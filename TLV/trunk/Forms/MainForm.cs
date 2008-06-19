@@ -8,12 +8,12 @@ namespace NagoyaUniv.OjlMpRtos.TraceLogVisualizer.Forms
 {
     public partial class MainForm : Form
     {
-        private ApplicationModel appModel;
+        private MainFormApplicationModel appModel;
 
         public MainForm()
         {
             InitializeComponent();
-            appModel = new ApplicationModel();
+            appModel = new MainFormApplicationModel();
         }
 
     }
