@@ -1,25 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forms", "Forms\Forms.csproj", "{A470A930-B780-47F9-B5C9-8880DE3AC717}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{8B93BBB1-1013-4533-865B-398CBF3AA0F7}"
-EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A470A930-B780-47F9-B5C9-8880DE3AC717}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A470A930-B780-47F9-B5C9-8880DE3AC717}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A470A930-B780-47F9-B5C9-8880DE3AC717}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A470A930-B780-47F9-B5C9-8880DE3AC717}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8B93BBB1-1013-4533-865B-398CBF3AA0F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8B93BBB1-1013-4533-865B-398CBF3AA0F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8B93BBB1-1013-4533-865B-398CBF3AA0F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8B93BBB1-1013-4533-865B-398CBF3AA0F7}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
