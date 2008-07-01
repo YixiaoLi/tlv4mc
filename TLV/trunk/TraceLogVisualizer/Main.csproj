@@ -12,8 +12,9 @@
     <AssemblyName>TraceLogVisualizer</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>NU.OJL.MPRTOS.TLV.Main.Program</StartupObject>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NoWin32Manifest>true</NoWin32Manifest>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,29 +27,28 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>
     </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'test|AnyCPU' ">
     <OutputPath>bin\test\</OutputPath>
@@ -116,17 +116,28 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Architecture\Architecture.csproj">
       <Project>{54B91E49-4C2D-4BF9-B301-4AD0C59B63D1}</Project>
       <Name>Architecture</Name>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{D705CAFB-6719-4776-B993-48BB6852CBBA}</Project>
       <Name>Core</Name>
+      <Private>True</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Release\NU.OJL.MPRTOS.TLV.Architecture.dll" />
+    <Content Include="bin\Release\NU.OJL.MPRTOS.TLV.Base.dll" />
+    <Content Include="bin\Release\NU.OJL.MPRTOS.TLV.Core.dll" />
+    <Content Include="bin\Release\TraceLogVisualizer.exe" />
+    <Content Include="bin\Release\WeifenLuo.WinFormsUI.Docking.dll" />
   </ItemGroup>
 </Project>
