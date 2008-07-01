@@ -107,7 +107,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Architecture.cs\Architecture.csproj">
+    <ProjectReference Include="..\Architecture\Architecture.csproj">
       <Project>{54B91E49-4C2D-4BF9-B301-4AD0C59B63D1}</Project>
       <Name>Architecture</Name>
     </ProjectReference>
