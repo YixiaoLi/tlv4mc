@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NU.OJL.MPRTOS.TLV.Main</RootNamespace>
-    <AssemblyName>NU.OJL.MPRTOS.TLV.Main</AssemblyName>
+    <AssemblyName>TraceLogVisualizer</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>
@@ -29,6 +29,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,6 +39,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -125,32 +128,5 @@
       <Project>{D705CAFB-6719-4776-B993-48BB6852CBBA}</Project>
       <Name>Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="bin\Debug\NU.OJL.MPRTOS.TLV.Architecture.dll" />
-    <Content Include="bin\Debug\NU.OJL.MPRTOS.TLV.Architecture.pdb" />
-    <Content Include="bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll" />
-    <Content Include="bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb" />
-    <Content Include="bin\Debug\NU.OJL.MPRTOS.TLV.Core.dll" />
-    <Content Include="bin\Debug\NU.OJL.MPRTOS.TLV.Core.pdb" />
-    <Content Include="bin\Debug\NU.OJL.MPRTOS.TLV.Main.exe" />
-    <Content Include="bin\Debug\NU.OJL.MPRTOS.TLV.Main.pdb" />
-    <Content Include="bin\Debug\NU.OJL.MPRTOS.TLV.Main.vshost.exe" />
-    <Content Include="bin\Debug\WeifenLuo.WinFormsUI.Docking.dll" />
-    <Content Include="bin\Release\NU.OJL.MPRTOS.TLV.Architecture.dll" />
-    <Content Include="bin\Release\NU.OJL.MPRTOS.TLV.Architecture.pdb" />
-    <Content Include="bin\Release\NU.OJL.MPRTOS.TLV.Base.dll" />
-    <Content Include="bin\Release\NU.OJL.MPRTOS.TLV.Base.pdb" />
-    <Content Include="bin\Release\NU.OJL.MPRTOS.TLV.Core.dll" />
-    <Content Include="bin\Release\NU.OJL.MPRTOS.TLV.Core.pdb" />
-    <Content Include="bin\Release\NU.OJL.MPRTOS.TLV.Main.exe" />
-    <Content Include="bin\Release\NU.OJL.MPRTOS.TLV.Main.pdb" />
-    <Content Include="bin\Release\NU.OJL.MPRTOS.TLV.Main.vshost.exe" />
-    <Content Include="bin\Release\WeifenLuo.WinFormsUI.Docking.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\NU.OJL.MPRTOS.TLV.Main.vshost.exe.manifest" />
-    <None Include="bin\Debug\TraceLogVisualizer.vshost.exe.manifest" />
-    <None Include="bin\Release\NU.OJL.MPRTOS.TLV.Main.vshost.exe.manifest" />
   </ItemGroup>
 </Project>
