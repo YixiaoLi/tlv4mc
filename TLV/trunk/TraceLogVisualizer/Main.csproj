@@ -125,18 +125,19 @@
     <ProjectReference Include="..\Architecture\Architecture.csproj">
       <Project>{54B91E49-4C2D-4BF9-B301-4AD0C59B63D1}</Project>
       <Name>Architecture</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{D705CAFB-6719-4776-B993-48BB6852CBBA}</Project>
       <Name>Core</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>move $(TargetFileName) __$(TargetFileName)
-..\..\..\bin\ILMerge.exe /lib:..\..\..\lib /ndebug /wildcards /out:$(TargetFileName) __$(TargetFileName) *.dll
-del __$(TargetFileName)</PostBuildEvent>
+    <PostBuildEvent>move $(TargetFileName) ___$(TargetFileName)
+..\..\..\bin\ILMerge.exe /lib:..\..\..\lib /ndebug /wildcards /out:$(TargetFileName) ___$(TargetFileName) *.dll
+del ___$(TargetFileName)
+del *.dll</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="bin\Release\" />
