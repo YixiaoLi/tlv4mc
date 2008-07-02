@@ -40,6 +40,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                 {
                     this.GetColumnFromDisplayIndex(this.Columns.Count - 2).Width += delta;
                 }
+
+                if (this.doesDrawLastIndex)
+                {
+                    this.DoesDrawLastIndex = true;
+                    this.Refresh();
+                }
+
+                timeLinePositionX = value;
             }
         }
         public int TimeLinePositionMinimumX
@@ -83,6 +91,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                 doesDrawLastIndex = value;
                 if (doesDrawLastIndex)
                 {
+                    this.Rows[this.FirstDisplayedScrollingRowIndex].Height = this.RowTemplate.Height;
                     firstDisplayBitmap = new Bitmap(this.Width, this.Rows[this.FirstDisplayedScrollingRowIndex].Height + this.ColumnHeadersHeight);
                     this.DrawToBitmap(firstDisplayBitmap, new Rectangle(0, 0, this.Width, this.Rows[this.FirstDisplayedScrollingRowIndex].Height + this.ColumnHeadersHeight));
                     this.Rows[this.FirstDisplayedScrollingRowIndex].Height = (this.Height - this.ColumnHeadersHeight) % this.RowTemplate.Height;
@@ -283,7 +292,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 
             if (this.doesDrawLastIndex)
             {
-                this.FirstDisplayedScrollingRowIndex--;
                 this.DoesDrawLastIndex = true;
                 this.Refresh();
             }
@@ -391,6 +399,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             {
                 this.timeLinePositionMinimumX = this.timeLinePositionX - this.GetColumnFromDisplayIndex(this.Columns.Count - 2).Width + this.GetColumnFromDisplayIndex(this.Columns.Count - 2).MinimumWidth;
             }
+
             base.OnColumnWidthChanged(e);
         }
 

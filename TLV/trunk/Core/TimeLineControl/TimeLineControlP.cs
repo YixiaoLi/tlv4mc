@@ -155,7 +155,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         private void timeLineResized(object sender, EventArgs e)
         {
             this.timeLineGrid.TimeLinePositionX = ((TimeLine)sender).TimeLinePisitionX;
-            this.timeLineGrid.Refresh();
         }
 
         private void timeLineGridColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
