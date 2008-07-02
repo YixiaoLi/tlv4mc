@@ -135,7 +135,8 @@
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>move $(TargetFileName) ___$(TargetFileName)
-..\..\..\bin\ILMerge.exe /lib:..\..\..\lib /ndebug /wildcards /out:$(TargetFileName) ___$(TargetFileName) *.dll
+if $(ConfigurationName) == Debug (..\..\..\bin\ILMerge.exe /wildcards /out:$(TargetFileName) ___$(TargetFileName) *.dll)
+if $(ConfigurationName) == Release (..\..\..\bin\ILMerge.exe /wildcards /ndebug /out:$(TargetFileName) ___$(TargetFileName) *.dll)
 del ___$(TargetFileName)
 del *.dll</PostBuildEvent>
   </PropertyGroup>

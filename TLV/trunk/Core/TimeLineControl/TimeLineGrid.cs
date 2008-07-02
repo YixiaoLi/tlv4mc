@@ -100,7 +100,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                 {
                     resizeRows();
                 }
-                this.Refresh();
             }
         }
 
@@ -219,9 +218,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             if (e.IsFirstDisplayedRow && doesDrawLastIndex)
             {
                 Bitmap tmpBmp = new Bitmap(this.Width, this.Rows[this.FirstDisplayedScrollingRowIndex].Height);
+                int height = this.RowTemplate.Height - this.Rows[this.FirstDisplayedScrollingRowIndex].Height;
                 using (Graphics tmpBmpGraphics = Graphics.FromImage(tmpBmp))
                 {
-                    tmpBmpGraphics.DrawImage(firstDisplayBitmap, 0, -1 * (this.ColumnHeadersHeight + (this.RowTemplate.Height - this.Rows[this.FirstDisplayedScrollingRowIndex].Height)));
+                    tmpBmpGraphics.DrawImage(firstDisplayBitmap, 0, -1 * (this.ColumnHeadersHeight + height));
+                    tmpBmpGraphics.Clip = new Region(new Rectangle(0, 0, this.Width, height));
                 }
                 e.Graphics.DrawImage(tmpBmp, e.RowBounds.X, e.RowBounds.Y);
             }
@@ -293,7 +294,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             if (this.doesDrawLastIndex)
             {
                 this.DoesDrawLastIndex = true;
-                this.Refresh();
             }
         }
 
