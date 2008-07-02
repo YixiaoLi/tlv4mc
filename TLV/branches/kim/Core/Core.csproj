@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D705CAFB-6719-4776-B993-48BB6852CBBA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NU.OJL.MPRTOS.TLV.Core</RootNamespace>
+    <AssemblyName>NU.OJL.MPRTOS.TLV.Core</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'test|AnyCPU' ">
+    <OutputPath>bin\test\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.2.2864.18696, Culture=neutral, PublicKeyToken=d481317c817cec47, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\WINDOWS\assembly\GAC_MSIL\WindowsFormsIntegration\3.0.0.0__31bf3856ad364e35\WindowsFormsIntegration.dll</HintPath>
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DockPanel\DockPanelA.cs" />
+    <Compile Include="DockPanel\DockPanelAgent.cs" />
+    <Compile Include="DockPanel\DockPanelC.cs" />
+    <Compile Include="DockPanel\DockPanelP.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ResourceExplorer\FileManager.cs" />
+    <Compile Include="ResourceExplorer\ResourceExplorerA.cs" />
+    <Compile Include="ResourceExplorer\ResourceExplorerAgent.cs" />
+    <Compile Include="ResourceExplorer\ResourceExplorerC.cs" />
+    <Compile Include="ResourceExplorer\ResourceExplorerP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResourceExplorer\ResourceExplorerP.Designer.cs">
+      <DependentUpon>ResourceExplorerP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResourceExplorer\ResourceList.cs" />
+    <Compile Include="ResourceExplorer\ViewTypeList.cs" />
+    <Compile Include="ResourceProperty\ResourcePropertyA.cs" />
+    <Compile Include="ResourceProperty\ResourcePropertyAgent.cs" />
+    <Compile Include="ResourceProperty\ResourcePropertyC.cs" />
+    <Compile Include="ResourceProperty\ResourcePropertyP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResourceProperty\ResourcePropertyP.Designer.cs">
+      <DependentUpon>ResourcePropertyP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Test_Main\MainA.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Test_Main\MainAgent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Test_Main\MainC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Test_Main\MainP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Test_Main\MainP.Designer.cs">
+      <DependentUpon>MainP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Test_Main\MainP2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Test_Main\MainP2.Designer.cs">
+      <DependentUpon>MainP2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeLineControl\TimeLine.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TimeLineControl\TimeLine.Designer.cs">
+      <DependentUpon>TimeLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeLineControl\TimeLineColumn.cs" />
+    <Compile Include="TimeLineControl\TimeLineControlA.cs" />
+    <Compile Include="TimeLineControl\TimeLineControlAgent.cs" />
+    <Compile Include="TimeLineControl\TimeLineControlC.cs" />
+    <Compile Include="TimeLineControl\TimeLineControlP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimeLineControl\TimeLineControlP.Designer.cs">
+      <DependentUpon>TimeLineControlP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeLineControl\TimeLineGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Architecture\Architecture.csproj">
+      <Project>{54B91E49-4C2D-4BF9-B301-4AD0C59B63D1}</Project>
+      <Name>Architecture</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{5C458A9C-47D4-4E64-89D8-4DBE448154D1}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ResourceExplorer\ResourceExplorerP.resx">
+      <DependentUpon>ResourceExplorerP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResourceProperty\ResourcePropertyP.resx">
+      <DependentUpon>ResourcePropertyP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Test_Main\MainP.resx">
+      <DependentUpon>MainP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Test_Main\MainP2.resx">
+      <DependentUpon>MainP2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimeLineControl\TimeLine.resx">
+      <DependentUpon>TimeLine.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimeLineControl\TimeLineControlP.resx">
+      <DependentUpon>TimeLineControlP.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Base\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
