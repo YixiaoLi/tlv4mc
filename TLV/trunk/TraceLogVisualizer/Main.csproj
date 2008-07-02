@@ -46,7 +46,7 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>none</ErrorReport>
+    <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
@@ -135,7 +135,7 @@
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>move $(TargetFileName) __$(TargetFileName)
-..\..\..\bin\ILMerge.exe /out:$(TargetFileName) __$(TargetFileName) ..\..\..\Architecture\$(OutDir)NU.OJL.MPRTOS.TLV.Architecture.dll ..\..\..\Base\$(OutDir)NU.OJL.MPRTOS.TLV.Base.dll ..\..\..\Core\$(OutDir)NU.OJL.MPRTOS.TLV.Core.dll ..\..\..\lib\WeifenLuo.WinFormsUI.Docking.dll
+..\..\..\bin\ILMerge.exe /lib:..\..\..\lib /ndebug /wildcards /out:$(TargetFileName) __$(TargetFileName) *.dll
 del __$(TargetFileName)</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
