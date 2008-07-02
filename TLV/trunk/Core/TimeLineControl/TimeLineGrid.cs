@@ -27,7 +27,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         private bool dropDestinationIsValid;
         private bool dropDestinationIsNextRow;
         private int dropDestinationRowIndex;
-        private bool doesDrawLastIndex = false;
+        private bool doesDrawLastRow = false;
         private Bitmap firstDisplayBitmap;
 
         public int TimeLinePositionX
@@ -41,9 +41,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                     this.GetColumnFromDisplayIndex(this.Columns.Count - 2).Width += delta;
                 }
 
-                if (this.doesDrawLastIndex)
+                if (this.doesDrawLastRow)
                 {
-                    this.DoesDrawLastIndex = true;
+                    this.DoesDrawLastRow = true;
                     this.Refresh();
                 }
 
@@ -83,13 +83,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                 }
             }
         }
-        public bool DoesDrawLastIndex
+        public bool DoesDrawLastRow
         {
-            get { return doesDrawLastIndex; }
+            get { return doesDrawLastRow; }
             set
             {
-                doesDrawLastIndex = value;
-                if (doesDrawLastIndex)
+                doesDrawLastRow = value;
+                if (doesDrawLastRow)
                 {
                     this.Rows[this.FirstDisplayedScrollingRowIndex].Height = this.RowTemplate.Height;
                     firstDisplayBitmap = new Bitmap(this.Width, this.Rows[this.FirstDisplayedScrollingRowIndex].Height + this.ColumnHeadersHeight);
@@ -123,6 +123,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.MultiSelect = false;
             this.AllowDrop = true;
             this.DoubleBuffered = true;
+            this.ReadOnly = true;
 
             this.timeLineColumn = new TimeLineColumn();
             this.timeLineColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -215,7 +216,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                     e.Graphics.FillPath(new HatchBrush(HatchStyle.Percent50, Color.Black, Color.Transparent), path);
                 }
             }
-            if (e.IsFirstDisplayedRow && doesDrawLastIndex)
+            if (e.IsFirstDisplayedRow && doesDrawLastRow)
             {
                 Bitmap tmpBmp = new Bitmap(this.Width, this.Rows[this.FirstDisplayedScrollingRowIndex].Height);
                 int height = this.RowTemplate.Height - this.Rows[this.FirstDisplayedScrollingRowIndex].Height;
@@ -289,11 +290,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                 this.resizeRows();
 
                 this.CurrentCell = this[this.CurrentCell.ColumnIndex, to];
-            }
-
-            if (this.doesDrawLastIndex)
-            {
-                this.DoesDrawLastIndex = true;
             }
         }
 

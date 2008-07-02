@@ -63,7 +63,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                 }
                 else
                 {
-                    this.timeLineGrid.DoesDrawLastIndex = false;
+                    this.timeLineGrid.DoesDrawLastRow = false;
                     if (this.timeLineGridVScrollBar.Visible)
                     {
                         this.timeLineGridVScrollBar.Hide();
@@ -127,13 +127,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         private void checkTimeLineGridVScrollBarVisiblity()
         {
             this.TimeLineGridVScrollBarVisibility = doesTimeLineGridNeedVScrollBar();
-            if (this.timeLineGrid.RowSizeMode == TimeLineGridRowSizeMode.Fill && this.timeLineGrid.DoesDrawLastIndex)
+            if (this.timeLineGrid.RowSizeMode == TimeLineGridRowSizeMode.Fill && this.timeLineGrid.DoesDrawLastRow)
             {
                 this.timeLineGridVScrollBar.Value = this.timeLineGridVScrollBarMaximunValue;
             }
             else
             {
-                this.timeLineGrid.DoesDrawLastIndex = false;
+                this.timeLineGrid.DoesDrawLastRow = false;
             }
         }
 
@@ -186,7 +186,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         private void timeLineGridVScrollBarValueChanged(object sender, EventArgs e)
         {
             this.timeLineGrid.FirstDisplayedScrollingRowIndex = this.timeLineGridVScrollBar.Value / this.timeLineGrid.RowTemplate.Height;
-            this.timeLineGrid.DoesDrawLastIndex = (this.timeLineGridVScrollBar.Value >= timeLineGridVScrollBarMaximunValue);
+            this.timeLineGrid.DoesDrawLastRow = (this.timeLineGridVScrollBar.Value >= timeLineGridVScrollBarMaximunValue);
         }
 
         private void timeLineGridMouseWheel(object sender, MouseEventArgs e)
