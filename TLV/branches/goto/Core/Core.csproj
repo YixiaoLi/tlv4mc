@@ -111,6 +111,9 @@
     <Compile Include="TimeLineControl\TimeLinePanel\TimeLinePanelP.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TimeLineControl\TimeLinePanel\TimeLinePanelP.Designer.cs">
+      <DependentUpon>TimeLinePanelP.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Architecture\Architecture.csproj">
