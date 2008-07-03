@@ -6,14 +6,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 {
     public class TimeLineControlAgent : Agent<TimeLineControlP, TimeLineControlA, TimeLineControlC>
     {
-        private TimeLinePanelAgent timeLinePanelAgent = new TimeLinePanelAgent("TimeLinePanel");
+        private TimeLineGridAgent timeLineGridAgent = new TimeLineGridAgent("TimeLineGrid");
 
         public TimeLineControlAgent(string name)
             : base(name, new TimeLineControlC(name, new TimeLineControlP(name), new TimeLineControlA(name)))
         {
-            this.Add(timeLinePanelAgent);
+            this.Add(timeLineGridAgent);
 
-            timeLinePanelAgent.P.Dock = WinForms.DockStyle.Fill;
+            timeLineGridAgent.P.Dock = DockStyle.Fill;
         }
     }
 }

@@ -58,7 +58,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.zoomInButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.zoomInButton.Name = "zoomInButton";
             this.zoomInButton.Size = new System.Drawing.Size(23, 22);
-            this.zoomInButton.Text = "toolStripButton1";
+            this.zoomInButton.Text = "拡大";
             // 
             // zoomOutButton
             // 
@@ -67,7 +67,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.zoomOutButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.zoomOutButton.Name = "zoomOutButton";
             this.zoomOutButton.Size = new System.Drawing.Size(23, 22);
-            this.zoomOutButton.Text = "toolStripButton2";
+            this.zoomOutButton.Text = "縮小";
             // 
             // TimeLineControlP
             // 
