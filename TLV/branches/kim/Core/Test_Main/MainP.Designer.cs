@@ -96,6 +96,7 @@
             this.tsmiDesplayProperty.Name = "tsmiDesplayProperty";
             this.tsmiDesplayProperty.Size = new System.Drawing.Size(167, 22);
             this.tsmiDesplayProperty.Text = "リソースプロパティ";
+            this.tsmiDesplayProperty.Click += new System.EventHandler(this.tsmiDesplayProperty_Click);
             // 
             // toolStrip
             // 

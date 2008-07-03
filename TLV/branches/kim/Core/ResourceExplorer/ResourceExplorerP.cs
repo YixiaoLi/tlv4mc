@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
+using NU.OJL.MPRTOS.TLV.Core.Base;
 
 using NU.OJL.MPRTOS.TLV.Core.Test_Main;
 
@@ -58,11 +59,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
             FileManager fileManager = new FileManager();
 
 
-            // リソースファイルのパス設定
-            fileManager.SetFilePath(resFilePath);
 
             //ファイルからリソースデータ読み込み
-            fileManager.ReadResFile(out this.resList, out this.viewTypeList);
+            fileManager.ReadResourceFile(resFilePath, out this.resList, out this.viewTypeList);
 
             //リソースデータ削除
             this.prcView.Nodes.Clear();
@@ -179,31 +178,35 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
             List<string> viewTypeList,
             ResourceList resList)
         {
-             string resInfoType =string.Empty;
+            string resInfoType =string.Empty;
+            string nodeKey = string.Empty;
 
-             prcView.Nodes.Add(viewTypeList[viewCount]);
+            prcView.Nodes.Add(viewTypeList[viewCount]);
 
-             foreach (TskInfo tskInfo in resList.TskInfoList)
-             {
-                 if (viewTypeList[viewCount].Equals(tskInfo.PrcID))
-                 {
-                     prcView.Nodes[viewCount].Nodes.Add(tskInfo.Key, tskInfo.Name);
-                 }
-             }
-             foreach (CycInfo cycInfo in resList.CycInfoList)
-             {
-                 if (viewTypeList[viewCount].Equals(cycInfo.PrcID))
-                 {
-                     prcView.Nodes[viewCount].Nodes.Add(cycInfo.Key, cycInfo.Name);
-                 }
-             }
-             foreach (AlmInfo almInfo in resList.AlmInfoList)
-             {
-                 if (viewTypeList[viewCount].Equals(almInfo.PrcID))
-                 {
-                     prcView.Nodes[viewCount].Nodes.Add(almInfo.Key, almInfo.Name);
-                 }
-             }
+            foreach (TskInfo tskInfo in resList.TskInfoList)
+            {
+                if (viewTypeList[viewCount].Equals(tskInfo.PrcID))
+                {
+                    nodeKey = tskInfo.Type + "_" +tskInfo.Id;
+                    prcView.Nodes[viewCount].Nodes.Add(nodeKey, tskInfo.Name);
+                }
+            }
+            foreach (CycInfo cycInfo in resList.CycInfoList)
+            {
+                if (viewTypeList[viewCount].Equals(cycInfo.PrcID))
+                {
+                    nodeKey = cycInfo.Type + "_" + cycInfo.Id;
+                    prcView.Nodes[viewCount].Nodes.Add(nodeKey, cycInfo.Name);
+                }
+            }
+            foreach (AlmInfo almInfo in resList.AlmInfoList)
+            {
+                if (viewTypeList[viewCount].Equals(almInfo.PrcID))
+                {
+                    nodeKey = almInfo.Type + "_" + almInfo.Id;
+                    prcView.Nodes[viewCount].Nodes.Add(nodeKey, almInfo.Name);
+                }
+            }
 
         }
 
@@ -215,6 +218,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
            ref TreeView treeView)
         {
             string resInfoType = string.Empty;
+            string nodeKey = string.Empty;
 
             treeView.Nodes.Add(viewTypeList[viewCount]);
 
@@ -233,7 +237,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
                 if (viewTypeList[viewCount].Equals(resInfoType))
                 {
-                    treeView.Nodes[viewCount].Nodes.Add(objbase.Key, objbase.Name);
+                    nodeKey = objbase.Type + "_" + objbase.Id;
+                    treeView.Nodes[viewCount].Nodes.Add(nodeKey, objbase.Name);
                 }
             }
 
@@ -249,7 +254,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
             MainP mainAgent = (MainP)ctl;
 
             char[] split = { '_' };
-            string[] resType = key.Split(split);
+            string[] resData = key.Split(split);
 
 
             if (e.Node.Level != 1)
@@ -257,32 +262,33 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 mainAgent.ChangePropty((Object)null);
                 return;
             }
-            switch (resType[0])
+
+            switch ((ResourceType)Enum.Parse(ResourceType.TSK.GetType(), resData[0]))
             {
-                case FileManager.ResType.TSK:
+                case ResourceType.TSK:
                     for (int i = 0; i < this.resList.TskInfoList.Count; i++)
                     {
-                        if (key.Equals(this.resList.TskInfoList[i].Key))
+                        if (this.resList.TskInfoList[i].Type == resData[0] && this.resList.TskInfoList[i].Id == int.Parse(resData[1]))
                         {
                             mainAgent.ChangePropty(this.resList.TskInfoList[i]);
                             break;
                         }
                     }
                     break;
-                case FileManager.ResType.CYC:
+                case ResourceType.CYC:
                     for (int i = 0; i < this.resList.CycInfoList.Count; i++)
                     {
-                        if (key.Equals(this.resList.CycInfoList[i].Key))
+                        if (this.resList.CycInfoList[i].Type == resData[0] && this.resList.CycInfoList[i].Id == int.Parse(resData[1]))
                         {
                             mainAgent.ChangePropty(this.resList.CycInfoList[i]);
                             break;
                         }
                     }
                     break;
-                case FileManager.ResType.ALM:
+                case ResourceType.ALM:
                     for (int i = 0; i < this.resList.AlmInfoList.Count; i++)
                     {
-                        if (key.Equals(this.resList.AlmInfoList[i].Key))
+                        if (this.resList.AlmInfoList[i].Type == resData[0] && this.resList.AlmInfoList[i].Id == int.Parse(resData[1]))
                         {
                             mainAgent.ChangePropty(this.resList.AlmInfoList[i]);
                             break;
@@ -294,145 +300,145 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
         private void clsView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            //string key = e.Node.Name;
+            string key = e.Node.Name;
 
-            //Control ctl = Control.FromHandle(this.formHandle);
+            Control ctl = Control.FromHandle(this.formHandle);
 
-            //TLVSample tlvSample = (TLVSample)ctl;
+            MainP mainAgent = (MainP)ctl;
 
-            //char[] split = { '_' };
-            //string[] resType = key.Split(split);
+            char[] split = { '_' };
+            string[] resData = key.Split(split);
 
-            
-            //if(e.Node.Level != 1)
-            //{
-            //    tlvSample.ChangePropty((Object)null);
-            //    return;
-            //}
 
-            //switch (resType[0])
-            //{
-            //    case FileManager.ResType.TSK:
-            //        for (int i = 0; i < this.resList.TskInfoList.Count; i++)
-            //        {
-            //            if (key.Equals(this.resList.TskInfoList[i].Key))
-            //            {
-            //                tlvSample.ChangePropty(this.resList.TskInfoList[i]);
-            //                break;
-            //            }
-            //        }
-            //        break;
-            //    case FileManager.ResType.SEM:
-            //        for (int i = 0; i < this.resList.SemInfoList.Count; i++)
-            //        {
-            //            if (key.Equals(this.resList.SemInfoList[i].Key))
-            //            {
-            //                tlvSample.ChangePropty(this.resList.SemInfoList[i]);
-            //                break;
-            //            }
-            //        }
-            //        break;
-            //    case FileManager.ResType.FLG:
-            //        for (int i = 0; i < this.resList.FlgInfoList.Count; i++)
-            //        {
-            //            if (key.Equals(this.resList.FlgInfoList[i].Key))
-            //            {
-            //                tlvSample.ChangePropty(this.resList.FlgInfoList[i]);
-            //                break;
-            //            }
-            //        }
-            //        break;
-            //    case FileManager.ResType.DTQ:
-            //        for (int i = 0; i < this.resList.DtqInfoList.Count; i++)
-            //        {
-            //            if (key.Equals(this.resList.DtqInfoList[i].Key))
-            //            {
-            //                tlvSample.ChangePropty(this.resList.DtqInfoList[i]);
-            //                break;
-            //            }
-            //        }
-            //        break;
-            //    case FileManager.ResType.PDTQ:
-            //        for (int i = 0; i < this.resList.PdtqInfoList.Count; i++)
-            //        {
-            //            if (key.Equals(this.resList.PdtqInfoList[i].Key))
-            //            {
-            //                tlvSample.ChangePropty(this.resList.PdtqInfoList[i]);
-            //                break;
-            //            }
-            //        }
-            //        break;
-            //    case FileManager.ResType.MBX:
-            //        for (int i = 0; i < this.resList.MbxInfoList.Count; i++)
-            //        {
-            //            if (key.Equals(this.resList.MbxInfoList[i].Key))
-            //            {
-            //                tlvSample.ChangePropty(this.resList.MbxInfoList[i]);
-            //                break;
-            //            }
-            //        }
-            //        break;
-            //    case FileManager.ResType.MPF:
-            //        for (int i = 0; i < this.resList.MpfInfoList.Count; i++)
-            //        {
-            //            if (key.Equals(this.resList.MpfInfoList[i].Key))
-            //            {
-            //                tlvSample.ChangePropty(this.resList.MpfInfoList[i]);
-            //                break;
-            //            }
-            //        }
-            //        break;
-            //    case FileManager.ResType.CYC:
-            //        for (int i = 0; i < this.resList.CycInfoList.Count; i++)
-            //        {
-            //            if (key.Equals(this.resList.CycInfoList[i].Key))
-            //            {
-            //                tlvSample.ChangePropty(this.resList.CycInfoList[i]);
-            //                break;
-            //            }
-            //        }
-            //        break;
-            //    case FileManager.ResType.ALM:
-            //        for (int i = 0; i < this.resList.AlmInfoList.Count; i++)
-            //        {
-            //            if (key.Equals(this.resList.AlmInfoList[i].Key))
-            //            {
-            //                tlvSample.ChangePropty(this.resList.AlmInfoList[i]);
-            //                break;
-            //            }
-            //        }
-            //        break;
-            //    case FileManager.ResType.SPN:
-            //        for (int i = 0; i < this.resList.SpnInfoList.Count; i++)
-            //        {
-            //            if (key.Equals(this.resList.SpnInfoList[i].Key))
-            //            {
-            //                tlvSample.ChangePropty(this.resList.SpnInfoList[i]);
-            //                break;
-            //            }
-            //        }
-            //        break;
-            //    case FileManager.ResType.INH:
-            //        for (int i = 0; i < this.resList.InhInfoList.Count; i++)
-            //        {
-            //            if (key.Equals(this.resList.InhInfoList[i].Key))
-            //            {
-            //                tlvSample.ChangePropty(this.resList.InhInfoList[i]);
-            //                break;
-            //            }
-            //        }
-            //        break;
-            //    case FileManager.ResType.EXC:
-            //        for (int i = 0; i < this.resList.ExcInfoList.Count; i++)
-            //        {
-            //            if (key.Equals(this.resList.ExcInfoList[i].Key))
-            //            {
-            //                tlvSample.ChangePropty(this.resList.ExcInfoList[i]);
-            //                break;
-            //            }
-            //        }
-            //        break;
-            //}
+            if (e.Node.Level != 1)
+            {
+                mainAgent.ChangePropty((Object)null);
+                return;
+            }
+
+            switch ((ResourceType)Enum.Parse(ResourceType.TSK.GetType(), resData[0]))
+            {
+                case ResourceType.TSK:
+                    for (int i = 0; i < this.resList.TskInfoList.Count; i++)
+                    {
+                        if (this.resList.TskInfoList[i].Type == resData[0] && this.resList.TskInfoList[i].Id == int.Parse(resData[1]))
+                        {
+                            mainAgent.ChangePropty(this.resList.TskInfoList[i]);
+                            break;
+                        }
+                    }
+                    break;
+                case ResourceType.SEM:
+                    for (int i = 0; i < this.resList.SemInfoList.Count; i++)
+                    {
+                        if (this.resList.SemInfoList[i].Type == resData[0] && this.resList.SemInfoList[i].Id == int.Parse(resData[1]))
+                        {
+                            mainAgent.ChangePropty(this.resList.SemInfoList[i]);
+                            break;
+                        }
+                    }
+                    break;
+                case ResourceType.FLG:
+                    for (int i = 0; i < this.resList.FlgInfoList.Count; i++)
+                    {
+                        if (this.resList.FlgInfoList[i].Type == resData[0] && this.resList.FlgInfoList[i].Id == int.Parse(resData[1]))
+                        {
+                            mainAgent.ChangePropty(this.resList.FlgInfoList[i]);
+                            break;
+                        }
+                    }
+                    break;
+                case ResourceType.DTQ:
+                    for (int i = 0; i < this.resList.DtqInfoList.Count; i++)
+                    {
+                        if (this.resList.DtqInfoList[i].Type == resData[0] && this.resList.DtqInfoList[i].Id == int.Parse(resData[1]))
+                        {
+                            mainAgent.ChangePropty(this.resList.DtqInfoList[i]);
+                            break;
+                        }
+                    }
+                    break;
+                case ResourceType.PDTQ:
+                    for (int i = 0; i < this.resList.PdtqInfoList.Count; i++)
+                    {
+                        if (this.resList.PdtqInfoList[i].Type == resData[0] && this.resList.PdtqInfoList[i].Id == int.Parse(resData[1]))
+                        {
+                            mainAgent.ChangePropty(this.resList.PdtqInfoList[i]);
+                            break;
+                        }
+                    }
+                    break;
+                case ResourceType.MBX:
+                    for (int i = 0; i < this.resList.MbxInfoList.Count; i++)
+                    {
+                        if (this.resList.MbxInfoList[i].Type == resData[0] && this.resList.MbxInfoList[i].Id == int.Parse(resData[1]))
+                        {
+                            mainAgent.ChangePropty(this.resList.MbxInfoList[i]);
+                            break;
+                        }
+                    }
+                    break;
+                case ResourceType.MPF:
+                    for (int i = 0; i < this.resList.MpfInfoList.Count; i++)
+                    {
+                        if (this.resList.MpfInfoList[i].Type == resData[0] && this.resList.MpfInfoList[i].Id == int.Parse(resData[1]))
+                        {
+                            mainAgent.ChangePropty(this.resList.MpfInfoList[i]);
+                            break;
+                        }
+                    }
+                    break;
+                case ResourceType.CYC:
+                    for (int i = 0; i < this.resList.CycInfoList.Count; i++)
+                    {
+                        if (this.resList.CycInfoList[i].Type == resData[0] && this.resList.CycInfoList[i].Id == int.Parse(resData[1]))
+                        {
+                            mainAgent.ChangePropty(this.resList.CycInfoList[i]);
+                            break;
+                        }
+                    }
+                    break;
+                case ResourceType.ALM:
+                    for (int i = 0; i < this.resList.AlmInfoList.Count; i++)
+                    {
+                        if (this.resList.AlmInfoList[i].Type == resData[0] && this.resList.AlmInfoList[i].Id == int.Parse(resData[1]))
+                        {
+                            mainAgent.ChangePropty(this.resList.AlmInfoList[i]);
+                            break;
+                        }
+                    }
+                    break;
+                case ResourceType.SPN:
+                    for (int i = 0; i < this.resList.SpnInfoList.Count; i++)
+                    {
+                        if (this.resList.SpnInfoList[i].Type == resData[0] && this.resList.SpnInfoList[i].Id == int.Parse(resData[1]))
+                        {
+                            mainAgent.ChangePropty(this.resList.SpnInfoList[i]);
+                            break;
+                        }
+                    }
+                    break;
+                case ResourceType.INH:
+                    for (int i = 0; i < this.resList.InhInfoList.Count; i++)
+                    {
+                        if (this.resList.InhInfoList[i].Type == resData[0] && this.resList.InhInfoList[i].Id == int.Parse(resData[1]))
+                        {
+                            mainAgent.ChangePropty(this.resList.InhInfoList[i]);
+                            break;
+                        }
+                    }
+                    break;
+                case ResourceType.EXC:
+                    for (int i = 0; i < this.resList.ExcInfoList.Count; i++)
+                    {
+                        if (this.resList.ExcInfoList[i].Type == resData[0] && this.resList.ExcInfoList[i].Id == int.Parse(resData[1]))
+                        {
+                            mainAgent.ChangePropty(this.resList.ExcInfoList[i]);
+                            break;
+                        }
+                    }
+                    break;
+            }
 
         }
 

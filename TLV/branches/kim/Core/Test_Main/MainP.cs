@@ -136,6 +136,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Test_Main
             }
         }
 
+        private void tsmiDesplayProperty_Click(object sender, EventArgs e)
+        {
+            if (!this.resProperty.Visible)
+            {
+                this.tsmiDesplayProperty.Checked = true;
+                this.resProperty.Show(dockPanel);
+            }
+            else
+            {
+                this.tsmiDesplayProperty.Checked = false;
+                this.resProperty.Hide();
+            }
+        }
+
 
     }
 }

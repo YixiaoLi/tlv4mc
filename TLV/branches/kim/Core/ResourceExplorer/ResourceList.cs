@@ -89,7 +89,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
     {
         protected int id;
         private string atr;
-        protected string key;
         protected string type;
         protected string name;
         protected string cls;
@@ -103,12 +102,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
         {
             get { return atr; }
             set { atr = value; }
-        }
-
-        public string Key
-        {
-            get { return key; }
-            set { key = value; }
         }
         public string Type
         {
