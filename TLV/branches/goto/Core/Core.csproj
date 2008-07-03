@@ -87,6 +87,12 @@
     <Compile Include="Main\MainP.Designer.cs">
       <DependentUpon>MainP.cs</DependentUpon>
     </Compile>
+    <Compile Include="TimeLineControl\TimeLineControlA.cs" />
+    <Compile Include="TimeLineControl\TimeLineControlAgent.cs" />
+    <Compile Include="TimeLineControl\TimeLineControlC.cs" />
+    <Compile Include="TimeLineControl\TimeLineControlP.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Architecture\Architecture.csproj">
@@ -107,7 +113,6 @@
   <ItemGroup>
     <Folder Include="Base\" />
     <Folder Include="Properties\" />
-    <Folder Include="TimeLineControl\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
