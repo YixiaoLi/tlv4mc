@@ -93,6 +93,24 @@
     <Compile Include="TimeLineControl\TimeLineControlP.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="TimeLineControl\TimeLineControlP.Designer.cs">
+      <DependentUpon>TimeLineControlP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeLineControl\TimeLineGrid\TimeLineGridA.cs" />
+    <Compile Include="TimeLineControl\TimeLineGrid\TimeLineGridAgent.cs" />
+    <Compile Include="TimeLineControl\TimeLineGrid\TimeLineGridC.cs" />
+    <Compile Include="TimeLineControl\TimeLineGrid\TimeLineGridP.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TimeLineControl\TimeLineGrid\TimeLineGridP.Designer.cs">
+      <DependentUpon>TimeLineGridP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeLineControl\TimeLinePanel\TimeLinePanelA.cs" />
+    <Compile Include="TimeLineControl\TimeLinePanel\TimeLinePanelAgent.cs" />
+    <Compile Include="TimeLineControl\TimeLinePanel\TimeLinePanelC.cs" />
+    <Compile Include="TimeLineControl\TimeLinePanel\TimeLinePanelP.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Architecture\Architecture.csproj">

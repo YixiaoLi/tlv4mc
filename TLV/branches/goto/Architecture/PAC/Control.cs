@@ -6,9 +6,6 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
     public interface IControl: IElement
     {
         IPresentation Presentation { get; }
-
-        void ShowPresentation();
-        void AddSubPresentation(IPresentation presentarion, object args);
     }
 
     public abstract class Control<Tp, Ta> : IControl
@@ -31,16 +28,6 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             this.name = name;
             this.P = presentation;
             this.A = abstraction;
-        }
-
-        public void ShowPresentation()
-        {
-            this.P.Show();
-        }
-
-        public virtual void AddSubPresentation(IPresentation presentarion, object args)
-        {
-            this.P.AddChild((Control)presentarion, args);
         }
 
     }

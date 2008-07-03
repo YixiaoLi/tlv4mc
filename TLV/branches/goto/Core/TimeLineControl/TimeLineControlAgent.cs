@@ -1,5 +1,4 @@
 ﻿using NU.OJL.MPRTOS.TLV.Architecture.PAC;
-using WeifenLuo.WinFormsUI.Docking;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 {
@@ -8,7 +7,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         public TimeLineControlAgent(string name)
             : base(name, new TimeLineControlC(name, new TimeLineControlP(name), new TimeLineControlA(name)))
         {
-            ((TimeLineControlP)this.Control.Presentation).DockAreas = DockAreas.Document;
+
         }
     }
 }

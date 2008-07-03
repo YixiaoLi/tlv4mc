@@ -10,12 +10,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
         public MainAgent(string name)
             : base(name, new MainC(name, new MainP(name), new MainA(name)), true)
         {
-            this.Parent = null;
-            this.Children.Add(new DockPanelAgent("DockPanel"));
-            this.Children["DockPanel"].Children.Add(new TimeLineControlAgent("TestTimeLineControl"));
+            this.Add(new DockPanelAgent("DockPanel"));
+            this["DockPanel"].Add(new TimeLineControlAgent("TestTimeLineControl"), DockState.Document);
 
             this.Show();
-            ((DockPanelAgent)this.Children["DockPanel"]).Show("TestTimeLineControl", DockState.Document);
         }
     }
 }

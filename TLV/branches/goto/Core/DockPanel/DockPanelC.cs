@@ -11,9 +11,5 @@ namespace NU.OJL.MPRTOS.TLV.Core.DockPanel
 
         }
 
-        public void Show(string name, DockState state)
-        {
-            P.Show(name, state);
-        }
     }
 }

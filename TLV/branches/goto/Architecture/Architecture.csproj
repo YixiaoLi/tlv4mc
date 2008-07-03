@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PAC\Abstraction.cs" />
     <Compile Include="PAC\Bace\ElementTable.cs" />
     <Compile Include="PAC\Bace\Utils.cs" />
     <Compile Include="PAC\IAbstraction.cs" />

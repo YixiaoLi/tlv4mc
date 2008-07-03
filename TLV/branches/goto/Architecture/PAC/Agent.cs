@@ -11,6 +11,8 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
         IControl Control { get; }
         void Show();
         bool IsMain { get; }
+        void Add(IAgent agent);
+        void Add(IAgent agent, object args);
     }
 
     abstract public class Agent<Tp, Ta, Tc> : IAgent
@@ -53,6 +55,7 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             this.control = control;
             this.isMain = isMain;
             this.children = new AgentTable(this);
+            this.parent = null;
 
             if(this.IsMain)
             {
@@ -60,15 +63,28 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             }
         }
 
-        protected void AddChild(IAgent child)
+        public IAgent this[string name]
         {
-            children.Add(child);
-            child.Parent = this;
+            get { return this.children[name]; }
+        }
+
+        public void Add(IAgent agent)
+        {
+            this.Add(agent, null);
+        }
+
+        public void Add(IAgent agent, object args)
+        {
+            this.children.Add(agent, args);
         }
 
         public void Show()
         {
-            control.ShowPresentation();
+            this.control.Presentation.Show();
+            foreach(IAgent agent in Children)
+            {
+                agent.Show();
+            }
         }
     }
 
@@ -89,7 +105,8 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
         public void Add(IAgent agent, Object args)
         {
             base.Add(agent);
-            holder.Control.AddSubPresentation(agent.Control.Presentation, args);
+            agent.Parent = holder;
+            holder.Control.Presentation.Add(agent.Control.Presentation, args);
         }
     }
 }
