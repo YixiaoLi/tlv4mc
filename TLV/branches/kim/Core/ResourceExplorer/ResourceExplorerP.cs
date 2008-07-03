@@ -56,14 +56,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
         {
             // リソースチェックリスト初期化
             this.nodeChekedList = new List<string>();
-            
-            
-            FileManager fileManager = new FileManager();
+
+
+            ResourceFileManager resFileManager = new ResourceFileManager();
 
 
 
             //ファイルからリソースデータ読み込み
-            fileManager.ReadResourceFile(resFilePath, out this.resList, out this.viewTypeList);
+            resFileManager.ReadResourceFile(resFilePath, out this.resList, out this.viewTypeList);
 
             //リソースデータ削除
             this.prcView.Nodes.Clear();
