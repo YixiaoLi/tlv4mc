@@ -81,7 +81,7 @@
     <Compile Include="DockPanel\DockPanelP.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ResourceExplorer\FileManager.cs" />
+    <Compile Include="ResourceExplorer\ResourceFileManager.cs" />
     <Compile Include="ResourceExplorer\ResourceExplorerA.cs" />
     <Compile Include="ResourceExplorer\ResourceExplorerAgent.cs" />
     <Compile Include="ResourceExplorer\ResourceExplorerC.cs" />

@@ -51,7 +51,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
         CYCPHS = TASK
     }
 
-    public class FileManager
+    public class ResourceFileManager
     {
         private const string RESFILE_COMENT = "#";
         private const string RESFILE_NULL = "";
