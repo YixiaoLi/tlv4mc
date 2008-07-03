@@ -14,6 +14,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 {
     public partial class ResourceExplorerP : WeifenLuo.WinFormsUI.Docking.DockContent, IPresentation
     {
+        private const string NODE_KEY_SPACE = "_";
+
         private IntPtr formHandle = IntPtr.Zero;
 
         private ResourceList resList;
@@ -187,7 +189,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
             {
                 if (viewTypeList[viewCount].Equals(tskInfo.PrcID))
                 {
-                    nodeKey = tskInfo.Type + "_" +tskInfo.Id;
+                    nodeKey = tskInfo.Type + NODE_KEY_SPACE + tskInfo.Id;
                     prcView.Nodes[viewCount].Nodes.Add(nodeKey, tskInfo.Name);
                 }
             }
@@ -195,7 +197,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
             {
                 if (viewTypeList[viewCount].Equals(cycInfo.PrcID))
                 {
-                    nodeKey = cycInfo.Type + "_" + cycInfo.Id;
+                    nodeKey = cycInfo.Type + NODE_KEY_SPACE + cycInfo.Id;
                     prcView.Nodes[viewCount].Nodes.Add(nodeKey, cycInfo.Name);
                 }
             }
@@ -203,7 +205,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
             {
                 if (viewTypeList[viewCount].Equals(almInfo.PrcID))
                 {
-                    nodeKey = almInfo.Type + "_" + almInfo.Id;
+                    nodeKey = almInfo.Type + NODE_KEY_SPACE + almInfo.Id;
                     prcView.Nodes[viewCount].Nodes.Add(nodeKey, almInfo.Name);
                 }
             }
@@ -253,7 +255,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
             MainP mainAgent = (MainP)ctl;
 
-            char[] split = { '_' };
+            char[] split = { char.Parse(NODE_KEY_SPACE) };
             string[] resData = key.Split(split);
 
 

@@ -55,7 +55,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
     {
         private const string RESFILE_COMENT = "#";
         private const string RESFILE_NULL = "";
-        private const string KEY_SPACE = "_";
         private const char RESFILE_COMMA = ',';
 
         public bool ReadResourceFile(string filePath, out ResourceList resList, out ViewTypeList viewTypeList)
