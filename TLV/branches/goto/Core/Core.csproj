@@ -101,6 +101,8 @@
     <Compile Include="TimeLineControl\TimeLineControlP.Designer.cs">
       <DependentUpon>TimeLineControlP.cs</DependentUpon>
     </Compile>
+    <Compile Include="TimeLineControl\TimeLineGrid\TimeLineCell.cs" />
+    <Compile Include="TimeLineControl\TimeLineGrid\TimeLineColumn.cs" />
     <Compile Include="TimeLineControl\TimeLineGrid\TimeLineGridA.cs" />
     <Compile Include="TimeLineControl\TimeLineGrid\TimeLineGridAgent.cs" />
     <Compile Include="TimeLineControl\TimeLineGrid\TimeLineGridC.cs" />

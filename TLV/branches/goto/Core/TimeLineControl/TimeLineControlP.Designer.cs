@@ -27,6 +27,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             // 
             // toolStripContainer.ContentPanel
             // 
+            this.toolStripContainer.ContentPanel.Padding = new System.Windows.Forms.Padding(1);
             this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(292, 248);
             this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer.Location = new System.Drawing.Point(0, 0);

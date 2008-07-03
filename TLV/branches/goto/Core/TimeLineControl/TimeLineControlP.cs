@@ -13,6 +13,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 
     public partial class TimeLineControlP : DockContent, IPresentation
     {
+        public ToolStripContentPanel ContentPanel { get { return this.toolStripContainer.ContentPanel; } }
+
         public TimeLineControlP(string name)
         {
             InitializeComponent();

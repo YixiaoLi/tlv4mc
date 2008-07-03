@@ -1,5 +1,4 @@
 ﻿using NU.OJL.MPRTOS.TLV.Architecture.PAC;
-using WeifenLuo.WinFormsUI.Docking;
 
 namespace NU.OJL.MPRTOS.TLV.Core.DockPanel
 {
