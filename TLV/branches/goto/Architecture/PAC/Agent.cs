@@ -4,40 +4,25 @@ using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
 
 namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
 {
-    public interface IAgent : IElement
-    {
-        IAgent Parent { get; set; }
-        AgentTable Children { get; }
-        IControl Control { get; }
-        void Show();
-        bool IsMain { get; }
-        void Add(IAgent agent);
-        void Add(IAgent agent, object args);
-    }
-
     abstract public class Agent<Tp, Ta, Tc> : IAgent
-        where Tp : IPresentation
-        where Ta : IAbstraction
-        where Tc : IControl
+        where Tp : Control, IPresentation
+        where Ta : Abstraction
+        where Tc : Control<Tp, Ta>
     {
-        protected string name;
-        protected Tc control;
-        private IAgent parent;
-        private AgentTable children;
-        private bool isMain;
-
-        public string Name { get { return name; } }
-        public IAgent Parent { get { return parent; } set { parent = value; } }
-        public AgentTable Children { get { return children; } }
-        public IControl Control { get { return control; } }
-        public bool IsMain { get { return isMain; } }
+        public string Name { get; protected set; }
+        public IAgent Parent { get; set; }
+        public AgentTable Children { get; protected set; }
+        public Tc C { get; protected set; }
+        public Ta A { get { return C.A; } }
+        public Tp P { get { return C.P; } }
+        public bool IsMain { get; protected set; }
         public ApplicationContext ApplicationContext
         {
             get
             {
                 if (this.IsMain)
                 {
-                    return new ApplicationContext((Form)(this.control.Presentation));
+                    return new ApplicationContext((Form)((IAgent)this).Presentation);
                 }
                 else
                 {
@@ -45,47 +30,55 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
                 }
             }
         }
+        Abstraction IAgent.Abstraction
+        {
+            get { return (Abstraction)this.C.A; }
+        }
+        IPresentation IAgent.Presentation
+        {
+            get { return (IPresentation)this.C.P; }
+        }
+        IControl IAgent.Control
+        {
+            get { return (IControl)this.C; }
+        }
 
         protected Agent(string name, Tc control)
             : this(name, control, false) { }
 
         protected Agent(string name, Tc control, bool isMain)
         {
-            this.name = name;
-            this.control = control;
-            this.isMain = isMain;
-            this.children = new AgentTable(this);
-            this.parent = null;
+            this.Name = name;
+            this.C = control;
+            this.IsMain = isMain;
+            this.Children = new AgentTable(this);
+            this.Parent = null;
 
             if(this.IsMain)
             {
-                ((Control)this.control.Presentation).Disposed += (object o, EventArgs e) => { ((Control)this.control.Presentation).Dispose(); Application.Exit(); };
+                ((Control)this.C.P).Disposed += (object o, EventArgs e) => { ((Control)this.C.P).Dispose(); Application.Exit(); };
             }
         }
 
         public IAgent this[string name]
         {
-            get { return this.children[name]; }
+            get { return this.Children[name]; }
         }
 
         public void Add(IAgent agent)
         {
-            this.Add(agent, null);
-        }
-
-        public void Add(IAgent agent, object args)
-        {
-            this.children.Add(agent, args);
+            this.Children.Add(agent);
         }
 
         public void Show()
         {
-            this.control.Presentation.Show();
+            this.C.P.Show();
             foreach(IAgent agent in Children)
             {
                 agent.Show();
             }
         }
+
     }
 
     public class AgentTable : ElementTable<IAgent>
@@ -99,14 +92,10 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
 
         public override void Add(IAgent agent)
         {
-            Add(agent, null);
-        }
-
-        public void Add(IAgent agent, Object args)
-        {
             base.Add(agent);
             agent.Parent = holder;
-            holder.Control.Presentation.Add(agent.Control.Presentation, args);
+            holder.Presentation.Add(agent.Presentation);
         }
+
     }
 }

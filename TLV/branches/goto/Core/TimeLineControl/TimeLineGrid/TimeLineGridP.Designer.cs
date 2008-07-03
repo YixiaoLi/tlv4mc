@@ -5,7 +5,7 @@ using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 {
-    public partial class TimeLineGridP : WinForms.Control, IPresentation
+    public partial class TimeLineGridP
     {
 
     }

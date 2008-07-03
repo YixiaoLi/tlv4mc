@@ -30,9 +30,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
             //    };
         }
 
-        public void Add(IPresentation presentation, object args)
+        public void Add(IPresentation presentation)
         {
-            this.Controls.Add((Control)presentation);
+            this.toolStripContainer.ContentPanel.Controls.Add((Control)presentation);
         }
 
     }

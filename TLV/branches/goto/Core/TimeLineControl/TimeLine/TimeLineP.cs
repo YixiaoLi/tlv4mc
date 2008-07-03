@@ -5,7 +5,6 @@ using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
 {
-    //TODO : Windows.Forms.Controlのサブクラスを継承してください
     public partial class TimeLineP : WinForms.Control, IPresentation
     {
         public TimeLineP(string name)
@@ -13,7 +12,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             this.Name = name;
         }
 
-        public void Add(IPresentation presentation, object args)
+        public void Add(IPresentation presentation)
         {
 
         }

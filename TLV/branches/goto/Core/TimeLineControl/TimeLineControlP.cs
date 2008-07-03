@@ -15,14 +15,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
     {
         public TimeLineControlP(string name)
         {
+            InitializeComponent();
 
             this.Name = name;
-
+            this.TabText = "タイムライン";
         }
 
-        public void Add(IPresentation presentation, object args)
+        public void Add(IPresentation presentation)
         {
-
+            this.toolStripContainer.ContentPanel.Controls.Add((Control)presentation);
         }
 
     }

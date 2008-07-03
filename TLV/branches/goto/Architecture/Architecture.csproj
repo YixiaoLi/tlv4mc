@@ -80,6 +80,8 @@
     <Compile Include="PAC\Agent.cs" />
     <Compile Include="PAC\Bace\IElement.cs" />
     <Compile Include="PAC\Control.cs" />
+    <Compile Include="PAC\IAgent.cs" />
+    <Compile Include="PAC\IControl.cs" />
     <Compile Include="PAC\IPresentation.cs" />
   </ItemGroup>
   <ItemGroup>
