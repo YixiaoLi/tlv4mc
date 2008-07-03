@@ -105,6 +105,15 @@
     <Compile Include="TimeLineControl\TimeLineGrid\TimeLineGridP.Designer.cs">
       <DependentUpon>TimeLineGridP.cs</DependentUpon>
     </Compile>
+    <Compile Include="TimeLineControl\TimeLinePanel\TimeLinePanelA.cs" />
+    <Compile Include="TimeLineControl\TimeLinePanel\TimeLinePanelAgent.cs" />
+    <Compile Include="TimeLineControl\TimeLinePanel\TimeLinePanelC.cs" />
+    <Compile Include="TimeLineControl\TimeLinePanel\TimeLinePanelP.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TimeLineControl\TimeLinePanel\TimeLinePanelP.Designer.cs">
+      <DependentUpon>TimeLinePanelP.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Architecture\Architecture.csproj">
