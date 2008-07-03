@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 
-namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
+namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
 {
-    public class TimeLineGridA : Abstraction
+    public class TimeLineA : Abstraction
     {
-        public TimeLineGridA(string name)
+        public TimeLineA(string name)
             : base(name)
         {
 

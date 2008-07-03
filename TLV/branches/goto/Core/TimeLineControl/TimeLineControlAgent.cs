@@ -7,7 +7,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         public TimeLineControlAgent(string name)
             : base(name, new TimeLineControlC(name, new TimeLineControlP(name), new TimeLineControlA(name)))
         {
-
+            this.Add(new TimeLinePanel.TimeLinePanelAgentAgent);
         }
     }
 }
