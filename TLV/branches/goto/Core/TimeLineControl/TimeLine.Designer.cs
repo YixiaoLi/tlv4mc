@@ -32,7 +32,6 @@
             // 
             // TimeLine
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "TimeLine";
