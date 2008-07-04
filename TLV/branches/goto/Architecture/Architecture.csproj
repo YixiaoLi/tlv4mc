@@ -78,7 +78,6 @@
     <Compile Include="PAC\Bace\ElementTable.cs" />
     <Compile Include="PAC\Bace\ITreeStructure.cs" />
     <Compile Include="PAC\Bace\SearchAFlags.cs" />
-    <Compile Include="PAC\Bace\Utils.cs" />
     <Compile Include="PAC\IAbstraction.cs" />
     <Compile Include="PAC\Agent.cs" />
     <Compile Include="PAC\Bace\IElement.cs" />
