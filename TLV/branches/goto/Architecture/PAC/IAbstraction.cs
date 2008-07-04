@@ -5,6 +5,5 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
 {
     public interface IAbstraction : IElement, INotifyPropertyChanged
     {
-
     }
 }

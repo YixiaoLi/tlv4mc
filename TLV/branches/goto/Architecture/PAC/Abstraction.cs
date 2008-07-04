@@ -6,6 +6,7 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
     public class Abstraction : IAbstraction
     {
         public string Name { get; protected set; }
+
         public Abstraction(string name)
         {
             this.Name = name;

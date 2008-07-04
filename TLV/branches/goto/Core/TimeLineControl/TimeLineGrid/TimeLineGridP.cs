@@ -8,14 +8,21 @@ using NU.OJL.MPRTOS.TLV.Core.TimeLineControl;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 {
-    
+    public enum RowSizeMode
+    {
+        Fix,
+        Fill
+    }
+
     public partial class TimeLineGridP : DataGridView, IPresentation
     {
         #region メンバ
 
         private TimeLineColumn timeLineColumn = new TimeLineColumn();
-        private int allRowsHeight;
+        private int allRowsHeight = 0;
+        private int maxRowsHeight = 0;
         private Size parentSize = new Size(0,0);
+        private RowSizeMode rowSizeMode = RowSizeMode.Fix;
 
         #endregion
 
@@ -29,7 +36,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 if (allRowsHeight != value)
                 {
                     allRowsHeight = value;
-                    autoRowsResize();
+                    autoResizeRows();
                 }
             }
         }
@@ -101,6 +108,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     this.Columns.GetPreviousColumn(timeLineColumn, DataGridViewElementStates.Visible, DataGridViewElementStates.None).Frozen = true;
                 }
             }
+
+            this.AutoResizeColumns();
+            this.Width = parentSize.Width - this.Location.X * 2;
         }
 
         protected override void OnRowsAdded(DataGridViewRowsAddedEventArgs e)
@@ -129,11 +139,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         {
             if (!parentSize.Equals(((Control)sender).ClientSize))
             {
-                parentSize = ((Control)sender).ClientSize;
+                Size clientSize = ((Control)sender).ClientSize;
 
-                autoRowsResize();
+                if (parentSize.Height != clientSize.Height)
+                {
+                    autoResizeRows();
+                }
+                if (parentSize.Width != clientSize.Width)
+                {
+                    this.Width = parentSize.Width - this.Location.X * 2;
+                }
 
-                this.Width = parentSize.Width - this.Location.X * 2;
+                parentSize = clientSize;
             }
         }
 
@@ -146,15 +163,40 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         #region プライベートメソッド
 
-        private void autoRowsResize()
+        private void autoResizeRows()
         {
-            if (parentSize.Height < allRowsHeight)
+            int rowHeight = 0;
+            switch(rowSizeMode)
             {
-                this.Height = parentSize.Height;
+                case RowSizeMode.Fix:
+                    if (parentSize.Height < allRowsHeight)
+                    {
+                        maxRowsHeight = parentSize.Height - ((parentSize.Height - this.ColumnHeadersHeight) % this.RowTemplate.Height);
+                        this.Height = maxRowsHeight;
+                    }
+                    else if (this.Height != allRowsHeight)
+                    {
+                        this.Height = allRowsHeight;
+                    }
+                    rowHeight = this.RowTemplate.Height;
+                    break;
+
+                case RowSizeMode.Fill:
+                    if (parentSize.Height != 0 && this.Rows.Count != 0)
+                    {
+                        rowHeight = parentSize.Height / this.Rows.Count;
+                        rowHeight = rowHeight < this.RowTemplate.Height ? this.RowTemplate.Height : rowHeight;
+                        maxRowsHeight = parentSize.Height - ((parentSize.Height - this.ColumnHeadersHeight) % rowHeight);
+                        this.Height = maxRowsHeight;
+                    }
+                    break;
             }
-            else if (this.Height != allRowsHeight)
+            foreach (DataGridViewRow row in this.Rows)
             {
-                this.Height = allRowsHeight;
+                if (row.Height != rowHeight)
+                {
+                    row.Height = rowHeight;
+                }
             }
         }
 
