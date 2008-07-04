@@ -140,7 +140,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
             }
             catch (Exception e)
             {
-                Console.WriteLine("[FileManager::ResFileRoad] " + e.Message);
+                Console.WriteLine("[ResourceFileManager::ReadResourceFile] " + e.Message);
                 ret = false;
             }
             return ret;

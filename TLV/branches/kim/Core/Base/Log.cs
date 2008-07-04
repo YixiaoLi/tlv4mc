@@ -6,12 +6,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
     public class Log
     {
         private ulong time;
+        private int prcid = 0;
         private Subject subject;
         private Verb verb;
 
         public ulong Time
         {
             get{ return time; }
+        }
+        public int PrcID
+        {
+            get { return prcid; }
         }
         public Subject Subject
         {
@@ -29,9 +34,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
             this.verb = verb;
         }
 
+        public Log(ulong time, int prcid, Subject subject, Verb verb)
+        {
+            this.time = time;
+            this.prcid = prcid;
+            this.subject = subject;
+            this.verb = verb;
+        }
+
         public Log(Log log)
         {
             this.time = log.time;
+            this.prcid = log.prcid;
             this.subject = log.subject;
             this.verb = log.verb;
         }
@@ -70,6 +84,39 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
         {
             list = new List<Log>();
         }
+
+        public int GetRunTaskId(int prcId)
+        {
+            int runTaskId = 0;
+
+            int runTaskNo = 0;
+            int dormantTaskNo = 0;
+
+            for (int i = (list.Count - 1); i > 0; i--)
+            {
+                if (list[i].PrcID== prcId && list[i].Verb == Verb.RUN)
+                {
+                    runTaskNo = i;
+                    break;                    
+                }                
+            }
+
+            for (int i = (list.Count - 1); i > 0; i--)
+            {
+                if (list[i].PrcID == prcId && list[i].Verb == Verb.DORMANT)
+                {
+                    dormantTaskNo = i;
+                    break;
+                }
+            }
+
+            if (runTaskNo > dormantTaskNo)
+            {
+                runTaskId = list[runTaskNo].Subject.Id;
+            }
+
+            return runTaskId;
+        }
     }
 
     public class Subject
@@ -80,12 +127,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
         public ResourceType Type
         {
             get { return type; }
-            set { type = value; }
         }
         public int Id
         {
             get { return id; }
-            set { id = value; }
+        }
+
+        public Subject(ResourceType type, int id)
+        {
+            this.type = type;
+            this.id = id;
         }
     }
 

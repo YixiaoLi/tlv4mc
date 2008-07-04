@@ -14,8 +14,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 {
     public partial class ResourceExplorerP : WeifenLuo.WinFormsUI.Docking.DockContent, IPresentation
     {
-        private const string NODE_KEY_SPACE = "_";
-
         private IntPtr formHandle = IntPtr.Zero;
 
         private ResourceList resList;
@@ -56,6 +54,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
         {
             // リソースチェックリスト初期化
             this.nodeChekedList = new List<string>();
+
+            LogList logList = new LogList();
+
+            LogFileManager logFile = new LogFileManager();
+
+            logFile.ReadLogFile(resFilePath, out logList);
 
 
             ResourceFileManager resFileManager = new ResourceFileManager();
@@ -181,7 +185,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
             ResourceList resList)
         {
             string resInfoType =string.Empty;
-            string nodeKey = string.Empty;
 
             prcView.Nodes.Add(viewTypeList[viewCount]);
 
@@ -189,24 +192,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
             {
                 if (viewTypeList[viewCount].Equals(tskInfo.PrcID))
                 {
-                    nodeKey = tskInfo.Type + NODE_KEY_SPACE + tskInfo.Id;
-                    prcView.Nodes[viewCount].Nodes.Add(nodeKey, tskInfo.Name);
+                    prcView.Nodes[viewCount].Nodes.Add(tskInfo.Type, tskInfo.Name);
                 }
             }
             foreach (CycInfo cycInfo in resList.CycInfoList)
             {
                 if (viewTypeList[viewCount].Equals(cycInfo.PrcID))
                 {
-                    nodeKey = cycInfo.Type + NODE_KEY_SPACE + cycInfo.Id;
-                    prcView.Nodes[viewCount].Nodes.Add(nodeKey, cycInfo.Name);
+                    prcView.Nodes[viewCount].Nodes.Add(cycInfo.Type, cycInfo.Name);
                 }
             }
             foreach (AlmInfo almInfo in resList.AlmInfoList)
             {
                 if (viewTypeList[viewCount].Equals(almInfo.PrcID))
                 {
-                    nodeKey = almInfo.Type + NODE_KEY_SPACE + almInfo.Id;
-                    prcView.Nodes[viewCount].Nodes.Add(nodeKey, almInfo.Name);
+                    prcView.Nodes[viewCount].Nodes.Add(almInfo.Type, almInfo.Name);
                 }
             }
 
@@ -220,7 +220,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
            ref TreeView treeView)
         {
             string resInfoType = string.Empty;
-            string nodeKey = string.Empty;
 
             treeView.Nodes.Add(viewTypeList[viewCount]);
 
@@ -239,8 +238,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
                 if (viewTypeList[viewCount].Equals(resInfoType))
                 {
-                    nodeKey = objbase.Type + "_" + objbase.Id;
-                    treeView.Nodes[viewCount].Nodes.Add(nodeKey, objbase.Name);
+                    treeView.Nodes[viewCount].Nodes.Add(objbase.Type, objbase.Name);
                 }
             }
 
@@ -250,14 +248,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
         {
 
             string key = e.Node.Name;
+            string name = e.Node.Text;
 
             Control ctl = Control.FromHandle(this.formHandle);
 
             MainP mainAgent = (MainP)ctl;
-
-            char[] split = { char.Parse(NODE_KEY_SPACE) };
-            string[] resData = key.Split(split);
-
 
             if (e.Node.Level != 1)
             {
@@ -265,12 +260,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 return;
             }
 
-            switch ((ResourceType)Enum.Parse(ResourceType.TSK.GetType(), resData[0]))
+            switch ((ResourceType)Enum.Parse(ResourceType.TSK.GetType(), key))
             {
                 case ResourceType.TSK:
                     for (int i = 0; i < this.resList.TskInfoList.Count; i++)
                     {
-                        if (this.resList.TskInfoList[i].Type == resData[0] && this.resList.TskInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.TskInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.TskInfoList[i]);
                             break;
@@ -280,7 +275,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 case ResourceType.CYC:
                     for (int i = 0; i < this.resList.CycInfoList.Count; i++)
                     {
-                        if (this.resList.CycInfoList[i].Type == resData[0] && this.resList.CycInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.CycInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.CycInfoList[i]);
                             break;
@@ -290,7 +285,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 case ResourceType.ALM:
                     for (int i = 0; i < this.resList.AlmInfoList.Count; i++)
                     {
-                        if (this.resList.AlmInfoList[i].Type == resData[0] && this.resList.AlmInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.AlmInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.AlmInfoList[i]);
                             break;
@@ -303,14 +298,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
         private void clsView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             string key = e.Node.Name;
+            string name = e.Node.Text;
 
             Control ctl = Control.FromHandle(this.formHandle);
 
             MainP mainAgent = (MainP)ctl;
-
-            char[] split = { '_' };
-            string[] resData = key.Split(split);
-
 
             if (e.Node.Level != 1)
             {
@@ -318,12 +310,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 return;
             }
 
-            switch ((ResourceType)Enum.Parse(ResourceType.TSK.GetType(), resData[0]))
+            switch ((ResourceType)Enum.Parse(ResourceType.TSK.GetType(), key))
             {
                 case ResourceType.TSK:
                     for (int i = 0; i < this.resList.TskInfoList.Count; i++)
                     {
-                        if (this.resList.TskInfoList[i].Type == resData[0] && this.resList.TskInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.TskInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.TskInfoList[i]);
                             break;
@@ -333,7 +325,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 case ResourceType.SEM:
                     for (int i = 0; i < this.resList.SemInfoList.Count; i++)
                     {
-                        if (this.resList.SemInfoList[i].Type == resData[0] && this.resList.SemInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.SemInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.SemInfoList[i]);
                             break;
@@ -343,7 +335,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 case ResourceType.FLG:
                     for (int i = 0; i < this.resList.FlgInfoList.Count; i++)
                     {
-                        if (this.resList.FlgInfoList[i].Type == resData[0] && this.resList.FlgInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.FlgInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.FlgInfoList[i]);
                             break;
@@ -353,7 +345,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 case ResourceType.DTQ:
                     for (int i = 0; i < this.resList.DtqInfoList.Count; i++)
                     {
-                        if (this.resList.DtqInfoList[i].Type == resData[0] && this.resList.DtqInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.DtqInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.DtqInfoList[i]);
                             break;
@@ -363,7 +355,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 case ResourceType.PDTQ:
                     for (int i = 0; i < this.resList.PdtqInfoList.Count; i++)
                     {
-                        if (this.resList.PdtqInfoList[i].Type == resData[0] && this.resList.PdtqInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.PdtqInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.PdtqInfoList[i]);
                             break;
@@ -373,7 +365,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 case ResourceType.MBX:
                     for (int i = 0; i < this.resList.MbxInfoList.Count; i++)
                     {
-                        if (this.resList.MbxInfoList[i].Type == resData[0] && this.resList.MbxInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.MbxInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.MbxInfoList[i]);
                             break;
@@ -383,7 +375,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 case ResourceType.MPF:
                     for (int i = 0; i < this.resList.MpfInfoList.Count; i++)
                     {
-                        if (this.resList.MpfInfoList[i].Type == resData[0] && this.resList.MpfInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.MpfInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.MpfInfoList[i]);
                             break;
@@ -393,7 +385,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 case ResourceType.CYC:
                     for (int i = 0; i < this.resList.CycInfoList.Count; i++)
                     {
-                        if (this.resList.CycInfoList[i].Type == resData[0] && this.resList.CycInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.CycInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.CycInfoList[i]);
                             break;
@@ -403,7 +395,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 case ResourceType.ALM:
                     for (int i = 0; i < this.resList.AlmInfoList.Count; i++)
                     {
-                        if (this.resList.AlmInfoList[i].Type == resData[0] && this.resList.AlmInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.AlmInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.AlmInfoList[i]);
                             break;
@@ -413,7 +405,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 case ResourceType.SPN:
                     for (int i = 0; i < this.resList.SpnInfoList.Count; i++)
                     {
-                        if (this.resList.SpnInfoList[i].Type == resData[0] && this.resList.SpnInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.SpnInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.SpnInfoList[i]);
                             break;
@@ -423,7 +415,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 case ResourceType.INH:
                     for (int i = 0; i < this.resList.InhInfoList.Count; i++)
                     {
-                        if (this.resList.InhInfoList[i].Type == resData[0] && this.resList.InhInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.InhInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.InhInfoList[i]);
                             break;
@@ -433,7 +425,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 case ResourceType.EXC:
                     for (int i = 0; i < this.resList.ExcInfoList.Count; i++)
                     {
-                        if (this.resList.ExcInfoList[i].Type == resData[0] && this.resList.ExcInfoList[i].Id == int.Parse(resData[1]))
+                        if (name.Equals(this.resList.ExcInfoList[i].Name))
                         {
                             mainAgent.ChangePropty(this.resList.ExcInfoList[i]);
                             break;
