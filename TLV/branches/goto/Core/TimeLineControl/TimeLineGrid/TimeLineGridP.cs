@@ -11,9 +11,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
     
     public partial class TimeLineGridP : DataGridView, IPresentation
     {
+        #region メンバ
+
         private TimeLineColumn timeLineColumn = new TimeLineColumn();
         private int allRowsHeight;
-        private Size parentSize;
+        private Size parentSize = new Size(0,0);
+
+        #endregion
+
+        #region プロパティ
 
         private int AllRowsHeight
         {
@@ -23,15 +29,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 if (allRowsHeight != value)
                 {
                     allRowsHeight = value;
-                    this.Height = allRowsHeight;
+                    autoRowsResize();
                 }
             }
         }
 
+        #endregion
+
+        #region コンストラクタ
+
         public TimeLineGridP(string name)
         {
-            this.Name = name;
 
+            #region スーパークラスプロパティ初期化
+
+            this.AllowUserToOrderColumns = true;
             this.ReadOnly = true;
             this.RowHeadersVisible = false;
             this.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
@@ -41,16 +53,32 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             this.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
             this.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             this.MultiSelect = false;
-            this.AllowUserToOrderColumns = true;
             this.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             this.ColumnHeadersHeight = 30;
             this.RowTemplate.Height = 25;
 
-            this.allRowsHeight = this.ColumnHeadersHeight;
+            #endregion
+
+            #region プロパティ初期化
+
+            this.Name = name;
+            this.AllRowsHeight = this.ColumnHeadersHeight;
+
+            #endregion
+
+            #region timeLineColumnプロパティ初期化
 
             timeLineColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             timeLineColumn.HeaderText = "タイムライン";
+
+            #endregion
         }
+
+        #endregion
+
+        #region メソッド
+
+        #region オーバライドメソッド
 
         protected override void OnColumnAdded(DataGridViewColumnEventArgs e)
         {
@@ -87,19 +115,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             AllRowsHeight -= e.RowCount * this.RowTemplate.Height;
         }
 
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+            this.Parent.ClientSizeChanged += ParentSizeChanged;
+        }
+
+        #endregion
+
+        #region パブリックメソッド
+
         public void ParentSizeChanged(object sender, EventArgs e)
         {
-            if (! parentSize.Equals(((Control)sender).ClientSize))
+            if (!parentSize.Equals(((Control)sender).ClientSize))
             {
                 parentSize = ((Control)sender).ClientSize;
-                if (parentSize.Height < allRowsHeight)
-                {
-                    this.Height = parentSize.Height;
-                }
-                else if (this.Height != allRowsHeight)
-                {
-                    this.Height = allRowsHeight;
-                }
+
+                autoRowsResize();
 
                 this.Width = parentSize.Width - this.Location.X * 2;
             }
@@ -110,5 +142,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         }
 
+        #endregion
+
+        #region プライベートメソッド
+
+        private void autoRowsResize()
+        {
+            if (parentSize.Height < allRowsHeight)
+            {
+                this.Height = parentSize.Height;
+            }
+            else if (this.Height != allRowsHeight)
+            {
+                this.Height = allRowsHeight;
+            }
+        }
+
+        #endregion
+
+        #endregion
     }
 }

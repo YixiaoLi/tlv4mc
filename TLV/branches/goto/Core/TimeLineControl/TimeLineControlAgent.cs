@@ -20,13 +20,33 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         {
             this.Add(timeLineGridAgent);
 
-            this.P.ContentPanel.ClientSizeChanged += timeLineGridAgent.P.ParentSizeChanged;
+            //this.P.ContentPanel.ClientSizeChanged += timeLineGridAgent.P.ParentSizeChanged;
 
             timeLineGridAgent.P.Location = new Point(1, 1);
             timeLineGridAgent.P.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
 
             timeLineGridAgent.P.DataSource = new SortableBindingList<TestObject>(new List<TestObject>()
             {
+                new TestObject("test"),
+                new TestObject("test1"),
+                new TestObject("test2"),
+                new TestObject("test3"),
+                new TestObject("test4"),
+                new TestObject("test"),
+                new TestObject("test1"),
+                new TestObject("test2"),
+                new TestObject("test3"),
+                new TestObject("test4"),
+                new TestObject("test"),
+                new TestObject("test1"),
+                new TestObject("test2"),
+                new TestObject("test3"),
+                new TestObject("test4"),
+                new TestObject("test"),
+                new TestObject("test1"),
+                new TestObject("test2"),
+                new TestObject("test3"),
+                new TestObject("test4"),
                 new TestObject("test"),
                 new TestObject("test1"),
                 new TestObject("test2"),
