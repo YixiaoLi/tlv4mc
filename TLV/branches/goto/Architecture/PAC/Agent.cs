@@ -9,8 +9,21 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
         where Ta : Abstraction
         where Tc : Control<Tp, Ta>
     {
+        private IAgent parent;
+
         public string Name { get; protected set; }
-        public IAgent Parent { get; set; }
+        public IAgent Parent
+        {
+            get { return parent; }
+            set
+            {
+                parent = value;
+                if (value != null)
+                {
+                    C.Parent = value.Control;
+                }
+            }
+        }
         public AgentTable Children { get; protected set; }
         public Tc C { get; protected set; }
         public Ta A { get { return C.A; } }
@@ -68,15 +81,29 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
         public void Add(IAgent agent)
         {
             this.Children.Add(agent);
+            this.C.Children.Add(agent.Control);
         }
 
         public void Show()
         {
+            if(this.IsMain)
+            {
+                this.InitPAC();
+            }
             this.C.P.Show();
             foreach(IAgent agent in Children)
             {
                 agent.Show();
             }
+        }
+
+        public void InitPAC()
+        {
+            foreach (IAgent agent in Children)
+            {
+                agent.InitPAC();
+            }
+            this.C.InitC();
         }
 
     }
@@ -96,6 +123,5 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             agent.Parent = holder;
             holder.Presentation.Add(agent.Presentation);
         }
-
     }
 }

@@ -5,14 +5,15 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
 {
     public class Abstraction : IAbstraction
     {
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public string Name { get; protected set; }
 
         public Abstraction(string name)
         {
             this.Name = name;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected void NotifyPropertyChanged(string info)
         {

@@ -17,6 +17,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.zoomInButton = new System.Windows.Forms.ToolStripButton();
             this.zoomOutButton = new System.Windows.Forms.ToolStripButton();
+            this.fillFixRowButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -45,7 +46,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.toolStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.zoomInButton,
-            this.zoomOutButton});
+            this.zoomOutButton,
+            this.fillFixRowButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(292, 25);
@@ -70,6 +72,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.zoomOutButton.Size = new System.Drawing.Size(23, 22);
             this.zoomOutButton.Text = "縮小";
             // 
+            // fillFixRowButton
+            // 
+            this.fillFixRowButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.fillRowButton;
+            this.fillFixRowButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.fillFixRowButton.Name = "fillFixRowButton";
+            this.fillFixRowButton.Size = new System.Drawing.Size(129, 22);
+            this.fillFixRowButton.Text = "行サイズを可変にする";
+            this.fillFixRowButton.Click += new System.EventHandler(this.fillFixRowButtonClick);
+            // 
             // TimeLineControlP
             // 
             this.ClientSize = new System.Drawing.Size(292, 273);
@@ -84,5 +95,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.ResumeLayout(false);
 
         }
+
+        private ToolStripButton fillFixRowButton;
     }
 }

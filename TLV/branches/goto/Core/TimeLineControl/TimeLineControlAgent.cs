@@ -20,8 +20,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         {
             this.Add(timeLineGridAgent);
 
-            //this.P.ContentPanel.ClientSizeChanged += timeLineGridAgent.P.ParentSizeChanged;
-
             timeLineGridAgent.P.Location = new Point(1, 1);
             timeLineGridAgent.P.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
 

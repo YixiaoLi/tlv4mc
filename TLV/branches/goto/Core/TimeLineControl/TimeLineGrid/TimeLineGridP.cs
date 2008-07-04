@@ -8,12 +8,6 @@ using NU.OJL.MPRTOS.TLV.Core.TimeLineControl;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 {
-    public enum RowSizeMode
-    {
-        Fix,
-        Fill
-    }
-
     public partial class TimeLineGridP : DataGridView, IPresentation
     {
         #region メンバ
@@ -21,8 +15,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private TimeLineColumn timeLineColumn = new TimeLineColumn();
         private int allRowsHeight = 0;
         private int maxRowsHeight = 0;
-        private Size parentSize = new Size(0,0);
         private RowSizeMode rowSizeMode = RowSizeMode.Fix;
+        private Size parentSize = new Size(0,0);
+        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -37,6 +32,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     allRowsHeight = value;
                     autoResizeRows();
+                }
+            }
+        }
+
+        public RowSizeMode RowSizeMode
+        {
+            get { return rowSizeMode; }
+            set
+            {
+                if (rowSizeMode != value)
+                {
+                    rowSizeMode = value;
+                    autoResizeRows();
+                    NotifyPropertyChanged("RowSizeMode");
                 }
             }
         }
@@ -135,25 +144,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         #region パブリックメソッド
 
-        public void ParentSizeChanged(object sender, EventArgs e)
-        {
-            if (!parentSize.Equals(((Control)sender).ClientSize))
-            {
-                Size clientSize = ((Control)sender).ClientSize;
-
-                if (parentSize.Height != clientSize.Height)
-                {
-                    autoResizeRows();
-                }
-                if (parentSize.Width != clientSize.Width)
-                {
-                    this.Width = parentSize.Width - this.Location.X * 2;
-                }
-
-                parentSize = clientSize;
-            }
-        }
-
         public void Add(IPresentation presentation)
         {
 
@@ -163,10 +153,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         #region プライベートメソッド
 
+        private void ParentSizeChanged(object sender, EventArgs e)
+        {
+            if (!parentSize.Equals(this.Parent.ClientSize))
+            {
+                if (parentSize.Height != this.Parent.ClientSize.Height)
+                {
+                    parentSize.Height = this.Parent.ClientSize.Height;
+                    autoResizeRows();
+                }
+                if (parentSize.Width != this.Parent.ClientSize.Width)
+                {
+                    parentSize.Width = this.Parent.ClientSize.Width;
+                    this.Width = parentSize.Width - this.Location.X * 2;
+                }
+            }
+        }
+
         private void autoResizeRows()
         {
             int rowHeight = 0;
-            switch(rowSizeMode)
+            switch(RowSizeMode)
             {
                 case RowSizeMode.Fix:
                     if (parentSize.Height < allRowsHeight)
@@ -197,6 +204,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     row.Height = rowHeight;
                 }
+            }
+        }
+
+        protected void NotifyPropertyChanged(string info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
         }
 

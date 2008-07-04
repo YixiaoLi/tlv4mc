@@ -1,6 +1,7 @@
 ﻿using System;
-using WinForms = System.Windows.Forms;
+using System.Drawing;
 using System.Collections.Generic;
+using WinForms = System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
@@ -10,11 +11,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
         public TimeLineP(string name)
         {
             this.Name = name;
-        }
-
-        public void Add(IPresentation presentation)
-        {
-
+            this.BackColor = Color.Black;
         }
 
     }

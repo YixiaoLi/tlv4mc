@@ -60,6 +60,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap fillRowButton {
+            get {
+                object obj = ResourceManager.GetObject("fillRowButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap fixRowButton {
+            get {
+                object obj = ResourceManager.GetObject("fixRowButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap zoomInButton {
             get {
                 object obj = ResourceManager.GetObject("zoomInButton", resourceCulture);

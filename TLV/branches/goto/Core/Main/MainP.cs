@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
@@ -8,6 +9,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
 {
     public partial class MainP : Form, IPresentation
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         //public OaP<string> Text1
         //{
         //    set { PACUtils.SetBinding(textBox1, "Text", value); }
@@ -33,6 +36,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
         public void Add(IPresentation presentation)
         {
             this.toolStripContainer.ContentPanel.Controls.Add((Control)presentation);
+        }
+
+        protected void NotifyPropertyChanged(string info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
         }
 
     }
