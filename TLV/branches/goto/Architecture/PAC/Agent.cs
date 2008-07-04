@@ -103,7 +103,7 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             {
                 agent.InitPAC();
             }
-            this.C.InitC();
+            this.C.Init();
         }
 
     }

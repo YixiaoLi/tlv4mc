@@ -1,6 +1,7 @@
-﻿using NU.OJL.MPRTOS.TLV.Architecture.PAC;
-using WeifenLuo.WinFormsUI.Docking;
+﻿using WeifenLuo.WinFormsUI.Docking;
 using NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid;
+using NU.OJL.MPRTOS.TLV.Architecture.PAC;
+using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 {
@@ -12,9 +13,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             P.DockAreas = DockAreas.Document;
         }
 
-        public override void InitC()
+        public override void Init()
         {
-            base.InitC();
+            base.Init();
             BindPToA("RowSizeMode", typeof(RowSizeMode), "RowSizeMode", SearchAFlags.Children);
         }
     }

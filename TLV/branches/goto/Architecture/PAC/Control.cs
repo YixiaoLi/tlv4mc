@@ -39,6 +39,11 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
 
         public IAbstraction getAProviding(Type type, string name, SearchAFlags flags)
         {
+            return this.getAProviding(type, name, flags, null);
+        }
+
+        public IAbstraction getAProviding(Type type, string name, SearchAFlags flags, IControl self)
+        {
             if ((flags & SearchAFlags.Self) != SearchAFlags.None)
             {
                 Type aType = A.GetType();
@@ -48,19 +53,47 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
                     return A;
                 }
             }
-            if ((flags & SearchAFlags.Parent) != SearchAFlags.None)
+            if ((flags & (SearchAFlags.Children | SearchAFlags.Descendants)) != SearchAFlags.None)
             {
-                return Parent.getAProviding(type, name, SearchAFlags.Self);
-            }
-            if ((flags & SearchAFlags.Children) != SearchAFlags.None)
-            {
-                foreach(IControl ctrl in Children)
+                if (Children.Count != 0)
                 {
-                    IAbstraction a = ctrl.getAProviding(type, name, SearchAFlags.Children | SearchAFlags.Self);
-                    if(a != null)
+                    SearchAFlags f = SearchAFlags.Self;
+                    if ((flags & (SearchAFlags.Descendants)) != SearchAFlags.None)
                     {
-                        return a;
+                        f |= SearchAFlags.Descendants;
                     }
+                    foreach (IControl ctrl in Children)
+                    {
+                        if(ctrl.Equals(self))
+                        {
+                            continue;
+                        }
+                        IAbstraction a = ctrl.getAProviding(type, name, f);
+                        if (a != null)
+                        {
+                            return a;
+                        }
+                    }
+                }
+            }
+            if ((flags & (SearchAFlags.Parent | SearchAFlags.Ancestors | SearchAFlags.AncestorsWithSiblings)) != SearchAFlags.None)
+            {
+                if (Parent != null)
+                {
+                    SearchAFlags f = SearchAFlags.Self;
+                    if ((flags & (SearchAFlags.AncestorsWithSiblings | SearchAFlags.Ancestors)) != SearchAFlags.None)
+                    {
+                        f |= flags;
+                    }
+                    if ((flags & (SearchAFlags.AncestorsWithSiblings)) != SearchAFlags.None)
+                    {
+                        f |= SearchAFlags.Descendants;
+                    }
+                    return Parent.getAProviding(type, name, f, this);
+                }
+                else
+                {
+                    return null;
                 }
             }
 
@@ -69,7 +102,7 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
 
         public void BindPToA(string pPropertyName, Type aType, string aPropertyName)
         {
-            BindPToA(pPropertyName, aType, aPropertyName, SearchAFlags.Self);
+            BindPToA(pPropertyName, aType, aPropertyName, SearchAFlags.All);
         }
 
         public void BindPToA(string pPropertyName, Type aType, string aPropertyName, SearchAFlags flags)
@@ -91,7 +124,7 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             this.Children.Add(control);
         }
 
-        public virtual void InitC()
+        public virtual void Init()
         {
 
         }
@@ -114,13 +147,4 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
         }
     }
 
-    [Flags]
-    public enum SearchAFlags
-    {
-        None        = 0x00,
-        Self        = 0x01,
-        Parent      = 0x02,
-        Children    = 0x04,
-        All         = Self | Parent | Children,
-    }
 }

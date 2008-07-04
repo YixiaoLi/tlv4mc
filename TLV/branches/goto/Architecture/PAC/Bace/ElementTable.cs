@@ -13,6 +13,7 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace
         }
 
         public T this[string name] { get { return table[name]; } }
+        public int Count { get { return table.Count; } }
 
         public IEnumerator<T> GetEnumerator()
         {

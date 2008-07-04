@@ -191,7 +191,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 case RowSizeMode.Fill:
                     if (parentSize.Height != 0 && this.Rows.Count != 0)
                     {
-                        rowHeight = parentSize.Height / this.Rows.Count;
+                        rowHeight = parentSize.Height / (this.Rows.Count + 1);
                         rowHeight = rowHeight < this.RowTemplate.Height ? this.RowTemplate.Height : rowHeight;
                         maxRowsHeight = parentSize.Height - ((parentSize.Height - this.ColumnHeadersHeight) % rowHeight);
                         this.Height = maxRowsHeight;
