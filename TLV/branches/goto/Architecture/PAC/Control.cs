@@ -21,7 +21,7 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             get { return (IPresentation)P; }
         }
         public IControl Parent { get; set; }
-        public ControlTable Children { get; protected set; }
+        public ChildrenTable<IControl> Children { get; protected set; }
 
         public IControl this[string name]
         {
@@ -33,13 +33,8 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             this.Name = name;
             this.P = presentation;
             this.A = abstraction;
-            this.Children = new ControlTable(this);
+            this.Children = new ChildrenTable<IControl>(this);
             this.Parent = null;
-        }
-
-        public IAbstraction getAProviding(Type type, string name, SearchAFlags flags)
-        {
-            return this.getAProviding(type, name, flags, null);
         }
 
         public IAbstraction getAProviding(Type type, string name, SearchAFlags flags, IControl self)
@@ -100,14 +95,9 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             return null;
         }
 
-        public void BindPToA(string pPropertyName, Type aType, string aPropertyName)
-        {
-            BindPToA(pPropertyName, aType, aPropertyName, SearchAFlags.All);
-        }
-
         public void BindPToA(string pPropertyName, Type aType, string aPropertyName, SearchAFlags flags)
         {
-            IAbstraction a = getAProviding(aType, aPropertyName, flags);
+            IAbstraction a = this.getAProviding(aType, aPropertyName, flags);
             if (a != null)
             {
                 P.DataBindings.Add(pPropertyName, a, aPropertyName, false, DataSourceUpdateMode.OnPropertyChanged);
@@ -129,22 +119,6 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
 
         }
 
-    }
-
-    public class ControlTable : ElementTable<IControl>
-    {
-        private IControl holder;
-
-        public ControlTable(IControl holder)
-        {
-            this.holder = holder;
-        }
-
-        public override void Add(IControl control)
-        {
-            base.Add(control);
-            control.Parent = holder;
-        }
     }
 
 }

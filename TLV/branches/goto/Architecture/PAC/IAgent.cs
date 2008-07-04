@@ -4,11 +4,8 @@ using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
 
 namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
 {
-    public interface IAgent : IElement
+    public interface IAgent : IElement, ITreeStructure<IAgent>
     {
-        IAgent Parent { get; set; }
-        AgentTable Children { get; }
-        void Add(IAgent agent);
         Abstraction Abstraction { get; }
         IPresentation Presentation { get; }
         IControl Control { get; }

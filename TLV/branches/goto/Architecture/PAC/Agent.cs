@@ -24,7 +24,7 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
                 }
             }
         }
-        public AgentTable Children { get; protected set; }
+        public ChildrenTable<IAgent> Children { get; protected set; }
         public Tc C { get; protected set; }
         public Ta A { get { return C.A; } }
         public Tp P { get { return C.P; } }
@@ -64,8 +64,12 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             this.Name = name;
             this.C = control;
             this.IsMain = isMain;
-            this.Children = new AgentTable(this);
+            this.Children = new ChildrenTable<IAgent>(this);
             this.Parent = null;
+            this.Children.Added += (object o, ChildrenTableAddedEventArgs<IAgent> e) =>
+                {
+                    Children.Holder.Presentation.Add(e.AddedChild.Presentation);
+                };
 
             if(this.IsMain)
             {
@@ -108,20 +112,4 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
 
     }
 
-    public class AgentTable : ElementTable<IAgent>
-    {
-        private IAgent holder;
-
-        public AgentTable(IAgent holder)
-        {
-            this.holder = holder;
-        }
-
-        public override void Add(IAgent agent)
-        {
-            base.Add(agent);
-            agent.Parent = holder;
-            holder.Presentation.Add(agent.Presentation);
-        }
-    }
 }
