@@ -72,6 +72,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\Log.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Base\LogFileManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Base\ResourceType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Base\Verb.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DockPanel\DockPanelA.cs" />
     <Compile Include="DockPanel\DockPanelAgent.cs" />
     <Compile Include="DockPanel\DockPanelC.cs" />
@@ -132,7 +144,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Base\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
