@@ -74,7 +74,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PAC\Abstraction.cs" />
+    <Compile Include="PAC\Bace\ChildrenTable.cs" />
     <Compile Include="PAC\Bace\ElementTable.cs" />
+    <Compile Include="PAC\Bace\ITreeStructure.cs" />
     <Compile Include="PAC\Bace\SearchAFlags.cs" />
     <Compile Include="PAC\Bace\Utils.cs" />
     <Compile Include="PAC\IAbstraction.cs" />
