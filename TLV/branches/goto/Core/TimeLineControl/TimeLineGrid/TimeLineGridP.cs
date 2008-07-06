@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.ComponentModel;
 using System.Collections.Generic;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
@@ -13,10 +14,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         #region メンバ
 
         private TimeLineColumn timeLineColumn = new TimeLineColumn();
+        private DataGridViewColumn timeLineColumnPreviousColumn = new DataGridViewColumn();
         private int allRowsHeight = 0;
         private int maxRowsHeight = 0;
+        private int timeLineX = 0;
+        private int timeLineMinimumX = 0;
         private RowSizeMode rowSizeMode = RowSizeMode.Fix;
         private Size parentSize = new Size(0,0);
+        Rectangle resizingBarRect = Rectangle.Empty;
+            
+        #endregion
+
+        #region イベント
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
@@ -35,7 +45,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
             }
         }
-
         public RowSizeMode RowSizeMode
         {
             get { return rowSizeMode; }
@@ -46,6 +55,35 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     rowSizeMode = value;
                     autoResizeRows();
                     NotifyPropertyChanged("RowSizeMode");
+                }
+            }
+        }
+        public int TimeLineX
+        {
+            get { return timeLineX; }
+            set
+            {
+                if (timeLineX != value)
+                {
+                    int delta = value - timeLineX;
+                    if (delta != 0 && this.Columns.Count > 1)
+                    {
+                        this.Columns[this.Columns.Count - 2].Width += delta;
+                    }
+                    timeLineX = value;
+                    NotifyPropertyChanged("TimeLineX");
+                }
+            }
+        }
+        public int TimeLineMinimumX
+        {
+            get { return timeLineMinimumX; }
+            set
+            {
+                if (timeLineMinimumX != value)
+                {
+                    timeLineMinimumX = value;
+                    NotifyPropertyChanged("TimeLineMinimumX");
                 }
             }
         }
@@ -112,9 +150,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     timeLineColumn.DisplayIndex = this.Columns.Count - 1;
                 }
-                if (this.Columns.Count > 1 && this.Columns.GetPreviousColumn(timeLineColumn, DataGridViewElementStates.Visible, DataGridViewElementStates.None).Frozen == false)
+                timeLineColumn = (TimeLineColumn)this.Columns[this.Columns.Count - 1];
+                if (this.Columns.Count > 1)
                 {
-                    this.Columns.GetPreviousColumn(timeLineColumn, DataGridViewElementStates.Visible, DataGridViewElementStates.None).Frozen = true;
+                    timeLineColumnPreviousColumn = this.Columns[this.Columns.Count - 2];
+                    if (timeLineColumnPreviousColumn.Frozen == false)
+                    {
+                        timeLineColumnPreviousColumn.Frozen = true;
+                    }
                 }
             }
 
@@ -140,6 +183,56 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             this.Parent.ClientSizeChanged += ParentSizeChanged;
         }
 
+        protected override void OnColumnWidthChanged(DataGridViewColumnEventArgs e)
+        {
+            base.OnColumnWidthChanged(e);
+            int width = 0;
+            int minimunWidth = 0;
+            foreach(DataGridViewColumn column in this.Columns)
+            {
+                if (column.Name != this.timeLineColumn.Name)
+                {
+                    width += column.Width;
+                    if (column.Name == this.timeLineColumnPreviousColumn.Name)
+                    {
+                        minimunWidth += column.MinimumWidth;
+                    }
+                    else
+                    {
+                        minimunWidth += column.Width;
+                    }
+                }
+            }
+            if (timeLineX != width)
+            {
+                timeLineX = width;
+                NotifyPropertyChanged("TimeLineX");
+            }
+            if (TimeLineMinimumX != minimunWidth)
+            {
+                TimeLineMinimumX = minimunWidth;
+            }
+        }
+
+        protected override void OnClientSizeChanged(EventArgs e)
+        {
+            base.OnClientSizeChanged(e);
+            if (!resizingBarRect.IsEmpty)
+            {
+                resizingBarRect.Height = this.ClientRectangle.Height - this.ColumnHeadersHeight;
+            }
+        }
+
+        protected override void OnColumnHeadersHeightChanged(EventArgs e)
+        {
+            base.OnColumnHeadersHeightChanged(e);
+            if (! resizingBarRect.IsEmpty)
+            {
+                resizingBarRect.Y = this.ClientRectangle.Y + this.ColumnHeadersHeight;
+                resizingBarRect.Height = this.ClientRectangle.Height - this.ColumnHeadersHeight;
+            }
+        }
+
         #endregion
 
         #region パブリックメソッド
@@ -147,6 +240,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         public void Add(IPresentation presentation)
         {
 
+        }
+
+        public void TimeLineXResizing(object sender, MouseEventArgs e)
+        {
+            int x = (e.X > this.Width - 3) ? this.Width - 3 : (e.X < this.timeLineMinimumX - 1) ? this.timeLineMinimumX - 1 : e.X;
+
+            this.drawTimeLineResizeBar(x);
         }
 
         #endregion
@@ -165,7 +265,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 if (parentSize.Width != this.Parent.ClientSize.Width)
                 {
                     parentSize.Width = this.Parent.ClientSize.Width;
-                    this.Width = parentSize.Width - this.Location.X * 2;
+                    this.Width = parentSize.Width - (this.Margin.Left + this.Margin.Right);
                 }
             }
         }
@@ -173,12 +273,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private void autoResizeRows()
         {
             int rowHeight = 0;
+            int heightInParent = parentSize.Height - (this.Margin.Top + this.Margin.Bottom);
             switch(RowSizeMode)
             {
                 case RowSizeMode.Fix:
-                    if (parentSize.Height < allRowsHeight)
+                    if (heightInParent < allRowsHeight)
                     {
-                        maxRowsHeight = parentSize.Height - ((parentSize.Height - this.ColumnHeadersHeight) % this.RowTemplate.Height);
+                        maxRowsHeight = heightInParent - ((heightInParent - this.ColumnHeadersHeight) % this.RowTemplate.Height);
                         this.Height = maxRowsHeight;
                     }
                     else if (this.Height != allRowsHeight)
@@ -189,11 +290,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     break;
 
                 case RowSizeMode.Fill:
-                    if (parentSize.Height != 0 && this.Rows.Count != 0)
+                    if (heightInParent != 0 && this.Rows.Count != 0)
                     {
-                        rowHeight = parentSize.Height / (this.Rows.Count + 1);
+                        rowHeight = heightInParent / (this.Rows.Count + 1);
                         rowHeight = rowHeight < this.RowTemplate.Height ? this.RowTemplate.Height : rowHeight;
-                        maxRowsHeight = parentSize.Height - ((parentSize.Height - this.ColumnHeadersHeight) % rowHeight);
+                        maxRowsHeight = heightInParent - ((heightInParent - this.ColumnHeadersHeight) % rowHeight);
                         this.Height = maxRowsHeight;
                     }
                     break;
@@ -212,6 +313,25 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+
+        private void drawTimeLineResizeBar(int x)
+        {
+            if (resizingBarRect.IsEmpty)
+            {
+                resizingBarRect = new Rectangle(x - 1, this.ClientRectangle.Y + this.ColumnHeadersHeight, 3, this.ClientRectangle.Height - this.ColumnHeadersHeight);
+            }
+            resizingBarRect.X = x;
+
+            Bitmap tmpBmp = new Bitmap(resizingBarRect.Width, resizingBarRect.Height);
+
+            using (Graphics graphics = this.CreateGraphics())
+            {
+                this.DoubleBuffered = true;
+                this.Refresh();
+                graphics.FillRectangle(new HatchBrush(HatchStyle.Percent50, Color.Black, Color.Transparent), resizingBarRect);
+                this.DoubleBuffered = false;
             }
         }
 

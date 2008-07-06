@@ -117,7 +117,7 @@
     <Compile Include="TimeLineControl\TimeLine\TimeLineAgent.cs" />
     <Compile Include="TimeLineControl\TimeLine\TimeLineC.cs" />
     <Compile Include="TimeLineControl\TimeLine\TimeLineP.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="TimeLineControl\TimeLine\TimeLineP.Designer.cs">
       <DependentUpon>TimeLineP.cs</DependentUpon>

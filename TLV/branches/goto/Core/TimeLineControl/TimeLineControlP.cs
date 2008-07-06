@@ -18,6 +18,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
     public partial class TimeLineControlP : DockContent, IPresentation
     {
         private RowSizeMode rowSizeMode;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ToolStripContentPanel ContentPanel { get { return this.toolStripContainer.ContentPanel; } }

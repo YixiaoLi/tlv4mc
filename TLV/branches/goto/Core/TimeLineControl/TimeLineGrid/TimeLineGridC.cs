@@ -11,7 +11,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         public TimeLineGridC(string name, TimeLineGridP presentation, TimeLineGridA abstraction)
             : base(name, presentation, abstraction)
         {
-            P.DataBindings.Add("RowSizeMode", A, "RowSizeMode", false, DataSourceUpdateMode.OnPropertyChanged);
+
+        }
+
+        public override void Init()
+        {
+            base.Init();
+            BindPToA("RowSizeMode", typeof(RowSizeMode), "RowSizeMode", SearchAFlags.Self);
+            BindPToA("TimeLineX", typeof(int), "TimeLineX", SearchAFlags.Self);
+            BindPToA("TimeLineMinimumX", typeof(int), "TimeLineMinimumX", SearchAFlags.Self);
         }
 
     }
