@@ -72,6 +72,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\Log.cs" />
+    <Compile Include="Base\ResourceType.cs" />
+    <Compile Include="Base\Subject.cs" />
+    <Compile Include="Base\Verb.cs" />
     <Compile Include="DockPanel\DockPanelA.cs" />
     <Compile Include="DockPanel\DockPanelAgent.cs" />
     <Compile Include="DockPanel\DockPanelC.cs" />
@@ -168,9 +172,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\fillRowButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Base\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

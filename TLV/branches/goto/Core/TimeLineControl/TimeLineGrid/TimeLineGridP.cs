@@ -3,10 +3,8 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.ComponentModel;
-using System.Collections.Generic;
 using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
-using NU.OJL.MPRTOS.TLV.Core.TimeLineControl;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 {

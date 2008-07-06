@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
-using WinForms = System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid;
