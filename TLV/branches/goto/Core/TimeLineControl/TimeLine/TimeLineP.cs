@@ -223,7 +223,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 float x = ((float)time - (float)BeginTime) / (float)nsPerPixel;
                 float y = scaleMarkY;
                 float h = scaleMarkHeight;
-                if(i % 10 == 0)
+                if(i % 10 == 0 || i == 1)
                 {
                     if (ScaleMarkDirection == ScaleMarkDirection.Bottom)
                     {
