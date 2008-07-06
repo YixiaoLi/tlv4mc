@@ -108,6 +108,12 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
                 agent.InitPAC();
             }
             this.C.Init();
+            this.Init();
+        }
+
+        public virtual void Init()
+        {
+            
         }
 
     }

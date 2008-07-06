@@ -11,6 +11,7 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
         IControl Control { get; }
         void Show();
         void InitPAC();
+        void Init();
         bool IsMain { get; }
     }
 }
