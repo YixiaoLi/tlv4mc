@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Log.cs" />
+    <Compile Include="Base\LogFileManager.cs" />
     <Compile Include="Base\ResourceType.cs" />
     <Compile Include="Base\Subject.cs" />
     <Compile Include="Base\Verb.cs" />
