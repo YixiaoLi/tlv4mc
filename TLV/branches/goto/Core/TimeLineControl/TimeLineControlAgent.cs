@@ -38,10 +38,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             bottomTimeLineAgent.P.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
 
             timeLineGridAgent.P.SizeChanged += new EventHandler(timeLineGridPSizeChanged);
-            topTimeLineAgent.P.TimeLineXResizing += timeLineGridAgent.P.TimeLineXResizing;
-            bottomTimeLineAgent.P.TimeLineXResizing += timeLineGridAgent.P.TimeLineXResizing;
-            topTimeLineAgent.P.TimeLineXResized += (object o, MouseEventArgs e) => { timeLineGridAgent.P.Refresh(); };
-            bottomTimeLineAgent.P.TimeLineXResized += (object o, MouseEventArgs e) => { timeLineGridAgent.P.Refresh(); };
 
             timeLineGridAgent.P.DataSource = new SortableBindingList<TestObject>(new List<TestObject>()
             {

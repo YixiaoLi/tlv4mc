@@ -249,6 +249,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             this.drawTimeLineResizeBar(x);
         }
 
+        public void TimeLineXResized(object sender, MouseEventArgs e)
+        {
+            Refresh();
+        }
+
         #endregion
 
         #region プライベートメソッド
