@@ -113,6 +113,15 @@
     <Compile Include="TimeLineControl\TimeLineGrid\TimeLineGridP.Designer.cs">
       <DependentUpon>TimeLineGridP.cs</DependentUpon>
     </Compile>
+    <Compile Include="TimeLineControl\TimeLineScrollBar\TimeLineScrollBarA.cs" />
+    <Compile Include="TimeLineControl\TimeLineScrollBar\TimeLineScrollBarAgent.cs" />
+    <Compile Include="TimeLineControl\TimeLineScrollBar\TimeLineScrollBarC.cs" />
+    <Compile Include="TimeLineControl\TimeLineScrollBar\TimeLineScrollBarP.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TimeLineControl\TimeLineScrollBar\TimeLineScrollBarP.Designer.cs">
+      <DependentUpon>TimeLineScrollBarP.cs</DependentUpon>
+    </Compile>
     <Compile Include="TimeLineControl\TimeLine\TimeLineA.cs" />
     <Compile Include="TimeLineControl\TimeLine\TimeLineAgent.cs" />
     <Compile Include="TimeLineControl\TimeLine\TimeLineC.cs" />

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.ComponentModel;
 using System.Collections.Generic;
+using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Core.TimeLineControl;
 
@@ -84,6 +85,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     timeLineMinimumX = value;
                     NotifyPropertyChanged("TimeLineMinimumX");
+                }
+            }
+        }
+        public int VerticalScrollBarWidth
+        {
+            get
+            {
+                if (this.Height < AllRowsHeight)
+                {
+                    return this.VerticalScrollBar.Width;
+                }
+                else
+                {
+                    return 0;
                 }
             }
         }
@@ -341,6 +356,50 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         }
 
         #endregion
+
+        #endregion
+
+        #region NativeScrollBar
+
+        private const int WM_HSCROLL = 0x0114;
+        private const int WM_VSCROLL = 0x0115;
+        private NativeScrollBar nsb;
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            if (this.Site == null)
+            {
+                this.nsb = new NativeScrollBar(this);
+            }
+        }
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            base.OnHandleDestroyed(e);
+            if (this.nsb != null)
+            {
+                this.nsb.DestroyHandle();
+            }
+        }
+        protected override void WndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                case WM_VSCROLL:
+                    if (m.LParam != this.VerticalScrollBar.Handle && this.VerticalScrollBar.Visible)
+                    {
+                        Control.ReflectMessage(this.VerticalScrollBar.Handle, ref m);
+                    }
+                    break;
+                case WM_HSCROLL:
+                    if (m.LParam != this.HorizontalScrollBar.Handle && this.HorizontalScrollBar.Visible)
+                    {
+                        Control.ReflectMessage(this.HorizontalScrollBar.Handle, ref m);
+                    }
+                    break;
+            }
+            base.WndProc(ref m);
+        }
 
         #endregion
     }

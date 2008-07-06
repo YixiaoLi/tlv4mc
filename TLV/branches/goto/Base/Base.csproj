@@ -75,6 +75,7 @@
   -->
   <ItemGroup>
     <Compile Include="Event.cs" />
+    <Compile Include="NativeScrollBar.cs" />
     <Compile Include="SortableBindingList.cs" />
   </ItemGroup>
   <ItemGroup>
