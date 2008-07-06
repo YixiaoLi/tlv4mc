@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Core.TimeLineControl;
+using NU.OJL.MPRTOS.TLV.Core.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 {
@@ -11,13 +13,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             : base()
         {
             this.Style.BackColor = Color.White;
+            this.ValueType = typeof(TimeLineEvents);
         }
 
         public override Type FormattedValueType
         {
             get
             {
-                return typeof(Log);
+                return this.ValueType;
             }
         }
 

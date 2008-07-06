@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.ComponentModel;
 using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
+using NU.OJL.MPRTOS.TLV.Core.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 {
@@ -14,24 +15,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         private TimeLineColumn timeLineColumn = new TimeLineColumn();
         private DataGridViewColumn timeLineColumnPreviousColumn = new DataGridViewColumn();
+        private RowSizeMode rowSizeMode = RowSizeMode.Fix;
+        private Size parentSize = new Size(0,0);
+        Rectangle resizingBarRect = Rectangle.Empty;
         private int allRowsHeight = 0;
         private int maxRowsHeight = 0;
         private int timeLineX = 0;
         private int timeLineMinimumX = 0;
-        private RowSizeMode rowSizeMode = RowSizeMode.Fix;
-        private Size parentSize = new Size(0,0);
-        Rectangle resizingBarRect = Rectangle.Empty;
+        private int timeLineWidth = 0;
+        private ulong minimumTime = 0;
+        private ulong maximumTime = 0;
+        private ulong beginTime = 0;
+        private ulong displayTimeLength = 0;
+        private ulong nsPerPixel = 1;
+        public bool Edited = false;
             
-        #endregion
-
-        #region イベント
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         #endregion
 
         #region プロパティ
 
+        public HScrollBar HScrollBar { get; set; }
         private int AllRowsHeight
         {
             get { return allRowsHeight; }
@@ -86,6 +89,28 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
             }
         }
+        public int TimeLineWidth
+        {
+            get { return timeLineWidth; }
+            set
+            {
+                if (timeLineWidth != value)
+                {
+                    timeLineWidth = value;
+                    ulong tmpDisplayTimeLength = NsPerPixel * (ulong)timeLineWidth;
+                    if (tmpDisplayTimeLength > MaximumTime - MinimumTime)
+                    {
+                        DisplayTimeLength = MaximumTime - BeginTime;
+                        NsPerPixel = (ulong)((decimal)DisplayTimeLength / (decimal)TimeLineWidth);
+                    }
+                    else
+                    {
+                        DisplayTimeLength = tmpDisplayTimeLength;
+                    }
+                    NotifyPropertyChanged("TimeLineWidth");
+                }
+            }
+        }
         public int VerticalScrollBarWidth
         {
             get
@@ -100,6 +125,73 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
             }
         }
+        public ulong MinimumTime
+        {
+            get { return minimumTime; }
+            set
+            {
+                if (minimumTime != value)
+                {
+                    minimumTime = value;
+                    NotifyPropertyChanged("MinimumTime");
+                }
+            }
+        }
+        public ulong MaximumTime
+        {
+            get { return maximumTime; }
+            set
+            {
+                if (maximumTime != value)
+                {
+                    maximumTime = value;
+                    NotifyPropertyChanged("MaximumTime");
+                }
+            }
+        }
+        public ulong BeginTime
+        {
+            get { return beginTime; }
+            set
+            {
+                if (beginTime != value)
+                {
+                    beginTime = value;
+                    NotifyPropertyChanged("BeginTime");
+                }
+            }
+        }
+        public ulong DisplayTimeLength
+        {
+            get { return displayTimeLength; }
+            set
+            {
+                if (displayTimeLength != value)
+                {
+                    displayTimeLength = value;
+                    NotifyPropertyChanged("DisplayTimeLength");
+                }
+            }
+        }
+        public ulong NsPerPixel
+        {
+            get { return nsPerPixel; }
+            set
+            {
+                if (nsPerPixel != value)
+                {
+                    nsPerPixel = value;
+                    NotifyPropertyChanged("NsPerPixel");
+                }
+            }
+        }
+
+        #endregion
+
+        #region イベント
+
+        public event PropertyChangedEventHandler PropertyChanged = null;
+        public event EventHandler RowChanged = null;
 
         #endregion
 
@@ -130,6 +222,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
             this.Name = name;
             this.AllRowsHeight = this.ColumnHeadersHeight;
+            this.RowChanged += onRowChanged;
 
             #endregion
 
@@ -151,7 +244,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         {
             base.OnColumnAdded(e);
 
-            if (e.Column.ValueType == typeof(Log))
+            if (e.Column.ValueType == typeof(TimeLineEvents))
             {
                 this.Columns.Remove(e.Column);
                 this.Columns.Add(timeLineColumn);
@@ -182,12 +275,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         {
             base.OnRowsAdded(e);
             AllRowsHeight += e.RowCount * this.RowTemplate.Height;
+
+            RowChanged(this, EventArgs.Empty);
         }
 
         protected override void OnRowsRemoved(DataGridViewRowsRemovedEventArgs e)
         {
             base.OnRowsRemoved(e);
             AllRowsHeight -= e.RowCount * this.RowTemplate.Height;
+
+            RowChanged(this, EventArgs.Empty);
         }
 
         protected override void OnParentChanged(EventArgs e)
@@ -200,7 +297,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         {
             base.OnColumnWidthChanged(e);
             int width = 0;
-            int minimunWidth = 0;
+            int minimumWidth = 0;
             foreach(DataGridViewColumn column in this.Columns)
             {
                 if (column.Name != this.timeLineColumn.Name)
@@ -208,11 +305,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     width += column.Width;
                     if (column.Name == this.timeLineColumnPreviousColumn.Name)
                     {
-                        minimunWidth += column.MinimumWidth;
+                        minimumWidth += column.MinimumWidth;
                     }
                     else
                     {
-                        minimunWidth += column.Width;
+                        minimumWidth += column.Width;
                     }
                 }
             }
@@ -221,10 +318,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 timeLineX = width;
                 NotifyPropertyChanged("TimeLineX");
             }
-            if (TimeLineMinimumX != minimunWidth)
+            if (TimeLineMinimumX != minimumWidth)
             {
-                TimeLineMinimumX = minimunWidth;
+                TimeLineMinimumX = minimumWidth;
             }
+
+            TimeLineWidth = this.Width - timeLineX;
         }
 
         protected override void OnClientSizeChanged(EventArgs e)
@@ -243,6 +342,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             {
                 resizingBarRect.Y = this.ClientRectangle.Y + this.ColumnHeadersHeight;
                 resizingBarRect.Height = this.ClientRectangle.Height - this.ColumnHeadersHeight;
+            }
+        }
+
+        protected override void OnSorted(EventArgs e)
+        {
+            base.OnSorted(e);
+            if (Edited == false)
+            {
+                Edited = true;
             }
         }
 
@@ -310,7 +418,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 case RowSizeMode.Fill:
                     if (heightInParent != 0 && this.Rows.Count != 0)
                     {
-                        rowHeight = heightInParent / (this.Rows.Count + 1);
+                        rowHeight = (heightInParent - this.ColumnHeadersHeight) / this.Rows.Count;
                         rowHeight = rowHeight < this.RowTemplate.Height ? this.RowTemplate.Height : rowHeight;
                         maxRowsHeight = heightInParent - ((heightInParent - this.ColumnHeadersHeight) % rowHeight);
                         this.Height = maxRowsHeight;
@@ -353,6 +461,50 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             }
         }
 
+        private void onRowChanged(object sender, EventArgs e)
+        {
+            minTimeMaxTimeReCalc();
+            if (Edited == false)
+            {
+                beginTimeDisplayTimeLengthReCalc();
+            }
+        }
+
+        private void beginTimeDisplayTimeLengthReCalc()
+        {
+            BeginTime = MinimumTime;
+            DisplayTimeLength = MaximumTime - BeginTime;
+            NsPerPixel = (ulong)((decimal)DisplayTimeLength / (decimal)TimeLineWidth);
+        }
+
+        private void minTimeMaxTimeReCalc()
+        {
+            if (this.Rows.Count > 0)
+            {
+                ulong st = ulong.MaxValue;
+                ulong et = ulong.MinValue;
+
+                for (int i = 0; i < this.Rows.Count; i++ )
+                {
+                    TimeLineEvents te = (TimeLineEvents)this[timeLineColumn.Name, i].Value;
+                    if (te != null)
+                    {
+                        if (te.StartTime < st)
+                        {
+                            st = te.StartTime;
+                        }
+                        if (te.EndTime > et)
+                        {
+                            et = te.EndTime;
+                        }
+                    }
+                }
+
+                this.MinimumTime = st;
+                this.MaximumTime = et;
+            }
+        }
+
         #endregion
 
         #endregion
@@ -361,6 +513,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         private const int WM_HSCROLL = 0x0114;
         private const int WM_VSCROLL = 0x0115;
+        private const int SB_LINELEFT = 0;
+        private const int SB_LINERIGHT = 1;
+        private const int SB_PAGELEFT = 2;
+        private const int SB_PAGERIGHT = 3;
+        private const int SB_THUMBPOSITION = 4;
+        private const int SB_THUMBTRACK = 5;
+        private const int SB_LEFT = 6;
+        private const int SB_RIGHT = 7;
+        private const int SB_ENDSCROLL = 8;
+
         private NativeScrollBar nsb;
 
         protected override void OnHandleCreated(EventArgs e)
@@ -384,15 +546,39 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             switch (m.Msg)
             {
                 case WM_VSCROLL:
-                    if (m.LParam != this.VerticalScrollBar.Handle && this.VerticalScrollBar.Visible)
+                    if (m.LParam != VerticalScrollBar.Handle && VerticalScrollBar.Visible)
                     {
                         Control.ReflectMessage(this.VerticalScrollBar.Handle, ref m);
                     }
                     break;
                 case WM_HSCROLL:
-                    if (m.LParam != this.HorizontalScrollBar.Handle && this.HorizontalScrollBar.Visible)
+                    if (HScrollBar != null)
                     {
-                        Control.ReflectMessage(this.HorizontalScrollBar.Handle, ref m);
+                        if (m.LParam != HScrollBar.Handle && HScrollBar.Visible)
+                        {
+                            int sb = m.WParam.ToInt32();
+
+                            if ((decimal)HScrollBar.Value + (decimal)HScrollBar.SmallChange > (decimal)HScrollBar.Maximum && sb == SB_LINERIGHT)
+                            {
+                                HScrollBar.Value = HScrollBar.Maximum - HScrollBar.LargeChange;
+                            }
+                            else if ((decimal)HScrollBar.Value + (decimal)HScrollBar.LargeChange > (decimal)HScrollBar.Maximum && sb == SB_PAGERIGHT)
+                            {
+                                HScrollBar.Value = HScrollBar.Maximum - HScrollBar.LargeChange;
+                            }
+                            else if ((decimal)HScrollBar.Value - (decimal)HScrollBar.SmallChange < (decimal)HScrollBar.Minimum && sb == SB_LINELEFT)
+                            {
+                                HScrollBar.Value = HScrollBar.Minimum;
+                            }
+                            else if ((decimal)HScrollBar.Value - (decimal)HScrollBar.LargeChange < (decimal)HScrollBar.Minimum && sb == SB_PAGELEFT)
+                            {
+                                HScrollBar.Value = HScrollBar.Minimum;
+                            }
+                            else
+                            {
+                                Control.ReflectMessage(this.HScrollBar.Handle, ref m);
+                            }
+                        }
                     }
                     break;
             }

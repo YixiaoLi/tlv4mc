@@ -9,6 +9,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private RowSizeMode rowSizeMode;
         private int timeLineX;
         private int timeLineMinimumX = 0;
+        private ulong minimumTime = 0;
+        private ulong maximumTime = 0;
+        private ulong beginTime = 0;
+        private ulong displayTimeLength = 0;
+        private ulong nsPerPixel = 1;
 
         public RowSizeMode RowSizeMode
         {
@@ -43,6 +48,66 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     timeLineMinimumX = value;
                     NotifyPropertyChanged("TimeLineMinimumX");
+                }
+            }
+        }
+        public ulong MinimumTime
+        {
+            get { return minimumTime; }
+            set
+            {
+                if (minimumTime != value)
+                {
+                    minimumTime = value;
+                    NotifyPropertyChanged("MinimumTime");
+                }
+            }
+        }
+        public ulong MaximumTime
+        {
+            get { return maximumTime; }
+            set
+            {
+                if (maximumTime != value)
+                {
+                    maximumTime = value;
+                    NotifyPropertyChanged("MaximumTime");
+                }
+            }
+        }
+        public ulong BeginTime
+        {
+            get { return beginTime; }
+            set
+            {
+                if (beginTime != value)
+                {
+                    beginTime = value;
+                    NotifyPropertyChanged("BeginTime");
+                }
+            }
+        }
+        public ulong DisplayTimeLength
+        {
+            get { return displayTimeLength; }
+            set
+            {
+                if (displayTimeLength != value)
+                {
+                    displayTimeLength = value;
+                    NotifyPropertyChanged("DisplayTimeLength");
+                }
+            }
+        }
+        public ulong NsPerPixel
+        {
+            get { return nsPerPixel; }
+            set
+            {
+                if (nsPerPixel != value)
+                {
+                    nsPerPixel = value;
+                    NotifyPropertyChanged("NsPerPixel");
                 }
             }
         }

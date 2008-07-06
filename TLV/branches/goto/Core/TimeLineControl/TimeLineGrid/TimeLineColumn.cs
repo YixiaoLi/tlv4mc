@@ -10,7 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             : base(new TimeLineCell())
         {
             this.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.DataPropertyName = "Value";
+            this.DataPropertyName = "TimeLineEvents";
             this.Name = "TimeLine";
         }
 

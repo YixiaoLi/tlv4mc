@@ -74,7 +74,7 @@
   </Target>
   -->
   <ItemGroup>
-    <Compile Include="Event.cs" />
+    <Compile Include="Math.cs" />
     <Compile Include="NativeScrollBar.cs" />
     <Compile Include="SortableBindingList.cs" />
   </ItemGroup>

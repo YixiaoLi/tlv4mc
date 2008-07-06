@@ -16,6 +16,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar
         {
             base.Init();
             BindPToA("X", typeof(int), "TimeLineX", SearchAFlags.AncestorsWithSiblings);
+            BindPToA("MinimumTime", typeof(ulong), "MinimumTime", SearchAFlags.AncestorsWithSiblings);
+            BindPToA("MaximumTime", typeof(ulong), "MaximumTime", SearchAFlags.AncestorsWithSiblings);
+            BindPToA("BeginTime", typeof(ulong), "BeginTime", SearchAFlags.AncestorsWithSiblings);
+            BindPToA("DisplayTimeLength", typeof(ulong), "DisplayTimeLength", SearchAFlags.AncestorsWithSiblings);
         }
     }
 }

@@ -20,6 +20,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             BindPToA("RowSizeMode", typeof(RowSizeMode), "RowSizeMode", SearchAFlags.Self);
             BindPToA("TimeLineX", typeof(int), "TimeLineX", SearchAFlags.Self);
             BindPToA("TimeLineMinimumX", typeof(int), "TimeLineMinimumX", SearchAFlags.Self);
+            BindPToA("MinimumTime", typeof(ulong), "MinimumTime", SearchAFlags.Self);
+            BindPToA("MaximumTime", typeof(ulong), "MaximumTime", SearchAFlags.Self);
+            BindPToA("BeginTime", typeof(ulong), "BeginTime", SearchAFlags.Self);
+            BindPToA("DisplayTimeLength", typeof(ulong), "DisplayTimeLength", SearchAFlags.Self);
+            BindPToA("NsPerPixel", typeof(ulong), "NsPerPixel", SearchAFlags.Self);
         }
 
     }
