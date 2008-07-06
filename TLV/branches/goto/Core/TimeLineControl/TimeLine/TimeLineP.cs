@@ -25,6 +25,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
         private ulong beginTime = 0;
         private ulong displayTimeLength = 0;
         private ulong nsPerPixel = 1;
+        private Font timeMarkLabelFont;
 
         public ScaleMarkDirection ScaleMarkDirection { get; set; }
         public int TimeLineX
@@ -131,6 +132,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             this.Height = 30;
             this.DoubleBuffered = true;
             this.ScaleMarkDirection = scaleMarkDirection;
+            this.timeMarkLabelFont = new Font(FontFamily.GenericMonospace, 8);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            this.timeMarkLabelFont.Dispose();
         }
 
         protected override void OnPaint(WinForms.PaintEventArgs e)
@@ -206,10 +214,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
 
             ulong endTime = this.BeginTime + this.DisplayTimeLength;
 
-            int scaleMarkIntervalPixel = 5;
+            int scaleMarkIntervalPixel = 4;
             ulong scaleMarkIntervalTime = (ulong)scaleMarkIntervalPixel * nsPerPixel;
             int order = (int)Math.Ceiling(Math.Log10((double)scaleMarkIntervalTime + 1D));
             ulong scaleMarkStartTime = (ulong)(Math.Floor((double)BeginTime / Math.Pow(10D, order - 1)) * Math.Pow(10D, order - 1)) + scaleMarkIntervalTime;
+
+            int endTimeOrder = (int)Math.Ceiling(Math.Log10((double)endTime + 1D));
+            float timeLineMarkLabelWidth = getTimeMarkLabelWidth(graphics, (ulong)Math.Pow(10, endTimeOrder)).Width;
+            int timeLineMarkLabelInterval = (int)Math.Ceiling(timeLineMarkLabelWidth * (float)nsPerPixel / (float)scaleMarkIntervalTime);
+            timeLineMarkLabelInterval += timeLineMarkLabelInterval % 2;
+            timeLineMarkLabelInterval = (int)Math.Ceiling((double)timeLineMarkLabelInterval / 10D) * 10;
 
             float scaleMarkHeight = 5;
             float scaleMarkY = height - scaleMarkHeight;
@@ -223,14 +237,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 float x = ((float)time - (float)BeginTime) / (float)nsPerPixel;
                 float y = scaleMarkY;
                 float h = scaleMarkHeight;
-                if(i % 10 == 0 || i == 1)
+                if (i % timeLineMarkLabelInterval == 0 || i == 1)
+                {
+                    drawTimeMarkLabel(graphics, time);
+                }
+                if (i % 10 == 0 || i == 1)
                 {
                     if (ScaleMarkDirection == ScaleMarkDirection.Bottom)
                     {
                         y -= h;
                     }
                     h *= 2f;
-                    drawTimeMarkLabel(graphics, time);
                 }
                 else if (i % 5 == 0)
                 {
@@ -246,23 +263,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
 
         }
 
-        private void drawTimeMarkLabel(Graphics graphics, ulong time)
+        private ulong drawTimeMarkLabel(Graphics graphics, ulong time)
         {
-            using (Font font = new Font(FontFamily.GenericMonospace, 8))
+            ulong nextTime = 0;
+
+            SizeF timeSize = getTimeMarkLabelWidth(graphics, time);
+
+            float labelY = 1;
+
+            if (ScaleMarkDirection == ScaleMarkDirection.Top)
             {
-                SizeF timeSize = graphics.MeasureString(time.ToString(), font);
-
-                float labelY = 1;
-
-                if (ScaleMarkDirection == ScaleMarkDirection.Top)
-                {
-                    labelY = this.Height - timeSize.Height - labelY;
-                }
-
-                float x = ((float)time - (float)BeginTime) / (float)nsPerPixel;
-
-                graphics.DrawString(time.ToString(), font, Brushes.White, x - (timeSize.Width / 2f), labelY);
+                labelY = this.Height - timeSize.Height - labelY;
             }
+
+            float x = ((float)time - (float)BeginTime) / (float)nsPerPixel;
+
+            nextTime = time + (ulong)(((timeSize.Width / 2f) + 5f) * (float)nsPerPixel);
+
+            graphics.DrawString(time.ToString(), timeMarkLabelFont, Brushes.White, x - (timeSize.Width / 2f), labelY);
+
+            return nextTime;
+        }
+
+        private SizeF getTimeMarkLabelWidth(Graphics graphics, ulong time)
+        {
+            return graphics.MeasureString(time.ToString(), timeMarkLabelFont);
         }
 
     }
