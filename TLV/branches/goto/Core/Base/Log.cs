@@ -31,4 +31,71 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
             this.Verb = verb;
         }
     }
+
+    public class LogList
+    {
+        // メンバ変数との不一致リスク低減のためメンバ変数をなるべくなくす
+        // そのかわりプロパティにprotected setを使ってアクセス制限
+
+        public List<Log> List { get; protected set; }
+
+        public int Count
+        {
+            get { return List.Count; }
+        }
+
+        public void Clear()
+        {
+            this.List.Clear();
+        }
+
+        public void Add(Log log)
+        {
+            List.Add(new Log(log));
+        }
+
+        public LogList(List<Log> logList)
+        {
+            List = new List<Log>(logList);
+        }
+
+        public LogList()
+        {
+            List = new List<Log>();
+        }
+
+        // このメソッドはなんのためにあるのでしょうか？
+        public int GetRunTaskId(int prcId)
+        {
+            int runTaskId = 0;
+
+            int runTaskNo = 0;
+            int dormantTaskNo = 0;
+
+            for (int i = (List.Count - 1); i > 0; i--)
+            {
+                if (List[i].PrcID == prcId && List[i].Verb == Verb.RUN)
+                {
+                    runTaskNo = i;
+                    break;
+                }
+            }
+
+            for (int i = (List.Count - 1); i > 0; i--)
+            {
+                if (List[i].PrcID == prcId && List[i].Verb == Verb.DORMANT)
+                {
+                    dormantTaskNo = i;
+                    break;
+                }
+            }
+
+            if (runTaskNo > dormantTaskNo)
+            {
+                runTaskId = List[runTaskNo].Subject.Id;
+            }
+
+            return runTaskId;
+        }
+    }
 }
