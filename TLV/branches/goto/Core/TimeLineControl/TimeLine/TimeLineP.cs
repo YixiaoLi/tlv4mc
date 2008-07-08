@@ -141,7 +141,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                     nsPerScaleMark = value;
 
                     int order = (int)Math.Ceiling(Math.Log10((double)nsPerScaleMark + 1D));
-                    scaleMarkStartTime = (ulong)(Math.Floor((double)MinimumTime / Math.Pow(10D, order - 1)) * Math.Pow(10D, order - 1)) + nsPerScaleMark;
+                    scaleMarkStartTime = (ulong)(Math.Floor((double)MinimumTime / Math.Pow(10D, order - 1)) * Math.Pow(10D, order - 1)) - nsPerScaleMark;
 
                     NotifyPropertyChanged("NsPerScaleMark");
                     this.Refresh();
@@ -286,13 +286,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             {
                 scaleMarkY = 0f;
             }
-            int i = 1;
-            for (ulong time = scaleMarkStartTime; time < EndTime; time += nsPerScaleMark, i++)
+
+            ulong st = (ulong)Math.Floor((double)(beginTime - scaleMarkStartTime) / (double)nsPerScaleMark);
+            ulong i = st;
+            st *= nsPerScaleMark;
+
+            for (ulong time = scaleMarkStartTime + st; time <= EndTime + nsPerScaleMark*2; time += nsPerScaleMark, i++)
             {
-                float x = (((float)time - (float)BeginTime) / (float)nsPerScaleMark) * pixelPerScaleMark;
+                float x = timeToX(time);
                 float y = scaleMarkY;
                 float h = scaleMarkHeight;
-                if (i % timeLineMarkLabelInterval == 0)
+                if (i % (ulong)timeLineMarkLabelInterval == 0)
                 {
                     drawTimeMarkLabel(graphics, time);
                 }

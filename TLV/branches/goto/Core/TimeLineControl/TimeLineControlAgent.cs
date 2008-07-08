@@ -200,7 +200,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                 new TestObject("task27", new TimeLineEvents(new List<TimeLineEvent>()
                     {
                         new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
+                        new TimeLineEvent(860234, Verb.DORMANT),
                     })),
             });
 

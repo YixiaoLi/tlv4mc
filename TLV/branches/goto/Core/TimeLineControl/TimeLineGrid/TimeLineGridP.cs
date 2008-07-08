@@ -321,7 +321,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             this.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             this.MultiSelect = false;
             this.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            this.ColumnHeadersHeight = 30;
+            this.ColumnHeadersHeight = 20;
             this.RowTemplate.Height = 25;
             this.rowHeight = this.RowTemplate.Height;
 
