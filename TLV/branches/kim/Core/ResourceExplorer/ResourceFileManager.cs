@@ -224,7 +224,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
             // TYPE ID NAME ATR CLASS PRI EXINF PRCID AFFINTYMASK STKSIZE TASK
             //  0   1   2    3    4    5    6      7       8         9     10  
-            tskInfo.Type = array[(int)ResourceData.TYPE];
+            tskInfo.Type = (ResourceType)Enum.Parse(ResourceType.TSK.GetType(), array[(int)ResourceData.TYPE]);
             tskInfo.Id = covertInt(array[(int)ResourceData.ID]);
             tskInfo.Name = array[(int)ResourceData.NAME];
             tskInfo.Atr = array[(int)ResourceData.ATR];
@@ -246,7 +246,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
             // TYPE ID NAME ATR CLASS SEMCNT MAXSEM
             //  0   1   2    3    4     5      6
-            semInfo.Type = array[(int)ResourceData.TYPE];
+            semInfo.Type = (ResourceType)Enum.Parse(ResourceType.TSK.GetType(), array[(int)ResourceData.TYPE]);
             semInfo.Id = covertInt(array[(int)ResourceData.ID]);
             semInfo.Name = array[(int)ResourceData.NAME];
             semInfo.Atr = array[(int)ResourceData.ATR];
@@ -264,7 +264,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
             // TYPE ID NAME ATR CLASS FLGPTN
             //  0   1   2    3    4     5
-            flgInfo.Type = array[(int)ResourceData.TYPE];
+            flgInfo.Type = (ResourceType)Enum.Parse(ResourceType.TSK.GetType(), array[(int)ResourceData.TYPE]);
             flgInfo.Id = covertInt(array[(int)ResourceData.ID]);
             flgInfo.Name = array[(int)ResourceData.NAME];
             flgInfo.Atr = array[(int)ResourceData.ATR];
@@ -281,7 +281,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
             // TYPE ID NAME ATR CLASS DTQCNT
             //  0   1   2    3    4     5
-            dtqInfo.Type = array[(int)ResourceData.TYPE];
+            dtqInfo.Type = (ResourceType)Enum.Parse(ResourceType.TSK.GetType(), array[(int)ResourceData.TYPE]);
             dtqInfo.Id = covertInt(array[(int)ResourceData.ID]);
             dtqInfo.Name = array[(int)ResourceData.NAME];
             dtqInfo.Atr = array[(int)ResourceData.ATR];
@@ -298,7 +298,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
             // TYPE ID NAME ATR CLASS PDQCNT MAXDPRI
             //  0   1   2    3    4     5       6
-            pdtqInfo.Type = array[(int)ResourceData.TYPE];
+            pdtqInfo.Type = (ResourceType)Enum.Parse(ResourceType.TSK.GetType(), array[(int)ResourceData.TYPE]);
             pdtqInfo.Id = covertInt(array[(int)ResourceData.ID]);
             pdtqInfo.Name = array[(int)ResourceData.NAME];
             pdtqInfo.Atr = array[(int)ResourceData.ATR];
@@ -316,7 +316,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
             // TYPE ID NAME ATR CLASS MAXMPRI
             //  0   1   2    3    4      5   
-            mbxInfo.Type = array[(int)ResourceData.TYPE];
+            mbxInfo.Type = (ResourceType)Enum.Parse(ResourceType.TSK.GetType(), array[(int)ResourceData.TYPE]);
             mbxInfo.Id = covertInt(array[(int)ResourceData.ID]);
             mbxInfo.Name = array[(int)ResourceData.NAME];
             mbxInfo.Atr = array[(int)ResourceData.ATR];
@@ -333,7 +333,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
             // TYPE ID NAME ATR CLASS BLKCNT BLKSIZE
             //  0   1   2    3    4     5       6
-            mpfInfo.Type = array[(int)ResourceData.TYPE];
+            mpfInfo.Type = (ResourceType)Enum.Parse(ResourceType.TSK.GetType(), array[(int)ResourceData.TYPE]);
             mpfInfo.Id = covertInt(array[(int)ResourceData.ID]);
             mpfInfo.Name = array[(int)ResourceData.NAME];
             mpfInfo.Atr = array[(int)ResourceData.ATR];
@@ -351,7 +351,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
             // TYPE ID NAME ATR CLASS CYCHDR EXINF PRCID AFFINTYMASK CYCTIM CYCPHS
             //  0   1   2    3    4     5      6     7        8        9      10
-            cycInfo.Type = array[(int)ResourceData.TYPE];
+            cycInfo.Type = (ResourceType)Enum.Parse(ResourceType.TSK.GetType(), array[(int)ResourceData.TYPE]);
             cycInfo.Id = covertInt(array[(int)ResourceData.ID]);
             cycInfo.Name = array[(int)ResourceData.NAME];
             cycInfo.Atr = array[(int)ResourceData.ATR];
@@ -373,7 +373,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
             // TYPE ID NAME ATR CLASS ALMHDR EXINF PRCID AFFINTYMASK 
             //  0   1   2    3    4     5      6     7        8
-            almInfo.Type = array[(int)ResourceData.TYPE];
+            almInfo.Type = (ResourceType)Enum.Parse(ResourceType.TSK.GetType(), array[(int)ResourceData.TYPE]);
             almInfo.Id = covertInt(array[(int)ResourceData.ID]);
             almInfo.Name = array[(int)ResourceData.NAME];
             almInfo.Atr = array[(int)ResourceData.ATR];
@@ -393,7 +393,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
             // TYPE ID NAME ATR CLASS
             //  0   1   2    3    4
-            spnInfo.Type = array[(int)ResourceData.TYPE];
+            spnInfo.Type = (ResourceType)Enum.Parse(ResourceType.TSK.GetType(), array[(int)ResourceData.TYPE]);
             spnInfo.Id = covertInt(array[(int)ResourceData.ID]);
             spnInfo.Name = array[(int)ResourceData.NAME];
             spnInfo.Atr = array[(int)ResourceData.ATR];
@@ -408,7 +408,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
             // TYPE ID NAME ATR CLASS PRI INHHDR
             //  0   1   2    3    4    5    6
-            inhInfo.Type = array[(int)ResourceData.TYPE];
+            inhInfo.Type = (ResourceType)Enum.Parse(ResourceType.TSK.GetType(), array[(int)ResourceData.TYPE]);
             inhInfo.Id = covertInt(array[(int)ResourceData.ID]);
             inhInfo.Name = array[(int)ResourceData.NAME];
             inhInfo.Atr = array[(int)ResourceData.ATR];
@@ -426,7 +426,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
             // TYPE ID NAME ATR CLASS EXCHDR
             //  0   1   2    3    4     5
-            excInfo.Type = array[(int)ResourceData.TYPE];
+            excInfo.Type = (ResourceType)Enum.Parse(ResourceType.TSK.GetType(), array[(int)ResourceData.TYPE]);
             excInfo.Id = covertInt(array[(int)ResourceData.ID]);
             excInfo.Name = array[(int)ResourceData.NAME];
             excInfo.Atr = array[(int)ResourceData.ATR];

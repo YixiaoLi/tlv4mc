@@ -12,8 +12,10 @@ using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
 using NU.OJL.MPRTOS.TLV.Base;
 
+using NU.OJL.MPRTOS.TLV.Core.FileOpenWindow;
 using NU.OJL.MPRTOS.TLV.Core.ResourceExplorer;
 using NU.OJL.MPRTOS.TLV.Core.ResourceProperty;
+using NU.OJL.MPRTOS.TLV.Core.LogWindow;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Test_Main
 {
@@ -23,6 +25,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Test_Main
 
         public ResourceExplorerP resExplorer;
         public ResourcePropertyP resProperty;
+
+        public LogWindowP logWindow;
+
         private DeserializeDockContent deserializeDockContent;
         //private bool m_bSaveLayout = true;
 
@@ -34,6 +39,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Test_Main
 
             this.resExplorer = new ResourceExplorerP("ResourceExplorer");
             this.resProperty = new ResourcePropertyP("ResourceProperty");
+            this.logWindow = new LogWindowP("LogWindow");
 
             this.resExplorer.SetHandle = this.Handle;
 
@@ -56,12 +62,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Test_Main
         {
             if (persistString == typeof(ResourceExplorerP).ToString())
             {
+                this.tsmiDisplayExploer.Checked = true;
                 return this.resExplorer;
             }
-            else
-            //else if (persistString == typeof(ResProperty).ToString())
+            else if (persistString == typeof(ResourcePropertyP).ToString())
             {
+                this.tsmiDesplayProperty.Checked = true;
                 return this.resProperty;
+            }
+            //else if (persistString == typeof(LogDisplayP).ToString())
+            else
+            {
+                this.tsmiLogWindow.Checked = true;
+                return this.logWindow;
             }
         }
 
@@ -72,6 +85,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Test_Main
 
             if (File.Exists(configFile))
                 dockPanel.LoadFromXml(configFile, this.deserializeDockContent);
+            
         }
 
         private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -86,19 +100,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Test_Main
 
         private void tsmiOpen_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "resource files (*.log)|*.log";
-            openFileDialog.FilterIndex = 0;
+            FileOpenWindowP fileOpenWindow = new FileOpenWindowP("FileOpenWidow");
+            string resFilePath = string.Empty;
+            string logFilePath = string.Empty;
 
-            string openSrc = string.Empty;
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            if (fileOpenWindow.ShowDialog() == DialogResult.OK)
             {
-                //リソースファイル名取得
-                openSrc = openFileDialog.FileName;
+                fileOpenWindow.getFilePath(out resFilePath, out logFilePath);
 
-                //TreeView初期化
-                this.resExplorer.InitTreeView(openSrc);
+                this.resExplorer.InitTreeView(resFilePath);
+
+                this.logWindow.InitLogWindow(logFilePath);
             }
 
         }
@@ -150,6 +162,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.Test_Main
             }
         }
 
+        private void tsmiLogWindow_Click(object sender, EventArgs e)
+        {
+            if (!this.logWindow.Visible)
+            {
+                this.tsmiLogWindow.Checked = true;
+                this.logWindow.Show(dockPanel);
+            }
+            else
+            {
+                this.tsmiLogWindow.Checked = false;
+                this.logWindow.Hide();
+            }
+
+
+        }
 
     }
 }

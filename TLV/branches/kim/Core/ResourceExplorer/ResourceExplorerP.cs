@@ -55,16 +55,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
             // リソースチェックリスト初期化
             this.nodeChekedList = new List<string>();
 
-            LogList logList = new LogList();
-
-            LogFileManager logFile = new LogFileManager();
-
-            logFile.ReadLogFile(resFilePath, out logList);
-
-
             ResourceFileManager resFileManager = new ResourceFileManager();
-
-
 
             //ファイルからリソースデータ読み込み
             resFileManager.ReadResourceFile(resFilePath, out this.resList, out this.viewTypeList);
@@ -192,21 +183,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
             {
                 if (viewTypeList[viewCount].Equals(tskInfo.PrcID))
                 {
-                    prcView.Nodes[viewCount].Nodes.Add(tskInfo.Type, tskInfo.Name);
+                    prcView.Nodes[viewCount].Nodes.Add(tskInfo.Type.ToString(), tskInfo.Name);
                 }
             }
             foreach (CycInfo cycInfo in resList.CycInfoList)
             {
                 if (viewTypeList[viewCount].Equals(cycInfo.PrcID))
                 {
-                    prcView.Nodes[viewCount].Nodes.Add(cycInfo.Type, cycInfo.Name);
+                    prcView.Nodes[viewCount].Nodes.Add(cycInfo.Type.ToString(), cycInfo.Name);
                 }
             }
             foreach (AlmInfo almInfo in resList.AlmInfoList)
             {
                 if (viewTypeList[viewCount].Equals(almInfo.PrcID))
                 {
-                    prcView.Nodes[viewCount].Nodes.Add(almInfo.Type, almInfo.Name);
+                    prcView.Nodes[viewCount].Nodes.Add(almInfo.Type.ToString(), almInfo.Name);
                 }
             }
 
@@ -232,13 +223,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                         resInfoType = objbase.Class;
                         break;
                     case ViewType.RES:
-                        resInfoType = objbase.Type;
+                        resInfoType = objbase.Type.ToString();
                         break;
                 }
 
                 if (viewTypeList[viewCount].Equals(resInfoType))
                 {
-                    treeView.Nodes[viewCount].Nodes.Add(objbase.Type, objbase.Name);
+                    treeView.Nodes[viewCount].Nodes.Add(objbase.Type.ToString(), objbase.Name);
                 }
             }
 
@@ -458,32 +449,32 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 {
                     foreach (string str in this.nodeChekedList)
                     {
-                        if (str == e.Node.Name)
+                        if (str == e.Node.Text)
                         {
                             hasNodeName = true;
                             break;
                         }
                     }
 
-                    if (!hasNodeName)
+                    if (!hasNodeName && e.Node.Level != 0)
                     {
-                        this.nodeChekedList.Add(e.Node.Name);
+                        this.nodeChekedList.Add(e.Node.Text);
                     }
                 }
                 else
                 {
                     foreach (string str in this.nodeChekedList)
                     {
-                        if (str == e.Node.Name)
+                        if (str == e.Node.Text)
                         {
                             hasNodeName = true;
                             break;
                         }
                     }
 
-                    if (hasNodeName)
+                    if (hasNodeName & e.Node.Level != 0)
                     {
-                        this.nodeChekedList.Remove(e.Node.Name);
+                        this.nodeChekedList.Remove(e.Node.Text);
                     }
                 }
 
@@ -591,7 +582,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 
                     for (int j = 0; j < (treeView.Nodes[i].Nodes).Count; j++)
                     {
-                        if(str.Equals(treeView.Nodes[i].Nodes[j].Name))
+                        if(str.Equals(treeView.Nodes[i].Nodes[j].Text))
                         {
                             treeView.Nodes[i].Nodes[j].Checked = true;
                             findNode = true;

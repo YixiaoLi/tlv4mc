@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.tsmiLogWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.tsmiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,6 +41,13 @@
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // tsmiLogWindow
+            // 
+            this.tsmiLogWindow.Name = "tsmiLogWindow";
+            this.tsmiLogWindow.Size = new System.Drawing.Size(167, 22);
+            this.tsmiLogWindow.Text = "トレースログ出力";
+            this.tsmiLogWindow.Click += new System.EventHandler(this.tsmiLogWindow_Click);
             // 
             // menuStrip
             // 
@@ -79,7 +87,8 @@
             // 
             this.tsmiDisplay.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiDisplayExploer,
-            this.tsmiDesplayProperty});
+            this.tsmiDesplayProperty,
+            this.tsmiLogWindow});
             this.tsmiDisplay.Name = "tsmiDisplay";
             this.tsmiDisplay.Size = new System.Drawing.Size(56, 20);
             this.tsmiDisplay.Text = "表示(&P)";
@@ -157,5 +166,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiDisplay;
         private System.Windows.Forms.ToolStripMenuItem tsmiDisplayExploer;
         private System.Windows.Forms.ToolStripMenuItem tsmiDesplayProperty;
+        private System.Windows.Forms.ToolStripMenuItem tsmiLogWindow;
     }
 }

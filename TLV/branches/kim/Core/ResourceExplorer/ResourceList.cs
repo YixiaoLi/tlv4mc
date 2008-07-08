@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NU.OJL.MPRTOS.TLV.Core.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 {
@@ -89,7 +90,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
     {
         protected int id;
         private string atr;
-        protected string type;
+        protected ResourceType type;
         protected string name;
         protected string cls;
 
@@ -103,7 +104,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
             get { return atr; }
             set { atr = value; }
         }
-        public string Type
+        public ResourceType Type
         {
             get { return type; }
             set { type = value; }

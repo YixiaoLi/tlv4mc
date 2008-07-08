@@ -75,12 +75,37 @@
     <Compile Include="Base\Log.cs" />
     <Compile Include="Base\LogFileManager.cs" />
     <Compile Include="Base\ResourceType.cs" />
+    <Compile Include="Base\Subject.cs" />
     <Compile Include="Base\Verb.cs" />
     <Compile Include="DockPanel\DockPanelA.cs" />
     <Compile Include="DockPanel\DockPanelAgent.cs" />
     <Compile Include="DockPanel\DockPanelC.cs" />
     <Compile Include="DockPanel\DockPanelP.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FileOpenWindow\FileOpenWindowA.cs" />
+    <Compile Include="FileOpenWindow\FileOpenWindowAgent.cs" />
+    <Compile Include="FileOpenWindow\FileOpenWindowC.cs" />
+    <Compile Include="FileOpenWindow\FileOpenWindowP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileOpenWindow\FileOpenWindowP.Designer.cs">
+      <DependentUpon>FileOpenWindowP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogWidnow\LogWidnowA.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LogWidnow\LogWidnowAgent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LogWidnow\LogWidnowC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LogWidnow\LogWidnowP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogWidnow\LogWidnowP.Designer.cs">
+      <DependentUpon>LogWidnowP.cs</DependentUpon>
     </Compile>
     <Compile Include="ResourceExplorer\ResourceFileManager.cs" />
     <Compile Include="ResourceExplorer\ResourceExplorerA.cs" />
@@ -149,14 +174,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FileOpenWindow\FileOpenWindowP.resx">
+      <DependentUpon>FileOpenWindowP.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogWidnow\LogWidnowP.resx">
+      <DependentUpon>LogWidnowP.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ResourceExplorer\ResourceExplorerP.resx">
       <DependentUpon>ResourceExplorerP.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ResourceProperty\ResourcePropertyP.resx">
       <DependentUpon>ResourcePropertyP.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Test_Main\MainP.resx">
       <DependentUpon>MainP.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="TimeLineControl\TimeLine.resx">
       <DependentUpon>TimeLine.cs</DependentUpon>
