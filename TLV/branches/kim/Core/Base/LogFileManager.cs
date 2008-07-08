@@ -10,7 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
         {
             bool ret = false;
             logList = new LogList();
-           
+
             try
             {
                 //ファイルエラーチェック
@@ -49,7 +49,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
 
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine("[LogFileManager::ReadLogFile] " + e.Message);
                 ret = false;
@@ -63,7 +63,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
             ulong time = 0;
             int prcid = 0;
             int taskid = 0;
-            
+
             Subject subject;
             Verb verb;
 
@@ -84,7 +84,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
                 {
                     int.TryParse(timeArray[1], out prcid);
                 }
-                
+
                 logList.Add(new Log(time, prcid, subject, verb));
             }
             else if (array[3] == "phase")
@@ -96,7 +96,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
         private void setDispatchLog(string[] array, ref LogList logList)
         {
             ulong time;
-            int prcid =0;
+            int prcid = 0;
             int taskid;
 
             string[] timeArray = getLogTime(array[0]);
