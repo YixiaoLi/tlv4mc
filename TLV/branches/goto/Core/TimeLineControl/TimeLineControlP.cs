@@ -21,6 +21,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         private ulong nsPerScaleMark = 1;
         private ulong maximumNsPerScaleMark = 1;
         private int pixelPerScaleMark;
+        private int maxRowHeight = 0;
+        private int minRowHeight = 0;
+        private int rowHeight = 0;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -49,7 +52,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 
                     this.nsPerScaleMarkTrackBar.Value = nsPerScaleMark > (ulong)nsPerScaleMarkTrackBar.Maximum ? nsPerScaleMarkTrackBar.Maximum : nsPerScaleMark < (ulong)nsPerScaleMarkTrackBar.Minimum ? nsPerScaleMarkTrackBar.Minimum : (int)nsPerScaleMark;
 
-                    this.nsPerScaleMarkButton.Text = value + this.nsPerScaleMarkTrackBar.PostFixText;
+                    this.nsPerScaleMarkButton.Text = this.nsPerScaleMarkTrackBar.PreFixText + value + this.nsPerScaleMarkTrackBar.PostFixText;
 
                     NotifyPropertyChanged("NsPerScaleMark");
                 }
@@ -83,9 +86,56 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 
                     this.nsPerScaleMarkTrackBar.Minimum = pixelPerScaleMark;
 
-                    this.pixelPerScaleMarkButton.Text = value + this.pixelPerScaleMarkButtonTrackBar.PostFixText;
+                    this.pixelPerScaleMarkButton.Text = this.pixelPerScaleMarkButtonTrackBar.PreFixText + value + this.pixelPerScaleMarkButtonTrackBar.PostFixText;
 
                     NotifyPropertyChanged("PixelPerScaleMark");
+                }
+            }
+        }
+        public int RowHeight
+        {
+            get { return rowHeight; }
+            set
+            {
+                if (rowHeight != value)
+                {
+                    rowHeight = value;
+
+                    this.rowHeightTrackBar.Value = rowHeight;
+
+                    this.rowHeightButton.Text = this.rowHeightTrackBar.PreFixText + value + this.rowHeightTrackBar.PostFixText;
+
+                    NotifyPropertyChanged("RowHeight");
+                }
+            }
+        }
+        public int MaxRowHeight
+        {
+            get { return maxRowHeight; }
+            set
+            {
+                if (maxRowHeight != value)
+                {
+                    maxRowHeight = value;
+
+                    this.rowHeightTrackBar.Maximum = maxRowHeight;
+
+                    NotifyPropertyChanged("MaxRowHeight");
+                }
+            }
+        }
+        public int MinRowHeight
+        {
+            get { return minRowHeight; }
+            set
+            {
+                if (minRowHeight != value)
+                {
+                    minRowHeight = value;
+
+                    this.rowHeightTrackBar.Minimum = minRowHeight;
+
+                    NotifyPropertyChanged("MinRowHeight");
                 }
             }
         }
@@ -97,21 +147,54 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.Name = name;
             this.TabText = "タイムライン";
             this.RowSizeMode = RowSizeMode.Fill;
-            this.nsPerScaleMarkTrackBar.Minimum = pixelPerScaleMark;
+            this.PixelPerScaleMark = 5;
+            this.nsPerScaleMarkTrackBar.Minimum = 1;
+            this.nsPerScaleMarkTrackBar.PostFixText = " ns/目盛";
             this.pixelPerScaleMarkButtonTrackBar.Minimum = 2;
             this.pixelPerScaleMarkButtonTrackBar.Maximum = 100;
-            this.PixelPerScaleMark = 5;
-            this.nsPerScaleMarkTrackBar.PostFixText = " ns/目盛";
             this.pixelPerScaleMarkButtonTrackBar.PostFixText = " pixel/目盛";
             this.pixelPerScaleMarkButton.Text = this.PixelPerScaleMark + this.pixelPerScaleMarkButtonTrackBar.PostFixText;
+            this.rowHeightTrackBar.PreFixText = "行サイズ : ";
+            this.rowHeightTrackBar.PostFixText = " px";
+            this.rowHeightTrackBar.Minimum = 15;
+            this.rowHeightTrackBar.Maximum = 100;
+            this.rowHeightTrackBar.Value = 25;
+            this.rowHeightButton.Text = this.rowHeightTrackBar.PreFixText + this.RowHeight + this.rowHeightTrackBar.PostFixText;
+
             this.nsPerScaleMarkTrackBar.ValueChanged += new EventHandler(nsPerScaleMarkTrackBarTrackBarValueChanged);
             this.pixelPerScaleMarkButtonTrackBar.ValueChanged += new EventHandler(pixelPerScaleMarkButtonTrackBarValueChanged);
-            this.pixelPerScaleMarkButton.ButtonClick += new EventHandler(pixelPerScaleMarkButtonButtonClick);
+            this.rowHeightTrackBar.ValueChanged += new EventHandler(rowHeightTrackBarValueChanged);
+
             this.nsPerScaleMarkButton.ButtonClick += new EventHandler(nsPerScaleMarkButtonButtonClick);
+            this.pixelPerScaleMarkButton.ButtonClick += new EventHandler(pixelPerScaleMarkButtonButtonClick);
+            this.rowHeightButton.ButtonClick += new EventHandler(rowHeightButtonButtonClick);
+
             this.pixelPerScaleMarkAddButton.Click += new EventHandler(pixelPerScaleMarkAddButtonClick);
             this.pixelPerScaleMarkSubtractButton.Click += new EventHandler(pixelPerScaleMarkSubtractButtonClick);
             this.nsPerScaleMarkAddButton.Click += new EventHandler(nsPerScaleMarkAddButtonClick);
             this.nsPerScaleMarkSubtractButton.Click += new EventHandler(nsPerScaleMarkSubtractButtonClick);
+            this.rowHeightAddButton.Click += new EventHandler(rowHeightAddButtonClick);
+            this.rowHeightSubtractButton.Click += new EventHandler(rowHeightSubtractButtonClick);
+        }
+
+        protected void rowHeightButtonButtonClick(object sender, EventArgs e)
+        {
+            this.rowHeightButton.ShowDropDown();
+        }
+
+        protected void rowHeightSubtractButtonClick(object sender, EventArgs e)
+        {
+            this.rowHeightTrackBar.Value -= this.rowHeightTrackBar.SmallChange;
+        }
+
+        protected void rowHeightAddButtonClick(object sender, EventArgs e)
+        {
+            this.rowHeightTrackBar.Value += this.rowHeightTrackBar.SmallChange;
+        }
+
+        protected void rowHeightTrackBarValueChanged(object sender, EventArgs e)
+        {
+            RowHeight = this.rowHeightTrackBar.Value;
         }
 
         protected void nsPerScaleMarkSubtractButtonClick(object sender, EventArgs e)

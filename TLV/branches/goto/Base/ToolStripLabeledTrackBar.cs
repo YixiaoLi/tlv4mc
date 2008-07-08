@@ -11,6 +11,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
     public class ToolStripLabeledTrackBar : ToolStripControlHost
     {
         private string postFixText = "";
+        private string preFixText = "";
 
         public ToolStripLabeledTrackBar() : base(new LabeledTrackBar())
         {
@@ -21,7 +22,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
         void ToolStripLabeledTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            ((LabeledTrackBar)Control).NowLabel = Value.ToString() + PostFixText;
+            ((LabeledTrackBar)Control).NowLabel = PreFixText + Value.ToString() + PostFixText;
         }
 
         public TickStyle TickStyle
@@ -62,7 +63,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 if (((LabeledTrackBar)Control).Value != value && ((LabeledTrackBar)Control).Maximum >= value && ((LabeledTrackBar)Control).Minimum <= value)
                 {
                     ((LabeledTrackBar)Control).Value = value;
-                    ((LabeledTrackBar)Control).NowLabel = Value.ToString() + PostFixText;
+                    ((LabeledTrackBar)Control).NowLabel = PreFixText + ((LabeledTrackBar)Control).Value.ToString() + PostFixText;
                 }
             }
         }
@@ -74,19 +75,13 @@ namespace NU.OJL.MPRTOS.TLV.Base
             {
                 ((LabeledTrackBar)Control).Maximum = value;
 
-                int order = (int)Math.Ceiling(Math.Log10((double)((LabeledTrackBar)Control).Maximum + 1D));
-                if(order > 2)
-                {
-                    order -= 2;
-                }
-                int orderVal = (int)Math.Pow(10D, (double)(order - 1));
+                int lc = ((LabeledTrackBar)Control).Maximum / 100;
 
-                ((LabeledTrackBar)Control).LargeChange = ((LabeledTrackBar)Control).Maximum / orderVal;
-                if (((LabeledTrackBar)Control).LargeChange != 0)
-                {
-                    ((LabeledTrackBar)Control).TickFrequency = ((LabeledTrackBar)Control).Maximum / 100;
-                }
-                ((LabeledTrackBar)Control).MaxLabel = value.ToString() + PostFixText;
+                ((LabeledTrackBar)Control).LargeChange = lc < 1 ? 1 : lc;
+
+                ((LabeledTrackBar)Control).TickFrequency = ((LabeledTrackBar)Control).LargeChange;
+
+                ((LabeledTrackBar)Control).MaxLabel = PreFixText + value.ToString() + PostFixText;
             }
         }
 
@@ -96,7 +91,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             set
             {
                 ((LabeledTrackBar)Control).Minimum = value;
-                ((LabeledTrackBar)Control).MinLabel = value.ToString() + PostFixText;
+                ((LabeledTrackBar)Control).MinLabel = PreFixText + value.ToString() + PostFixText;
             }
         }
 
@@ -126,9 +121,24 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 if (postFixText != value)
                 {
                     postFixText = value;
-                    ((LabeledTrackBar)Control).NowLabel = ((LabeledTrackBar)Control).NowLabel.ToString() + PostFixText;
-                    ((LabeledTrackBar)Control).MinLabel = ((LabeledTrackBar)Control).MinLabel.ToString() + PostFixText;
-                    ((LabeledTrackBar)Control).MaxLabel = ((LabeledTrackBar)Control).MaxLabel.ToString() + PostFixText;
+                    ((LabeledTrackBar)Control).NowLabel = PreFixText + ((LabeledTrackBar)Control).NowLabel.ToString() + PostFixText;
+                    ((LabeledTrackBar)Control).MinLabel = PreFixText + ((LabeledTrackBar)Control).MinLabel.ToString() + PostFixText;
+                    ((LabeledTrackBar)Control).MaxLabel = PreFixText + ((LabeledTrackBar)Control).MaxLabel.ToString() + PostFixText;
+                }
+            }
+        }
+
+        public string PreFixText
+        {
+            get { return preFixText; }
+            set
+            {
+                if (preFixText != value)
+                {
+                    preFixText = value;
+                    ((LabeledTrackBar)Control).NowLabel = PreFixText + ((LabeledTrackBar)Control).NowLabel.ToString() + PostFixText;
+                    ((LabeledTrackBar)Control).MinLabel = PreFixText + ((LabeledTrackBar)Control).MinLabel.ToString() + PostFixText;
+                    ((LabeledTrackBar)Control).MaxLabel = PreFixText + ((LabeledTrackBar)Control).MaxLabel.ToString() + PostFixText;
                 }
             }
         }

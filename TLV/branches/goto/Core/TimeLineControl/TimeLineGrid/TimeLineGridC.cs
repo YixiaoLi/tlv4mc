@@ -31,7 +31,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             BindPToA("PixelPerScaleMark", typeof(int), "PixelPerScaleMark", SearchAFlags.Self);
             BindPToA("NowMarkerTime", typeof(ulong), "NowMarkerTime", SearchAFlags.Self);
             BindPToA("NowMarkerColor", typeof(Color), "NowMarkerColor", SearchAFlags.Self);
+            BindPToA("MaxRowHeight", typeof(int), "MaxRowHeight", SearchAFlags.Self);
+            BindPToA("MinRowHeight", typeof(int), "MinRowHeight", SearchAFlags.Self);
+            BindPToA("NowRowHeight", typeof(int), "NowRowHeight", SearchAFlags.Self);
         }
+
 
     }
 }

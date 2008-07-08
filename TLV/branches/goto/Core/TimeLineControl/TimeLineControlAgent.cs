@@ -82,8 +82,129 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                         new TimeLineEvent(600000, Verb.RUN),
                         new TimeLineEvent(700000, Verb.DORMANT),
                     })),
+                new TestObject("task4", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task5", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task6", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task7", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task8", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task9", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task10", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task11", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task12", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task13", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task14", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task15", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task16", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task17", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task18", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task19", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task20", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task21", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task22", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task23", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task24", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task25", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task26", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
+                new TestObject("task27", new TimeLineEvents(new List<TimeLineEvent>()
+                    {
+                        new TimeLineEvent(100239, Verb.DORMANT),
+                        new TimeLineEvent(800000, Verb.DORMANT),
+                    })),
             });
 
+            timeLineGridAgent.P.NowRowHeight = 25;
         }
 
         private void timeLineGridPSizeChanged(object sender, EventArgs e)

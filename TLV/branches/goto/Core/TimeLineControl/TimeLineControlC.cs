@@ -20,6 +20,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             BindPToA("MaximumNsPerScaleMark", typeof(ulong), "MaximumNsPerScaleMark", SearchAFlags.Children);
             BindPToA("NsPerScaleMark", typeof(ulong), "NsPerScaleMark", SearchAFlags.Children);
             BindPToA("PixelPerScaleMark", typeof(int), "PixelPerScaleMark", SearchAFlags.Children);
+            BindPToA("RowHeight", typeof(int), "NowRowHeight", SearchAFlags.Children);
+            BindPToA("MaxRowHeight", typeof(int), "MaxRowHeight", SearchAFlags.Children);
+            BindPToA("MinRowHeight", typeof(int), "MinRowHeight", SearchAFlags.Children);
         }
     }
 }

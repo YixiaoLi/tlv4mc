@@ -196,12 +196,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
         public TimeLineP(string name, ScaleMarkDirection scaleMarkDirection)
         {
             this.Name = name;
-            this.BackColor = Color.Transparent;
             this.Height = 30;
-            this.DoubleBuffered = true;
             this.ScaleMarkDirection = scaleMarkDirection;
             this.IsDisplayNowMarkTime = true;
             this.timeMarkLabelFont = new Font(FontFamily.GenericMonospace, 8);
+            this.SetStyle(WinForms.ControlStyles.ResizeRedraw | WinForms.ControlStyles.Opaque, true);
         }
 
         protected override void Dispose(bool disposing)
@@ -220,6 +219,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 {
                     drawTimeLine(tmpBmpGraphics, backRect.Width, backRect.Height);
                 }
+                e.Graphics.FillRectangle(new SolidBrush(this.BackColor), new Rectangle(0, 0, timeLineX, Height));
                 e.Graphics.DrawImage(tmpBmp, TimeLineX, 0);
             }
         }
@@ -378,12 +378,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                         nowLabelMiddleY = labelY;
                     };
 
+                    int margin = 2;
+
                     PointF[] points = new[] {
-                        new PointF(x - (timeSize.Width / 2), nowLabelTopY),
-                        new PointF(x + (timeSize.Width / 2), nowLabelTopY),
-                        new PointF(x + (timeSize.Width / 2), nowLabelMiddleY),
+                        new PointF(x - (timeSize.Width / 2) - margin, nowLabelTopY),
+                        new PointF(x + (timeSize.Width / 2) + margin, nowLabelTopY),
+                        new PointF(x + (timeSize.Width / 2) + margin, nowLabelMiddleY),
                         new PointF(x, nowLabelBottomY),
-                        new PointF(x - (timeSize.Width / 2), nowLabelMiddleY),
+                        new PointF(x - (timeSize.Width / 2) - margin, nowLabelMiddleY),
                     };
 
                     tmpBmpGraphics.SmoothingMode = SmoothingMode.HighQuality;

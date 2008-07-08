@@ -35,6 +35,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private bool isShownCursor = true;
         private Color nowMarkerColor;
         private ulong nowMarkerTime = 0;
+        private int maxRowHeight = 0;
+        private int minRowHeight = 0;
+        private int rowHeight = 0;
             
         #endregion
 
@@ -252,6 +255,44 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
             }
         }
+        public int NowRowHeight
+        {
+            get { return rowHeight; }
+            set
+            {
+                if (rowHeight != value && value != 0)
+                {
+                    rowHeight = value;
+                    AllRowsHeight = rowHeight * this.Rows.Count + this.ColumnHeadersHeight;
+                    NotifyPropertyChanged("NowRowHeight");
+                }
+            }
+        }
+        public int MaxRowHeight
+        {
+            get { return maxRowHeight; }
+            set
+            {
+                if (maxRowHeight != value)
+                {
+                    maxRowHeight = value;
+                    NotifyPropertyChanged("MaxRowHeight");
+                }
+            }
+        }
+        public int MinRowHeight
+        {
+            get { return minRowHeight; }
+            set
+            {
+                if (minRowHeight != value)
+                {
+                    minRowHeight = value;
+
+                    NotifyPropertyChanged("MinRowHeight");
+                }
+            }
+        }
 
         #endregion
 
@@ -282,6 +323,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             this.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             this.ColumnHeadersHeight = 30;
             this.RowTemplate.Height = 25;
+            this.rowHeight = this.RowTemplate.Height;
 
             #endregion
 
@@ -341,7 +383,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         protected override void OnRowsAdded(DataGridViewRowsAddedEventArgs e)
         {
             base.OnRowsAdded(e);
-            AllRowsHeight += e.RowCount * this.RowTemplate.Height;
+            AllRowsHeight += e.RowCount * rowHeight;
 
             RowChanged(this, EventArgs.Empty);
         }
@@ -349,7 +391,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         protected override void OnRowsRemoved(DataGridViewRowsRemovedEventArgs e)
         {
             base.OnRowsRemoved(e);
-            AllRowsHeight -= e.RowCount * this.RowTemplate.Height;
+            AllRowsHeight -= e.RowCount * rowHeight;
 
             RowChanged(this, EventArgs.Empty);
         }
@@ -453,6 +495,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             }
         }
 
+        protected override void OnScroll(ScrollEventArgs e)
+        {
+            base.OnScroll(e);
+            Refresh();
+        }
+
         #endregion
 
         #region パブリックメソッド
@@ -497,38 +545,42 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         private void autoResizeRows()
         {
-            int rowHeight = 0;
+            int rh = 0;
             int heightInParent = parentSize.Height - (this.Margin.Top + this.Margin.Bottom);
             switch(RowSizeMode)
             {
                 case RowSizeMode.Fix:
+                    rh = this.rowHeight;
                     if (heightInParent < allRowsHeight)
                     {
-                        maxRowsHeight = heightInParent - ((heightInParent - this.ColumnHeadersHeight) % this.RowTemplate.Height);
+                        maxRowsHeight = heightInParent - ((heightInParent - this.ColumnHeadersHeight) % rh);
                         this.Height = maxRowsHeight;
                     }
                     else if (this.Height != allRowsHeight)
                     {
                         this.Height = allRowsHeight;
                     }
-                    rowHeight = this.RowTemplate.Height;
+                    MinRowHeight = this.FontHeight + 3;
                     break;
 
                 case RowSizeMode.Fill:
                     if (heightInParent != 0 && this.Rows.Count != 0)
                     {
-                        rowHeight = (heightInParent - this.ColumnHeadersHeight) / this.Rows.Count;
-                        rowHeight = rowHeight < this.RowTemplate.Height ? this.RowTemplate.Height : rowHeight;
-                        maxRowsHeight = heightInParent - ((heightInParent - this.ColumnHeadersHeight) % rowHeight);
+                        rh = (heightInParent - this.ColumnHeadersHeight) / this.Rows.Count;
+                        rh = rh < this.rowHeight ? this.rowHeight : rh;
+                        maxRowsHeight = heightInParent - ((heightInParent - this.ColumnHeadersHeight) % rh);
+                        MinRowHeight = (heightInParent - this.ColumnHeadersHeight) / this.Rows.Count;
+                        rowHeight = rh;
+                        NotifyPropertyChanged("NowRowHeight");
                         this.Height = maxRowsHeight;
                     }
                     break;
             }
             foreach (DataGridViewRow row in this.Rows)
             {
-                if (row.Height != rowHeight)
+                if (row.Height != rh)
                 {
-                    row.Height = rowHeight;
+                    row.Height = rh;
                 }
             }
         }

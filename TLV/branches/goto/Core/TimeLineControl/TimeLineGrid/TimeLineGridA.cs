@@ -20,6 +20,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private int pixelPerScaleMark = 5;
         private ulong nowMarkerTime = 0;
         private Color nowMarkerColor = Color.FromArgb(255, Color.Red);
+        private int maxRowHeight = 0;
+        private int minRowHeight = 0;
+        private int rowHeight = 0;
 
         public RowSizeMode RowSizeMode
         {
@@ -162,6 +165,43 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     nowMarkerColor = value;
                     NotifyPropertyChanged("NowMarkerColor");
+                }
+            }
+        }
+        public int NowRowHeight
+        {
+            get { return rowHeight; }
+            set
+            {
+                if (rowHeight != value)
+                {
+                    rowHeight = value;
+                    NotifyPropertyChanged("NowRowHeight");
+                }
+            }
+        }
+        public int MaxRowHeight
+        {
+            get { return maxRowHeight; }
+            set
+            {
+                if (maxRowHeight != value)
+                {
+                    maxRowHeight = value;
+                    NotifyPropertyChanged("MaxRowHeight");
+                }
+            }
+        }
+        public int MinRowHeight
+        {
+            get { return minRowHeight; }
+            set
+            {
+                if (minRowHeight != value)
+                {
+                    minRowHeight = value;
+
+                    NotifyPropertyChanged("MinRowHeight");
                 }
             }
         }
