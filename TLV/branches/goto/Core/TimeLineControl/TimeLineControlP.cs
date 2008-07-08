@@ -84,8 +84,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 
                     this.pixelPerScaleMarkButtonTrackBar.Value = pixelPerScaleMark;
 
-                    this.nsPerScaleMarkTrackBar.Minimum = pixelPerScaleMark;
-
                     this.pixelPerScaleMarkButton.Text = this.pixelPerScaleMarkButtonTrackBar.PreFixText + value + this.pixelPerScaleMarkButtonTrackBar.PostFixText;
 
                     NotifyPropertyChanged("PixelPerScaleMark");
@@ -264,14 +262,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             if (RowSizeMode == RowSizeMode.Fill)
             {
                 this.fillFixRowButton.Image = Resources.fixRowButton;
-                this.fillFixRowButton.Text = "行サイズを固定にする";
+                this.fillFixRowButton.Text = "行サイズ固定";
                 this.fillFixRowButton.ToolTipText = this.fillFixRowButton.Text;
+                this.rowHeightButton.Visible = false;
+                this.rowHeightAddButton.Visible = false;
+                this.rowHeightSubtractButton.Visible = false;
             }
             else
             {
                 this.fillFixRowButton.Image = Resources.fillRowButton;
-                this.fillFixRowButton.Text = "行サイズを可変にする";
+                this.fillFixRowButton.Text = "行サイズ自動調整";
                 this.fillFixRowButton.ToolTipText = this.fillFixRowButton.Text;
+                this.rowHeightButton.Visible = true;
+                this.rowHeightAddButton.Visible = true;
+                this.rowHeightSubtractButton.Visible = true;
             }
         }
 

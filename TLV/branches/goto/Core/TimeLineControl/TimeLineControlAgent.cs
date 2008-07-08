@@ -204,6 +204,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                     })),
             });
 
+            timeLineGridAgent.P.MinRowHeight = 15;
             timeLineGridAgent.P.NowRowHeight = 25;
         }
 

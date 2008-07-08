@@ -22,20 +22,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.nsPerScaleMarkAddButton = new System.Windows.Forms.ToolStripButton();
             this.nsPerScaleMarkButton = new System.Windows.Forms.ToolStripSplitButton();
-            this.nsPerScaleMarkTrackBar = new NU.OJL.MPRTOS.TLV.Base.ToolStripLabeledTrackBar();
             this.nsPerScaleMarkSubtractButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.pixelPerScaleMarkAddButton = new System.Windows.Forms.ToolStripButton();
             this.pixelPerScaleMarkButton = new System.Windows.Forms.ToolStripSplitButton();
-            this.pixelPerScaleMarkButtonTrackBar = new NU.OJL.MPRTOS.TLV.Base.ToolStripLabeledTrackBar();
             this.pixelPerScaleMarkSubtractButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.rowHeightAddButton = new System.Windows.Forms.ToolStripButton();
             this.rowHeightButton = new System.Windows.Forms.ToolStripSplitButton();
-            this.rowHeightTrackBar = new NU.OJL.MPRTOS.TLV.Base.ToolStripLabeledTrackBar();
             this.rowHeightSubtractButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.fillFixRowButton = new System.Windows.Forms.ToolStripButton();
+            this.nsPerScaleMarkTrackBar = new NU.OJL.MPRTOS.TLV.Base.ToolStripLabeledTrackBar();
+            this.pixelPerScaleMarkButtonTrackBar = new NU.OJL.MPRTOS.TLV.Base.ToolStripLabeledTrackBar();
+            this.rowHeightTrackBar = new NU.OJL.MPRTOS.TLV.Base.ToolStripLabeledTrackBar();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -75,11 +75,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.pixelPerScaleMarkButton,
             this.pixelPerScaleMarkSubtractButton,
             this.toolStripSeparator3,
+            this.fillFixRowButton,
+            this.toolStripSeparator4,
             this.rowHeightAddButton,
             this.rowHeightButton,
-            this.rowHeightSubtractButton,
-            this.toolStripSeparator4,
-            this.fillFixRowButton});
+            this.rowHeightSubtractButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(702, 25);
@@ -139,27 +139,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.nsPerScaleMarkButton.Size = new System.Drawing.Size(65, 22);
             this.nsPerScaleMarkButton.Text = "ns/目盛";
             // 
-            // nsPerScaleMarkTrackBar
-            // 
-            this.nsPerScaleMarkTrackBar.AutoSize = false;
-            this.nsPerScaleMarkTrackBar.BackColor = System.Drawing.Color.Transparent;
-            this.nsPerScaleMarkTrackBar.LargeChange = 100;
-            this.nsPerScaleMarkTrackBar.Maximum = 100;
-            this.nsPerScaleMarkTrackBar.MaxLabel = "maxValue";
-            this.nsPerScaleMarkTrackBar.Minimum = 0;
-            this.nsPerScaleMarkTrackBar.MinLabel = "minValue";
-            this.nsPerScaleMarkTrackBar.Name = "nsPerScaleMarkTrackBar";
-            this.nsPerScaleMarkTrackBar.NowLabel = "0";
-            this.nsPerScaleMarkTrackBar.PostFixText = "";
-            this.nsPerScaleMarkTrackBar.PreFixText = "";
-            this.nsPerScaleMarkTrackBar.Size = new System.Drawing.Size(400, 36);
-            this.nsPerScaleMarkTrackBar.SmallChange = 1;
-            this.nsPerScaleMarkTrackBar.Text = "toolStripLabeledTrackBar1";
-            this.nsPerScaleMarkTrackBar.TickFrequency = 10;
-            this.nsPerScaleMarkTrackBar.TickStyle = System.Windows.Forms.TickStyle.BottomRight;
-            this.nsPerScaleMarkTrackBar.TrackBarSize = new System.Drawing.Size(400, 36);
-            this.nsPerScaleMarkTrackBar.Value = 0;
-            // 
             // nsPerScaleMarkSubtractButton
             // 
             this.nsPerScaleMarkSubtractButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -193,27 +172,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.pixelPerScaleMarkButton.Name = "pixelPerScaleMarkButton";
             this.pixelPerScaleMarkButton.Size = new System.Drawing.Size(77, 22);
             this.pixelPerScaleMarkButton.Text = "pixel/目盛";
-            // 
-            // pixelPerScaleMarkButtonTrackBar
-            // 
-            this.pixelPerScaleMarkButtonTrackBar.AutoSize = false;
-            this.pixelPerScaleMarkButtonTrackBar.BackColor = System.Drawing.Color.Transparent;
-            this.pixelPerScaleMarkButtonTrackBar.LargeChange = 1;
-            this.pixelPerScaleMarkButtonTrackBar.Maximum = 10;
-            this.pixelPerScaleMarkButtonTrackBar.MaxLabel = "minValue";
-            this.pixelPerScaleMarkButtonTrackBar.Minimum = 0;
-            this.pixelPerScaleMarkButtonTrackBar.MinLabel = "minValue";
-            this.pixelPerScaleMarkButtonTrackBar.Name = "pixelPerScaleMarkButtonTrackBar";
-            this.pixelPerScaleMarkButtonTrackBar.NowLabel = "nowValue";
-            this.pixelPerScaleMarkButtonTrackBar.PostFixText = "";
-            this.pixelPerScaleMarkButtonTrackBar.PreFixText = "";
-            this.pixelPerScaleMarkButtonTrackBar.Size = new System.Drawing.Size(400, 36);
-            this.pixelPerScaleMarkButtonTrackBar.SmallChange = 1;
-            this.pixelPerScaleMarkButtonTrackBar.Text = "toolStripLabeledTrackBar1";
-            this.pixelPerScaleMarkButtonTrackBar.TickFrequency = 100;
-            this.pixelPerScaleMarkButtonTrackBar.TickStyle = System.Windows.Forms.TickStyle.BottomRight;
-            this.pixelPerScaleMarkButtonTrackBar.TrackBarSize = new System.Drawing.Size(400, 36);
-            this.pixelPerScaleMarkButtonTrackBar.Value = 0;
             // 
             // pixelPerScaleMarkSubtractButton
             // 
@@ -249,6 +207,71 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.rowHeightButton.Size = new System.Drawing.Size(35, 22);
             this.rowHeightButton.Text = "25";
             // 
+            // rowHeightSubtractButton
+            // 
+            this.rowHeightSubtractButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.rowHeightSubtractButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.subtractButton;
+            this.rowHeightSubtractButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.rowHeightSubtractButton.Name = "rowHeightSubtractButton";
+            this.rowHeightSubtractButton.Size = new System.Drawing.Size(23, 22);
+            this.rowHeightSubtractButton.Text = "toolStripButton2";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // fillFixRowButton
+            // 
+            this.fillFixRowButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.fillRowButton;
+            this.fillFixRowButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.fillFixRowButton.Name = "fillFixRowButton";
+            this.fillFixRowButton.Size = new System.Drawing.Size(116, 22);
+            this.fillFixRowButton.Text = "行サイズ自動調整";
+            this.fillFixRowButton.Click += new System.EventHandler(this.fillFixRowButtonClick);
+            // 
+            // nsPerScaleMarkTrackBar
+            // 
+            this.nsPerScaleMarkTrackBar.AutoSize = false;
+            this.nsPerScaleMarkTrackBar.BackColor = System.Drawing.Color.Transparent;
+            this.nsPerScaleMarkTrackBar.LargeChange = 100;
+            this.nsPerScaleMarkTrackBar.Maximum = 100;
+            this.nsPerScaleMarkTrackBar.MaxLabel = "maxValue";
+            this.nsPerScaleMarkTrackBar.Minimum = 0;
+            this.nsPerScaleMarkTrackBar.MinLabel = "minValue";
+            this.nsPerScaleMarkTrackBar.Name = "nsPerScaleMarkTrackBar";
+            this.nsPerScaleMarkTrackBar.NowLabel = "0";
+            this.nsPerScaleMarkTrackBar.PostFixText = "";
+            this.nsPerScaleMarkTrackBar.PreFixText = "";
+            this.nsPerScaleMarkTrackBar.Size = new System.Drawing.Size(400, 36);
+            this.nsPerScaleMarkTrackBar.SmallChange = 1;
+            this.nsPerScaleMarkTrackBar.Text = "toolStripLabeledTrackBar1";
+            this.nsPerScaleMarkTrackBar.TickFrequency = 10;
+            this.nsPerScaleMarkTrackBar.TickStyle = System.Windows.Forms.TickStyle.BottomRight;
+            this.nsPerScaleMarkTrackBar.TrackBarSize = new System.Drawing.Size(400, 36);
+            this.nsPerScaleMarkTrackBar.Value = 0;
+            // 
+            // pixelPerScaleMarkButtonTrackBar
+            // 
+            this.pixelPerScaleMarkButtonTrackBar.AutoSize = false;
+            this.pixelPerScaleMarkButtonTrackBar.BackColor = System.Drawing.Color.Transparent;
+            this.pixelPerScaleMarkButtonTrackBar.LargeChange = 1;
+            this.pixelPerScaleMarkButtonTrackBar.Maximum = 10;
+            this.pixelPerScaleMarkButtonTrackBar.MaxLabel = "minValue";
+            this.pixelPerScaleMarkButtonTrackBar.Minimum = 0;
+            this.pixelPerScaleMarkButtonTrackBar.MinLabel = "minValue";
+            this.pixelPerScaleMarkButtonTrackBar.Name = "pixelPerScaleMarkButtonTrackBar";
+            this.pixelPerScaleMarkButtonTrackBar.NowLabel = "nowValue";
+            this.pixelPerScaleMarkButtonTrackBar.PostFixText = "";
+            this.pixelPerScaleMarkButtonTrackBar.PreFixText = "";
+            this.pixelPerScaleMarkButtonTrackBar.Size = new System.Drawing.Size(400, 36);
+            this.pixelPerScaleMarkButtonTrackBar.SmallChange = 1;
+            this.pixelPerScaleMarkButtonTrackBar.Text = "toolStripLabeledTrackBar1";
+            this.pixelPerScaleMarkButtonTrackBar.TickFrequency = 100;
+            this.pixelPerScaleMarkButtonTrackBar.TickStyle = System.Windows.Forms.TickStyle.BottomRight;
+            this.pixelPerScaleMarkButtonTrackBar.TrackBarSize = new System.Drawing.Size(400, 36);
+            this.pixelPerScaleMarkButtonTrackBar.Value = 0;
+            // 
             // rowHeightTrackBar
             // 
             this.rowHeightTrackBar.AutoSize = false;
@@ -269,29 +292,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.rowHeightTrackBar.TickStyle = System.Windows.Forms.TickStyle.BottomRight;
             this.rowHeightTrackBar.TrackBarSize = new System.Drawing.Size(400, 36);
             this.rowHeightTrackBar.Value = 0;
-            // 
-            // rowHeightSubtractButton
-            // 
-            this.rowHeightSubtractButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.rowHeightSubtractButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.subtractButton;
-            this.rowHeightSubtractButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.rowHeightSubtractButton.Name = "rowHeightSubtractButton";
-            this.rowHeightSubtractButton.Size = new System.Drawing.Size(23, 22);
-            this.rowHeightSubtractButton.Text = "toolStripButton2";
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
-            // 
-            // fillFixRowButton
-            // 
-            this.fillFixRowButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.fillRowButton;
-            this.fillFixRowButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.fillFixRowButton.Name = "fillFixRowButton";
-            this.fillFixRowButton.Size = new System.Drawing.Size(129, 22);
-            this.fillFixRowButton.Text = "行サイズを可変にする";
-            this.fillFixRowButton.Click += new System.EventHandler(this.fillFixRowButtonClick);
             // 
             // TimeLineControlP
             // 

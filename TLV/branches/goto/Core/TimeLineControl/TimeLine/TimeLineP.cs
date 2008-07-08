@@ -403,10 +403,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
 
                 using (Graphics graphics = this.CreateGraphics())
                 {
-                    this.DoubleBuffered = true;
                     this.Refresh();
                     graphics.DrawImage(tmpBmp, backRect.X, backRect.Y);
-                    this.DoubleBuffered = false;
                 }
             }
         }
