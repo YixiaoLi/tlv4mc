@@ -23,7 +23,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             BindPToA("TimeLineMinimumX", typeof(int), "TimeLineMinimumX", SearchAFlags.AncestorsWithSiblings);
             BindPToA("BeginTime", typeof(ulong), "BeginTime", SearchAFlags.AncestorsWithSiblings);
             BindPToA("DisplayTimeLength", typeof(ulong), "DisplayTimeLength", SearchAFlags.AncestorsWithSiblings);
-            BindPToA("NsPerPixel", typeof(ulong), "NsPerPixel", SearchAFlags.AncestorsWithSiblings);
+            BindPToA("NsPerScaleMark", typeof(ulong), "NsPerScaleMark", SearchAFlags.AncestorsWithSiblings);
+            BindPToA("PixelPerScaleMark", typeof(int), "PixelPerScaleMark", SearchAFlags.AncestorsWithSiblings);
 
             this.P.TimeLineXResizing += (MouseEventHandler)this.GetDelegate(typeof(MouseEventHandler), "TimeLineXResizing", SearchAFlags.AncestorsWithSiblings);
             this.P.TimeLineXResized += (MouseEventHandler)this.GetDelegate(typeof(MouseEventHandler), "TimeLineXResized", SearchAFlags.AncestorsWithSiblings);

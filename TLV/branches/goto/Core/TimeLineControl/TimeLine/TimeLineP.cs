@@ -23,9 +23,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
         private ulong minimumTime = 0;
         private ulong maximumTime = 0;
         private ulong beginTime = 0;
+        private ulong endTime = 0;
         private ulong displayTimeLength = 0;
-        private ulong nsPerPixel = 1;
+        private ulong nsPerScaleMark = 1;
+        private int pixelPerScaleMark = 5;
         private Font timeMarkLabelFont;
+        private ulong scaleMarkStartTime;
+        private int timeLineMarkLabelInterval;
+        private float scaleMarkHeight = 5;
 
         public ScaleMarkDirection ScaleMarkDirection { get; set; }
         public int TimeLineX
@@ -87,8 +92,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 if (beginTime != value)
                 {
                     beginTime = value;
+                    EndTime = value + DisplayTimeLength;
+                    int order = (int)Math.Ceiling(Math.Log10((double)nsPerScaleMark + 1D));
+                    scaleMarkStartTime = (ulong)(Math.Floor((double)BeginTime / Math.Pow(10D, order - 1)) * Math.Pow(10D, order - 1)) + nsPerScaleMark;
                     NotifyPropertyChanged("BeginTime");
                     this.Refresh();
+                }
+            }
+        }
+        public ulong EndTime
+        {
+            get { return endTime; }
+            set
+            {
+                if(endTime != value)
+                {
+                    endTime = value;
+                    int endTimeOrder = (int)Math.Ceiling(Math.Log10((double)EndTime + 1D));
+                    double timeLineMarkLabelWidth = getTimeMarkLabelWidth((ulong)Math.Pow(10, endTimeOrder)).Width;
+                    timeLineMarkLabelInterval = (int)Math.Ceiling(timeLineMarkLabelWidth / (double)pixelPerScaleMark);
+                    timeLineMarkLabelInterval += timeLineMarkLabelInterval % 2;
+                    timeLineMarkLabelInterval = (int)Math.Ceiling((double)timeLineMarkLabelInterval / 10D) * 10;
                 }
             }
         }
@@ -100,20 +124,45 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 if (displayTimeLength != value)
                 {
                     displayTimeLength = value;
+                    EndTime = BeginTime + value;
                     NotifyPropertyChanged("DisplayTimeLength");
                     this.Refresh();
                 }
             }
         }
-        public ulong NsPerPixel
+        public ulong NsPerScaleMark
         {
-            get { return nsPerPixel; }
+            get { return nsPerScaleMark; }
             set
             {
-                if (nsPerPixel != value)
+                if (nsPerScaleMark != value)
                 {
-                    nsPerPixel = value;
-                    NotifyPropertyChanged("NsPerPixel");
+                    nsPerScaleMark = value;
+
+                    int order = (int)Math.Ceiling(Math.Log10((double)nsPerScaleMark + 1D));
+                    scaleMarkStartTime = (ulong)(Math.Floor((double)BeginTime / Math.Pow(10D, order - 1)) * Math.Pow(10D, order - 1)) + nsPerScaleMark;
+
+                    NotifyPropertyChanged("NsPerScaleMark");
+                    this.Refresh();
+                }
+            }
+        }
+        public int PixelPerScaleMark
+        {
+            get { return pixelPerScaleMark; }
+            set
+            {
+                if (pixelPerScaleMark != value)
+                {
+                    pixelPerScaleMark = value;
+
+                    int endTimeOrder = (int)Math.Ceiling(Math.Log10((double)EndTime + 1D));
+                    double timeLineMarkLabelWidth = getTimeMarkLabelWidth((ulong)Math.Pow(10, endTimeOrder)).Width;
+                    timeLineMarkLabelInterval = (int)Math.Ceiling(timeLineMarkLabelWidth / (double)pixelPerScaleMark);
+                    timeLineMarkLabelInterval += timeLineMarkLabelInterval % 2;
+                    timeLineMarkLabelInterval = (int)Math.Ceiling((double)timeLineMarkLabelInterval / 10D) * 10;
+
+                    NotifyPropertyChanged("PixelPerScaleMark");
                     this.Refresh();
                 }
             }
@@ -212,29 +261,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             Rectangle backRect = new Rectangle(0, 0, width, height);
             graphics.FillRectangle(Brushes.Black, backRect);
 
-            ulong endTime = this.BeginTime + this.DisplayTimeLength;
-
-            int scaleMarkIntervalPixel = 4;
-            ulong scaleMarkIntervalTime = (ulong)scaleMarkIntervalPixel * nsPerPixel;
-            int order = (int)Math.Ceiling(Math.Log10((double)scaleMarkIntervalTime + 1D));
-            ulong scaleMarkStartTime = (ulong)(Math.Floor((double)BeginTime / Math.Pow(10D, order - 1)) * Math.Pow(10D, order - 1)) + scaleMarkIntervalTime;
-
-            int endTimeOrder = (int)Math.Ceiling(Math.Log10((double)endTime + 1D));
-            float timeLineMarkLabelWidth = getTimeMarkLabelWidth(graphics, (ulong)Math.Pow(10, endTimeOrder)).Width;
-            int timeLineMarkLabelInterval = (int)Math.Ceiling(timeLineMarkLabelWidth * (float)nsPerPixel / (float)scaleMarkIntervalTime);
-            timeLineMarkLabelInterval += timeLineMarkLabelInterval % 2;
-            timeLineMarkLabelInterval = (int)Math.Ceiling((double)timeLineMarkLabelInterval / 10D) * 10;
-
-            float scaleMarkHeight = 5;
             float scaleMarkY = height - scaleMarkHeight;
             if (ScaleMarkDirection == ScaleMarkDirection.Top)
             {
                 scaleMarkY = 0f;
             }
             int i = 1;
-            for (ulong time = scaleMarkStartTime; time < endTime; time += scaleMarkIntervalTime, i++)
+            for (ulong time = scaleMarkStartTime; time < EndTime; time += nsPerScaleMark, i++)
             {
-                float x = ((float)time - (float)BeginTime) / (float)nsPerPixel;
+                float x = (((float)time - (float)BeginTime) / (float)nsPerScaleMark) * pixelPerScaleMark;
                 float y = scaleMarkY;
                 float h = scaleMarkHeight;
                 if (i % timeLineMarkLabelInterval == 0 || i == 1)
@@ -267,7 +302,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
         {
             ulong nextTime = 0;
 
-            SizeF timeSize = getTimeMarkLabelWidth(graphics, time);
+            SizeF timeSize = getTimeMarkLabelWidth(time);
 
             float labelY = 1;
 
@@ -276,18 +311,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 labelY = this.Height - timeSize.Height - labelY;
             }
 
-            float x = ((float)time - (float)BeginTime) / (float)nsPerPixel;
+            float x = (((float)time - (float)BeginTime) / (float)nsPerScaleMark) * pixelPerScaleMark;
 
-            nextTime = time + (ulong)(((timeSize.Width / 2f) + 5f) * (float)nsPerPixel);
+            nextTime = time + (ulong)(((timeSize.Width / 2f) + 5f) * (float)nsPerScaleMark);
 
             graphics.DrawString(time.ToString(), timeMarkLabelFont, Brushes.White, x - (timeSize.Width / 2f), labelY);
 
             return nextTime;
         }
 
-        private SizeF getTimeMarkLabelWidth(Graphics graphics, ulong time)
+        private SizeF getTimeMarkLabelWidth(ulong time)
         {
-            return graphics.MeasureString(time.ToString(), timeMarkLabelFont);
+            SizeF size;
+            using (Graphics graphics = this.CreateGraphics())
+            {
+                size = graphics.MeasureString(time.ToString(), timeMarkLabelFont);
+            }
+            return size;
         }
 
     }

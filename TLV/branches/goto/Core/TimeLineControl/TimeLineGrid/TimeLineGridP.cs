@@ -27,7 +27,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private ulong maximumTime = 0;
         private ulong beginTime = 0;
         private ulong displayTimeLength = 0;
-        private ulong nsPerPixel = 1;
+        private ulong nsPerScaleMark = 1;
+        private ulong maximumNsPerScaleMark = 1;
+        private int pixelPerScaleMark = 5;
         public bool Edited = false;
             
         #endregion
@@ -97,16 +99,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 if (timeLineWidth != value)
                 {
                     timeLineWidth = value;
-                    ulong tmpDisplayTimeLength = NsPerPixel * (ulong)timeLineWidth;
-                    if (tmpDisplayTimeLength > MaximumTime - MinimumTime)
-                    {
-                        DisplayTimeLength = MaximumTime - BeginTime;
-                        NsPerPixel = (ulong)((decimal)DisplayTimeLength / (decimal)TimeLineWidth);
-                    }
-                    else
-                    {
-                        DisplayTimeLength = tmpDisplayTimeLength;
-                    }
+                    dispalyTimeLengthReCalc();
+                    MaximumNsPerScaleMark = (ulong)(((decimal)(MaximumTime - MinimumTime) / (decimal)TimeLineWidth) * (decimal)pixelPerScaleMark);
                     NotifyPropertyChanged("TimeLineWidth");
                 }
             }
@@ -173,15 +167,46 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
             }
         }
-        public ulong NsPerPixel
+        public ulong NsPerScaleMark
         {
-            get { return nsPerPixel; }
+            get { return nsPerScaleMark; }
             set
             {
-                if (nsPerPixel != value)
+                if (nsPerScaleMark != value && value != 0)
                 {
-                    nsPerPixel = value;
-                    NotifyPropertyChanged("NsPerPixel");
+                    nsPerScaleMark = value;
+
+                    dispalyTimeLengthReCalc();
+
+                    NotifyPropertyChanged("NsPerScaleMark");
+                }
+            }
+        }
+        public ulong MaximumNsPerScaleMark
+        {
+            get { return maximumNsPerScaleMark; }
+            set
+            {
+                if (maximumNsPerScaleMark != value)
+                {
+                    maximumNsPerScaleMark = value;
+                    NotifyPropertyChanged("MaximumNsPerScaleMark");
+                }
+            }
+        }
+        public int PixelPerScaleMark
+        {
+            get { return pixelPerScaleMark; }
+            set
+            {
+                if (pixelPerScaleMark != value)
+                {
+                    pixelPerScaleMark = value;
+
+                    dispalyTimeLengthReCalc();
+                    MaximumNsPerScaleMark = (ulong)(((decimal)(MaximumTime - MinimumTime) / (decimal)TimeLineWidth) * (decimal)pixelPerScaleMark);
+
+                    NotifyPropertyChanged("PixelPerScaleMark");
                 }
             }
         }
@@ -472,9 +497,32 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         private void beginTimeDisplayTimeLengthReCalc()
         {
-            BeginTime = MinimumTime;
-            DisplayTimeLength = MaximumTime - BeginTime;
-            NsPerPixel = (ulong)((decimal)DisplayTimeLength / (decimal)TimeLineWidth);
+            if (this.Rows.Count > 0)
+            {
+                BeginTime = MinimumTime;
+                if (MaximumTime > BeginTime)
+                {
+                    DisplayTimeLength = MaximumTime - BeginTime;
+                    MaximumNsPerScaleMark = (ulong)(((decimal)(MaximumTime - MinimumTime) / (decimal)TimeLineWidth) * (decimal)pixelPerScaleMark);
+                    nsPerScaleMark = (ulong)(((decimal)DisplayTimeLength / (decimal)TimeLineWidth) * (decimal)pixelPerScaleMark);
+                    NotifyPropertyChanged("NsPerScaleMark");
+                }
+            }
+        }
+
+        private void dispalyTimeLengthReCalc()
+        {
+            ulong tmpDisplayTimeLength = (ulong)((decimal)nsPerScaleMark * ((decimal)TimeLineWidth / (decimal)pixelPerScaleMark));
+            if (beginTime + tmpDisplayTimeLength > MaximumTime)
+            {
+                DisplayTimeLength = MaximumTime - BeginTime;
+                nsPerScaleMark = (ulong)(((decimal)DisplayTimeLength / (decimal)TimeLineWidth) * (decimal)pixelPerScaleMark);
+                NotifyPropertyChanged("NsPerScaleMark");
+            }
+            else
+            {
+                DisplayTimeLength = tmpDisplayTimeLength;
+            }
         }
 
         private void minTimeMaxTimeReCalc()

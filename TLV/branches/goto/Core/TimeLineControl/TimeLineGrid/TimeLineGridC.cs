@@ -24,7 +24,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             BindPToA("MaximumTime", typeof(ulong), "MaximumTime", SearchAFlags.Self);
             BindPToA("BeginTime", typeof(ulong), "BeginTime", SearchAFlags.Self);
             BindPToA("DisplayTimeLength", typeof(ulong), "DisplayTimeLength", SearchAFlags.Self);
-            BindPToA("NsPerPixel", typeof(ulong), "NsPerPixel", SearchAFlags.Self);
+            BindPToA("NsPerScaleMark", typeof(ulong), "NsPerScaleMark", SearchAFlags.Self);
+            BindPToA("MaximumNsPerScaleMark", typeof(ulong), "MaximumNsPerScaleMark", SearchAFlags.Self);
+            BindPToA("PixelPerScaleMark", typeof(int), "PixelPerScaleMark", SearchAFlags.Self);
         }
 
     }

@@ -18,6 +18,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
     public partial class TimeLineControlP : DockContent, IPresentation
     {
         private RowSizeMode rowSizeMode;
+        private ulong nsPerScaleMark = 1;
+        private ulong maximumNsPerScaleMark = 1;
+        private int pixelPerScaleMark;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -35,6 +38,53 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                 }
             }
         }
+        public ulong NsPerScaleMark
+        {
+            get { return nsPerScaleMark; }
+            set
+            {
+                if (nsPerScaleMark != value)
+                {
+                    nsPerScaleMark = value;
+
+                    this.nsPerScaleMarkTrackBar.Value = nsPerScaleMark > (ulong)nsPerScaleMarkTrackBar.Maximum ? nsPerScaleMarkTrackBar.Maximum : nsPerScaleMark < (ulong)nsPerScaleMarkTrackBar.Minimum ? nsPerScaleMarkTrackBar.Minimum : (int)nsPerScaleMark;
+                    
+                    NotifyPropertyChanged("NsPerScaleMark");
+                }
+            }
+        }
+        public ulong MaximumNsPerScaleMark
+        {
+            get { return maximumNsPerScaleMark; }
+            set
+            {
+                if (maximumNsPerScaleMark != value)
+                {
+                    maximumNsPerScaleMark = value;
+
+                    this.nsPerScaleMarkTrackBar.Maximum = maximumNsPerScaleMark > int.MaxValue ? int.MaxValue : maximumNsPerScaleMark < (ulong)nsPerScaleMarkTrackBar.Minimum ? nsPerScaleMarkTrackBar.Minimum : (int)maximumNsPerScaleMark;
+                    
+                    NotifyPropertyChanged("MaximumNsPerScaleMark");
+                }
+            }
+        }
+        public int PixelPerScaleMark
+        {
+            get { return pixelPerScaleMark; }
+            set
+            {
+                if (pixelPerScaleMark != value)
+                {
+                    pixelPerScaleMark = value;
+
+                    this.pixelPerScaleMarkButtonTrackBar.Value = pixelPerScaleMark;
+
+                    this.nsPerScaleMarkTrackBar.Minimum = pixelPerScaleMark;
+
+                    NotifyPropertyChanged("PixelPerScaleMark");
+                }
+            }
+        }
 
         public TimeLineControlP(string name)
         {
@@ -43,6 +93,36 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.Name = name;
             this.TabText = "タイムライン";
             this.RowSizeMode = RowSizeMode.Fill;
+            this.nsPerScaleMarkTrackBar.Minimum = pixelPerScaleMark;
+            this.pixelPerScaleMarkButtonTrackBar.Minimum = 3;
+            this.pixelPerScaleMarkButtonTrackBar.Maximum = 100;
+            this.PixelPerScaleMark = 5;
+            this.nsPerScaleMarkTrackBar.PostFixText = "ns/目盛";
+            this.pixelPerScaleMarkButtonTrackBar.PostFixText = "pixel/目盛";
+            this.nsPerScaleMarkTrackBar.ValueChanged += new EventHandler(nsPerScaleMarkTrackBarTrackBarValueChanged);
+            this.pixelPerScaleMarkButtonTrackBar.ValueChanged += new EventHandler(pixelPerScaleMarkButtonTrackBarValueChanged);
+            this.pixelPerScaleMarkButton.ButtonClick += new EventHandler(pixelPerScaleMarkButtonButtonClick);
+            this.nsPerScaleMarkButton.ButtonClick += new EventHandler(nsPerScaleMarkButtonButtonClick);
+        }
+
+        protected void nsPerScaleMarkButtonButtonClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void pixelPerScaleMarkButtonButtonClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void pixelPerScaleMarkButtonTrackBarValueChanged(object sender, EventArgs e)
+        {
+            PixelPerScaleMark = this.pixelPerScaleMarkButtonTrackBar.Value;
+        }
+
+        protected void nsPerScaleMarkTrackBarTrackBarValueChanged(object sender, EventArgs e)
+        {
+            NsPerScaleMark = (ulong)this.nsPerScaleMarkTrackBar.Value;
         }
 
         protected override void OnParentChanged(EventArgs e)

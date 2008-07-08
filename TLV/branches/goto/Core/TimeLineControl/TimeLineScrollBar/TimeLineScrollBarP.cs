@@ -13,7 +13,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar
         private ulong maximumTime = 0;
         private ulong beginTime = 0;
         private ulong displayTimeLength = 0;
-        private int smallChangePerLargeChange = 20;
+        private int smallChangePerLargeChange = 100;
 
         public int X
         {
@@ -28,7 +28,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar
                 if (minimumTime != value)
                 {
                     minimumTime = value;
-                    minimumReCalc();
                     NotifyPropertyChanged("MinimumTime");
                 }
             }
@@ -41,7 +40,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar
                 if (maximumTime != value)
                 {
                     maximumTime = value;
-                    minimumReCalc();
                     NotifyPropertyChanged("MaximumTime");
                 }
             }
@@ -54,6 +52,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar
                 if (beginTime != value)
                 {
                     beginTime = value;
+
                     NotifyPropertyChanged("BeginTime");
                 }
             }
@@ -77,8 +76,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar
         public TimeLineScrollBarP(string name)
         {
             this.Name = name;
-            this.Minimum = 0;
+            this.Minimum = 1;
             this.Maximum = int.MaxValue;
+            this.Value = 1;
         }
 
         public void Add(IPresentation presentation)
@@ -97,8 +97,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar
         protected override void OnValueChanged(EventArgs e)
         {
             base.OnValueChanged(e);
-            ulong bt = (ulong)(((decimal)Value * (decimal)maximumTime) / (decimal)int.MaxValue);
-            BeginTime = bt < minimumTime ? minimumTime : bt;
+            BeginTime = valueToTime(Value);
         }
 
         protected void NotifyPropertyChanged(string info)
@@ -111,18 +110,40 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar
 
         protected void minimumReCalc()
         {
-            decimal t = (decimal)minimumTime / (decimal)Math.Max(maximumTime, 1);
-            int min =(decimal)Maximum * t > (decimal)(int.MaxValue) ? int.MaxValue : (int)((decimal)Maximum * t);
-            Minimum = min > Maximum ? Maximum : min < 0 ? 0 : min;
-            this.Value = Minimum;
+            Minimum = timeToValue(minimumTime);
+            if(Value == 0)
+            {
+                Value = Minimum;
+            }
         }
 
         protected void displayTimeLengthReCalc()
         {
-            decimal t = (decimal)displayTimeLength / (decimal)Math.Max(maximumTime, 1);
-            int lc = (decimal)Maximum * t > (decimal)(int.MaxValue) ? int.MaxValue : (int)((decimal)Maximum * t);
-            LargeChange = lc > Maximum ? Maximum : lc < 1 ? 1 : lc;
-            SmallChange = LargeChange / smallChangePerLargeChange > Maximum ? Maximum : LargeChange / smallChangePerLargeChange < 1 ? 1 : LargeChange / smallChangePerLargeChange;
+            LargeChange = timeToValue(beginTime + displayTimeLength) - timeToValue(beginTime);
+            SmallChange = LargeChange / smallChangePerLargeChange < 1 ? 1 : LargeChange / smallChangePerLargeChange;
+
+            Value = timeToValue(beginTime);
+        }
+
+        protected int timeToValue(ulong time)
+        {
+            if (maximumTime - minimumTime != 0)
+            {
+                decimal i = (decimal)(maximumTime - minimumTime) / (decimal)(Maximum - Minimum);
+                decimal v = ((decimal)time - ((decimal)minimumTime - i)) / i;
+                return (int)(v > (decimal)(int.MaxValue) ? int.MaxValue : v < 1 ? 1 : v);
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
+        protected ulong valueToTime(int value)
+        {
+            decimal i = (decimal)(maximumTime - minimumTime) / (decimal)(Maximum - Minimum);
+            decimal t = i * (decimal)value + ((decimal)minimumTime - i);
+            return (ulong)(t > (decimal)(maximumTime) ? maximumTime : t < (decimal)minimumTime ? minimumTime : t);
         }
 
     }

@@ -13,7 +13,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private ulong maximumTime = 0;
         private ulong beginTime = 0;
         private ulong displayTimeLength = 0;
-        private ulong nsPerPixel = 1;
+        private ulong nsPerScaleMark = 1;
+        private ulong maximumNsPerScaleMark = 1;
+        private int pixelPerScaleMark = 5;
 
         public RowSizeMode RowSizeMode
         {
@@ -99,15 +101,39 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
             }
         }
-        public ulong NsPerPixel
+        public ulong NsPerScaleMark
         {
-            get { return nsPerPixel; }
+            get { return nsPerScaleMark; }
             set
             {
-                if (nsPerPixel != value)
+                if (nsPerScaleMark != value)
                 {
-                    nsPerPixel = value;
-                    NotifyPropertyChanged("NsPerPixel");
+                    nsPerScaleMark = value;
+                    NotifyPropertyChanged("NsPerScaleMark");
+                }
+            }
+        }
+        public ulong MaximumNsPerScaleMark
+        {
+            get { return maximumNsPerScaleMark; }
+            set
+            {
+                if (maximumNsPerScaleMark != value)
+                {
+                    maximumNsPerScaleMark = value;
+                    NotifyPropertyChanged("MaximumNsPerScaleMark");
+                }
+            }
+        }
+        public int PixelPerScaleMark
+        {
+            get { return pixelPerScaleMark; }
+            set
+            {
+                if (pixelPerScaleMark != value)
+                {
+                    pixelPerScaleMark = value;
+                    NotifyPropertyChanged("PixelPerScaleMark");
                 }
             }
         }
