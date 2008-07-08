@@ -288,7 +288,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             }
 
             ulong st = (ulong)Math.Floor((double)(beginTime - scaleMarkStartTime) / (double)nsPerScaleMark);
-            ulong i = st;
+            int i = (int)st;
             st *= nsPerScaleMark;
 
             for (ulong time = scaleMarkStartTime + st; time <= EndTime + nsPerScaleMark*2; time += nsPerScaleMark, i++)
@@ -296,7 +296,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 float x = timeToX(time);
                 float y = scaleMarkY;
                 float h = scaleMarkHeight;
-                if (i % (ulong)timeLineMarkLabelInterval == 0)
+                if (i % timeLineMarkLabelInterval == 0)
                 {
                     drawTimeMarkLabel(graphics, time);
                 }
