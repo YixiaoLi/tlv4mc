@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
@@ -27,6 +29,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             BindPToA("NsPerScaleMark", typeof(ulong), "NsPerScaleMark", SearchAFlags.Self);
             BindPToA("MaximumNsPerScaleMark", typeof(ulong), "MaximumNsPerScaleMark", SearchAFlags.Self);
             BindPToA("PixelPerScaleMark", typeof(int), "PixelPerScaleMark", SearchAFlags.Self);
+            BindPToA("NowMarkerTime", typeof(ulong), "NowMarkerTime", SearchAFlags.Self);
+            BindPToA("NowMarkerColor", typeof(Color), "NowMarkerColor", SearchAFlags.Self);
         }
 
     }

@@ -121,13 +121,22 @@
   <data name="zoomInButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zoomInButton.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="addButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\addButton.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="zoomOutButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zoomOutButton.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fillRowButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fillRowButton.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="fixRowButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fixRowButton.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="fillRowButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fillRowButton.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="subtractButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\subtractButton.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cursorButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cursorButton.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

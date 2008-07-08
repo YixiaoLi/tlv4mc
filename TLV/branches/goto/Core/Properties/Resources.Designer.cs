@@ -60,6 +60,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap addButton {
+            get {
+                object obj = ResourceManager.GetObject("addButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap cursorButton {
+            get {
+                object obj = ResourceManager.GetObject("cursorButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap fillRowButton {
             get {
                 object obj = ResourceManager.GetObject("fillRowButton", resourceCulture);
@@ -70,6 +84,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         internal static System.Drawing.Bitmap fixRowButton {
             get {
                 object obj = ResourceManager.GetObject("fixRowButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap subtractButton {
+            get {
+                object obj = ResourceManager.GetObject("subtractButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

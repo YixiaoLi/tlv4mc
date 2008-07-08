@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 
@@ -16,6 +18,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private ulong nsPerScaleMark = 1;
         private ulong maximumNsPerScaleMark = 1;
         private int pixelPerScaleMark = 5;
+        private ulong nowMarkerTime = 0;
+        private Color nowMarkerColor = Color.FromArgb(255, Color.Red);
 
         public RowSizeMode RowSizeMode
         {
@@ -134,6 +138,30 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     pixelPerScaleMark = value;
                     NotifyPropertyChanged("PixelPerScaleMark");
+                }
+            }
+        }
+        public ulong NowMarkerTime
+        {
+            get { return nowMarkerTime; }
+            set
+            {
+                if (nowMarkerTime != value)
+                {
+                    nowMarkerTime = value;
+                    NotifyPropertyChanged("NowMarkerTime");
+                }
+            }
+        }
+        public Color NowMarkerColor
+        {
+            get { return nowMarkerColor; }
+            set
+            {
+                if (!nowMarkerColor.Equals(value))
+                {
+                    nowMarkerColor = value;
+                    NotifyPropertyChanged("NowMarkerColor");
                 }
             }
         }

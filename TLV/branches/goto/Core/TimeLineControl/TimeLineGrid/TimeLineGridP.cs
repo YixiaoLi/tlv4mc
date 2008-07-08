@@ -26,11 +26,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private ulong minimumTime = 0;
         private ulong maximumTime = 0;
         private ulong beginTime = 0;
+        private ulong endTime = 0;
         private ulong displayTimeLength = 0;
         private ulong nsPerScaleMark = 1;
         private ulong maximumNsPerScaleMark = 1;
         private int pixelPerScaleMark = 5;
         public bool Edited = false;
+        private bool isShownCursor = true;
+        private Color nowMarkerColor;
+        private ulong nowMarkerTime = 0;
             
         #endregion
 
@@ -151,7 +155,44 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 if (beginTime != value)
                 {
                     beginTime = value;
+                    EndTime = value + DisplayTimeLength;
                     NotifyPropertyChanged("BeginTime");
+                }
+            }
+        }
+        public ulong EndTime
+        {
+            get { return endTime; }
+            set
+            {
+                if (endTime != value)
+                {
+                    endTime = value;
+                }
+            }
+        }
+        public ulong NowMarkerTime
+        {
+            get { return nowMarkerTime; }
+            set
+            {
+                if (nowMarkerTime != value)
+                {
+                    nowMarkerTime = value;
+                    drawNowMarker(nowMarkerTime);
+                    NotifyPropertyChanged("NowMarkerTime");
+                }
+            }
+        }
+        public Color NowMarkerColor
+        {
+            get { return nowMarkerColor; }
+            set
+            {
+                if (!nowMarkerColor.Equals(value))
+                {
+                    nowMarkerColor = value;
+                    NotifyPropertyChanged("NowMarkerColor");
                 }
             }
         }
@@ -163,6 +204,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 if (displayTimeLength != value)
                 {
                     displayTimeLength = value;
+                    EndTime = value + BeginTime;
                     NotifyPropertyChanged("DisplayTimeLength");
                 }
             }
@@ -379,6 +421,38 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             }
         }
 
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            if (!isShownCursor)
+            {
+                Cursor.Show();
+                this.Cursor = Cursors.Default;
+                isShownCursor = true;
+                this.Refresh();
+                NowMarkerTime = 0;
+            }
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (e.X > this.TimeLineX && e.Y > this.ColumnHeadersHeight)
+            {
+                if (isShownCursor)
+                {
+                    this.Cursor = Cursors.Cross;
+                    isShownCursor = false;
+                }
+                NowMarkerTime = xToTime(e.X - timeLineX);
+            }
+            else
+            {
+                NowMarkerTime = 0;
+                OnMouseLeave(EventArgs.Empty);
+            }
+        }
+
         #endregion
 
         #region パブリックメソッド
@@ -486,6 +560,34 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             }
         }
 
+        private void drawNowMarker(ulong time)
+        {
+            Rectangle backRect = new Rectangle(
+                this.TimeLineX,
+                this.ColumnHeadersHeight,
+                this.ClientSize.Width - this.TimeLineX,
+                this.ClientSize.Height - this.ColumnHeadersHeight
+                );
+
+            Bitmap tmpBmp = new Bitmap(backRect.Width, backRect.Height);
+            using (Graphics tmpBmpGraphics = Graphics.FromImage(tmpBmp))
+            {
+                int x = timeToX(time);
+                using (Pen pen = new Pen(NowMarkerColor))
+                {
+                    //pen.DashStyle = DashStyle.Dash;
+                    tmpBmpGraphics.DrawLine(pen, x, 0, x, backRect.Height);
+                }
+                using (Graphics graphics = this.CreateGraphics())
+                {
+                    this.DoubleBuffered = true;
+                    this.Refresh();
+                    graphics.DrawImage(tmpBmp, backRect.X, backRect.Y);
+                    this.DoubleBuffered = false;
+                }
+            }
+        }
+
         private void onRowChanged(object sender, EventArgs e)
         {
             minTimeMaxTimeReCalc();
@@ -551,6 +653,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 this.MinimumTime = st;
                 this.MaximumTime = et;
             }
+        }
+
+        private ulong xToTime(int x)
+        {
+            return (ulong)(((decimal)x * ((decimal)nsPerScaleMark / (decimal)pixelPerScaleMark)) + (decimal)beginTime);
+        }
+
+        private int timeToX(ulong t)
+        {
+            return (int)(((decimal)t - (decimal)beginTime) / ((decimal)nsPerScaleMark / (decimal)pixelPerScaleMark));
         }
 
         #endregion

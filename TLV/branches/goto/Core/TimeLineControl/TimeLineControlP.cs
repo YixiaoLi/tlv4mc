@@ -48,7 +48,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                     nsPerScaleMark = value;
 
                     this.nsPerScaleMarkTrackBar.Value = nsPerScaleMark > (ulong)nsPerScaleMarkTrackBar.Maximum ? nsPerScaleMarkTrackBar.Maximum : nsPerScaleMark < (ulong)nsPerScaleMarkTrackBar.Minimum ? nsPerScaleMarkTrackBar.Minimum : (int)nsPerScaleMark;
-                    
+
+                    this.nsPerScaleMarkButton.Text = value + this.nsPerScaleMarkTrackBar.PostFixText;
+
                     NotifyPropertyChanged("NsPerScaleMark");
                 }
             }
@@ -81,6 +83,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 
                     this.nsPerScaleMarkTrackBar.Minimum = pixelPerScaleMark;
 
+                    this.pixelPerScaleMarkButton.Text = value + this.pixelPerScaleMarkButtonTrackBar.PostFixText;
+
                     NotifyPropertyChanged("PixelPerScaleMark");
                 }
             }
@@ -94,25 +98,50 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.TabText = "タイムライン";
             this.RowSizeMode = RowSizeMode.Fill;
             this.nsPerScaleMarkTrackBar.Minimum = pixelPerScaleMark;
-            this.pixelPerScaleMarkButtonTrackBar.Minimum = 3;
+            this.pixelPerScaleMarkButtonTrackBar.Minimum = 2;
             this.pixelPerScaleMarkButtonTrackBar.Maximum = 100;
             this.PixelPerScaleMark = 5;
-            this.nsPerScaleMarkTrackBar.PostFixText = "ns/目盛";
-            this.pixelPerScaleMarkButtonTrackBar.PostFixText = "pixel/目盛";
+            this.nsPerScaleMarkTrackBar.PostFixText = " ns/目盛";
+            this.pixelPerScaleMarkButtonTrackBar.PostFixText = " pixel/目盛";
+            this.pixelPerScaleMarkButton.Text = this.PixelPerScaleMark + this.pixelPerScaleMarkButtonTrackBar.PostFixText;
             this.nsPerScaleMarkTrackBar.ValueChanged += new EventHandler(nsPerScaleMarkTrackBarTrackBarValueChanged);
             this.pixelPerScaleMarkButtonTrackBar.ValueChanged += new EventHandler(pixelPerScaleMarkButtonTrackBarValueChanged);
             this.pixelPerScaleMarkButton.ButtonClick += new EventHandler(pixelPerScaleMarkButtonButtonClick);
             this.nsPerScaleMarkButton.ButtonClick += new EventHandler(nsPerScaleMarkButtonButtonClick);
+            this.pixelPerScaleMarkAddButton.Click += new EventHandler(pixelPerScaleMarkAddButtonClick);
+            this.pixelPerScaleMarkSubtractButton.Click += new EventHandler(pixelPerScaleMarkSubtractButtonClick);
+            this.nsPerScaleMarkAddButton.Click += new EventHandler(nsPerScaleMarkAddButtonClick);
+            this.nsPerScaleMarkSubtractButton.Click += new EventHandler(nsPerScaleMarkSubtractButtonClick);
+        }
+
+        protected void nsPerScaleMarkSubtractButtonClick(object sender, EventArgs e)
+        {
+            this.nsPerScaleMarkTrackBar.Value -= this.nsPerScaleMarkTrackBar.SmallChange;
+        }
+
+        protected void nsPerScaleMarkAddButtonClick(object sender, EventArgs e)
+        {
+            this.nsPerScaleMarkTrackBar.Value += this.nsPerScaleMarkTrackBar.SmallChange;
+        }
+
+        protected void pixelPerScaleMarkSubtractButtonClick(object sender, EventArgs e)
+        {
+            this.pixelPerScaleMarkButtonTrackBar.Value -= this.pixelPerScaleMarkButtonTrackBar.SmallChange;
+        }
+
+        protected void pixelPerScaleMarkAddButtonClick(object sender, EventArgs e)
+        {
+            this.pixelPerScaleMarkButtonTrackBar.Value += this.pixelPerScaleMarkButtonTrackBar.SmallChange;
         }
 
         protected void nsPerScaleMarkButtonButtonClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            this.nsPerScaleMarkButton.ShowDropDown();
         }
 
         protected void pixelPerScaleMarkButtonButtonClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            this.pixelPerScaleMarkButton.ShowDropDown();
         }
 
         protected void pixelPerScaleMarkButtonTrackBarValueChanged(object sender, EventArgs e)

@@ -49,7 +49,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 
             timeLineGridAgent.P.SizeChanged += timeLineGridPSizeChanged;
             timeLineScrollBarAgent.P.Scroll += new ScrollEventHandler(timeLineScrollBarPScroll);
-
+           
         }
 
         public override void Init()

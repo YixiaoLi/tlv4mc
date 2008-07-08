@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
 {
@@ -25,6 +27,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             BindPToA("DisplayTimeLength", typeof(ulong), "DisplayTimeLength", SearchAFlags.AncestorsWithSiblings);
             BindPToA("NsPerScaleMark", typeof(ulong), "NsPerScaleMark", SearchAFlags.AncestorsWithSiblings);
             BindPToA("PixelPerScaleMark", typeof(int), "PixelPerScaleMark", SearchAFlags.AncestorsWithSiblings);
+            BindPToA("NowMarkerTime", typeof(ulong), "NowMarkerTime", SearchAFlags.AncestorsWithSiblings);
+            BindPToA("NowMarkerColor", typeof(Color), "NowMarkerColor", SearchAFlags.AncestorsWithSiblings);
 
             this.P.TimeLineXResizing += (MouseEventHandler)this.GetDelegate(typeof(MouseEventHandler), "TimeLineXResizing", SearchAFlags.AncestorsWithSiblings);
             this.P.TimeLineXResized += (MouseEventHandler)this.GetDelegate(typeof(MouseEventHandler), "TimeLineXResized", SearchAFlags.AncestorsWithSiblings);

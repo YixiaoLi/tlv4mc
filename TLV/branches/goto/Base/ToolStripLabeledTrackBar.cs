@@ -59,7 +59,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             get { return ((LabeledTrackBar)Control).Value; }
             set
             {
-                if (((LabeledTrackBar)Control).Value != value)
+                if (((LabeledTrackBar)Control).Value != value && ((LabeledTrackBar)Control).Maximum >= value && ((LabeledTrackBar)Control).Minimum <= value)
                 {
                     ((LabeledTrackBar)Control).Value = value;
                     ((LabeledTrackBar)Control).NowLabel = Value.ToString() + PostFixText;
@@ -84,7 +84,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 ((LabeledTrackBar)Control).LargeChange = ((LabeledTrackBar)Control).Maximum / orderVal;
                 if (((LabeledTrackBar)Control).LargeChange != 0)
                 {
-                    ((LabeledTrackBar)Control).TickFrequency = ((LabeledTrackBar)Control).Maximum / ((LabeledTrackBar)Control).LargeChange;
+                    ((LabeledTrackBar)Control).TickFrequency = ((LabeledTrackBar)Control).Maximum / 100;
                 }
                 ((LabeledTrackBar)Control).MaxLabel = value.ToString() + PostFixText;
             }
