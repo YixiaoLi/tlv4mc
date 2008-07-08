@@ -75,11 +75,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
             this.clsView.ExpandAll();
             this.resView.ExpandAll();
 
-            //ソート
-            this.prcView.Sort();
-            this.clsView.Sort();
-            this.resView.Sort();
-
         }
 
 

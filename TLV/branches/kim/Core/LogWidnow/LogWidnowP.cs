@@ -26,6 +26,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.LogWindow
 
             lvwColumnSorter = new ListViewColumnSorter();
             this.listView.ListViewItemSorter = lvwColumnSorter;
+
         }
 
         public void AddChild(Control control, object args)
@@ -39,9 +40,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.LogWindow
 
             logFile.ReadLogFile(filePath, out logList);
 
+            this.listView.Clear();
+
             initListViewHeader();
             initListViewItem();
-
             
             //ソート初期化
             lvwColumnSorter.SortColumn = 0;
@@ -62,6 +64,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.LogWindow
 
         private void initListViewItem()
         {
+
             foreach (Log log in this.logList.List)
             {
                 string[] itemList = new string[] {log.Time.ToString(), log.PrcID.ToString(), 
