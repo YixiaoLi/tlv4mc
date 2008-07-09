@@ -46,9 +46,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.LogWindow
             initListViewItem();
             
             //ソート初期化
-            lvwColumnSorter.SortColumn = 0;
-            lvwColumnSorter.Order = SortOrder.Ascending;
-            this.listView.Sort();
+            //lvwColumnSorter.SortColumn = 0;
+            //lvwColumnSorter.Order = SortOrder.Ascending;
+            //this.listView.Sort();
 
         }
 
@@ -77,27 +77,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.LogWindow
 
         private void listView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            // Determine if clicked column is already the column that is being sorted.
-            if (e.Column == lvwColumnSorter.SortColumn)
+            //時間をテキストでソートするのでとりあえずは時間順は外す
+            if (e.Column != 0)
             {
-                // Reverse the current sort direction for this column.
-                if (lvwColumnSorter.Order == SortOrder.Ascending)
+                // Determine if clicked column is already the column that is being sorted.
+                if (e.Column == lvwColumnSorter.SortColumn)
                 {
-                    lvwColumnSorter.Order = SortOrder.Descending;
+                    // Reverse the current sort direction for this column.
+                    if (lvwColumnSorter.Order == SortOrder.Ascending)
+                    {
+                        lvwColumnSorter.Order = SortOrder.Descending;
+                    }
+                    else
+                    {
+                        lvwColumnSorter.Order = SortOrder.Ascending;
+                    }
                 }
                 else
                 {
+                    // Set the column number that is to be sorted; default to ascending.
+                    lvwColumnSorter.SortColumn = e.Column;
                     lvwColumnSorter.Order = SortOrder.Ascending;
                 }
-            }
-            else
-            {
-                // Set the column number that is to be sorted; default to ascending.
-                lvwColumnSorter.SortColumn = e.Column;
-                lvwColumnSorter.Order = SortOrder.Ascending;
-            }
 
-            this.listView.Sort();
+                this.listView.Sort();
+            }
 
         }
 

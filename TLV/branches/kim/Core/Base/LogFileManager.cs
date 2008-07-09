@@ -112,17 +112,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
                     int.TryParse(timeArray[1], out prcid);
                 }
 
-                int runId = logList.GetRunTaskId(prcid);
 
-                if (runId == 0)
-                {
-                    logList.Add(new Log(time, prcid, new Subject(ResourceType.TSK, taskid), Verb.RUN));
-                }
-                else
-                {
-                    logList.Add(new Log(time, prcid, new Subject(ResourceType.TSK, runId), Verb.RUNNABLE));
-                    logList.Add(new Log(time, prcid, new Subject(ResourceType.TSK, taskid), Verb.RUN));
-                }
+                logList.Add(new Log(time, prcid, new Subject(ResourceType.TSK, taskid), Verb.RUN));
 
             }
 

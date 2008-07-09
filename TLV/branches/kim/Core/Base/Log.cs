@@ -64,38 +64,5 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
             List = new List<Log>();
         }
 
-        // このメソッドはなんのためにあるのでしょうか？
-        public int GetRunTaskId(int prcId)
-        {
-            int runTaskId = 0;
-
-            int runTaskNo = 0;
-            int dormantTaskNo = 0;
-
-            for (int i = (List.Count - 1); i > 0; i--)
-            {
-                if (List[i].PrcID == prcId && List[i].Verb == Verb.RUN)
-                {
-                    runTaskNo = i;
-                    break;
-                }
-            }
-
-            for (int i = (List.Count - 1); i > 0; i--)
-            {
-                if (List[i].PrcID == prcId && List[i].Verb == Verb.DORMANT)
-                {
-                    dormantTaskNo = i;
-                    break;
-                }
-            }
-
-            if (runTaskNo > dormantTaskNo)
-            {
-                runTaskId = List[runTaskNo].Subject.Id;
-            }
-
-            return runTaskId;
-        }
     }
 }
