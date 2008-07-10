@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NU.OJL.MPRTOS.TLV.Core.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
 {
@@ -23,6 +22,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
         public List<TskInfo> TskInfoList
         {
             get { return tskInfoList; }
+
         }
         public List<SemInfo> SemInfoList
         {
@@ -89,7 +89,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
     public class ObjectBase
     {
         protected int id;
-        private string atr;
+        protected string atr;
         protected ResourceType type;
         protected string name;
         protected string cls;

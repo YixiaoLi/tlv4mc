@@ -196,7 +196,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceExplorer
                 }
             }
 
-        }
+       }
 
         private void insertNode(
            int viewCount,
