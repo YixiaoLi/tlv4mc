@@ -10,8 +10,10 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
         IPresentation Presentation { get; }
         IControl Control { get; }
         void Show();
-        void InitPAC();
-        void Init();
+        void InitChildrenFirstPAC();
+        void InitParentFirstPAC();
+        void InitChildrenFirst();
+        void InitParentFirst();
         bool IsMain { get; }
     }
 }

@@ -70,7 +70,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 {
                     minimumTime = value;
                     int order = (int)Math.Ceiling(Math.Log10((double)nsPerScaleMark + 1D));
-                    scaleMarkStartTime = (ulong)((decimal)(Math.Floor((double)MinimumTime / Math.Pow(10D, order - 1)) * Math.Pow(10D, order - 1)) - (decimal)nsPerScaleMark);
+                    if(order != 0)
+                    {
+                        scaleMarkStartTime = (ulong)((decimal)(Math.Floor((double)MinimumTime / Math.Pow(10D, order - 1)) * Math.Pow(10D, order - 1)) - (decimal)nsPerScaleMark);
+                    }
                     if(beginTime < minimumTime)
                     {
                         BeginTime = minimumTime;

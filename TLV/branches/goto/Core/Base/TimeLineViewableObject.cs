@@ -21,14 +21,62 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
             koList.Add((T)ko);
         }
 
+        protected static void RemoveAt<T>(object source, int index)
+            where T : TimeLineViewableObject
+        {
+            SortableBindingList<T> koList = (SortableBindingList<T>)source;
+            koList.RemoveAt(index);
+        }
+
+        protected static void Insert<T>(TimeLineViewableObject ko, object source, int index)
+            where T : TimeLineViewableObject
+        {
+            SortableBindingList<T> koList = (SortableBindingList<T>)source;
+            koList.Insert(index, (T)ko);
+        }
+
+        protected static TimeLineViewableObject Get<T>(object source, int index)
+            where T : TimeLineViewableObject
+        {
+            SortableBindingList<T> koList = (SortableBindingList<T>)source;
+            return koList[index];
+        }
+
+        public static int IndexOf<T>(TimeLineViewableObject ko, object source)
+            where T : TimeLineViewableObject
+        {
+            SortableBindingList<T> koList = (SortableBindingList<T>)source;
+            return koList.IndexOf((T)ko);
+        }
+
         public static void Add(TimeLineViewableObject ko, object source)
         {
             Add<TimeLineViewableObject>(ko, source);
         }
 
-        [PropertyDisplayName("ログ")]
+        public static void RemoveAt(object source, int index)
+        {
+            RemoveAt<TimeLineViewableObject>(source, index);
+        }
+
+        public static void Insert(TimeLineViewableObject ko, object source, int index)
+        {
+            Insert<TimeLineViewableObject>(ko, source, index);
+        }
+
+        public static TimeLineViewableObject Get(object source, int index)
+        {
+            return Get<TimeLineViewableObject>(source, index);
+        }
+
+        public static int IndexOf(TimeLineViewableObject ko, object source)
+        {
+            return IndexOf<TimeLineViewableObject>(ko, source);
+        }
+
+        [PropertyDisplayName("ログ", 10 * 10)]
         public TimeLineEvents TimeLineEvents { get; protected set; }
-        [PropertyDisplayName("名前")]
+        [PropertyDisplayName("名前", 10)]
         public string Name { get; protected set; }
 
         public TimeLineViewableObject(string name, TimeLineEvents timeLineEvents)

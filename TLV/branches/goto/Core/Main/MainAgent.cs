@@ -5,6 +5,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject;
 using NU.OJL.MPRTOS.TLV.Core.Base;
 using NU.OJL.MPRTOS.TLV.Base;
+using System;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Main
 {

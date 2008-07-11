@@ -38,11 +38,15 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             this.Parent = null;
         }
 
-        public Delegate GetPProviding(Type type, string name, SearchAFlags flags, IControl self)
+        public Delegate GetDelegate(Type type, string name, SearchAFlags flags, IControl self)
         {
             if ((flags & SearchAFlags.Self) != SearchAFlags.None)
             {
                 Delegate del = Delegate.CreateDelegate(type, P, name, true, false);
+                if(del == null)
+                {
+                    del = Delegate.CreateDelegate(type, A, name, true, false);
+                }
                 if(del != null)
                 {
                     return del;
@@ -63,7 +67,7 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
                         {
                             continue;
                         }
-                        Delegate d = ctrl.GetPProviding(type, name, f, null);
+                        Delegate d = ctrl.GetDelegate(type, name, f, null);
                         if (d != null)
                         {
                             return d;
@@ -84,7 +88,7 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
                     {
                         f |= SearchAFlags.Descendants;
                     }
-                    return Parent.GetPProviding(type, name, f, this);
+                    return Parent.GetDelegate(type, name, f, this);
                 }
                 else
                 {
@@ -97,14 +101,14 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
 
         public Delegate GetDelegate(Type type, string name, SearchAFlags flags)
         {
-            Delegate del = GetPProviding(type, name, flags, null);
+            Delegate del = GetDelegate(type, name, flags, null);
             if (del != null)
             {
                 return del;
             }
             else
             {
-                throw new Exception("型 : " + type.ToString() + ", デリゲート名 : " + name + " をもつPresentationは見つかりませんでした");
+                throw new Exception("型 : " + type.ToString() + ", デリゲート名 : " + name + " をもつ要素は見つかりませんでした");
             }
         }
 
@@ -166,12 +170,18 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             return null;
         }
 
+        public object GetPropertyAFrom(Type type, string name, SearchAFlags flags)
+        {
+            IAbstraction a = GetAProviding(type, name, flags, null);
+            return a.GetType().GetProperty(name).GetValue(a, null);
+        }
+
         public void BindPToA(string pPropertyName, Type aType, string aPropertyName, SearchAFlags flags)
         {
             IAbstraction a = this.GetAProviding(aType, aPropertyName, flags, null);
             if (a != null)
             {
-                P.DataBindings.Add(pPropertyName, a, aPropertyName, false, DataSourceUpdateMode.OnPropertyChanged);
+                P.DataBindings.Add(pPropertyName, a, aPropertyName, true, DataSourceUpdateMode.OnPropertyChanged);
             }
             else
             {
@@ -185,7 +195,12 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             this.Children.Add(control);
         }
 
-        public virtual void Init()
+        public virtual void InitChildrenFirst()
+        {
+
+        }
+
+        public virtual void InitParentFirst()
         {
 
         }

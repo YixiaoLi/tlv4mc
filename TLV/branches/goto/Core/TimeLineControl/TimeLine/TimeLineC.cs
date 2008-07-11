@@ -30,8 +30,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             BindPToA("NowMarkerTime", typeof(ulong), "NowMarkerTime", SearchAFlags.AncestorsWithSiblings);
             BindPToA("NowMarkerColor", typeof(Color), "NowMarkerColor", SearchAFlags.AncestorsWithSiblings);
 
-            this.P.TimeLineXResizing += (MouseEventHandler)this.GetDelegate(typeof(MouseEventHandler), "TimeLineXResizing", SearchAFlags.AncestorsWithSiblings);
-            this.P.TimeLineXResized += (MouseEventHandler)this.GetDelegate(typeof(MouseEventHandler), "TimeLineXResized", SearchAFlags.AncestorsWithSiblings);
+            this.P.TimeLineXResizing += (MouseEventHandler)GetDelegate(typeof(MouseEventHandler), "TimeLineXResizing", SearchAFlags.AncestorsWithSiblings);
+            this.P.TimeLineXResized += (MouseEventHandler)GetDelegate(typeof(MouseEventHandler), "TimeLineXResized", SearchAFlags.AncestorsWithSiblings);
         }
     }
 }

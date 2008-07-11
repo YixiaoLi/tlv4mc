@@ -95,6 +95,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TimeLineControl\CursorMode.cs" />
     <Compile Include="TimeLineControl\TimeLineControlA.cs" />
     <Compile Include="TimeLineControl\TimeLineControlAgent.cs" />
     <Compile Include="TimeLineControl\TimeLineControlC.cs" />
@@ -183,6 +184,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\cursorButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoomer.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoomerIn.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoomerOut.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hand.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\handHold.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\handButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

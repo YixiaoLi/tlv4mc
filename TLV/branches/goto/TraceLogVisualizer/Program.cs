@@ -14,7 +14,23 @@ namespace NU.OJL.MPRTOS.TLV.Main
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainAgent("MainForm").ApplicationContext);
+
+            try
+            {
+                Application.Run(new MainAgent("MainForm").ApplicationContext);
+            }
+            catch(OverflowException ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+            catch (DivideByZeroException ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
         }
     }
 }

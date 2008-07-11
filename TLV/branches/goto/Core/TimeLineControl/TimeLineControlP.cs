@@ -17,7 +17,6 @@ using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 {
-
     public partial class TimeLineControlP : DockContent, IPresentation
     {
         private RowSizeMode rowSizeMode;
@@ -29,8 +28,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         private int rowHeight = 0;
         private Type viewableObjectType = typeof(TimeLineViewableObject);
         private object viewableObjectDataSource;
+        private CursorMode cursorMode = CursorMode.Default;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged = null;
+        public event ViewableObjectAddHandler AddViewableObject = null;
+        public event ViewableObjectRemoveAtHandler RemoveAtViewableObject = null;
+        public event ViewableObjectInsertHandler InsertViewableObject = null;
+        public event ViewableObjectGetHandler GetViewableObject = null;
+        public event ViewableObjectIndexOfHandler IndexOfViewableObject = null;
 
         public ToolStripContentPanel ContentPanel { get { return this.toolStripContainer.ContentPanel; } }
         public RowSizeMode RowSizeMode
@@ -159,6 +164,43 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             get { return viewableObjectDataSource; }
             set { viewableObjectDataSource = value; }
         }
+        public CursorMode CursorMode
+        {
+            get { return cursorMode; }
+            set
+            {
+                if (!value.Equals(cursorMode))
+                {
+                    cursorMode = value;
+
+                    cursorButton.Checked = false;
+                    zoomOutButton.Checked = false;
+                    zoomInButton.Checked = false;
+                    handButton.Checked = false;
+
+                    switch (cursorMode)
+                    {
+                        case CursorMode.Default:
+                            cursorButton.Checked = true;
+                            break;
+
+                        case CursorMode.ZoomIn:
+                            zoomInButton.Checked = true;
+                            break;
+
+                        case CursorMode.ZoomOut:
+                            zoomOutButton.Checked = true;
+                            break;
+
+                        case CursorMode.Hand:
+                            handButton.Checked = true;
+                            break;
+                    }
+
+                    NotifyPropertyChanged("CursorMode");
+                }
+            }
+        }
 
         public TimeLineControlP(string name)
         {
@@ -196,6 +238,30 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.rowHeightAddButton.Click += new EventHandler(rowHeightAddButtonClick);
             this.rowHeightSubtractButton.Click += new EventHandler(rowHeightSubtractButtonClick);
 
+            this.cursorButton.Click += new EventHandler(cursorButtonClick);
+            this.handButton.Click += new EventHandler(handButtonClick);
+            this.zoomInButton.Click += new EventHandler(zoomInButtonClick);
+            this.zoomOutButton.Click += new EventHandler(zoomOutButtonClick);
+        }
+
+        protected void handButtonClick(object sender, EventArgs e)
+        {
+            CursorMode = CursorMode.Hand;
+        }
+
+        protected void zoomOutButtonClick(object sender, EventArgs e)
+        {
+            CursorMode = CursorMode.ZoomOut;
+        }
+
+        protected void zoomInButtonClick(object sender, EventArgs e)
+        {
+            CursorMode = CursorMode.ZoomIn;
+        }
+
+        protected void cursorButtonClick(object sender, EventArgs e)
+        {
+            CursorMode = CursorMode.Default;
         }
 
         protected void rowHeightButtonButtonClick(object sender, EventArgs e)
@@ -329,9 +395,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             }
         }
         private int i = 0;
-        public event ViewableObjectAddHandler AddViewableObject = null;
 
     }
-    public delegate void ViewableObjectAddHandler(TimeLineViewableObject tlvo, object source);
 
 }

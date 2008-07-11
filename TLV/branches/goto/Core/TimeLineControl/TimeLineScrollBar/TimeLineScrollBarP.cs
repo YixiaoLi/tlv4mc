@@ -61,6 +61,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar
                 {
                     beginTime = value;
 
+                    this.Value = timeToValue(beginTime);
+
                     NotifyPropertyChanged("BeginTime");
                 }
             }
@@ -105,7 +107,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar
         protected override void OnValueChanged(EventArgs e)
         {
             base.OnValueChanged(e);
-            BeginTime = valueToTime(Value);
+            beginTime = valueToTime(Value);
+            NotifyPropertyChanged("BeginTime");
         }
 
         protected void NotifyPropertyChanged(string info)

@@ -9,10 +9,11 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
         Abstraction Abstraction { get; }
         IPresentation Presentation { get; }
         IAbstraction GetAProviding(Type type, string name, SearchAFlags flags, IControl self);
-        Delegate GetPProviding(Type type, string name, SearchAFlags flags, IControl self);
+        Delegate GetDelegate(Type type, string name, SearchAFlags flags, IControl self);
         void BindPToA(string pPropertyName, Type aType, string aPropertyName, SearchAFlags flags);
         Delegate GetDelegate(Type type, string name, SearchAFlags flags);
-        void Init();
+        void InitChildrenFirst();
+        void InitParentFirst();
     }
 
 }

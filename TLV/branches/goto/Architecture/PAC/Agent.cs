@@ -10,6 +10,8 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
         where Tc : Control<Tp, Ta>
     {
         private IAgent parent;
+        private bool initted = false;
+        private bool relinked = false;
 
         public string Name { get; protected set; }
         public IAgent Parent
@@ -74,6 +76,7 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             if(this.IsMain)
             {
                 ((Control)this.C.P).Disposed += (object o, EventArgs e) => { ((Control)this.C.P).Dispose(); Application.Exit(); };
+
             }
         }
 
@@ -90,9 +93,13 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
 
         public void Show()
         {
-            if(this.IsMain)
+            if (this.IsMain && relinked == false)
             {
-                this.InitPAC();
+                this.InitParentFirstPAC();
+            }
+            if (this.IsMain && initted == false)
+            {
+                this.InitChildrenFirstPAC();
             }
             this.C.P.Show();
             foreach(IAgent agent in Children)
@@ -101,19 +108,36 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             }
         }
 
-        public void InitPAC()
+        public void InitParentFirstPAC()
+        {
+            this.InitParentFirst();
+            this.C.InitParentFirst();
+            foreach (IAgent agent in Children)
+            {
+                agent.InitParentFirstPAC();
+            }
+            relinked = true;
+        }
+
+        public void InitChildrenFirstPAC()
         {
             foreach (IAgent agent in Children)
             {
-                agent.InitPAC();
+                agent.InitChildrenFirstPAC();
             }
-            this.C.Init();
-            this.Init();
+            this.C.InitChildrenFirst();
+            this.InitChildrenFirst();
+            initted = true;
         }
 
-        public virtual void Init()
+        public virtual void InitChildrenFirst()
         {
             
+        }
+
+        public virtual void InitParentFirst()
+        {
+
         }
 
     }

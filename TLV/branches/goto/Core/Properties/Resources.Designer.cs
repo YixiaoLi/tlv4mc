@@ -88,6 +88,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             }
         }
         
+        internal static System.Drawing.Icon hand {
+            get {
+                object obj = ResourceManager.GetObject("hand", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap handButton {
+            get {
+                object obj = ResourceManager.GetObject("handButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon handHold {
+            get {
+                object obj = ResourceManager.GetObject("handHold", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap subtractButton {
             get {
                 object obj = ResourceManager.GetObject("subtractButton", resourceCulture);
@@ -95,10 +116,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             }
         }
         
+        internal static System.Drawing.Icon zoom {
+            get {
+                object obj = ResourceManager.GetObject("zoom", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon zoomIn {
+            get {
+                object obj = ResourceManager.GetObject("zoomIn", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap zoomInButton {
             get {
                 object obj = ResourceManager.GetObject("zoomInButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon zoomOut {
+            get {
+                object obj = ResourceManager.GetObject("zoomOut", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

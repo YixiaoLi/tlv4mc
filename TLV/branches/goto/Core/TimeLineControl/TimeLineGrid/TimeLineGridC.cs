@@ -40,8 +40,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             BindPToA("MinRowHeight", typeof(int), "MinRowHeight", SearchAFlags.Self);
             BindPToA("NowRowHeight", typeof(int), "NowRowHeight", SearchAFlags.Self);
             BindPToA("ViewableObjectType", typeof(Type), "ViewableObjectType", SearchAFlags.Ancestors);
+            BindPToA("CursorMode", typeof(CursorMode), "CursorMode", SearchAFlags.Ancestors);
             A.ViewableObjectDataSource = GetPropertyAFrom(typeof(object), "ViewableObjectDataSource", SearchAFlags.Ancestors);
             P.ViewableObjectDataSource = A.ViewableObjectDataSource;
+            P.AddViewableObject += (ViewableObjectAddHandler)GetDelegate(typeof(ViewableObjectAddHandler), "AddViewableObject", SearchAFlags.Ancestors);
+            P.RemoveAtViewableObject += (ViewableObjectRemoveAtHandler)GetDelegate(typeof(ViewableObjectRemoveAtHandler), "RemoveAtViewableObject", SearchAFlags.Ancestors);
+            P.InsertViewableObject += (ViewableObjectInsertHandler)GetDelegate(typeof(ViewableObjectInsertHandler), "InsertViewableObject", SearchAFlags.Ancestors);
+            P.GetViewableObject += (ViewableObjectGetHandler)GetDelegate(typeof(ViewableObjectGetHandler), "GetViewableObject", SearchAFlags.Ancestors);
+            P.IndexOfViewableObject += (ViewableObjectIndexOfHandler)GetDelegate(typeof(ViewableObjectIndexOfHandler), "IndexOfViewableObject", SearchAFlags.Ancestors);
         }
     }
 }
