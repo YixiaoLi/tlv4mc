@@ -11,6 +11,9 @@ using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
 using NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid;
 using NU.OJL.MPRTOS.TLV.Core.Properties;
+using NU.OJL.MPRTOS.TLV.Core.Base;
+using NU.OJL.MPRTOS.TLV.Core.ViewableObject;
+using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 {
@@ -24,6 +27,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         private int maxRowHeight = 0;
         private int minRowHeight = 0;
         private int rowHeight = 0;
+        private Type viewableObjectType = typeof(TimeLineViewableObject);
+        private object viewableObjectDataSource;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -137,6 +142,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                 }
             }
         }
+        public Type ViewableObjectType
+        {
+            get { return viewableObjectType; }
+            set
+            {
+                if (value != null && !value.Equals(viewableObjectType))
+                {
+                    viewableObjectType = value;
+                    NotifyPropertyChanged("ViewableObjectType");
+                }
+            }
+        }
+        public Object ViewableObjectDataSource
+        {
+            get { return viewableObjectDataSource; }
+            set { viewableObjectDataSource = value; }
+        }
 
         public TimeLineControlP(string name)
         {
@@ -173,6 +195,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.nsPerScaleMarkSubtractButton.Click += new EventHandler(nsPerScaleMarkSubtractButtonClick);
             this.rowHeightAddButton.Click += new EventHandler(rowHeightAddButtonClick);
             this.rowHeightSubtractButton.Click += new EventHandler(rowHeightSubtractButtonClick);
+
         }
 
         protected void rowHeightButtonButtonClick(object sender, EventArgs e)
@@ -287,6 +310,28 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             }
         }
 
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+
+            KernelObject ko = new KernelObject(i, "task" + i.ToString(), ObjectType.TSK, "", 1, new TimeLineEvents()
+                    {
+                        new TimeLineEvent(100239, (int)KernelObjectVerb.DORMANT),
+                        new TimeLineEvent(234532, (int)KernelObjectVerb.RUN),
+                        new TimeLineEvent(634633, (int)KernelObjectVerb.WAITING_SUSPENDED),
+                        new TimeLineEvent(745332, (int)KernelObjectVerb.RUNNABLE),
+                    });
+            i++;
+
+
+            if (AddViewableObject != null)
+            {
+                AddViewableObject(ko, viewableObjectDataSource);
+            }
+        }
+        private int i = 0;
+        public event ViewableObjectAddHandler AddViewableObject = null;
+
     }
+    public delegate void ViewableObjectAddHandler(TimeLineViewableObject tlvo, object source);
 
 }

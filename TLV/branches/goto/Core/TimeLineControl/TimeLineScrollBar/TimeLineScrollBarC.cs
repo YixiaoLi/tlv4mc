@@ -12,9 +12,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar
         {
         }
 
-        public override void Init()
+        public override void InitChildrenFirst()
         {
-            base.Init();
+            base.InitChildrenFirst();
+        }
+
+        public override void InitParentFirst()
+        {
+            base.InitParentFirst();
             BindPToA("X", typeof(int), "TimeLineX", SearchAFlags.AncestorsWithSiblings);
             BindPToA("MinimumTime", typeof(ulong), "MinimumTime", SearchAFlags.AncestorsWithSiblings);
             BindPToA("MaximumTime", typeof(ulong), "MaximumTime", SearchAFlags.AncestorsWithSiblings);

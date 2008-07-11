@@ -1,6 +1,6 @@
-﻿namespace NU.OJL.MPRTOS.TLV.Core.Base
+﻿namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject
 {
-    public enum Verb
+    public enum KernelObjectVerb
     {
         RUN,
         RUNNABLE,

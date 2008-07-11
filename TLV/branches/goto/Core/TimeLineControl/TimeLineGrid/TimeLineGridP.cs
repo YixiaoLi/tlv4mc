@@ -3,9 +3,14 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.ComponentModel;
+using System.Collections.Generic;
+using System.Collections;
+using System.Data;
+using System.Reflection;
 using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Core.Base;
+using NU.OJL.MPRTOS.TLV.Core.ViewableObject;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 {
@@ -23,21 +28,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private int timeLineX = 0;
         private int timeLineMinimumX = 0;
         private int timeLineWidth = 0;
-        private ulong minimumTime = 0;
-        private ulong maximumTime = 0;
+        private ulong minimumTime = ulong.MaxValue;
+        private ulong maximumTime = ulong.MinValue;
         private ulong beginTime = 0;
         private ulong endTime = 0;
         private ulong displayTimeLength = 0;
         private ulong nsPerScaleMark = 1;
         private ulong maximumNsPerScaleMark = 1;
         private int pixelPerScaleMark = 5;
-        public bool Edited = false;
         private bool isShownCursor = true;
         private Color nowMarkerColor;
         private ulong nowMarkerTime = 0;
         private int maxRowHeight = 0;
         private int minRowHeight = 0;
         private int rowHeight = 0;
+        private int ownBeginGrabRowIndex = -1;
+        private bool dropDestinationIsValid;
+        private bool dropDestinationIsNextRow;
+        private int dropDestinationRowIndex;
+        private Type viewableObjectType = typeof(TimeLineViewableObject);
+        private bool isfirstAddedRow = true;
             
         #endregion
 
@@ -105,7 +115,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             {
                 if (timeLineWidth != value)
                 {
-                    timeLineWidth = value;
+                    timeLineWidth = value <= 0 ? 10 : value;
                     dispalyTimeLengthReCalc();
                     MaximumNsPerScaleMark = (ulong)(((decimal)(MaximumTime - MinimumTime) / (decimal)TimeLineWidth) * (decimal)pixelPerScaleMark);
                     NotifyPropertyChanged("TimeLineWidth");
@@ -159,6 +169,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     beginTime = value;
                     EndTime = value + DisplayTimeLength;
+
                     NotifyPropertyChanged("BeginTime");
                 }
             }
@@ -264,6 +275,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     rowHeight = value;
                     AllRowsHeight = rowHeight * this.Rows.Count + this.ColumnHeadersHeight;
+
                     NotifyPropertyChanged("NowRowHeight");
                 }
             }
@@ -293,13 +305,83 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
             }
         }
+        public Type ViewableObjectType
+        {
+            get { return viewableObjectType; }
+            set
+            {
+                if (value != null && !value.Equals(viewableObjectType))
+                {
+                    if(value.BaseType != typeof(TimeLineViewableObject))
+                    {
+                        throw new Exception("ViewableObjectTypeはTimeLineViewableObjectのサブクラスでなければなりません");
+                    }
+
+                    viewableObjectType = value;
+
+                    Type tlelType = typeof(SortableBindingList<>);
+
+                    this.Columns.Clear();
+
+                    PropertyInfo[] pis = viewableObjectType.GetProperties();
+                    List<DataGridViewColumn> columns = new List<DataGridViewColumn>();
+
+                    foreach (PropertyInfo pi in pis)
+                    {
+                        Type type = pi.PropertyType;
+                        string name = pi.Name;
+                        string headerText = name;
+                        PropertyDisplayNameAttribute[] propertyDisplayNameAttribute = (PropertyDisplayNameAttribute[])pi.GetCustomAttributes(typeof(PropertyDisplayNameAttribute), true);
+                        if (propertyDisplayNameAttribute != null)
+                        {
+                            headerText = propertyDisplayNameAttribute[0].PropertyDisplayName;
+                        }
+
+                        if (type != typeof(TimeLineEvents))
+                        {
+                            DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
+                            column.Name = name;
+                            column.ValueType = type;
+                            column.DataPropertyName = name;
+                            column.HeaderText = headerText;
+                            column.CellTemplate = new DataGridViewTextBoxCell();
+                            columns.Add(column);
+                        }
+                    }
+                    columns.Add(timeLineColumn);
+
+                    timeLineColumnPreviousColumn = columns[columns.Count - 2];
+
+                    foreach (DataGridViewColumn column in columns)
+                    {
+                        try
+                        {
+                            this.Columns.Add(column);
+                        }
+                        catch (InvalidOperationException e)
+                        {
+                            System.Console.WriteLine(e.Message);
+                        }
+                    }
+
+                    timeLineColumnPreviousColumn.Frozen = true;
+
+                    this.AutoResizeColumns();
+                    this.Width = parentSize.Width - this.Location.X * 2;
+                }
+            }
+        }
+        public Object ViewableObjectDataSource
+        {
+            get { return DataSource; }
+            set { DataSource = value; }
+        }
 
         #endregion
 
         #region イベント
 
         public event PropertyChangedEventHandler PropertyChanged = null;
-        public event EventHandler RowChanged = null;
 
         #endregion
 
@@ -310,7 +392,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
             #region スーパークラスプロパティ初期化
 
-            this.AllowUserToOrderColumns = true;
             this.ReadOnly = true;
             this.RowHeadersVisible = false;
             this.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
@@ -324,6 +405,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             this.ColumnHeadersHeight = 20;
             this.RowTemplate.Height = 25;
             this.rowHeight = this.RowTemplate.Height;
+            this.AllowDrop = true;
+            this.AllowUserToOrderColumns = true;
+            this.AllowUserToAddRows = false;
+            this.AllowUserToDeleteRows = false;
+            this.AllowUserToResizeColumns = true;
+            this.AutoGenerateColumns = false;
+            this.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.VirtualMode = true;
 
             #endregion
 
@@ -331,7 +420,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
             this.Name = name;
             this.AllRowsHeight = this.ColumnHeadersHeight;
-            this.RowChanged += onRowChanged;
 
             #endregion
 
@@ -349,43 +437,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         #region オーバライドメソッド
 
-        protected override void OnColumnAdded(DataGridViewColumnEventArgs e)
-        {
-            base.OnColumnAdded(e);
-
-            if (e.Column.ValueType == typeof(TimeLineEvents))
-            {
-                this.Columns.Remove(e.Column);
-                this.Columns.Add(timeLineColumn);
-            }
-
-            if(this.Columns.Contains(timeLineColumn))
-            {
-                if (timeLineColumn.DisplayIndex != this.Columns.Count - 1)
-                {
-                    timeLineColumn.DisplayIndex = this.Columns.Count - 1;
-                }
-                timeLineColumn = (TimeLineColumn)this.Columns[this.Columns.Count - 1];
-                if (this.Columns.Count > 1)
-                {
-                    timeLineColumnPreviousColumn = this.Columns[this.Columns.Count - 2];
-                    if (timeLineColumnPreviousColumn.Frozen == false)
-                    {
-                        timeLineColumnPreviousColumn.Frozen = true;
-                    }
-                }
-            }
-
-            this.AutoResizeColumns();
-            this.Width = parentSize.Width - this.Location.X * 2;
-        }
-
         protected override void OnRowsAdded(DataGridViewRowsAddedEventArgs e)
         {
             base.OnRowsAdded(e);
             AllRowsHeight += e.RowCount * rowHeight;
 
-            RowChanged(this, EventArgs.Empty);
+            TimeLineEvents tes = (TimeLineEvents)this.Rows[e.RowIndex].Cells[timeLineColumn.Name].Value;
+            ulong st = tes.StartTime;
+            ulong et = tes.EndTime;
+            if (MinimumTime > st)
+            {
+                MinimumTime = st;
+            }
+            if (MaximumTime < et)
+            {
+                MaximumTime = et;
+            }
+
+            if (this.Rows.Count == 1 && isfirstAddedRow)
+            {
+                beginTimeDisplayTimeLengthReCalc();
+                isfirstAddedRow = false;
+            }
+
         }
 
         protected override void OnRowsRemoved(DataGridViewRowsRemovedEventArgs e)
@@ -393,7 +467,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             base.OnRowsRemoved(e);
             AllRowsHeight -= e.RowCount * rowHeight;
 
-            RowChanged(this, EventArgs.Empty);
+            ulong st = ulong.MaxValue;
+            ulong et = ulong.MinValue;
+
+            foreach (DataGridViewRow row in this.Rows)
+            {
+                TimeLineEvents te = (TimeLineEvents)row.Cells[timeLineColumn.Name].Value;
+                if (te != null)
+                {
+                    if (te.StartTime < st)
+                    {
+                        st = te.StartTime;
+                    }
+                    if (te.EndTime > et)
+                    {
+                        et = te.EndTime;
+                    }
+                }
+            }
+
+            this.MinimumTime = st;
+            this.MaximumTime = et;
         }
 
         protected override void OnParentChanged(EventArgs e)
@@ -407,7 +501,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             base.OnColumnWidthChanged(e);
             int width = 0;
             int minimumWidth = 0;
-            foreach(DataGridViewColumn column in this.Columns)
+            foreach (DataGridViewColumn column in this.Columns)
             {
                 if (column.Name != this.timeLineColumn.Name)
                 {
@@ -454,15 +548,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             }
         }
 
-        protected override void OnSorted(EventArgs e)
-        {
-            base.OnSorted(e);
-            if (Edited == false)
-            {
-                Edited = true;
-            }
-        }
-
         protected override void OnMouseLeave(EventArgs e)
         {
             if (!isShownCursor)
@@ -479,26 +564,134 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         {
             base.OnMouseMove(e);
 
-            if (e.X > this.TimeLineX && e.Y > this.ColumnHeadersHeight)
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left && ownBeginGrabRowIndex != -1)
             {
-                if (isShownCursor)
-                {
-                    this.Cursor = Cursors.Cross;
-                    isShownCursor = false;
-                }
-                NowMarkerTime = xToTime(e.X - timeLineX);
+                this.DoDragDrop(ownBeginGrabRowIndex, DragDropEffects.Move);
             }
             else
             {
-                NowMarkerTime = 0;
-                OnMouseLeave(EventArgs.Empty);
+                if (e.X > this.TimeLineX && e.Y > this.ColumnHeadersHeight)
+                {
+                    if (isShownCursor)
+                    {
+                        this.Cursor = Cursors.Cross;
+                        isShownCursor = false;
+                    }
+                    NowMarkerTime = xToTime(e.X - timeLineX);
+                }
+                else
+                {
+                    NowMarkerTime = 0;
+                    OnMouseLeave(EventArgs.Empty);
+                }
             }
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            ownBeginGrabRowIndex = -1;
+
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                DataGridView.HitTestInfo hit = this.HitTest(e.X, e.Y);
+
+                if (hit.Type == DataGridViewHitTestType.Cell)
+                {
+                    CurrentCell = this[hit.ColumnIndex, hit.RowIndex];
+                    ownBeginGrabRowIndex = hit.RowIndex;
+                }
+            }
+
         }
 
         protected override void OnScroll(ScrollEventArgs e)
         {
             base.OnScroll(e);
             Refresh();
+        }
+
+        protected override void OnDragDrop(DragEventArgs e)
+        {
+            base.OnDragDrop(e);
+
+            int from, to;
+            bool next;
+
+            if (decideDropDestinationRowIndex(this, e, out from, out to, out next))
+            {
+                dropDestinationIsValid = false;
+
+                to = moveDataValue(from, to, next);
+
+                this.autoResizeRows();
+
+                this.CurrentCell = this[this.CurrentCell.ColumnIndex, to];
+            }
+        }
+
+        protected override void OnRowPostPaint(DataGridViewRowPostPaintEventArgs e)
+        {
+            base.OnRowPostPaint(e);
+            if (dropDestinationIsValid)
+            {
+                if (e.RowIndex == dropDestinationRowIndex)
+                {
+                    GraphicsPath path = new GraphicsPath();
+                    path.StartFigure();
+                    path.AddRectangle(new Rectangle(e.RowBounds.X + 1, e.RowBounds.Y, e.RowBounds.Width - 2, e.RowBounds.Height - 1));
+                    path.AddRectangle(new Rectangle(e.RowBounds.X + 4, e.RowBounds.Y + 3, e.RowBounds.Width - 8, e.RowBounds.Height - 7));
+                    path.CloseFigure();
+                    e.Graphics.FillPath(new HatchBrush(HatchStyle.Percent50, Color.Black, Color.Transparent), path);
+                }
+            }
+
+        }
+
+        protected override void OnDragOver(DragEventArgs e)
+        {
+            base.OnDragOver(e);
+
+            e.Effect = DragDropEffects.Move;
+
+            int from, to;
+            bool next;
+            bool valid = decideDropDestinationRowIndex(this, e, out from, out to, out next);
+
+            bool needRedraw = (valid != dropDestinationIsValid);
+
+            if (valid)
+            {
+                needRedraw = needRedraw || (to != dropDestinationRowIndex) || (next != dropDestinationIsNextRow);
+            }
+
+            if (needRedraw)
+            {
+                if (dropDestinationIsValid)
+                {
+                    this.InvalidateRow(dropDestinationRowIndex);
+                }
+                if (valid)
+                {
+                    this.InvalidateRow(to);
+                }
+            }
+
+            dropDestinationIsValid = valid;
+            dropDestinationRowIndex = to;
+            dropDestinationIsNextRow = next;
+
+        }
+
+        protected override void OnDragLeave(EventArgs e)
+        {
+            base.OnDragLeave(e);
+            if (dropDestinationIsValid)
+            {
+                dropDestinationIsValid = false;
+                this.InvalidateRow(dropDestinationRowIndex);
+            }
         }
 
         #endregion
@@ -596,20 +789,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         private void drawTimeLineResizeBar(int x)
         {
-            if (resizingBarRect.IsEmpty)
+            if(this.Rows.Count != 0)
             {
-                resizingBarRect = new Rectangle(x - 1, this.ClientRectangle.Y + this.ColumnHeadersHeight, 3, this.ClientRectangle.Height - this.ColumnHeadersHeight);
-            }
-            resizingBarRect.X = x;
+                if (resizingBarRect.IsEmpty)
+                {
+                    resizingBarRect = new Rectangle(x - 1, this.ClientRectangle.Y + this.ColumnHeadersHeight, 3, this.ClientRectangle.Height - this.ColumnHeadersHeight);
+                }
+                resizingBarRect.X = x;
 
-            Bitmap tmpBmp = new Bitmap(resizingBarRect.Width, resizingBarRect.Height);
+                Bitmap tmpBmp = new Bitmap(resizingBarRect.Width, resizingBarRect.Height);
 
-            using (Graphics graphics = this.CreateGraphics())
-            {
-                this.DoubleBuffered = true;
-                this.Refresh();
-                graphics.FillRectangle(new HatchBrush(HatchStyle.Percent50, Color.Black, Color.Transparent), resizingBarRect);
-                this.DoubleBuffered = false;
+                using (Graphics graphics = this.CreateGraphics())
+                {
+                    this.DoubleBuffered = true;
+                    this.Refresh();
+                    graphics.FillRectangle(new HatchBrush(HatchStyle.Percent50, Color.Black, Color.Transparent), resizingBarRect);
+                    this.DoubleBuffered = false;
+                }
             }
         }
 
@@ -625,7 +821,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             Bitmap tmpBmp = new Bitmap(backRect.Width, backRect.Height);
             using (Graphics tmpBmpGraphics = Graphics.FromImage(tmpBmp))
             {
-                int x = timeToX(time);
+                float x = timeToX(time);
                 using (Pen pen = new Pen(NowMarkerColor))
                 {
                     //pen.DashStyle = DashStyle.Dash;
@@ -638,15 +834,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     graphics.DrawImage(tmpBmp, backRect.X, backRect.Y);
                     this.DoubleBuffered = false;
                 }
-            }
-        }
-
-        private void onRowChanged(object sender, EventArgs e)
-        {
-            minTimeMaxTimeReCalc();
-            if (Edited == false)
-            {
-                beginTimeDisplayTimeLengthReCalc();
             }
         }
 
@@ -680,42 +867,83 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             }
         }
 
-        private void minTimeMaxTimeReCalc()
-        {
-            if (this.Rows.Count > 0)
-            {
-                ulong st = ulong.MaxValue;
-                ulong et = ulong.MinValue;
-
-                for (int i = 0; i < this.Rows.Count; i++ )
-                {
-                    TimeLineEvents te = (TimeLineEvents)this[timeLineColumn.Name, i].Value;
-                    if (te != null)
-                    {
-                        if (te.StartTime < st)
-                        {
-                            st = te.StartTime;
-                        }
-                        if (te.EndTime > et)
-                        {
-                            et = te.EndTime;
-                        }
-                    }
-                }
-
-                this.MinimumTime = st;
-                this.MaximumTime = et;
-            }
-        }
 
         private ulong xToTime(int x)
         {
             return (ulong)(((decimal)x * ((decimal)nsPerScaleMark / (decimal)pixelPerScaleMark)) + (decimal)beginTime);
         }
 
-        private int timeToX(ulong t)
+        private float timeToX(ulong t)
         {
-            return (int)(((decimal)t - (decimal)beginTime) / ((decimal)nsPerScaleMark / (decimal)pixelPerScaleMark));
+            return (float)(((decimal)t - (decimal)beginTime) / ((decimal)nsPerScaleMark / (decimal)pixelPerScaleMark));
+        }
+
+        private bool decideDropDestinationRowIndex(DataGridView grid, DragEventArgs e, out int from, out int to, out bool next)
+        {
+            from = (int)e.Data.GetData(typeof(int));
+
+            if (grid.NewRowIndex != -1 && grid.NewRowIndex == from)
+            {
+                to = 0;
+                next = false;
+                return false;
+            }
+
+            Point clientPoint = grid.PointToClient(new Point(e.X, e.Y));
+            clientPoint.X = 1;
+            DataGridView.HitTestInfo hit = grid.HitTest(clientPoint.X, clientPoint.Y);
+
+            to = hit.RowIndex;
+            if (to == -1)
+            {
+                int top = grid.ColumnHeadersVisible ? grid.ColumnHeadersHeight : 0;
+                top += 1;
+
+                if (top > clientPoint.Y)
+                {
+                    to = grid.FirstDisplayedCell.RowIndex;
+                }
+                else
+                {
+                    to = grid.Rows.Count - 1;
+                }
+            }
+
+            if (to == grid.NewRowIndex)
+            {
+                to--;
+            }
+
+            next = (to > from);
+            return (from != to);
+        }
+
+        private int moveDataValue(int from, int to, bool next)
+        {
+
+            //TimeLineViewableObject tvo = viewableObjectList[from].DeepClone();
+
+            //viewableObjectList.RemoveAt(from);
+
+            //if (to > from)
+            //{
+            //    to--;
+            //}
+            //if (next)
+            //{
+            //    to++;
+            //}
+            //if (to <= (viewableObjectList.Count))
+            //{
+            //    viewableObjectList.Insert(to, tvo);
+            //}
+            //else
+            //{
+            //    viewableObjectList.Add(tvo);
+            //}
+
+            //return viewableObjectList.IndexOf(tvo);
+            return 0;
         }
 
         #endregion

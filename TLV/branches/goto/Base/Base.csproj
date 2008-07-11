@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="Math.cs" />
     <Compile Include="NativeScrollBar.cs" />
+    <Compile Include="PropertyDisplayNameAttribute.cs" />
     <Compile Include="SortableBindingList.cs" />
     <Compile Include="ToolStripLabeledTrackBar.cs">
       <SubType>Component</SubType>

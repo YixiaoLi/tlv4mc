@@ -18,7 +18,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar
         public int X
         {
             get { return this.Location.X; }
-            set { this.Location = new Point(value, this.Location.Y); }
+            set
+            {
+                if (this.Location.X != value)
+                {
+                    int delta = value - this.Location.X;
+                    this.Width -= delta;
+                    this.Location = new Point(value, this.Location.Y);
+                }
+            }
         }
         public ulong MinimumTime
         {

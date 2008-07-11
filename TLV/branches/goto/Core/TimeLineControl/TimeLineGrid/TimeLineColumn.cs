@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using NU.OJL.MPRTOS.TLV.Core.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 {
@@ -11,7 +12,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         {
             this.SortMode = DataGridViewColumnSortMode.NotSortable;
             this.DataPropertyName = "TimeLineEvents";
-            this.Name = "TimeLine";
+            this.ValueType = typeof(TimeLineEvents);
+            this.Name = this.DataPropertyName;
         }
 
         public override DataGridViewCell CellTemplate

@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
+using NU.OJL.MPRTOS.TLV.Core.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 {
@@ -16,9 +17,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         }
 
-        public override void Init()
+        public override void InitChildrenFirst()
         {
-            base.Init();
+            base.InitChildrenFirst();
+        }
+
+        public override void InitParentFirst()
+        {
             BindPToA("RowSizeMode", typeof(RowSizeMode), "RowSizeMode", SearchAFlags.Self);
             BindPToA("TimeLineX", typeof(int), "TimeLineX", SearchAFlags.Self);
             BindPToA("TimeLineMinimumX", typeof(int), "TimeLineMinimumX", SearchAFlags.Self);
@@ -34,8 +39,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             BindPToA("MaxRowHeight", typeof(int), "MaxRowHeight", SearchAFlags.Self);
             BindPToA("MinRowHeight", typeof(int), "MinRowHeight", SearchAFlags.Self);
             BindPToA("NowRowHeight", typeof(int), "NowRowHeight", SearchAFlags.Self);
+            BindPToA("ViewableObjectType", typeof(Type), "ViewableObjectType", SearchAFlags.Ancestors);
+            A.ViewableObjectDataSource = GetPropertyAFrom(typeof(object), "ViewableObjectDataSource", SearchAFlags.Ancestors);
+            P.ViewableObjectDataSource = A.ViewableObjectDataSource;
         }
-
-
     }
 }

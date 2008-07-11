@@ -16,9 +16,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
 
         }
 
-        public override void Init()
+        public override void  InitParentFirst()
         {
-            base.Init();
+            base.InitParentFirst();
             BindPToA("MinimumTime", typeof(ulong), "MinimumTime", SearchAFlags.AncestorsWithSiblings);
             BindPToA("MaximumTime", typeof(ulong), "MaximumTime", SearchAFlags.AncestorsWithSiblings);
             BindPToA("TimeLineX", typeof(int), "TimeLineX", SearchAFlags.AncestorsWithSiblings);

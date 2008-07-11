@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
+using NU.OJL.MPRTOS.TLV.Core.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 {
@@ -11,18 +12,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private RowSizeMode rowSizeMode;
         private int timeLineX;
         private int timeLineMinimumX = 0;
-        private ulong minimumTime = 0;
-        private ulong maximumTime = 0;
+        private ulong minimumTime = ulong.MaxValue;
+        private ulong maximumTime = ulong.MinValue;
         private ulong beginTime = 0;
         private ulong displayTimeLength = 0;
-        private ulong nsPerScaleMark = 1;
+        private ulong nsPerScaleMark = 0;
         private ulong maximumNsPerScaleMark = 1;
         private int pixelPerScaleMark = 5;
         private ulong nowMarkerTime = 0;
         private Color nowMarkerColor = Color.FromArgb(255, Color.Red);
-        private int maxRowHeight = 0;
-        private int minRowHeight = 0;
-        private int rowHeight = 0;
+        private int maxRowHeight = 100;
+        private int minRowHeight = 15;
+        private int rowHeight = 25;
+        private Object viewableObjectDataSource;
 
         public RowSizeMode RowSizeMode
         {
@@ -113,7 +115,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             get { return nsPerScaleMark; }
             set
             {
-                if (nsPerScaleMark != value)
+                if (nsPerScaleMark != value && value != 0)
                 {
                     nsPerScaleMark = value;
                     NotifyPropertyChanged("NsPerScaleMark");
@@ -204,6 +206,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     NotifyPropertyChanged("MinRowHeight");
                 }
             }
+        }
+        public Object ViewableObjectDataSource
+        {
+            get { return viewableObjectDataSource; }
+            set { viewableObjectDataSource = value; }
         }
 
         public TimeLineGridA(string name)

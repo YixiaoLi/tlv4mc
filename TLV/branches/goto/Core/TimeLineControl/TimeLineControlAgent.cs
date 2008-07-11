@@ -1,15 +1,15 @@
 ﻿using System;
-using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
 using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Core.Base;
 using NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid;
 using NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine;
 using NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar;
+using NU.OJL.MPRTOS.TLV.Core.ViewableObject;
+using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 {
@@ -48,161 +48,44 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             timeLineScrollBarAgent.P.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
 
             timeLineGridAgent.P.SizeChanged += timeLineGridPSizeChanged;
-            timeLineScrollBarAgent.P.Scroll += new ScrollEventHandler(timeLineScrollBarPScroll);
            
         }
 
-        public override void Init()
+        public override void InitChildrenFirst()
         {
-            base.Init();
+            base.InitChildrenFirst();
 
-            timeLineGridAgent.P.DataSource = new SortableBindingList<TestObject>(new List<TestObject>()
-            {
-                new TestObject("task1", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(200000, Verb.RUN),
-                        new TimeLineEvent(400000, Verb.DORMANT),
-                    })),
-                new TestObject("task2", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(250000, Verb.RUNNABLE),
-                        new TimeLineEvent(400000, Verb.RUN),
-                        new TimeLineEvent(500000, Verb.RUNNABLE),
-                        new TimeLineEvent(600000, Verb.RUNNABLE),
-                        new TimeLineEvent(700000, Verb.RUN),
-                        new TimeLineEvent(719284, Verb.DORMANT),
-                    })),
-                new TestObject("task3", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(500000, Verb.RUN),
-                        new TimeLineEvent(550000, Verb.WAITING),
-                        new TimeLineEvent(600000, Verb.RUN),
-                        new TimeLineEvent(700000, Verb.DORMANT),
-                    })),
-                new TestObject("task4", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task5", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task6", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task7", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task8", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task9", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task10", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task11", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task12", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task13", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task14", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task15", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task16", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task17", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task18", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task19", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task20", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task21", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task22", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task23", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task24", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task25", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task26", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(800000, Verb.DORMANT),
-                    })),
-                new TestObject("task27", new TimeLineEvents(new List<TimeLineEvent>()
-                    {
-                        new TimeLineEvent(100239, Verb.DORMANT),
-                        new TimeLineEvent(860234, Verb.DORMANT),
-                    })),
-            });
+            //timeLineGridAgent.P.ViewableObjectList = new TimeLineViewableObjectList<KernelObject>()
+            //{
+            //    new KernelObject(1, "task1", ObjectType.TSK, "", 1, new TimeLineEvents()
+            //        {
+            //            new TimeLineEvent(100239, (int)KernelObjectVerb.DORMANT),
+            //            new TimeLineEvent(234532, (int)KernelObjectVerb.RUN),
+            //            new TimeLineEvent(634633, (int)KernelObjectVerb.WAITING_SUSPENDED),
+            //            new TimeLineEvent(745332, (int)KernelObjectVerb.RUNNABLE),
+            //        }),
+            //    new KernelObject(2, "task2", ObjectType.TSK, "", 1, new TimeLineEvents()
+            //        {
+            //            new TimeLineEvent(136511, (int)KernelObjectVerb.DORMANT),
+            //            new TimeLineEvent(234532, (int)KernelObjectVerb.RUN),
+            //            new TimeLineEvent(634633, (int)KernelObjectVerb.WAITING_SUSPENDED),
+            //            new TimeLineEvent(823512, (int)KernelObjectVerb.RUNNABLE),
+            //        }),
+            //    new KernelObject(3, "task3", ObjectType.TSK, "", 1, new TimeLineEvents()
+            //        {
+            //            new TimeLineEvent(100239, (int)KernelObjectVerb.DORMANT),
+            //            new TimeLineEvent(234532, (int)KernelObjectVerb.RUN),
+            //            new TimeLineEvent(634633, (int)KernelObjectVerb.WAITING_SUSPENDED),
+            //            new TimeLineEvent(713221, (int)KernelObjectVerb.RUNNABLE),
+            //        }),
+            //    new KernelObject(4, "task4", ObjectType.TSK, "", 1, new TimeLineEvents()
+            //        {
+            //            new TimeLineEvent(112231, (int)KernelObjectVerb.DORMANT),
+            //            new TimeLineEvent(234532, (int)KernelObjectVerb.RUN),
+            //            new TimeLineEvent(612612, (int)KernelObjectVerb.WAITING_SUSPENDED),
+            //            new TimeLineEvent(621235, (int)KernelObjectVerb.RUNNABLE),
+            //        }),
+            //};
 
             timeLineGridAgent.P.MinRowHeight = 15;
             timeLineGridAgent.P.NowRowHeight = 25;
@@ -216,43 +99,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             timeLineScrollBarAgent.P.Width = timeLineWidth - (timeLineGridAgent.P.TimeLineX - timeLineGridAgent.P.Location.X);
             bottomTimeLineAgent.P.Location = new Point(1, timeLineGridAgent.P.Location.Y + timeLineGridAgent.P.Height);
             timeLineScrollBarAgent.P.Location = new Point(timeLineGridAgent.P.TimeLineX, bottomTimeLineAgent.P.Location.Y + bottomTimeLineAgent.P.Height);
-        }
-
-        private void timeLineScrollBarPScroll(object sender, ScrollEventArgs e)
-        {
-            if (timeLineGridAgent.P.Edited == false)
-            {
-                timeLineGridAgent.P.Edited = true;
-            }
-        }
-
-    }
-
-    [Serializable]
-    public class TestObject : ITimeLineViewable
-    {
-        public string Name { get; protected set; }
-        public TimeLineEvents TimeLineEvents { get; protected set; }
-
-        public TestObject(string name, TimeLineEvents timeLineEvents)
-        {
-            this.Name = name;
-            this.TimeLineEvents = timeLineEvents;
-        }
-
-        public TestObject DeepClone()
-        {
-            TestObject target = null;
-            using (MemoryStream stream = new MemoryStream())
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(stream, this);
-                stream.Position = 0;
-
-                target = (TestObject)formatter.Deserialize(stream);
-            }
-
-            return target;
         }
 
     }

@@ -1,6 +1,6 @@
-﻿namespace NU.OJL.MPRTOS.TLV.Core.Base
+﻿namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject
 {
-    public enum ResourceType
+    public enum ObjectType
     {
         TSK,
         SEM,
