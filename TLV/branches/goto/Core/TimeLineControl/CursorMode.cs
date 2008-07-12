@@ -32,7 +32,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                 case CursorMode.ZoomOut:
                     return new Cursor(Resources.zoomOut.Handle);
                 case CursorMode.ZoomSelect:
-                    return new Cursor(Resources.zoom.Handle);
+                    return new Cursor(Resources.zoomSelect.Handle);
                 case CursorMode.Hand:
                     if (mouseDowned)
                     {

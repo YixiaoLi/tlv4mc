@@ -242,6 +242,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.handButton.Click += new EventHandler(handButtonClick);
             this.zoomInButton.Click += new EventHandler(zoomInButtonClick);
             this.zoomOutButton.Click += new EventHandler(zoomOutButtonClick);
+            this.zoomSelectButton.Click += new EventHandler(zoomSelectButtonClick);
+        }
+
+        protected void zoomSelectButtonClick(object sender, EventArgs e)
+        {
+            CursorMode = CursorMode.ZoomSelect;
         }
 
         protected void handButtonClick(object sender, EventArgs e)

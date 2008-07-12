@@ -38,6 +38,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.handButton = new System.Windows.Forms.ToolStripButton();
             this.zoomInButton = new System.Windows.Forms.ToolStripButton();
             this.zoomOutButton = new System.Windows.Forms.ToolStripButton();
+            this.zoomSelectButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
             this.scaleToolStrip.SuspendLayout();
@@ -60,8 +61,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             // 
             // toolStripContainer.TopToolStripPanel
             // 
-            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.scaleToolStrip);
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.buttonToolStrip);
+            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.scaleToolStrip);
             // 
             // scaleToolStrip
             // 
@@ -84,7 +85,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.toolStripButton1});
             this.scaleToolStrip.Location = new System.Drawing.Point(3, 0);
             this.scaleToolStrip.Name = "scaleToolStrip";
-            this.scaleToolStrip.Size = new System.Drawing.Size(590, 25);
+            this.scaleToolStrip.Size = new System.Drawing.Size(559, 25);
             this.scaleToolStrip.TabIndex = 0;
             // 
             // nsPerScaleMarkAddButton
@@ -284,10 +285,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.cursorButton,
             this.handButton,
             this.zoomInButton,
-            this.zoomOutButton});
-            this.buttonToolStrip.Location = new System.Drawing.Point(593, 0);
+            this.zoomOutButton,
+            this.zoomSelectButton});
+            this.buttonToolStrip.Location = new System.Drawing.Point(562, 0);
             this.buttonToolStrip.Name = "buttonToolStrip";
-            this.buttonToolStrip.Size = new System.Drawing.Size(102, 25);
+            this.buttonToolStrip.Size = new System.Drawing.Size(156, 25);
             this.buttonToolStrip.TabIndex = 1;
             // 
             // cursorButton
@@ -327,6 +329,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.zoomOutButton.Name = "zoomOutButton";
             this.zoomOutButton.Size = new System.Drawing.Size(23, 22);
             this.zoomOutButton.Text = "縮小";
+            // 
+            // zoomSelectButton
+            // 
+            this.zoomSelectButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.zoomSelectButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.zoomSelectButton;
+            this.zoomSelectButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.zoomSelectButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.zoomSelectButton.Name = "zoomSelectButton";
+            this.zoomSelectButton.Size = new System.Drawing.Size(23, 22);
+            this.zoomSelectButton.Text = "範囲を指定して拡大";
             // 
             // TimeLineControlP
             // 
@@ -368,5 +380,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         private ToolStripButton handButton;
         private ToolStripButton zoomInButton;
         private ToolStripButton zoomOutButton;
+        private ToolStripButton zoomSelectButton;
     }
 }

@@ -20,6 +20,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private ulong maximumNsPerScaleMark = 1;
         private int pixelPerScaleMark = 5;
         private ulong nowMarkerTime = 0;
+        private ulong selectRectStartTime = 0;
         private Color nowMarkerColor = Color.FromArgb(255, Color.Red);
         private int maxRowHeight = 100;
         private int minRowHeight = 15;
@@ -155,6 +156,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     nowMarkerTime = value;
                     NotifyPropertyChanged("NowMarkerTime");
+                }
+            }
+        }
+        public ulong SelectRectStartTime
+        {
+            get { return selectRectStartTime; }
+            set
+            {
+                if (selectRectStartTime != value)
+                {
+                    selectRectStartTime = value;
+                    NotifyPropertyChanged("SelectRectStartTime");
                 }
             }
         }

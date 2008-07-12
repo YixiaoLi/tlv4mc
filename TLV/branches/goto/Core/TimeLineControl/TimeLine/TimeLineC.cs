@@ -28,6 +28,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             BindPToA("NsPerScaleMark", typeof(ulong), "NsPerScaleMark", SearchAFlags.AncestorsWithSiblings);
             BindPToA("PixelPerScaleMark", typeof(int), "PixelPerScaleMark", SearchAFlags.AncestorsWithSiblings);
             BindPToA("NowMarkerTime", typeof(ulong), "NowMarkerTime", SearchAFlags.AncestorsWithSiblings);
+            BindPToA("SelectRectStartTime", typeof(ulong), "SelectRectStartTime", SearchAFlags.AncestorsWithSiblings);
             BindPToA("NowMarkerColor", typeof(Color), "NowMarkerColor", SearchAFlags.AncestorsWithSiblings);
 
             this.P.TimeLineXResizing += (MouseEventHandler)GetDelegate(typeof(MouseEventHandler), "TimeLineXResizing", SearchAFlags.AncestorsWithSiblings);

@@ -53,6 +53,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private Point mouseDownPoint = new Point(0, 0);
         private Point mouseMoveLastPoint = new Point(0, 0);
         private ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
+        private ulong selectRectStartTime = 0;
             
         #endregion
 
@@ -205,8 +206,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 if (nowMarkerTime != value)
                 {
                     nowMarkerTime = value;
-                    drawNowMarker(nowMarkerTime);
+                    Refresh();
                     NotifyPropertyChanged("NowMarkerTime");
+                }
+            }
+        }
+        public ulong SelectRectStartTime
+        {
+            get { return selectRectStartTime; }
+            set
+            {
+                if (selectRectStartTime != value)
+                {
+                    selectRectStartTime = value;
+                    NotifyPropertyChanged("SelectRectStartTime");
+                    if (selectRectStartTime == 0)
+                    {
+                        Refresh();
+                    }
                 }
             }
         }
@@ -481,7 +498,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             this.AllRowsHeight = this.ColumnHeadersHeight;
             this.ContextMenuStrip = contextMenuStrip;
             this.DefaultCellStyle.SelectionForeColor = this.DefaultCellStyle.ForeColor;
-
+            this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.Opaque, true);
+            this.DoubleBuffered = true;
             #endregion
 
             #region timeLineColumnプロパティ初期化
@@ -631,7 +649,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 Cursor.Show();
                 this.Cursor = Cursors.Default;
                 isMouseEnter = false;
-                this.Refresh();
+                SelectRectStartTime = 0;
                 NowMarkerTime = 0;
             }
         }
@@ -649,14 +667,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
                 if (e.X < this.Width && e.X > this.TimeLineX && e.Y > this.ColumnHeadersHeight && e.Y < this.Height)
                 {
-                    if (CursorMode != CursorMode.Hand)
+                    switch (cursorMode)
                     {
-                        NowMarkerTime = xToTime(e.X - timeLineX);
-                    }
-                    else
-                    {
-                        moveTimeToX(xToTime(mouseMoveLastPoint.X), e.X);
-                        mouseMoveLastPoint = e.Location;
+                        case CursorMode.Hand:
+                            moveTimeToX(xToTime(mouseMoveLastPoint.X), e.X);
+                            mouseMoveLastPoint = e.Location;
+                            break;
+
+                        case CursorMode.ZoomIn:
+                            NowMarkerTime = xToTime(e.X - timeLineX);
+                            break;
+
+                        case CursorMode.ZoomOut:
+                            NowMarkerTime = xToTime(e.X - timeLineX);
+                            break;
+
+                        case CursorMode.ZoomSelect:
+                            NowMarkerTime = xToTime(e.X - timeLineX);
+                            break;
+
+                        case CursorMode.Default:
+                            NowMarkerTime = xToTime(e.X - timeLineX);
+                            break;
+
+                        default:
+                            break;
                     }
                 }
                 else
@@ -682,6 +717,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             }
             else
             {
+                SelectRectStartTime = 0;
                 NowMarkerTime = 0;
                 OnMouseLeave(EventArgs.Empty);
             }
@@ -712,6 +748,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
                         case CursorMode.ZoomOut:
                             onZoomOut(e.X - TimeLineX);
+                            break;
+
+                        case CursorMode.ZoomSelect:
+                            SelectRectStartTime = xToTime(mouseDownPoint.X - timeLineX);
+                            break;
+
+                        case CursorMode.Default:
+                            SelectRectStartTime = xToTime(mouseDownPoint.X - timeLineX);
                             break;
 
                         default:
@@ -750,6 +794,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     {
                         case CursorMode.Hand:
                             this.Cursor = CursorMode.Cursor(false);
+                            break;
+
+                        case CursorMode.ZoomSelect:
+                            SelectRectStartTime = 0;
+                            break;
+
+                        case CursorMode.Default:
+                            SelectRectStartTime = 0;
                             break;
 
                         default:
@@ -861,6 +913,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         }
 
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(new PaintEventArgs(e.Graphics, e.ClipRectangle));
+
+            if (selectRectStartTime != 0)
+            {
+                drawSelectRect(selectRectStartTime, nowMarkerTime, e.Graphics);
+                drawNowMarker(selectRectStartTime, e.Graphics);
+            }
+
+            if (nowMarkerTime != 0)
+            {
+                drawNowMarker(nowMarkerTime, e.Graphics);
+            }
+
+        }
+
         #endregion
 
         #region パブリックメソッド
@@ -968,39 +1037,34 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
                 using (Graphics graphics = this.CreateGraphics())
                 {
-                    this.DoubleBuffered = true;
                     this.Refresh();
                     graphics.FillRectangle(new HatchBrush(HatchStyle.Percent50, Color.Black, Color.Transparent), resizingBarRect);
-                    this.DoubleBuffered = false;
                 }
             }
         }
 
-        private void drawNowMarker(ulong time)
+        private void drawNowMarker(ulong time, Graphics graphics)
         {
-            Rectangle backRect = new Rectangle(
-                this.TimeLineX,
+            float x = timeToX(time) + timeLineX;
+
+            using (Pen pen = new Pen(NowMarkerColor))
+            {
+                graphics.DrawLine(pen, x, this.ColumnHeadersHeight, x, this.ClientSize.Height);
+            }
+        }
+
+        private void drawSelectRect(ulong from, ulong to, Graphics graphics)
+        {
+            RectangleF backRect = new RectangleF(
+                this.timeToX(to > from ? from : to) + timeLineX,
                 this.ColumnHeadersHeight,
-                this.ClientSize.Width - this.TimeLineX,
+                this.timeToX(to > from ? to : from) - this.timeToX(to > from ? from : to),
                 this.ClientSize.Height - this.ColumnHeadersHeight
                 );
 
-            Bitmap tmpBmp = new Bitmap(backRect.Width, backRect.Height);
-            using (Graphics tmpBmpGraphics = Graphics.FromImage(tmpBmp))
+            using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, Color.Purple)))
             {
-                float x = timeToX(time);
-                using (Pen pen = new Pen(NowMarkerColor))
-                {
-                    //pen.DashStyle = DashStyle.Dash;
-                    tmpBmpGraphics.DrawLine(pen, x, 0, x, backRect.Height);
-                }
-                using (Graphics graphics = this.CreateGraphics())
-                {
-                    this.DoubleBuffered = true;
-                    this.Refresh();
-                    graphics.DrawImage(tmpBmp, backRect.X, backRect.Y);
-                    this.DoubleBuffered = false;
-                }
+                graphics.FillRectangle(brush, backRect);
             }
         }
 

@@ -150,5 +150,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Icon zoomSelect {
+            get {
+                object obj = ResourceManager.GetObject("zoomSelect", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap zoomSelectButton {
+            get {
+                object obj = ResourceManager.GetObject("zoomSelectButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

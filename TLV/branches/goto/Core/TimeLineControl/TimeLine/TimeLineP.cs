@@ -33,9 +33,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
         private int timeLineMarkLabelInterval = 1;
         private float scaleMarkHeight = 5;
         private ulong nowMarkerTime = 0;
+        private ulong selectRectStartTime = 0;
+        private int labelMargin = 2;
 
         public ScaleMarkDirection ScaleMarkDirection { get; set; }
-        public bool IsDisplayNowMarkTime { get; set; }
         public int TimeLineX
         {
             get { return timeLineX; }
@@ -183,8 +184,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 if (nowMarkerTime != value)
                 {
                     nowMarkerTime = value;
-                    drawNowMarker(nowMarkerTime);
                     NotifyPropertyChanged("NowMarkerTime");
+                    Refresh();
                 }
             }
         }
@@ -192,6 +193,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
         {
             get;
             set;
+        }
+        public ulong SelectRectStartTime
+        {
+            get { return selectRectStartTime; }
+            set
+            {
+                if (selectRectStartTime != value)
+                {
+                    selectRectStartTime = value;
+                    NotifyPropertyChanged("SelectRectStartTime");
+                    if (selectRectStartTime == 0)
+                    {
+                        Refresh();
+                    }
+                }
+            }
         }
 
         public event WinForms.MouseEventHandler TimeLineXResizing = null;
@@ -205,7 +222,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             this.Name = name;
             this.Height = 30;
             this.ScaleMarkDirection = scaleMarkDirection;
-            this.IsDisplayNowMarkTime = true;
             this.timeMarkLabelFont = new Font(FontFamily.GenericMonospace, 8);
             this.SetStyle(WinForms.ControlStyles.ResizeRedraw | WinForms.ControlStyles.Opaque, true);
         }
@@ -225,6 +241,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 using (Graphics tmpBmpGraphics = Graphics.FromImage(tmpBmp))
                 {
                     drawTimeLine(tmpBmpGraphics, backRect.Width, backRect.Height);
+
+                    if (selectRectStartTime != 0)
+                    {
+                        drawNowMarker(selectRectStartTime, tmpBmpGraphics, NowMarkerColor);
+                    }
+
+                    if (nowMarkerTime != 0)
+                    {
+                        drawNowMarker(nowMarkerTime, tmpBmpGraphics, NowMarkerColor);
+                    }
+
+                    if (selectRectStartTime != 0)
+                    {
+                        drawFromToLabel(selectRectStartTime, nowMarkerTime, tmpBmpGraphics, NowMarkerColor);
+                    }
+
                 }
                 e.Graphics.FillRectangle(new SolidBrush(this.BackColor), new Rectangle(0, 0, timeLineX, Height));
                 e.Graphics.DrawImage(tmpBmp, TimeLineX, 0);
@@ -357,77 +389,94 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             return nextTime;
         }
 
-        private void drawNowMarker(ulong time)
+        private void drawNowMarker(ulong time, Graphics graphics, Color color)
         {
-            Rectangle backRect = new Rectangle(
-                this.TimeLineX,
-                0,
-                this.Width,
-                this.Height
-                );
 
-            Bitmap tmpBmp = new Bitmap(backRect.Width, backRect.Height);
-            using (Graphics tmpBmpGraphics = Graphics.FromImage(tmpBmp))
+            float x = timeToX(time);
+            float labelY = 1;
+            using (Pen pen = new Pen(color))
             {
-                float x = timeToX(time);
-                float labelY = 1;
-                using (Pen pen = new Pen(NowMarkerColor))
+                //pen.DashStyle = DashStyle.Dash;
+                if (ScaleMarkDirection == ScaleMarkDirection.Top)
                 {
-                    //pen.DashStyle = DashStyle.Dash;
-                    if (ScaleMarkDirection == ScaleMarkDirection.Top)
-                    {
-                        tmpBmpGraphics.DrawLine(pen, x, 0, x, (scaleMarkHeight * 2));
-                    }
-                    else
-                    {
-                        tmpBmpGraphics.DrawLine(pen, x, backRect.Height, x, (scaleMarkHeight * 2));
-                    }
+                    graphics.DrawLine(pen, x, 0, x, (scaleMarkHeight * 2));
                 }
-                if (IsDisplayNowMarkTime)
+                else
                 {
-                    SizeF timeSize = getTimeMarkLabelWidth(time);
-
-                    float nowLabelBottomY = Height - (scaleMarkHeight * 2);
-                    float nowLabelMiddleY = labelY + timeSize.Height;
-                    float nowLabelTopY = labelY;
-
-                    if (ScaleMarkDirection == ScaleMarkDirection.Top)
-                    {
-                        nowLabelBottomY = scaleMarkHeight * 2 - 1;
-                        nowLabelMiddleY = this.Height - timeSize.Height - labelY - 1;
-                        nowLabelTopY = timeSize.Height + nowLabelMiddleY;
-                        labelY = this.Height - timeSize.Height - labelY - 1;
-                    };
-
-                    int margin = 2;
-
-                    PointF[] points = new[] {
-                        new PointF(x - (timeSize.Width / 2) - margin, nowLabelTopY),
-                        new PointF(x + (timeSize.Width / 2) + margin, nowLabelTopY),
-                        new PointF(x + (timeSize.Width / 2) + margin, nowLabelMiddleY),
-                        new PointF(x, nowLabelBottomY),
-                        new PointF(x - (timeSize.Width / 2) - margin, nowLabelMiddleY),
-                    };
-
-                    tmpBmpGraphics.SmoothingMode = SmoothingMode.HighQuality;
-                    using (SolidBrush brush = new SolidBrush(Color.FromArgb(250, Color.White)))
-                    {
-                        tmpBmpGraphics.FillPolygon(brush, points);
-                    }
-                    using (Pen pen = new Pen(Color.DarkGray))
-                    {
-                        tmpBmpGraphics.DrawPolygon(pen, points);
-                    }
-                    tmpBmpGraphics.SmoothingMode = SmoothingMode.Default;
-                    tmpBmpGraphics.DrawString(time.ToString(), timeMarkLabelFont, Brushes.Black, x - (timeSize.Width / 2), labelY);
-                }
-
-                using (Graphics graphics = this.CreateGraphics())
-                {
-                    this.Refresh();
-                    graphics.DrawImage(tmpBmp, backRect.X, backRect.Y);
+                    graphics.DrawLine(pen, x, Height, x, (scaleMarkHeight * 2));
                 }
             }
+            SizeF timeSize = getTimeMarkLabelWidth(time);
+
+            float nowLabelBottomY = Height - (scaleMarkHeight * 2);
+            float nowLabelMiddleY = labelY + timeSize.Height;
+            float nowLabelTopY = labelY;
+
+            if (ScaleMarkDirection == ScaleMarkDirection.Top)
+            {
+                nowLabelBottomY = scaleMarkHeight * 2 - 1;
+                nowLabelMiddleY = this.Height - timeSize.Height - labelY - 1;
+                nowLabelTopY = timeSize.Height + nowLabelMiddleY;
+                labelY = this.Height - timeSize.Height - labelY - 1;
+            };
+
+            PointF[] points = new[] {
+                new PointF(x - (timeSize.Width / 2) - labelMargin, nowLabelTopY),
+                new PointF(x + (timeSize.Width / 2) + labelMargin, nowLabelTopY),
+                new PointF(x + (timeSize.Width / 2) + labelMargin, nowLabelMiddleY),
+                new PointF(x, nowLabelBottomY),
+                new PointF(x - (timeSize.Width / 2) - labelMargin, nowLabelMiddleY),
+            };
+
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
+            using (SolidBrush brush = new SolidBrush(Color.FromArgb(250, Color.White)))
+            {
+                graphics.FillPolygon(brush, points);
+            }
+            using (Pen pen = new Pen(Color.DarkGray))
+            {
+                graphics.DrawPolygon(pen, points);
+            }
+            graphics.SmoothingMode = SmoothingMode.Default;
+            graphics.DrawString(time.ToString(), timeMarkLabelFont, Brushes.Black, x - (timeSize.Width / 2), labelY);
+        }
+
+        private void drawFromToLabel(ulong f, ulong t, Graphics graphics, Color color)
+        {
+            ulong from = t > f ? f : t;
+            ulong to = t > f ? t : f;
+            float fromX = timeToX(from);
+            float toX = timeToX(to);
+            SizeF fromTimeSize = getTimeMarkLabelWidth(from);
+            SizeF toTimeSize = getTimeMarkLabelWidth(to);
+            float lineY = Height / 2;
+            int arrowSize = 8;
+            ulong time = to - from;
+            float timeX = timeToX(from + (time / 2));
+            SizeF timeSize = getTimeMarkLabelWidth(time);
+            float timeLength = timeToX(to) - timeToX(from);
+
+            if (fromTimeSize.Width / 2 + toTimeSize.Width / 2 + (labelMargin * 2) + (arrowSize * 2)< timeLength)
+            {
+                using (Pen pen = new Pen(color))
+                {
+                    graphics.DrawLine(pen, fromX + fromTimeSize.Width / 2 + labelMargin, lineY, toX - fromTimeSize.Width / 2 - labelMargin, lineY);
+                    graphics.DrawLine(pen, fromX + fromTimeSize.Width / 2 + labelMargin, lineY, fromX + fromTimeSize.Width / 2 + arrowSize + labelMargin, lineY + arrowSize / 2);
+                    graphics.DrawLine(pen, fromX + fromTimeSize.Width / 2 + labelMargin, lineY, fromX + fromTimeSize.Width / 2 + arrowSize + labelMargin, lineY - arrowSize / 2);
+                    graphics.DrawLine(pen, toX - fromTimeSize.Width / 2 - labelMargin, lineY, toX - fromTimeSize.Width / 2 - arrowSize - labelMargin, lineY + arrowSize / 2);
+                    graphics.DrawLine(pen, toX - fromTimeSize.Width / 2 - labelMargin, lineY, toX - fromTimeSize.Width / 2 - arrowSize - labelMargin, lineY - arrowSize / 2);
+                }
+            }
+
+            using (SolidBrush brush = new SolidBrush(Color.FromArgb(250, Color.White)))
+            {
+                graphics.FillRectangle(brush, timeX - (timeSize.Width / 2) - labelMargin, lineY - (timeSize.Height / 2), timeSize.Width + (labelMargin * 2), timeSize.Height);
+            }
+            using (Pen pen = new Pen(Color.DarkGray))
+            {
+                graphics.DrawRectangle(pen, timeX - (timeSize.Width / 2) - labelMargin, lineY - (timeSize.Height / 2), timeSize.Width + (labelMargin * 2), timeSize.Height);
+            }
+            graphics.DrawString(time.ToString(), timeMarkLabelFont, Brushes.Black, timeX - (timeSize.Width / 2), lineY - (timeSize.Height / 2));
         }
 
         private ulong xToTime(int x)
