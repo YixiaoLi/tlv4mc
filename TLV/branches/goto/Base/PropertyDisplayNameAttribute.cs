@@ -13,11 +13,19 @@ namespace NU.OJL.MPRTOS.TLV.Base
     {
         public int Order { get; protected set; }
         public string PropertyDisplayName { get; protected set; }
+        public bool DefaultBrowsable { get; protected set; }
 
-        public PropertyDisplayNameAttribute(string name, int order)
+        /// <summary>
+        /// TimeLineControlに表示させる時の表示名、順番、デフォルトでの表示を設定する
+        /// </summary>
+        /// <param name="name">表示名</param>
+        /// <param name="order">順番（昇順）</param>
+        /// <param name="defaultBrowsable">デフォルトでの表示をするかどうか</param>
+        public PropertyDisplayNameAttribute(string name, int order, bool defaultBrowsable)
         {
             PropertyDisplayName = name;
             Order = order;
+            DefaultBrowsable = defaultBrowsable;
         }
     }
 
@@ -156,8 +164,21 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
                 return oneProperty.DisplayName;
             }
-        } 
+        }
 
+        public bool DefaultBrowsable
+        {
+            get
+            {
+                PropertyDisplayNameAttribute attrib = (PropertyDisplayNameAttribute)oneProperty.Attributes[typeof(PropertyDisplayNameAttribute)];
+                if (attrib != null)
+                {
+                    return attrib.DefaultBrowsable;
+                }
+
+                return true;
+            }
+        }
     }
 
     public static class PropertyDescriptorCollectionUtils

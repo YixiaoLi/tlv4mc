@@ -351,11 +351,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
                     List<DataGridViewColumn> columns = new List<DataGridViewColumn>();
 
-                    foreach (PropertyDescriptor pd in viewableObjectTypePdc)
+                    foreach (PropertyDisplayPropertyDescriptor pd in viewableObjectTypePdc)
                     {
                         Type type = pd.PropertyType;
                         string name = pd.Name;
                         string headerText = pd.DisplayName;
+                        bool browsable = pd.DefaultBrowsable;
 
                         if (type != typeof(TimeLineEvents))
                         {
@@ -370,18 +371,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                             ToolStripMenuItem newcontitem = new ToolStripMenuItem();
                             newcontitem.Text = headerText;
                             newcontitem.Name = name + "ContextMenuStrip";
-                            newcontitem.Checked = true;
+                            newcontitem.Checked = browsable;
                             contextMenuStrip.Items.Add(newcontitem);
+                            column.Visible = browsable;
                             newcontitem.Click += delegate
                             {
-                                if (this.Columns[column.Name].Visible)
+                                if (Columns[column.Name].Visible)
                                 {
-                                    this.Columns[column.Name].Visible = false;
+                                    Columns[column.Name].Visible = false;
                                     newcontitem.Checked = false;
                                 }
                                 else
                                 {
-                                    this.Columns[column.Name].Visible = true;
+                                    Columns[column.Name].Visible = true;
                                     newcontitem.Checked = true;
                                 }
                             };

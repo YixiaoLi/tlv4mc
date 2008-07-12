@@ -36,13 +36,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject
             return IndexOf<KernelObject>(ko, source);
         }
 
-        [PropertyDisplayName("ID", 10 * 3)]
+        [PropertyDisplayName("ID", 10 * 3, true)]
         public int Id { get; protected set; }
-        [PropertyDisplayName("タイプ", 10 * 2)]
+        [PropertyDisplayName("タイプ", 10 * 2, true)]
         public ObjectType ObjectType { get; protected set; }
-        [PropertyDisplayName("属性", 10 * 4)]
+        [PropertyDisplayName("属性", 10 * 4, false)]
         public string Atr { get; protected set; }
-        [PropertyDisplayName("クラス", 10 * 5)]
+        [PropertyDisplayName("クラス", 10 * 5, false)]
         public int Class { get; protected set; }
 
         public KernelObject(int id, string name, ObjectType type, string atr, int cls, TimeLineEvents timeLineEvents)
