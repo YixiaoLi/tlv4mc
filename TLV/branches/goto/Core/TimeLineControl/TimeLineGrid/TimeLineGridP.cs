@@ -93,17 +93,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 if (timeLineX != value)
                 {
                     int delta = value - timeLineX;
-                    if (delta != 0 && this.Columns.Count > 1)
-                    {
-                        for (int i = 2; i <= this.Columns.Count; i++ )
-                        {
-                            if (this.Columns[this.Columns.Count - i].Visible)
-                            {
-                                this.Columns[this.Columns.Count - i].Width += delta;
-                                break;
-                            }
-                        }
-                    }
+                    timeLineColumnPreviousColumn.Width += delta;
                     timeLineX = value;
                     NotifyPropertyChanged("TimeLineX");
                 }
@@ -257,9 +247,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             get { return nsPerScaleMark; }
             set
             {
-                if (nsPerScaleMark != value && value != 0)
+                if (nsPerScaleMark != value)
                 {
-                    nsPerScaleMark = value;
+                    nsPerScaleMark = value != 0 ? value : 1;
 
                     NotifyPropertyChanged("NsPerScaleMark");
 
@@ -490,16 +480,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             this.AutoGenerateColumns = false;
             this.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.VirtualMode = true;
+            this.ContextMenuStrip = contextMenuStrip;
+            this.DefaultCellStyle.SelectionForeColor = this.DefaultCellStyle.ForeColor;
+            this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.Opaque, true);
+            this.DoubleBuffered = true;
             #endregion
 
             #region プロパティ初期化
 
             this.Name = name;
             this.AllRowsHeight = this.ColumnHeadersHeight;
-            this.ContextMenuStrip = contextMenuStrip;
-            this.DefaultCellStyle.SelectionForeColor = this.DefaultCellStyle.ForeColor;
-            this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.Opaque, true);
-            this.DoubleBuffered = true;
+
             #endregion
 
             #region timeLineColumnプロパティ初期化
@@ -579,16 +570,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         protected override void OnColumnWidthChanged(DataGridViewColumnEventArgs e)
         {
-            base.OnColumnWidthChanged(e);
+            if(e != null)
+            {
+                base.OnColumnWidthChanged(e);
+            }
             int width = 0;
             int minimumWidth = 0;
 
+            int timeLineColumnPreviousColumnIndex = 0;
             for (int i = 2; i <= this.Columns.Count; i++)
             {
                 if (this.Columns[this.Columns.Count - i].Visible)
                 {
-                    timeLineColumnPreviousColumn = this.Columns[this.Columns.Count - i];
-                    break;
+                    if (timeLineColumnPreviousColumnIndex < this.Columns[this.Columns.Count - i].DisplayIndex)
+                    {
+                        timeLineColumnPreviousColumn = this.Columns[this.Columns.Count - i];
+                        timeLineColumnPreviousColumnIndex = this.Columns[this.Columns.Count - i].DisplayIndex;
+                    }
                 }
             }
 
@@ -743,11 +741,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                             break;
 
                         case CursorMode.ZoomIn:
-                            onZoomIn(e.X - TimeLineX);
+                            onZoomIn(e.X - TimeLineX, 0.75D);
                             break;
 
                         case CursorMode.ZoomOut:
-                            onZoomOut(e.X - TimeLineX);
+                            onZoomOut(e.X - TimeLineX, 1.5D);
                             break;
 
                         case CursorMode.ZoomSelect:
@@ -771,6 +769,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                         CurrentCell = this[hit.ColumnIndex, hit.RowIndex];
                         ownBeginGrabRowIndex = hit.RowIndex;
                     }
+                }
+
+                if (e.Y < this.ColumnHeadersHeight)
+                {
+                    DoubleBuffered = false;
                 }
             }
 
@@ -797,6 +800,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                             break;
 
                         case CursorMode.ZoomSelect:
+                            ulong fromTime = SelectRectStartTime > xToTime(e.X - timeLineX) ? xToTime(e.X - timeLineX) : SelectRectStartTime;
+                            ulong toTime = SelectRectStartTime > xToTime(e.X - timeLineX) ? SelectRectStartTime : xToTime(e.X - timeLineX);
+
+                            if (fromTime != toTime)
+                            {
+                                zoomSelect(fromTime, toTime);
+                            }
+
                             SelectRectStartTime = 0;
                             break;
 
@@ -811,6 +822,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 else
                 {
 
+                }
+
+                if (e.Y < this.ColumnHeadersHeight)
+                {
+                    DoubleBuffered = true;
+                    OnColumnWidthChanged(null);
                 }
             }
         }
@@ -1185,23 +1202,37 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
  
         }
 
-        private void onZoomIn(int x)
+        private void onZoomIn(int x, double ratio)
         {
             ulong time = xToTime(x);
-            NsPerScaleMark = (ulong)((double)nsPerScaleMark * 0.75d);
+            NowMarkerTime = 0;
+            NsPerScaleMark = (ulong)((double)nsPerScaleMark * ratio);
             moveTimeToX(time, x);
         }
 
-        private void onZoomOut(int x)
+        private void zoomSelect(ulong fromTime, ulong toTime)
+        {
+            double ratio = ((double)toTime - (double)fromTime) / ((double)endTime - (double)beginTime);
+
+            NowMarkerTime = 0;
+            SelectRectStartTime = 0;
+
+            NsPerScaleMark = (ulong)((double)nsPerScaleMark * ratio);
+
+            moveTimeToX(fromTime, 0);
+        }
+
+        private void onZoomOut(int x, double ratio)
         {
             ulong time = xToTime(x);
+            NowMarkerTime = 0;
             if (nsPerScaleMark == 1)
             {
                 NsPerScaleMark = 2;
             }
             else
             {
-                NsPerScaleMark = (ulong)((double)nsPerScaleMark * 1.5d);
+                NsPerScaleMark = (ulong)((double)nsPerScaleMark * ratio);
             }
             moveTimeToX(time, x);
         }
@@ -1233,7 +1264,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
             if(CursorMode != CursorMode.Hand)
             {
-                NowMarkerTime = 0;
                 NowMarkerTime = nowTime;
             }
         }

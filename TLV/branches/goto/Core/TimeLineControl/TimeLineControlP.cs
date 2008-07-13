@@ -176,6 +176,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                     cursorButton.Checked = false;
                     zoomOutButton.Checked = false;
                     zoomInButton.Checked = false;
+                    zoomSelectButton.Checked = false;
                     handButton.Checked = false;
 
                     switch (cursorMode)
@@ -190,6 +191,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 
                         case CursorMode.ZoomOut:
                             zoomOutButton.Checked = true;
+                            break;
+
+                        case CursorMode.ZoomSelect:
+                            zoomSelectButton.Checked = true;
                             break;
 
                         case CursorMode.Hand:

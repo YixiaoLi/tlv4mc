@@ -449,22 +449,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             float toX = timeToX(to);
             SizeF fromTimeSize = getTimeMarkLabelWidth(from);
             SizeF toTimeSize = getTimeMarkLabelWidth(to);
-            float lineY = Height / 2;
             int arrowSize = 8;
             ulong time = to - from;
             float timeX = timeToX(from + (time / 2));
             SizeF timeSize = getTimeMarkLabelWidth(time);
             float timeLength = timeToX(to) - timeToX(from);
+            float lineY = Height - scaleMarkHeight * 2;
+            if (ScaleMarkDirection == ScaleMarkDirection.Top)
+            {
+                lineY = scaleMarkHeight * 2;
+            }
 
-            if (fromTimeSize.Width / 2 + toTimeSize.Width / 2 + (labelMargin * 2) + (arrowSize * 2)< timeLength)
+            if (fromTimeSize.Width / 2 + toTimeSize.Width / 2 + (labelMargin * 2)< timeLength)
             {
                 using (Pen pen = new Pen(color))
                 {
-                    graphics.DrawLine(pen, fromX + fromTimeSize.Width / 2 + labelMargin, lineY, toX - fromTimeSize.Width / 2 - labelMargin, lineY);
-                    graphics.DrawLine(pen, fromX + fromTimeSize.Width / 2 + labelMargin, lineY, fromX + fromTimeSize.Width / 2 + arrowSize + labelMargin, lineY + arrowSize / 2);
-                    graphics.DrawLine(pen, fromX + fromTimeSize.Width / 2 + labelMargin, lineY, fromX + fromTimeSize.Width / 2 + arrowSize + labelMargin, lineY - arrowSize / 2);
-                    graphics.DrawLine(pen, toX - fromTimeSize.Width / 2 - labelMargin, lineY, toX - fromTimeSize.Width / 2 - arrowSize - labelMargin, lineY + arrowSize / 2);
-                    graphics.DrawLine(pen, toX - fromTimeSize.Width / 2 - labelMargin, lineY, toX - fromTimeSize.Width / 2 - arrowSize - labelMargin, lineY - arrowSize / 2);
+                    graphics.DrawLine(pen, fromX + labelMargin, lineY, toX - labelMargin, lineY);
+
+                    graphics.DrawLine(pen, fromX + labelMargin, lineY, fromX + arrowSize + labelMargin, lineY + 3);
+                    graphics.DrawLine(pen, fromX + labelMargin, lineY, fromX + arrowSize + labelMargin, lineY - 3);
+                    graphics.DrawLine(pen, toX - labelMargin, lineY, toX - arrowSize - labelMargin, lineY + 3);
+                    graphics.DrawLine(pen, toX - labelMargin, lineY, toX - arrowSize - labelMargin, lineY - 3);
                 }
             }
 
