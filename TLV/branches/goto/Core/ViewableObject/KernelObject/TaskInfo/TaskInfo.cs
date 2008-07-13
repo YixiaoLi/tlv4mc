@@ -57,8 +57,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo
             this.Task = task;
         }
 
-        public TaskInfo(string resourceFileLine)
-            :base(resourceFileLine)
+        public TaskInfo(string resourceFileLine, TimeLineEvents timeLineEvents)
+            : base(resourceFileLine, timeLineEvents)
         {
 
         }

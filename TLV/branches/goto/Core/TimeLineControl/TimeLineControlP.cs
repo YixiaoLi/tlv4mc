@@ -13,7 +13,7 @@ using NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid;
 using NU.OJL.MPRTOS.TLV.Core.Properties;
 using NU.OJL.MPRTOS.TLV.Core.Base;
 using NU.OJL.MPRTOS.TLV.Core.ViewableObject;
-using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject;
+using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 {
@@ -389,14 +389,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
 
-            KernelObject ko = new KernelObject(i, "task" + i.ToString(), ObjectType.TSK, "", new TimeLineEvents()
-                    {
-                        new TimeLineEvent(100239, (int)KernelObjectVerb.DORMANT),
-                        new TimeLineEvent(234532, (int)KernelObjectVerb.RUN),
-                        new TimeLineEvent(634633, (int)KernelObjectVerb.WAITING_SUSPENDED),
-                        new TimeLineEvent(745332, (int)KernelObjectVerb.RUNNABLE),
-                    });
-            i++;
+            TaskInfo ti = new TaskInfo("TSK, 1, MAIN_TASK, TA_NULL, 10, 1, 4096", new TimeLineEvents()
+            {
+                new TimeLineEvent(123987, Ta),
+            });
 
 
             if (AddViewableObject != null)
@@ -404,7 +400,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                 AddViewableObject(ko, viewableObjectDataSource);
             }
         }
-        private int i = 0;
 
     }
 

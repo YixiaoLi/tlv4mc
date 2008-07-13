@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.ComponentModel;
+using System.Reflection;
 using NU.OJL.MPRTOS.TLV.Core.Base;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
@@ -88,9 +89,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
             this.TimeLineEvents = timeLineEvents;
         }
 
-        public TimeLineViewableObject(string resourceFileLine)
+        public TimeLineViewableObject(string resourceFileLine, TimeLineEvents timeLineEvents)
         {
+            this.TimeLineEvents = timeLineEvents;
 
+            ResourceFileLineParser resFormatter = new ResourceFileLineParser(ResourceFileLineFormat);
+            Dictionary<string, string> dic = resFormatter.Parse(resourceFileLine);
+            foreach(KeyValuePair<string, string> prop in dic)
+            {
+                PropertyInfo pi = this.GetType().GetProperty(prop.Key);
+                if(pi != null)
+                {
+                    pi.SetValue(this, prop.Value, null);
+                }
+            }
         }
 
         public TimeLineViewableObject DeepClone()

@@ -58,8 +58,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject
             this.Atr = Atr;
         }
 
-        public KernelObject(string resourceFileLine)
-            : base(resourceFileLine)
+        public KernelObject(string resourceFileLine, TimeLineEvents timeLineEvents)
+            : base(resourceFileLine, timeLineEvents)
         {
 
         }
