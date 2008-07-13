@@ -73,7 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\ITimeLineViewable.cs" />
-    <None Include="Base\ResourceFileLineParsercs" />
+    <Compile Include="Base\ResourceFileLineParser.cs" />
     <Compile Include="Base\TimeLineEvent.cs" />
     <Compile Include="Base\TimeLineViewableObject.cs" />
     <Compile Include="DockPanel\DockPanelA.cs" />
