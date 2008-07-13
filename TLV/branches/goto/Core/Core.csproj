@@ -157,7 +157,7 @@
     <Compile Include="ViewableObject\KernelObject\KernelObject.cs" />
     <Compile Include="ViewableObject\KernelObject\KernelObjectType.cs" />
     <Compile Include="ViewableObject\KernelObject\KernelObjectVerb.cs" />
-    <Compile Include="ViewableObject\KernelObject\Task\Task.cs" />
+    <Compile Include="ViewableObject\KernelObject\TaskInfo\TaskInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Architecture\Architecture.csproj">
