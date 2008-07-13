@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
+using NU.OJL.MPRTOS.TLV.Core.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.ResourceSelectControl
 {
@@ -14,7 +15,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceSelectControl
 
         public override void InitParentFirst()
         {
-            BindPToA("ViewableObjectType", typeof(Type), "ViewableObjectType", SearchAFlags.Ancestors);
+            BindPToA("ViewableObjectList", typeof(Dictionary<TimeLineViewableObjectType, List<TimeLineViewableObject>>), "ViewableObjectList", SearchAFlags.Ancestors);
         }
     }
 }

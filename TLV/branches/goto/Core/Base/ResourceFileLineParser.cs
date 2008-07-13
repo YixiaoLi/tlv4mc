@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Text;
 using System.Collections.Generic;
+using NU.OJL.MPRTOS.TLV.Core.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Base
 {
@@ -13,19 +15,37 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
         public string SplitStr { get; protected set; }
         public List<string> FormatList { get; protected set; }
 
-        public ResourceFileLineParser(List<string> formatList)
-            : this(formatList, DefaultCommentStr, DefaultSplitStr)
+        public ResourceFileLineParser()
+            : this(DefaultCommentStr, DefaultSplitStr)
         { }
 
-        public ResourceFileLineParser(List<string> formatList, string commentStr, string splitStr)
+        public ResourceFileLineParser(string commentStr, string splitStr)
         {
             CommentStr = commentStr;
             SplitStr = splitStr;
-            FormatList = formatList;
         }
 
-        public Dictionary<string, string> Parse(string resourceFileLine)
+        public TimeLineViewableObjectType GetObjectType(string resourceFileLine)
         {
+            if (resourceFileLine == "")
+            {
+                return TimeLineViewableObjectType.NONE;
+            }
+
+            string[] res = resourceFileLine.Split(SplitStr.ToCharArray());
+
+            TimeLineViewableObjectType ot = (TimeLineViewableObjectType)TypeDescriptor.GetConverter(typeof(TimeLineViewableObjectType)).ConvertFromString(res[0]);
+
+            return ot;
+        }
+
+        public Dictionary<string, string> Parse(List<string> FormatList, string resourceFileLine)
+        {
+            if(FormatList == null)
+            {
+                return null;
+            }
+
             if (resourceFileLine == "")
             {
                 return null;

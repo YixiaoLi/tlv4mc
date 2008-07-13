@@ -38,18 +38,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo
         [PropertyDisplayName("起動関数", 10 * 7, false)]
         public string Task { get; protected set; }
 
-        public override List<string> ResourceFileLineFormat
-        {
-            get
-            {
-                List<string> list = base.ResourceFileLineFormat;
-                list.AddRange(new List<string>() { "Pri", "Exinf", "Stksize", "Task" });
-                return list;
-            }
-        }
-
         public TaskInfo(int id, string name, string atr, int pri, string exinf, int stksize, string task, TimeLineEvents timeLineEvents)
-            :base(id, name, ObjectType.TSK, atr, timeLineEvents)
+            : base(id, name, TimeLineViewableObjectType.TSK, atr, timeLineEvents)
         {
             this.Pri = pri;
             this.Exinf = exinf;
@@ -57,6 +47,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo
             this.Task = task;
         }
 
+        /// <summary>
+        /// リソースファイル１行のフォーマットの文字列を入力してTaskInfoを生成
+        /// </summary>
+        /// <param name="resourceFileLine">"TYPE, ID, NAME, ATR, PRI, EXINF, STKSIZE, TASK"</param>
+        /// <param name="timeLineEvents">タイムラインイベント</param>
         public TaskInfo(string resourceFileLine, TimeLineEvents timeLineEvents)
             : base(resourceFileLine, timeLineEvents)
         {

@@ -45,7 +45,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
 
         public override void InitParentFirst()
         {
-            A.ViewableObjectType = typeof(TaskInfo);
+            //A.ViewableObjectType = typeof(TaskInfo);
         }
     }
 }

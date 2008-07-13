@@ -73,19 +73,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
             return IndexOf<TimeLineViewableObject>(ko, source);
         }
 
+        [PropertyDisplayName("タイプ", 10 * 1, true, true)]
+        public TimeLineViewableObjectType ObjectType { get; protected set; }
         [PropertyDisplayName("ログ", 10 * 10, true)]
         public TimeLineEvents TimeLineEvents { get; protected set; }
-        [PropertyDisplayName("名前", 10, true)]
-        public string Name { get; protected set; }
 
-        public virtual List<string> ResourceFileLineFormat
+        public TimeLineViewableObject(TimeLineViewableObjectType objectType, TimeLineEvents timeLineEvents)
         {
-            get { return new List<string> {"Name"}; }
-        }
-
-        public TimeLineViewableObject(string name, TimeLineEvents timeLineEvents)
-        {
-            this.Name = name;
+            this.ObjectType = objectType;
             this.TimeLineEvents = timeLineEvents;
         }
 
@@ -93,14 +88,25 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
         {
             this.TimeLineEvents = timeLineEvents;
 
-            ResourceFileLineParser resFormatter = new ResourceFileLineParser(ResourceFileLineFormat);
-            Dictionary<string, string> dic = resFormatter.Parse(resourceFileLine);
-            foreach(KeyValuePair<string, string> prop in dic)
+            ResourceFileLineParser resFormatter = new ResourceFileLineParser();
+            this.ObjectType = resFormatter.GetObjectType(resourceFileLine);
+            List<string> resFormat = this.ObjectType.GetFormat();
+
+            Dictionary<string, string> dic = resFormatter.Parse(resFormat, resourceFileLine);
+            if (dic == null)
             {
-                PropertyInfo pi = this.GetType().GetProperty(prop.Key);
-                if(pi != null)
+                throw new Exception("リソースファイル行のフォーマットが異常です。:" + resourceFileLine);
+            }
+            else
+            {
+                foreach(KeyValuePair<string, string> prop in dic)
                 {
-                    pi.SetValue(this, prop.Value, null);
+                    PropertyInfo pi = this.GetType().GetProperty(prop.Key);
+                    if(pi != null)
+                    {
+                        object o = TypeDescriptor.GetConverter(pi.PropertyType).ConvertFromString(prop.Value);
+                        pi.SetValue(this, o, null);
+                    }
                 }
             }
         }

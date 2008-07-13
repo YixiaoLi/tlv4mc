@@ -76,11 +76,18 @@
     <Compile Include="Base\ResourceFileLineParser.cs" />
     <Compile Include="Base\TimeLineEvent.cs" />
     <Compile Include="Base\TimeLineViewableObject.cs" />
+    <Compile Include="Base\TimeLineViewableObjectType.cs" />
     <Compile Include="DockPanel\DockPanelA.cs" />
     <Compile Include="DockPanel\DockPanelAgent.cs" />
     <Compile Include="DockPanel\DockPanelC.cs" />
     <Compile Include="DockPanel\DockPanelP.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Main\FileOpenForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\FileOpenForm.Designer.cs">
+      <DependentUpon>FileOpenForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\MainA.cs" />
     <Compile Include="Main\MainAgent.cs" />
@@ -155,7 +162,6 @@
       <DependentUpon>TimeLineP.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewableObject\KernelObject\KernelObject.cs" />
-    <Compile Include="ViewableObject\KernelObject\KernelObjectType.cs" />
     <Compile Include="ViewableObject\KernelObject\TaskInfo\TaskVerb.cs" />
     <Compile Include="ViewableObject\KernelObject\TaskInfo\TaskInfo.cs" />
   </ItemGroup>
@@ -170,6 +176,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Main\FileOpenForm.resx">
+      <DependentUpon>FileOpenForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main\MainP.resx">
       <DependentUpon>MainP.cs</DependentUpon>
       <SubType>Designer</SubType>

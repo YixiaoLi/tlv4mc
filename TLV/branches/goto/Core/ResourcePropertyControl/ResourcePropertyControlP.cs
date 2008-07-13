@@ -10,6 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourcePropertyControl
 {
     public partial class ResourcePropertyControlP : DockContent, IPresentation
     {
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ResourcePropertyControlP(string name)

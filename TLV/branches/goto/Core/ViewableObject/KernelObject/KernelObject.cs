@@ -32,29 +32,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject
             return IndexOf<KernelObject>(ko, source);
         }
 
-        [PropertyDisplayName("タイプ", 10 * 2, true, true)]
-        public ObjectType ObjectType { get; protected set; }
+        [PropertyDisplayName("名前", 10 * 2, true)]
+        public string Name { get; protected set; }
         [PropertyDisplayName("ID", 10 * 3, true)]
         public int Id { get; protected set; }
         [PropertyDisplayName("属性", 10 * 4, false)]
         public string Atr { get; protected set; }
 
-        public override List<string> ResourceFileLineFormat
+        public KernelObject(int id, string name, TimeLineViewableObjectType type, string atr, TimeLineEvents timeLineEvents)
+            : base(type, timeLineEvents)
         {
-            get
-            {
-                List<string> list = base.ResourceFileLineFormat;
-                list.InsertRange(0, new List<string>() { "ObjectType", "ID" });
-                list.AddRange(new List<string>() { "Atr" });
-                return list;
-            }
-        }
-
-        public KernelObject(int id, string name, ObjectType type, string atr, TimeLineEvents timeLineEvents)
-            :base(name, timeLineEvents)
-        {
+            this.Name = name;
             this.Id = id;
-            this.ObjectType = type;
             this.Atr = Atr;
         }
 

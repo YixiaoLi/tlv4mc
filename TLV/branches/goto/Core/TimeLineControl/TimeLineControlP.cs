@@ -389,15 +389,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
 
-            TaskInfo ti = new TaskInfo("TSK, 1, MAIN_TASK, TA_NULL, 10, 1, 4096", new TimeLineEvents()
+            TaskInfo ti = new TaskInfo("TSK, 1, MAIN_TASK, TA_NULL, 10, 1, 4096, task1", new TimeLineEvents()
             {
-                new TimeLineEvent(123987, Ta),
+                new TimeLineEvent(123987, (int)TaskVerb.DORMANT),
+                new TimeLineEvent(236272, (int)TaskVerb.RUN),
+                new TimeLineEvent(373473, (int)TaskVerb.RUNNABLE),
+                new TimeLineEvent(456845, (int)TaskVerb.RUN),
+                new TimeLineEvent(595695, (int)TaskVerb.WAITING),
+                new TimeLineEvent(676860, (int)TaskVerb.RUNNABLE),
+                new TimeLineEvent(789745, (int)TaskVerb.RUN),
+                new TimeLineEvent(823562, (int)TaskVerb.DORMANT),
             });
-
 
             if (AddViewableObject != null)
             {
-                AddViewableObject(ko, viewableObjectDataSource);
+                AddViewableObject(ti, viewableObjectDataSource);
             }
         }
 

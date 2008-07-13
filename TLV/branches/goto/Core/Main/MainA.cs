@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Core.Base;
@@ -7,8 +8,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
 {
     public class MainA : Abstraction
     {
+        private string resourceFilePath = String.Empty;
+        private string traceLogFilePath = String.Empty;
         private Type viewableObjectType = typeof(TimeLineViewableObject);
         private object viewableObjectDataSource;
+        private Dictionary<TimeLineViewableObjectType, List<TimeLineViewableObject>> viewableObjectList = new Dictionary<TimeLineViewableObjectType, List<TimeLineViewableObject>>();
+
         public Type ViewableObjectType
         {
             get { return viewableObjectType; }
@@ -31,6 +36,42 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
             get { return viewableObjectDataSource; }
             set { viewableObjectDataSource = value; }
         }
+        public string ResourceFilePath
+        {
+            get { return resourceFilePath; }
+            set
+            {
+                if (value != resourceFilePath)
+                {
+                    resourceFilePath = value;
+                    NotifyPropertyChanged("ResourceFilePath");
+                }
+            }
+        }
+        public string TraceLogFilePath
+        {
+            get { return traceLogFilePath; }
+            set
+            {
+                if (value != traceLogFilePath)
+                {
+                    traceLogFilePath = value;
+                    NotifyPropertyChanged("TraceLogFilePath");
+                }
+            }
+        }
+        public Dictionary<TimeLineViewableObjectType, List<TimeLineViewableObject>> ViewableObjectList
+        {
+            get { return viewableObjectList; }
+            set
+            {
+                if (value != null && !value.Equals(viewableObjectList))
+                {
+                    viewableObjectList = value;
+                    NotifyPropertyChanged("ViewableObjectList");
+                }
+            }
+        }
 
         public void AddViewableObject(TimeLineViewableObject tlvo, object source)
         {
@@ -52,6 +93,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
         {
             return (int)(viewableObjectType.GetMethod("IndexOf").Invoke(null, new object[] { tlvo, source }));
         }
+
 
         public MainA(string name)
             :base(name)

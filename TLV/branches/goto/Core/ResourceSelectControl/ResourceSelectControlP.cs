@@ -10,16 +10,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceSelectControl
 {
     public partial class ResourceSelectControlP : DockContent, IPresentation
     {
-        private Type viewableObjectType = typeof(TimeLineViewableObject);
+        private Dictionary<TimeLineViewableObjectType, List<TimeLineViewableObject>> viewableObjectList = new Dictionary<TimeLineViewableObjectType, List<TimeLineViewableObject>>();
 
-        public Type ViewableObjectType
+        public Dictionary<TimeLineViewableObjectType, List<TimeLineViewableObject>> ViewableObjectList
         {
-            get { return viewableObjectType; }
+            get { return viewableObjectList; }
             set
             {
-                if (value != null && !value.Equals(viewableObjectType))
+                if (value != null && !value.Equals(viewableObjectList))
                 {
-                    viewableObjectType = value;
+                    viewableObjectList = value;
+                    NotifyPropertyChanged("ViewableObjectList");
+
+                    this.tabControl.
                 }
             }
         }
