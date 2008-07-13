@@ -50,7 +50,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             }
             catch (NullReferenceException e)
             {
-                throw new OutOfMemoryException("Could not create Native Window");
+                throw new OutOfMemoryException("Could not create Native Window : " + e.Message);
             }
             if (handleCreated == IntPtr.Zero)
             {

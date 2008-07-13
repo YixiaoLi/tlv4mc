@@ -55,38 +55,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         {
             base.InitChildrenFirst();
 
-            //timeLineGridAgent.P.ViewableObjectList = new TimeLineViewableObjectList<KernelObject>()
-            //{
-            //    new KernelObject(1, "task1", ObjectType.TSK, "", 1, new TimeLineEvents()
-            //        {
-            //            new TimeLineEvent(100239, (int)KernelObjectVerb.DORMANT),
-            //            new TimeLineEvent(234532, (int)KernelObjectVerb.RUN),
-            //            new TimeLineEvent(634633, (int)KernelObjectVerb.WAITING_SUSPENDED),
-            //            new TimeLineEvent(745332, (int)KernelObjectVerb.RUNNABLE),
-            //        }),
-            //    new KernelObject(2, "task2", ObjectType.TSK, "", 1, new TimeLineEvents()
-            //        {
-            //            new TimeLineEvent(136511, (int)KernelObjectVerb.DORMANT),
-            //            new TimeLineEvent(234532, (int)KernelObjectVerb.RUN),
-            //            new TimeLineEvent(634633, (int)KernelObjectVerb.WAITING_SUSPENDED),
-            //            new TimeLineEvent(823512, (int)KernelObjectVerb.RUNNABLE),
-            //        }),
-            //    new KernelObject(3, "task3", ObjectType.TSK, "", 1, new TimeLineEvents()
-            //        {
-            //            new TimeLineEvent(100239, (int)KernelObjectVerb.DORMANT),
-            //            new TimeLineEvent(234532, (int)KernelObjectVerb.RUN),
-            //            new TimeLineEvent(634633, (int)KernelObjectVerb.WAITING_SUSPENDED),
-            //            new TimeLineEvent(713221, (int)KernelObjectVerb.RUNNABLE),
-            //        }),
-            //    new KernelObject(4, "task4", ObjectType.TSK, "", 1, new TimeLineEvents()
-            //        {
-            //            new TimeLineEvent(112231, (int)KernelObjectVerb.DORMANT),
-            //            new TimeLineEvent(234532, (int)KernelObjectVerb.RUN),
-            //            new TimeLineEvent(612612, (int)KernelObjectVerb.WAITING_SUSPENDED),
-            //            new TimeLineEvent(621235, (int)KernelObjectVerb.RUNNABLE),
-            //        }),
-            //};
-
             timeLineGridAgent.P.MinRowHeight = 15;
             timeLineGridAgent.P.NowRowHeight = 25;
         }

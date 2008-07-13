@@ -14,6 +14,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimeLineControlP));
             this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
+            this.buttonToolStrip = new System.Windows.Forms.ToolStrip();
+            this.cursorButton = new System.Windows.Forms.ToolStripButton();
+            this.handButton = new System.Windows.Forms.ToolStripButton();
+            this.zoomInButton = new System.Windows.Forms.ToolStripButton();
+            this.zoomOutButton = new System.Windows.Forms.ToolStripButton();
+            this.zoomSelectButton = new System.Windows.Forms.ToolStripButton();
             this.scaleToolStrip = new System.Windows.Forms.ToolStrip();
             this.nsPerScaleMarkAddButton = new System.Windows.Forms.ToolStripButton();
             this.nsPerScaleMarkButton = new System.Windows.Forms.ToolStripSplitButton();
@@ -33,16 +39,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.rowHeightSubtractButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.buttonToolStrip = new System.Windows.Forms.ToolStrip();
-            this.cursorButton = new System.Windows.Forms.ToolStripButton();
-            this.handButton = new System.Windows.Forms.ToolStripButton();
-            this.zoomInButton = new System.Windows.Forms.ToolStripButton();
-            this.zoomOutButton = new System.Windows.Forms.ToolStripButton();
-            this.zoomSelectButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
-            this.scaleToolStrip.SuspendLayout();
             this.buttonToolStrip.SuspendLayout();
+            this.scaleToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripContainer
@@ -64,6 +64,68 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.buttonToolStrip);
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.scaleToolStrip);
             // 
+            // buttonToolStrip
+            // 
+            this.buttonToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.buttonToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cursorButton,
+            this.handButton,
+            this.zoomInButton,
+            this.zoomOutButton,
+            this.zoomSelectButton});
+            this.buttonToolStrip.Location = new System.Drawing.Point(3, 0);
+            this.buttonToolStrip.Name = "buttonToolStrip";
+            this.buttonToolStrip.Size = new System.Drawing.Size(125, 25);
+            this.buttonToolStrip.TabIndex = 1;
+            // 
+            // cursorButton
+            // 
+            this.cursorButton.Checked = true;
+            this.cursorButton.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cursorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.cursorButton.Image = ((System.Drawing.Image)(resources.GetObject("cursorButton.Image")));
+            this.cursorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.cursorButton.Name = "cursorButton";
+            this.cursorButton.Size = new System.Drawing.Size(23, 22);
+            this.cursorButton.Text = "通常のカーソル";
+            // 
+            // handButton
+            // 
+            this.handButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.handButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.handButton;
+            this.handButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.handButton.Name = "handButton";
+            this.handButton.Size = new System.Drawing.Size(23, 22);
+            this.handButton.Text = "つかみ移動";
+            // 
+            // zoomInButton
+            // 
+            this.zoomInButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.zoomInButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomInButton.Image")));
+            this.zoomInButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.zoomInButton.Name = "zoomInButton";
+            this.zoomInButton.Size = new System.Drawing.Size(23, 22);
+            this.zoomInButton.Text = "拡大";
+            // 
+            // zoomOutButton
+            // 
+            this.zoomOutButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.zoomOutButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomOutButton.Image")));
+            this.zoomOutButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.zoomOutButton.Name = "zoomOutButton";
+            this.zoomOutButton.Size = new System.Drawing.Size(23, 22);
+            this.zoomOutButton.Text = "縮小";
+            // 
+            // zoomSelectButton
+            // 
+            this.zoomSelectButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.zoomSelectButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.zoomSelectButton;
+            this.zoomSelectButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.zoomSelectButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.zoomSelectButton.Name = "zoomSelectButton";
+            this.zoomSelectButton.Size = new System.Drawing.Size(23, 22);
+            this.zoomSelectButton.Text = "範囲を指定して拡大";
+            // 
             // scaleToolStrip
             // 
             this.scaleToolStrip.Dock = System.Windows.Forms.DockStyle.None;
@@ -83,9 +145,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.rowHeightSubtractButton,
             this.toolStripSeparator5,
             this.toolStripButton1});
-            this.scaleToolStrip.Location = new System.Drawing.Point(3, 0);
+            this.scaleToolStrip.Location = new System.Drawing.Point(128, 0);
             this.scaleToolStrip.Name = "scaleToolStrip";
-            this.scaleToolStrip.Size = new System.Drawing.Size(559, 25);
+            this.scaleToolStrip.Size = new System.Drawing.Size(590, 25);
             this.scaleToolStrip.TabIndex = 0;
             // 
             // nsPerScaleMarkAddButton
@@ -278,81 +340,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.toolStripButton1.Text = "toolStripButton1";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
-            // buttonToolStrip
-            // 
-            this.buttonToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.buttonToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cursorButton,
-            this.handButton,
-            this.zoomInButton,
-            this.zoomOutButton,
-            this.zoomSelectButton});
-            this.buttonToolStrip.Location = new System.Drawing.Point(562, 0);
-            this.buttonToolStrip.Name = "buttonToolStrip";
-            this.buttonToolStrip.Size = new System.Drawing.Size(156, 25);
-            this.buttonToolStrip.TabIndex = 1;
-            // 
-            // cursorButton
-            // 
-            this.cursorButton.Checked = true;
-            this.cursorButton.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cursorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.cursorButton.Image = ((System.Drawing.Image)(resources.GetObject("cursorButton.Image")));
-            this.cursorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.cursorButton.Name = "cursorButton";
-            this.cursorButton.Size = new System.Drawing.Size(23, 22);
-            this.cursorButton.Text = "通常のカーソル";
-            // 
-            // handButton
-            // 
-            this.handButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.handButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.handButton;
-            this.handButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.handButton.Name = "handButton";
-            this.handButton.Size = new System.Drawing.Size(23, 22);
-            this.handButton.Text = "つかみ移動";
-            // 
-            // zoomInButton
-            // 
-            this.zoomInButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.zoomInButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomInButton.Image")));
-            this.zoomInButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.zoomInButton.Name = "zoomInButton";
-            this.zoomInButton.Size = new System.Drawing.Size(23, 22);
-            this.zoomInButton.Text = "拡大";
-            // 
-            // zoomOutButton
-            // 
-            this.zoomOutButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.zoomOutButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomOutButton.Image")));
-            this.zoomOutButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.zoomOutButton.Name = "zoomOutButton";
-            this.zoomOutButton.Size = new System.Drawing.Size(23, 22);
-            this.zoomOutButton.Text = "縮小";
-            // 
-            // zoomSelectButton
-            // 
-            this.zoomSelectButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.zoomSelectButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.zoomSelectButton;
-            this.zoomSelectButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.zoomSelectButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.zoomSelectButton.Name = "zoomSelectButton";
-            this.zoomSelectButton.Size = new System.Drawing.Size(23, 22);
-            this.zoomSelectButton.Text = "範囲を指定して拡大";
-            // 
             // TimeLineControlP
             // 
+            this.AllowEndUserDocking = false;
             this.ClientSize = new System.Drawing.Size(871, 358);
+            this.CloseButton = false;
             this.Controls.Add(this.toolStripContainer);
             this.Name = "TimeLineControlP";
             this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer.TopToolStripPanel.PerformLayout();
             this.toolStripContainer.ResumeLayout(false);
             this.toolStripContainer.PerformLayout();
-            this.scaleToolStrip.ResumeLayout(false);
-            this.scaleToolStrip.PerformLayout();
             this.buttonToolStrip.ResumeLayout(false);
             this.buttonToolStrip.PerformLayout();
+            this.scaleToolStrip.ResumeLayout(false);
+            this.scaleToolStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }

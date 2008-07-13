@@ -342,7 +342,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             {
                 if (value != null && !value.Equals(viewableObjectType))
                 {
-                    if(value.BaseType != typeof(TimeLineViewableObject))
+                    if(! value.IsSubclassOf(typeof(TimeLineViewableObject)))
                     {
                         throw new Exception("ViewableObjectTypeはTimeLineViewableObjectのサブクラスでなければなりません");
                     }
@@ -800,15 +800,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                             break;
 
                         case CursorMode.ZoomSelect:
-                            ulong fromTime = SelectRectStartTime > xToTime(e.X - timeLineX) ? xToTime(e.X - timeLineX) : SelectRectStartTime;
-                            ulong toTime = SelectRectStartTime > xToTime(e.X - timeLineX) ? SelectRectStartTime : xToTime(e.X - timeLineX);
-
-                            if (fromTime != toTime)
+                            if (SelectRectStartTime != 0)
                             {
-                                zoomSelect(fromTime, toTime);
-                            }
+                                ulong fromTime = SelectRectStartTime > xToTime(e.X - timeLineX) ? xToTime(e.X - timeLineX) : SelectRectStartTime;
+                                ulong toTime = SelectRectStartTime > xToTime(e.X - timeLineX) ? SelectRectStartTime : xToTime(e.X - timeLineX);
 
-                            SelectRectStartTime = 0;
+                                if (fromTime != toTime)
+                                {
+                                    zoomSelect(fromTime, toTime);
+                                }
+
+                                SelectRectStartTime = 0;
+                            }
                             break;
 
                         case CursorMode.Default:
@@ -1214,8 +1217,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         {
             double ratio = ((double)toTime - (double)fromTime) / ((double)endTime - (double)beginTime);
 
-            NowMarkerTime = 0;
             SelectRectStartTime = 0;
+            NowMarkerTime = 0;
 
             NsPerScaleMark = (ulong)((double)nsPerScaleMark * ratio);
 
@@ -1262,7 +1265,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 nowTime = time;
             }
 
-            if(CursorMode != CursorMode.Hand)
+            if (CursorMode != CursorMode.Hand && nowTime != xToTime(0))
             {
                 NowMarkerTime = nowTime;
             }

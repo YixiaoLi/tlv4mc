@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Reflection.Emit;
 
 
 namespace NU.OJL.MPRTOS.TLV.Base
@@ -14,6 +15,17 @@ namespace NU.OJL.MPRTOS.TLV.Base
         public int Order { get; protected set; }
         public string PropertyDisplayName { get; protected set; }
         public bool DefaultBrowsable { get; protected set; }
+        public bool Categorizable { get; protected set; }
+
+        public PropertyDisplayNameAttribute(string name)
+            : this(name, 10, true, false)
+        { }
+        public PropertyDisplayNameAttribute(string name, int order)
+            : this(name, order, true, false)
+        { }
+        public PropertyDisplayNameAttribute(string name, int order, bool defaultBrowsable)
+            :this(name, order, defaultBrowsable, false)
+        { }
 
         /// <summary>
         /// TimeLineControlに表示させる時の表示名、順番、デフォルトでの表示を設定する
@@ -21,11 +33,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <param name="name">表示名</param>
         /// <param name="order">順番（昇順）</param>
         /// <param name="defaultBrowsable">デフォルトでの表示をするかどうか</param>
-        public PropertyDisplayNameAttribute(string name, int order, bool defaultBrowsable)
+        public PropertyDisplayNameAttribute(string name, int order, bool defaultBrowsable, bool categorizable)
         {
             PropertyDisplayName = name;
             Order = order;
             DefaultBrowsable = defaultBrowsable;
+            Categorizable = categorizable;
         }
     }
 
@@ -189,7 +202,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
             foreach (PropertyDescriptor pd in pdc)
             {
-                collection.Add(new PropertyDisplayPropertyDescriptor(pd));
+                if (pd.Attributes.Contains(typeof(PropertyDisplayNameAttribute)))
+                {
+                    collection.Add(new PropertyDisplayPropertyDescriptor(pd));
+                }
             }
 
             return collection.Sort(new PropertyDescriptorCollectionComparer());

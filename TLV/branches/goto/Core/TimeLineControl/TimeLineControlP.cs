@@ -210,7 +210,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         public TimeLineControlP(string name)
         {
             InitializeComponent();
-
             this.Name = name;
             this.TabText = "タイムライン";
             this.RowSizeMode = RowSizeMode.Fill;

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using Docking = WeifenLuo.WinFormsUI.Docking;
 using System.Collections.Generic;
-
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace NU.OJL.MPRTOS.TLV.Core.DockPanel
 {
@@ -18,7 +18,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.DockPanel
         {
             this.Name = name;
             this.Dock = DockStyle.Fill;
-            this.DocumentStyle = Docking.DocumentStyle.DockingWindow;
+            this.DocumentStyle = DocumentStyle.DockingSdi;
         }
 
         public void Add(IPresentation presentation)

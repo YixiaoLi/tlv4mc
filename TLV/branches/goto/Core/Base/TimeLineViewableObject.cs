@@ -10,6 +10,12 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Base
 {
+    public delegate void ViewableObjectAddHandler(TimeLineViewableObject tlvo, object source);
+    public delegate void ViewableObjectRemoveAtHandler(object source, int index);
+    public delegate void ViewableObjectInsertHandler(TimeLineViewableObject tlvo, object source, int index);
+    public delegate TimeLineViewableObject ViewableObjectGetHandler(object source, int index);
+    public delegate int ViewableObjectIndexOfHandler(TimeLineViewableObject tlvo, object source);
+
     [Serializable]
     [TypeConverter(typeof(PropertyDisplayConverter))]
     public class TimeLineViewableObject : ITimeLineViewable
@@ -70,6 +76,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
         public TimeLineEvents TimeLineEvents { get; protected set; }
         [PropertyDisplayName("名前", 10, true)]
         public string Name { get; protected set; }
+
+        public string[] ResourceFileLineFormat
+        {
+            get { return new[]{"Name"}; }
+        }
 
         public TimeLineViewableObject(string name, TimeLineEvents timeLineEvents)
         {
