@@ -1,6 +1,6 @@
-﻿namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject
+﻿namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo
 {
-    public enum KernelObjectVerb
+    public enum TaskVerb
     {
         RUN,
         RUNNABLE,
