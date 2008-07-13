@@ -202,7 +202,16 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
             foreach (PropertyDescriptor pd in pdc)
             {
-                if (pd.Attributes.Contains(typeof(PropertyDisplayNameAttribute)))
+                bool containAttr = false;
+                foreach (Attribute attr in pd.Attributes)
+                {
+                    if (attr is PropertyDisplayNameAttribute)
+                    {
+                        containAttr = true;
+                        break;
+                    }
+                }
+                if (containAttr)
                 {
                     collection.Add(new PropertyDisplayPropertyDescriptor(pd));
                 }

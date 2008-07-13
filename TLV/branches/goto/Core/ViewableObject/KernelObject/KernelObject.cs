@@ -39,12 +39,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject
         [PropertyDisplayName("属性", 10 * 4, false)]
         public string Atr { get; protected set; }
 
+        public override List<string> ResourceFileLineFormat
+        {
+            get
+            {
+                List<string> list = base.ResourceFileLineFormat;
+                list.InsertRange(0, new List<string>() { "ObjectType", "ID" });
+                list.AddRange(new List<string>() { "Atr" });
+                return list;
+            }
+        }
+
         public KernelObject(int id, string name, ObjectType type, string atr, TimeLineEvents timeLineEvents)
             :base(name, timeLineEvents)
         {
             this.Id = id;
             this.ObjectType = type;
             this.Atr = Atr;
+        }
+
+        public KernelObject(string resourceFileLine)
+            : base(resourceFileLine)
+        {
+
         }
     }
 }

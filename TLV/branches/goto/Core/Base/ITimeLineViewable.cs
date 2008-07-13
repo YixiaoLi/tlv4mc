@@ -6,6 +6,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
     {
         string Name { get; }
         TimeLineEvents TimeLineEvents { get; }
-        string[] ResourceFileLineFormat { get; }
+        List<string> ResourceFileLineFormat { get; }
     }
 }

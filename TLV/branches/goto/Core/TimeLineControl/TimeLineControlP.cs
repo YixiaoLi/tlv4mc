@@ -389,7 +389,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
 
-            KernelObject ko = new KernelObject(i, "task" + i.ToString(), ObjectType.TSK, "", 1, new TimeLineEvents()
+            KernelObject ko = new KernelObject(i, "task" + i.ToString(), ObjectType.TSK, "", new TimeLineEvents()
                     {
                         new TimeLineEvent(100239, (int)KernelObjectVerb.DORMANT),
                         new TimeLineEvent(234532, (int)KernelObjectVerb.RUN),

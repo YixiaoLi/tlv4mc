@@ -6,7 +6,7 @@ using NU.OJL.MPRTOS.TLV.Core.ResourcePropertyControl;
 using WeifenLuo.WinFormsUI.Docking;
 using NU.OJL.MPRTOS.TLV.Core.Base;
 using NU.OJL.MPRTOS.TLV.Base;
-using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.Task;
+using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo;
 using System;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Main
@@ -45,7 +45,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
 
         public override void InitParentFirst()
         {
-            A.ViewableObjectType = typeof(Task);
+            A.ViewableObjectType = typeof(TaskInfo);
         }
     }
 }

@@ -77,15 +77,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
         [PropertyDisplayName("名前", 10, true)]
         public string Name { get; protected set; }
 
-        public string[] ResourceFileLineFormat
+        public virtual List<string> ResourceFileLineFormat
         {
-            get { return new[]{"Name"}; }
+            get { return new List<string> {"Name"}; }
         }
 
         public TimeLineViewableObject(string name, TimeLineEvents timeLineEvents)
         {
             this.Name = name;
             this.TimeLineEvents = timeLineEvents;
+        }
+
+        public TimeLineViewableObject(string resourceFileLine)
+        {
+
         }
 
         public TimeLineViewableObject DeepClone()

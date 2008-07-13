@@ -38,6 +38,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo
         [PropertyDisplayName("起動関数", 10 * 7, false)]
         public string Task { get; protected set; }
 
+        public override List<string> ResourceFileLineFormat
+        {
+            get
+            {
+                List<string> list = base.ResourceFileLineFormat;
+                list.AddRange(new List<string>() { "Pri", "Exinf", "Stksize", "Task" });
+                return list;
+            }
+        }
+
         public TaskInfo(int id, string name, string atr, int pri, string exinf, int stksize, string task, TimeLineEvents timeLineEvents)
             :base(id, name, ObjectType.TSK, atr, timeLineEvents)
         {
@@ -48,6 +58,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo
         }
 
         public TaskInfo(string resourceFileLine)
+            :base(resourceFileLine)
         {
 
         }
