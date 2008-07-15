@@ -28,6 +28,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resourceListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resourceInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -89,7 +92,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
             // 
             this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.viewToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1016, 24);
@@ -107,8 +111,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.openToolStripMenuItem.Text = "開く(&O)";
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.resourceListToolStripMenuItem,
+            this.resourceInfoToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.viewToolStripMenuItem.Text = "表示(&V)";
+            // 
+            // resourceListToolStripMenuItem
+            // 
+            this.resourceListToolStripMenuItem.Name = "resourceListToolStripMenuItem";
+            this.resourceListToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resourceListToolStripMenuItem.Text = "リソース一覧(&L)";
+            this.resourceListToolStripMenuItem.Click += new System.EventHandler(this.resourceListToolStripMenuItem_Click);
+            // 
+            // resourceInfoToolStripMenuItem
+            // 
+            this.resourceInfoToolStripMenuItem.Name = "resourceInfoToolStripMenuItem";
+            this.resourceInfoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resourceInfoToolStripMenuItem.Text = "リソース情報(&I)";
+            this.resourceInfoToolStripMenuItem.Click += new System.EventHandler(this.resourceInfoToolStripMenuItem_Click);
             // 
             // MainP
             // 
@@ -137,5 +164,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
         private MenuStrip menuStrip;
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem openToolStripMenuItem;
+        private ToolStripMenuItem viewToolStripMenuItem;
+        private ToolStripMenuItem resourceListToolStripMenuItem;
+        private ToolStripMenuItem resourceInfoToolStripMenuItem;
     }
 }

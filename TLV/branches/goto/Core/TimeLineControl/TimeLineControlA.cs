@@ -10,7 +10,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
     public class TimeLineControlA : Abstraction
     {
         private CursorMode cursorMode = CursorMode.Default;
-        private Object viewableObjectDataSource;
 
         public CursorMode CursorMode
         {
@@ -24,11 +23,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                     NotifyPropertyChanged("CursorMode");
                 }
             }
-        }
-        public Object ViewableObjectDataSource
-        {
-            get { return viewableObjectDataSource; }
-            set { viewableObjectDataSource = value; }
         }
 
         public TimeLineControlA(string name)

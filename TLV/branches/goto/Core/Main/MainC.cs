@@ -6,6 +6,7 @@ using System.ComponentModel;
 using NU.OJL.MPRTOS.TLV.Core.Base;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
+using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Main
 {
@@ -21,8 +22,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
         {
             BindPToA("ResourceFilePath", typeof(string), "ResourceFilePath", SearchAFlags.Self);
             BindPToA("TraceLogFilePath", typeof(string), "TraceLogFilePath", SearchAFlags.Self);
-
-
             A.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(APropertyChanged);
         }
 
@@ -39,7 +38,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
                             using (StreamReader resourceFile = new StreamReader(A.ResourceFilePath))
                             {
                                 string resLine = "";
-                                Dictionary<TimeLineViewableObjectType, List<TimeLineViewableObject>> vol = new Dictionary<TimeLineViewableObjectType,List<TimeLineViewableObject>>();
+                                Dictionary<Type, List<TaskInfo>> vol = new Dictionary<Type, List<TaskInfo>>();
 
                                 while ((resLine = resourceFile.ReadLine()) != null)
                                 {
@@ -48,34 +47,44 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
 
                                     if (!(resLine.Equals(String.Empty)) && !((resLine.Substring(0, 1)).Equals(resParser.CommentStr)))
                                     {
-                                        TimeLineViewableObjectType ot = resParser.GetObjectType(resLine);
-                                        if (ot != TimeLineViewableObjectType.NONE)
+                                        TimeLineViewableObjectType type = resParser.GetObjectType(resLine);
+                                        if (type.GetObjectType().IsSubclassOf(typeof(TimeLineViewableObject)) || type.GetObjectType() == typeof(TimeLineViewableObject))
                                         {
-                                            if (!vol.ContainsKey(ot))
+                                            if (!vol.ContainsKey(type.GetObjectType()))
                                             {
-                                                vol.Add(ot, new List<TimeLineViewableObject>());
+                                                vol.Add(type.GetObjectType(), new List<TaskInfo>());
                                             }
 
-                                            TimeLineEvents tes = new TimeLineEvents()
+                                            TimeLineEvents tles = new TimeLineEvents();
+
+                                            using (StreamReader TraceLogFile = new StreamReader(A.TraceLogFilePath))
                                             {
-                                                new TimeLineEvent(123987, 0),
-                                                new TimeLineEvent(236272, 0),
-                                                new TimeLineEvent(373473, 0),
-                                                new TimeLineEvent(456845, 0),
-                                                new TimeLineEvent(595695, 0),
-                                                new TimeLineEvent(676860, 0),
-                                                new TimeLineEvent(789745, 0),
-                                                new TimeLineEvent(823562, 0),
-                                            };
+                                                string logLine = "";
+                                                TraceLogFileLineParser logParser = new TraceLogFileLineParser();
+                                                while ((logLine = TraceLogFile.ReadLine()) != null)
+                                                {
+                                                    logLine = logLine.Trim();
 
-                                            TimeLineViewableObject to = (TimeLineViewableObject)Activator.CreateInstance(ot.GetObjectType(), new object[] { resLine, tes });
+                                                    if (!(logLine.Equals(String.Empty)) && logParser.ContainLog(logLine, resLine))
+                                                    {
+                                                        foreach (TimeLineEvent tle in logParser.GetTimeLineEvent(logLine, resLine))
+                                                        {
+                                                            tles.Add(tle);
+                                                        }
+                                                    }
+                                                }
+                                            }
 
-                                            vol[ot].Add(to);
+                                            TaskInfo to = (TaskInfo)Activator.CreateInstance(type.GetObjectType(), new object[] { resLine, tles });
+
+                                            vol[type.GetObjectType()].Add(to);
+
                                         }
                                     }
                                 }
 
-                                A.ViewableObjectList = vol;
+                                SetPropertyToA(typeof(Dictionary<Type, List<TaskInfo>>), "ViewableObjectList", vol, SearchAFlags.Self);
+
                             }
                         }
                         catch (Exception ex)

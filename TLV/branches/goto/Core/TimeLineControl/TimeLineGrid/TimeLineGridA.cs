@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.ComponentModel;
 using System.Collections.Generic;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Core.Base;
+using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 {
-    public class TimeLineGridA : Abstraction
+    public class TimeLineGridA<T> : Abstraction
+        where T : TimeLineViewableObject
     {
         private RowSizeMode rowSizeMode;
         private int timeLineX;
@@ -25,7 +28,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private int maxRowHeight = 100;
         private int minRowHeight = 15;
         private int rowHeight = 25;
-        private Object viewableObjectDataSource;
+        private SortableBindingList<T> viewableObjectDataSource = new SortableBindingList<T>();
 
         public RowSizeMode RowSizeMode
         {
@@ -220,16 +223,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
             }
         }
-        public Object ViewableObjectDataSource
+        public SortableBindingList<T> ViewableObjectDataSource
         {
             get { return viewableObjectDataSource; }
-            set { viewableObjectDataSource = value; }
+            set
+            {
+                if (viewableObjectDataSource != value)
+                {
+                    viewableObjectDataSource = value;
+                    NotifyPropertyChanged("ViewableObjectDataSource");
+                }
+            }
         }
 
         public TimeLineGridA(string name)
             : base(name)
         {
-
+            viewableObjectDataSource.ListChanged += (object sender, ListChangedEventArgs e) =>
+            {
+                NotifyPropertyChanged("ViewableObjectDataSource");
+            };
         }
     }
 }

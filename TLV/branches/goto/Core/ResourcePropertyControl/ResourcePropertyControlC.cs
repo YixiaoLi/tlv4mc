@@ -15,7 +15,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourcePropertyControl
 
         public override void InitParentFirst()
         {
-
+            BindPToA("SelectedObject", typeof(object), "SelectedObject", SearchAFlags.Self);
         }
     }
 }

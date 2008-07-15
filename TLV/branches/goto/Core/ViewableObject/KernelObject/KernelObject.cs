@@ -11,27 +11,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject
     [TypeConverter(typeof(PropertyDisplayConverter))]
     public class KernelObject : TimeLineViewableObject
     {
-        public new static void Add(TimeLineViewableObject ko, object source)
-        {
-            Add<KernelObject>(ko, source);
-        }
-        public new static void Insert(TimeLineViewableObject ko, object source, int index)
-        {
-            Insert<KernelObject>(ko, source, index);
-        }
-        public new static void RemoveAt(object source, int index)
-        {
-            RemoveAt<KernelObject>(source, index);
-        }
-        public new static TimeLineViewableObject Get(object source, int index)
-        {
-            return Get<KernelObject>(source, index);
-        }
-        public new static int IndexOf(TimeLineViewableObject ko, object source)
-        {
-            return IndexOf<KernelObject>(ko, source);
-        }
-
         [PropertyDisplayName("名前", 10 * 2, true)]
         public string Name { get; protected set; }
         [PropertyDisplayName("ID", 10 * 3, true)]
@@ -51,6 +30,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject
             : base(resourceFileLine, timeLineEvents)
         {
 
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

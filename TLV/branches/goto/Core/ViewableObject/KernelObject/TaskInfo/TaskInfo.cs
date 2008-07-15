@@ -6,27 +6,34 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo
 {
+    [Serializable]
+    [TypeConverter(typeof(PropertyDisplayConverter))]
     public class TaskInfo : KernelObject
     {
-        public new static void Add(TimeLineViewableObject ko, object source)
+        public enum Verb
         {
-            Add<TaskInfo>(ko, source);
+            RUN,
+            RUNNABLE,
+            DORMANT,
+            WAITING,
+            SUSPENDED,
+            WAITING_SUSPENDED
         }
-        public new static void Insert(TimeLineViewableObject ko, object source, int index)
+
+        public static Dictionary<int, string> VerbFormats
         {
-            Insert<TaskInfo>(ko, source, index);
-        }
-        public new static void RemoveAt(object source, int index)
-        {
-            RemoveAt<TaskInfo>(source, index);
-        }
-        public new static TimeLineViewableObject Get(object source, int index)
-        {
-            return Get<TaskInfo>(source, index);
-        }
-        public new static int IndexOf(TimeLineViewableObject ko, object source)
-        {
-            return IndexOf<TaskInfo>(ko, source);
+            get
+            {
+                return new Dictionary<int, string>()
+                {
+                    {(int)Verb.RUN, "dispatch to"},
+                    {(int)Verb.RUNNABLE, "becomes RUNNABLE"},
+                    {(int)Verb.DORMANT, "becomes DORMANT"},
+                    {(int)Verb.WAITING, "becomes WAITING"},
+                    {(int)Verb.SUSPENDED, "becomes SUSPENDED"},
+                    {(int)Verb.WAITING_SUSPENDED, "becomes WAITING_SUSPENDED"},
+                };
+            }
         }
 
         [PropertyDisplayName("優先度", (int)(10D * 3.5D), true)]

@@ -14,7 +14,8 @@ using NU.OJL.MPRTOS.TLV.Core.ViewableObject;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 {
-    public partial class TimeLineGridP : DataGridView, IPresentation
+    public partial class TimeLineGridP<T> : DataGridView, IPresentation
+        where T : TimeLineViewableObject
     {
         #region メンバ
 
@@ -46,7 +47,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private bool dropDestinationIsValid;
         private bool dropDestinationIsNextRow;
         private int dropDestinationRowIndex;
-        private Type viewableObjectType = typeof(TimeLineViewableObject);
         private bool isfirstAddedRow = true;
         private PropertyDescriptorCollection viewableObjectTypePdc = null;
         private CursorMode cursorMode = CursorMode.Default;
@@ -54,7 +54,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private Point mouseMoveLastPoint = new Point(0, 0);
         private ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
         private ulong selectRectStartTime = 0;
-            
+        private SortableBindingList<T> viewableObjectDataSource;
+        private Dictionary<Type, List<T>> viewableObjectList = new Dictionary<Type, List<T>>();
+        public object selectedObject;
+
         #endregion
 
         #region プロパティ
@@ -335,95 +338,30 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
             }
         }
-        public Type ViewableObjectType
+        public SortableBindingList<T> ViewableObjectDataSource
         {
-            get { return viewableObjectType; }
+            get
+            {
+                return (SortableBindingList<T>)DataSource;
+            }
             set
             {
-                if (value != null && !value.Equals(viewableObjectType))
-                {
-                    if(! value.IsSubclassOf(typeof(TimeLineViewableObject)))
-                    {
-                        throw new Exception("ViewableObjectTypeはTimeLineViewableObjectのサブクラスでなければなりません");
-                    }
+                viewableObjectDataSource = value;
+                NotifyPropertyChanged("ViewableObjectDataSource");
 
-                    viewableObjectType = value;
-
-                    Type tlelType = typeof(SortableBindingList<>);
-
-                    this.Columns.Clear();
-                    contextMenuStrip.Items.Clear();
-
-                    ViewableObjectTypePdc = PropertyDescriptorCollectionUtils.ConvertToPropertyDisplayPropertyDescriptor(TypeDescriptor.GetProperties(viewableObjectType));
-
-                    List<DataGridViewColumn> columns = new List<DataGridViewColumn>();
-
-                    foreach (PropertyDisplayPropertyDescriptor pd in viewableObjectTypePdc)
-                    {
-                        Type type = pd.PropertyType;
-                        string name = pd.Name;
-                        string headerText = pd.DisplayName;
-                        bool browsable = pd.DefaultBrowsable;
-
-                        if (type != typeof(TimeLineEvents))
-                        {
-                            DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
-                            column.Name = name;
-                            column.ValueType = type;
-                            column.DataPropertyName = name;
-                            column.HeaderText = headerText;
-                            column.CellTemplate = new DataGridViewTextBoxCell();
-                            columns.Add(column);
-
-                            ToolStripMenuItem newcontitem = new ToolStripMenuItem();
-                            newcontitem.Text = headerText;
-                            newcontitem.Name = name + "ContextMenuStrip";
-                            newcontitem.Checked = browsable;
-                            contextMenuStrip.Items.Add(newcontitem);
-                            column.Visible = browsable;
-                            newcontitem.Click += delegate
-                            {
-                                if (Columns[column.Name].Visible)
-                                {
-                                    Columns[column.Name].Visible = false;
-                                    newcontitem.Checked = false;
-                                }
-                                else
-                                {
-                                    Columns[column.Name].Visible = true;
-                                    newcontitem.Checked = true;
-                                }
-                            };
-                        }
-
-                    }
-                    columns.Add(timeLineColumn);
-
-                    timeLineColumnPreviousColumn = columns[columns.Count - 2];
-
-                    foreach (DataGridViewColumn column in columns)
-                    {
-                        try
-                        {
-                            this.Columns.Add(column);
-                        }
-                        catch (InvalidOperationException e)
-                        {
-                            System.Console.WriteLine(e.Message);
-                        }
-                    }
-
-                    timeLineColumnPreviousColumn.Frozen = true;
-
-                    this.AutoResizeColumns();
-                    this.Width = parentSize.Width - this.Location.X * 2;
-                }
+                DataSource = viewableObjectDataSource;
             }
         }
-        public Object ViewableObjectDataSource
+        public Dictionary<Type, List<T>> ViewableObjectList
         {
-            get { return DataSource; }
-            set { DataSource = value; }
+            get { return viewableObjectList; }
+            set
+            {
+                if (value != viewableObjectList)
+                {
+                    viewableObjectList = value;
+                }
+            }
         }
         public CursorMode CursorMode
         {
@@ -438,17 +376,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
             }
         }
+        public object SelectedObject
+        {
+            get { return selectedObject; }
+            set
+            {
+                if (selectedObject != value)
+                {
+                    selectedObject = value;
+                    NotifyPropertyChanged("SelectedObject");
+                }
+            }
+        }
 
         #endregion
 
         #region イベント
 
         public event PropertyChangedEventHandler PropertyChanged = null;
-        public event ViewableObjectAddHandler AddViewableObject = null;
-        public event ViewableObjectRemoveAtHandler RemoveAtViewableObject = null;
-        public event ViewableObjectInsertHandler InsertViewableObject = null;
-        public event ViewableObjectGetHandler GetViewableObject = null;
-        public event ViewableObjectIndexOfHandler IndexOfViewableObject = null;
 
         #endregion
 
@@ -481,7 +426,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             this.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.VirtualMode = true;
             this.ContextMenuStrip = contextMenuStrip;
-            this.DefaultCellStyle.SelectionForeColor = this.DefaultCellStyle.ForeColor;
+//            this.DefaultCellStyle.SelectionForeColor = this.DefaultCellStyle.ForeColor;
             this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.Opaque, true);
             this.DoubleBuffered = true;
             #endregion
@@ -495,10 +440,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
             #region timeLineColumnプロパティ初期化
 
-            timeLineColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             timeLineColumn.HeaderText = "タイムライン";
 
             #endregion
+
+            constructColumns();
         }
 
         #endregion
@@ -527,6 +473,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
             if (this.Rows.Count == 1 && isfirstAddedRow)
             {
+                this.AutoResizeColumns();
                 beginTimeDisplayTimeLengthReCalc();
                 isfirstAddedRow = false;
             }
@@ -829,8 +776,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
                 if (e.Y < this.ColumnHeadersHeight)
                 {
-                    DoubleBuffered = true;
                     OnColumnWidthChanged(null);
+                }
+                if (!DoubleBuffered)
+                {
+                    DoubleBuffered = true;
                 }
             }
         }
@@ -908,8 +858,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         protected override void OnRowPrePaint(DataGridViewRowPrePaintEventArgs e)
         {
             e.PaintParts &= ~DataGridViewPaintParts.Focus;
-            e.PaintParts &= ~DataGridViewPaintParts.SelectionBackground;
-            e.PaintParts &= ~DataGridViewPaintParts.ContentBackground;
+            //e.PaintParts &= ~DataGridViewPaintParts.SelectionBackground;
+            //e.PaintParts &= ~DataGridViewPaintParts.ContentBackground;
 
             base.OnRowPrePaint(e);
         }
@@ -950,6 +900,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         }
 
+        protected override void OnSelectionChanged(EventArgs e)
+        {
+            base.OnSelectionChanged(e);
+            if (this.SelectedRows.Count != 0)
+            {
+                int index = viewableObjectList[typeof(T)].IndexOf(ViewableObjectDataSource[this.SelectedRows[0].Index]);
+                T tvo = viewableObjectList[typeof(T)][index];
+
+                SelectedObject = tvo;
+            }
+        }
+
         #endregion
 
         #region パブリックメソッド
@@ -974,6 +936,71 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         #endregion
 
         #region プライベートメソッド
+
+        private void constructColumns()
+        {
+            ViewableObjectTypePdc = PropertyDescriptorCollectionUtils.ConvertToPropertyDisplayPropertyDescriptor(TypeDescriptor.GetProperties(typeof(T)));
+
+            List<DataGridViewColumn> columns = new List<DataGridViewColumn>();
+            Dictionary<DataGridViewColumn, bool> browsables = new Dictionary<DataGridViewColumn, bool>();
+
+            foreach (PropertyDisplayPropertyDescriptor pd in viewableObjectTypePdc)
+            {
+                Type type = pd.PropertyType;
+                string name = pd.Name;
+                string headerText = pd.DisplayName;
+                bool browsable = pd.DefaultBrowsable;
+
+                if (type != typeof(TimeLineEvents))
+                {
+                    DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
+                    column.Name = name;
+                    column.ValueType = type;
+                    column.DataPropertyName = name;
+                    column.HeaderText = headerText;
+                    column.CellTemplate = new DataGridViewTextBoxCell();
+
+                    columns.Add(column);
+
+                    ToolStripMenuItem newcontitem = new ToolStripMenuItem();
+                    newcontitem.Text = headerText;
+                    newcontitem.Name = name + "ContextMenuStrip";
+                    newcontitem.Checked = browsable;
+                    contextMenuStrip.Items.Add(newcontitem);
+                    browsables[column] = browsable;
+                    newcontitem.Click += delegate
+                    {
+                        if (Columns[column.Name].Visible)
+                        {
+                            Columns[column.Name].Visible = false;
+                            newcontitem.Checked = false;
+                        }
+                        else
+                        {
+                            Columns[column.Name].Visible = true;
+                            newcontitem.Checked = true;
+                        }
+                    };
+                }
+
+            }
+            columns.Add(timeLineColumn);
+
+            Columns.AddRange(columns.ToArray());
+
+            this.AutoResizeColumns();
+
+            timeLineColumnPreviousColumn = Columns[columns.Count - 2];
+            timeLineColumnPreviousColumn.Frozen = true;
+
+            foreach(KeyValuePair<DataGridViewColumn, bool> kvp in browsables)
+            {
+                kvp.Key.Visible = kvp.Value;
+            }
+            timeLineColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            this.Width = parentSize.Width - this.Location.X * 2;
+        }
 
         private void ParentSizeChanged(object sender, EventArgs e)
         {
@@ -1021,6 +1048,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                             num = num > this.Rows.Count ? this.Rows.Count : num;
                             maxRowsHeight = rh * num + this.ColumnHeadersHeight;
                             NowRowHeight = rh;
+                            MaxRowHeight = rh;
                             this.Height = maxRowsHeight;
                         }
                         break;
@@ -1180,9 +1208,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private int moveDataValue(int from, int to, bool next)
         {
 
-            TimeLineViewableObject tvo = GetViewableObject(ViewableObjectDataSource, from).DeepClone();
+            int index = viewableObjectList[typeof(T)].IndexOf(ViewableObjectDataSource[from]);
+            T tvo = viewableObjectList[typeof(T)][index];
 
-            RemoveAtViewableObject(ViewableObjectDataSource, from);
+            ViewableObjectDataSource.RemoveAt(from);
 
             if (to > from)
             {
@@ -1192,16 +1221,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             {
                 to++;
             }
-            if (to <= (this.Rows.Count))
+            if (to <= (this.ViewableObjectDataSource.Count))
             {
-                InsertViewableObject(tvo, ViewableObjectDataSource, to);
+                ViewableObjectDataSource.Insert(to, tvo);
             }
             else
             {
-                AddViewableObject(tvo, ViewableObjectDataSource);
+                ViewableObjectDataSource.Add(tvo);
             }
 
-            return IndexOfViewableObject(tvo, ViewableObjectDataSource);
+            NotifyPropertyChanged("ViewableObjectDataSource");
+
+            return viewableObjectDataSource.IndexOf(tvo);
  
         }
 

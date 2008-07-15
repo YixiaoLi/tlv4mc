@@ -39,9 +39,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
             return ot;
         }
 
-        public Dictionary<string, string> Parse(List<string> FormatList, string resourceFileLine)
+        public Dictionary<string, string> Parse(List<string> formatList, string resourceFileLine)
         {
-            if(FormatList == null)
+            if(formatList == null)
             {
                 return null;
             }
@@ -53,16 +53,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
 
             string[] res = resourceFileLine.Split(SplitStr.ToCharArray());
 
-            if (res.Length != FormatList.Count)
+            if (res.Length != formatList.Count)
             {
                 return null;
             }
 
             Dictionary<string, string> dic = new Dictionary<string, string>();
 
-            for (int i = 0; i < FormatList.Count; i++ )
+            for (int i = 0; i < formatList.Count; i++ )
             {
-                dic.Add(FormatList[i], res[i]);
+                dic.Add(formatList[i], res[i].Trim());
             }
 
             return dic;

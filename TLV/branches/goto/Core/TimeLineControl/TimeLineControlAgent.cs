@@ -9,13 +9,13 @@ using NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid;
 using NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine;
 using NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineScrollBar;
 using NU.OJL.MPRTOS.TLV.Core.ViewableObject;
-using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject;
+using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 {
     public class TimeLineControlAgent : Agent<TimeLineControlP, TimeLineControlA, TimeLineControlC>
     {
-        private TimeLineGridAgent timeLineGridAgent = new TimeLineGridAgent("TimeLineGrid");
+        private TimeLineGridAgent<TaskInfo> timeLineGridAgent = new TimeLineGridAgent<TaskInfo>("TimeLineGrid");
         private TimeLineAgent topTimeLineAgent = new TimeLineAgent("TopTimeLineAgent");
         private TimeLineAgent bottomTimeLineAgent = new TimeLineAgent("BottomTimeLineAgent");
         private TimeLineScrollBarAgent timeLineScrollBarAgent = new TimeLineScrollBarAgent("TimeLineScrollBarAgent");

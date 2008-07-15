@@ -29,15 +29,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 
         public override void InitParentFirst()
         {
-            BindPToA("ViewableObjectType", typeof(Type), "ViewableObjectType", SearchAFlags.Ancestors);
             BindPToA("CursorMode", typeof(CursorMode), "CursorMode", SearchAFlags.Self);
-            A.ViewableObjectDataSource = GetPropertyAFrom(typeof(object), "ViewableObjectDataSource", SearchAFlags.Ancestors);
-            P.ViewableObjectDataSource = A.ViewableObjectDataSource;
-            P.AddViewableObject += (ViewableObjectAddHandler)GetDelegate(typeof(ViewableObjectAddHandler), "AddViewableObject", SearchAFlags.Ancestors);
-            P.RemoveAtViewableObject += (ViewableObjectRemoveAtHandler)GetDelegate(typeof(ViewableObjectRemoveAtHandler), "RemoveAtViewableObject", SearchAFlags.Ancestors);
-            P.InsertViewableObject += (ViewableObjectInsertHandler)GetDelegate(typeof(ViewableObjectInsertHandler), "InsertViewableObject", SearchAFlags.Ancestors);
-            P.GetViewableObject += (ViewableObjectGetHandler)GetDelegate(typeof(ViewableObjectGetHandler), "GetViewableObject", SearchAFlags.Ancestors);
-            P.IndexOfViewableObject += (ViewableObjectIndexOfHandler)GetDelegate(typeof(ViewableObjectIndexOfHandler), "IndexOfViewableObject", SearchAFlags.Ancestors);
         }
     }
 }

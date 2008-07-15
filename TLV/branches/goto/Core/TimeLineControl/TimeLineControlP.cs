@@ -26,16 +26,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         private int maxRowHeight = 0;
         private int minRowHeight = 0;
         private int rowHeight = 0;
-        private Type viewableObjectType = typeof(TimeLineViewableObject);
-        private object viewableObjectDataSource;
         private CursorMode cursorMode = CursorMode.Default;
 
         public event PropertyChangedEventHandler PropertyChanged = null;
-        public event ViewableObjectAddHandler AddViewableObject = null;
-        public event ViewableObjectRemoveAtHandler RemoveAtViewableObject = null;
-        public event ViewableObjectInsertHandler InsertViewableObject = null;
-        public event ViewableObjectGetHandler GetViewableObject = null;
-        public event ViewableObjectIndexOfHandler IndexOfViewableObject = null;
 
         public ToolStripContentPanel ContentPanel { get { return this.toolStripContainer.ContentPanel; } }
         public RowSizeMode RowSizeMode
@@ -105,7 +98,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             get { return rowHeight; }
             set
             {
-                if (rowHeight != value)
+                if (rowHeight != value || this.rowHeightTrackBar.Value != value)
                 {
                     rowHeight = value;
 
@@ -146,23 +139,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
                     NotifyPropertyChanged("MinRowHeight");
                 }
             }
-        }
-        public Type ViewableObjectType
-        {
-            get { return viewableObjectType; }
-            set
-            {
-                if (value != null && !value.Equals(viewableObjectType))
-                {
-                    viewableObjectType = value;
-                    NotifyPropertyChanged("ViewableObjectType");
-                }
-            }
-        }
-        public Object ViewableObjectDataSource
-        {
-            get { return viewableObjectDataSource; }
-            set { viewableObjectDataSource = value; }
         }
         public CursorMode CursorMode
         {
@@ -210,6 +186,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         public TimeLineControlP(string name)
         {
             InitializeComponent();
+
             this.Name = name;
             this.TabText = "タイムライン";
             this.RowSizeMode = RowSizeMode.Fill;
@@ -383,27 +360,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
-        }
-
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-
-            TaskInfo ti = new TaskInfo("TSK, 1, MAIN_TASK, TA_NULL, 10, 1, 4096, task1", new TimeLineEvents()
-            {
-                new TimeLineEvent(123987, (int)TaskVerb.DORMANT),
-                new TimeLineEvent(236272, (int)TaskVerb.RUN),
-                new TimeLineEvent(373473, (int)TaskVerb.RUNNABLE),
-                new TimeLineEvent(456845, (int)TaskVerb.RUN),
-                new TimeLineEvent(595695, (int)TaskVerb.WAITING),
-                new TimeLineEvent(676860, (int)TaskVerb.RUNNABLE),
-                new TimeLineEvent(789745, (int)TaskVerb.RUN),
-                new TimeLineEvent(823562, (int)TaskVerb.DORMANT),
-            });
-
-            if (AddViewableObject != null)
-            {
-                AddViewableObject(ti, viewableObjectDataSource);
             }
         }
 

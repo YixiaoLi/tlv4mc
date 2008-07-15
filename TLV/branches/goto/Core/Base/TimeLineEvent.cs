@@ -33,6 +33,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
         public ulong EndTime { get; protected set; }
 
         public TimeLineEvent this[int index] { get { return this.List[index]; } }
+        public TimeLineEvents this[ulong time]
+        {
+            get
+            {
+                return new TimeLineEvents(this.List.FindAll(tle => tle.Time == time));
+            }
+        }
 
         public TimeLineEvents()
             : base()

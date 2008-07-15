@@ -73,7 +73,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                     int order = (int)Math.Ceiling(Math.Log10((double)nsPerScaleMark + 1D));
                     if(order != 0)
                     {
-                        scaleMarkStartTime = (ulong)((decimal)(Math.Floor((double)MinimumTime / Math.Pow(10D, order - 1)) * Math.Pow(10D, order - 1)) - (decimal)nsPerScaleMark);
+                        decimal tmp = ((decimal)(Math.Floor((double)MinimumTime / Math.Pow(10D, order - 1)) * Math.Pow(10D, order - 1)) - (decimal)nsPerScaleMark);
+                        scaleMarkStartTime = (ulong)(tmp < 0 ? 0 : tmp);
                     }
                     if(beginTime < minimumTime)
                     {
@@ -146,10 +147,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 if (nsPerScaleMark != value)
                 {
                     nsPerScaleMark = value;
-
                     int order = (int)Math.Ceiling(Math.Log10((double)nsPerScaleMark + 1D));
-                    scaleMarkStartTime = (ulong)((decimal)(Math.Floor((double)MinimumTime / Math.Pow(10D, order - 1)) * Math.Pow(10D, order - 1)) - (decimal)nsPerScaleMark);
-
+                    if (order != 0)
+                    {
+                        decimal tmp = ((decimal)(Math.Floor((double)MinimumTime / Math.Pow(10D, order - 1)) * Math.Pow(10D, order - 1)) - (decimal)nsPerScaleMark);
+                        scaleMarkStartTime = (ulong)(tmp < 0 ? 0 : tmp);
+                    }
                     NotifyPropertyChanged("NsPerScaleMark");
                     this.Refresh();
                 }

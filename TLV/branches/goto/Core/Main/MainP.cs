@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
 using NU.OJL.MPRTOS.TLV.Base;
+using NU.OJL.MPRTOS.TLV.Core.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Main
 {
@@ -11,6 +13,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
     {
         public string resourceFilePath = String.Empty;
         public string traceLogFilePath = String.Empty;
+
         public string ResourceFilePath
         {
             get { return resourceFilePath; }
@@ -40,6 +43,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
             get { return this.toolStripContainer.ContentPanel; }
         }
 
+        public event EventHandler ResourcePropertyControlShow;
+        public event EventHandler ResourceSelectControlShow;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public MainP(string name)
@@ -74,6 +79,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
                 ResourceFilePath = fileOpenForm.ResourceFilePath;
                 TraceLogFilePath = fileOpenForm.TraceLogFilePath;
             }
+        }
+
+        private void resourceListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResourceSelectControlShow(this, EventArgs.Empty);
+        }
+
+        private void resourceInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResourcePropertyControlShow(this, EventArgs.Empty);
         }
 
     }

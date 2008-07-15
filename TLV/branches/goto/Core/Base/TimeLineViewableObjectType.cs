@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo;
+using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Base
 {
@@ -23,7 +24,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
 
     static class TimeLineViewableObjectTypeExtension
     {
-        public static List<string> GetFormat(this TimeLineViewableObjectType type)
+
+        public static List<string> GetResourceFormat(this TimeLineViewableObjectType type)
         {
             List<string> formatList = null;
 
@@ -31,9 +33,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
             switch (type)
             {
                 case TimeLineViewableObjectType.TSK:
-                    formatList = new List<string>() { "ObjectType", "ID", "Name", "Atr", "Pri", "Exinf", "Stksize", "Task" };
+                    formatList = new List<string>() { "ObjectType", "Id", "Name", "Atr", "Pri", "Exinf", "Stksize", "Task" };
                     break;
-                default :
+                default:
+                    formatList = new List<string>() { "ObjectType" };
                     break;
             }
 
@@ -44,13 +47,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
         {
             Type t = null;
 
-            // formatListの最初の要素は"ObjectType"にすること
             switch (type)
             {
                 case TimeLineViewableObjectType.TSK:
                     t = typeof(TaskInfo);
                     break;
                 default:
+                    t = typeof(TimeLineViewableObject);
                     break;
             }
 

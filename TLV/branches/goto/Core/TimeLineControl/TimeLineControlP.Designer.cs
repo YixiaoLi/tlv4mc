@@ -37,8 +37,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.rowHeightButton = new System.Windows.Forms.ToolStripSplitButton();
             this.rowHeightTrackBar = new NU.OJL.MPRTOS.TLV.Base.ToolStripLabeledTrackBar();
             this.rowHeightSubtractButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
             this.buttonToolStrip.SuspendLayout();
@@ -73,9 +71,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.zoomInButton,
             this.zoomOutButton,
             this.zoomSelectButton});
-            this.buttonToolStrip.Location = new System.Drawing.Point(3, 0);
+            this.buttonToolStrip.Location = new System.Drawing.Point(462, 0);
             this.buttonToolStrip.Name = "buttonToolStrip";
-            this.buttonToolStrip.Size = new System.Drawing.Size(125, 25);
+            this.buttonToolStrip.Size = new System.Drawing.Size(156, 25);
             this.buttonToolStrip.TabIndex = 1;
             // 
             // cursorButton
@@ -142,12 +140,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.toolStripSeparator4,
             this.rowHeightAddButton,
             this.rowHeightButton,
-            this.rowHeightSubtractButton,
-            this.toolStripSeparator5,
-            this.toolStripButton1});
-            this.scaleToolStrip.Location = new System.Drawing.Point(128, 0);
+            this.rowHeightSubtractButton});
+            this.scaleToolStrip.Location = new System.Drawing.Point(3, 0);
             this.scaleToolStrip.Name = "scaleToolStrip";
-            this.scaleToolStrip.Size = new System.Drawing.Size(590, 25);
+            this.scaleToolStrip.Size = new System.Drawing.Size(459, 25);
             this.scaleToolStrip.TabIndex = 0;
             // 
             // nsPerScaleMarkAddButton
@@ -325,21 +321,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.rowHeightSubtractButton.Size = new System.Drawing.Size(23, 22);
             this.rowHeightSubtractButton.Text = "行サイズ - 1 pixel";
             // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(94, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
             // TimeLineControlP
             // 
             this.AllowEndUserDocking = false;
@@ -375,8 +356,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
         private ToolStripSplitButton rowHeightButton;
         private ToolStripButton rowHeightSubtractButton;
         private NU.OJL.MPRTOS.TLV.Base.ToolStripLabeledTrackBar rowHeightTrackBar;
-        private ToolStripSeparator toolStripSeparator5;
-        private ToolStripButton toolStripButton1;
         private ToolStrip buttonToolStrip;
         private ToolStripButton cursorButton;
         private ToolStripButton handButton;

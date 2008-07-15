@@ -7,6 +7,19 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
     public class SortableBindingList<T> : BindingList<T>
     {
+        //public SortableBindingList<S> SortableBindingListFactory<S>()
+        //    where S : T
+        //{
+        //    List<S> list = new List<S>();
+
+        //    foreach (T t in this)
+        //    {
+        //        list.Add((S)t);
+        //    }
+
+        //    return new SortableBindingList<S>(list);
+        //}
+
         private PropertyDescriptor _sortProp = null;
         private ListSortDirection _sortDir = ListSortDirection.Ascending;
         private bool _isSorted = false;
@@ -34,6 +47,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         protected override bool IsSortedCore { get { return this._isSorted; } }
         protected override PropertyDescriptor SortPropertyCore { get { return this._sortProp; } }
         protected override ListSortDirection SortDirectionCore { get { return this._sortDir; } }
+
     }
 
     public static class PropertyComparerFactory

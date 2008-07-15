@@ -28,6 +28,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
             dockPanelAgent.Add(resourceSelectControlAgent);
             dockPanelAgent.Add(resourcePropertyControlAgent);
 
+            P.ResourcePropertyControlShow += delegate
+            {
+                resourcePropertyControlAgent.P.Show();
+            };
+            P.ResourceSelectControlShow += delegate
+            {
+                resourceSelectControlAgent.P.Show();
+            };
+
             this.Show();
         }
 
