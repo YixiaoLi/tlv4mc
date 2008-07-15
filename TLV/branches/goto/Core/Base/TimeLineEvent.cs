@@ -41,6 +41,28 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
             }
         }
 
+        public TimeLineEvents GetTimeLineEvents(ulong from, ulong to)
+        {
+            List<TimeLineEvent> l = List.FindAll(tlv => tlv.Time >= from && tlv.Time <= to);
+            if (l.Count != 0)
+            {
+                TimeLineEvents tles = new TimeLineEvents(l);
+                if (List.IndexOf(tles[0]) > 0)
+                {
+                    tles.List.Insert(0, List[List.IndexOf(tles[0]) - 1]);
+                }
+                if (List.IndexOf(tles[tles.List.Count - 1]) < List.Count - 1)
+                {
+                    tles.List.Add(List[List.IndexOf(tles[tles.List.Count - 1]) + 1]);
+                }
+                return tles;
+            }
+            else
+            {
+                return new TimeLineEvents();
+            }
+        }
+
         public TimeLineEvents()
             : base()
         {

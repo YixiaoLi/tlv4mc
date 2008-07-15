@@ -61,6 +61,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
                                 }
                             }
 
+                            foreach(TaskInfo ti in tlvol.List)
+                            {
+                                logList.Add(new Log(0, ti.MetaId, "DORMANT"));
+                            }
+
                             using (StreamReader TraceLogFile = new StreamReader(A.TraceLogFilePath))
                             {
                                 string logLine = "";
@@ -75,6 +80,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
                                         Log log = logParser.Parse(logLine, tlvol);
                                         if(log != null)
                                         {
+                                            if(log.Verb == "RUN")
+                                            {
+                                                // 一つ前に実行状態だったやつをみつける
+                                                Log l1 = logList.List.FindLast(l => l.Verb == "RUN");
+                                                if(l1 != null)
+                                                {
+                                                    // そのタスクの最後に休止状態だったときを見つける
+                                                    Log l2 = logList.List.FindLast(l => (l.MetaId == l1.MetaId && l.Verb == "DORMANT"));
+                                                    // まだ休止になっていなくてRUNなら実行可能状態にする
+                                                    if(l2 != null && l1.Time >= l2.Time)
+                                                    {
+                                                        Log l3 = logList.List.FindLast(l => (l.MetaId == l1.MetaId));
+                                                        if(l3.Verb == "RUN")
+                                                        {
+                                                            logList.Add(new Log(log.Time, l1.MetaId, "RUNNABLE"));
+                                                        }
+                                                    }
+                                                }
+                                            }
+
                                             logList.Add(log);
                                         }
                                     }

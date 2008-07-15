@@ -176,7 +176,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     beginTime = value;
                     NotifyPropertyChanged("BeginTime");
                     EndTime = value + DisplayTimeLength;
-
+                    Refresh();
                 }
             }
         }
@@ -594,8 +594,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 Cursor.Show();
                 this.Cursor = Cursors.Default;
                 isMouseEnter = false;
-                SelectRectStartTime = 0;
-                NowMarkerTime = 0;
+
+                if (mouseMoveLastPoint != Point.Empty)
+                {
+
+                }
+                else
+                {
+                    SelectRectStartTime = 0;
+                    NowMarkerTime = 0;
+                }
             }
         }
 
@@ -650,6 +658,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     NowMarkerTime = xToTime(e.X - timeLineX);
                 }
+                else
+                {
+                    SelectRectStartTime = 0;
+                    NowMarkerTime = 0;
+                }
             }
 
             if (e.X < this.Width && e.X > this.TimeLineX && e.Y > this.ColumnHeadersHeight && e.Y < this.Height)
@@ -659,12 +672,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     this.Cursor = CursorMode.Cursor();
                     isMouseEnter = true;
                 }
-            }
-            else
-            {
-                SelectRectStartTime = 0;
-                NowMarkerTime = 0;
-                OnMouseLeave(EventArgs.Empty);
             }
 
         }
@@ -736,15 +743,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
+            mouseMoveLastPoint = Point.Empty;
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
                 if (e.X < this.Width && e.X > this.TimeLineX && e.Y > this.ColumnHeadersHeight && e.Y < this.Height)
                 {
                     switch (cursorMode)
                     {
-                        case CursorMode.Hand:
-                            this.Cursor = CursorMode.Cursor(false);
-                            break;
 
                         case CursorMode.ZoomSelect:
                             if (SelectRectStartTime != 0)
@@ -761,10 +766,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                             }
                             break;
 
-                        case CursorMode.Default:
-                            SelectRectStartTime = 0;
-                            break;
-
                         default:
                             break;
                     }
@@ -772,6 +773,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 else
                 {
 
+                }
+
+                switch (cursorMode)
+                {
+                    case CursorMode.Hand:
+                        this.Cursor = CursorMode.Cursor(false);
+                        break;
+
+                    case CursorMode.Default:
+                        SelectRectStartTime = 0;
+                        break;
+
+                    default:
+                        break;
                 }
 
                 if (e.Y < this.ColumnHeadersHeight)
@@ -880,6 +895,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     e.Graphics.FillPath(new HatchBrush(HatchStyle.Percent50, Color.Black, Color.Transparent), path);
                 }
             }
+
+            drawTaskState(e.RowBounds, e.RowIndex, e.Graphics);
 
         }
 
@@ -1156,6 +1173,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     DisplayTimeLength = tmpDisplayTimeLength;
                 }
             }
+            Refresh();
         }
 
         private ulong xToTime(int x)
@@ -1165,7 +1183,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         private float timeToX(ulong t)
         {
-            return (float)(((decimal)t - (decimal)beginTime) / ((decimal)nsPerScaleMark / (decimal)pixelPerScaleMark));
+            if (nsPerScaleMark != 0 && pixelPerScaleMark != 0)
+            {
+                return (float)(((decimal)t - (decimal)beginTime) / ((decimal)nsPerScaleMark / (decimal)pixelPerScaleMark));
+            }
+            else
+            {
+                return 0.0f;
+            }
         }
 
         private bool decideDropDestinationRowIndex(DataGridView grid, DragEventArgs e, out int from, out int to, out bool next)
@@ -1303,6 +1328,151 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             {
                 NowMarkerTime = nowTime;
             }
+        }
+
+        private void drawTaskState(Rectangle rect, int rowIndex, Graphics graphics)
+        {
+            Rectangle rowRect = new Rectangle(timeLineX + 1, rect.Y, rect.Width - 3 - timeLineX, rect.Height - 1);
+            TimeLineEvents timeLineEvents = ((TimeLineEvents)Rows[rowIndex].Cells[timeLineColumn.Name].Value).GetTimeLineEvents(beginTime, endTime);
+
+            int lineWidth = 2;
+
+            float y1 = (float)rowRect.Height / 3.0f + (float)rowRect.Y;
+            float y2 = (float)rowRect.Height / 3.0f * 2.0f + (float)rowRect.Y;
+            float y3 = (float)rowRect.Height + (float)rowRect.Y;
+            float h1 = (float)rowRect.Height / 3.0f * 2.0f;
+            float h2 = (float)rowRect.Height / 3.0f;
+            float h3 = 1.0f;
+
+            Dictionary<GraphicsPath, Pen>[] penPaths = new[]
+                    {
+                        new Dictionary<GraphicsPath, Pen>(),
+                        new Dictionary<GraphicsPath, Pen>(),
+                        new Dictionary<GraphicsPath, Pen>(),
+                    };
+            Dictionary<GraphicsPath, Brush>[] brushPaths = new[]
+                    {
+                        new Dictionary<GraphicsPath, Brush>(),
+                        new Dictionary<GraphicsPath, Brush>(),
+                        new Dictionary<GraphicsPath, Brush>(),
+                    };
+
+            Dictionary<string, Pen> pens = new Dictionary<string, Pen>()
+            {
+                {"ACT_TER", new Pen(Color.Black){CustomEndCap = new AdjustableArrowCap(4,4), Width = lineWidth}},
+                {"RUN", new Pen(Color.FromArgb(250, Color.Lime)){Width = lineWidth}},
+                {"RUNNABLE", new Pen(Color.FromArgb(250, Color.Orange)){Width = lineWidth}},
+                {"WAITING", new Pen(Color.FromArgb(250, Color.Red)){Width = lineWidth}},
+                {"SUSPENDED", new Pen(Color.FromArgb(250, Color.Blue)){Width = lineWidth}},
+                {"WAITING_SUSPENDED", new Pen(Color.FromArgb(250, Color.Blue)){DashStyle = DashStyle.Dash, Width = lineWidth}},
+            };
+
+            Dictionary<string, Brush> brushes = new Dictionary<string, Brush>()
+            {
+                {"RUN", new SolidBrush(Color.FromArgb(100, Color.Lime))},
+            };
+
+            foreach (TimeLineEvent te in timeLineEvents)
+            {
+                TimeLineEvent nextTe;
+                if (timeLineEvents.List.IndexOf(te) != timeLineEvents.List.Count - 1)
+                {
+                    nextTe = timeLineEvents[timeLineEvents.List.IndexOf(te) + 1];
+
+                    float x0 = (float)rowRect.X + timeToX(te.Time);
+                    float x1 = (float)rowRect.X + timeToX(nextTe.Time);
+                    x0 = x0 < rowRect.X ? rowRect.X - 1 : x0;
+                    x1 = x1 < rowRect.X ? rowRect.X - 1: x1;
+                    float w = x1 - x0;
+                    w = w == 0 ? 1 : w;
+
+                    // RUNNABLE状態描画
+                    if (te.Verb == "RUNNABLE")
+                    {
+                        GraphicsPath path = new GraphicsPath();
+                        path.AddLine(x0, y1, x1, y1);
+                        penPaths[2].Add(path, pens["RUNNABLE"]);
+                    }
+
+                    // 待ちから実行可能への線
+                    if ((te.Verb == "WAITING"
+                        || te.Verb == "SUSPENDED"
+                        || te.Verb == "WAITING_SUSPENDED")
+                        && nextTe.Verb == "RUNNABLE")
+                    {
+                        GraphicsPath path = new GraphicsPath();
+                        path.AddLine(x1, y3, x1, y1);
+                        penPaths[1].Add(path, pens["RUNNABLE"]);
+                    }
+
+                    // RUN状態描画
+                    if (te.Verb == "RUN")
+                    {
+                        GraphicsPath path = new GraphicsPath();
+                        path.AddRectangle(new RectangleF(x0, y1, w, h1));
+                        brushPaths[1].Add(path, brushes["RUN"]);
+                        penPaths[1].Add(path, pens["RUN"]);
+                    }
+
+                    // WAITING状態描画
+                    if (te.Verb == "WAITING")
+                    {
+                        GraphicsPath path = new GraphicsPath();
+                        path.AddLine(x0, y3 - lineWidth / 2, x1, y3 - lineWidth / 2);
+                        penPaths[2].Add(path, pens["WAITING"]);
+                    }
+
+                    // SUSPENDED状態描画
+                    if (te.Verb == "SUSPENDED")
+                    {
+                        GraphicsPath path = new GraphicsPath();
+                        path.AddLine(x0, y3 - lineWidth / 2, x1, y3 - lineWidth / 2);
+                        penPaths[2].Add(path, pens["SUSPENDED"]);
+                    }
+
+                    // WAITING_SUSPENDED状態描画
+                    if (te.Verb == "WAITING_SUSPENDED")
+                    {
+                        GraphicsPath path = new GraphicsPath();
+                        path.AddLine(x0, y3 - lineWidth / 2, x1, y3 - lineWidth / 2);
+                        penPaths[2].Add(path, pens["WAITING_SUSPENDED"]);
+                    }
+
+                    // 起動の上矢印描画
+                    if (te.Verb == "DORMANT" && ((nextTe.Verb == "RUN") || (nextTe.Verb == "RUNNABLE")))
+                    {
+                        GraphicsPath path = new GraphicsPath();
+                        path.AddLine(x1, y3, x1, y1);
+                        penPaths[2].Add(path, pens["ACT_TER"]);
+                    }
+
+                    // 終了の下矢印描画
+                    if (te.Verb == "RUN" && nextTe.Verb == "DORMANT")
+                    {
+                        GraphicsPath path = new GraphicsPath();
+                        path.AddLine(x1, y1, x1, y3);
+                        penPaths[2].Add(path, pens["ACT_TER"]);
+                    }
+                }
+            }
+
+            Region re = graphics.Clip;
+            graphics.Clip = new Region(rowRect);
+            //graphics.SmoothingMode = SmoothingMode.HighQuality;
+            for(int i = 0; i < 3; i++)
+            {
+                foreach(KeyValuePair<GraphicsPath, Brush> kvp in brushPaths[i])
+                {
+                    graphics.FillPath(kvp.Value, kvp.Key);
+                }
+                foreach(KeyValuePair<GraphicsPath, Pen> kvp in penPaths[i])
+                {
+                    graphics.DrawPath(kvp.Value, kvp.Key);
+                }
+            }
+            //graphics.SmoothingMode = SmoothingMode.HighQuality;
+            graphics.Clip = re;
+
         }
 
         #endregion
