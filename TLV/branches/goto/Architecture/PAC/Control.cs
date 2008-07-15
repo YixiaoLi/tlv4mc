@@ -170,10 +170,16 @@ namespace NU.OJL.MPRTOS.TLV.Architecture.PAC
             return null;
         }
 
-        public object GetPropertyAFrom(Type type, string name, SearchAFlags flags)
+        public object GetPropertyFromA(Type type, string name, SearchAFlags flags)
         {
             IAbstraction a = GetAProviding(type, name, flags, null);
             return a.GetType().GetProperty(name).GetValue(a, null);
+        }
+
+        public void SetPropertyToA(Type type, string name, object o, SearchAFlags flags)
+        {
+            IAbstraction a = GetAProviding(type, name, flags, null);
+            a.GetType().GetProperty(name).SetValue(a, o, null);
         }
 
         public void BindPToA(string pPropertyName, Type aType, string aPropertyName, SearchAFlags flags)
