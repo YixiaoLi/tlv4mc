@@ -141,6 +141,7 @@ del ___$(TargetFileName)
 del *.dll</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="bin\Release\" />
+    <None Include="bin\Release\resourceSample.res" />
+    <None Include="bin\Release\traceLogSample.log" />
   </ItemGroup>
 </Project>
