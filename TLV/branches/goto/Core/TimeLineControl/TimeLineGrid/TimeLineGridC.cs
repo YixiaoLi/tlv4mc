@@ -7,6 +7,7 @@ using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
 using NU.OJL.MPRTOS.TLV.Core.Base;
 using NU.OJL.MPRTOS.TLV.Base;
+using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo;
 
 namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 {
@@ -44,7 +45,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             BindPToA("MinRowHeight", typeof(int), "MinRowHeight", SearchAFlags.Self);
             BindPToA("NowRowHeight", typeof(int), "NowRowHeight", SearchAFlags.Self);
             BindPToA("CursorMode", typeof(CursorMode), "CursorMode", SearchAFlags.Ancestors);
-            BindPToA("ViewableObjectList", typeof(Dictionary<Type, List<T>>), "ViewableObjectList", SearchAFlags.AncestorsWithSiblings);
+            BindPToA("ViewableObjectList", typeof(TimeLineViewableObjectList<TaskInfo>), "ViewableObjectList", SearchAFlags.AncestorsWithSiblings);
             P.ViewableObjectDataSource = A.ViewableObjectDataSource;
 
         }

@@ -27,37 +27,25 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
 
         public static List<string> GetResourceFormat(this TimeLineViewableObjectType type)
         {
-            List<string> formatList = null;
-
             // formatListの最初の要素は"ObjectType"にすること
             switch (type)
             {
                 case TimeLineViewableObjectType.TSK:
-                    formatList = new List<string>() { "ObjectType", "Id", "Name", "Atr", "Pri", "Exinf", "Stksize", "Task" };
-                    break;
+                    return new List<string>() { "ObjectType", "Id", "Name", "Atr", "Pri", "Exinf", "Stksize", "Task" };
                 default:
-                    formatList = new List<string>() { "ObjectType" };
-                    break;
+                    return new List<string>() { "ObjectType" };
             }
-
-            return formatList;
         }
 
         public static Type GetObjectType(this TimeLineViewableObjectType type)
         {
-            Type t = null;
-
             switch (type)
             {
                 case TimeLineViewableObjectType.TSK:
-                    t = typeof(TaskInfo);
-                    break;
+                    return typeof(TaskInfo);
                 default:
-                    t = typeof(TimeLineViewableObject);
-                    break;
+                    return typeof(TimeLineViewableObject);
             }
-
-            return t;
         }
     }
 

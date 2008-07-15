@@ -73,9 +73,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\ITimeLineViewable.cs" />
+    <Compile Include="Base\Log.cs" />
     <Compile Include="Base\ResourceFileLineParser.cs" />
     <Compile Include="Base\TimeLineEvent.cs" />
     <Compile Include="Base\TimeLineViewableObject.cs" />
+    <Compile Include="Base\TimeLineViewableObjectList.cs" />
     <Compile Include="Base\TimeLineViewableObjectType.cs" />
     <Compile Include="Base\TraceLogFileLineParser.cs" />
     <Compile Include="DockPanel\DockPanelA.cs" />
@@ -162,8 +164,16 @@
     <Compile Include="TimeLineControl\TimeLine\TimeLineP.Designer.cs">
       <DependentUpon>TimeLineP.cs</DependentUpon>
     </Compile>
+    <Compile Include="TraceLogListControl\TraceLogListControlA.cs" />
+    <Compile Include="TraceLogListControl\TraceLogListControlAgent.cs" />
+    <Compile Include="TraceLogListControl\TraceLogListControlC.cs" />
+    <Compile Include="TraceLogListControl\TraceLogListControlP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TraceLogListControl\TraceLogListControlP.Designer.cs">
+      <DependentUpon>TraceLogListControlP.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewableObject\KernelObject\KernelObject.cs" />
-    <Compile Include="ViewableObject\KernelObject\TaskInfo\TaskVerb.cs" />
     <Compile Include="ViewableObject\KernelObject\TaskInfo\TaskInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +210,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TimeLineControl\TimeLineControlP.resx">
       <DependentUpon>TimeLineControlP.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TraceLogListControl\TraceLogListControlP.resx">
+      <DependentUpon>TraceLogListControlP.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

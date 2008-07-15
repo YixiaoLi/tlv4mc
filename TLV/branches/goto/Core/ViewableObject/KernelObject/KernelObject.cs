@@ -13,21 +13,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject
     {
         [PropertyDisplayName("名前", 10 * 2, true)]
         public string Name { get; protected set; }
-        [PropertyDisplayName("ID", 10 * 3, true)]
+        [PropertyDisplayName("ID", 10 * 3, false)]
         public int Id { get; protected set; }
         [PropertyDisplayName("属性", 10 * 4, false)]
         public string Atr { get; protected set; }
 
-        public KernelObject(int id, string name, TimeLineViewableObjectType type, string atr, TimeLineEvents timeLineEvents)
-            : base(type, timeLineEvents)
-        {
-            this.Name = name;
-            this.Id = id;
-            this.Atr = Atr;
-        }
-
-        public KernelObject(string resourceFileLine, TimeLineEvents timeLineEvents)
-            : base(resourceFileLine, timeLineEvents)
+        public KernelObject(string resourceFileLine)
+            : base(resourceFileLine)
         {
 
         }

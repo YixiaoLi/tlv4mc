@@ -17,7 +17,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceSelectControl
 
         public override void InitParentFirst()
         {
-            BindPToA("ViewableObjectList", typeof(Dictionary<Type, List<TaskInfo>>), "ViewableObjectList", SearchAFlags.Ancestors);
+            BindPToA("ViewableObjectList", typeof(TimeLineViewableObjectList<TaskInfo>), "ViewableObjectList", SearchAFlags.Ancestors);
             BindPToA("ViewableObjectDataSource", typeof(SortableBindingList<TaskInfo>), "ViewableObjectDataSource", SearchAFlags.AncestorsWithSiblings);
             BindPToA("SelectedObject", typeof(object), "SelectedObject", SearchAFlags.AncestorsWithSiblings);
         }

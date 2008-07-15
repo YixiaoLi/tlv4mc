@@ -21,23 +21,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
     [TypeConverter(typeof(PropertyDisplayConverter))]
     public class TimeLineViewableObject : ITimeLineViewable
     {
-        [PropertyDisplayName("タイプ", 10 * 1, true, true)]
+        private static int uniqKey = 0;
+
+        public int MetaId { get; protected set; }
+        public string ResourceFormat { get; protected set; }
+
+        [PropertyDisplayName("タイプ", 10 * 1, false, true)]
         public TimeLineViewableObjectType ObjectType { get; protected set; }
         [PropertyDisplayName("ログ", 10 * 10, true)]
-        public TimeLineEvents TimeLineEvents { get; protected set; }
+        public TimeLineEvents TimeLineEvents { get; set; }
 
-        public TimeLineViewableObject(TimeLineViewableObjectType objectType, TimeLineEvents timeLineEvents)
+        public TimeLineViewableObject(string resourceFileLine)
         {
-            this.ObjectType = objectType;
-            this.TimeLineEvents = timeLineEvents;
-        }
-
-        public TimeLineViewableObject(string resourceFileLine, TimeLineEvents timeLineEvents)
-        {
-            this.TimeLineEvents = timeLineEvents;
+            MetaId = uniqKey++;
+            TimeLineEvents = new TimeLineEvents();
+            ResourceFormat = resourceFileLine;
 
             ResourceFileLineParser resFormatter = new ResourceFileLineParser();
-            this.ObjectType = resFormatter.GetObjectType(resourceFileLine);
+            ObjectType = resFormatter.GetObjectType(resourceFileLine);
             List<string> resFormat = this.ObjectType.GetResourceFormat();
 
             Dictionary<string, string> dic = resFormatter.Parse(resFormat, resourceFileLine);

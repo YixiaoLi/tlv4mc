@@ -1,69 +1,49 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Text;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using NU.OJL.MPRTOS.TLV.Core.Base;
+using NU.OJL.MPRTOS.TLV.Core.ViewableObject.KernelObject.TaskInfo;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Base
 {
-    public class TraceLogFileLineParser
+    public class TraceLogFileLineParser<T>
+        where T : TimeLineViewableObject
     {
-        public bool ContainLog(string logLine, string resLine)
+        public TraceLogFileLineParser()
         {
-            ResourceFileLineParser resParser = new ResourceFileLineParser();
-            TimeLineViewableObjectType type = resParser.GetObjectType(resLine);
-            Dictionary<string, string> resDict = resParser.Parse(type.GetResourceFormat(), resLine);
-            Dictionary<int, string> VerbFormats = (Dictionary<int, string>)type.GetObjectType().GetProperty("VerbFormats").GetValue(null, null);
-            
-            foreach(KeyValuePair<int, string> kvp in  VerbFormats)
-            {
-                if(! Regex.IsMatch(logLine, @"task (?<id>\d+)"))
-                {
-                    return false;
-                }
-                Regex regex = new Regex(@"task (?<id>\d+)");
-                Match match = regex.Match(logLine); 
-                int logId = int.Parse(match.Result("${id}"));
-                int resId = int.Parse(resDict["Id"]);
-                if (logLine.Contains(kvp.Value) && logId == resId)
-                {
-                    return true;
-                }
-            }
-            return false;
+
         }
 
-        public TimeLineEvents GetTimeLineEvent(string logLine, string resLine)
+        public Log Parse(string logLine, TimeLineViewableObjectList<T> tlvol)
         {
-            if (ContainLog(logLine, resLine))
-            {
-                ResourceFileLineParser resParser = new ResourceFileLineParser();
-                TimeLineViewableObjectType type = resParser.GetObjectType(resLine);
-                Dictionary<string, string> resDict = resParser.Parse(type.GetResourceFormat(), resLine);
-                Dictionary<int, string> VerbFormats = (Dictionary<int, string>)type.GetObjectType().GetProperty("VerbFormats").GetValue(null, null);
-                TimeLineEvents tles = new TimeLineEvents();
+            Match timeMatch = new Regex(@"\[(?<Time>\d+)\]").Match(logLine);
+            ulong time = ulong.Parse(timeMatch.Result("${Time}"));
 
-                foreach (KeyValuePair<int, string> kvp in VerbFormats)
-                {
-                    Regex regex = new Regex(@"task (?<id>\d+)");
-                    Match match = regex.Match(logLine);
-                    int logId = int.Parse(match.Result("${id}"));
-                    int resId = int.Parse(resDict["Id"]);
-                    if (logLine.Contains(kvp.Value) && logId == resId)
-                    {
-                        Regex timeRegex = new Regex(@"\[(?<time>\d+)\]");
-                        Match timeMatch = timeRegex.Match(logLine);
-                        ulong time = ulong.Parse(timeMatch.Result("${time}"));
-                        tles.Add(new TimeLineEvent(time, kvp.Key));
-                    }
-                }
-                return tles;
-            }
-            else
+            Match taskMatch = new Regex(@"task (?<Id>\d+)").Match(logLine);
+            int taskId = int.Parse(taskMatch.Result("${Id}"));
+
+            string verb = "";
+            if (logLine.Contains("becomes"))
             {
-                return null;
+                Match verbMatch = new Regex(@"becomes (?<Verb>\w+)\.").Match(logLine);
+                verb = verbMatch.Result("${Verb}");
             }
+            else if (logLine.Contains("dispatch to"))
+            {
+                verb = "RUN";
+            }
+
+            int metaId = tlvol.GetMetaIdFrom("Id", (object)taskId);
+
+            if (metaId != -1)
+            {
+                return new Log(time, metaId, verb);
+            }
+
+            return null;
         }
     }
 }

@@ -9,16 +9,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
     public interface ITimeLineEvent
     {
         ulong Time { get; }
-        int Verb { get; }
+        string Verb { get; }
     }
 
     [Serializable]
     public class TimeLineEvent : ITimeLineEvent
     {
         public ulong Time { get; protected set; }
-        public int Verb { get; protected set; }
+        public string Verb { get; protected set; }
 
-        public TimeLineEvent(ulong time, int verb)
+        public TimeLineEvent(ulong time, string verb)
         {
             this.Time = time;
             this.Verb = verb;

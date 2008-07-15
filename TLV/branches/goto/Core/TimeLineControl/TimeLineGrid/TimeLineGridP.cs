@@ -55,7 +55,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
         private ulong selectRectStartTime = 0;
         private SortableBindingList<T> viewableObjectDataSource;
-        private Dictionary<Type, List<T>> viewableObjectList = new Dictionary<Type, List<T>>();
+        private TimeLineViewableObjectList<T> viewableObjectList = new TimeLineViewableObjectList<T>();
         public object selectedObject;
 
         #endregion
@@ -352,7 +352,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 DataSource = viewableObjectDataSource;
             }
         }
-        public Dictionary<Type, List<T>> ViewableObjectList
+        public TimeLineViewableObjectList<T> ViewableObjectList
         {
             get { return viewableObjectList; }
             set
@@ -1133,25 +1133,28 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         private void dispalyTimeLengthReCalc()
         {
-            ulong tmpDisplayTimeLength = (ulong)((decimal)nsPerScaleMark * ((decimal)TimeLineWidth / (decimal)pixelPerScaleMark));
-            if (beginTime + tmpDisplayTimeLength > MaximumTime)
+            if (pixelPerScaleMark != 0)
             {
-                if (((decimal)beginTime - ((decimal)(beginTime + tmpDisplayTimeLength) - (decimal)MaximumTime)) > (decimal)minimumTime)
+                ulong tmpDisplayTimeLength = (ulong)((decimal)nsPerScaleMark * ((decimal)TimeLineWidth / (decimal)pixelPerScaleMark));
+                if (beginTime + tmpDisplayTimeLength > MaximumTime)
                 {
-                    BeginTime -= ((beginTime + tmpDisplayTimeLength) - MaximumTime);
-                    DisplayTimeLength = tmpDisplayTimeLength;
+                    if (((decimal)beginTime - ((decimal)(beginTime + tmpDisplayTimeLength) - (decimal)MaximumTime)) > (decimal)minimumTime)
+                    {
+                        BeginTime -= ((beginTime + tmpDisplayTimeLength) - MaximumTime);
+                        DisplayTimeLength = tmpDisplayTimeLength;
+                    }
+                    else if (TimeLineWidth != 0)
+                    {
+                        BeginTime = minimumTime;
+                        DisplayTimeLength = MaximumTime - BeginTime;
+                        nsPerScaleMark = (ulong)(((decimal)DisplayTimeLength / (decimal)TimeLineWidth) * (decimal)pixelPerScaleMark);
+                        NotifyPropertyChanged("NsPerScaleMark");
+                    }
                 }
                 else
                 {
-                    BeginTime = minimumTime;
-                    DisplayTimeLength = MaximumTime - BeginTime;
-                    nsPerScaleMark = (ulong)(((decimal)DisplayTimeLength / (decimal)TimeLineWidth) * (decimal)pixelPerScaleMark);
-                    NotifyPropertyChanged("NsPerScaleMark");
+                    DisplayTimeLength = tmpDisplayTimeLength;
                 }
-            }
-            else
-            {
-                DisplayTimeLength = tmpDisplayTimeLength;
             }
         }
 

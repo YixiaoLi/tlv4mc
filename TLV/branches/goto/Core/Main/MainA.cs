@@ -11,7 +11,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
     {
         private string resourceFilePath = String.Empty;
         private string traceLogFilePath = String.Empty;
-        private Dictionary<Type, List<TaskInfo>> viewableObjectList = new Dictionary<Type, List<TaskInfo>>();
+        private TimeLineViewableObjectList<TaskInfo> viewableObjectList = new TimeLineViewableObjectList<TaskInfo>();
+        private LogList logList = new LogList();
 
         public string ResourceFilePath
         {
@@ -37,7 +38,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
                 }
             }
         }
-        public Dictionary<Type, List<TaskInfo>> ViewableObjectList
+        public TimeLineViewableObjectList<TaskInfo> ViewableObjectList
         {
             get { return viewableObjectList; }
             set
@@ -46,6 +47,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
                 {
                     viewableObjectList = value;
                     NotifyPropertyChanged("ViewableObjectList");
+                }
+            }
+        }
+        public LogList LogList
+        {
+            get { return logList; }
+            set
+            {
+                if (value != logList)
+                {
+                    logList = value;
+                    NotifyPropertyChanged("LogList");
                 }
             }
         }

@@ -14,13 +14,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceSelectControl
 {
     public partial class ResourceSelectControlP : DockContent, IPresentation
     {
-        private Dictionary<Type, List<TaskInfo>> viewableObjectList = new Dictionary<Type, List<TaskInfo>>();
+        private TimeLineViewableObjectList<TaskInfo> viewableObjectList = new TimeLineViewableObjectList<TaskInfo>();
         private SortableBindingList<TaskInfo> viewableObjectDataSource;
         public object selectedObject;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Dictionary<Type, List<TaskInfo>> ViewableObjectList
+        public TimeLineViewableObjectList<TaskInfo> ViewableObjectList
         {
             get { return viewableObjectList; }
             set
@@ -30,9 +30,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceSelectControl
                     viewableObjectList = value;
                     NotifyPropertyChanged("ViewableObjectList");
 
-                    foreach (KeyValuePair<Type, List<TaskInfo>> vo in viewableObjectList)
+                    foreach (Type type in viewableObjectList.Types)
                     {
-                        var pis = from pi in vo.Key.GetProperties()
+                        var pis = from pi in type.GetProperties()
                                              where pi.IsDefined(typeof(PropertyDisplayNameAttribute), true)
                                              && ((PropertyDisplayNameAttribute)(pi.GetCustomAttributes(typeof(PropertyDisplayNameAttribute), true)[0])).Categorizable
                                              select pi;
@@ -55,9 +55,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceSelectControl
                                 tabControl.TabPages[pi.Name].Controls.Add(tv);
                             }
 
-                            foreach(TimeLineViewableObject to in vo.Value)
+                            foreach (TimeLineViewableObject tlvo in viewableObjectList[type])
                             {
-                                string str = to.GetType().GetProperty(pi.Name).GetValue(to, null).ToString();
+                                string str = tlvo.GetType().GetProperty(pi.Name).GetValue(tlvo, null).ToString();
 
                                 if (! ((TreeView)tabControl.TabPages[pi.Name].Controls["treeView"]).Nodes.ContainsKey(str))
                                 {
@@ -66,8 +66,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceSelectControl
                                     ((TreeView)tabControl.TabPages[pi.Name].Controls["treeView"]).Nodes.Add(tn);
                                 }
 
-                                TreeNode n = new TreeNode(to.ToString());
-                                n.Name = to.ToString();
+                                TreeNode n = new TreeNode(tlvo.ToString());
+                                n.Name = tlvo.MetaId.ToString();
 
                                 ((TreeView)tabControl.TabPages[pi.Name].Controls["treeView"]).Nodes[str].Nodes.Add(n);
 
@@ -143,12 +143,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceSelectControl
             }
             else
             {
-                Type type = ((TimeLineViewableObjectType)(TypeDescriptor.GetConverter(typeof(TimeLineViewableObjectType)).ConvertFromString(e.Node.Parent.Name))).GetObjectType();
-
                 if (e.Node.Checked)
                 {
 
-                    ViewableObjectDataSource.Add(viewableObjectList[type][e.Node.Index]);
+                    ViewableObjectDataSource.Add((TaskInfo)viewableObjectList[int.Parse(e.Node.Name)]);
 
                     bool allChecked = true;
                     foreach (TreeNode tn in e.Node.Parent.Nodes)
@@ -167,7 +165,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceSelectControl
                 else
                 {
 
-                    ViewableObjectDataSource.Remove(viewableObjectList[type][e.Node.Index]);
+                    ViewableObjectDataSource.Remove((TaskInfo)viewableObjectList[int.Parse(e.Node.Name)]);
 
                     bool allChecked = false;
                     foreach (TreeNode tn in e.Node.Parent.Nodes)

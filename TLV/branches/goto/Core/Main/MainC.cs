@@ -35,10 +35,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
                     {
                         try
                         {
+
+                            TimeLineViewableObjectList<TaskInfo> tlvol = new TimeLineViewableObjectList<TaskInfo>();
+                            LogList logList = new LogList();
+
                             using (StreamReader resourceFile = new StreamReader(A.ResourceFilePath))
                             {
                                 string resLine = "";
-                                Dictionary<Type, List<TaskInfo>> vol = new Dictionary<Type, List<TaskInfo>>();
 
                                 while ((resLine = resourceFile.ReadLine()) != null)
                                 {
@@ -50,42 +53,42 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
                                         TimeLineViewableObjectType type = resParser.GetObjectType(resLine);
                                         if (type.GetObjectType().IsSubclassOf(typeof(TimeLineViewableObject)) || type.GetObjectType() == typeof(TimeLineViewableObject))
                                         {
-                                            if (!vol.ContainsKey(type.GetObjectType()))
-                                            {
-                                                vol.Add(type.GetObjectType(), new List<TaskInfo>());
-                                            }
 
-                                            TimeLineEvents tles = new TimeLineEvents();
-
-                                            using (StreamReader TraceLogFile = new StreamReader(A.TraceLogFilePath))
-                                            {
-                                                string logLine = "";
-                                                TraceLogFileLineParser logParser = new TraceLogFileLineParser();
-                                                while ((logLine = TraceLogFile.ReadLine()) != null)
-                                                {
-                                                    logLine = logLine.Trim();
-
-                                                    if (!(logLine.Equals(String.Empty)) && logParser.ContainLog(logLine, resLine))
-                                                    {
-                                                        foreach (TimeLineEvent tle in logParser.GetTimeLineEvent(logLine, resLine))
-                                                        {
-                                                            tles.Add(tle);
-                                                        }
-                                                    }
-                                                }
-                                            }
-
-                                            TaskInfo to = (TaskInfo)Activator.CreateInstance(type.GetObjectType(), new object[] { resLine, tles });
-
-                                            vol[type.GetObjectType()].Add(to);
+                                            tlvol.Add((TaskInfo)Activator.CreateInstance(type.GetObjectType(), new object[] { resLine }));
 
                                         }
                                     }
                                 }
-
-                                SetPropertyToA(typeof(Dictionary<Type, List<TaskInfo>>), "ViewableObjectList", vol, SearchAFlags.Self);
-
                             }
+
+                            using (StreamReader TraceLogFile = new StreamReader(A.TraceLogFilePath))
+                            {
+                                string logLine = "";
+
+                                while ((logLine = TraceLogFile.ReadLine()) != null)
+                                {
+                                    logLine = logLine.Trim();
+                                    TraceLogFileLineParser<TaskInfo> logParser = new TraceLogFileLineParser<TaskInfo>();
+
+                                    if (!(logLine.Equals(String.Empty)))
+                                    {
+                                        Log log = logParser.Parse(logLine, tlvol);
+                                        if(log != null)
+                                        {
+                                            logList.Add(log);
+                                        }
+                                    }
+                                }
+                            }
+
+                            A.ViewableObjectList = tlvol;
+                            A.LogList = logList;
+
+                            foreach (TaskInfo ti in A.ViewableObjectList.List)
+                            {
+                                ti.TimeLineEvents = A.LogList[ti.MetaId];
+                            }
+
                         }
                         catch (Exception ex)
                         {
