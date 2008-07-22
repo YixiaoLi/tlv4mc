@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineMarkerManager
+namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
 {
     static class ColorExtension
     {
@@ -113,16 +113,35 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineMarkerManager
         private static int hue = 0;
         private static int saturation = 100;
         private static int value = 100;
+        private bool selected = false;
 
         public string Name { get; set; }
         public ulong Time { get; set; }
         public Color Color { get; protected set; }
+        public bool Selected
+        {
+            get { return selected; }
+            set
+            {
+                if(selected != value)
+                {
+                    selected = value;
+                    if (selected && OnSelected != null)
+                    {
+                        OnSelected(this, EventArgs.Empty);
+                    }
+                }
+            }
+        }
+
+        public event EventHandler OnSelected = null;
 
         public TimeLineMarker(ulong time)
         {
             Time = time;
             Name = i.ToString();
             Color = Color.FromHsv(hue % 360, saturation, value);
+            Selected = false;
 
             colorRecalc();
         }
@@ -147,6 +166,116 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineMarkerManager
                 }
             }
             i++;
+        }
+    }
+
+    public class TimeLineMarkers
+    {
+        private List<TimeLineMarker> list = new List<TimeLineMarker>();
+
+        public int Count
+        {
+            get
+            {
+                return list.Count;
+            }
+        }
+
+        public event EventHandler ItemAdded = null;
+        public event EventHandler ItemRemoved = null;
+        public event EventHandler ListChanged = null;
+        public event EventHandler SelectChanged = null;
+        public event EventHandler SelectCleared = null;
+
+        public TimeLineMarkers(List<TimeLineMarker> list)
+        {
+            this.list = list;
+        }
+        public TimeLineMarkers()
+        {
+        }
+
+        public void SelectClear()
+        {
+            foreach (TimeLineMarker tlm in list)
+            {
+                tlm.Selected = false;
+            }
+            if (SelectCleared != null)
+            {
+                SelectCleared(this, EventArgs.Empty);
+            }
+        }
+
+        public void Add(TimeLineMarker tlm)
+        {
+            tlm.OnSelected += new EventHandler(tlmOnSelected);
+            list.Add(tlm);
+            list.Sort((t1, t2) => { return (int)((decimal)t1.Time - (decimal)t2.Time); });
+            if(ItemAdded != null)
+            {
+                ItemAdded(this, EventArgs.Empty);
+            }
+            if(ListChanged != null)
+            {
+                ListChanged(this, EventArgs.Empty);
+            }
+        }
+
+        protected void tlmOnSelected(object sender, EventArgs e)
+        {
+            if (SelectChanged != null)
+            {
+                SelectChanged(this, EventArgs.Empty);
+            }
+        }
+
+        public void Remove(TimeLineMarker tlm)
+        {
+            list.Remove(tlm);
+            list.Sort((t1, t2) => { return (int)((decimal)t1.Time - (decimal)t2.Time); });
+            if(ItemRemoved != null)
+            {
+                ItemRemoved(this, EventArgs.Empty);
+            }
+            if(ListChanged != null)
+            {
+                ListChanged(this, EventArgs.Empty);
+            }
+        }
+        public bool Exists(Predicate<TimeLineMarker> match)
+        {
+            return list.Exists(match);
+        }
+        public TimeLineMarkers GetBetween(ulong from, ulong to)
+        {
+            List<TimeLineMarker> tlms = list.FindAll(tlm => tlm.Time >= from && tlm.Time <= to);
+
+            return new TimeLineMarkers(tlms);
+        }
+        public TimeLineMarkers GetBetweenExtended(ulong from, ulong to)
+        {
+            List<TimeLineMarker> tlms = list.FindAll(tlm => tlm.Time >= from && tlm.Time <= to);
+            TimeLineMarker pre = list.FindLast(tlm => tlm.Time < from);
+            TimeLineMarker post = list.Find(tlm => tlm.Time > to);
+            if(pre != null)
+            {
+                tlms.Insert(0, pre);
+            }
+            if(post != null)
+            {
+                tlms.Add(post);
+            }
+
+            return new TimeLineMarkers(tlms);
+        }
+
+        public IEnumerator<TimeLineMarker> GetEnumerator()
+        {
+            foreach (TimeLineMarker element in list)
+            {
+                yield return element;
+            }
         }
     }
 }

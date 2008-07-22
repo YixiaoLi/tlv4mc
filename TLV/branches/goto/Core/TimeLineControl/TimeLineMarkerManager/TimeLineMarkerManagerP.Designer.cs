@@ -17,7 +17,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineMarkerManager
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Name = "TimeLineMarkerManagerP";
-            this.Size = new System.Drawing.Size(308, 45);
+            this.Size = new System.Drawing.Size(308, 25);
             this.ResumeLayout(false);
 
         }

@@ -54,12 +54,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private CursorMode cursorMode = CursorMode.Default;
         private Point mouseDownPoint = new Point(0, 0);
         private Point mouseMoveLastPoint = new Point(0, 0);
-        private ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
+        private ContextMenuStrip defaultContextMenuStrip = new ContextMenuStrip();
+        private ContextMenuStrip timeLineContextMenuStrip = new ContextMenuStrip();
         private ulong selectRectStartTime = 0;
         private SortableBindingList<T> viewableObjectDataSource;
         private TimeLineViewableObjectList<T> viewableObjectList = new TimeLineViewableObjectList<T>();
+        private TimeLineMarkers timeLineMarkerList = new TimeLineMarkers();
         public object selectedObject;
         private float tmpMarkerX = 0;
+        private bool isRightButtonClicked = false;
 
         #endregion
 
@@ -101,7 +104,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     int delta = value - timeLineX;
                     timeLineColumnPreviousColumn.Width += delta;
                     timeLineX = value;
-                    NotifyPropertyChanged("TimeLineX");
                 }
             }
         }
@@ -424,6 +426,30 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
             }
         }
+        public TimeLineMarkers TimeLineMarkerList
+        {
+            get { return timeLineMarkerList; }
+            set
+            {
+                if (!timeLineMarkerList.Equals(value))
+                {
+                    timeLineMarkerList = value;
+                    NotifyPropertyChanged("TimeLineMarkerList");
+                    timeLineMarkerList.ListChanged += delegate
+                    {
+                        Refresh();
+                    };
+                    timeLineMarkerList.SelectChanged += delegate
+                    {
+                        Refresh();
+                    };
+                    timeLineMarkerList.SelectCleared += delegate
+                    {
+                        Refresh();
+                    };
+                }
+            }
+        }
 
         #endregion
 
@@ -461,16 +487,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             this.AutoGenerateColumns = false;
             this.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.VirtualMode = true;
-            this.ContextMenuStrip = contextMenuStrip;
+            this.ContextMenuStrip = defaultContextMenuStrip;
 //            this.DefaultCellStyle.SelectionForeColor = this.DefaultCellStyle.ForeColor;
             this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.Opaque, true);
             this.DoubleBuffered = true;
+
             #endregion
 
             #region プロパティ初期化
 
             this.Name = name;
             this.AllRowsHeight = this.ColumnHeadersHeight;
+
+            ToolStripMenuItem addMarkerContItem = new ToolStripMenuItem();
+            addMarkerContItem.Text = "ここにマーカーを追加する";
+            addMarkerContItem.Name = "addMarkerContItem";
+            addMarkerContItem.Click += new EventHandler(addMarkerContItemClick);
+            this.timeLineContextMenuStrip.Items.Add(addMarkerContItem);
 
             #endregion
 
@@ -637,8 +670,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
                 else
                 {
-                    SelectRectStartTime = 0;
-                    NowMarkerTime = 0;
+                    if (!isRightButtonClicked)
+                    {
+                        SelectRectStartTime = 0;
+                        NowMarkerTime = 0;
+                    }
+                    else
+                    {
+                        isRightButtonClicked = false;
+                    }
                 }
             }
         }
@@ -696,8 +736,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
                 else
                 {
-                    SelectRectStartTime = 0;
-                    NowMarkerTime = 0;
+
                 }
             }
 
@@ -708,10 +747,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     this.Cursor = CursorMode.Cursor();
                     isMouseEnter = true;
                 }
+                if (! this.ContextMenuStrip.Equals(timeLineContextMenuStrip))
+                {
+                    this.ContextMenuStrip = timeLineContextMenuStrip;
+                }
             }
             else
             {
                 OnMouseLeave(EventArgs.Empty);
+
+                if (!this.ContextMenuStrip.Equals(defaultContextMenuStrip))
+                {
+                    this.ContextMenuStrip = defaultContextMenuStrip;
+                }
             }
 
         }
@@ -770,6 +818,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     DoubleBuffered = false;
                 }
+            }
+            else if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
+            {
+                isRightButtonClicked = true;
             }
 
             if (e.X < this.Width && e.X > this.TimeLineX && e.Y > this.ColumnHeadersHeight && e.Y < this.Height)
@@ -945,6 +997,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         {
             base.OnPaint(new PaintEventArgs(e.Graphics, e.ClipRectangle));
 
+            if (TimeLineMarkerList.Count != 0)
+            {
+                foreach (TimeLineMarker tlm in TimeLineMarkerList.GetBetween(beginTime, endTime))
+                {
+                    drawMarker(tlm, e.Graphics);
+                }
+            }
+
             if (selectRectStartTime != 0)
             {
                 drawSelectRect(selectRectStartTime, nowMarkerTime, e.Graphics);
@@ -1000,6 +1060,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
         #region プライベートメソッド
 
+        private void addMarkerContItemClick(object sender, EventArgs e)
+        {
+            timeLineMarkerList.Add(new TimeLineMarker(nowMarkerTime));
+        }
 
         private void constructColumns()
         {
@@ -1030,7 +1094,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     newcontitem.Text = headerText;
                     newcontitem.Name = name + "ContextMenuStrip";
                     newcontitem.Checked = browsable;
-                    contextMenuStrip.Items.Add(newcontitem);
+                    defaultContextMenuStrip.Items.Add(newcontitem);
                     browsables[column] = browsable;
                     newcontitem.Click += delegate
                     {
@@ -1160,6 +1224,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             float x = timeToX(time) + timeLineX;
 
             using (Pen pen = new Pen(color))
+            {
+                graphics.DrawLine(pen, x, this.ColumnHeadersHeight, x, this.ClientSize.Height);
+            }
+        }
+
+        private void drawMarker(TimeLineMarker tlm, Graphics graphics)
+        {
+            float x = timeToX(tlm.Time) + timeLineX;
+
+            if (tlm.Selected)
+            {
+                using (Pen pen = new Pen(Color.FromArgb(150, tlm.Color)))
+                {
+                    pen.Width = 3;
+                    graphics.DrawLine(pen, x, this.ColumnHeadersHeight, x, this.ClientSize.Height);
+                }
+            }
+            using (Pen pen = new Pen(tlm.Color))
             {
                 graphics.DrawLine(pen, x, this.ColumnHeadersHeight, x, this.ClientSize.Height);
             }

@@ -16,6 +16,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineMarkerManager
         public override void InitParentFirst()
         {
             base.InitParentFirst();
+            BindPToA("X", typeof(int), "TimeLineX", SearchAFlags.AncestorsWithSiblings);
             BindPToA("MinimumTime", typeof(ulong), "MinimumTime", SearchAFlags.AncestorsWithSiblings);
             BindPToA("MaximumTime", typeof(ulong), "MaximumTime", SearchAFlags.AncestorsWithSiblings);
             BindPToA("TimeLineX", typeof(int), "TimeLineX", SearchAFlags.AncestorsWithSiblings);
@@ -29,7 +30,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineMarkerManager
             BindPToA("SelectRectStartTime", typeof(ulong), "SelectRectStartTime", SearchAFlags.AncestorsWithSiblings);
             BindPToA("NowMarkerColor", typeof(Color), "NowMarkerColor", SearchAFlags.AncestorsWithSiblings);
             BindPToA("TmpMarkerColor", typeof(Color), "TmpMarkerColor", SearchAFlags.AncestorsWithSiblings);
-            BindPToA("TimeLineMarkerList", typeof(List<TimeLineMarker>), "TimeLineMarkerList", SearchAFlags.Self);
+            BindPToA("TimeLineMarkerList", typeof(TimeLineMarkers), "TimeLineMarkerList", SearchAFlags.Self);
         }
     }
 }

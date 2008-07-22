@@ -78,6 +78,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             timeLineScrollBarAgent.P.Location = new Point(timeLineGridAgent.P.TimeLineX, timeLineMarkerManagerAgent.P.Location.Y + timeLineMarkerManagerAgent.P.Height);
         }
 
+
     }
 
 }

@@ -35,7 +35,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
         private ulong nowMarkerTime = 0;
         private ulong selectRectStartTime = 0;
         private int labelMargin = 2;
-        private List<TimeLineMarker> timeLineMarkerList = new List<TimeLineMarker>();
+        private TimeLineMarkers timeLineMarkerList = new TimeLineMarkers();
 
         public ScaleMarkDirection ScaleMarkDirection { get; set; }
         public int TimeLineX
@@ -118,7 +118,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 {
                     endTime = value;
                     int endTimeOrder = (int)Math.Ceiling(Math.Log10((double)EndTime + 1D));
-                    double timeLineMarkLabelWidth = getTimeMarkLabelWidth((ulong)Math.Pow(10, endTimeOrder)).Width;
+                    double timeLineMarkLabelWidth = getMarkLabelWidth(Math.Pow(10, endTimeOrder).ToString()).Width;
                     timeLineMarkLabelInterval = (int)Math.Ceiling(timeLineMarkLabelWidth / (double)pixelPerScaleMark);
                     timeLineMarkLabelInterval += timeLineMarkLabelInterval % 2;
                     timeLineMarkLabelInterval = (int)Math.Ceiling((double)timeLineMarkLabelInterval / 10D) * 10;
@@ -169,7 +169,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                     pixelPerScaleMark = value;
 
                     int endTimeOrder = (int)Math.Ceiling(Math.Log10((double)EndTime + 1D));
-                    double timeLineMarkLabelWidth = getTimeMarkLabelWidth((ulong)Math.Pow(10, endTimeOrder)).Width;
+                    double timeLineMarkLabelWidth = getMarkLabelWidth(Math.Pow(10, endTimeOrder).ToString()).Width;
                     timeLineMarkLabelInterval = (int)Math.Ceiling(timeLineMarkLabelWidth / (double)pixelPerScaleMark);
                     timeLineMarkLabelInterval += timeLineMarkLabelInterval % 2;
                     timeLineMarkLabelInterval = (int)Math.Ceiling((double)timeLineMarkLabelInterval / 10D) * 10;
@@ -224,7 +224,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 }
             }
         }
-        public List<TimeLineMarker> TimeLineMarkerList
+        public TimeLineMarkers TimeLineMarkerList
         {
             get { return timeLineMarkerList; }
             set
@@ -233,6 +233,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 {
                     timeLineMarkerList = value;
                     NotifyPropertyChanged("TimeLineMarkerList");
+                    timeLineMarkerList.ListChanged += delegate
+                    {
+                        Refresh();
+                    };
+                    timeLineMarkerList.SelectChanged += delegate
+                    {
+                        Refresh();
+                    };
+                    timeLineMarkerList.SelectCleared += delegate
+                    {
+                        Refresh();
+                    };
                 }
             }
         }
@@ -267,6 +279,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 using (Graphics tmpBmpGraphics = Graphics.FromImage(tmpBmp))
                 {
                     drawTimeLine(tmpBmpGraphics, backRect.Width, backRect.Height);
+
+
+                    if (TimeLineMarkerList.Count != 0)
+                    {
+                        foreach (TimeLineMarker tlm in TimeLineMarkerList)
+                        {
+                            drawMarker(tlm, tmpBmpGraphics);
+                        }
+                    }
 
                     if (selectRectStartTime != 0)
                     {
@@ -402,7 +423,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
         {
             ulong nextTime = 0;
 
-            SizeF timeSize = getTimeMarkLabelWidth(time);
+            SizeF timeSize = getMarkLabelWidth(time.ToString());
 
             float labelY = 1;
 
@@ -437,7 +458,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                     graphics.DrawLine(pen, x, Height, x, (scaleMarkHeight * 2));
                 }
             }
-            SizeF timeSize = getTimeMarkLabelWidth(time);
+            SizeF timeSize = getMarkLabelWidth(time.ToString());
 
             float nowLabelBottomY = Height - (scaleMarkHeight * 2);
             float nowLabelMiddleY = labelY + timeSize.Height;
@@ -472,18 +493,70 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             graphics.DrawString(time.ToString(), timeMarkLabelFont, Brushes.Black, x - (timeSize.Width / 2), labelY);
         }
 
+        private void drawMarker(TimeLineMarker tlm, Graphics graphics)
+        {
+
+            float x = timeToX(tlm.Time);
+            float verticalMargin = 3;
+
+            SizeF labelSize = getMarkLabelWidth(tlm.Time.ToString());
+
+            if (tlm.Selected)
+            {
+                using (Pen pen = new Pen(Color.FromArgb(200, tlm.Color)))
+                {
+                    pen.Width = 3;
+                    graphics.DrawLine(pen, x, 0, x, Height);
+                }
+            }
+            using(Pen pen = new Pen(tlm.Color))
+            {
+                graphics.DrawLine(pen, x, 0, x, Height);
+            }
+
+            if (ScaleMarkDirection == ScaleMarkDirection.Top)
+            {
+
+                float nowLabelTopY = (Height / 2) - (labelSize.Height / 2) - verticalMargin;
+                float nowLabelMiddleTopY = nowLabelTopY + verticalMargin;
+                float nowLabelMiddleBottomY = nowLabelMiddleTopY + labelSize.Height;
+                float nowLabelBottomY = nowLabelMiddleBottomY + verticalMargin;
+
+                PointF[] points = new[] {
+                new PointF(x - (labelSize.Width / 2) - labelMargin, nowLabelMiddleBottomY),
+                new PointF(x, nowLabelBottomY),
+                new PointF(x + (labelSize.Width / 2) + labelMargin, nowLabelMiddleBottomY),
+                new PointF(x + (labelSize.Width / 2) + labelMargin, nowLabelMiddleTopY),
+                new PointF(x, nowLabelTopY),
+                new PointF(x - (labelSize.Width / 2) - labelMargin, nowLabelMiddleTopY),
+            };
+
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(250, Color.White)))
+                {
+                    graphics.FillPolygon(brush, points);
+                }
+                using (Pen pen = new Pen(tlm.Color))
+                {
+                    graphics.DrawPolygon(pen, points);
+                }
+                graphics.SmoothingMode = SmoothingMode.Default;
+                graphics.DrawString(tlm.Time.ToString(), timeMarkLabelFont, Brushes.Black, x - (labelSize.Width / 2), nowLabelMiddleTopY);
+            }
+        }
+
         private void drawFromToLabel(ulong f, ulong t, Graphics graphics, Color color)
         {
             ulong from = t > f ? f : t;
             ulong to = t > f ? t : f;
             float fromX = timeToX(from);
             float toX = timeToX(to);
-            SizeF fromTimeSize = getTimeMarkLabelWidth(from);
-            SizeF toTimeSize = getTimeMarkLabelWidth(to);
+            SizeF fromTimeSize = getMarkLabelWidth(from.ToString());
+            SizeF toTimeSize = getMarkLabelWidth(to.ToString());
             int arrowSize = 8;
             ulong time = to - from;
             float timeX = timeToX(from + (time / 2));
-            SizeF timeSize = getTimeMarkLabelWidth(time);
+            SizeF timeSize = getMarkLabelWidth(time.ToString());
             float timeLength = timeToX(to) - timeToX(from);
             float lineY = Height - scaleMarkHeight * 2;
             if (ScaleMarkDirection == ScaleMarkDirection.Top)
@@ -504,13 +577,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 }
             }
 
+            PointF[] points = new[] {
+                new PointF(timeX - timeSize.Width / 2,                  lineY - timeSize.Height / 2),
+                new PointF(timeX - timeSize.Width / 2 - 5, lineY),
+                new PointF(timeX - timeSize.Width / 2,                  lineY + timeSize.Height / 2),
+                new PointF(timeX + timeSize.Width / 2,                  lineY + timeSize.Height / 2),
+                new PointF(timeX + timeSize.Width / 2 + 5, lineY),
+                new PointF(timeX + timeSize.Width / 2,                  lineY - timeSize.Height / 2),
+            };
+
             using (SolidBrush brush = new SolidBrush(Color.FromArgb(250, Color.White)))
             {
-                graphics.FillRectangle(brush, timeX - (timeSize.Width / 2) - labelMargin, lineY - (timeSize.Height / 2), timeSize.Width + (labelMargin * 2), timeSize.Height);
+                graphics.FillPolygon(brush, points);
             }
             using (Pen pen = new Pen(Color.DarkGray))
             {
-                graphics.DrawRectangle(pen, timeX - (timeSize.Width / 2) - labelMargin, lineY - (timeSize.Height / 2), timeSize.Width + (labelMargin * 2), timeSize.Height);
+                graphics.DrawPolygon(pen, points);
             }
             graphics.DrawString(time.ToString(), timeMarkLabelFont, Brushes.Black, timeX - (timeSize.Width / 2), lineY - (timeSize.Height / 2));
         }
@@ -525,12 +607,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             return (float)(((decimal)t - (decimal)beginTime) / ((decimal)nsPerScaleMark / (decimal)pixelPerScaleMark));
         }
 
-        private SizeF getTimeMarkLabelWidth(ulong time)
+        private SizeF getMarkLabelWidth(string label)
         {
             SizeF size;
             using (Graphics graphics = this.CreateGraphics())
             {
-                size = graphics.MeasureString(time.ToString(), timeMarkLabelFont);
+                size = graphics.MeasureString(label, timeMarkLabelFont);
             }
             return size;
         }

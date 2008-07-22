@@ -6,9 +6,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineMarkerManager
 {
     public class TimeLineMarkerManagerA : Abstraction
     {
-        private List<TimeLineMarker> timeLineMarkerList = new List<TimeLineMarker>();
+        private TimeLineMarkers timeLineMarkerList = new TimeLineMarkers();
 
-        public List<TimeLineMarker> TimeLineMarkerList
+        public TimeLineMarkers TimeLineMarkerList
         {
             get { return timeLineMarkerList; }
             set
