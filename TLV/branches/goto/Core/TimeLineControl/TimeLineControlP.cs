@@ -224,6 +224,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl
             this.zoomInButton.Click += new EventHandler(zoomInButtonClick);
             this.zoomOutButton.Click += new EventHandler(zoomOutButtonClick);
             this.zoomSelectButton.Click += new EventHandler(zoomSelectButtonClick);
+            this.viewAllButton.Click += new EventHandler(viewAllButtonClick);
+            this.zoomInAtButton.Click += new EventHandler(zoomInAtButtonClick);
+            this.zoomOutAtButton.Click += new EventHandler(zoomOutAtButtonClick);
+        }
+
+        protected void zoomOutAtButtonClick(object sender, EventArgs e)
+        {
+            if (NsPerScaleMark != 1)
+            {
+                NsPerScaleMark = (ulong)Math.Min(Math.Max(((double)NsPerScaleMark * 1.5d), 1), MaximumNsPerScaleMark);
+            }
+            else
+            {
+                NsPerScaleMark = 2;
+            }
+        }
+
+        protected void zoomInAtButtonClick(object sender, EventArgs e)
+        {
+            NsPerScaleMark = (ulong)Math.Min(Math.Max(((double)NsPerScaleMark * 0.75d), 1), MaximumNsPerScaleMark);
+        }
+
+        protected void viewAllButtonClick(object sender, EventArgs e)
+        {
+            NsPerScaleMark = MaximumNsPerScaleMark;
         }
 
         protected void zoomSelectButtonClick(object sender, EventArgs e)

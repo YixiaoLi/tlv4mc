@@ -39,7 +39,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private int pixelPerScaleMark = 5;
         private bool isMouseEnter = false;
         private Color nowMarkerColor;
+        private Color tmpMarkerColor;
         private ulong nowMarkerTime = 0;
+        private ulong tmpMarkerTime = 0;
         private int maxRowHeight = 0;
         private int minRowHeight = 0;
         private int rowHeight = 0;
@@ -57,6 +59,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private SortableBindingList<T> viewableObjectDataSource;
         private TimeLineViewableObjectList<T> viewableObjectList = new TimeLineViewableObjectList<T>();
         public object selectedObject;
+        private float tmpMarkerX = 0;
 
         #endregion
 
@@ -204,6 +207,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 }
             }
         }
+        public ulong TmpMarkerTime
+        {
+            get { return tmpMarkerTime; }
+            set
+            {
+                if (tmpMarkerTime != value)
+                {
+                    tmpMarkerTime = value;
+                    if (tmpMarkerTime != 0)
+                    {
+                        tmpMarkerX = timeToX(tmpMarkerTime);
+                    }
+                    else
+                    {
+                        tmpMarkerX = 0; 
+                    }
+
+                    NotifyPropertyChanged("TmpMarkerTime");
+                }
+            }
+        }
         public ulong SelectRectStartTime
         {
             get { return selectRectStartTime; }
@@ -229,6 +253,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     nowMarkerColor = value;
                     NotifyPropertyChanged("NowMarkerColor");
+                }
+            }
+        }
+        public Color TmpMarkerColor
+        {
+            get { return tmpMarkerColor; }
+            set
+            {
+                if (!tmpMarkerColor.Equals(value))
+                {
+                    tmpMarkerColor = value;
+                    NotifyPropertyChanged("TmpMarkerColor");
                 }
             }
         }
@@ -277,7 +313,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             get { return pixelPerScaleMark; }
             set
             {
-                if (pixelPerScaleMark != value)
+                if (pixelPerScaleMark != value && pixelPerScaleMark != 0)
                 {
                     pixelPerScaleMark = value;
                     NotifyPropertyChanged("PixelPerScaleMark");
@@ -673,6 +709,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     isMouseEnter = true;
                 }
             }
+            else
+            {
+                OnMouseLeave(EventArgs.Empty);
+            }
 
         }
 
@@ -708,6 +748,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
 
                         case CursorMode.Default:
                             SelectRectStartTime = xToTime(mouseDownPoint.X - timeLineX);
+                            TmpMarkerTime = xToTime(mouseDownPoint.X - timeLineX);
                             break;
 
                         default:
@@ -907,12 +948,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             if (selectRectStartTime != 0)
             {
                 drawSelectRect(selectRectStartTime, nowMarkerTime, e.Graphics);
-                drawNowMarker(selectRectStartTime, e.Graphics);
+                drawNowMarker(selectRectStartTime, e.Graphics, NowMarkerColor);
             }
 
             if (nowMarkerTime != 0)
             {
-                drawNowMarker(nowMarkerTime, e.Graphics);
+                drawNowMarker(nowMarkerTime, e.Graphics, NowMarkerColor);
+            }
+
+            if (tmpMarkerTime != 0 && tmpMarkerTime > beginTime && tmpMarkerTime < endTime)
+            {
+                drawNowMarker(tmpMarkerTime, e.Graphics, TmpMarkerColor);
             }
 
         }
@@ -953,6 +999,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         #endregion
 
         #region プライベートメソッド
+
 
         private void constructColumns()
         {
@@ -1108,11 +1155,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             }
         }
 
-        private void drawNowMarker(ulong time, Graphics graphics)
+        private void drawNowMarker(ulong time, Graphics graphics, Color color)
         {
             float x = timeToX(time) + timeLineX;
 
-            using (Pen pen = new Pen(NowMarkerColor))
+            using (Pen pen = new Pen(color))
             {
                 graphics.DrawLine(pen, x, this.ColumnHeadersHeight, x, this.ClientSize.Height);
             }
@@ -1173,12 +1220,25 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     DisplayTimeLength = tmpDisplayTimeLength;
                 }
             }
+
+            if (tmpMarkerTime != 0)
+            {
+                moveTimeToX(tmpMarkerTime, (int)tmpMarkerX);
+            }
+
             Refresh();
         }
 
         private ulong xToTime(int x)
         {
-            return (ulong)(((decimal)x * ((decimal)nsPerScaleMark / (decimal)pixelPerScaleMark)) + (decimal)beginTime);
+            if (pixelPerScaleMark != 0)
+            {
+                return (ulong)(((decimal)x * ((decimal)nsPerScaleMark / (decimal)pixelPerScaleMark)) + (decimal)beginTime);
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         private float timeToX(ulong t)
@@ -1385,6 +1445,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                     x1 = x1 < rowRect.X ? rowRect.X - 1: x1;
                     float w = x1 - x0;
                     w = w == 0 ? 1 : w;
+                    //w = w > rowRect.Width ? rowRect.Width : w;
+                    //x1 = x1 > rowRect.Width + rowRect.X ? rowRect.Width + rowRect.X : x1;
 
                     // RUNNABLE状態描画
                     if (te.Verb == "RUNNABLE")

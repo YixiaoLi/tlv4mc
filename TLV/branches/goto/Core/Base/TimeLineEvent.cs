@@ -23,6 +23,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
             this.Time = time;
             this.Verb = verb;
         }
+
     }
 
     [Serializable]
@@ -59,7 +60,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
             }
             else
             {
-                return new TimeLineEvents();
+                l.Add(List.FindLast(tlv => tlv.Time <= from));
+                l.Add(List.Find(tlv => tlv.Time >= to));
+                TimeLineEvents tles = new TimeLineEvents(l);
+                return tles;
             }
         }
 
@@ -72,16 +76,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Base
         public TimeLineEvents(List<TimeLineEvent> list)
             :base()
         {
-            this.List = list;
-            this.StartTime = List.Min(te => te.Time);
-            this.EndTime = List.Max(te => te.Time);
+            list.Remove(null);
+            if (list.Count != 0)
+            {
+                this.List = list;
+                this.StartTime = List.Min(te => te.Time);
+                this.EndTime = List.Max(te => te.Time);
+            }
+            else
+            {
+                this.List = new List<TimeLineEvent>();
+            }
         }
 
         public void Add(TimeLineEvent timeLineEvent)
         {
-            this.List.Add(timeLineEvent);
-            this.StartTime = List.Min(te => te.Time);
-            this.EndTime = List.Max(te => te.Time);
+            if (timeLineEvent != null)
+            {
+                this.List.Add(timeLineEvent);
+                this.StartTime = List.Min(te => te.Time);
+                this.EndTime = List.Max(te => te.Time);
+            }
         }
 
         public IEnumerator<TimeLineEvent> GetEnumerator()

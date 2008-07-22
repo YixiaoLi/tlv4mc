@@ -146,6 +146,16 @@
     <Compile Include="TimeLineControl\TimeLineGrid\TimeLineGridP.Designer.cs">
       <DependentUpon>TimeLineGridP.cs</DependentUpon>
     </Compile>
+    <Compile Include="TimeLineControl\TimeLineMarkerManager\TimeLineMarker.cs" />
+    <Compile Include="TimeLineControl\TimeLineMarkerManager\TimeLineMarkerManagerA.cs" />
+    <Compile Include="TimeLineControl\TimeLineMarkerManager\TimeLineMarkerManagerAgent.cs" />
+    <Compile Include="TimeLineControl\TimeLineMarkerManager\TimeLineMarkerManagerC.cs" />
+    <Compile Include="TimeLineControl\TimeLineMarkerManager\TimeLineMarkerManagerP.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TimeLineControl\TimeLineMarkerManager\TimeLineMarkerManagerP.Designer.cs">
+      <DependentUpon>TimeLineMarkerManagerP.cs</DependentUpon>
+    </Compile>
     <Compile Include="TimeLineControl\TimeLineScrollBar\TimeLineScrollBarA.cs" />
     <Compile Include="TimeLineControl\TimeLineScrollBar\TimeLineScrollBarAgent.cs" />
     <Compile Include="TimeLineControl\TimeLineScrollBar\TimeLineScrollBarC.cs" />
@@ -212,6 +222,10 @@
       <DependentUpon>TimeLineControlP.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="TimeLineControl\TimeLineMarkerManager\TimeLineMarkerManagerP.resx">
+      <DependentUpon>TimeLineMarkerManagerP.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="TraceLogListControl\TraceLogListControlP.resx">
       <DependentUpon>TraceLogListControlP.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -261,6 +275,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\zoomSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoomOutAtButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoomInAtButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

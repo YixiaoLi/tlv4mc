@@ -35,6 +35,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
         private ulong nowMarkerTime = 0;
         private ulong selectRectStartTime = 0;
         private int labelMargin = 2;
+        private List<TimeLineMarker> timeLineMarkerList = new List<TimeLineMarker>();
 
         public ScaleMarkDirection ScaleMarkDirection { get; set; }
         public int TimeLineX
@@ -192,7 +193,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                 }
             }
         }
+        public ulong TmpMarkerTime
+        {
+            get;
+            set;
+        }
         public Color NowMarkerColor
+        {
+            get;
+            set;
+        }
+        public Color TmpMarkerColor
         {
             get;
             set;
@@ -210,6 +221,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                     {
                         Refresh();
                     }
+                }
+            }
+        }
+        public List<TimeLineMarker> TimeLineMarkerList
+        {
+            get { return timeLineMarkerList; }
+            set
+            {
+                if (!timeLineMarkerList.Equals(value))
+                {
+                    timeLineMarkerList = value;
+                    NotifyPropertyChanged("TimeLineMarkerList");
                 }
             }
         }
@@ -253,6 +276,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
                     if (nowMarkerTime != 0)
                     {
                         drawNowMarker(nowMarkerTime, tmpBmpGraphics, NowMarkerColor);
+                    }
+
+                    if (TmpMarkerTime != 0)
+                    {
+                        drawNowMarker(TmpMarkerTime, tmpBmpGraphics, TmpMarkerColor);
                     }
 
                     if (selectRectStartTime != 0)

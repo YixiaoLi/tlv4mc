@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Drawing;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC;
 using NU.OJL.MPRTOS.TLV.Architecture.PAC.Bace;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 
-namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
+namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineMarkerManager
 {
-    public class TimeLineC : Control<TimeLineP, TimeLineA>
+    public class TimeLineMarkerManagerC : Control<TimeLineMarkerManagerP, TimeLineMarkerManagerA>
     {
-        public TimeLineC(string name, TimeLineP presentation, TimeLineA abstraction)
+        public TimeLineMarkerManagerC(string name, TimeLineMarkerManagerP presentation, TimeLineMarkerManagerA abstraction)
             : base(name, presentation, abstraction)
         {
-
         }
 
-        public override void  InitParentFirst()
+        public override void InitParentFirst()
         {
             base.InitParentFirst();
             BindPToA("MinimumTime", typeof(ulong), "MinimumTime", SearchAFlags.AncestorsWithSiblings);
@@ -32,10 +29,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLine
             BindPToA("SelectRectStartTime", typeof(ulong), "SelectRectStartTime", SearchAFlags.AncestorsWithSiblings);
             BindPToA("NowMarkerColor", typeof(Color), "NowMarkerColor", SearchAFlags.AncestorsWithSiblings);
             BindPToA("TmpMarkerColor", typeof(Color), "TmpMarkerColor", SearchAFlags.AncestorsWithSiblings);
-            BindPToA("TimeLineMarkerList", typeof(List<TimeLineMarker>), "TimeLineMarkerList", SearchAFlags.AncestorsWithSiblings);
-
-            this.P.TimeLineXResizing += (MouseEventHandler)GetDelegate(typeof(MouseEventHandler), "TimeLineXResizing", SearchAFlags.AncestorsWithSiblings);
-            this.P.TimeLineXResized += (MouseEventHandler)GetDelegate(typeof(MouseEventHandler), "TimeLineXResized", SearchAFlags.AncestorsWithSiblings);
+            BindPToA("TimeLineMarkerList", typeof(List<TimeLineMarker>), "TimeLineMarkerList", SearchAFlags.Self);
         }
     }
 }

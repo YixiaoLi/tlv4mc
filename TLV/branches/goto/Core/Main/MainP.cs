@@ -45,6 +45,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
 
         public event EventHandler ResourcePropertyControlShow;
         public event EventHandler ResourceSelectControlShow;
+        public event EventHandler TraceLogListControlShow;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public MainP(string name)
@@ -89,6 +90,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
         private void resourceInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ResourcePropertyControlShow(this, EventArgs.Empty);
+        }
+
+        private void traceLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TraceLogListControlShow(this, EventArgs.Empty);
         }
 
     }

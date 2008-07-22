@@ -39,6 +39,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
             {
                 resourceSelectControlAgent.P.Show();
             };
+            P.TraceLogListControlShow += delegate
+            {
+                traceLogListControlAgent.P.Show();
+            };
 
             this.Show();
         }

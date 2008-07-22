@@ -23,8 +23,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
         private ulong maximumNsPerScaleMark = 1;
         private int pixelPerScaleMark = 5;
         private ulong nowMarkerTime = 0;
+        private ulong tmpMarkerTime = 0;
         private ulong selectRectStartTime = 0;
         private Color nowMarkerColor = Color.FromArgb(255, Color.Red);
+        private Color tmpMarkerColor = Color.FromArgb(255, Color.Blue);
         private int maxRowHeight = 100;
         private int minRowHeight = 15;
         private int rowHeight = 25;
@@ -143,7 +145,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
             get { return pixelPerScaleMark; }
             set
             {
-                if (pixelPerScaleMark != value)
+                if (pixelPerScaleMark != value && pixelPerScaleMark != 0)
                 {
                     pixelPerScaleMark = value;
                     NotifyPropertyChanged("PixelPerScaleMark");
@@ -159,6 +161,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     nowMarkerTime = value;
                     NotifyPropertyChanged("NowMarkerTime");
+                }
+            }
+        }
+        public ulong TmpMarkerTime
+        {
+            get { return tmpMarkerTime; }
+            set
+            {
+                if (tmpMarkerTime != value)
+                {
+                    tmpMarkerTime = value;
+                    NotifyPropertyChanged("TmpMarkerTime");
                 }
             }
         }
@@ -183,6 +197,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.TimeLineControl.TimeLineGrid
                 {
                     nowMarkerColor = value;
                     NotifyPropertyChanged("NowMarkerColor");
+                }
+            }
+        }
+        public Color TmpMarkerColor
+        {
+            get { return tmpMarkerColor; }
+            set
+            {
+                if (!tmpMarkerColor.Equals(value))
+                {
+                    tmpMarkerColor = value;
+                    NotifyPropertyChanged("TmpMarkerColor");
                 }
             }
         }

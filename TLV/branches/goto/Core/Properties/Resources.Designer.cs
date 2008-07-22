@@ -130,6 +130,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap zoomInAtButton {
+            get {
+                object obj = ResourceManager.GetObject("zoomInAtButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap zoomInButton {
             get {
                 object obj = ResourceManager.GetObject("zoomInButton", resourceCulture);
@@ -141,6 +148,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             get {
                 object obj = ResourceManager.GetObject("zoomOut", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap zoomOutAtButton {
+            get {
+                object obj = ResourceManager.GetObject("zoomOutAtButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

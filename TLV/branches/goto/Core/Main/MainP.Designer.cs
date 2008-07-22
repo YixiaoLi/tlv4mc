@@ -31,6 +31,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resourceListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resourceInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.traceLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -118,7 +119,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.resourceListToolStripMenuItem,
-            this.resourceInfoToolStripMenuItem});
+            this.resourceInfoToolStripMenuItem,
+            this.traceLogToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.viewToolStripMenuItem.Text = "表示(&V)";
@@ -136,6 +138,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
             this.resourceInfoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.resourceInfoToolStripMenuItem.Text = "リソース情報(&I)";
             this.resourceInfoToolStripMenuItem.Click += new System.EventHandler(this.resourceInfoToolStripMenuItem_Click);
+            // 
+            // traceLogToolStripMenuItem
+            // 
+            this.traceLogToolStripMenuItem.Name = "traceLogToolStripMenuItem";
+            this.traceLogToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.traceLogToolStripMenuItem.Text = "トレースログ(&T)";
+            this.traceLogToolStripMenuItem.Click += new System.EventHandler(this.traceLogToolStripMenuItem_Click);
             // 
             // MainP
             // 
@@ -167,5 +176,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Main
         private ToolStripMenuItem viewToolStripMenuItem;
         private ToolStripMenuItem resourceListToolStripMenuItem;
         private ToolStripMenuItem resourceInfoToolStripMenuItem;
+        private ToolStripMenuItem traceLogToolStripMenuItem;
     }
 }

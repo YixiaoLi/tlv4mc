@@ -32,10 +32,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.ResourceSelectControl
 
                     foreach (Type type in viewableObjectList.Types)
                     {
-                        var pis = from pi in type.GetProperties()
-                                             where pi.IsDefined(typeof(PropertyDisplayNameAttribute), true)
-                                             && ((PropertyDisplayNameAttribute)(pi.GetCustomAttributes(typeof(PropertyDisplayNameAttribute), true)[0])).Categorizable
-                                             select pi;
+                        List<PropertyInfo> pis = new List<PropertyInfo>(type.GetProperties());
+
+                        pis = pis.FindAll(pi => pi.IsDefined(typeof(PropertyDisplayNameAttribute), true)
+                                             && ((PropertyDisplayNameAttribute)(pi.GetCustomAttributes(typeof(PropertyDisplayNameAttribute), true)[0])).Categorizable);
+
+                        //var pis = from pi in type.GetProperties()
+                        //                     where pi.IsDefined(typeof(PropertyDisplayNameAttribute), true)
+                        //                     && ((PropertyDisplayNameAttribute)(pi.GetCustomAttributes(typeof(PropertyDisplayNameAttribute), true)[0])).Categorizable
+                        //                     select pi;
 
                         foreach(var pi in pis)
                         {
