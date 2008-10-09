@@ -45,6 +45,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             foreach (SubWindow sw in subWindows)
             {
                 _subWindows.Add(sw);
+
                 sw.Control.Dock = DockStyle.Fill;
                 sw.DockStateChanged += OnSubWindowDockStateChanged;
                 sw.VisibleChanged += OnSubWindowVisibleChanged;

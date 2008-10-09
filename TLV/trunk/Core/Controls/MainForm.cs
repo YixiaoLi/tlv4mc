@@ -30,7 +30,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             {
                 new SubWindow("sb3", new Control(), DockState.DockTop) { Text = "サブウィンドウ3" },
                 new SubWindow("sb4", new Control(), DockState.DockBottom) { Text = "サブウィンドウ4", Visible = false },
-                new SubWindow("sb1", new Control(), DockState.DockLeft) { Text = "サブウィンドウ1" },
+                new SubWindow("sb1", new Control(), DockState.DockLeft),
                 new SubWindow("sb2", new Control(), DockState.DockRight) { Text = "サブウィンドウ2" },
                 new SubWindow("sb5", new Control(), DockState.DockLeft) { Text = "サブウィンドウ5" },
             };
