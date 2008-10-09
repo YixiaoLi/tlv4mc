@@ -1,7 +1,0 @@
-C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TraceLogVisualizer\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
-C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TraceLogVisualizer\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
-C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TraceLogVisualizer\Base\obj\Debug\ResolveAssemblyReference.cache
-C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TraceLogVisualizer\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.LabeledTrackBar.resources
-C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TraceLogVisualizer\Base\obj\Debug\Base.csproj.GenerateResource.Cache
-C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TraceLogVisualizer\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
-C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TraceLogVisualizer\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
