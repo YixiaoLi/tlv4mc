@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="f04a26fe-c9af-4093-b2db-5f3df755bac5" name="junji@JUNJI_IBM 2008-10-07 05:23:56" runUser="JUNJI_IBM\junji" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestRunConfiguration name="ローカル テストの実行" id="f925b93b-19e8-42c9-be1f-07b649dddab7">
+    <Description>これは、ローカル テストの実行に対する既定のテストの実行構成です。</Description>
+    <Deployment runDeploymentRoot="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\TestResults\junji_JUNJI_IBM 2008-10-07 05_23_56">
+      <DeploymentItem filename="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll" />
+      <DeploymentItem filename="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Core.dll" />
+      <DeploymentItem filename="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\TLV\bin\Debug\NU.OJL.MPRTOS.TLV.exe" />
+      <DeploymentItem filename="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Third.dll" />
+    </Deployment>
+    <TestTypeSpecific />
+  </TestRunConfiguration>
+  <ResultSummary outcome="Error">
+    <Counters total="17" executed="3" passed="2" error="0" failed="0" timeout="0" aborted="1" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="14" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="JUNJI_IBM" outcome="Error" timestamp="2008-10-07T05:24:04.4218750+09:00">
+        <Text>テストのホスト プロセスは予期せずに終了しました。</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <Times creation="2008-10-07T05:23:56.4375000+09:00" queuing="2008-10-07T05:23:58.8593750+09:00" start="2008-10-07T05:23:59.2500000+09:00" finish="2008-10-07T05:24:04.4218750+09:00" />
+  <TestDefinitions>
+    <UnitTest name="ShowAllSubWindowsTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="70eb10c6-60d6-1aed-113b-d8ddd59c7274">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="ShowAllSubWindowsTest" />
+    </UnitTest>
+    <UnitTest name="GetSubWindowTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="ffdba880-057c-4a34-89d4-85578df4a8d0">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="GetSubWindowTest" />
+    </UnitTest>
+    <UnitTest name="HideSubWindowTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="ee373636-ec40-9dc5-890d-b66b2ccb8eb4">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="HideSubWindowTest" />
+    </UnitTest>
+    <UnitTest name="サブウィンドウの非表示" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="d444c8ef-7a85-3095-10e2-a34420f25e87">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="8e572c43-0f79-4870-b41c-1e9fda910988" />
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.サブウィンドウ管理, NU.OJL.MPRTOS.TLV.Test" name="サブウィンドウの非表示" />
+    </UnitTest>
+    <UnitTest name="ParentTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="e0b78af8-8a90-007d-2a79-f225969e57da">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="ParentTest" />
+    </UnitTest>
+    <UnitTest name="サブウィンドウ追加" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="ac1d43a1-22f1-2535-f494-f576f97bdc87">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="e84e7589-c51e-46de-b5dd-daf38aaa64e7" />
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.サブウィンドウ管理, NU.OJL.MPRTOS.TLV.Test" name="サブウィンドウ追加" />
+    </UnitTest>
+    <UnitTest name="AutoHideAllSubWindowsTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="26208305-4ee1-2bbf-668b-a2a6096ba9af">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="AutoHideAllSubWindowsTest" />
+    </UnitTest>
+    <UnitTest name="ContainSubWindowTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="51decc5c-6228-095a-884b-129b1a3a4f2f">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="ContainSubWindowTest" />
+    </UnitTest>
+    <UnitTest name="ShowSubWindowTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="16022dc8-380a-68ca-eea4-0f5d6bc43397">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="ShowSubWindowTest" />
+    </UnitTest>
+    <UnitTest name="HideAllSubWindowsTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="3e348342-8790-e31d-abb3-3ec459875f94">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="HideAllSubWindowsTest" />
+    </UnitTest>
+    <UnitTest name="SubWindowsTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="ac0a3c32-c791-d575-1a12-d85639611058">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="SubWindowsTest" />
+    </UnitTest>
+    <UnitTest name="SubWindowCountTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="4366fb21-f797-41ea-f9fa-67661cbd8930">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="SubWindowCountTest" />
+    </UnitTest>
+    <UnitTest name="MenuTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="0db950f3-3573-bde6-cda3-b5cc9f170adc">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="c8b85fb0-f26d-49f2-84b1-ed7898f3b2d5" />
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="MenuTest" />
+    </UnitTest>
+    <UnitTest name="AddSubWindowTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="f1cfe9b5-f467-e939-f956-35e0d791843c">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="AddSubWindowTest" />
+    </UnitTest>
+    <UnitTest name="サブウィンドウの表示" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="7c7d94e0-f4e5-0a1c-9114-cccf6ff5ef63">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="b1764ad6-b28b-4365-adf9-20b5f0afe0e1" />
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.サブウィンドウ管理, NU.OJL.MPRTOS.TLV.Test" name="サブウィンドウの表示" />
+    </UnitTest>
+    <UnitTest name="MainPanelTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="13217adb-c851-e01b-9aa8-9f7189360a63">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="ce110ee6-c6b8-4153-9c04-00345726be5f" />
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="MainPanelTest" />
+    </UnitTest>
+    <UnitTest name="AutoHideSubWindowTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="c5fa65bd-7703-1d30-62d5-192694180686">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="AutoHideSubWindowTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="一覧に存在しない結果" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="読み込まれたすべての結果" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="0db950f3-3573-bde6-cda3-b5cc9f170adc" executionId="c8b85fb0-f26d-49f2-84b1-ed7898f3b2d5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="13217adb-c851-e01b-9aa8-9f7189360a63" executionId="ce110ee6-c6b8-4153-9c04-00345726be5f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="16022dc8-380a-68ca-eea4-0f5d6bc43397" executionId="c85938b7-062e-4141-bf49-b3b311ad784a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="26208305-4ee1-2bbf-668b-a2a6096ba9af" executionId="0b6c03af-406d-4109-a9e1-8e27df4f4c88" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3e348342-8790-e31d-abb3-3ec459875f94" executionId="797fc70b-0899-434e-9f41-5fb4ec7899b6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4366fb21-f797-41ea-f9fa-67661cbd8930" executionId="5643a974-d01b-4bb1-a3bc-97ec773c4115" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="51decc5c-6228-095a-884b-129b1a3a4f2f" executionId="9772149a-14e1-41d9-88ba-1d91ff13539f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="70eb10c6-60d6-1aed-113b-d8ddd59c7274" executionId="79397fbf-8560-43fe-9046-466620725f30" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7c7d94e0-f4e5-0a1c-9114-cccf6ff5ef63" executionId="578a67c8-dfe3-47c5-ae16-fb4dee322e89" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ac0a3c32-c791-d575-1a12-d85639611058" executionId="f0e3013c-60fa-415e-8263-8612e1a5e37a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ac1d43a1-22f1-2535-f494-f576f97bdc87" executionId="b906f15c-dd52-405f-86b6-f7043d253871" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c5fa65bd-7703-1d30-62d5-192694180686" executionId="0d91257a-3fbf-4e25-b504-5a133c88a777" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d444c8ef-7a85-3095-10e2-a34420f25e87" executionId="d5a32631-3174-4295-945f-6e15b42258c2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e0b78af8-8a90-007d-2a79-f225969e57da" executionId="ca58e1fe-f236-44fb-814c-ac16dc973a8f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ee373636-ec40-9dc5-890d-b66b2ccb8eb4" executionId="d19c07a2-a752-4850-9b2a-3e563a31ff70" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f1cfe9b5-f467-e939-f956-35e0d791843c" executionId="030a1e07-2903-4929-8406-6ac70e9da1af" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ffdba880-057c-4a34-89d4-85578df4a8d0" executionId="5b99183a-1c43-4bcf-85a7-5037d27f5680" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="c8b85fb0-f26d-49f2-84b1-ed7898f3b2d5" testId="0db950f3-3573-bde6-cda3-b5cc9f170adc" testName="MenuTest" computerName="JUNJI_IBM" duration="00:00:00.4816271" startTime="2008-10-07T05:23:59.3593750+09:00" endTime="2008-10-07T05:24:00.3750000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ce110ee6-c6b8-4153-9c04-00345726be5f" testId="13217adb-c851-e01b-9aa8-9f7189360a63" testName="MainPanelTest" computerName="JUNJI_IBM" duration="00:00:00.3482473" startTime="2008-10-07T05:24:00.3906250+09:00" endTime="2008-10-07T05:24:00.7500000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c85938b7-062e-4141-bf49-b3b311ad784a" testId="16022dc8-380a-68ca-eea4-0f5d6bc43397" testName="ShowSubWindowTest" computerName="JUNJI_IBM" duration="00:00:03.6718750" startTime="2008-10-07T05:24:00.7500000+09:00" endTime="2008-10-07T05:24:04.4218750+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Aborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="0b6c03af-406d-4109-a9e1-8e27df4f4c88" testId="26208305-4ee1-2bbf-668b-a2a6096ba9af" testName="AutoHideAllSubWindowsTest" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="797fc70b-0899-434e-9f41-5fb4ec7899b6" testId="3e348342-8790-e31d-abb3-3ec459875f94" testName="HideAllSubWindowsTest" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="5643a974-d01b-4bb1-a3bc-97ec773c4115" testId="4366fb21-f797-41ea-f9fa-67661cbd8930" testName="SubWindowCountTest" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="9772149a-14e1-41d9-88ba-1d91ff13539f" testId="51decc5c-6228-095a-884b-129b1a3a4f2f" testName="ContainSubWindowTest" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="79397fbf-8560-43fe-9046-466620725f30" testId="70eb10c6-60d6-1aed-113b-d8ddd59c7274" testName="ShowAllSubWindowsTest" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="578a67c8-dfe3-47c5-ae16-fb4dee322e89" testId="7c7d94e0-f4e5-0a1c-9114-cccf6ff5ef63" testName="サブウィンドウの表示" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="f0e3013c-60fa-415e-8263-8612e1a5e37a" testId="ac0a3c32-c791-d575-1a12-d85639611058" testName="SubWindowsTest" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="b906f15c-dd52-405f-86b6-f7043d253871" testId="ac1d43a1-22f1-2535-f494-f576f97bdc87" testName="サブウィンドウ追加" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="0d91257a-3fbf-4e25-b504-5a133c88a777" testId="c5fa65bd-7703-1d30-62d5-192694180686" testName="AutoHideSubWindowTest" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="d5a32631-3174-4295-945f-6e15b42258c2" testId="d444c8ef-7a85-3095-10e2-a34420f25e87" testName="サブウィンドウの非表示" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="ca58e1fe-f236-44fb-814c-ac16dc973a8f" testId="e0b78af8-8a90-007d-2a79-f225969e57da" testName="ParentTest" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="d19c07a2-a752-4850-9b2a-3e563a31ff70" testId="ee373636-ec40-9dc5-890d-b66b2ccb8eb4" testName="HideSubWindowTest" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="030a1e07-2903-4929-8406-6ac70e9da1af" testId="f1cfe9b5-f467-e939-f956-35e0d791843c" testName="AddSubWindowTest" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="5b99183a-1c43-4bcf-85a7-5037d27f5680" testId="ffdba880-057c-4a34-89d4-85578df4a8d0" testName="GetSubWindowTest" computerName="JUNJI_IBM" duration="00:00:00" startTime="0001-01-01T09:00:00.0000000+09:00" endTime="0001-01-01T09:00:00.0000000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+  </Results>
+</TestRun>
