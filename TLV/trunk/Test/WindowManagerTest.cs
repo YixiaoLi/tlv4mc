@@ -187,30 +187,6 @@ namespace NU.OJL.MPRTOS.TLV.Test
             }
         }
 
-        [Ignore]
-        [TestMethod()]
-        public void OnSubWindowVisibleChangedTest()
-        {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
-            object sender = null;
-            EventArgs e = null;
-            target.OnSubWindowVisibleChanged(sender, e);
-            Assert.Inconclusive("値を返さないメソッドは確認できません。");
-        }
-
-        [Ignore]
-        [TestMethod()]
-        public void OnSubWindowDockStateChangedTest()
-        {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
-            object sender = null;
-            EventArgs e = null;
-            target.OnSubWindowDockStateChanged(sender, e);
-            Assert.Inconclusive("値を返さないメソッドは確認できません。");
-        }
-
         [TestMethod()]
         public void HideSubWindowTest()
         {
@@ -366,27 +342,6 @@ namespace NU.OJL.MPRTOS.TLV.Test
             Assert.IsTrue(target.ContainSubWindow("sb2"));
             Assert.IsTrue(target.ContainSubWindow("sb3"));
             Assert.IsTrue(target.ContainSubWindow("sb4"));
-        }
-
-        [Ignore]
-        [TestMethod()]
-        [DeploymentItem("NU.OJL.MPRTOS.TLV.Base.dll")]
-        public void addMenuItemTest()
-        {
-            PrivateObject param0 = null;
-            WindowManager_Accessor target = new WindowManager_Accessor(param0);
-            SubWindow sw = null;
-            target.addMenuItem(sw);
-            Assert.Inconclusive("値を返さないメソッドは確認できません。");
-        }
-
-        [Ignore]
-        [TestMethod()]
-        public void WindowManagerConstructorTest()
-        {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
-            Assert.Inconclusive("TODO: ターゲットを確認するためのコードを実装してください");
         }
     }
 }
