@@ -4,16 +4,16 @@
 [d]はディレクトリ
 [p]はプロジェクト
 
-/-+							ルート
-  +-[d] dll					dll格納フォルダ
-  +-[d] Solution Items		VisualStudioによって生成されるディレクトリ
-  +-[p] Base				TLV以外にも使い道のあるライブラリ
-  | +-[d] WindowManage		サブウインドウ管理
-  | +-[d] PAC				PACパターン
-  +-[p] Core				TLVのコア部分
-  +-[p] Main				Program.csのみ。エントリポイントをもつ
-  +-[p] Third				サードパーティライブラリに依存するもの
-  +-[p] Test				テストプロジェクト
+/-+                         ルート
+  +-[d] dll                 dll格納フォルダ
+  +-[d] Solution Items      VisualStudioによって生成されるディレクトリ
+  +-[p] Base                TLV以外にも使い道のあるライブラリ
+  | +-[d] WindowManage      サブウインドウ管理
+  | +-[d] PAC               PACパターン
+  +-[p] Core                TLVのコア部分
+  +-[p] Main                Program.csのみ。エントリポイントをもつ
+  +-[p] Third               サードパーティライブラリに依存するもの
+  +-[p] Test                テストプロジェクト
 
 
 ===============================================================================
