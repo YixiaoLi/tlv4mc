@@ -38,7 +38,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
             _windowManager.MainPanel = new Control();
             _windowManager.AddSubWindow(sws);
-            _windowManager.Menu = viewToolStripMenuItem;
+            viewToolStripMenuItem.SetWindowManager(_windowManager);
 
         }
     }

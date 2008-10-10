@@ -11,33 +11,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
     /// ドッキング可能なサブウィンドウを管理するクラス
     /// 実際の処理はIWindowManagerHandlerの実装クラスに委譲される
     /// </summary>
-    public class WindowManager : IWindowManager
+    public class WindowManager : IWindowManagerHandler
     {
         protected IWindowManagerHandler _handler = null;
-        private ToolStripMenuItem _menu = null;
 
-        /// <summary>
-        /// この<c>WindowManager</c>に関連付けられる<c>ToolStripMenuItem</c>。
-        /// <newpara>
-        /// サブウィンドウ追加時に、追加するサブウィンドウの<c>Name</c>, <c>Text</c>プロパティを
-        /// 継承した<c>ToolStripMenuItem</c>がここで指定した<c>ToolStripMenuItem</c>に追加される。
-        /// </newpara>
-        /// </summary>
-        public ToolStripMenuItem Menu
-        {
-            get { return _menu; }
-            set
-            {
-                _menu = value;
-                if (_handler.SubWindowCount != 0)
-                {
-                    foreach (SubWindow sw in SubWindows)
-                    {
-                        addMenuItem(sw);
-                    }
-                }
-            }
-        }
+        public event EventHandler<SubWindowEventArgs> SubWindowAdded;
+
         /// <summary>
         /// この<c>WindowManager</c>を格納する<c>Control</c>
         /// </summary>
@@ -87,10 +66,8 @@ namespace NU.OJL.MPRTOS.TLV.Base
                     HideSubWindow(sw.Name);
                 }
 
-                if (_menu != null)
-                {
-                    addMenuItem(sw);
-                }
+                if (SubWindowAdded != null)
+                    SubWindowAdded(this, new SubWindowEventArgs(sw));
 
             }
         }
@@ -170,7 +147,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// </summary>
         /// <param name="sender"><c>DockState</c>が変化した<c>SubWindow</c></param>
         /// <param name="e"><c>EventArgs.Empty</c></param>
-        public virtual void OnSubWindowDockStateChanged(object sender, EventArgs e)
+        public virtual void OnSubWindowDockStateChanged(object sender, SubWindowEventArgs e)
         {
         }
         /// <summary>
@@ -178,7 +155,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// </summary>
         /// <param name="sender"><c>Visible</c>が変化した<c>SubWindow</c></param>
         /// <param name="e"><c>EventArgs.Empty</c></param>
-        public virtual void OnSubWindowVisibleChanged(object sender, EventArgs e)
+        public virtual void OnSubWindowVisibleChanged(object sender, SubWindowEventArgs e)
         {
         }
         /// <summary>
@@ -188,16 +165,6 @@ namespace NU.OJL.MPRTOS.TLV.Base
         public WindowManager(IWindowManagerHandler handler)
         {
             _handler = handler;
-        }
-
-        private void addMenuItem(SubWindow sw)
-        {
-            ToolStripMenuItem item = new ToolStripMenuItem() { Text = sw.Text, Name = sw.Name };
-            item.Checked = sw.Visible;
-            item.CheckOnClick = true;
-            item.CheckedChanged += (o, e) => { sw.Visible = ((ToolStripMenuItem)o).Checked; };
-            sw.VisibleChanged += (o, e) => { item.Checked = ((SubWindow)sw).Visible; };
-            _menu.DropDownItems.Add(item);
         }
 
     }

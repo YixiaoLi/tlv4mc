@@ -109,13 +109,13 @@ namespace NU.OJL.MPRTOS.TLV.Third
             }
         }
 
-        public override void OnSubWindowDockStateChanged(object o, EventArgs e)
+        public override void OnSubWindowDockStateChanged(object o, SubWindowEventArgs e)
         {
             base.OnSubWindowDockStateChanged(o, e);
             _dockContents[((SubWindow)o).Name].DockState = ((SubWindow)o).DockState.Specialize();
         }
 
-        public override void OnSubWindowVisibleChanged(object o, EventArgs e)
+        public override void OnSubWindowVisibleChanged(object o, SubWindowEventArgs e)
         {
             base.OnSubWindowVisibleChanged(o, e);
             if (((SubWindow)o).Visible)

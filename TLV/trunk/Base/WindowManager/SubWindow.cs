@@ -14,12 +14,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <summary>
         /// DockStateが変わるときに発生するイベント
         /// </summary>
-        public event EventHandler DockStateChanged = null;
+        public event EventHandler<SubWindowEventArgs> DockStateChanged = null;
 
         /// <summary>
         /// Visibleが変わるときに発生するイベント
         /// </summary>
-        public event EventHandler VisibleChanged = null;
+        public event EventHandler<SubWindowEventArgs> VisibleChanged = null;
 
         private string _name = string.Empty;
         private DockState _dockState = DockState.Unknown;
@@ -42,7 +42,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
                     _dockState = value;
 
                     if (DockStateChanged != null)
-                        DockStateChanged(this, EventArgs.Empty);
+                        DockStateChanged(this, new SubWindowEventArgs(this));
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
                     _visible = value;
 
                     if (VisibleChanged != null)
-                        VisibleChanged(this, EventArgs.Empty);
+                        VisibleChanged(this, new SubWindowEventArgs(this));
                 }
             }
         }
@@ -89,6 +89,15 @@ namespace NU.OJL.MPRTOS.TLV.Base
             Control = control;
             DockState = dockState;
             Visible = true;
+        }
+    }
+
+    public class SubWindowEventArgs : EventArgs
+    {
+        public SubWindow SubWindow { get; set; }
+        public SubWindowEventArgs(SubWindow subWindow)
+        {
+            SubWindow = subWindow;
         }
     }
 }

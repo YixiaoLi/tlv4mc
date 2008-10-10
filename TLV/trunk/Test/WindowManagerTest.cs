@@ -119,18 +119,6 @@ namespace NU.OJL.MPRTOS.TLV.Test
         }
 
         [TestMethod()]
-        public void MenuTest()
-        {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
-            ToolStripMenuItem expected = new ToolStripMenuItem() { Name = "test"};
-            ToolStripMenuItem actual;
-            target.Menu = expected;
-            actual = target.Menu;
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod()]
         public void MainPanelTest()
         {
             IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
@@ -326,7 +314,6 @@ namespace NU.OJL.MPRTOS.TLV.Test
         {
             IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
             WindowManager target = new WindowManager(handler);
-            target.Menu = new ToolStripMenuItem();
 
             SubWindow[] sws = new[]
             {
@@ -343,7 +330,6 @@ namespace NU.OJL.MPRTOS.TLV.Test
             Assert.IsTrue(target.ContainSubWindow("sb2"));
             Assert.IsTrue(target.ContainSubWindow("sb3"));
             Assert.IsTrue(target.ContainSubWindow("sb4"));
-            Assert.AreEqual(4, target.Menu.DropDownItems.Count);
         }
     }
 }

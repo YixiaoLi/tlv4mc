@@ -17,6 +17,8 @@ namespace NU.OJL.MPRTOS.TLV.Base
         private SubWindowCollection _subWindows = new SubWindowCollection();
         private Control _mainPanel = null;
 
+        public event EventHandler<SubWindowEventArgs> SubWindowAdded;
+
         public virtual Control Parent { get; set; }
 
         public virtual Control MainPanel
@@ -49,6 +51,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 sw.Control.Dock = DockStyle.Fill;
                 sw.DockStateChanged += OnSubWindowDockStateChanged;
                 sw.VisibleChanged += OnSubWindowVisibleChanged;
+
+                if (SubWindowAdded != null)
+                    SubWindowAdded(this, new SubWindowEventArgs(sw));
             }
         }
 
@@ -101,11 +106,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
             return _subWindows[name];
         }
 
-        public virtual void OnSubWindowDockStateChanged(object sender, EventArgs e)
+        public virtual void OnSubWindowDockStateChanged(object sender, SubWindowEventArgs e)
         {
         }
 
-        public virtual void OnSubWindowVisibleChanged(object sender, EventArgs e)
+        public virtual void OnSubWindowVisibleChanged(object sender, SubWindowEventArgs e)
         {
         }
 

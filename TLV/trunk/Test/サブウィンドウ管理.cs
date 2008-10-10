@@ -58,7 +58,6 @@ namespace NU.OJL.MPRTOS.TLV.Test
             wm = new WindowManager(new WeifenLuoWindowManagerHandler());
             wm.Parent = new Control();
             wm.MainPanel = new Control();
-            ToolStripMenuItem tsmi = new ToolStripMenuItem();
 
             SubWindow[] sws = new[]
             {
@@ -70,7 +69,6 @@ namespace NU.OJL.MPRTOS.TLV.Test
             };
 
             wm.AddSubWindow(sws);
-            wm.Menu = tsmi;
 
             Assert.AreEqual(5, wm.SubWindowCount);
             Assert.IsTrue(wm.ContainSubWindow("sb1"));
@@ -93,7 +91,6 @@ namespace NU.OJL.MPRTOS.TLV.Test
             Assert.IsTrue(wm.GetSubWindow("sb3").Visible);
             Assert.IsFalse(wm.GetSubWindow("sb4").Visible);
             Assert.IsTrue(wm.GetSubWindow("sb5").Visible);
-            Assert.AreEqual(5, tsmi.DropDownItems.Count);
         }
 
         [TestMethod]
@@ -115,7 +112,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
             };
 
             wm.AddSubWindow(sws);
-            wm.Menu = tsmi;
+            tsmi.SetWindowManager(wm);
 
             Assert.IsFalse(wm.GetSubWindow("sb1").Visible);
             Assert.IsFalse(wm.GetSubWindow("sb2").Visible);
@@ -155,7 +152,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
             };
 
             wm.AddSubWindow(sws);
-            wm.Menu = tsmi;
+            tsmi.SetWindowManager(wm);
 
             Assert.IsTrue(wm.GetSubWindow("sb1").Visible);
             Assert.IsTrue(wm.GetSubWindow("sb2").Visible);

@@ -13,6 +13,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
     /// </summary>
     public interface IWindowManagerHandler
     {
+        event EventHandler<SubWindowEventArgs> SubWindowAdded;
         Control Parent { get; set; }
         Control MainPanel { get; set; }
         int SubWindowCount { get; }
@@ -26,8 +27,8 @@ namespace NU.OJL.MPRTOS.TLV.Base
         void ShowSubWindow(string name);
         void HideSubWindow(string name);
         void AutoHideSubWindow(string name);
-        void OnSubWindowDockStateChanged(object sender, EventArgs e);
-        void OnSubWindowVisibleChanged(object sender, EventArgs e);
+        void OnSubWindowDockStateChanged(object sender, SubWindowEventArgs e);
+        void OnSubWindowVisibleChanged(object sender, SubWindowEventArgs e);
     }
 
     public enum DockState
