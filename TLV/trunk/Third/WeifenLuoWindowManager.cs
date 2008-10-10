@@ -14,7 +14,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
     /// IWindowManagerで使うためのハンドラ
     /// WeifenLuo.WinFormsUI.Docking.dllを必要とする
     /// </summary>
-    public class WeifenLuoWindowManagerHandler : AbstractWindowManagerHandler
+    public class WeifenLuoWindowManager : WindowManager
     {
         Dictionary<string, DockContent> _dockContents = new Dictionary<string, DockContent>();
         private DockPanel _dockPanel = null;
@@ -45,8 +45,6 @@ namespace NU.OJL.MPRTOS.TLV.Third
 
         public override void AddSubWindow(params SubWindow[] subWindows)
         {
-            base.AddSubWindow(subWindows);
-
             foreach(SubWindow sw in subWindows)
             {
                 DockContent dc = new DockContent();
@@ -57,6 +55,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
                 dc.DockAreas = DockAreas.DockBottom | DockAreas.DockLeft | DockAreas.DockRight | DockAreas.DockTop | DockAreas.Float;
                 dc.DockState = sw.DockState.Specialize();
                 dc.HideOnClose = true;
+
                 dc.DockStateChanged += (o, e) =>
                 {
                     SubWindow s = this.GetSubWindow(((DockContent)o).Name);
@@ -72,6 +71,9 @@ namespace NU.OJL.MPRTOS.TLV.Third
 
                 _dockContents.Add(sw.Name, dc);
             }
+
+            base.AddSubWindow(subWindows);
+
         }
 
         public override void ShowSubWindow(string name)
@@ -109,16 +111,16 @@ namespace NU.OJL.MPRTOS.TLV.Third
             }
         }
 
-        protected override void OnSubWindowDockStateChanged(object o, SubWindowEventArgs e)
+        protected override void OnSubWindowDockStateChanged(object o, GeneralChangedEventArgs<NU.OJL.MPRTOS.TLV.Base.DockState> e)
         {
             base.OnSubWindowDockStateChanged(o, e);
-            _dockContents[e.SubWindow.Name].DockState = ((SubWindow)o).DockState.Specialize();
+            _dockContents[((SubWindow)o).Name].DockState = ((SubWindow)o).DockState.Specialize();
         }
 
-        protected override void OnSubWindowVisibleChanged(object o, SubWindowEventArgs e)
+        protected override void OnSubWindowVisibleChanged(object o, GeneralChangedEventArgs<bool> e)
         {
             base.OnSubWindowVisibleChanged(o, e);
-            if (e.SubWindow.Visible)
+            if (((SubWindow)o).Visible)
             {
                 ShowSubWindow(((SubWindow)o).Name);
             }
@@ -128,7 +130,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
             }
         }
 
-        public WeifenLuoWindowManagerHandler()
+        public WeifenLuoWindowManager()
         {
             _dockPanel = new DockPanel();
             _dockPanel.DocumentStyle = DocumentStyle.DockingSdi;

@@ -12,14 +12,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
     public partial class MainForm : Form
     {
-        private WindowManager _windowManager;
+        private IWindowManager _windowManager;
+        private TransactionManager _transactionManager;
 
         public MainForm()
         {
             InitializeComponent();
 
             // アプリケーションに指定されたWindowManagerHandlerを使いWindowManagerを生成
-            _windowManager = new WindowManager(ApplicationFactory.WindowManagerHandler);
+            _windowManager = ApplicationFactory.WindowManager;
+            _transactionManager = ApplicationFactory.TransactionManager;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -38,8 +40,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
             _windowManager.MainPanel = new Control();
             _windowManager.AddSubWindow(sws);
-            viewToolStripMenuItem.SetWindowManager(_windowManager);
+            _windowManager.SubWindowDockStateChanged += (o, _e) =>
+                {
+                    _transactionManager.Done(new GeneralTransaction(((SubWindow)o).Text + "のドッキング箇所を" + _e.New.ToText() + "にする",
+                        () =>
+                        {
+                            ((SubWindow)o).DockState = _e.New;
+                        },
+                        () =>
+                        {
+                            ((SubWindow)o).DockState = _e.Old;
+                        }));
+                };
 
+            viewToolStripMenuItem.SetWindowManager(_windowManager);
+            undoToolStripMenuItem.SetUndoMenu(_transactionManager);
+            redoToolStripMenuItem.SetRedoMenu(_transactionManager);
         }
     }
 }

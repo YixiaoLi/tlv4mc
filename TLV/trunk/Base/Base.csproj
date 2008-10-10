@@ -41,16 +41,16 @@
   </Target>
   -->
   <ItemGroup>
+    <Compile Include="GeneralEventArgs.cs" />
     <Compile Include="TransactionManager\GeneralTransaction.cs" />
     <Compile Include="TransactionManager\ITransaction.cs" />
     <Compile Include="TransactionManager\ITransactionManager.cs" />
     <Compile Include="TransactionManager\TransactionManager.cs" />
     <Compile Include="Extensions\ToolStripMenuItemExtensions.cs" />
     <Compile Include="WindowManager\WindowManager.cs" />
-    <Compile Include="WindowManager\IWindowManagerHandler.cs" />
+    <Compile Include="WindowManager\IWindowManager.cs" />
     <Compile Include="WindowManager\SubWindow.cs" />
     <Compile Include="WindowManager\SubWindowCollection.cs" />
-    <Compile Include="WindowManager\AbstractWindowManagerHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

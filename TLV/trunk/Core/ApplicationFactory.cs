@@ -9,10 +9,21 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
     public static class ApplicationFactory
     {
-        public static IWindowManagerHandler WindowManagerHandler
+        private static TransactionManager _transactionManager;
+
+        public static IWindowManager WindowManager
         {
-            // Thirdパーティ製のドッキングパネル使用
-            get { return new WeifenLuoWindowManagerHandler(); }
+            get { return new WeifenLuoWindowManager(); }
+        }
+
+        public static TransactionManager TransactionManager
+        {
+            get { return _transactionManager; }
+        }
+
+        static ApplicationFactory()
+        {
+            _transactionManager = new TransactionManager();
         }
     }
 }

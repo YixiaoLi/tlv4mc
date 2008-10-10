@@ -54,8 +54,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod]
         public void サブウィンドウの追加()
         {
-            WindowManager wm;
-            wm = new WindowManager(new WeifenLuoWindowManagerHandler());
+            WindowManager wm = new WindowManager();
             wm.Parent = new Control();
             wm.MainPanel = new Control();
 
@@ -96,8 +95,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod]
         public void サブウィンドウの表示()
         {
-            WindowManager wm;
-            wm = new WindowManager(new WeifenLuoWindowManagerHandler());
+            WindowManager wm = new WindowManager();
             wm.Parent = new Control();
             wm.MainPanel = new Control();
             ToolStripMenuItem tsmi = new ToolStripMenuItem();
@@ -136,8 +134,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod]
         public void サブウィンドウの非表示()
         {
-            WindowManager wm;
-            wm = new WindowManager(new WeifenLuoWindowManagerHandler());
+            WindowManager wm = new WindowManager();
             wm.Parent = new Control();
             wm.MainPanel = new Control();
             ToolStripMenuItem tsmi = new ToolStripMenuItem();

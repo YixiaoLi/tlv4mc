@@ -11,8 +11,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
         public Action DoAction { get; set; }
         public Action UndoAction { get; set; }
 
-        public GeneralTransaction(Action _do, Action undo)
+        public GeneralTransaction(string text, Action _do, Action undo)
         {
+            Text = text;
             DoAction = _do;
             UndoAction = undo;
         }
@@ -32,7 +33,6 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 UndoAction();
             }
         }
-
     }
 
 }

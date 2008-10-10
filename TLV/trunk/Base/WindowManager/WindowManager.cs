@@ -11,27 +11,32 @@ namespace NU.OJL.MPRTOS.TLV.Base
     /// ドッキング可能なサブウィンドウを管理するクラス
     /// 実際の処理はIWindowManagerHandlerの実装クラスに委譲される
     /// </summary>
-    public class WindowManager : IWindowManagerHandler
+    public class WindowManager : IWindowManager
     {
-        protected IWindowManagerHandler _handler = null;
+        private SubWindowCollection _subWindows = new SubWindowCollection();
+        private Control _mainPanel = null;
 
-        public event EventHandler<SubWindowEventArgs> SubWindowAdded;
+        public event EventHandler<GeneralEventArgs<SubWindow>> SubWindowAdded;
+
+        public event EventHandler<GeneralChangedEventArgs<DockState>> SubWindowDockStateChanged;
+
+        public event EventHandler<GeneralChangedEventArgs<bool>> SubWindowVisibleChanged;
 
         /// <summary>
         /// この<c>WindowManager</c>を格納する<c>Control</c>
         /// </summary>
-        public Control Parent
-        {
-            get { return _handler.Parent; }
-            set { _handler.Parent = value; }
-        }
+        public virtual Control Parent { get; set; }
         /// <summary>
         /// <c>MainPanel</c>にFillされる<c>Contorl</c>
         /// </summary>
-        public Control MainPanel
+        public virtual Control MainPanel
         {
-            get { return _handler.MainPanel; }
-            set { _handler.MainPanel = value; }
+            get { return _mainPanel; }
+            set
+            {
+                _mainPanel = value;
+                _mainPanel.Dock = DockStyle.Fill;
+            }
         }
         /// <summary>
         /// この<c>WindowManager</c>で管理しているSubWindowを返すイテレータ
@@ -40,7 +45,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
         {
             get
             {
-                return _handler.SubWindows;
+                foreach (SubWindow sw in _subWindows)
+                {
+                    yield return sw;
+                }
             }
         }
         /// <summary>
@@ -52,7 +60,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         {
             foreach(SubWindow sw in subWindows)
             {
-                _handler.AddSubWindow(sw);
+                _subWindows.Add(sw);
 
                 sw.DockStateChanged += OnSubWindowDockStateChanged;
                 sw.VisibleChanged += OnSubWindowVisibleChanged;
@@ -67,7 +75,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 }
 
                 if (SubWindowAdded != null)
-                    SubWindowAdded(this, new SubWindowEventArgs(sw));
+                    SubWindowAdded(this, new GeneralEventArgs<SubWindow>(sw));
 
             }
         }
@@ -76,21 +84,30 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// </summary>
         public virtual void ShowAllSubWindows()
         {
-            _handler.ShowAllSubWindows();
+            foreach (SubWindow sw in _subWindows)
+            {
+                ShowSubWindow(sw.Name);
+            }
         }
         /// <summary>
         /// 管理下にある<c>SubWindow</c>のすべてを非表示にします
         /// </summary>
         public virtual void AutoHideAllSubWindows()
         {
-            _handler.AutoHideAllSubWindows();
+            foreach (SubWindow sw in _subWindows)
+            {
+                AutoHideSubWindow(sw.Name);
+            }
         }
         /// <summary>
         /// 管理下にある<c>SubWindow</c>のすべてをオートハイド状態にします
         /// </summary>
         public virtual void HideAllSubWindows()
         {
-            _handler.HideAllSubWindows();
+            foreach (SubWindow sw in _subWindows)
+            {
+                HideSubWindow(sw.Name);
+            }
         }
         /// <summary>
         /// <paramref name="name"/>で指定した<c>Name</c>プロパティをもつ<c>SubWindow</c>を表示します
@@ -98,7 +115,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <param name="name">表示する<c>SubWindow</c>の<c>Name</c>プロパティの値</param>
         public virtual void ShowSubWindow(string name)
         {
-            _handler.ShowSubWindow(name);
+            _subWindows[name].Visible = true;
         }
         /// <summary>
         /// <paramref name="name"/>で指定した<c>Name</c>プロパティをもつ<c>SubWindow</c>を非表示にします
@@ -106,7 +123,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <param name="name">非表示にする<c>SubWindow</c>の<c>Name</c>プロパティの値</param>
         public virtual void HideSubWindow(string name)
         {
-            _handler.HideSubWindow(name);
+            _subWindows[name].Visible = false;
         }
         /// <summary>
         /// <paramref name="name"/>で指定した<c>Name</c>プロパティをもつ<c>SubWindow</c>をオートハイド状態にします
@@ -114,23 +131,39 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <param name="name">オートハイド状態にする<c>SubWindow</c>の<c>Name</c>プロパティの値</param>
         public virtual void AutoHideSubWindow(string name)
         {
-            _handler.AutoHideSubWindow(name);
+            switch (_subWindows[name].DockState)
+            {
+                case DockState.DockBottom:
+                    _subWindows[name].DockState = DockState.DockBottomAutoHide;
+                    break;
+                case DockState.DockLeft:
+                    _subWindows[name].DockState = DockState.DockLeftAutoHide;
+                    break;
+                case DockState.DockRight:
+                    _subWindows[name].DockState = DockState.DockRightAutoHide;
+                    break;
+                case DockState.DockTop:
+                    _subWindows[name].DockState = DockState.DockTopAutoHide;
+                    break;
+                default:
+                    break;
+            }
         }
         /// <summary>
         /// 管理している<c>SubWindow</c>の数
         /// </summary>
         public int SubWindowCount
         {
-            get { return _handler.SubWindowCount; }
+            get { return _subWindows.Count; }
         }
         /// <summary>
         /// <paramref name="name"/>で指定した<c>Name</c>プロパティをもつ<c>SubWindow</c>を取得する
         /// </summary>
         /// <param name="name">取得したい<c>SubWindow</c>の<c>Name</c>プロパティの値</param>
         /// <returns><paramref name="name"/>で指定した値の<c>Name</c>プロパティをもつ<c>SubWindow</c></returns>
-        public virtual SubWindow GetSubWindow(string name)
+        public SubWindow GetSubWindow(string name)
         {
-            return _handler.GetSubWindow(name);
+            return _subWindows[name];
         }
         /// <summary>
         /// <paramref name="name"/>で指定した<c>Name</c>プロパティをもつ<c>SubWindow</c>が管理下にあるかどうか
@@ -138,33 +171,29 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <param name="name">管理下にあるかどうか調べたい<c>SubWindow</c>の<c>Name</c>プロパティ</param>
         /// <returns>管理下にある場合true</returns>
         /// <returns>管理下にない場合false</returns>
-        public virtual bool ContainSubWindow(string name)
+        public bool ContainSubWindow(string name)
         {
-            return _handler.ContainSubWindow(name);
+            return _subWindows.Contains(name);
         }
         /// <summary>
         /// 管理する<c>SubWindow</c>のどれかの<c>DockState</c>プロパティの値が変化したときに呼び出される
         /// </summary>
         /// <param name="sender"><c>DockState</c>が変化した<c>SubWindow</c></param>
         /// <param name="e"><c>EventArgs.Empty</c></param>
-        protected virtual void OnSubWindowDockStateChanged(object sender, SubWindowEventArgs e)
+        protected virtual void OnSubWindowDockStateChanged(object sender, GeneralChangedEventArgs<DockState> e)
         {
+            if (SubWindowDockStateChanged != null)
+                SubWindowDockStateChanged(sender, e);
         }
         /// <summary>
         /// 管理する<c>SubWindow</c>のどれかの<c>Visible</c>プロパティの値が変化したときに呼び出される
         /// </summary>
         /// <param name="sender"><c>Visible</c>が変化した<c>SubWindow</c></param>
         /// <param name="e"><c>EventArgs.Empty</c></param>
-        protected virtual void OnSubWindowVisibleChanged(object sender, SubWindowEventArgs e)
+        protected virtual void OnSubWindowVisibleChanged(object sender, GeneralChangedEventArgs<bool> e)
         {
-        }
-        /// <summary>
-        /// WindowManagerのインスタンスを生成する
-        /// </summary>
-        /// <param name="handler">処理を委譲する<c>IWindowManagerHandler</c>の実装クラス</param>
-        public WindowManager(IWindowManagerHandler handler)
-        {
-            _handler = handler;
+            if (SubWindowVisibleChanged != null)
+                SubWindowVisibleChanged(sender, e);
         }
 
     }

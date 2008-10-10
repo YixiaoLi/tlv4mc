@@ -11,9 +11,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
     /// IWindowManagerの実装クラスから処理を委譲されるクラスがもつべきインターフェイス
     /// サブウィンドウの管理に必須な機能を定義する
     /// </summary>
-    public interface IWindowManagerHandler
+    public interface IWindowManager
     {
-        event EventHandler<SubWindowEventArgs> SubWindowAdded;
+        event EventHandler<GeneralEventArgs<SubWindow>> SubWindowAdded;
+        event EventHandler<GeneralChangedEventArgs<DockState>> SubWindowDockStateChanged;
+        event EventHandler<GeneralChangedEventArgs<bool>> SubWindowVisibleChanged;
         Control Parent { get; set; }
         Control MainPanel { get; set; }
         int SubWindowCount { get; }

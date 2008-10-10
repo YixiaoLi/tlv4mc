@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using NU.OJL.MPRTOS.TLV.Core;
 
 namespace NU.OJL.MPRTOS.TLV.Test
 {
@@ -59,8 +58,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void SubWindowsTest()
         {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
+            WindowManager target = new WindowManager();
 
             SubWindow[] sws = new[]
             {
@@ -87,8 +85,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void SubWindowCountTest()
         {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
+            WindowManager target = new WindowManager();
 
             SubWindow[] sws = new[]
             {
@@ -109,8 +106,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void ParentTest()
         {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
+            WindowManager target = new WindowManager();
             Control expected = new Control() { Name = "test"};
             Control actual;
             target.Parent = expected;
@@ -121,8 +117,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void MainPanelTest()
         {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
+            WindowManager target = new WindowManager();
             Control expected = new Control();
             Control actual;
             target.MainPanel = expected;
@@ -133,8 +128,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void ShowSubWindowTest()
         {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
+            WindowManager target = new WindowManager();
 
             target.AddSubWindow(new SubWindow("sb1", new Control(), DockState.DockLeft) { Visible = false });
 
@@ -148,8 +142,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void ShowAllSubWindowsTest()
         {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
+            WindowManager target = new WindowManager();
 
             SubWindow[] sws = new[]
             {
@@ -178,8 +171,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void HideSubWindowTest()
         {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
+            WindowManager target = new WindowManager();
 
             target.AddSubWindow(new SubWindow("sb1", new Control(), DockState.DockLeft) { Visible = true });
 
@@ -195,8 +187,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void HideAllSubWindowsTest()
         {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
+            WindowManager target = new WindowManager();
 
             SubWindow[] sws = new[]
             {
@@ -225,8 +216,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void GetSubWindowTest()
         {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
+            WindowManager target = new WindowManager();
 
             SubWindow sb1 = new SubWindow("sb1", new Control(), DockState.DockLeft) { Visible = true };
 
@@ -238,8 +228,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void ContainSubWindowTest()
         {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
+            WindowManager target = new WindowManager();
 
             SubWindow sb1 = new SubWindow("sb1", new Control(), DockState.DockLeft) { Visible = true };
 
@@ -251,8 +240,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void AutoHideSubWindowTest()
         {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
+            WindowManager target = new WindowManager();
 
             SubWindow[] sws = new[]
             {
@@ -283,8 +271,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void AutoHideAllSubWindowsTest()
         {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
+            WindowManager target = new WindowManager();
 
             SubWindow[] sws = new[]
             {
@@ -312,8 +299,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void AddSubWindowTest()
         {
-            IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
-            WindowManager target = new WindowManager(handler);
+            WindowManager target = new WindowManager();
 
             SubWindow[] sws = new[]
             {

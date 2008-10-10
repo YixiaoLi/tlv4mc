@@ -14,12 +14,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <summary>
         /// DockStateが変わるときに発生するイベント
         /// </summary>
-        public event EventHandler<SubWindowEventArgs> DockStateChanged = null;
+        public event EventHandler<GeneralChangedEventArgs<DockState>> DockStateChanged = null;
 
         /// <summary>
         /// Visibleが変わるときに発生するイベント
         /// </summary>
-        public event EventHandler<SubWindowEventArgs> VisibleChanged = null;
+        public event EventHandler<GeneralChangedEventArgs<bool>> VisibleChanged = null;
 
         private string _name = string.Empty;
         private DockState _dockState = DockState.Unknown;
@@ -28,7 +28,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <summary>
         /// サブウィンドウにFillされるControl
         /// </summary>
-        public Control Control { get; private set; }
+        public Control Control{ get; private set; }
         /// <summary>
         /// ドッキング状態
         /// </summary>
@@ -39,10 +39,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
             {
                 if(_dockState != value)
                 {
+                    DockState old = _dockState;
+
                     _dockState = value;
 
                     if (DockStateChanged != null)
-                        DockStateChanged(this, new SubWindowEventArgs(this));
+                        DockStateChanged(this, new GeneralChangedEventArgs<DockState>(old, _dockState));
                 }
             }
         }
@@ -56,10 +58,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
             {
                 if (_visible != value)
                 {
+                    bool old = _visible;
+
                     _visible = value;
 
                     if (VisibleChanged != null)
-                        VisibleChanged(this, new SubWindowEventArgs(this));
+                        VisibleChanged(this, new GeneralChangedEventArgs<bool>(old, _visible) );
                 }
             }
         }
@@ -87,18 +91,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
             Name = name;
             Text = name;
             Control = control;
+            Control.Dock = DockStyle.Fill;
             DockState = dockState;
             Visible = true;
         }
 
     }
 
-    public class SubWindowEventArgs : EventArgs
-    {
-        public SubWindow SubWindow { get; set; }
-        public SubWindowEventArgs(SubWindow subWindow)
-        {
-            SubWindow = subWindow;
-        }
-    }
 }
