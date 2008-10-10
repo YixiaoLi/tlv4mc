@@ -326,6 +326,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         {
             IWindowManagerHandler handler = ApplicationFactory.WindowManagerHandler;
             WindowManager target = new WindowManager(handler);
+            target.Menu = new ToolStripMenuItem();
 
             SubWindow[] sws = new[]
             {
@@ -342,6 +343,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
             Assert.IsTrue(target.ContainSubWindow("sb2"));
             Assert.IsTrue(target.ContainSubWindow("sb3"));
             Assert.IsTrue(target.ContainSubWindow("sb4"));
+            Assert.AreEqual(4, target.Menu.DropDownItems.Count);
         }
     }
 }
