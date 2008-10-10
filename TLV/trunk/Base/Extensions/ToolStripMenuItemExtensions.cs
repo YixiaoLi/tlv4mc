@@ -15,28 +15,28 @@ namespace NU.OJL.MPRTOS.TLV.Base
             {
                 foreach (SubWindow sw in windowManager.SubWindows)
                 {
-                    tsmi.addMenuItem(sw);
+                    tsmi.addSubWindowMenuItem(sw);
                 }
             }
             windowManager.SubWindowAdded += (o, e) =>
             {
-                tsmi.addMenuItem(e.SubWindow);
+                tsmi.addSubWindowMenuItem(e.SubWindow);
             };
         }
 
-        private static void addMenuItem(this ToolStripMenuItem tsmi, SubWindow sw)
+        private static void addSubWindowMenuItem(this ToolStripMenuItem tsmi, SubWindow sw)
         {
             ToolStripMenuItem item = new ToolStripMenuItem() { Name = sw.Name };
-            item.setText(sw);
+            item.setSubWindowText(sw);
             item.Checked = sw.Visible;
             item.CheckOnClick = true;
             item.CheckedChanged += (o, e) => { sw.Visible = ((ToolStripMenuItem)o).Checked; };
             sw.VisibleChanged += (o, e) => { item.Checked = ((SubWindow)sw).Visible; };
-            sw.DockStateChanged += (o, e) => { item.setText(sw); };
+            sw.DockStateChanged += (o, e) => { item.setSubWindowText(sw); };
             tsmi.DropDownItems.Add(item);
         }
 
-        private static void setText(this ToolStripMenuItem tsmi, SubWindow sw)
+        private static void setSubWindowText(this ToolStripMenuItem tsmi, SubWindow sw)
         {
             tsmi.Text = sw.Text;
             tsmi.ShortcutKeyDisplayString = sw.DockState.ToText();

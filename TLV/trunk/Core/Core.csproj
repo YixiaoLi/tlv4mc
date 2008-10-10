@@ -65,6 +65,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{920F5653-9ED8-416C-B4FC-64285D3BB1A5}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Third\Third.csproj">
+      <Project>{C2A4F798-30E4-4F03-AA49-F060FFD09B48}</Project>
+      <Name>Third</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Controls\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -74,15 +84,5 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Base\Base.csproj">
-      <Project>{920F5653-9ED8-416C-B4FC-64285D3BB1A5}</Project>
-      <Name>Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Third\Third.csproj">
-      <Project>{C2A4F798-30E4-4F03-AA49-F060FFD09B48}</Project>
-      <Name>Third</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>
