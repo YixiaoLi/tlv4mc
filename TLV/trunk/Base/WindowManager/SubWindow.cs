@@ -90,6 +90,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             DockState = dockState;
             Visible = true;
         }
+
     }
 
     public class SubWindowEventArgs : EventArgs

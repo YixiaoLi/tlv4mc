@@ -67,6 +67,7 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.ShortcutKeyDisplayString = "";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.viewToolStripMenuItem.Text = "表示(&V)";
             // 

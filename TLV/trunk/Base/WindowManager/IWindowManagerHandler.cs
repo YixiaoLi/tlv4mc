@@ -27,8 +27,6 @@ namespace NU.OJL.MPRTOS.TLV.Base
         void ShowSubWindow(string name);
         void HideSubWindow(string name);
         void AutoHideSubWindow(string name);
-        void OnSubWindowDockStateChanged(object sender, SubWindowEventArgs e);
-        void OnSubWindowVisibleChanged(object sender, SubWindowEventArgs e);
     }
 
     public enum DockState
@@ -43,5 +41,35 @@ namespace NU.OJL.MPRTOS.TLV.Base
         DockLeft,
         DockBottom,
         DockRight
+    }
+
+    public static class DockStateExtension
+    {
+        public static string ToText(this DockState dockState)
+        {
+            switch (dockState)
+            {
+                case DockState.DockBottom:
+                    return "下";
+                case DockState.DockBottomAutoHide:
+                    return "下（オートハイド）";
+                case DockState.DockLeft:
+                    return "左";
+                case DockState.DockLeftAutoHide:
+                    return "左（オートハイド）";
+                case DockState.DockRight:
+                    return "右";
+                case DockState.DockRightAutoHide:
+                    return "右（オートハイド）";
+                case DockState.DockTop:
+                    return "上";
+                case DockState.DockTopAutoHide:
+                    return "上（オートハイド）";
+                case DockState.Float:
+                    return "フローティング";
+                default:
+                    return "状態不正";
+            }
+        }
     }
 }

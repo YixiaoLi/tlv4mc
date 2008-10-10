@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace NU.OJL.MPRTOS.TLV.Base
 {
-    public static class ToolStripMenuItemExtension
+    public static class ToolStripMenuItemExtensions
     {
         public static void SetWindowManager(this ToolStripMenuItem tsmi, WindowManager windowManager)
         {
@@ -15,23 +15,31 @@ namespace NU.OJL.MPRTOS.TLV.Base
             {
                 foreach (SubWindow sw in windowManager.SubWindows)
                 {
-                    tsmi.AddMenuItem(sw);
+                    tsmi.addMenuItem(sw);
                 }
             }
             windowManager.SubWindowAdded += (o, e) =>
             {
-                tsmi.AddMenuItem(e.SubWindow);
+                tsmi.addMenuItem(e.SubWindow);
             };
         }
 
-        public static void AddMenuItem(this ToolStripMenuItem tsmi, SubWindow sw)
+        private static void addMenuItem(this ToolStripMenuItem tsmi, SubWindow sw)
         {
-            ToolStripMenuItem item = new ToolStripMenuItem() { Text = sw.Text, Name = sw.Name };
+            ToolStripMenuItem item = new ToolStripMenuItem() { Name = sw.Name };
+            item.setText(sw);
             item.Checked = sw.Visible;
             item.CheckOnClick = true;
             item.CheckedChanged += (o, e) => { sw.Visible = ((ToolStripMenuItem)o).Checked; };
             sw.VisibleChanged += (o, e) => { item.Checked = ((SubWindow)sw).Visible; };
+            sw.DockStateChanged += (o, e) => { item.setText(sw); };
             tsmi.DropDownItems.Add(item);
+        }
+
+        private static void setText(this ToolStripMenuItem tsmi, SubWindow sw)
+        {
+            tsmi.Text = sw.Text;
+            tsmi.ShortcutKeyDisplayString = sw.DockState.ToText();
         }
     }
 }

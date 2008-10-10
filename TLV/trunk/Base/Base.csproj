@@ -45,7 +45,7 @@
     <Compile Include="TransactionManager\ITransaction.cs" />
     <Compile Include="TransactionManager\ITransactionManager.cs" />
     <Compile Include="TransactionManager\TransactionManager.cs" />
-    <Compile Include="WindowManager\ToolStripMenuItemExtension.cs" />
+    <Compile Include="Extensions\ToolStripMenuItemExtensions.cs" />
     <Compile Include="WindowManager\WindowManager.cs" />
     <Compile Include="WindowManager\IWindowManagerHandler.cs" />
     <Compile Include="WindowManager\SubWindow.cs" />

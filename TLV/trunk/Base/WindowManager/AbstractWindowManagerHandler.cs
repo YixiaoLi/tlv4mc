@@ -106,11 +106,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
             return _subWindows[name];
         }
 
-        public virtual void OnSubWindowDockStateChanged(object sender, SubWindowEventArgs e)
+        protected virtual void OnSubWindowDockStateChanged(object sender, SubWindowEventArgs e)
         {
         }
 
-        public virtual void OnSubWindowVisibleChanged(object sender, SubWindowEventArgs e)
+        protected virtual void OnSubWindowVisibleChanged(object sender, SubWindowEventArgs e)
         {
         }
 

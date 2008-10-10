@@ -147,7 +147,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// </summary>
         /// <param name="sender"><c>DockState</c>が変化した<c>SubWindow</c></param>
         /// <param name="e"><c>EventArgs.Empty</c></param>
-        public virtual void OnSubWindowDockStateChanged(object sender, SubWindowEventArgs e)
+        protected virtual void OnSubWindowDockStateChanged(object sender, SubWindowEventArgs e)
         {
         }
         /// <summary>
@@ -155,7 +155,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// </summary>
         /// <param name="sender"><c>Visible</c>が変化した<c>SubWindow</c></param>
         /// <param name="e"><c>EventArgs.Empty</c></param>
-        public virtual void OnSubWindowVisibleChanged(object sender, SubWindowEventArgs e)
+        protected virtual void OnSubWindowVisibleChanged(object sender, SubWindowEventArgs e)
         {
         }
         /// <summary>
