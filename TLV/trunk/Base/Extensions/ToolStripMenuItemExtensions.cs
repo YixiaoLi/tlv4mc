@@ -48,47 +48,47 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
     public static class ToolStripMenuItemForTransactionManagerExtensions
     {
-        public static void SetUndoMenu(this ToolStripMenuItem tsmi, TransactionManager transactionManager)
+        public static void SetUndoMenu(this ToolStripMenuItem tsmi, CommandManager commandManager)
         {
             tsmi.Enabled = false;
 
-            transactionManager.TransactionDone += (o, e) =>
+            commandManager.CommandDone += (o, e) =>
                 {
-                    tsmi.Text = "「" + transactionManager.UndoText + "」を元に戻す";
+                    tsmi.Text = "「" + commandManager.UndoText + "」を元に戻す";
                     tsmi.Click += (_o, _e) =>
                         {
-                            transactionManager.Undo();
+                            commandManager.Undo();
                         };
                 };
-            transactionManager.UndoBecameEnable += (o, e) =>
+            commandManager.UndoBecameEnable += (o, e) =>
                 {
                     tsmi.Enabled = true;
                 };
-            transactionManager.UndoBecameDisEnable += (o, e) =>
+            commandManager.UndoBecameDisEnable += (o, e) =>
             {
                 tsmi.Text = "元に戻す";
                 tsmi.Enabled = false;
             };
         }
 
-        public static void SetRedoMenu(this ToolStripMenuItem tsmi, TransactionManager transactionManager)
+        public static void SetRedoMenu(this ToolStripMenuItem tsmi, CommandManager commandManager)
         {
             tsmi.Enabled = false;
 
-            transactionManager.Undone += (o, e) =>
+            commandManager.CommandUndone += (o, e) =>
             {
-                tsmi.Text = "「" + transactionManager.RedoText + "」をやり直す";
+                tsmi.Text = "「" + commandManager.RedoText + "」をやり直す";
                 tsmi.Click += (_o, _e) =>
                     {
-                        transactionManager.Redo();
+                        commandManager.Redo();
                     };
             };
-            transactionManager.RedoBecameDisenable += (o, e) =>
+            commandManager.RedoBecameDisenable += (o, e) =>
             {
                 tsmi.Text = "やり戻す";
                 tsmi.Enabled = false;
             };
-            transactionManager.RedoBecameEnable += (o, e) =>
+            commandManager.RedoBecameEnable += (o, e) =>
             {
                 tsmi.Enabled = true;
             };

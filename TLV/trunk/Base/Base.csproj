@@ -42,10 +42,10 @@
   -->
   <ItemGroup>
     <Compile Include="GeneralEventArgs.cs" />
-    <Compile Include="TransactionManager\GeneralTransaction.cs" />
-    <Compile Include="TransactionManager\ITransaction.cs" />
-    <Compile Include="TransactionManager\ITransactionManager.cs" />
-    <Compile Include="TransactionManager\TransactionManager.cs" />
+    <Compile Include="CommandManager\GeneralCommand.cs" />
+    <Compile Include="CommandManager\ICommand.cs" />
+    <Compile Include="CommandManager\ICOmmandManager.cs" />
+    <Compile Include="CommandManager\CommandManager.cs" />
     <Compile Include="Extensions\ToolStripMenuItemExtensions.cs" />
     <Compile Include="WindowManager\WindowManager.cs" />
     <Compile Include="WindowManager\IWindowManager.cs" />
