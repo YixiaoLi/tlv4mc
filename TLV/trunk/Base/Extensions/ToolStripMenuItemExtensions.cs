@@ -52,46 +52,45 @@ namespace NU.OJL.MPRTOS.TLV.Base
         {
             tsmi.Enabled = false;
 
+            tsmi.Click += (_o, _e) =>
+                {
+                    commandManager.Undo();
+                };
+
             commandManager.CommandDone += (o, e) =>
                 {
-                    tsmi.Text = "「" + commandManager.UndoText + "」を元に戻す";
-                    tsmi.Click += (_o, _e) =>
-                        {
-                            commandManager.Undo();
-                        };
+                    tsmi.Text = commandManager.UndoText + "元に戻す";
                 };
-            commandManager.UndoBecameEnable += (o, e) =>
+            commandManager.UndoEnable += (o, e) =>
                 {
                     tsmi.Enabled = true;
                 };
-            commandManager.UndoBecameDisEnable += (o, e) =>
-            {
-                tsmi.Text = "元に戻す";
-                tsmi.Enabled = false;
-            };
+            commandManager.UndoDisEnable += (o, e) =>
+                {
+                    tsmi.Enabled = false;
+                };
         }
 
         public static void SetRedoMenu(this ToolStripMenuItem tsmi, CommandManager commandManager)
         {
             tsmi.Enabled = false;
+            tsmi.Click += (_o, _e) =>
+                {
+                    commandManager.Redo();
+                };
 
-            commandManager.CommandUndone += (o, e) =>
-            {
-                tsmi.Text = "「" + commandManager.RedoText + "」をやり直す";
-                tsmi.Click += (_o, _e) =>
-                    {
-                        commandManager.Redo();
-                    };
-            };
-            commandManager.RedoBecameDisenable += (o, e) =>
-            {
-                tsmi.Text = "やり戻す";
-                tsmi.Enabled = false;
-            };
-            commandManager.RedoBecameEnable += (o, e) =>
-            {
-                tsmi.Enabled = true;
-            };
+            commandManager.CommandDone += (o, e) =>
+                {
+                    tsmi.Text = commandManager.RedoText + "やり直す";
+                };
+            commandManager.RedoDisenable += (o, e) =>
+                {
+                    tsmi.Enabled = false;
+                };
+            commandManager.RedoEnable += (o, e) =>
+                {
+                    tsmi.Enabled = true;
+                };
         }
     }
 }

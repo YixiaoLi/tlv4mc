@@ -10,11 +10,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
         public event EventHandler<GeneralEventArgs<ICommand>> CommandDone;
         public event EventHandler<GeneralEventArgs<ICommand>> CommandUndone;
         public event EventHandler<GeneralEventArgs<ICommand>> CommandRedone;
-        public event EventHandler UndoBecameDisEnable;
-        public event EventHandler UndoBecameEnable;
-        public event EventHandler RedoBecameDisenable;
-        public event EventHandler RedoBecameEnable;
+        public event EventHandler UndoDisEnable;
+        public event EventHandler UndoEnable;
+        public event EventHandler RedoDisenable;
+        public event EventHandler RedoEnable;
         private bool _isUndoing = false;
+        private bool _isRedoing = false;
         private bool _canUndo = false;
         private bool _canRedo = false;
         private Stack<ICommand> _undoStack = new Stack<ICommand>();
@@ -22,13 +23,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
         public string UndoText
         {
-            get { return _undoStack.Peek().Text; }
+            get { return CanUndo ? "「" + _undoStack.Peek().Text + "」を" : ""; }
         }
         public string RedoText
         {
-            get { return _redoStack.Peek().Text; }
+            get { return CanRedo ? "「" + _redoStack.Peek().Text + "」を" : ""; }
         }
-
         public bool CanUndo
         {
             get { return _canUndo; }
@@ -37,6 +37,27 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 if (_canUndo != value)
                 {
                     _canUndo = value;
+
+                    if (_canUndo && UndoEnable != null)
+                        UndoEnable(this, EventArgs.Empty);
+                    else if (!_canUndo && UndoDisEnable != null)
+                        UndoDisEnable(this, EventArgs.Empty);
+                }
+            }
+        }
+        public bool CanRedo
+        {
+            get { return _canRedo; }
+            set
+            {
+                if (_canRedo != value)
+                {
+                    _canRedo = value;
+
+                    if (_canRedo && RedoEnable != null)
+                        RedoEnable(this, EventArgs.Empty);
+                    else if (!_canRedo && RedoDisenable != null)
+                        RedoDisenable(this, EventArgs.Empty);
                 }
             }
         }
@@ -49,20 +70,18 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
         public void Done(ICommand command)
         {
-            if (!_isUndoing)
+            if (!_isUndoing && !_isRedoing)
             {
+                if (_undoStack.Count == 0)
+                    CanUndo = true;
+
+                if (_redoStack.Count != 0)
+                {
+                    CanRedo = false;
+                    _redoStack.Clear();
+                }
+
                 _undoStack.Push(command);
-
-                if (_undoStack.Count != 0 && UndoBecameEnable != null)
-                    UndoBecameEnable(this, EventArgs.Empty);
-            }
-
-            if(_redoStack.Count != 0)
-            {
-                _redoStack.Clear();
-
-                if (RedoBecameDisenable != null)
-                    RedoBecameDisenable(this, EventArgs.Empty);
             }
 
             if (CommandDone != null)
@@ -71,44 +90,51 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
         public void Undo()
         {
-            if (_undoStack.Count != 0)
+            if (CanUndo)
             {
                 _isUndoing = true;
-                ICommand t = _undoStack.Pop();
-                t.Undo();
-                _redoStack.Push(t);
 
-                if (_redoStack.Count == 1 && RedoBecameEnable != null)
-                    RedoBecameEnable(this, EventArgs.Empty);
+                ICommand c = _undoStack.Pop();
 
-                if(_undoStack.Count == 0 && UndoBecameDisEnable != null)
-                    UndoBecameDisEnable(this, EventArgs.Empty);
+                if (_undoStack.Count == 0)
+                    CanUndo = false;
+
+                if (_redoStack.Count == 0)
+                    CanRedo = true;
+
+                _redoStack.Push(c);
+
+                c.Undo();
 
                 _isUndoing = false;
 
                 if (CommandUndone != null)
-                    CommandUndone(this, new GeneralEventArgs<ICommand>(t));
+                    CommandUndone(this, new GeneralEventArgs<ICommand>(c));
             }
         }
 
         public void Redo()
         {
-            if (_redoStack.Count != 0)
+            if (CanRedo)
             {
-                ICommand t = _redoStack.Pop();
+                _isRedoing = true;
 
-                t.Do();
+                ICommand c = _redoStack.Pop();
 
-                _undoStack.Push(t);
+                if (_redoStack.Count == 0)
+                    CanRedo = false;
 
-                if (_undoStack.Count == 1 && UndoBecameEnable != null)
-                    UndoBecameEnable(this, EventArgs.Empty);
+                if (_undoStack.Count == 0)
+                    CanUndo = true;
 
-                if (_redoStack.Count == 0 && RedoBecameDisenable != null)
-                    RedoBecameDisenable(this, EventArgs.Empty);
+                _undoStack.Push(c);
+
+                Do(c);
+
+                _isRedoing = false;
 
                 if (CommandRedone != null)
-                    CommandRedone(this, new GeneralEventArgs<ICommand>(t));
+                    CommandRedone(this, new GeneralEventArgs<ICommand>(c));
             }
         }
 
