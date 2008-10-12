@@ -13,7 +13,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     public partial class MainForm : Form
     {
         private IWindowManager _windowManager;
-        private TransactionManager _transactionManager;
+        private CommandManager _commandManager;
 
         public MainForm()
         {
@@ -21,7 +21,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             // アプリケーションに指定されたWindowManagerHandlerを使いWindowManagerを生成
             _windowManager = ApplicationFactory.WindowManager;
-            _transactionManager = ApplicationFactory.TransactionManager;
+            _commandManager = ApplicationFactory.TransactionManager;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -42,7 +42,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             _windowManager.AddSubWindow(sws);
             _windowManager.SubWindowDockStateChanged += (o, _e) =>
                 {
-                    _transactionManager.Done(new GeneralTransaction(
+                    _commandManager.Done(new GeneralCommand(
                         ((SubWindow)o).Text + " のドッキング箇所を " + _e.New.ToText() + " にする",
                         () =>
                         {
@@ -57,7 +57,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 {
                     string visible = _e.New ? "表示" : "非表示";
 
-                    _transactionManager.Done(new GeneralTransaction(
+                    _commandManager.Done(new GeneralCommand(
                         ((SubWindow)o).Text + " を " + visible + " にする",
                         () =>
                         {
@@ -70,8 +70,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 };
 
             viewToolStripMenuItem.SetWindowManager(_windowManager);
-            undoToolStripMenuItem.SetUndoMenu(_transactionManager);
-            redoToolStripMenuItem.SetRedoMenu(_transactionManager);
+            undoToolStripMenuItem.SetUndoMenu(_commandManager);
+            redoToolStripMenuItem.SetRedoMenu(_commandManager);
         }
     }
 }

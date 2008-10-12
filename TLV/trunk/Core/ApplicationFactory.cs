@@ -9,21 +9,21 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
     public static class ApplicationFactory
     {
-        private static TransactionManager _transactionManager;
+        private static CommandManager _commandManager;
 
         public static IWindowManager WindowManager
         {
             get { return new WeifenLuoWindowManager(); }
         }
 
-        public static TransactionManager TransactionManager
+        public static CommandManager TransactionManager
         {
-            get { return _transactionManager; }
+            get { return _commandManager; }
         }
 
         static ApplicationFactory()
         {
-            _transactionManager = new TransactionManager();
+            _commandManager = new CommandManager();
         }
     }
 }
