@@ -138,5 +138,23 @@ namespace NU.OJL.MPRTOS.TLV.Test
             Assert.AreEqual(target.Control, control);
             Assert.AreEqual(target.DockState, dockState);
         }
+
+        [TestMethod()]
+        public void EnabledTest()
+        {
+            string name = "test"; // TODO: 適切な値に初期化してください
+            Control control = new Control(); // TODO: 適切な値に初期化してください
+            DockState dockState = DockState.DockLeft; // TODO: 適切な値に初期化してください
+            SubWindow target = new SubWindow(name, control, dockState); // TODO: 適切な値に初期化してください
+            target.Enabled = true;
+            Assert.AreEqual(true, target.Enabled);
+            Assert.AreEqual(true, target.Visible);
+            target.Enabled = false;
+            Assert.AreEqual(false, target.Enabled);
+            Assert.AreEqual(false, target.Visible);
+            target.Enabled = true;
+            Assert.AreEqual(true, target.Enabled);
+            Assert.AreEqual(false, target.Visible);
+        }
     }
 }

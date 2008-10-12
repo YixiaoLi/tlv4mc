@@ -16,7 +16,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
             get { return new WeifenLuoWindowManager(); }
         }
 
-        public static CommandManager TransactionManager
+        /// <summary>
+        /// <c>CommandManager</c>のインスタンス。これはシングルトンなインスタンスである。
+        /// </summary>
+        public static CommandManager CommandManager
         {
             get { return _commandManager; }
         }

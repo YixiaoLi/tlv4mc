@@ -42,6 +42,7 @@
   -->
   <ItemGroup>
     <Compile Include="CommandManager\ICommandManager.cs" />
+    <Compile Include="CommandManager\MacroCommand.cs" />
     <Compile Include="GeneralEventArgs.cs" />
     <Compile Include="CommandManager\GeneralCommand.cs" />
     <Compile Include="CommandManager\ICommand.cs" />

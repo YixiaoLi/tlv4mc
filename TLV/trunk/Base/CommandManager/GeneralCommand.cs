@@ -10,13 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         public string Text { get; set; }
         public Action DoAction { get; set; }
         public Action UndoAction { get; set; }
-
-        public GeneralCommand(string text, Action _do, Action undo)
-        {
-            Text = text;
-            DoAction = _do;
-            UndoAction = undo;
-        }
+        public bool CanUndo { get; private set; }
 
         public void Do()
         {
@@ -28,11 +22,25 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
         public void Undo()
         {
-            if (UndoAction != null)
+            if (CanUndo && UndoAction != null)
             {
                 UndoAction();
             }
         }
+        /// <summary>
+        /// <c>GeneralCommand</c>のインスタンスを生成する
+        /// </summary>
+        /// <param name="text">コマンドの説明</param>
+        /// <param name="_do">コマンドの処理</param>
+        /// <param name="undo">コマンド結果を元に戻す処理</param>
+        public GeneralCommand(string text, Action _do, Action undo)
+        {
+            Text = text;
+            DoAction = _do;
+            UndoAction = undo;
+            CanUndo = (undo != null);
+        }
+
     }
 
 }

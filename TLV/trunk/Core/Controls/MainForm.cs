@@ -19,9 +19,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             InitializeComponent();
 
-            // アプリケーションに指定されたWindowManagerHandlerを使いWindowManagerを生成
             _windowManager = ApplicationFactory.WindowManager;
-            _commandManager = ApplicationFactory.TransactionManager;
+            _commandManager = ApplicationFactory.CommandManager;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -34,44 +33,38 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 new SubWindow("sb4", new Control(), DockState.DockBottom) { Text = "サブウィンドウ4", Visible = false },
                 new SubWindow("sb1", new Control(), DockState.DockLeft),
                 new SubWindow("sb2", new Control(), DockState.DockRight) { Text = "サブウィンドウ2" },
-                new SubWindow("sb5", new Control(), DockState.DockLeft) { Text = "サブウィンドウ5" },
+                new SubWindow("sb5", new Control(), DockState.DockLeft) { Text = "サブウィンドウ5", Enabled = false },
             };
+
+            undoToolStripMenuItem.SetCommandManagerAsUndo(_commandManager);
+            redoToolStripMenuItem.SetCommandManagerAsRedo(_commandManager);
+
+            EventHandler<GeneralChangedEventArgs<DockState>> d = (o, _e) => { _commandManager.Done(new ChangeSubWindowDockStateCommand(((SubWindow)o), _e.Old, _e.New)); };
+            EventHandler<GeneralChangedEventArgs<bool>> v = (o, _e) => { _commandManager.Done(new ChangeSubWindowVisiblityCommand(((SubWindow)o), _e.New)); };
 
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
             _windowManager.MainPanel = new Control();
             _windowManager.AddSubWindow(sws);
-            _windowManager.SubWindowDockStateChanged += (o, _e) =>
-                {
-                    _commandManager.Done(new GeneralCommand(
-                        ((SubWindow)o).Text + " のドッキング箇所を " + _e.New.ToText() + " にする",
-                        () =>
-                        {
-                            ((SubWindow)o).DockState = _e.New;
-                        },
-                        () =>
-                        {
-                            ((SubWindow)o).DockState = _e.Old;
-                        }));
-                };
-            _windowManager.SubWindowVisibleChanged += (o, _e) =>
-                {
-                    string visible = _e.New ? "表示" : "非表示";
-
-                    _commandManager.Done(new GeneralCommand(
-                        ((SubWindow)o).Text + " を " + visible + " にする",
-                        () =>
-                        {
-                            ((SubWindow)o).Visible = _e.New;
-                        },
-                        () =>
-                        {
-                            ((SubWindow)o).Visible = _e.Old;
-                        }));
-                };
-
+            _windowManager.SubWindowDockStateChanged += d;
+            _windowManager.SubWindowVisibleChanged += v;
             viewToolStripMenuItem.SetWindowManager(_windowManager);
-            undoToolStripMenuItem.SetUndoMenu(_commandManager);
-            redoToolStripMenuItem.SetRedoMenu(_commandManager);
+
+            showAllToolStripMenuItem.Click += (o, _e) =>
+            {
+                _windowManager.SubWindowVisibleChanged -= v;
+                _commandManager.Do(new MacroCommand(
+                    from sw in sws where !sw.Visible && sw.Enabled
+                    select (ICommand)(new ChangeSubWindowVisiblityCommand(sw, true))) { Text= "すべてのウィンドウを表示する" });
+                _windowManager.SubWindowVisibleChanged += v;
+            };
+            hideAllToolStripMenuItem.Click += (o, _e) =>
+            {
+                _windowManager.SubWindowVisibleChanged -= v;
+                _commandManager.Do(new MacroCommand(
+                    from sw in sws where sw.Visible && sw.Enabled
+                    select (ICommand)(new ChangeSubWindowVisiblityCommand(sw, false))) { Text = "すべてのウィンドウを非表示にする" });
+                _windowManager.SubWindowVisibleChanged += v;
+            };
         }
     }
 }

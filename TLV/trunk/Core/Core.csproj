@@ -42,6 +42,9 @@
   -->
   <ItemGroup>
     <Compile Include="ApplicationFactory.cs" />
+    <Compile Include="Commands\ChangeSubWindowDockStateCommand.cs" />
+    <Compile Include="Commands\ChangeSubWindowVisiblityCommand.cs" />
+    <Compile Include="Commands\ChangeSubWindowEnabledCommand.cs" />
     <Compile Include="Controls\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

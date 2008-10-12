@@ -7,6 +7,22 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
     public class CommandManager : ICommandManager
     {
+        private delegate void PushHandelr(ICommand command);
+        private delegate ICommand PopHandelr();
+        private delegate void ClearHandelr();
+        private delegate string GetTextHandelr();
+        private event PushHandelr _pushUndo;
+        private event PopHandelr _popUndo;
+        private event PushHandelr _pushRedo;
+        private event PopHandelr _popRedo;
+        private event GetTextHandelr _undoText;
+        private event GetTextHandelr _redoText;
+        private event ClearHandelr _clearRedo;
+        private bool _isUndoing = false;
+        private bool _isRedoing = false;
+        private bool _canUndo = false;
+        private bool _canRedo = false;
+
         public event EventHandler<GeneralEventArgs<ICommand>> CommandDone;
         public event EventHandler<GeneralEventArgs<ICommand>> CommandUndone;
         public event EventHandler<GeneralEventArgs<ICommand>> CommandRedone;
@@ -14,20 +30,14 @@ namespace NU.OJL.MPRTOS.TLV.Base
         public event EventHandler UndoEnable;
         public event EventHandler RedoDisenable;
         public event EventHandler RedoEnable;
-        private bool _isUndoing = false;
-        private bool _isRedoing = false;
-        private bool _canUndo = false;
-        private bool _canRedo = false;
-        private Stack<ICommand> _undoStack = new Stack<ICommand>();
-        private Stack<ICommand> _redoStack = new Stack<ICommand>();
 
         public string UndoText
         {
-            get { return CanUndo ? "「" + _undoStack.Peek().Text + "」を" : ""; }
+            get { return CanUndo ? "「" + _undoText() + "」を" : ""; }
         }
         public string RedoText
         {
-            get { return CanRedo ? "「" + _redoStack.Peek().Text + "」を" : ""; }
+            get { return CanRedo ? "「" + _redoText() + "」を" : ""; }
         }
         public bool CanUndo
         {
@@ -62,47 +72,42 @@ namespace NU.OJL.MPRTOS.TLV.Base
             }
         }
 
+        /// <summary>
+        /// <paramref name="command"/>を実行する
+        /// </summary>
+        /// <param name="command">実行するコマンド</param>
         public void Do(ICommand command)
         {
             command.Do();
             Done(command);
         }
-
+        /// <summary>
+        /// <paramref name="command"/>で行う処理が既に行われてしまったときに実行する
+        /// </summary>
+        /// <param name="command">実行したコマンド</param>
         public void Done(ICommand command)
         {
             if (!_isUndoing && !_isRedoing)
             {
-                if (_undoStack.Count == 0)
-                    CanUndo = true;
-
-                if (_redoStack.Count != 0)
-                {
-                    CanRedo = false;
-                    _redoStack.Clear();
-                }
-
-                _undoStack.Push(command);
+                _pushUndo(command);
+                _clearRedo();
             }
 
             if (CommandDone != null)
                 CommandDone(this, new GeneralEventArgs<ICommand>(command));
         }
-
+        /// <summary>
+        /// 一つ前のコマンドを元に戻す
+        /// </summary>
         public void Undo()
         {
             if (CanUndo)
             {
                 _isUndoing = true;
 
-                ICommand c = _undoStack.Pop();
+                ICommand c = _popUndo();
 
-                if (_undoStack.Count == 0)
-                    CanUndo = false;
-
-                if (_redoStack.Count == 0)
-                    CanRedo = true;
-
-                _redoStack.Push(c);
+                _pushRedo(c);
 
                 c.Undo();
 
@@ -112,22 +117,18 @@ namespace NU.OJL.MPRTOS.TLV.Base
                     CommandUndone(this, new GeneralEventArgs<ICommand>(c));
             }
         }
-
+        /// <summary>
+        /// 一つ前にアンドゥしたものをやり直す
+        /// </summary>
         public void Redo()
         {
             if (CanRedo)
             {
                 _isRedoing = true;
 
-                ICommand c = _redoStack.Pop();
+                ICommand c = _popRedo();
 
-                if (_redoStack.Count == 0)
-                    CanRedo = false;
-
-                if (_undoStack.Count == 0)
-                    CanUndo = true;
-
-                _undoStack.Push(c);
+                _pushUndo(c);
 
                 Do(c);
 
@@ -137,7 +138,65 @@ namespace NU.OJL.MPRTOS.TLV.Base
                     CommandRedone(this, new GeneralEventArgs<ICommand>(c));
             }
         }
+        /// <summary>
+        /// <c>CommandManager</c>クラスのインスタンスを生成する
+        /// </summary>
+        public CommandManager()
+        {
+            Stack<ICommand> undoStack = new Stack<ICommand>();
+            Stack<ICommand> redoStack = new Stack<ICommand>();
 
+            _pushUndo = (command) =>
+                {
+                    if (command.CanUndo)
+                    {
+                        if (undoStack.Count == 0)
+                            CanUndo = true;
 
+                        undoStack.Push(command);
+                    }
+                };
+            _popUndo = () =>
+                {
+                    ICommand c = undoStack.Pop();
+
+                    if (undoStack.Count == 0)
+                        CanUndo = false;
+
+                    return c;
+                };
+            _pushRedo = (command) =>
+                {
+                    if (redoStack.Count == 0)
+                        CanRedo = true;
+
+                    redoStack.Push(command);
+                };
+            _popRedo = () =>
+                {
+                    ICommand c = redoStack.Pop();
+
+                    if (redoStack.Count == 0)
+                        CanRedo = false;
+
+                    return c;
+                };
+            _clearRedo = () =>
+                {
+                    if (redoStack.Count != 0)
+                    {
+                        CanRedo = false;
+                        redoStack.Clear();
+                    }
+                };
+            _undoText = () =>
+                {
+                    return undoStack.Peek().Text;
+                };
+            _redoText = () =>
+                {
+                    return redoStack.Peek().Text;
+                };
+        }
     }
 }

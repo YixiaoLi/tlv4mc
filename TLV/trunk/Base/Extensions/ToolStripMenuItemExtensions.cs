@@ -10,7 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
     public static class ToolStripMenuItemForWindowManagerExtensions
     {
         /// <summary>
-        /// メニューとWindowManagerを関連付ける拡張メソッド
+        /// 表示メニューとWindowManagerを関連付ける拡張メソッド
         /// </summary>
         public static void SetWindowManager(this ToolStripMenuItem tsmi, IWindowManager windowManager)
         {
@@ -32,10 +32,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
             ToolStripMenuItem item = new ToolStripMenuItem() { Name = sw.Name };
             item.setSubWindowText(sw);
             item.Checked = sw.Visible;
+            item.Enabled = sw.Enabled;
             item.CheckOnClick = true;
             item.CheckedChanged += (o, e) => { sw.Visible = ((ToolStripMenuItem)o).Checked; };
             sw.VisibleChanged += (o, e) => { item.Checked = sw.Visible; };
             sw.DockStateChanged += (o, e) => { item.setSubWindowText(sw); };
+            sw.EnabledChanged += (o, e) => { item.Enabled = sw.Enabled; };
             tsmi.DropDownItems.Add(item);
         }
 
@@ -48,11 +50,14 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
     public static class ToolStripMenuItemForTransactionManagerExtensions
     {
-        public static void SetUndoMenu(this ToolStripMenuItem tsmi, CommandManager commandManager)
+        /// <summary>
+        /// 元に戻るメニューとWindowManagerを関連付ける拡張メソッド
+        /// </summary>
+        public static void SetCommandManagerAsUndo(this ToolStripMenuItem tsmi, ICommandManager commandManager)
         {
             tsmi.Enabled = false;
 
-            tsmi.Click += (_o, _e) =>
+            tsmi.Click += (o, e) =>
                 {
                     commandManager.Undo();
                 };
@@ -71,10 +76,14 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 };
         }
 
-        public static void SetRedoMenu(this ToolStripMenuItem tsmi, CommandManager commandManager)
+        /// <summary>
+        /// やり直すメニューとWindowManagerを関連付ける拡張メソッド
+        /// </summary>
+        public static void SetCommandManagerAsRedo(this ToolStripMenuItem tsmi, ICommandManager commandManager)
         {
             tsmi.Enabled = false;
-            tsmi.Click += (_o, _e) =>
+
+            tsmi.Click += (o, e) =>
                 {
                     commandManager.Redo();
                 };
