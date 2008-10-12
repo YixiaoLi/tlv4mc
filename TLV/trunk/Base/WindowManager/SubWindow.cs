@@ -12,12 +12,22 @@ namespace NU.OJL.MPRTOS.TLV.Base
     public class SubWindow
     {
         /// <summary>
-        /// DockStateが変わるときに発生するイベント
+        /// DockStateが変わるときに発生するイベント。
+        /// DockStateを変えるときはtrueを、変えないときはfalseを返すこと
+        /// </summary>
+        public event EventHandler<bool, GeneralChangedEventArgs<DockState>> DockStateChanging = null;
+        /// <summary>
+        /// DockStateが変ったときに発生するイベント
         /// </summary>
         public event EventHandler<GeneralChangedEventArgs<DockState>> DockStateChanged = null;
 
         /// <summary>
-        /// Visibleが変わるときに発生するイベント
+        /// Visibleが変わるときに発生するイベント。
+        /// Visibleを変えるときはtrueを、変えないときはfalseを返すこと
+        /// </summary>
+        public event EventHandler<bool, GeneralChangedEventArgs<bool>> VisibleChanging = null;
+        /// <summary>
+        /// Visibleが変ったときに発生するイベント
         /// </summary>
         public event EventHandler<GeneralChangedEventArgs<bool>> VisibleChanged = null;
 
@@ -41,10 +51,13 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 {
                     DockState old = _dockState;
 
-                    _dockState = value;
+                    if (DockStateChanging == null || DockStateChanging(this, new GeneralChangedEventArgs<DockState>(old, _dockState)))
+                    {
+                        _dockState = value;
 
-                    if (DockStateChanged != null)
-                        DockStateChanged(this, new GeneralChangedEventArgs<DockState>(old, _dockState));
+                        if (DockStateChanged != null)
+                            DockStateChanged(this, new GeneralChangedEventArgs<DockState>(old, _dockState));
+                    }
                 }
             }
         }
@@ -60,10 +73,13 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 {
                     bool old = _visible;
 
-                    _visible = value;
+                    if (VisibleChanging == null || VisibleChanging(this, new GeneralChangedEventArgs<bool>(old, _visible)))
+                    {
+                        _visible = value;
 
-                    if (VisibleChanged != null)
-                        VisibleChanged(this, new GeneralChangedEventArgs<bool>(old, _visible) );
+                        if (VisibleChanged != null)
+                            VisibleChanged(this, new GeneralChangedEventArgs<bool>(old, _visible));
+                    }
                 }
             }
         }

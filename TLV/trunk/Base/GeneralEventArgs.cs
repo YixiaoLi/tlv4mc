@@ -5,6 +5,9 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Base
 {
+    [SerializableAttribute]
+    public delegate TResult EventHandler<TResult, TEventArgs>(Object sender, TEventArgs e) where TEventArgs : EventArgs;
+
     public class GeneralEventArgs<T> : EventArgs
     {
         public T Arg { get; private set; }

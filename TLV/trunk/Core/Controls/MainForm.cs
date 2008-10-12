@@ -42,7 +42,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             _windowManager.AddSubWindow(sws);
             _windowManager.SubWindowDockStateChanged += (o, _e) =>
                 {
-                    _transactionManager.Done(new GeneralTransaction(((SubWindow)o).Text + "のドッキング箇所を" + _e.New.ToText() + "にする",
+                    _transactionManager.Done(new GeneralTransaction(
+                        ((SubWindow)o).Text + " のドッキング箇所を " + _e.New.ToText() + " にする",
                         () =>
                         {
                             ((SubWindow)o).DockState = _e.New;
@@ -50,6 +51,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                         () =>
                         {
                             ((SubWindow)o).DockState = _e.Old;
+                        }));
+                };
+            _windowManager.SubWindowVisibleChanged += (o, _e) =>
+                {
+                    string visible = _e.New ? "表示" : "非表示";
+
+                    _transactionManager.Done(new GeneralTransaction(
+                        ((SubWindow)o).Text + " を " + visible + " にする",
+                        () =>
+                        {
+                            ((SubWindow)o).Visible = _e.New;
+                        },
+                        () =>
+                        {
+                            ((SubWindow)o).Visible = _e.Old;
                         }));
                 };
 

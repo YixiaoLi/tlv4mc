@@ -16,11 +16,27 @@ namespace NU.OJL.MPRTOS.TLV.Base
         private SubWindowCollection _subWindows = new SubWindowCollection();
         private Control _mainPanel = null;
 
-        public event EventHandler<GeneralEventArgs<SubWindow>> SubWindowAdded;
+        public event EventHandler<GeneralEventArgs<SubWindow>> SubWindowAdded = null;
 
-        public event EventHandler<GeneralChangedEventArgs<DockState>> SubWindowDockStateChanged;
+        /// <summary>
+        /// 管理下のSubWindowのDockStateが変わるときに発生するイベント。
+        /// DockStateを変えるときはtrueを、変えないときはfalseを返すこと。
+        /// </summary>
+        public event EventHandler<bool, GeneralChangedEventArgs<DockState>> SubWindowDockStateChanging = null;
+        /// <summary>
+        /// 管理下のSubWindowのDockStateが変ったときに発生するイベント
+        /// </summary>
+        public event EventHandler<GeneralChangedEventArgs<DockState>> SubWindowDockStateChanged = null;
 
-        public event EventHandler<GeneralChangedEventArgs<bool>> SubWindowVisibleChanged;
+        /// <summary>
+        /// 管理下のSubWindowのVisibleが変わるときに発生するイベント。
+        /// Visibleを変えるときはtrueを、変えないときはfalseを返すこと
+        /// </summary>
+        public event EventHandler<bool, GeneralChangedEventArgs<bool>> SubWindowVisibleChanging = null;
+        /// <summary>
+        /// 管理下のSubWindowのVisibleが変ったときに発生するイベント
+        /// </summary>
+        public event EventHandler<GeneralChangedEventArgs<bool>> SubWindowVisibleChanged = null;
 
         /// <summary>
         /// この<c>WindowManager</c>を格納する<c>Control</c>
@@ -62,7 +78,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
             {
                 _subWindows.Add(sw);
 
+                sw.DockStateChanging += OnSubWindowDockStateChanging;
                 sw.DockStateChanged += OnSubWindowDockStateChanged;
+                sw.VisibleChanging += OnSubWindowVisibleChanging;
                 sw.VisibleChanged += OnSubWindowVisibleChanged;
 
                 if (sw.Visible)
@@ -195,6 +213,29 @@ namespace NU.OJL.MPRTOS.TLV.Base
             if (SubWindowVisibleChanged != null)
                 SubWindowVisibleChanged(sender, e);
         }
-
+        /// <summary>
+        /// 管理する<c>SubWindow</c>のどれかの<c>DockState</c>プロパティの値が変化するときに呼び出される
+        /// </summary>
+        /// <param name="sender"><c>DockState</c>が変化した<c>SubWindow</c></param>
+        /// <param name="e"><c>EventArgs.Empty</c></param>
+        protected virtual bool OnSubWindowDockStateChanging(object sender, GeneralChangedEventArgs<DockState> e)
+        {
+            if (SubWindowDockStateChanging != null)
+                return SubWindowDockStateChanging(sender, e);
+            else
+                return true;
+        }
+        /// <summary>
+        /// 管理する<c>SubWindow</c>のどれかの<c>Visible</c>プロパティの値が変化するときに呼び出される
+        /// </summary>
+        /// <param name="sender"><c>Visible</c>が変化した<c>SubWindow</c></param>
+        /// <param name="e"><c>EventArgs.Empty</c></param>
+        protected virtual bool OnSubWindowVisibleChanging(object sender, GeneralChangedEventArgs<bool> e)
+        {
+            if (SubWindowVisibleChanging != null)
+                return SubWindowVisibleChanging(sender, e);
+            else
+                return true;
+        }
     }
 }
