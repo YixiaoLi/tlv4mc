@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<kernelObjects xmlns="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource/ITRON4" >
+<kernelObjects xmlns="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource/ITRON4">
   <tasks>
     <task>
       <name>LOGTASK</name>

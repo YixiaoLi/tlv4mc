@@ -4,10 +4,6 @@
 >
   <xsl:output method="xml" indent="yes"/>
 
-  <xsl:template match="/">
-    <xsl:apply-templates />
-  </xsl:template>
-
   <xsl:template match="kernelObjects">
     <resources xmlns="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource">
       <xsl:apply-templates />
