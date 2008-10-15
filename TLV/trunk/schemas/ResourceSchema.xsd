@@ -8,40 +8,40 @@
   <!-- =================================================================== -->
   <!-- simpleTypes                                                         -->
   <!-- =================================================================== -->
-  <xs:simpleType name="AttributeType_type">
-    <xs:restriction base="tns:Type_type">
-      <xs:enumeration value="Static" />
-      <xs:enumeration value="Dynamic" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="AllocationType_type">
-    <xs:restriction base="tns:Type_type">
-      <xs:enumeration value="Boolean" />
-      <xs:enumeration value="Decimal" />
-      <xs:enumeration value="String" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="VariableType_type">
-    <xs:restriction base="tns:Type_type">
-      <xs:enumeration value="Static" />
-      <xs:enumeration value="Dynamic" />
-    </xs:restriction>
-  </xs:simpleType>
 
   <xs:simpleType name="Name_type">
-    <xs:restriction base="xs:NCName" />
-  </xs:simpleType>
-
-  <xs:simpleType name="Type_type">
-    <xs:restriction base="xs:NCName" />
+    <xs:restriction base="xs:ID" />
   </xs:simpleType>
 
   <xs:simpleType name="Value_type">
     <xs:restriction base="xs:string" />
   </xs:simpleType>
 
+  <xs:simpleType name="Type_type">
+    <xs:restriction base="xs:NCName" />
+  </xs:simpleType>
+
+  <xs:simpleType name="VariableType_type">
+    <xs:restriction base="tns:Type_type">
+      <xs:enumeration value="Boolean" />
+      <xs:enumeration value="Decimal" />
+      <xs:enumeration value="String" />
+      <xs:enumeration value="Enumeration" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="AllocationType_type">
+    <xs:restriction base="tns:Type_type">
+      <xs:enumeration value="Static" />
+      <xs:enumeration value="Dynamic" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Grouping_type">
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  
+  
 
   <!-- =================================================================== -->
   <!-- complexTypes                                                        -->
@@ -71,15 +71,15 @@
       <xs:element name="value" type="tns:Value_type" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="variableType" type="tns:VariableType_type" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="allocationType" type="tns:AllocationType_type" minOccurs ="1" maxOccurs ="1" />
+      <xs:element name="grouping" type="tns:Grouping_type" minOccurs="0" maxOccurs ="1" default="false" />
     </xs:sequence>
   </xs:complexType>
 
-
+  
 
   <!-- =================================================================== -->
   <!-- elementDefine                                                       -->
   <!-- =================================================================== -->
   <xs:element name="resources" type="tns:Resources_type" />
-  <xs:element name="resource" type="tns:Resource_type" />
 
 </xs:schema>

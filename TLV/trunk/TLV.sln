@@ -24,20 +24,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionItems", "solutionIt
 		TLV3.vsmdi = TLV3.vsmdi
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schemas", "schemas", "{2B259C0E-5A3F-4A58-99F1-F7F5037668CE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schemas", "schemas", "{75C5952A-8A89-4C76-B198-19D33D54CAC2}"
 	ProjectSection(SolutionItems) = preProject
-		ITRON4.xsd = ITRON4.xsd
-		ResourceSchema.xsd = ResourceSchema.xsd
+		schemas\ITRON4.xsd = schemas\ITRON4.xsd
+		schemas\ResourceSchema.xsd = schemas\ResourceSchema.xsd
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{2B77F4D7-3FB7-4E89-A8FF-921450C3147E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xslt", "xslt", "{BA18A2C1-3C9D-4279-B894-69F69CB4AD7B}"
 	ProjectSection(SolutionItems) = preProject
-		SampleResources.xml = SampleResources.xml
+		xslt\ITRON4.xslt = xslt\ITRON4.xslt
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xslts", "xslts", "{10AFB196-2D6A-4A79-9579-AD9D9E3AB03C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{92DADFFC-3815-4346-B504-00E1C119B730}"
 	ProjectSection(SolutionItems) = preProject
-		ITRON4.xslt = ITRON4.xslt
+		sampleFiles\SampleITRONResources.xml = sampleFiles\SampleITRONResources.xml
+		sampleFiles\SampleResources.xml = sampleFiles\SampleResources.xml
 	EndProjectSection
 EndProject
 Global

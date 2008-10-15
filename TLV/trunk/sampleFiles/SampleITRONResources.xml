@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kernelObjects xmlns="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource/ITRON4" >
+  <tasks>
+    <task>
+      <name>LOGTASK</name>
+      <id>0</id>
+      <atr>TA_ACT</atr>
+      <pri>3</pri>
+      <exinf>1</exinf>
+      <task>logtask_main</task>
+      <stksz>1024</stksz>
+      <stk>NULL</stk>
+    </task>
+    <task>
+      <name>MAIN_TASK</name>
+      <id>1</id>
+      <atr>TA_ACT</atr>
+      <pri>5</pri>
+      <exinf>0</exinf>
+      <task>main_task</task>
+      <stksz>4096</stksz>
+      <stk>NULL</stk>
+    </task>
+  </tasks>
+</kernelObjects>
