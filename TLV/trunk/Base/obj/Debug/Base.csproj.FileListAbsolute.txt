@@ -3,3 +3,8 @@ C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Bas
 C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
 C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
 C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb

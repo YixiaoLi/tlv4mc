@@ -26,7 +26,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionItems", "solutionIt
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schemas", "schemas", "{2B259C0E-5A3F-4A58-99F1-F7F5037668CE}"
 	ProjectSection(SolutionItems) = preProject
+		ITRON4.xsd = ITRON4.xsd
 		ResourceSchema.xsd = ResourceSchema.xsd
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{2B77F4D7-3FB7-4E89-A8FF-921450C3147E}"
+	ProjectSection(SolutionItems) = preProject
+		SampleResources.xml = SampleResources.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xslts", "xslts", "{10AFB196-2D6A-4A79-9579-AD9D9E3AB03C}"
+	ProjectSection(SolutionItems) = preProject
+		ITRON4.xslt = ITRON4.xslt
 	EndProjectSection
 EndProject
 Global

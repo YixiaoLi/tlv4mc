@@ -4,32 +4,10 @@
     xmlns:tns="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
-  
+
   <!-- =================================================================== -->
   <!-- simpleTypes                                                         -->
   <!-- =================================================================== -->
-  <xs:simpleType name="ITRON4_KernelObject_Type_type">
-    <xs:restriction base="tns:Type_type">
-      <xs:enumeration value="Task" />
-      <xs:enumeration value="TaskExceptionHandler" />
-      <xs:enumeration value="Semaphore" />
-      <xs:enumeration value="Eventflag" />
-      <xs:enumeration value="DataQueue" />
-      <xs:enumeration value="Mailbox" />
-      <xs:enumeration value="Mutex" />
-      <xs:enumeration value="MessageBuffer" />
-      <xs:enumeration value="RendezvousPort" />
-      <xs:enumeration value="FixedSizedMemoryPool" />
-      <xs:enumeration value="VariableSizedMemoryPool" />
-      <xs:enumeration value="CyclicHandler" />
-      <xs:enumeration value="AlarmHandler" />
-      <xs:enumeration value="OverRunHandler" />
-      <xs:enumeration value="InterruptHandler" />
-      <xs:enumeration value="ExtendedServiceCall" />
-      <xs:enumeration value="CPUExceptionHandler" />
-    </xs:restriction>
-  </xs:simpleType>
-
   <xs:simpleType name="AttributeType_type">
     <xs:restriction base="tns:Type_type">
       <xs:enumeration value="Static" />
@@ -44,18 +22,18 @@
       <xs:enumeration value="String" />
     </xs:restriction>
   </xs:simpleType>
-  
+
   <xs:simpleType name="VariableType_type">
     <xs:restriction base="tns:Type_type">
       <xs:enumeration value="Static" />
       <xs:enumeration value="Dynamic" />
     </xs:restriction>
   </xs:simpleType>
-  
+
   <xs:simpleType name="Name_type">
     <xs:restriction base="xs:NCName" />
   </xs:simpleType>
-  
+
   <xs:simpleType name="Type_type">
     <xs:restriction base="xs:NCName" />
   </xs:simpleType>
@@ -77,7 +55,6 @@
   <xs:complexType name="Resource_type">
     <xs:sequence>
       <xs:element name="name" type="tns:Name_type" minOccurs ="1" maxOccurs ="1" />
-      <xs:element name="type" type="tns:Type_type" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="attributes" type="tns:Attributes_type" minOccurs ="1" maxOccurs ="1" />
     </xs:sequence>
   </xs:complexType>
@@ -94,16 +71,15 @@
       <xs:element name="value" type="tns:Value_type" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="variableType" type="tns:VariableType_type" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="allocationType" type="tns:AllocationType_type" minOccurs ="1" maxOccurs ="1" />
-      <xs:element name="nullable" type ="xs:boolean" default="true" minOccurs="1" maxOccurs="1" />
     </xs:sequence>
   </xs:complexType>
-  
-  
+
+
 
   <!-- =================================================================== -->
   <!-- elementDefine                                                       -->
   <!-- =================================================================== -->
   <xs:element name="resources" type="tns:Resources_type" />
   <xs:element name="resource" type="tns:Resource_type" />
-  
+
 </xs:schema>
