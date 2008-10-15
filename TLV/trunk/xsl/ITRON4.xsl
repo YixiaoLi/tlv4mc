@@ -1,17 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl"
->
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:output method="xml" indent="yes"/>
-
-  <xsl:template match="kernelObjects">
+  
+  <xsl:template match="/">
     <resources xmlns="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource">
       <xsl:apply-templates />
     </resources>
-  </xsl:template>
-
-  <xsl:template match="tasks">
-    <xsl:apply-templates />
   </xsl:template>
   
   <xsl:template match="task">
