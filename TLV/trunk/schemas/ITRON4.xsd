@@ -4,7 +4,7 @@
     xmlns:tns="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource/ITRON4"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
-  
+
   <!-- =================================================================== -->
   <!-- simpleTypes                                                         -->
   <!-- =================================================================== -->
@@ -13,7 +13,7 @@
     <xs:restriction base="xs:ID" />
   </xs:simpleType>
 
-  
+
 
   <!-- =================================================================== -->
   <!-- complexTypes                                                        -->
@@ -202,12 +202,12 @@
     <xs:sequence>
     </xs:sequence>
   </xs:complexType>
-  
+
 
 
   <!-- =================================================================== -->
   <!-- elementDefine                                                       -->
   <!-- =================================================================== -->
   <xs:element name="kernelObjects" type="tns:KernelObjects_type" />
-  
+
 </xs:schema>

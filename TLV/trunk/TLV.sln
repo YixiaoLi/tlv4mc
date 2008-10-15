@@ -32,7 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schemas", "schemas", "{75C5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xsl", "xsl", "{BA18A2C1-3C9D-4279-B894-69F69CB4AD7B}"
 	ProjectSection(SolutionItems) = preProject
-		xsl\ITRON4.xsl = xsl\ITRON4.xsl
+		..\..\..\..\..\..\Documents and Settings\junji\デスクトップ\ITRON4.xsl = ..\..\..\..\..\..\Documents and Settings\junji\デスクトップ\ITRON4.xsl
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{92DADFFC-3815-4346-B504-00E1C119B730}"

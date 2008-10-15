@@ -54,7 +54,7 @@
         <rs:attribute>
           <rs:name>exinf</rs:name>
           <rs:value>
-            <xsl:value-of select ="exinf"/>
+            <xsl:value-of select ="ko:exinf"/>
           </rs:value>
           <rs:variableType>Decimal</rs:variableType>
           <rs:allocationType>Static</rs:allocationType>
@@ -78,7 +78,7 @@
         <rs:attribute>
           <rs:name>stk</rs:name>
           <rs:value>
-            <xsl:value-of select ="stk"/>
+            <xsl:value-of select ="ko:stk"/>
           </rs:value>
           <rs:variableType>String</rs:variableType>
           <rs:allocationType>Static</rs:allocationType>
@@ -87,10 +87,10 @@
           <rs:name>state</rs:name>
           <rs:value>
             <xsl:choose>
-              <xsl:when test="ko:atr = TA_ACT">
+              <xsl:when test="ko:atr=TA_ACT">
                 RUNNING
               </xsl:when>
-              <xsl:when test="ko:atr = TA_NULL">
+              <xsl:when test="ko:atr=TA_NULL">
                 DORMANT
               </xsl:when>
             </xsl:choose>

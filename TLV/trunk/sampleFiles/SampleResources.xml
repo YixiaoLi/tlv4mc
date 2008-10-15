@@ -1,45 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource" >
-  <resource>
-    <name>TASK1</name>
-    <attributes>
-      <attribute>
-        <name>type</name>
-        <value>Task</value>
-        <variableType>String</variableType>
-        <allocationType>Static</allocationType>
-        <grouping>true</grouping>
-      </attribute>
-      <attribute>
-        <name>state</name>
-        <value>DORMANT</value>
-        <variableType>Enumeration</variableType>
-        <allocationType>Static</allocationType>
-      </attribute>
-      <attribute>
-        <name>id</name>
-        <value>1</value>
-        <variableType>Decimal</variableType>
-        <allocationType>Static</allocationType>
-      </attribute>
-      <attribute>
-        <name>atr</name>
-        <value>TA_NULL</value>
-        <variableType>String</variableType>
-        <allocationType>Static</allocationType>
-      </attribute>
-      <attribute>
-        <name>pri</name>
-        <value>11</value>
-        <variableType>Decimal</variableType>
-        <allocationType>Dynamic</allocationType>
-      </attribute>
-      <attribute>
-        <name>stksz</name>
-        <value>4096</value>
-        <variableType>Decimal</variableType>
-        <allocationType>Dynamic</allocationType>
-      </attribute>
-    </attributes>
-  </resource>
-</resources>
+<rs:resources xmlns:rs="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource" xmlns:ko="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource/ITRON4">
+  <rs:resource><rs:name>LOGTASK</rs:name><rs:attributes><rs:attribute><rs:name>type</rs:name><rs:value>Task</rs:value><rs:variableType>String</rs:variableType><rs:allocationType>Static</rs:allocationType><rs:grouping>true</rs:grouping></rs:attribute><rs:attribute><rs:name>id</rs:name><rs:value>0</rs:value><rs:variableType>Decimal</rs:variableType><rs:allocationType>Static</rs:allocationType></rs:attribute><rs:attribute><rs:name>atr</rs:name><rs:value>TA_ACT</rs:value><rs:variableType>String</rs:variableType><rs:allocationType>Static</rs:allocationType></rs:attribute><rs:attribute><rs:name>pri</rs:name><rs:value>3</rs:value><rs:variableType>Decimal</rs:variableType><rs:allocationType>Dynamic</rs:allocationType></rs:attribute><rs:attribute><rs:name>exinf</rs:name><rs:value>1</rs:value><rs:variableType>Decimal</rs:variableType><rs:allocationType>Static</rs:allocationType></rs:attribute><rs:attribute><rs:name>task</rs:name><rs:value>logtask_main</rs:value><rs:variableType>String</rs:variableType><rs:allocationType>Static</rs:allocationType></rs:attribute><rs:attribute><rs:name>stksz</rs:name><rs:value>1024</rs:value><rs:variableType>Decimal</rs:variableType><rs:allocationType>Static</rs:allocationType></rs:attribute><rs:attribute><rs:name>stk</rs:name><rs:value>NULL</rs:value><rs:variableType>String</rs:variableType><rs:allocationType>Static</rs:allocationType></rs:attribute><rs:attribute><rs:name>state</rs:name><rs:value /><rs:variableType>Enumeration</rs:variableType><rs:allocationType>Dynamic</rs:allocationType></rs:attribute></rs:attributes></rs:resource><rs:resource><rs:name>MAIN_TASK</rs:name><rs:attributes><rs:attribute><rs:name>type</rs:name><rs:value>Task</rs:value><rs:variableType>String</rs:variableType><rs:allocationType>Static</rs:allocationType><rs:grouping>true</rs:grouping></rs:attribute><rs:attribute><rs:name>id</rs:name><rs:value>1</rs:value><rs:variableType>Decimal</rs:variableType><rs:allocationType>Static</rs:allocationType></rs:attribute><rs:attribute><rs:name>atr</rs:name><rs:value>TA_ACT</rs:value><rs:variableType>String</rs:variableType><rs:allocationType>Static</rs:allocationType></rs:attribute><rs:attribute><rs:name>pri</rs:name><rs:value>5</rs:value><rs:variableType>Decimal</rs:variableType><rs:allocationType>Dynamic</rs:allocationType></rs:attribute><rs:attribute><rs:name>exinf</rs:name><rs:value>0</rs:value><rs:variableType>Decimal</rs:variableType><rs:allocationType>Static</rs:allocationType></rs:attribute><rs:attribute><rs:name>task</rs:name><rs:value>main_task</rs:value><rs:variableType>String</rs:variableType><rs:allocationType>Static</rs:allocationType></rs:attribute><rs:attribute><rs:name>stksz</rs:name><rs:value>4096</rs:value><rs:variableType>Decimal</rs:variableType><rs:allocationType>Static</rs:allocationType></rs:attribute><rs:attribute><rs:name>stk</rs:name><rs:value>NULL</rs:value><rs:variableType>String</rs:variableType><rs:allocationType>Static</rs:allocationType></rs:attribute><rs:attribute><rs:name>state</rs:name><rs:value /><rs:variableType>Enumeration</rs:variableType><rs:allocationType>Dynamic</rs:allocationType></rs:attribute></rs:attributes></rs:resource>
+</rs:resources>

@@ -8,21 +8,8 @@
   <!-- =================================================================== -->
   <!-- simpleTypes                                                         -->
   <!-- =================================================================== -->
-
-  <xs:simpleType name="Name_type">
-    <xs:restriction base="xs:ID" />
-  </xs:simpleType>
-
-  <xs:simpleType name="Value_type">
-    <xs:restriction base="xs:string" />
-  </xs:simpleType>
-
-  <xs:simpleType name="Type_type">
-    <xs:restriction base="xs:NCName" />
-  </xs:simpleType>
-
   <xs:simpleType name="VariableType_type">
-    <xs:restriction base="tns:Type_type">
+    <xs:restriction base="xs:NCName">
       <xs:enumeration value="Boolean" />
       <xs:enumeration value="Decimal" />
       <xs:enumeration value="String" />
@@ -31,14 +18,10 @@
   </xs:simpleType>
 
   <xs:simpleType name="AllocationType_type">
-    <xs:restriction base="tns:Type_type">
+    <xs:restriction base="xs:NCName">
       <xs:enumeration value="Static" />
       <xs:enumeration value="Dynamic" />
     </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="Grouping_type">
-    <xs:restriction base="xs:boolean" />
   </xs:simpleType>
   
   
@@ -54,7 +37,7 @@
 
   <xs:complexType name="Resource_type">
     <xs:sequence>
-      <xs:element name="name" type="tns:Name_type" minOccurs ="1" maxOccurs ="1" />
+      <xs:element name="name" type="xs:ID" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="attributes" type="tns:Attributes_type" minOccurs ="1" maxOccurs ="1" />
     </xs:sequence>
   </xs:complexType>
@@ -67,11 +50,11 @@
 
   <xs:complexType name="Attribute_type">
     <xs:sequence>
-      <xs:element name="name" type="tns:Name_type" minOccurs ="1" maxOccurs ="1" />
-      <xs:element name="value" type="tns:Value_type" minOccurs ="1" maxOccurs ="1" />
+      <xs:element name="name" type="xs:NCName" minOccurs ="1" maxOccurs ="1" />
+      <xs:element name="value" type="xs:string" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="variableType" type="tns:VariableType_type" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="allocationType" type="tns:AllocationType_type" minOccurs ="1" maxOccurs ="1" />
-      <xs:element name="grouping" type="tns:Grouping_type" minOccurs="0" maxOccurs ="1" default="false" />
+      <xs:element name="grouping" type="xs:boolean" minOccurs="0" maxOccurs ="1" default="false" />
     </xs:sequence>
   </xs:complexType>
 
