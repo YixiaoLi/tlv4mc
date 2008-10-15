@@ -30,9 +30,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schemas", "schemas", "{75C5
 		schemas\ResourceSchema.xsd = schemas\ResourceSchema.xsd
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xslt", "xslt", "{BA18A2C1-3C9D-4279-B894-69F69CB4AD7B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xsl", "xsl", "{BA18A2C1-3C9D-4279-B894-69F69CB4AD7B}"
 	ProjectSection(SolutionItems) = preProject
-		xslt\ITRON4.xslt = xslt\ITRON4.xslt
+		xsl\ITRON4.xsl = xsl\ITRON4.xsl
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{92DADFFC-3815-4346-B504-00E1C119B730}"
