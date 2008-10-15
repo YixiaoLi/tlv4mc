@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource/" >
+  <resource>
+    <name>TASK1</name>
+    <attributes>
+      <attribute>
+        <name>TYPE</name>
+        <value>Task</value>
+        <variableType>String</variableType>
+        <allocationType>Static</allocationType>
+      </attribute>
+      <attribute>
+        <name>ID</name>
+        <value>1</value>
+        <variableType>Decimal</variableType>
+        <allocationType>Static</allocationType>
+      </attribute>
+      <attribute>
+        <name>ATR</name>
+        <value>TA_NULL</value>
+        <variableType>String</variableType>
+        <allocationType>Static</allocationType>
+      </attribute>
+      <attribute>
+        <name>PRI</name>
+        <value>11</value>
+        <variableType>Decimal</variableType>
+        <allocationType>Dynamic</allocationType>
+      </attribute>
+      <attribute>
+        <name>STKSIZE</name>
+        <value>4096</value>
+        <variableType>Decimal</variableType>
+        <allocationType>Dynamic</allocationType>
+      </attribute>
+    </attributes>
+  </resource>
+</resources>

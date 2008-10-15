@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource/ITRON4"
+    elementFormDefault="qualified"
+    xmlns:tns="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource/ITRON4"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:rs="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource"
+>
+  <xs:import namespace="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource"
+             schemaLocation="ResourceSchema.xsd"/>
+  
+  <xs:simpleType name="Type_type">
+    <xs:restriction base="rs:Type_type">
+      <xs:enumeration value="Task" />
+      <xs:enumeration value="TaskExceptionHandler" />
+      <xs:enumeration value="Semaphore" />
+      <xs:enumeration value="Eventflag" />
+      <xs:enumeration value="DataQueue" />
+      <xs:enumeration value="Mailbox" />
+      <xs:enumeration value="Mutex" />
+      <xs:enumeration value="MessageBuffer" />
+      <xs:enumeration value="RendezvousPort" />
+      <xs:enumeration value="FixedSizedMemoryPool" />
+      <xs:enumeration value="VariableSizedMemoryPool" />
+      <xs:enumeration value="CyclicHandler" />
+      <xs:enumeration value="AlarmHandler" />
+      <xs:enumeration value="OverRunHandler" />
+      <xs:enumeration value="InterruptHandler" />
+      <xs:enumeration value="ExtendedServiceCall" />
+      <xs:enumeration value="CPUExceptionHandler" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>
