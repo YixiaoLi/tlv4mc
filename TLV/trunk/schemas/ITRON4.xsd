@@ -9,11 +9,6 @@
   <!-- simpleTypes                                                         -->
   <!-- =================================================================== -->
 
-  <xs:simpleType name="Name_type">
-    <xs:restriction base="xs:ID" />
-  </xs:simpleType>
-
-
 
   <!-- =================================================================== -->
   <!-- complexTypes                                                        -->
@@ -128,7 +123,6 @@
 
   <xs:complexType name="Task_type">
     <xs:sequence>
-      <xs:element name ="name" type ="tns:Name_type" minOccurs="1" maxOccurs="1" />
       <xs:element name ="id" type ="xs:int" minOccurs="1" maxOccurs="1" />
       <xs:element name ="atr" type ="xs:string" minOccurs="1" maxOccurs="1" />
       <xs:element name ="pri" type ="xs:int" minOccurs="1" maxOccurs="1" />
@@ -137,6 +131,7 @@
       <xs:element name ="stksz" type ="xs:unsignedInt" minOccurs="1" maxOccurs="1" />
       <xs:element name ="stk" type ="xs:string" minOccurs="1" maxOccurs="1" />
     </xs:sequence>
+    <xs:attribute name="name" type ="xs:ID" use ="required" />
   </xs:complexType>
   <xs:complexType name="Semaphore_type">
     <xs:sequence>

@@ -1,25 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ko:kernelObjects xmlns:ko="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource/ITRON4">
-  <ko:tasks>
-    <ko:task>
-      <ko:name>LOGTASK</ko:name>
-      <ko:id>0</ko:id>
-      <ko:atr>TA_ACT</ko:atr>
-      <ko:pri>3</ko:pri>
-      <ko:exinf>1</ko:exinf>
-      <ko:task>logtask_main</ko:task>
-      <ko:stksz>1024</ko:stksz>
-      <ko:stk>NULL</ko:stk>
-    </ko:task>
-    <ko:task>
-      <ko:name>MAIN_TASK</ko:name>
-      <ko:id>1</ko:id>
-      <ko:atr>TA_ACT</ko:atr>
-      <ko:pri>5</ko:pri>
-      <ko:exinf>0</ko:exinf>
-      <ko:task>main_task</ko:task>
-      <ko:stksz>4096</ko:stksz>
-      <ko:stk>NULL</ko:stk>
-  </ko:task>
-  </ko:tasks>
-</ko:kernelObjects>
+<itron4:kernelObjects xmlns:itron4="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource/ITRON4">
+  <itron4:tasks>
+    <itron4:task name="LOGTASK">
+      <itron4:id>0</itron4:id>
+      <itron4:atr>TA_ACT</itron4:atr>
+      <itron4:pri>3</itron4:pri>
+      <itron4:exinf>1</itron4:exinf>
+      <itron4:task>logtask_main</itron4:task>
+      <itron4:stksz>1024</itron4:stksz>
+      <itron4:stk>NULL</itron4:stk>
+    </itron4:task>
+    <itron4:task name="MATIN_TASK">
+      <itron4:id>1</itron4:id>
+      <itron4:atr>TA_ACT</itron4:atr>
+      <itron4:pri>5</itron4:pri>
+      <itron4:exinf>0</itron4:exinf>
+      <itron4:task>main_task</itron4:task>
+      <itron4:stksz>4096</itron4:stksz>
+      <itron4:stk>NULL</itron4:stk>
+  </itron4:task>
+  </itron4:tasks>
+</itron4:kernelObjects>

@@ -37,9 +37,9 @@
 
   <xs:complexType name="Resource_type">
     <xs:sequence>
-      <xs:element name="name" type="xs:ID" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="attributes" type="tns:Attributes_type" minOccurs ="1" maxOccurs ="1" />
     </xs:sequence>
+    <xs:attribute name="name" type ="xs:ID" use ="required" />
   </xs:complexType>
 
   <xs:complexType name="Attributes_type">
@@ -50,12 +50,12 @@
 
   <xs:complexType name="Attribute_type">
     <xs:sequence>
-      <xs:element name="name" type="xs:NCName" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="value" type="xs:string" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="variableType" type="tns:VariableType_type" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="allocationType" type="tns:AllocationType_type" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="grouping" type="xs:boolean" minOccurs="0" maxOccurs ="1" default="false" />
     </xs:sequence>
+    <xs:attribute name="name" type ="xs:NCName" use ="required" />
   </xs:complexType>
 
   
