@@ -78,4 +78,16 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>if not exist $(OutDir)rules mkdir rules
+if not exist $(OutDir)rules\visualizeRules mkdir rules\visualizeRules
+if not exist $(OutDir)rules\convertRules mkdir rules\convertRules
+if not exist $(OutDir)rules\convertRules\ResourceSchema.xsd copy $(SolutionDir)\schemas\ResourceSchema.xsd rules\convertRules\
+if not exist $(OutDir)rules\convertRules\ITRON4 mkdir rules\convertRules\ITRON4
+if not exist $(OutDir)rules\convertRules\ITRON4\ITRON4.xsd copy $(SolutionDir)\schemas\ITRON4.xsd rules\convertRules\ITRON4
+if not exist $(OutDir)rules\convertRules\ITRON4\ITRON4.xslt copy $(SolutionDir)\xslt\ITRON4.xslt rules\convertRules\ITRON4
+
+
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>
