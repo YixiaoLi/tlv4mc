@@ -9,6 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base", "Base\Base.csproj", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dll", "dll", "{C9BAF152-4724-43A5-AD69-EBBB9A7ECB29}"
 	ProjectSection(SolutionItems) = preProject
+		dll\ICSharpCode.SharpZipLib.dll = dll\ICSharpCode.SharpZipLib.dll
 		dll\WeifenLuo.WinFormsUI.Docking.dll = dll\WeifenLuo.WinFormsUI.Docking.dll
 	EndProjectSection
 EndProject
@@ -26,9 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionItems", "solutionIt
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{92DADFFC-3815-4346-B504-00E1C119B730}"
 	ProjectSection(SolutionItems) = preProject
-		sampleFiles\sample.xml = sampleFiles\sample.xml
 		sampleFiles\SampleITRONResources.xml = sampleFiles\SampleITRONResources.xml
-		sampleFiles\SampleResources.xml = sampleFiles\SampleResources.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rules", "rules", "{80065D5C-A54D-4547-9122-BCBDAEBADC60}"

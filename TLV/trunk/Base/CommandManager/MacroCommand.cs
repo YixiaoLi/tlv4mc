@@ -19,6 +19,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
         {
             get
             {
+                if (_commandList.Count == 0)
+                {
+                    return false;
+                }
+
                 foreach (ICommand c in _commandList)
                 {
                     if (!c.CanUndo)
@@ -50,7 +55,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
         public MacroCommand(IEnumerable<ICommand> commands)
         {
             _commandList = new List<ICommand>(commands);
-            Text = _commandList.First<ICommand>().Text + " から " + _commandList.Last<ICommand>().Text + " までの一連の動作";
+            if (_commandList.Count != 0)
+            {
+                Text = _commandList.First<ICommand>().Text + " から " + _commandList.Last<ICommand>().Text + " までの一連の動作";
+            }
         }
     }
 }

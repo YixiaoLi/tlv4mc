@@ -31,9 +31,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
             
         }
 
-        public ResourceFileAndTraceLogFileOpenCommand(string resourceFilePath, string traceLogFilePath, string formatFilePath)
+        public ResourceFileAndTraceLogFileOpenCommand(string resourceFilePath, string traceLogFilePath, string convertRuleFilePath)
         {
             Text = "リソースファイルとトレースログファイルを開く";
+            ConvertRule cr = ConvertRule.GetInstance(convertRuleFilePath);
         }
 
     }

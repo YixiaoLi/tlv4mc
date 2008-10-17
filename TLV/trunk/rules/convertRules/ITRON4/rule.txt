@@ -1,4 +1,4 @@
 name = ITRON4
 description = ITRON4.0
-xsd = ITRON4.xsd
-xslt = ITRON4.xslt
+resourceXsd = ITRON4.xsd
+resourceXslt = ITRON4.xslt

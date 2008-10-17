@@ -27,6 +27,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             base.OnLoad(evntArgs);
 
+            #region コマンドマ管理初期化
+            undoToolStripMenuItem.SetCommandManagerAsUndo(_commandManager);
+            redoToolStripMenuItem.SetCommandManagerAsRedo(_commandManager);
+            EventHandler<GeneralChangedEventArgs<DockState>> d = (o, e) => { _commandManager.Done(new ChangeSubWindowDockStateCommand(((SubWindow)o), e.Old, e.New)); };
+            EventHandler<GeneralChangedEventArgs<bool>> v = (o, e) => { _commandManager.Done(new ChangeSubWindowVisiblityCommand(((SubWindow)o), e.New)); };
+            #endregion
+
+            #region サブウィンドウ管理初期化
             SubWindow[] sws = new[]
             {
                 new SubWindow("sb3", new Control(), DockState.DockTop) { Text = "サブウィンドウ3" },
@@ -35,19 +43,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 new SubWindow("sb2", new Control(), DockState.DockRight) { Text = "サブウィンドウ2" },
                 new SubWindow("sb5", new Control(), DockState.DockLeft) { Text = "サブウィンドウ5", Enabled = false },
             };
-
-            undoToolStripMenuItem.SetCommandManagerAsUndo(_commandManager);
-            redoToolStripMenuItem.SetCommandManagerAsRedo(_commandManager);
-
-            EventHandler<GeneralChangedEventArgs<DockState>> d = (o, e) => { _commandManager.Done(new ChangeSubWindowDockStateCommand(((SubWindow)o), e.Old, e.New)); };
-            EventHandler<GeneralChangedEventArgs<bool>> v = (o, e) => { _commandManager.Done(new ChangeSubWindowVisiblityCommand(((SubWindow)o), e.New)); };
-
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
             _windowManager.MainPanel = new Control();
             _windowManager.AddSubWindow(sws);
             _windowManager.SubWindowDockStateChanged += d;
             _windowManager.SubWindowVisibleChanged += v;
             viewToolStripMenuItem.SetWindowManager(_windowManager);
+            #endregion
 
             #region メニューバーイベント設定
             #region 表示メニュー
@@ -71,17 +73,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #endregion
             #region ファイルメニュー
             openToolStripMenuItem.Click += (o, e) =>
+            {
+                var f = new OpenResourceFileAndTraceLogFileOpenForm();
+                if(f.ShowDialog() == DialogResult.OK)
                 {
-                    var f = new OpenResourceFileAndTraceLogFileOpenForm();
-                    if(f.ShowDialog() == DialogResult.OK)
-                    {
-                        _commandManager.Do(new ResourceFileAndTraceLogFileOpenCommand(f.ResourceFilePath, f.TraceLogFilePath, f.ConvertRuleFilePath));
-                    }
-                };
+                    _commandManager.Do(new ResourceFileAndTraceLogFileOpenCommand(f.ResourceFilePath, f.TraceLogFilePath, f.ConvertRuleFilePath));
+                }
+            };
             closeToolStripMenuItem.Click += (o, e) =>
-                {
+            {
 
-                };
+            };
             #endregion
             #endregion
         }
