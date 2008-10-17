@@ -72,7 +72,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region ファイルメニュー
             openToolStripMenuItem.Click += (o, e) =>
                 {
-                    _commandManager.Do(new OpenResourceFileAndTraceLogFileOpenWindowCommand());
+                    var f = new OpenResourceFileAndTraceLogFileOpenForm();
+                    if(f.ShowDialog() == DialogResult.OK)
+                    {
+                        _commandManager.Do(new ResourceFileAndTraceLogFileOpenCommand(f.ResourceFilePath, f.TraceLogFilePath, f.ConvertRuleFilePath));
+                    }
                 };
             closeToolStripMenuItem.Click += (o, e) =>
                 {

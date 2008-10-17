@@ -47,6 +47,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ITRON4", "ITRON4", "{31AB23
 		rules\convertRules\ITRON4\rule.txt = rules\convertRules\ITRON4\rule.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{37F01460-E939-41AD-B195-4219C5DF177F}"
+	ProjectSection(SolutionItems) = preProject
+		bin\ICSharpCode.SharpZipLib.dll = bin\ICSharpCode.SharpZipLib.dll
+		bin\Zip.exe = bin\Zip.exe
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

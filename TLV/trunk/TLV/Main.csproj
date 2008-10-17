@@ -79,16 +79,11 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>if not exist $(OutDir)rules mkdir rules
-if not exist $(OutDir)rules\visualizeRules mkdir rules\visualizeRules
-if not exist $(OutDir)rules\convertRules mkdir rules\convertRules
-if not exist $(OutDir)rules\convertRules\ResourceSchema.xsd copy $(SolutionDir)rules\convertRules\ResourceSchema.xsd rules\convertRules\
-if not exist $(OutDir)rules\convertRules\ITRON4 mkdir rules\convertRules\ITRON4
-if not exist $(OutDir)rules\convertRules\ITRON4\ITRON4.xsd copy $(SolutionDir)rules\convertRules\ITRON4\ITRON4.xsd rules\convertRules\ITRON4
-if not exist $(OutDir)rules\convertRules\ITRON4\ITRON4.xslt copy $(SolutionDir)rules\convertRules\ITRON4\ITRON4.xslt rules\convertRules\ITRON4
-if not exist $(OutDir)rules\convertRules\ITRON4\rule.txt copy $(SolutionDir)rules\convertRules\ITRON4\rule.txt rules\convertRules\ITRON4
-
-
+    <PostBuildEvent>if not exist $(TargetDir)rules mkdir rules
+if not exist $(TargetDir)rules\visualizeRules mkdir rules\visualizeRules
+if not exist $(TargetDir)rules\convertRules mkdir rules\convertRules
+if not exist $(TargetDir)rules\convertRules\ResourceSchema.xsd copy $(SolutionDir)rules\convertRules\ResourceSchema.xsd rules\convertRules\
+if not exist $(TargetDir)rules\convertRules\ITRON4.zip $(SolutionDir)bin\Zip.exe $(TargetDir)rules\convertRules\ITRON4.zip $(SolutionDir)rules\convertRules\ITRON4
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

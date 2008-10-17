@@ -8,7 +8,7 @@ using NU.OJL.MPRTOS.TLV.Core.Controls;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-    public class OpenResourceFileAndTraceLogFileOpenWindowCommand : ICommand
+    public class ResourceFileAndTraceLogFileOpenCommand : ICommand
     {
         public string Text
         {
@@ -23,16 +23,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
         public void Do()
         {
-            var form = new OpenResourceFileAndTraceLogFileOpenForm();
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                MessageBox.Show(form.ResourceFilePath + ", " + form.TraceLogFilePath);
-            }
+
         }
 
         public void Undo()
         {
             
+        }
+
+        public ResourceFileAndTraceLogFileOpenCommand(string resourceFilePath, string traceLogFilePath, string formatFilePath)
+        {
+            Text = "リソースファイルとトレースログファイルを開く";
         }
 
     }

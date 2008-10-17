@@ -42,10 +42,11 @@
   -->
   <ItemGroup>
     <Compile Include="ApplicationFactory.cs" />
+    <Compile Include="Base\ConvertRule.cs" />
     <Compile Include="Commands\ChangeSubWindowDockStateCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowVisiblityCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowEnabledCommand.cs" />
-    <Compile Include="Commands\OpenResourceFileAndTraceLogFileOpenWindowCommand.cs" />
+    <Compile Include="Commands\ResourceFileAndTraceLogFileOpenCommand.cs" />
     <Compile Include="Controls\Forms\OpenResourceFileAndTraceLogFileOpenForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -18,13 +18,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             NONE = 0x0,
             RESOURCE_FILE_PATH = 0x1,
             TRACELOG_FILE_PATH = 0x2,
-            FORMAT_DIR_TYPE = 0x4,
-            ALL = RESOURCE_FILE_PATH | TRACELOG_FILE_PATH | FORMAT_DIR_TYPE,
+            CONVERTRULE_FILE_PATH = 0x4,
+            ALL = RESOURCE_FILE_PATH | TRACELOG_FILE_PATH | CONVERTRULE_FILE_PATH,
         }
         private inputFlags _inputFlags = inputFlags.NONE;
         private string _resourceFilePath;
         private string _traceLogFilePath;
-        private string _formatDirectoryPath;
+        private string _convertRuleFilePath;
 
         public string ResourceFilePath
         {
@@ -64,21 +64,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }
             }
         }
-        public string FormatDirectoryPath
+        public string ConvertRuleFilePath
         {
-            get { return _formatDirectoryPath; }
+            get { return _convertRuleFilePath; }
             set
             {
-                if (_formatDirectoryPath != value)
+                if (_convertRuleFilePath != value)
                 {
-                    _formatDirectoryPath = value;
-                    if (Directory.Exists(_formatDirectoryPath))
+                    _convertRuleFilePath = value;
+                    if (File.Exists(_convertRuleFilePath))
                     {
-                        InputFlags |= inputFlags.FORMAT_DIR_TYPE;
+                        InputFlags |= inputFlags.CONVERTRULE_FILE_PATH;
                     }
                     else
                     {
-                        InputFlags &= ~inputFlags.FORMAT_DIR_TYPE;
+                        InputFlags &= ~inputFlags.CONVERTRULE_FILE_PATH;
                     }
                 }
             }
