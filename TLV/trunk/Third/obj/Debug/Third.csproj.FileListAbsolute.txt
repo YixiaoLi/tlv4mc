@@ -14,3 +14,4 @@ C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Base
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Third\obj\Debug\ResolveAssemblyReference.cache
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Third\obj\Debug\NU.OJL.MPRTOS.TLV.Third.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Third\obj\Debug\NU.OJL.MPRTOS.TLV.Third.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Third\bin\Debug\ICSharpCode.SharpZipLib.dll

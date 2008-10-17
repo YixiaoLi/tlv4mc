@@ -30,3 +30,4 @@ C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Base_
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\obj\Debug\ResolveAssemblyReference.cache
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\obj\Debug\NU.OJL.MPRTOS.TLV.Test.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\obj\Debug\NU.OJL.MPRTOS.TLV.Test.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\bin\Debug\ICSharpCode.SharpZipLib.dll
