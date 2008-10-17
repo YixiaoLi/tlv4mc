@@ -16,6 +16,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
             get { return new WeifenLuoWindowManager(); }
         }
 
+        public static IZip Zip
+        {
+            get { return new SharpZipLibZip(); }
+        }
+
         /// <summary>
         /// <c>CommandManager</c>のインスタンス。これはシングルトンなインスタンスである。
         /// </summary>

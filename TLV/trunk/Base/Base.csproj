@@ -52,6 +52,7 @@
     <Compile Include="WindowManager\IWindowManager.cs" />
     <Compile Include="WindowManager\SubWindow.cs" />
     <Compile Include="WindowManager\SubWindowCollection.cs" />
+    <Compile Include="Xml\Xml.cs" />
     <Compile Include="Zip\IZip.cs" />
   </ItemGroup>
   <ItemGroup>

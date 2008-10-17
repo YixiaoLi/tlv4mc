@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Base;
+using NU.OJL.MPRTOS.TLV.Core.Commands;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
@@ -27,7 +28,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             base.OnLoad(evntArgs);
 
-            #region コマンドマ管理初期化
+            #region コマンド管理初期化
             undoToolStripMenuItem.SetCommandManagerAsUndo(_commandManager);
             redoToolStripMenuItem.SetCommandManagerAsRedo(_commandManager);
             EventHandler<GeneralChangedEventArgs<DockState>> d = (o, e) => { _commandManager.Done(new ChangeSubWindowDockStateCommand(((SubWindow)o), e.Old, e.New)); };
@@ -52,6 +53,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #endregion
 
             #region メニューバーイベント設定
+
             #region 表示メニュー
             showAllToolStripMenuItem.Click += (o, e) =>
             {
@@ -71,6 +73,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 _windowManager.SubWindowVisibleChanged += v;
             };
             #endregion
+
             #region ファイルメニュー
             openToolStripMenuItem.Click += (o, e) =>
             {
@@ -85,6 +88,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             };
             #endregion
+
             #endregion
         }
     }

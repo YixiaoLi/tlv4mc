@@ -27,7 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionItems", "solutionIt
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{92DADFFC-3815-4346-B504-00E1C119B730}"
 	ProjectSection(SolutionItems) = preProject
-		sampleFiles\SampleITRONResources.xml = sampleFiles\SampleITRONResources.xml
+		sampleFiles\SampleITRONResources.res = sampleFiles\SampleITRONResources.res
+		sampleFiles\SampleITRONTraceLog.log = sampleFiles\SampleITRONTraceLog.log
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rules", "rules", "{80065D5C-A54D-4547-9122-BCBDAEBADC60}"

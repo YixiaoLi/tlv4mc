@@ -211,9 +211,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         public OpenResourceFileAndTraceLogFileOpenForm()
         {
             InitializeComponent();
-            ResourceFileExt = "res";
-            TraceLogFileExt = "log";
-            ConvertRuleFileExt = "zip";
+            ResourceFileExt = Properties.Resources.ResourceFileExtension;
+            TraceLogFileExt = Properties.Resources.TraceLogFileExtension;
+            ConvertRuleFileExt = Properties.Resources.ConvertRuleFileExtension;
         }
 
         protected override void OnLoad(EventArgs evntArgs)
@@ -221,9 +221,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             base.OnLoad(evntArgs);
             updateErrorMessageBox();
 
-            foreach (string filePath in Directory.GetFiles(Properties.Settings.Default.ConvertRulesDirectoryPath))
+            string rulesDirPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\" + Properties.Resources.ConvertRulesDirectoryPath;
+            string convertRulesDirPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\" + Properties.Resources.ConvertRulesDirectoryPath;
+
+            foreach (string filePath in Directory.GetFiles(convertRulesDirPath))
             {
-                ConvertRule c = ConvertRule.GetInstance(filePath);
+                CommonFormatConverter c = CommonFormatConverter.GetInstance(filePath);
                 if(c != null)
                 {
                     convertRuleComboBox.Items.Add(c);
@@ -232,7 +235,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             if (convertRuleComboBox.Items.Count == 0)
             {
-                MessageBox.Show("共通形式変換ルールが存在しません。\n共通形式変換ルールは\"" + Properties.Settings.Default.ConvertRulesDirectoryPath + "\"に一つ以上存在していなければなりません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("共通形式変換ルールが存在しません。\n共通形式変換ルールは\"" + convertRulesDirPath + "\"に一つ以上存在していなければなりません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 DialogResult = DialogResult.Cancel;
                 Close();
             }
@@ -252,8 +255,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             convertRuleComboBox.SelectedValueChanged += (o, e)
                 =>
                 {
-                    ConvertRuleFilePath = ((ConvertRule)convertRuleComboBox.SelectedItem).Path;
-                    convertRuleMessageBox.Text = ((ConvertRule)convertRuleComboBox.SelectedItem).Description;
+                    ConvertRuleFilePath = ((CommonFormatConverter)convertRuleComboBox.SelectedItem).Path;
+                    convertRuleMessageBox.Text = ((CommonFormatConverter)convertRuleComboBox.SelectedItem).Description;
                 };
 
             resourceFileRefButton.Click += (o, e)
