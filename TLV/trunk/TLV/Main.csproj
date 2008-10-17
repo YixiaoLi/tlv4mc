@@ -86,6 +86,7 @@ if not exist $(OutDir)rules\convertRules\ResourceSchema.xsd copy $(SolutionDir)r
 if not exist $(OutDir)rules\convertRules\ITRON4 mkdir rules\convertRules\ITRON4
 if not exist $(OutDir)rules\convertRules\ITRON4\ITRON4.xsd copy $(SolutionDir)rules\convertRules\ITRON4\ITRON4.xsd rules\convertRules\ITRON4
 if not exist $(OutDir)rules\convertRules\ITRON4\ITRON4.xslt copy $(SolutionDir)rules\convertRules\ITRON4\ITRON4.xslt rules\convertRules\ITRON4
+if not exist $(OutDir)rules\convertRules\ITRON4\rule.txt copy $(SolutionDir)rules\convertRules\ITRON4\rule.txt rules\convertRules\ITRON4
 
 
 </PostBuildEvent>

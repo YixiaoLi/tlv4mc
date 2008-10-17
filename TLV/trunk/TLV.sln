@@ -44,6 +44,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ITRON4", "ITRON4", "{31AB23
 	ProjectSection(SolutionItems) = preProject
 		rules\convertRules\ITRON4\ITRON4.xsd = rules\convertRules\ITRON4\ITRON4.xsd
 		rules\convertRules\ITRON4\ITRON4.xslt = rules\convertRules\ITRON4\ITRON4.xslt
+		rules\convertRules\ITRON4\rule.txt = rules\convertRules\ITRON4\rule.txt
 	EndProjectSection
 EndProject
 Global
