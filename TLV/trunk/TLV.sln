@@ -24,22 +24,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionItems", "solutionIt
 		TLV3.vsmdi = TLV3.vsmdi
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schemas", "schemas", "{75C5952A-8A89-4C76-B198-19D33D54CAC2}"
-	ProjectSection(SolutionItems) = preProject
-		schemas\ITRON4.xsd = schemas\ITRON4.xsd
-		schemas\ResourceSchema.xsd = schemas\ResourceSchema.xsd
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xslt", "xslt", "{BA18A2C1-3C9D-4279-B894-69F69CB4AD7B}"
-	ProjectSection(SolutionItems) = preProject
-		xslt\ITRON4.xslt = xslt\ITRON4.xslt
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{92DADFFC-3815-4346-B504-00E1C119B730}"
 	ProjectSection(SolutionItems) = preProject
 		sampleFiles\sample.xml = sampleFiles\sample.xml
 		sampleFiles\SampleITRONResources.xml = sampleFiles\SampleITRONResources.xml
 		sampleFiles\SampleResources.xml = sampleFiles\SampleResources.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rules", "rules", "{80065D5C-A54D-4547-9122-BCBDAEBADC60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "convertRules", "convertRules", "{9A7BDD9E-B480-43E9-BC3C-8327D9B04222}"
+	ProjectSection(SolutionItems) = preProject
+		rules\convertRules\ResourceSchema.xsd = rules\convertRules\ResourceSchema.xsd
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualizeRules", "visualizeRules", "{E579742F-4567-4F41-8B7D-83680E2DFB01}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ITRON4", "ITRON4", "{31AB23F1-5083-4936-B87E-E1B293D4A681}"
+	ProjectSection(SolutionItems) = preProject
+		rules\convertRules\ITRON4\ITRON4.xsd = rules\convertRules\ITRON4\ITRON4.xsd
+		rules\convertRules\ITRON4\ITRON4.xslt = rules\convertRules\ITRON4\ITRON4.xslt
 	EndProjectSection
 EndProject
 Global
@@ -70,5 +74,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9A7BDD9E-B480-43E9-BC3C-8327D9B04222} = {80065D5C-A54D-4547-9122-BCBDAEBADC60}
+		{E579742F-4567-4F41-8B7D-83680E2DFB01} = {80065D5C-A54D-4547-9122-BCBDAEBADC60}
+		{31AB23F1-5083-4936-B87E-E1B293D4A681} = {9A7BDD9E-B480-43E9-BC3C-8327D9B04222}
 	EndGlobalSection
 EndGlobal
