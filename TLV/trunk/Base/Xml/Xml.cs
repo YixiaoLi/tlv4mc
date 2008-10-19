@@ -13,12 +13,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
     public class Xml
     {
-        public static bool Validate(XmlReader xml, XmlReader xslt, TextWriter result)
+        public static bool IsValid(string xml, string xslt, TextWriter result)
         {
             XmlReaderSettings xs = new XmlReaderSettings();
-            xs.Schemas.Add(XmlSchema.Read(xml, null));
+            xs.Schemas.Add(XmlSchema.Read(new XmlTextReader(new StringReader(xml)), null));
             xs.ValidationType = ValidationType.Schema;
-            XmlReader xmlr = XmlReader.Create(xslt, xs);
+            XmlReader xmlr = XmlReader.Create(new XmlTextReader(new StringReader(xslt)), xs);
             try { while (xmlr.Read()) { } }
             catch (XmlSchemaValidationException e)
             {
@@ -29,21 +29,24 @@ namespace NU.OJL.MPRTOS.TLV.Base
             return true;
         }
 
-        public static void Transform(XmlReader xml, XmlReader xslt, XmlWriter result)
+        public static string Transform(string xml, string xslt)
         {
-            XslCompiledTransform _xslt = new XslCompiledTransform();
-            _xslt.Load(xslt);
             StringBuilder sb = new StringBuilder();
-            _xslt.Transform(xml, result);
+            XslCompiledTransform _xslt = new XslCompiledTransform();
+            _xslt.Load(new XmlTextReader(new StringReader(xslt)));
+            _xslt.Transform(new XmlTextReader(new StringReader(xml)), new XmlTextWriter(new StringWriter(sb)));
+            return sb.ToString();
         }
 
-        public static void AutoIndent(string xml, TextWriter result)
+        public static string AutoIndent(string xml)
         {
+            StringBuilder sb = new StringBuilder();
             XmlDocument xd = new XmlDocument();
             xd.LoadXml(xml);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xd.InnerXml));
-            ds.WriteXml(result);
+            ds.WriteXml(new StringWriter(sb));
+            return sb.ToString();
         }
     }
 }

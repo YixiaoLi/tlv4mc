@@ -61,11 +61,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         }
         
         /// <summary>
-        ///   zip に類似しているローカライズされた文字列を検索します。
+        ///   tlv に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CommonFormatTraceLogFileExtension {
+            get {
+                return ResourceManager.GetString("CommonFormatTraceLogFileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   cnv に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ConvertRuleFileExtension {
             get {
                 return ResourceManager.GetString("ConvertRuleFileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   rule.txt に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ConvertRuleInfoFileName {
+            get {
+                return ResourceManager.GetString("ConvertRuleInfoFileName", resourceCulture);
             }
         }
         
@@ -84,6 +102,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         internal static string ResourceFileExtension {
             get {
                 return ResourceManager.GetString("ResourceFileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   rules\convertRules\ResourceSchema.xsd に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ResourceSchemaFilePath {
+            get {
+                return ResourceManager.GetString("ResourceSchemaFilePath", resourceCulture);
             }
         }
         

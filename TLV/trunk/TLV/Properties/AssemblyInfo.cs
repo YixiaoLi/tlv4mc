@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("TLV")]
+[assembly: AssemblyTitle("TraceLogVisualizer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TLV")]
-[assembly: AssemblyCopyright("Copyright ©  2008")]
+[assembly: AssemblyCompany("Nagoya Univ")]
+[assembly: AssemblyProduct("TraceLogVisualizer")]
+[assembly: AssemblyCopyright("Copyright ©Nagoya Univ 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

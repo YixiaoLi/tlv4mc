@@ -117,14 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CommonFormatTraceLogFileExtension" xml:space="preserve">
+    <value>tlv</value>
+  </data>
   <data name="ConvertRuleFileExtension" xml:space="preserve">
-    <value>zip</value>
+    <value>cnv</value>
+  </data>
+  <data name="ConvertRuleInfoFileName" xml:space="preserve">
+    <value>rule.txt</value>
   </data>
   <data name="ConvertRulesDirectoryPath" xml:space="preserve">
     <value>rules\convertRules\</value>
   </data>
   <data name="ResourceFileExtension" xml:space="preserve">
     <value>res</value>
+  </data>
+  <data name="ResourceSchemaFilePath" xml:space="preserve">
+    <value>rules\convertRules\ResourceSchema.xsd</value>
   </data>
   <data name="RulesDirectoryPath" xml:space="preserve">
     <value>rules\</value>

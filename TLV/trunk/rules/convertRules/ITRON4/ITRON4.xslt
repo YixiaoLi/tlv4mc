@@ -26,7 +26,7 @@
       <rs:attributes>
         <rs:attribute>
           <xsl:attribute name="name">type</xsl:attribute>
-          <rs:displayName>タスク名</rs:displayName>
+          <rs:displayName>タイプ</rs:displayName>
           <rs:value>Task</rs:value>
           <rs:variableType>String</rs:variableType>
           <rs:allocationType>Static</rs:allocationType>
@@ -100,7 +100,7 @@
           <rs:displayName>状態</rs:displayName>
           <rs:value>
             <xsl:choose>
-              <xsl:when test="itron4:atr='TA_ACT'">RUNNING</xsl:when>
+              <xsl:when test="itron4:atr='TA_ACT'">RUNNABLE</xsl:when>
               <xsl:when test="itron4:atr='TA_NULL'">DORMANT</xsl:when>
             </xsl:choose>
           </rs:value>

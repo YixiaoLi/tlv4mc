@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Core.Commands;
@@ -20,13 +21,32 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             InitializeComponent();
 
+            settingLoad();
+
             _windowManager = ApplicationFactory.WindowManager;
             _commandManager = ApplicationFactory.CommandManager;
+            Text += ApplicationDatas.Name + " " + ApplicationDatas.Version;
         }
 
         protected override void OnLoad(EventArgs evntArgs)
         {
             base.OnLoad(evntArgs);
+
+            #region ApplicationDatasイベント設定
+            ApplicationDatas.ActiveFileContext.PathChanged += (o, e) => { textReflesh(); };
+            ApplicationDatas.ActiveFileContext.IsSavedChanged += (o, e) =>
+            {
+                textReflesh();
+                saveSToolStripMenuItem.Enabled = !ApplicationDatas.ActiveFileContext.IsSaved;
+                saveToolStripButton.Enabled = !ApplicationDatas.ActiveFileContext.IsSaved;
+            };
+            ApplicationDatas.ActiveFileContext.IsOpenedChanged += (o, e) =>
+            {
+                textReflesh();
+                saveAsToolStripMenuItem.Enabled = ApplicationDatas.ActiveFileContext.IsOpened;
+            };
+            ApplicationDatas.ActiveFileContext.DataChanged += (o, e) => { textReflesh(); };
+            #endregion
 
             #region コマンド管理初期化
             undoToolStripMenuItem.SetCommandManagerAsUndo(_commandManager);
@@ -38,11 +58,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region サブウィンドウ管理初期化
             SubWindow[] sws = new[]
             {
-                new SubWindow("sb3", new Control(), DockState.DockTop) { Text = "サブウィンドウ3" },
-                new SubWindow("sb4", new Control(), DockState.DockBottom) { Text = "サブウィンドウ4", Visible = false },
-                new SubWindow("sb1", new Control(), DockState.DockLeft),
-                new SubWindow("sb2", new Control(), DockState.DockRight) { Text = "サブウィンドウ2" },
-                new SubWindow("sb5", new Control(), DockState.DockLeft) { Text = "サブウィンドウ5", Enabled = false },
+                new SubWindow("sb1", new Control(), DockState.DockLeft) { Text = "サブウィンドウ1" },
+                new SubWindow("sb2", new Control(), DockState.DockLeft) { Text = "サブウィンドウ2" },
+                new SubWindow("sb3", new Control(), DockState.DockRight) { Text = "サブウィンドウ3" },
             };
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
             _windowManager.MainPanel = new Control();
@@ -75,21 +93,98 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #endregion
 
             #region ファイルメニュー
-            openToolStripMenuItem.Click += (o, e) =>
+            openCommonFormatTraceLogFileToolStripMenuItem.Click += (o, e) =>
             {
-                var f = new OpenResourceFileAndTraceLogFileOpenForm();
-                if(f.ShowDialog() == DialogResult.OK)
-                {
-                    _commandManager.Do(new ResourceFileAndTraceLogFileOpenCommand(f.ResourceFilePath, f.TraceLogFilePath, f.ConvertRuleFilePath));
-                }
+                _commandManager.Do(new OpenCommonFormatTraceLogFileCommand());
             };
+
+            openResourceFileAndTraceLogFileToolStripMenuItem.Click += (o, e) =>
+            {
+                _commandManager.Do(new OpenResourceFileAndTraceLogFileCommand());
+            };
+
             closeToolStripMenuItem.Click += (o, e) =>
             {
-
+                _commandManager.Do(new CloseCommand(this));
             };
+
+            saveSToolStripMenuItem.Click += (o, e) =>
+            {
+                _commandManager.Do(new SaveCommonFormatTraceLogFileCommand());
+            };
+
+            saveAsToolStripMenuItem.Click += (o, e) =>
+            {
+                _commandManager.Do(new SaveAsCommonFormatTraceLogFileCommand());
+            };
+
             #endregion
 
             #endregion
+
+            #region ツールバーイベント設定
+
+            openToolStripButton.Click += (o, e) =>
+            {
+                _commandManager.Do(new OpenCommonFormatTraceLogFileCommand());
+            };
+
+            saveToolStripButton.Click += (o, e) =>
+            {
+                _commandManager.Do(new SaveCommonFormatTraceLogFileCommand());
+            };
+
+            #endregion
+
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            settingSave();
+
+            if (ApplicationDatas.ActiveFileContext.IsOpened
+                && !ApplicationDatas.ActiveFileContext.IsSaved)
+            {
+                e.Cancel = true;
+                _commandManager.Do(new CloseCommand(this));
+            }
+        }
+
+        private void settingLoad()
+        {
+            ClientSize = Properties.Settings.Default.ClientSize;
+            Location = Properties.Settings.Default.Location;
+            WindowState = Properties.Settings.Default.WindowState;
+        }
+
+        private void settingSave()
+        {
+            Properties.Settings.Default.ClientSize = ClientSize;
+            Properties.Settings.Default.Location = Location;
+            Properties.Settings.Default.WindowState = WindowState;
+            Properties.Settings.Default.Save();
+        }
+
+        protected void textReflesh()
+        {
+            Text = "";
+            string title = "";
+
+            if (ApplicationDatas.ActiveFileContext.Path == string.Empty)
+                title = "無題";
+            else
+                title = Path.GetFileNameWithoutExtension(ApplicationDatas.ActiveFileContext.Path);
+
+            Text += title;
+
+            if (!ApplicationDatas.ActiveFileContext.IsSaved)
+                Text += " *";
+
+            Text += " - ";
+
+            Text += ApplicationDatas.Name + " " + ApplicationDatas.Version;
         }
     }
 }

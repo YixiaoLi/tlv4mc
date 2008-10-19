@@ -1,4 +1,5 @@
-name = ITRON4
-description = ITRON4.0
-resourceXsd = ITRON4.xsd
-resourceXslt = ITRON4.xslt
+name			ITRON4
+description		ITRON4.0
+resourceXsd		ITRON4.xsd
+resourceXslt	ITRON4.xslt
+traceLogCnv		ITRON4.lcnv

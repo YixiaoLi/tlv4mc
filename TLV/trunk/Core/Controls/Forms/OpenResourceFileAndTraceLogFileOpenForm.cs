@@ -1,13 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using NU.OJL.MPRTOS.TLV.Core;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
@@ -221,8 +215,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             base.OnLoad(evntArgs);
             updateErrorMessageBox();
 
-            string rulesDirPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\" + Properties.Resources.ConvertRulesDirectoryPath;
-            string convertRulesDirPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\" + Properties.Resources.ConvertRulesDirectoryPath;
+            string rulesDirPath = ApplicationDatas.RulesDirectoryPath;
+            string convertRulesDirPath = ApplicationDatas.ConvertRulesDirectoryPath;
 
             foreach (string filePath in Directory.GetFiles(convertRulesDirPath))
             {

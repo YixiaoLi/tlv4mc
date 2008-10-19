@@ -43,6 +43,11 @@
   <ItemGroup>
     <Compile Include="CommandManager\ICommandManager.cs" />
     <Compile Include="CommandManager\MacroCommand.cs" />
+    <Compile Include="Extensions\ByteArrayExtensions.cs" />
+    <Compile Include="FileContext\FileContext.cs" />
+    <Compile Include="FileContext\IFileContextData.cs" />
+    <Compile Include="FileContext\FilePathUndefinedException.cs" />
+    <Compile Include="FileContext\ISerializable.cs" />
     <Compile Include="GeneralEventArgs.cs" />
     <Compile Include="CommandManager\GeneralCommand.cs" />
     <Compile Include="CommandManager\ICommand.cs" />

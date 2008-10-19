@@ -19,13 +19,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public string Description { get; private set; }
         public string ResourceXsd { get; private set; }
         public string ResourceXslt { get; private set; }
+        public string TraceLogConvertRule { get; private set; }
 
         public static CommonFormatConverter GetInstance(string convertFilePath)
         {
             CommonFormatConverter c = new CommonFormatConverter();
             c.Path = System.IO.Path.GetFullPath(convertFilePath);
 
-            if (!File.Exists(convertFilePath) || System.IO.Path.GetExtension(convertFilePath) != ".zip")
+            if (!File.Exists(convertFilePath) || System.IO.Path.GetExtension(convertFilePath) != "." + Properties.Resources.ConvertRuleFileExtension)
                 return null;
 
             IZip zip = ApplicationFactory.Zip;
@@ -34,11 +35,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 string tmpDirPath = System.IO.Path.GetTempPath() + "tlv_convertRuleTmp_" + DateTime.Now.Ticks.ToString() + @"\";
                 Directory.CreateDirectory(tmpDirPath);
                 zip.Extract(convertFilePath, tmpDirPath);
-                string ruleFilePath = tmpDirPath + "rule.txt";
+                string ruleFilePath = tmpDirPath + Properties.Resources.ConvertRuleInfoFileName;
                 string[] ruleFileLines = File.ReadAllLines(ruleFilePath);
                 foreach (string line in ruleFileLines)
                 {
-                    Match m = new Regex(@"\s*(?<name>[^\s]+)\s*=\s*(?<value>[^\s]+)\s*").Match(line);
+                    Match m = new Regex(@"^(?<name>[^\t]+)\t+(?<value>.+)$").Match(line);
                     switch (m.Groups["name"].Value)
                     {
                         case "name":
@@ -46,14 +47,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             break;
                         case "description":
                             c.Description = m.Groups["value"].Value;
-                            c.Description = c.Description.Replace(@"\n", "\n");
-                            c.Description = c.Description.Replace(@"\t", "\t");
                             break;
                         case "resourceXsd":
                             c.ResourceXsd = File.ReadAllText(tmpDirPath + m.Groups["value"]);
                             break;
                         case "resourceXslt":
                             c.ResourceXslt = File.ReadAllText(tmpDirPath + m.Groups["value"]);
+                            break;
+                        case "traceLogCnv":
+                            c.TraceLogConvertRule = File.ReadAllText(tmpDirPath + m.Groups["value"]);
                             break;
                     }
                 }
@@ -71,27 +73,42 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
         }
 
-        public bool ConvertResourceFile(string resourceFilePath, TextWriter textWriter)
+        public string ConvertResourceFile(string resourceFilePath)
         {
+            string res = File.ReadAllText(resourceFilePath);
+            StringBuilder sb = new StringBuilder();
             // resourceFilePathで読み込むXMLをResourceXsdのスキーマで検証
-            if (!Xml.Validate(new XmlTextReader(new StringReader(ResourceXsd)), new XmlTextReader(resourceFilePath), textWriter))
+            if (!Xml.IsValid(ResourceXsd, res, new StringWriter(sb)))
             {
-                return false;
+                throw new ResourceFileValidationException("リソースファイルの共通形式への変換に失敗しました。\n" + resourceFilePath + "は定義されたスキーマに準拠しません。\n" + sb.ToString());
             }
 
             // resourceFilePathで読み込むXMLをResourceXsltでXSLT変換
-            StringBuilder sb = new StringBuilder();
-            Xml.Transform(new XmlTextReader(resourceFilePath), new XmlTextReader(new StringReader(ResourceXslt)), new XmlTextWriter(new StringWriter(sb)));
+            res = Xml.Transform(res, ResourceXslt);
+
+            if (!Xml.IsValid(File.ReadAllText(ApplicationDatas.ResourceSchemaFilePath), res, new StringWriter(sb)))
+            {
+                throw new ResourceFileValidationException("リソースファイルの共通形式への変換に失敗しました。\nリソースファイル共通形式変換ルールファイルの定義が誤っている可能性があります。\n" + sb.ToString());
+            }
 
             // 変換したxmlをDataSetで整形してtextWriterで記述
-            Xml.AutoIndent(sb.ToString(), textWriter);
+            //res = Xml.AutoIndent(res);
 
-            return true;
+            return res;
         }
 
-        public void ConvertTraceLogFile(string traceLogFilePath, string targetFilePath)
+        public string ConvertTraceLogFile(string traceLogFilePath)
         {
+            string log = File.ReadAllText(traceLogFilePath);
 
+            log = TraceLogConverter.Transform(log, TraceLogConvertRule);
+
+            if (!TraceLogConverter.IsValid(log, ApplicationDatas.CommonFormatTraceLogRegex))
+            {
+                throw new ResourceFileValidationException("トレースログファイルの共通形式への変換に失敗しました。\n" + traceLogFilePath + "は定義された正規表現に準拠しません。");
+            }
+
+            return log;
         }
 
         public override string ToString()

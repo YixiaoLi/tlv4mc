@@ -41,12 +41,29 @@
   </Target>
   -->
   <ItemGroup>
+    <Compile Include="ApplicationDatas.cs" />
     <Compile Include="ApplicationFactory.cs" />
+    <Compile Include="Base\Attribute.cs" />
+    <Compile Include="Base\AttributeList.cs" />
     <Compile Include="Base\CommonFormatConverter.cs" />
+    <Compile Include="Base\CommonFormatTraceLog.cs" />
+    <Compile Include="Base\CommonFormatTraceLogSerializer.cs" />
+    <Compile Include="Base\Resource.cs" />
+    <Compile Include="Base\ResourceFileValidationException.cs" />
+    <Compile Include="Base\ResourceList.cs" />
+    <Compile Include="Base\TraceLog.cs" />
+    <Compile Include="Base\TraceLogConverter.cs" />
+    <Compile Include="Base\TraceLogFileValidationException.cs" />
+    <Compile Include="Base\TraceLogList.cs" />
     <Compile Include="Commands\ChangeSubWindowDockStateCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowVisiblityCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowEnabledCommand.cs" />
-    <Compile Include="Commands\ResourceFileAndTraceLogFileOpenCommand.cs" />
+    <Compile Include="Commands\CloseCommand.cs" />
+    <Compile Include="Commands\FileChangeCommand.cs" />
+    <Compile Include="Commands\OpenCommonFormatTraceLogFileCommand.cs" />
+    <Compile Include="Commands\OpenResourceFileAndTraceLogFileCommand.cs" />
+    <Compile Include="Commands\SaveAsCommonFormatTraceLogFileCommand.cs" />
+    <Compile Include="Commands\SaveCommonFormatTraceLogFileCommand.cs" />
     <Compile Include="Controls\Forms\OpenResourceFileAndTraceLogFileOpenForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +81,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -99,5 +122,12 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 </Project>

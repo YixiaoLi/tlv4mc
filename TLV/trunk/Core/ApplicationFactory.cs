@@ -9,16 +9,20 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
     public static class ApplicationFactory
     {
-        private static CommandManager _commandManager;
+        private static readonly CommandManager _commandManager;
+        private static readonly IZip _zip;
 
         public static IWindowManager WindowManager
         {
             get { return new WeifenLuoWindowManager(); }
         }
 
+        /// <summary>
+        /// <c>IZip</c>のインスタンス。これはシングルトンなインスタンスである。
+        /// </summary>
         public static IZip Zip
         {
-            get { return new SharpZipLibZip(); }
+            get { return _zip; }
         }
 
         /// <summary>
@@ -32,6 +36,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         static ApplicationFactory()
         {
             _commandManager = new CommandManager();
+            _zip = new SharpZipLibZip();
         }
     }
 }
