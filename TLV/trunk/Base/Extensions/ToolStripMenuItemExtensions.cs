@@ -48,12 +48,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
         }
     }
 
-    public static class ToolStripMenuItemForTransactionManagerExtensions
+    public static class ToolStripItemForTransactionManagerExtensions
     {
         /// <summary>
         /// 元に戻るメニューとWindowManagerを関連付ける拡張メソッド
         /// </summary>
-        public static void SetCommandManagerAsUndo(this ToolStripMenuItem tsmi, ICommandManager commandManager)
+        public static void SetCommandManagerAsUndo(this ToolStripItem tsmi, ICommandManager commandManager)
         {
             tsmi.Enabled = false;
 
@@ -79,7 +79,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <summary>
         /// やり直すメニューとWindowManagerを関連付ける拡張メソッド
         /// </summary>
-        public static void SetCommandManagerAsRedo(this ToolStripMenuItem tsmi, ICommandManager commandManager)
+        public static void SetCommandManagerAsRedo(this ToolStripItem tsmi, ICommandManager commandManager)
         {
             tsmi.Enabled = false;
 

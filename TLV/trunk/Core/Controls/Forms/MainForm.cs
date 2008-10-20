@@ -51,6 +51,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region コマンド管理初期化
             undoToolStripMenuItem.SetCommandManagerAsUndo(_commandManager);
             redoToolStripMenuItem.SetCommandManagerAsRedo(_commandManager);
+            undoToolStripButton.SetCommandManagerAsUndo(_commandManager);
+            redoToolStripButton.SetCommandManagerAsRedo(_commandManager);
             EventHandler<GeneralChangedEventArgs<DockState>> d = (o, e) => { _commandManager.Done(new ChangeSubWindowDockStateCommand(((SubWindow)o), e.Old, e.New)); };
             EventHandler<GeneralChangedEventArgs<bool>> v = (o, e) => { _commandManager.Done(new ChangeSubWindowVisiblityCommand(((SubWindow)o), e.New)); };
             #endregion
