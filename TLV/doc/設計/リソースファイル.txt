@@ -1,0 +1,13 @@
+rules/convertRules/XXXX.zip
+
+
+XXXX/
+	XXXX.xsd	スキーマ
+	XXXX.xslt	XLSTファイル
+	rule.txt	ルール情報
+	
+rule.txt
+name = XXXX
+disc = YYY社製 XXXX ver 1.0 以降
+xsd = XXXX.xsd
+xslt = XXXX.xslt

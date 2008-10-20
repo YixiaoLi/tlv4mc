@@ -3,8 +3,26 @@ SVC		task1.state becomes DORMANT
 SVO		task1 terminate task1
 SVOC	task1 make task1.state DORMANT
 
-[time] S : O.atr = X
-[time] (type=Task, id=n) : (type=Task, id=m).state = X
+
+
+[T]S:O.B
+[T]S:O.A=V
+
+]S. replace ]S:S
+
+
+
+
+[time]TASK1.activate
+[time]TASK1:TASK1.activate
+[time]TASK1:TASK1.state=RUNNING
+[time](name=TASK1):(name=TASK1).state=RUNNING
+[time](type=Task,id=1):(type=Task,id=1).state=RUNNING
+
+[time]TASK1:TASK2.activate
+[time]TASK1:TASK2.state=RUNNING
+[time](name=TASK1):(name=TASK2).state=RUNNING
+[time](type=Task,id=1):(type=Task,id=2).state=RUNNING
 
 [正規表現]
 @"^\s*\[(?<time>\d+)\][ \t]*(?<S>\w+|\([^\)]+\))[ \t]*:[ \t]*(?<O>\w+|\([^\)]+\)).(?<atr>\w)+[ \t]*=[ \t]*(?<C>\w+)\s*$"
@@ -22,13 +40,13 @@ R := @"\w+/|/\((\w+)[ \t]*=[ \t]*(\w+)(?:,[ \t]*(\w+)[ \t]*=[ \t]*(\w+))*\)"
 
 
 [S,Oがリソース名のとき]
-MAINTASK exit				⇒ MAINTASK : MAINTASK.state = DORMANT	(S exit			⇒ S : S.state = DORMANT )
+MAINTASK terminate			⇒ MAINTASK : MAINTASK.state = DORMANT	(S exit			⇒ S : S.state = DORMANT )
 MAINTASK becomes C			⇒ MAINTASK : MAINTASK.state = C		(S becomes C	⇒ S : S.state = C )
 MAINTASK terminates LOGTASK	⇒ MAINTASK : LOGTASK.state = DORMANT	(S terminates O	⇒ S : O.state = DORMANT )
 MAINTASK makes LOGTASK C	⇒ MAINTASK : LOGTASK.state = C			(S makes O C	⇒ S : O.state = C )
 
 [S,Oがリソース属性により特定されるとき]
-task n exit					⇒ (type=Task, id=n) : (type=Task, id=n).state = DORMANT
+task n terminate			⇒ (type=Task, id=n) : (type=Task, id=n).state = DORMANT
 task n becomes C			⇒ (type=Task, id=n) : (type=Task, id=n).state = C
 task n terminates task m	⇒ (type=Task, id=n) : (type=Task, id=m).state = DORMANT
 task n makes task m C		⇒ (type=Task, id=n) : (type=Task, id=m).state = C
@@ -38,4 +56,9 @@ Vic	= becomes
 Vtc	= makes
 Vi	= exit
 Vt	= terminates
+
+
+
+e = t s a
+a = x v
 
