@@ -94,8 +94,8 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
         public void Open(string path)
         {
-            if (Data == null)
-                Data = new T();
+            if (_data == null)
+                _data = new T();
             Data.Deserialize(path);
             Path = path;
             IsOpened = true;
