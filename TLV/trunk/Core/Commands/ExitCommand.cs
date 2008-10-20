@@ -7,8 +7,10 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Commands
 {
-    public class CloseCommand :ICommand
+    public class ExitCommand :ICommand
     {
+        private Form _form;
+
         public string Text
         {
             get;
@@ -21,7 +23,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
         {
             ApplicationFactory.CommandManager.Do(new FileChangeCommand(() =>
             {
-                ApplicationDatas.ActiveFileContext.Close();
+                _form.Close();
             }));
         }
 
@@ -29,8 +31,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
         {
         }
 
-        public CloseCommand()
+        public ExitCommand(Form form)
         {
+            _form = form;
         }
 
     }

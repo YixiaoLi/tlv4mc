@@ -6,7 +6,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Commands
 {
-    public class SaveCommonFormatTraceLogFileCommand : ICommand
+    public class SaveCommand : ICommand
     {
         public string Text
         {
@@ -26,7 +26,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                 }
                 catch (FilePathUndefinedException)
                 {
-                    ApplicationFactory.CommandManager.Do(new SaveAsCommonFormatTraceLogFileCommand());
+                    ApplicationFactory.CommandManager.Do(new SaveAsCommand());
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 
         }
 
-        public SaveCommonFormatTraceLogFileCommand()
+        public SaveCommand()
         {
             Text = "保存する";
         }

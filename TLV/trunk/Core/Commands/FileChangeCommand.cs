@@ -25,7 +25,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                 switch (MessageBox.Show("ファイルが変更されています。\n保存しますか？", "ファイルが変更されています", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                 {
                     case DialogResult.Yes:
-                        ApplicationFactory.CommandManager.Do(new SaveCommonFormatTraceLogFileCommand());
+                        ApplicationFactory.CommandManager.Do(new SaveCommand());
                         if (ApplicationDatas.ActiveFileContext.IsSaved)
                         {
                             _action.Invoke();

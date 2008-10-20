@@ -58,12 +58,13 @@
     <Compile Include="Commands\ChangeSubWindowDockStateCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowVisiblityCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowEnabledCommand.cs" />
-    <Compile Include="Commands\CloseCommand.cs" />
+    <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\FileChangeCommand.cs" />
-    <Compile Include="Commands\OpenCommonFormatTraceLogFileCommand.cs" />
-    <Compile Include="Commands\OpenResourceFileAndTraceLogFileCommand.cs" />
-    <Compile Include="Commands\SaveAsCommonFormatTraceLogFileCommand.cs" />
-    <Compile Include="Commands\SaveCommonFormatTraceLogFileCommand.cs" />
+    <Compile Include="Commands\OpenCommand.cs" />
+    <Compile Include="Commands\NewCommand.cs" />
+    <Compile Include="Commands\SaveAsCommand.cs" />
+    <Compile Include="Commands\SaveCommand.cs" />
+    <Compile Include="Commands\CloseCommand.cs" />
     <Compile Include="Controls\Forms\OpenResourceFileAndTraceLogFileOpenForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,5 +130,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TLV.ico" />
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Commands
 {
-    public class SaveAsCommonFormatTraceLogFileCommand : ICommand
+    public class SaveAsCommand : ICommand
     {
         public string Text
         {
@@ -36,7 +36,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 
         }
 
-        public SaveAsCommonFormatTraceLogFileCommand()
+        public SaveAsCommand()
         {
             Text = "名前を付けて保存する";
         }

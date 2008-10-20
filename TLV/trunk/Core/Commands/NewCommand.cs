@@ -7,7 +7,7 @@ using NU.OJL.MPRTOS.TLV.Core.Controls;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Commands
 {
-    public class OpenResourceFileAndTraceLogFileCommand : ICommand
+    public class NewCommand : ICommand
     {
 
         public string Text
@@ -53,7 +53,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
         {
         }
 
-        public OpenResourceFileAndTraceLogFileCommand()
+        public NewCommand()
         {
             Text = "リソースファイルとトレースログファイルを開く";
         }

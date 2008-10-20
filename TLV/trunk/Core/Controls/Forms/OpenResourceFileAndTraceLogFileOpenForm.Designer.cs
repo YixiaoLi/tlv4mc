@@ -204,7 +204,7 @@
             this.Name = "OpenResourceFileAndTraceLogFileOpenForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "ファイルを開く";
+            this.Text = "新規作成ウィザード";
             this.ResumeLayout(false);
             this.PerformLayout();
 

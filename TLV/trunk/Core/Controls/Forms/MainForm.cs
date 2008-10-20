@@ -43,9 +43,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             ApplicationDatas.ActiveFileContext.IsOpenedChanged += (o, e) =>
             {
                 textReflesh();
+                closeToolStripMenuItem.Enabled = ApplicationDatas.ActiveFileContext.IsOpened;
                 saveAsToolStripMenuItem.Enabled = ApplicationDatas.ActiveFileContext.IsOpened;
             };
-            ApplicationDatas.ActiveFileContext.DataChanged += (o, e) => { textReflesh(); };
+            ApplicationDatas.ActiveFileContext.DataChanged += (o, e) =>
+            {
+                if (ApplicationDatas.ActiveFileContext.Data == null)
+                {
+                    saveSToolStripMenuItem.Enabled = false;
+                    saveToolStripButton.Enabled = false;
+                }
+                textReflesh();
+            };
             #endregion
 
             #region コマンド管理初期化
@@ -95,29 +104,34 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #endregion
 
             #region ファイルメニュー
-            openCommonFormatTraceLogFileToolStripMenuItem.Click += (o, e) =>
+
+            newToolStripMenuItem.Click += (o, e) =>
             {
-                _commandManager.Do(new OpenCommonFormatTraceLogFileCommand());
+                _commandManager.Do(new NewCommand());
             };
 
-            openResourceFileAndTraceLogFileToolStripMenuItem.Click += (o, e) =>
+            openToolStripMenuItem.Click += (o, e) =>
             {
-                _commandManager.Do(new OpenResourceFileAndTraceLogFileCommand());
-            };
-
-            closeToolStripMenuItem.Click += (o, e) =>
-            {
-                _commandManager.Do(new CloseCommand(this));
+                _commandManager.Do(new OpenCommand());
             };
 
             saveSToolStripMenuItem.Click += (o, e) =>
             {
-                _commandManager.Do(new SaveCommonFormatTraceLogFileCommand());
+                _commandManager.Do(new SaveCommand());
             };
 
             saveAsToolStripMenuItem.Click += (o, e) =>
             {
-                _commandManager.Do(new SaveAsCommonFormatTraceLogFileCommand());
+                _commandManager.Do(new SaveAsCommand());
+            };
+
+            exitToolStripMenuItem.Click += (o, e) =>
+            {
+                _commandManager.Do(new ExitCommand(this));
+            };
+            closeToolStripMenuItem.Click += (o, e) =>
+            {
+                _commandManager.Do(new CloseCommand());
             };
 
             #endregion
@@ -126,14 +140,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             #region ツールバーイベント設定
 
+            newToolStripButton.Click += (o, e) =>
+            {
+                _commandManager.Do(new NewCommand());
+            };
+
             openToolStripButton.Click += (o, e) =>
             {
-                _commandManager.Do(new OpenCommonFormatTraceLogFileCommand());
+                _commandManager.Do(new OpenCommand());
             };
 
             saveToolStripButton.Click += (o, e) =>
             {
-                _commandManager.Do(new SaveCommonFormatTraceLogFileCommand());
+                _commandManager.Do(new SaveCommand());
             };
 
             #endregion
@@ -150,7 +169,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 && !ApplicationDatas.ActiveFileContext.IsSaved)
             {
                 e.Cancel = true;
-                _commandManager.Do(new CloseCommand(this));
+                _commandManager.Do(new ExitCommand(this));
             }
         }
 
@@ -173,16 +192,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             Text = "";
 
-            if (ApplicationDatas.ActiveFileContext.Path == string.Empty)
-                Text += "新規トレースログ";
-            else
-                Text += Path.GetFileNameWithoutExtension(ApplicationDatas.ActiveFileContext.Path);
+            if(ApplicationDatas.ActiveFileContext.Data != null)
+            {
+                if (ApplicationDatas.ActiveFileContext.Path == string.Empty)
+                    Text += "新規トレースログ";
+                else
+                    Text += Path.GetFileNameWithoutExtension(ApplicationDatas.ActiveFileContext.Path);
 
-            if (!ApplicationDatas.ActiveFileContext.IsSaved)
-                Text += " *";
+                if (!ApplicationDatas.ActiveFileContext.IsSaved)
+                    Text += " *";
 
-            Text += " - ";
-
+                Text += " - ";
+            }
             Text += ApplicationDatas.Name + " " + ApplicationDatas.Version;
         }
     }

@@ -7,7 +7,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Commands
 {
-    public class OpenCommonFormatTraceLogFileCommand : ICommand
+    public class OpenCommand : ICommand
     {
         public string Text
         {
@@ -35,7 +35,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
         {
         }
 
-        public OpenCommonFormatTraceLogFileCommand()
+        public OpenCommand()
         {
             Text = "共通形式トレースログファイルを開く";
         }

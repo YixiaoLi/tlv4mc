@@ -33,8 +33,6 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openCommonFormatTraceLogFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openResourceFileAndTraceLogFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -53,6 +51,10 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.undoToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.redoToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -93,36 +95,24 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
             this.openToolStripMenuItem,
             this.toolStripSeparator2,
             this.closeToolStripMenuItem,
             this.toolStripSeparator3,
             this.saveSToolStripMenuItem,
-            this.saveAsToolStripMenuItem});
+            this.saveAsToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
             this.fileToolStripMenuItem.Text = "ファイル(&F)";
             // 
             // openToolStripMenuItem
             // 
-            this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openCommonFormatTraceLogFileToolStripMenuItem,
-            this.openResourceFileAndTraceLogFileToolStripMenuItem});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.openToolStripMenuItem.Text = "開く(&O)";
-            // 
-            // openCommonFormatTraceLogFileToolStripMenuItem
-            // 
-            this.openCommonFormatTraceLogFileToolStripMenuItem.Name = "openCommonFormatTraceLogFileToolStripMenuItem";
-            this.openCommonFormatTraceLogFileToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
-            this.openCommonFormatTraceLogFileToolStripMenuItem.Text = "共通形式トレースログファイルを開く";
-            // 
-            // openResourceFileAndTraceLogFileToolStripMenuItem
-            // 
-            this.openResourceFileAndTraceLogFileToolStripMenuItem.Name = "openResourceFileAndTraceLogFileToolStripMenuItem";
-            this.openResourceFileAndTraceLogFileToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
-            this.openResourceFileAndTraceLogFileToolStripMenuItem.Text = "リソースファイルとトレースログファイルを指定して開く";
             // 
             // toolStripSeparator2
             // 
@@ -131,6 +121,7 @@
             // 
             // closeToolStripMenuItem
             // 
+            this.closeToolStripMenuItem.Enabled = false;
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.closeToolStripMenuItem.Text = "閉じる(&C)";
@@ -212,6 +203,7 @@
             // 
             this.mainToolStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.mainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripButton,
             this.openToolStripButton,
             this.saveToolStripButton,
             this.toolStripSeparator4,
@@ -219,7 +211,7 @@
             this.redoToolStripButton});
             this.mainToolStrip.Location = new System.Drawing.Point(3, 24);
             this.mainToolStrip.Name = "mainToolStrip";
-            this.mainToolStrip.Size = new System.Drawing.Size(108, 25);
+            this.mainToolStrip.Size = new System.Drawing.Size(131, 25);
             this.mainToolStrip.TabIndex = 0;
             this.mainToolStrip.Text = "toolStrip1";
             // 
@@ -230,7 +222,7 @@
             this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openToolStripButton.Name = "openToolStripButton";
             this.openToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.openToolStripButton.Text = "共通形式トレースログファイルを開く";
+            this.openToolStripButton.Text = "開く";
             // 
             // saveToolStripButton
             // 
@@ -266,6 +258,32 @@
             this.redoToolStripButton.Name = "redoToolStripButton";
             this.redoToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.redoToolStripButton.Text = "やり直す";
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.newToolStripMenuItem.Text = "新規作成(&N)";
+            // 
+            // newToolStripButton
+            // 
+            this.newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
+            this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newToolStripButton.Name = "newToolStripButton";
+            this.newToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.newToolStripButton.Text = "新規作成";
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(172, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.exitToolStripMenuItem.Text = "終了(&X)";
             // 
             // MainForm
             // 
@@ -303,8 +321,6 @@
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openCommonFormatTraceLogFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openResourceFileAndTraceLogFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem saveSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
@@ -314,5 +330,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton undoToolStripButton;
         private System.Windows.Forms.ToolStripButton redoToolStripButton;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton newToolStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
