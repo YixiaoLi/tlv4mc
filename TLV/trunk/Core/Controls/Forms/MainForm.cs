@@ -25,7 +25,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             _windowManager = ApplicationFactory.WindowManager;
             _commandManager = ApplicationFactory.CommandManager;
-            Text += ApplicationDatas.Name + " " + ApplicationDatas.Version;
+            Text = ApplicationDatas.Name + " " + ApplicationDatas.Version;
         }
 
         protected override void OnLoad(EventArgs evntArgs)
@@ -170,14 +170,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         protected void textReflesh()
         {
             Text = "";
-            string title = "";
 
             if (ApplicationDatas.ActiveFileContext.Path == string.Empty)
-                title = "無題";
+                Text += "新規トレースログ";
             else
-                title = Path.GetFileNameWithoutExtension(ApplicationDatas.ActiveFileContext.Path);
-
-            Text += title;
+                Text += Path.GetFileNameWithoutExtension(ApplicationDatas.ActiveFileContext.Path);
 
             if (!ApplicationDatas.ActiveFileContext.IsSaved)
                 Text += " *";

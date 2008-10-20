@@ -50,7 +50,7 @@
 
   <xs:complexType name="Attribute_type">
     <xs:sequence>
-      <xs:element name="displayName" type="xs:string" minOccurs="0" maxOccurs ="1" />
+      <xs:element name="displayName" type="xs:string" minOccurs="1" maxOccurs ="1" />
       <xs:element name="value" type="xs:string" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="variableType" type="tns:VariableType_type" minOccurs ="1" maxOccurs ="1" />
       <xs:element name="allocationType" type="tns:AllocationType_type" minOccurs ="1" maxOccurs ="1" />

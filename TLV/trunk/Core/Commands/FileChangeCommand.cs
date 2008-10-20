@@ -32,6 +32,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                         }
                         break;
                     case DialogResult.No:
+                        ApplicationDatas.ActiveFileContext.Close();
                         _action.Invoke();
                         break;
                     case DialogResult.Cancel:
