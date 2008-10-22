@@ -63,9 +63,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return c;
         }
 
-        private CommonFormatConverter()
+        public CommonFormatConverter()
         {
-
         }
 
         public string ConvertResourceFile(string resourceFilePath)

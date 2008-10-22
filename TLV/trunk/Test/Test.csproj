@@ -65,10 +65,6 @@
       <Project>{C2A4F798-30E4-4F03-AA49-F060FFD09B48}</Project>
       <Name>Third</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TLV\Main.csproj">
-      <Project>{08D6D604-5CAB-4F00-96FE-F5C97A2C4A1E}</Project>
-      <Name>Main</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Shadow Include="テストの参照\NU.OJL.MPRTOS.TLV.Base.accessor" />
