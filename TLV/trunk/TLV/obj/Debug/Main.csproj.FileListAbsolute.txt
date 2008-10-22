@@ -12,10 +12,9 @@ C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\TLV
 C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\TLV\bin\Debug\WeifenLuo.WinFormsUI.Docking.dll
 C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\TLV\bin\Debug\NU.OJL.MPRTOS.TLV.Third.dll
 C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\TLV\bin\Debug\NU.OJL.MPRTOS.TLV.Third.pdb
-C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\NU.OJL.MPRTOS.TLV.exe
-C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\NU.OJL.MPRTOS.TLV.pdb
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\NU.OJL.MPRTOS.TLV.Core.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\WeifenLuo.WinFormsUI.Docking.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\ICSharpCode.SharpZipLib.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\NU.OJL.MPRTOS.TLV.Third.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\NU.OJL.MPRTOS.TLV.Core.pdb
@@ -24,6 +23,7 @@ C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\NU.OJL.MPRTOS.TLV.Third.
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\obj\Debug\ResolveAssemblyReference.cache
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\obj\Debug\NU.OJL.MPRTOS.TLV.Properties.Resources.resources
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\obj\Debug\Main.csproj.GenerateResource.Cache
-C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\obj\Debug\NU.OJL.MPRTOS.TLV.exe
-C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\obj\Debug\NU.OJL.MPRTOS.TLV.pdb
-C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\TraceLogVisualizer.exe
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\TraceLogVisualizer.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\obj\Debug\TraceLogVisualizer.exe
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\obj\Debug\TraceLogVisualizer.pdb
