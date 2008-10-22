@@ -9,9 +9,10 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NU.OJL.MPRTOS.TLV</RootNamespace>
-    <AssemblyName>NU.OJL.MPRTOS.TLV</AssemblyName>
+    <AssemblyName>TraceLogVisualizer</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -38,14 +38,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>
     </DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
+    <ErrorReport>none</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DebugSymbols>false</DebugSymbols>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -128,6 +130,11 @@ xcopy $(SolutionDir)rules\convertRules\ITRON4 $(TargetDir)rules\convertRules\ITR
 if not exist $(TargetDir)rules\convertRules\ResourceSchema.xsd copy $(SolutionDir)rules\convertRules\ResourceSchema.xsd $(TargetDir)rules\convertRules
 if not exist $(TargetDir)sampleFiles\SampleITRONResources.res copy $(SolutionDir)sampleFiles\SampleITRONResources.res $(TargetDir)sampleFiles
 if not exist $(TargetDir)sampleFiles\SampleITRONTraceLog.log copy $(SolutionDir)sampleFiles\SampleITRONTraceLog.log $(TargetDir)sampleFiles
-</PostBuildEvent>
+
+move $(TargetPath) $(TargetDir)___$(TargetFileName)
+if $(ConfigurationName) == Debug $(SolutionDir)bin\ILMerge.exe /wildcards /ndebug /out:$(TargetPath) $(TargetDir)___$(TargetFileName) *.dll
+if $(ConfigurationName) == Release $(SolutionDir)bin\ILMerge.exe /wildcards /out:$(TargetPath) $(TargetDir)___$(TargetFileName) *.dll
+del $(TargetDir)___$(TargetFileName)
+del $(TargetDir)*.dll</PostBuildEvent>
   </PropertyGroup>
 </Project>

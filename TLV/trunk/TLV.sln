@@ -50,7 +50,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ITRON4", "ITRON4", "{31AB23
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{37F01460-E939-41AD-B195-4219C5DF177F}"
 	ProjectSection(SolutionItems) = preProject
-		bin\ICSharpCode.SharpZipLib.dll = bin\ICSharpCode.SharpZipLib.dll
+		bin\ILMerge.exe = bin\ILMerge.exe
 		bin\Zip.exe = bin\Zip.exe
 	EndProjectSection
 EndProject
