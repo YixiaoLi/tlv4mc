@@ -4,7 +4,8 @@ SVO		task1 terminate task1
 SVOC	task1 make task1.state DORMANT
 
 
-
+[T]O.B
+[T]X:O.B
 [T]S:O.B
 [T]S:O.A=V
 
