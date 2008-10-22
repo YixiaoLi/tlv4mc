@@ -7,56 +7,45 @@ using NU.OJL.MPRTOS.TLV.Core.Controls;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Commands
 {
-    public class NewCommand : ICommand
+    public class NewCommand : AbstractFileChangeCommand
     {
-
-        public string Text
-        {
-            get;
-            set;
-        }
-
-        public bool CanUndo { get { return false; } }
-
-        public void Do()
-        {
-            ApplicationFactory.CommandManager.Do(new FileChangeCommand(() =>
-            {
-                var f = new OpenResourceFileAndTraceLogFileOpenForm();
-                if (f.ShowDialog() == DialogResult.OK)
-                {
-                    CommonFormatConverter cfc = CommonFormatConverter.GetInstance(f.ConvertRuleFilePath);
-                    string res = "";
-                    string log = "";
-                    try
-                    {
-                        res = cfc.ConvertResourceFile(f.ResourceFilePath);
-                        log = cfc.ConvertTraceLogFile(f.TraceLogFilePath);
-                    }
-                    catch (ResourceFileValidationException e)
-                    {
-                        MessageBox.Show(e.Message, "リソースファイルの共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    catch (TraceLogFileValidationException e)
-                    {
-                        MessageBox.Show(e.Message, "トレースログファイルの共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    ApplicationDatas.ActiveFileContext.Data = new CommonFormatTraceLog(res, log);
-                }
-            }));
-        }
-
-        public void Undo()
-        {
-        }
 
         public NewCommand()
         {
             Text = "リソースファイルとトレースログファイルを開く";
         }
 
+        protected override void action()
+        {
+            var f = new OpenResourceFileAndTraceLogFileOpenForm();
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                CommonFormatConverter cfc = CommonFormatConverter.GetInstance(f.ConvertRuleDirPath);
+                string res = "";
+                string log = "";
+                try
+                {
+                    res = cfc.ConvertResourceFile(f.ResourceFilePath);
+                    log = cfc.ConvertTraceLogFile(f.TraceLogFilePath);
+                }
+                catch (ResourceFileValidationException e)
+                {
+                    MessageBox.Show(e.Message, "リソースファイルの共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                catch (TraceLogFileValidationException e)
+                {
+                    MessageBox.Show(e.Message, "トレースログファイルの共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                ApplicationDatas.ActiveFileContext.Data = new CommonFormatTraceLog(res, log);
+                if (f.SaveFilePath != string.Empty)
+                {
+                    ApplicationDatas.ActiveFileContext.Path = f.SaveFilePath;
+                    ApplicationDatas.ActiveFileContext.Save();
+                }
+            }
+        }
     }
 }

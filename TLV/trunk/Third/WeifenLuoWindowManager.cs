@@ -66,6 +66,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
                     else
                     {
                         s.DockState = ((DockContent)o).DockState.Generalize();
+                        s.Visible = true;
                     }
                 };
 

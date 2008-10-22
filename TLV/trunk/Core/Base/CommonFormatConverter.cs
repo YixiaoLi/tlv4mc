@@ -21,21 +21,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public string ResourceXslt { get; private set; }
         public string TraceLogConvertRule { get; private set; }
 
-        public static CommonFormatConverter GetInstance(string convertFilePath)
+        public static CommonFormatConverter GetInstance(string convertDirPathPath)
         {
             CommonFormatConverter c = new CommonFormatConverter();
-            c.Path = System.IO.Path.GetFullPath(convertFilePath);
+            c.Path = System.IO.Path.GetFullPath(convertDirPathPath);
 
-            if (!File.Exists(convertFilePath) || System.IO.Path.GetExtension(convertFilePath) != "." + Properties.Resources.ConvertRuleFileExtension)
+            if (! Directory.Exists(convertDirPathPath))
                 return null;
 
-            IZip zip = ApplicationFactory.Zip;
             try
             {
-                string tmpDirPath = System.IO.Path.GetTempPath() + "tlv_convertRuleTmp_" + DateTime.Now.Ticks.ToString() + @"\";
-                Directory.CreateDirectory(tmpDirPath);
-                zip.Extract(convertFilePath, tmpDirPath);
-                string ruleFilePath = tmpDirPath + Properties.Resources.ConvertRuleInfoFileName;
+                string ruleFilePath = convertDirPathPath + Properties.Resources.ConvertRuleInfoFileName;
                 string[] ruleFileLines = File.ReadAllLines(ruleFilePath);
                 foreach (string line in ruleFileLines)
                 {
@@ -49,17 +45,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             c.Description = m.Groups["value"].Value;
                             break;
                         case "resourceXsd":
-                            c.ResourceXsd = File.ReadAllText(tmpDirPath + m.Groups["value"]);
+                            c.ResourceXsd = File.ReadAllText(convertDirPathPath + m.Groups["value"]);
                             break;
                         case "resourceXslt":
-                            c.ResourceXslt = File.ReadAllText(tmpDirPath + m.Groups["value"]);
+                            c.ResourceXslt = File.ReadAllText(convertDirPathPath + m.Groups["value"]);
                             break;
                         case "traceLogCnv":
-                            c.TraceLogConvertRule = File.ReadAllText(tmpDirPath + m.Groups["value"]);
+                            c.TraceLogConvertRule = File.ReadAllText(convertDirPathPath + m.Groups["value"]);
                             break;
                     }
                 }
-                Directory.Delete(tmpDirPath, true);
             }
             catch
             {

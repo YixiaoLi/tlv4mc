@@ -8,16 +8,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     public partial class OpenResourceFileAndTraceLogFileOpenForm : Form
     {
         [Flags]
-        private enum inputFlags
+        private enum InputFlags
         {
             NONE = 0x0,
             RESOURCE_FILE_PATH = 0x1,
             TRACELOG_FILE_PATH = 0x2,
             CONVERTRULE_FILE_PATH = 0x4,
-            ALL = RESOURCE_FILE_PATH | TRACELOG_FILE_PATH | CONVERTRULE_FILE_PATH,
+            SAVE_FILE_PATH = 0x8,
+            NEED = RESOURCE_FILE_PATH | TRACELOG_FILE_PATH | CONVERTRULE_FILE_PATH,
+            ALL = RESOURCE_FILE_PATH | TRACELOG_FILE_PATH | CONVERTRULE_FILE_PATH | SAVE_FILE_PATH,
         }
         [Flags]
-        private enum errorFlags
+        private enum ErrorFlags
         {
             NONE = 0x00,
             NO_RESOURCE_FILE_PATH = 0x01,
@@ -28,14 +30,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             WRONG_CONVERTRULE_FILE_PATH = 0x20,
             ALL = NO_RESOURCE_FILE_PATH | NO_TRACELOG_FILE_PATH | NO_CONVERTRULE_FILE_PATH | WRONG_RESOURCE_FILE_PATH | WRONG_TRACELOG_FILE_PATH | WRONG_CONVERTRULE_FILE_PATH,
         }
-        private inputFlags _inputFlags = inputFlags.NONE;
-        private errorFlags _errorFlags = errorFlags.NO_RESOURCE_FILE_PATH | errorFlags.NO_CONVERTRULE_FILE_PATH | errorFlags.NO_TRACELOG_FILE_PATH;
-        private string _resourceFilePath;
-        private string _traceLogFilePath;
-        private string _convertRuleFilePath;
+        private InputFlags _inputFlags = InputFlags.NONE;
+        private ErrorFlags _errorFlags = ErrorFlags.NO_RESOURCE_FILE_PATH | ErrorFlags.NO_CONVERTRULE_FILE_PATH | ErrorFlags.NO_TRACELOG_FILE_PATH;
+        private string _resourceFilePath = string.Empty;
+        private string _traceLogFilePath = string.Empty;
+        private string _convertRuleDirPath = string.Empty;
+        private string _saveFilePath = string.Empty;
         private string _resourceFileExt;
         private string _traceLogFileExt;
-        private string _convertRuleFileExt;
+        private string _saveFileExt;
 
         public string ResourceFilePath
         {
@@ -47,21 +50,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                     _resourceFilePath = value;
                     if (_resourceFilePath == "" || Path.GetExtension(_resourceFilePath) != "." + _resourceFileExt)
                     {
-                        InputFlags &= ~inputFlags.RESOURCE_FILE_PATH;
-                        ErrorFlags |= errorFlags.NO_RESOURCE_FILE_PATH;
-                        ErrorFlags &= ~errorFlags.WRONG_RESOURCE_FILE_PATH;
+                        InputFlag &= ~InputFlags.RESOURCE_FILE_PATH;
+                        ErrorFlag |= ErrorFlags.NO_RESOURCE_FILE_PATH;
+                        ErrorFlag &= ~ErrorFlags.WRONG_RESOURCE_FILE_PATH;
                     }
                     else if (File.Exists(_resourceFilePath))
                     {
-                        InputFlags |= inputFlags.RESOURCE_FILE_PATH;
-                        ErrorFlags &= ~errorFlags.WRONG_RESOURCE_FILE_PATH;
-                        ErrorFlags &= ~errorFlags.NO_RESOURCE_FILE_PATH;
+                        InputFlag |= InputFlags.RESOURCE_FILE_PATH;
+                        ErrorFlag &= ~ErrorFlags.WRONG_RESOURCE_FILE_PATH;
+                        ErrorFlag &= ~ErrorFlags.NO_RESOURCE_FILE_PATH;
                     }
                     else
                     {
-                        InputFlags &= ~inputFlags.RESOURCE_FILE_PATH;
-                        ErrorFlags |= errorFlags.WRONG_RESOURCE_FILE_PATH;
-                        ErrorFlags &= ~errorFlags.NO_RESOURCE_FILE_PATH;
+                        InputFlag &= ~InputFlags.RESOURCE_FILE_PATH;
+                        ErrorFlag |= ErrorFlags.WRONG_RESOURCE_FILE_PATH;
+                        ErrorFlag &= ~ErrorFlags.NO_RESOURCE_FILE_PATH;
                     }
                 }
             }
@@ -76,55 +79,73 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                     _traceLogFilePath = value;
                     if (_traceLogFilePath == "" || Path.GetExtension(_traceLogFilePath) != "." + _traceLogFileExt)
                     {
-                        InputFlags &= ~inputFlags.TRACELOG_FILE_PATH;
-                        ErrorFlags |= errorFlags.NO_TRACELOG_FILE_PATH;
-                        ErrorFlags &= ~errorFlags.WRONG_TRACELOG_FILE_PATH;
+                        InputFlag &= ~InputFlags.TRACELOG_FILE_PATH;
+                        ErrorFlag |= ErrorFlags.NO_TRACELOG_FILE_PATH;
+                        ErrorFlag &= ~ErrorFlags.WRONG_TRACELOG_FILE_PATH;
                     }
                     else if (File.Exists(_traceLogFilePath))
                     {
-                        InputFlags |= inputFlags.TRACELOG_FILE_PATH;
-                        ErrorFlags &= ~errorFlags.WRONG_TRACELOG_FILE_PATH;
-                        ErrorFlags &= ~errorFlags.NO_TRACELOG_FILE_PATH;
+                        InputFlag |= InputFlags.TRACELOG_FILE_PATH;
+                        ErrorFlag &= ~ErrorFlags.WRONG_TRACELOG_FILE_PATH;
+                        ErrorFlag &= ~ErrorFlags.NO_TRACELOG_FILE_PATH;
                     }
                     else
                     {
-                        InputFlags &= ~inputFlags.TRACELOG_FILE_PATH;
-                        ErrorFlags |= errorFlags.WRONG_TRACELOG_FILE_PATH;
-                        ErrorFlags &= ~errorFlags.NO_TRACELOG_FILE_PATH;
+                        InputFlag &= ~InputFlags.TRACELOG_FILE_PATH;
+                        ErrorFlag |= ErrorFlags.WRONG_TRACELOG_FILE_PATH;
+                        ErrorFlag &= ~ErrorFlags.NO_TRACELOG_FILE_PATH;
                     }
                 }
             }
         }
-        public string ConvertRuleFilePath
+        public string ConvertRuleDirPath
         {
-            get { return _convertRuleFilePath; }
+            get { return _convertRuleDirPath; }
             set
             {
-                if (_convertRuleFilePath != value)
+                if (_convertRuleDirPath != value)
                 {
-                    _convertRuleFilePath = value;
-                    if (_convertRuleFilePath == "" || Path.GetExtension(_convertRuleFilePath) != "." + _convertRuleFileExt)
+                    _convertRuleDirPath = value;
+                    if (_convertRuleDirPath == "")
                     {
-                        InputFlags &= ~inputFlags.CONVERTRULE_FILE_PATH;
-                        ErrorFlags |= errorFlags.NO_CONVERTRULE_FILE_PATH;
-                        ErrorFlags &= ~errorFlags.WRONG_CONVERTRULE_FILE_PATH;
+                        InputFlag &= ~InputFlags.CONVERTRULE_FILE_PATH;
+                        ErrorFlag |= ErrorFlags.NO_CONVERTRULE_FILE_PATH;
+                        ErrorFlag &= ~ErrorFlags.WRONG_CONVERTRULE_FILE_PATH;
                     }
-                    else if (File.Exists(_convertRuleFilePath))
+                    else if (Directory.Exists(_convertRuleDirPath))
                     {
-                        InputFlags |= inputFlags.CONVERTRULE_FILE_PATH;
-                        ErrorFlags &= ~errorFlags.WRONG_CONVERTRULE_FILE_PATH;
-                        ErrorFlags &= ~errorFlags.NO_CONVERTRULE_FILE_PATH;
+                        InputFlag |= InputFlags.CONVERTRULE_FILE_PATH;
+                        ErrorFlag &= ~ErrorFlags.WRONG_CONVERTRULE_FILE_PATH;
+                        ErrorFlag &= ~ErrorFlags.NO_CONVERTRULE_FILE_PATH;
                     }
                     else
                     {
-                        InputFlags &= ~inputFlags.CONVERTRULE_FILE_PATH;
-                        ErrorFlags |= errorFlags.WRONG_CONVERTRULE_FILE_PATH;
-                        ErrorFlags &= ~errorFlags.NO_CONVERTRULE_FILE_PATH;
+                        InputFlag &= ~InputFlags.CONVERTRULE_FILE_PATH;
+                        ErrorFlag |= ErrorFlags.WRONG_CONVERTRULE_FILE_PATH;
+                        ErrorFlag &= ~ErrorFlags.NO_CONVERTRULE_FILE_PATH;
                     }
                 }
             }
         }
-        public string ResourceFileExt
+        public string SaveFilePath
+        {
+            get { return _saveFilePath; }
+            set{
+                if (_saveFilePath != value)
+                {
+                    _saveFilePath = value;
+                    if (_saveFilePath == "")
+                    {
+                        InputFlag &= ~InputFlags.SAVE_FILE_PATH;
+                    }
+                    else
+                    {
+                        InputFlag |= InputFlags.SAVE_FILE_PATH;
+                    }
+                }
+            }
+        }
+        private string ResourceFileExt
         {
             get { return _resourceFileExt; }
             set
@@ -137,7 +158,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }
             }
         }
-        public string TraceLogFileExt
+        private string TraceLogFileExt
         {
             get { return _traceLogFileExt; }
             set
@@ -150,18 +171,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }
             }
         }
-        public string ConvertRuleFileExt
+        private string SaveFileExt
         {
-            get { return _convertRuleFileExt; }
+            get { return _saveFileExt; }
             set
             {
-                if(_convertRuleFileExt != value)
+                if (_saveFileExt != value)
                 {
-                    _convertRuleFileExt = value;
+                    _saveFileExt = value;
+                    saveFileDialog.DefaultExt = _saveFilePath;
+                    saveFileDialog.Filter = "Common Format TraceLog File (*." + _saveFileExt + ")|*." + _saveFileExt;
                 }
             }
         }
-        private inputFlags InputFlags
+        private InputFlags InputFlag
         {
             get { return _inputFlags; }
             set
@@ -169,7 +192,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 if (_inputFlags != value)
                 {
                     _inputFlags = value;
-                    if (_inputFlags == inputFlags.ALL && ErrorFlags == errorFlags.NONE)
+                    if ((_inputFlags & InputFlags.NEED) == InputFlags.NEED && ErrorFlag == ErrorFlags.NONE)
                     {
                         okButton.Enabled = true;
                     }
@@ -181,7 +204,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }
             }
         }
-        private errorFlags ErrorFlags
+        private ErrorFlags ErrorFlag
         {
             get { return _errorFlags; }
             set
@@ -189,7 +212,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 if (_errorFlags != value)
                 {
                     _errorFlags = value;
-                    if (InputFlags == inputFlags.ALL && _errorFlags == errorFlags.NONE)
+                    if ((_inputFlags & InputFlags.NEED) == InputFlags.NEED && _errorFlags == ErrorFlags.NONE)
                     {
                         okButton.Enabled = true;
                     }
@@ -207,7 +230,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             InitializeComponent();
             ResourceFileExt = Properties.Resources.ResourceFileExtension;
             TraceLogFileExt = Properties.Resources.TraceLogFileExtension;
-            ConvertRuleFileExt = Properties.Resources.ConvertRuleFileExtension;
+            SaveFileExt = Properties.Resources.CommonFormatTraceLogFileExtension;
         }
 
         protected override void OnLoad(EventArgs evntArgs)
@@ -215,15 +238,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             base.OnLoad(evntArgs);
             updateErrorMessageBox();
 
-            string rulesDirPath = ApplicationDatas.RulesDirectoryPath;
             string convertRulesDirPath = ApplicationDatas.ConvertRulesDirectoryPath;
 
-            foreach (string filePath in Directory.GetFiles(convertRulesDirPath))
+            foreach (string dirPath in Directory.GetDirectories(convertRulesDirPath))
             {
-                CommonFormatConverter c = CommonFormatConverter.GetInstance(filePath);
-                if(c != null)
+                if (File.Exists(dirPath + @"\rule.txt"))
                 {
-                    convertRuleComboBox.Items.Add(c);
+                    CommonFormatConverter c = CommonFormatConverter.GetInstance(dirPath + @"\");
+                    if(c != null)
+                    {
+                        convertRuleComboBox.Items.Add(c);
+                    }
                 }
             }
 
@@ -246,10 +271,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                     TraceLogFilePath = traceLogFilePathTextBox.Text;
                 };
 
+            savePathTextBox.TextChanged += (o, e)
+                =>
+                {
+                    SaveFilePath = savePathTextBox.Text;
+                };
+
             convertRuleComboBox.SelectedValueChanged += (o, e)
                 =>
                 {
-                    ConvertRuleFilePath = ((CommonFormatConverter)convertRuleComboBox.SelectedItem).Path;
+                    ConvertRuleDirPath = ((CommonFormatConverter)convertRuleComboBox.SelectedItem).Path;
                     convertRuleMessageBox.Text = ((CommonFormatConverter)convertRuleComboBox.SelectedItem).Description;
                 };
 
@@ -264,12 +295,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             traceLogFileRefButton.Click += (o, e)
                 =>
-            {
-                if (traceLogFileOpenFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    traceLogFilePathTextBox.Text = traceLogFileOpenFileDialog.FileName;
-                }
-            };
+                    if (traceLogFileOpenFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        traceLogFilePathTextBox.Text = traceLogFileOpenFileDialog.FileName;
+                    }
+                };
+
+            savePathRefButton.Click += (o, e)
+                =>
+                {
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        savePathTextBox.Text = saveFileDialog.FileName;
+                    }
+                };
 
             okButton.Click += (o, e) =>
                 {
@@ -282,37 +322,43 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         private void updateErrorMessageBox()
         {
-            errorMessageBox.Text = "";
+            errorMessageBox.Clear();
+            string[] errorMessages = new string[3];
 
-            if((ErrorFlags & errorFlags.NO_RESOURCE_FILE_PATH) != errorFlags.NONE)
+            if((ErrorFlag & ErrorFlags.NO_RESOURCE_FILE_PATH) != ErrorFlags.NONE)
             {
-                errorMessageBox.Text += "リソースファイルのパスを入力して下さい。\n";
+                errorMessages[0] = "・リソースファイルのパスを入力して下さい。";
             }
-            if ((ErrorFlags & errorFlags.NO_TRACELOG_FILE_PATH) != errorFlags.NONE)
+            if ((ErrorFlag & ErrorFlags.WRONG_RESOURCE_FILE_PATH) != ErrorFlags.NONE)
             {
-                errorMessageBox.Text += "トレースログファイルのパスを入力して下さい。\n";
+                errorMessages[0] = "・指定されたリソースファイルは存在しません。入力を確認してください。";
             }
-            if ((ErrorFlags & errorFlags.NO_CONVERTRULE_FILE_PATH) != errorFlags.NONE)
+            if ((ErrorFlag & ErrorFlags.NO_TRACELOG_FILE_PATH) != ErrorFlags.NONE)
             {
-                errorMessageBox.Text += "共通形式変換ルールを選択して下さい。\n";
+                errorMessages[1] = "・トレースログファイルのパスを入力して下さい。";
             }
-            if ((ErrorFlags & errorFlags.WRONG_RESOURCE_FILE_PATH) != errorFlags.NONE)
+            if ((ErrorFlag & ErrorFlags.WRONG_TRACELOG_FILE_PATH) != ErrorFlags.NONE)
             {
-                errorMessageBox.Text += "指定されたリソースファイルは存在しません。入力を確認してください。\n";
+                errorMessages[1] = "・指定されたトレースログファイルは存在しません。入力を確認してください。";
             }
-            if ((ErrorFlags & errorFlags.WRONG_TRACELOG_FILE_PATH) != errorFlags.NONE)
+            if ((ErrorFlag & ErrorFlags.NO_CONVERTRULE_FILE_PATH) != ErrorFlags.NONE)
             {
-                errorMessageBox.Text += "指定されたトレースログファイルは存在しません。入力を確認してください。\n";
+                errorMessages[2] = "・共通形式変換ルールを選択して下さい。";
             }
-            if (ErrorFlags == errorFlags.NONE)
+            if (ErrorFlag == ErrorFlags.NONE)
             {
-                errorMessageBox.Text += "OKボタンで確定して下さい。\nキャンセルボタンで確定せずに終了出来ます。";
+                errorMessages[0] = "・OKボタンで確定して下さい。キャンセルボタンで確定せずに終了出来ます。";
+                if((InputFlag & InputFlags.SAVE_FILE_PATH) == InputFlags.NONE)
+                {
+                    errorMessages[1] = "・保存先を設定することが出来ます。設定せずに作成することもできます。";
+                }
                 errorMessageBox.ForeColor = Color.Green;
             }
             else
             {
                 errorMessageBox.ForeColor = Color.Red;
             }
+            errorMessageBox.Lines = errorMessages;
         }
     }
 }

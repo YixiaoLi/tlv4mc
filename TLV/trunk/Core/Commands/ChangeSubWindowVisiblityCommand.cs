@@ -8,8 +8,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 {
     public class ChangeSubWindowVisiblityCommand : ICommand
     {
+        private bool _canUndo = true;
+
         private SubWindow _subWindow;
-        public bool _visiblity;
+        private bool _visiblity;
 
         public string Text
         {
@@ -19,7 +21,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 
         public bool CanUndo
         {
-            get { return true; }
+            get { return _canUndo; }
+            set { _canUndo = value; }
         }
 
         public void Do()
@@ -29,7 +32,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 
         public void Undo()
         {
-            _subWindow.Visible = !_visiblity;
+            if (_canUndo)
+            {
+                _subWindow.Visible = !_visiblity;
+            }
         }
 
         public ChangeSubWindowVisiblityCommand(SubWindow subWindow, bool visiblity)

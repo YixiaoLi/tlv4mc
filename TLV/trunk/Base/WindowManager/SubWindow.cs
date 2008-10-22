@@ -28,7 +28,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         private DockState _dockState = DockState.Unknown;
         private bool _visible = true;
         private bool _enabled = true;
-        
+
         /// <summary>
         /// サブウィンドウにFillされるControl
         /// </summary>

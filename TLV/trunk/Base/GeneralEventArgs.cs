@@ -20,6 +20,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
     public class GeneralChangedEventArgs<T> : EventArgs
     {
+        public bool IsAutonomic { get; set; }
         public T New { get; private set; }
         public T Old { get; private set; }
 
@@ -27,6 +28,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         {
             Old = o;
             New = n;
+            IsAutonomic = true;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         public string Text { get; set; }
         public Action DoAction { get; set; }
         public Action UndoAction { get; set; }
-        public bool CanUndo { get; private set; }
+        public bool CanUndo { get; set; }
 
         public void Do()
         {

@@ -7,6 +7,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
     public class MacroCommand : ICommand
     {
+        private bool _canUndo = true;
         private List<ICommand> _commandList;
 
         public string Text
@@ -17,20 +18,8 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
         public bool CanUndo
         {
-            get
-            {
-                if (_commandList.Count == 0)
-                {
-                    return false;
-                }
-
-                foreach (ICommand c in _commandList)
-                {
-                    if (!c.CanUndo)
-                        return false;
-                }
-                return true;
-            }
+            get { return _canUndo; }
+            set { _canUndo = value; }
         }
 
         public void Do()
@@ -55,9 +44,23 @@ namespace NU.OJL.MPRTOS.TLV.Base
         public MacroCommand(IEnumerable<ICommand> commands)
         {
             _commandList = new List<ICommand>(commands);
+
             if (_commandList.Count != 0)
             {
                 Text = _commandList.First<ICommand>().Text + " から " + _commandList.Last<ICommand>().Text + " までの一連の動作";
+            }
+            else
+            {
+                _canUndo = false;
+            }
+
+            foreach (ICommand c in _commandList)
+            {
+                if(! c.CanUndo)
+                {
+                    _canUndo = false;
+                    break;
+                }
             }
         }
     }

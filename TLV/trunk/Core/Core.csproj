@@ -59,7 +59,7 @@
     <Compile Include="Commands\ChangeSubWindowVisiblityCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowEnabledCommand.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
-    <Compile Include="Commands\FileChangeCommand.cs" />
+    <Compile Include="Commands\AbstractFileChangeCommand.cs" />
     <Compile Include="Commands\OpenCommand.cs" />
     <Compile Include="Commands\NewCommand.cs" />
     <Compile Include="Commands\SaveAsCommand.cs" />

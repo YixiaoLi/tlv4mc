@@ -120,9 +120,6 @@
   <data name="CommonFormatTraceLogFileExtension" xml:space="preserve">
     <value>tlv</value>
   </data>
-  <data name="ConvertRuleFileExtension" xml:space="preserve">
-    <value>cnv</value>
-  </data>
   <data name="ConvertRuleInfoFileName" xml:space="preserve">
     <value>rule.txt</value>
   </data>

@@ -70,15 +70,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         }
         
         /// <summary>
-        ///   cnv に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string ConvertRuleFileExtension {
-            get {
-                return ResourceManager.GetString("ConvertRuleFileExtension", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   rule.txt に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ConvertRuleInfoFileName {

@@ -14,7 +14,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
             set;
         }
 
-        public bool CanUndo { get { return false; } }
+        public bool CanUndo { get { return false; } set { } }
 
         public void Do()
         {

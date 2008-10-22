@@ -62,8 +62,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             redoToolStripMenuItem.SetCommandManagerAsRedo(_commandManager);
             undoToolStripButton.SetCommandManagerAsUndo(_commandManager);
             redoToolStripButton.SetCommandManagerAsRedo(_commandManager);
-            EventHandler<GeneralChangedEventArgs<DockState>> d = (o, e) => { _commandManager.Done(new ChangeSubWindowDockStateCommand(((SubWindow)o), e.Old, e.New)); };
-            EventHandler<GeneralChangedEventArgs<bool>> v = (o, e) => { _commandManager.Done(new ChangeSubWindowVisiblityCommand(((SubWindow)o), e.New)); };
             #endregion
 
             #region サブウィンドウ管理初期化
@@ -76,7 +74,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
             _windowManager.MainPanel = new Control();
             _windowManager.AddSubWindow(sws);
-            _windowManager.SubWindowDockStateChanged += d;
+            _windowManager.SubWindowDockStateChanged += (o, e) => { _commandManager.Done(new ChangeSubWindowDockStateCommand(((SubWindow)o), e.Old, e.New)); };
+            EventHandler<GeneralChangedEventArgs<bool>> v = (o, e) => { _commandManager.Done(new ChangeSubWindowVisiblityCommand(((SubWindow)o), e.New)); };
             _windowManager.SubWindowVisibleChanged += v;
             viewToolStripMenuItem.SetWindowManager(_windowManager);
             #endregion
@@ -86,20 +85,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region 表示メニュー
             showAllToolStripMenuItem.Click += (o, e) =>
             {
-                _windowManager.SubWindowVisibleChanged -= v;
-                _commandManager.Do(new MacroCommand(
-                    from sw in sws where !sw.Visible && sw.Enabled
-                    select (ICommand)(new ChangeSubWindowVisiblityCommand(sw, true))) { Text= "すべてのウィンドウを表示する" });
-                _windowManager.SubWindowVisibleChanged += v;
+                // 非表示状態のウィンドウを探しコマンドを生成する
+                var cswvc = from sw in sws
+                         where !sw.Visible && sw.Enabled
+                         select (ICommand)(new ChangeSubWindowVisiblityCommand(sw, true));
+                if (cswvc.Count() != 0)
+                {
+                    // SubWindowVisibleChangedを無効にしておかないとundoスタックにすべてのウィンドウの表示コマンドが追加されてしまう
+                    _windowManager.SubWindowVisibleChanged -= v;
+                    _commandManager.Do(new MacroCommand(cswvc) { Text="すべてのウィンドウを表示する"});
+                    _windowManager.SubWindowVisibleChanged += v;
+                }
             };
             hideAllToolStripMenuItem.Click += (o, e) =>
             {
-                _windowManager.SubWindowVisibleChanged -= v;
-                _commandManager.Do(new MacroCommand(
-                    from sw in sws
-                    where sw.Visible && sw.Enabled
-                    select (ICommand)(new ChangeSubWindowVisiblityCommand(sw, false))) { Text = "すべてのウィンドウを非表示にする" });
-                _windowManager.SubWindowVisibleChanged += v;
+                // 表示状態のウィンドウを探しコマンドを生成する
+                var cswvc = from sw in sws
+                            where sw.Visible && sw.Enabled
+                            select (ICommand)(new ChangeSubWindowVisiblityCommand(sw, false));
+                if (cswvc.Count() != 0)
+                {
+                    // SubWindowVisibleChangedを無効にしておかないとundoスタックにすべてのウィンドウの非表示コマンドが追加されてしまう
+                    _windowManager.SubWindowVisibleChanged -= v;
+                    _commandManager.Do(new MacroCommand(cswvc) { Text = "すべてのウィンドウを非表示にする" });
+                    _windowManager.SubWindowVisibleChanged += v;
+                }
             };
             #endregion
 
