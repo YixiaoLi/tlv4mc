@@ -47,13 +47,14 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.convertRuleMessageBox = new System.Windows.Forms.TextBox();
             this.errorMessageBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // okButton
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.Enabled = false;
-            this.okButton.Location = new System.Drawing.Point(274, 248);
+            this.okButton.Location = new System.Drawing.Point(374, 268);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 7;
@@ -73,7 +74,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(355, 248);
+            this.cancelButton.Location = new System.Drawing.Point(455, 268);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 8;
@@ -88,7 +89,7 @@
             this.convertRuleComboBox.FormattingEnabled = true;
             this.convertRuleComboBox.Location = new System.Drawing.Point(126, 62);
             this.convertRuleComboBox.Name = "convertRuleComboBox";
-            this.convertRuleComboBox.Size = new System.Drawing.Size(304, 20);
+            this.convertRuleComboBox.Size = new System.Drawing.Size(404, 20);
             this.convertRuleComboBox.TabIndex = 4;
             // 
             // label2
@@ -112,7 +113,7 @@
             // traceLogFileRefButton
             // 
             this.traceLogFileRefButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.traceLogFileRefButton.Location = new System.Drawing.Point(355, 33);
+            this.traceLogFileRefButton.Location = new System.Drawing.Point(455, 33);
             this.traceLogFileRefButton.Name = "traceLogFileRefButton";
             this.traceLogFileRefButton.Size = new System.Drawing.Size(75, 23);
             this.traceLogFileRefButton.TabIndex = 3;
@@ -125,13 +126,13 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.traceLogFilePathTextBox.Location = new System.Drawing.Point(126, 35);
             this.traceLogFilePathTextBox.Name = "traceLogFilePathTextBox";
-            this.traceLogFilePathTextBox.Size = new System.Drawing.Size(223, 19);
+            this.traceLogFilePathTextBox.Size = new System.Drawing.Size(323, 19);
             this.traceLogFilePathTextBox.TabIndex = 2;
             // 
             // resourceFileRefButton
             // 
             this.resourceFileRefButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.resourceFileRefButton.Location = new System.Drawing.Point(355, 4);
+            this.resourceFileRefButton.Location = new System.Drawing.Point(455, 4);
             this.resourceFileRefButton.Name = "resourceFileRefButton";
             this.resourceFileRefButton.Size = new System.Drawing.Size(75, 23);
             this.resourceFileRefButton.TabIndex = 1;
@@ -144,7 +145,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.resourceFilePathTextBox.Location = new System.Drawing.Point(126, 6);
             this.resourceFilePathTextBox.Name = "resourceFilePathTextBox";
-            this.resourceFilePathTextBox.Size = new System.Drawing.Size(223, 19);
+            this.resourceFilePathTextBox.Size = new System.Drawing.Size(323, 19);
             this.resourceFilePathTextBox.TabIndex = 0;
             // 
             // label4
@@ -168,7 +169,7 @@
             // savePathRefButton
             // 
             this.savePathRefButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.savePathRefButton.Location = new System.Drawing.Point(355, 86);
+            this.savePathRefButton.Location = new System.Drawing.Point(455, 86);
             this.savePathRefButton.Name = "savePathRefButton";
             this.savePathRefButton.Size = new System.Drawing.Size(75, 23);
             this.savePathRefButton.TabIndex = 6;
@@ -181,7 +182,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.savePathTextBox.Location = new System.Drawing.Point(126, 88);
             this.savePathTextBox.Name = "savePathTextBox";
-            this.savePathTextBox.Size = new System.Drawing.Size(223, 19);
+            this.savePathTextBox.Size = new System.Drawing.Size(323, 19);
             this.savePathTextBox.TabIndex = 5;
             // 
             // convertRuleMessageBox
@@ -190,12 +191,12 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.convertRuleMessageBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.convertRuleMessageBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.convertRuleMessageBox.Location = new System.Drawing.Point(14, 132);
+            this.convertRuleMessageBox.Location = new System.Drawing.Point(14, 131);
             this.convertRuleMessageBox.Multiline = true;
             this.convertRuleMessageBox.Name = "convertRuleMessageBox";
             this.convertRuleMessageBox.ReadOnly = true;
             this.convertRuleMessageBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.convertRuleMessageBox.Size = new System.Drawing.Size(416, 52);
+            this.convertRuleMessageBox.Size = new System.Drawing.Size(516, 53);
             this.convertRuleMessageBox.TabIndex = 25;
             // 
             // errorMessageBox
@@ -204,13 +205,22 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.errorMessageBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.errorMessageBox.Location = new System.Drawing.Point(14, 190);
+            this.errorMessageBox.Location = new System.Drawing.Point(14, 208);
             this.errorMessageBox.Multiline = true;
             this.errorMessageBox.Name = "errorMessageBox";
             this.errorMessageBox.ReadOnly = true;
             this.errorMessageBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.errorMessageBox.Size = new System.Drawing.Size(416, 52);
+            this.errorMessageBox.Size = new System.Drawing.Size(516, 54);
             this.errorMessageBox.TabIndex = 26;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 193);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(50, 12);
+            this.label6.TabIndex = 27;
+            this.label6.Text = "メッセージ";
             // 
             // OpenResourceFileAndTraceLogFileOpenForm
             // 
@@ -218,7 +228,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(442, 283);
+            this.ClientSize = new System.Drawing.Size(542, 303);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.errorMessageBox);
             this.Controls.Add(this.convertRuleMessageBox);
             this.Controls.Add(this.label5);
@@ -237,10 +248,11 @@
             this.Controls.Add(this.resourceFilePathTextBox);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(240, 280);
+            this.MinimumSize = new System.Drawing.Size(240, 300);
             this.Name = "OpenResourceFileAndTraceLogFileOpenForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "新規作成ウィザード";
             this.ResumeLayout(false);
@@ -269,5 +281,6 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.TextBox convertRuleMessageBox;
         private System.Windows.Forms.TextBox errorMessageBox;
+        private System.Windows.Forms.Label label6;
     }
 }

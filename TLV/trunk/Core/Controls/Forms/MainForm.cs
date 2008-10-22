@@ -33,27 +33,42 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             base.OnLoad(evntArgs);
 
             #region ApplicationDatasイベント設定
-            ApplicationDatas.ActiveFileContext.PathChanged += (o, e) => { textReflesh(); };
+            ApplicationDatas.ActiveFileContext.PathChanged += (o, e) =>
+            {
+                Invoke((MethodInvoker)(() => 
+                {
+                    textReflesh();
+                }));
+            };
             ApplicationDatas.ActiveFileContext.IsSavedChanged += (o, e) =>
             {
-                textReflesh();
-                saveSToolStripMenuItem.Enabled = !ApplicationDatas.ActiveFileContext.IsSaved;
-                saveToolStripButton.Enabled = !ApplicationDatas.ActiveFileContext.IsSaved;
+                Invoke((MethodInvoker)(() => 
+                {
+                    textReflesh();
+                    saveSToolStripMenuItem.Enabled = !ApplicationDatas.ActiveFileContext.IsSaved;
+                    saveToolStripButton.Enabled = !ApplicationDatas.ActiveFileContext.IsSaved;
+                }));
             };
             ApplicationDatas.ActiveFileContext.IsOpenedChanged += (o, e) =>
             {
-                textReflesh();
-                closeToolStripMenuItem.Enabled = ApplicationDatas.ActiveFileContext.IsOpened;
-                saveAsToolStripMenuItem.Enabled = ApplicationDatas.ActiveFileContext.IsOpened;
+                Invoke((MethodInvoker)(() =>
+                {
+                    textReflesh();
+                    closeToolStripMenuItem.Enabled = ApplicationDatas.ActiveFileContext.IsOpened;
+                    saveAsToolStripMenuItem.Enabled = ApplicationDatas.ActiveFileContext.IsOpened;
+                }));
             };
             ApplicationDatas.ActiveFileContext.DataChanged += (o, e) =>
             {
-                if (ApplicationDatas.ActiveFileContext.Data == null)
+                Invoke((MethodInvoker)(() =>
                 {
-                    saveSToolStripMenuItem.Enabled = false;
-                    saveToolStripButton.Enabled = false;
-                }
-                textReflesh();
+                    if (ApplicationDatas.ActiveFileContext.Data == null)
+                    {
+                        saveSToolStripMenuItem.Enabled = false;
+                        saveToolStripButton.Enabled = false;
+                    }
+                    textReflesh();
+                }));
             };
             #endregion
 

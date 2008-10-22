@@ -344,6 +344,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             if ((ErrorFlag & ErrorFlags.NO_CONVERTRULE_FILE_PATH) != ErrorFlags.NONE)
             {
                 errorMessages[2] = "・共通形式変換ルールを選択して下さい。";
+                convertRuleMessageBox.Text = "共通形式変換ルールを選択するとここに説明が表示されます。";
             }
             if (ErrorFlag == ErrorFlags.NONE)
             {
