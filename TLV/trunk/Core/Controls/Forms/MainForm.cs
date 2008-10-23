@@ -198,6 +198,30 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             }
         }
 
+        protected override void OnDragEnter(DragEventArgs drgevent)
+        {
+            base.OnDragEnter(drgevent);
+
+            string s = ((string[])(drgevent.Data.GetData(DataFormats.FileDrop)))[0];
+
+            if(Path.GetExtension(s) == "." + Properties.Resources.CommonFormatTraceLogFileExtension 
+                && drgevent.Data.GetDataPresent(DataFormats.FileDrop))
+                drgevent.Effect = DragDropEffects.All;
+            else
+                drgevent.Effect = DragDropEffects.None;
+        }
+
+        protected override void OnDragDrop(DragEventArgs drgevent)
+        {
+            base.OnDragDrop(drgevent);
+            if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string s = ((string[])(drgevent.Data.GetData(DataFormats.FileDrop)))[0];
+
+                _commandManager.Do(new OpenCommand(s));
+            }
+        }
+
         private void settingLoad()
         {
             ClientSize = Properties.Settings.Default.ClientSize;

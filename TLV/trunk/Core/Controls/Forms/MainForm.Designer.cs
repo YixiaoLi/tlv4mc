@@ -303,6 +303,7 @@
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.AllowDrop = true;
 
         }
 
