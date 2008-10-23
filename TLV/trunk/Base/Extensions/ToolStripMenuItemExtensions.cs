@@ -72,11 +72,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 {
                     tsmi.Text = commandManager.UndoText + "元に戻す";
                 };
-            commandManager.UndoEnable += (o, e) =>
+            commandManager.UndoBecameEnable += (o, e) =>
                 {
                     tsmi.Enabled = true;
                 };
-            commandManager.UndoDisEnable += (o, e) =>
+            commandManager.UndoBecameDisenable += (o, e) =>
                 {
                     tsmi.Enabled = false;
                 };
@@ -98,11 +98,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 {
                     tsmi.Text = commandManager.RedoText + "やり直す";
                 };
-            commandManager.RedoDisenable += (o, e) =>
+            commandManager.RedoBecameDisenable += (o, e) =>
                 {
                     tsmi.Enabled = false;
                 };
-            commandManager.RedoEnable += (o, e) =>
+            commandManager.RedoBecameEnable += (o, e) =>
                 {
                     tsmi.Enabled = true;
                 };

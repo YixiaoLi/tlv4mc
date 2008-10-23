@@ -9,7 +9,6 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
     /// <summary>
     /// ドッキング可能なサブウィンドウを管理するクラス
-    /// 実際の処理はIWindowManagerHandlerの実装クラスに委譲される
     /// </summary>
     public class WindowManager : IWindowManager
     {

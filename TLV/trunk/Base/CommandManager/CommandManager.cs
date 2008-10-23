@@ -26,10 +26,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
         public event EventHandler<GeneralEventArgs<ICommand>> CommandDone;
         public event EventHandler<GeneralEventArgs<ICommand>> CommandUndone;
         public event EventHandler<GeneralEventArgs<ICommand>> CommandRedone;
-        public event EventHandler UndoDisEnable;
-        public event EventHandler UndoEnable;
-        public event EventHandler RedoDisenable;
-        public event EventHandler RedoEnable;
+        public event EventHandler UndoBecameDisenable;
+        public event EventHandler UndoBecameEnable;
+        public event EventHandler RedoBecameDisenable;
+        public event EventHandler RedoBecameEnable;
 
         public string UndoText
         {
@@ -48,10 +48,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 {
                     _canUndo = value;
 
-                    if (_canUndo && UndoEnable != null)
-                        UndoEnable(this, EventArgs.Empty);
-                    else if (!_canUndo && UndoDisEnable != null)
-                        UndoDisEnable(this, EventArgs.Empty);
+                    if (_canUndo && UndoBecameEnable != null)
+                        UndoBecameEnable(this, EventArgs.Empty);
+                    else if (!_canUndo && UndoBecameDisenable != null)
+                        UndoBecameDisenable(this, EventArgs.Empty);
                 }
             }
         }
@@ -64,10 +64,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 {
                     _canRedo = value;
 
-                    if (_canRedo && RedoEnable != null)
-                        RedoEnable(this, EventArgs.Empty);
-                    else if (!_canRedo && RedoDisenable != null)
-                        RedoDisenable(this, EventArgs.Empty);
+                    if (_canRedo && RedoBecameEnable != null)
+                        RedoBecameEnable(this, EventArgs.Empty);
+                    else if (!_canRedo && RedoBecameDisenable != null)
+                        RedoBecameDisenable(this, EventArgs.Empty);
                 }
             }
         }
@@ -83,6 +83,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         }
         /// <summary>
         /// <paramref name="command"/>で行う処理が既に行われてしまったときに実行する
+        /// 実行せずにUndoスタックに積みたいときに使用する
         /// </summary>
         /// <param name="command">実行したコマンド</param>
         public void Done(ICommand command)
