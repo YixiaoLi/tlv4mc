@@ -7,17 +7,17 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
     public class CommandManager : ICommandManager
     {
-        private delegate void PushHandelr(ICommand command);
-        private delegate ICommand PopHandelr();
-        private delegate void ClearHandelr();
-        private delegate string GetTextHandelr();
-        private event PushHandelr _pushUndo;
-        private event PopHandelr _popUndo;
-        private event PushHandelr _pushRedo;
-        private event PopHandelr _popRedo;
-        private event GetTextHandelr _undoText;
-        private event GetTextHandelr _redoText;
-        private event ClearHandelr _clearRedo;
+        private delegate void PushHandler(ICommand command);
+        private delegate ICommand PopHandler();
+        private delegate void ClearHandler();
+        private delegate string GetTextHandler();
+        private event PushHandler _pushUndo;
+        private event PopHandler _popUndo;
+        private event PushHandler _pushRedo;
+        private event PopHandler _popRedo;
+        private event GetTextHandler _undoText;
+        private event GetTextHandler _redoText;
+        private event ClearHandler _clearRedo;
         private bool _isUndoing = false;
         private bool _isRedoing = false;
         private bool _canUndo = false;

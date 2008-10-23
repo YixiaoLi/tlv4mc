@@ -27,6 +27,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
         private void generateTraceLogs()
         {
+            // 共通形式トレースログをパースしTraceLogクラスのインスタンスを生成、_listに格納する
             foreach (Match m in Regex.Matches(_traceLogData, ApplicationDatas.CommonFormatTraceLogRegex))
             {
                 _list.Add(new TraceLog(long.Parse(m.Groups["T"].Value), m.Groups["S"].Value, m.Groups["O"].Value, m.Groups["B"].Value));

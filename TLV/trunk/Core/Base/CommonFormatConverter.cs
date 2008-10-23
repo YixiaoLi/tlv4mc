@@ -49,17 +49,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         /// <param name="convertDirPathPath">変換ルールが格納されているディレクトリのパス</param>
         /// <returns>共通形式トレースログへ変換するためのコンバータ</returns>
-        public static CommonFormatConverter GetInstance(string convertDirPathPath)
+        public static CommonFormatConverter GetInstance(string convertDirPath)
         {
             CommonFormatConverter c = new CommonFormatConverter();
-            c.Path = System.IO.Path.GetFullPath(convertDirPathPath);
+            c.Path = System.IO.Path.GetFullPath(convertDirPath);
 
-            if (! Directory.Exists(convertDirPathPath))
+            if (! Directory.Exists(convertDirPath))
                 return null;
 
             try
             {
-                string ruleFilePath = convertDirPathPath + Properties.Resources.ConvertRuleInfoFileName;
+                string ruleFilePath = convertDirPath + Properties.Resources.ConvertRuleInfoFileName;
                 string[] ruleFileLines = File.ReadAllLines(ruleFilePath);
                 foreach (string line in ruleFileLines)
                 {
@@ -74,13 +74,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             c.Description = m.Groups["value"].Value;
                             break;
                         case "resourceXsd":
-                            c.ResourceXsd = File.ReadAllText(convertDirPathPath + m.Groups["value"]);
+                            c.ResourceXsd = File.ReadAllText(convertDirPath + m.Groups["value"]);
                             break;
                         case "resourceXslt":
-                            c.ResourceXslt = File.ReadAllText(convertDirPathPath + m.Groups["value"]);
+                            c.ResourceXslt = File.ReadAllText(convertDirPath + m.Groups["value"]);
                             break;
                         case "traceLogLcnv":
-                            c.TraceLogConvertRule = File.ReadAllText(convertDirPathPath + m.Groups["value"]);
+                            c.TraceLogConvertRule = File.ReadAllText(convertDirPath + m.Groups["value"]);
                             break;
                     }
                 }
