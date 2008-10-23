@@ -5,11 +5,19 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Base
 {
+    /// <summary>
+    /// Byteの配列から文字コードを検出する拡張メソッドを定義するクラス
+    /// </summary>
     public static class ByteArrayExtensions
     {
         private static bool bBOM, bLE, bBE;
         private static int sjis, euc, utf8;
 
+        /// <summary>
+        /// Byteの配列から文字コードを検出する拡張メソッド
+        /// </summary>
+        /// <param name="bytes">検出対象のByte配列</param>
+        /// <returns>文字コード</returns>
         public static Encoding GetCode(this byte[] bytes)
         {
 

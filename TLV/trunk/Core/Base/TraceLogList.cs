@@ -11,6 +11,9 @@ using System.IO;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
+    /// <summary>
+    /// トレースログリスト
+    /// </summary>
     public class TraceLogList : IEnumerable<TraceLog>
     {
         private List<TraceLog> _list = new List<TraceLog>();

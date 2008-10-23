@@ -12,15 +12,43 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
+    /// <summary>
+    /// 共通形式トレースログへ変換するためのコンバータ
+    /// コンストラクタはプライベートとなっているのでGetInstanceメソッドを使ってインスタンスを得る
+    /// </summary>
     public class CommonFormatConverter
     {
+        /// <summary>
+        /// 変換ルールの名前
+        /// </summary>
         public string Name { get; private set; }
+        /// <summary>
+        /// 変換ルールのパス
+        /// </summary>
         public string Path { get; private set; }
+        /// <summary>
+        /// 変換ルールの説明
+        /// </summary>
         public string Description { get; private set; }
+        /// <summary>
+        /// リソースファイルのスキーマ（.xsd）
+        /// </summary>
         public string ResourceXsd { get; private set; }
+        /// <summary>
+        /// リソースファイルの変換ルール（.xslt）
+        /// </summary>
         public string ResourceXslt { get; private set; }
+        /// <summary>
+        /// トレースログの変換ルール（.lcnv）
+        /// </summary>
         public string TraceLogConvertRule { get; private set; }
 
+        /// <summary>
+        /// <c>CommonFormatConverter</c>のインスタンスを生成する
+        /// 指定したディレクトリが不正な場合はnullが返される
+        /// </summary>
+        /// <param name="convertDirPathPath">変換ルールが格納されているディレクトリのパス</param>
+        /// <returns>共通形式トレースログへ変換するためのコンバータ</returns>
         public static CommonFormatConverter GetInstance(string convertDirPathPath)
         {
             CommonFormatConverter c = new CommonFormatConverter();
@@ -35,6 +63,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 string[] ruleFileLines = File.ReadAllLines(ruleFilePath);
                 foreach (string line in ruleFileLines)
                 {
+                    // タブ区切りで設定パラメータ名と値を得る
                     Match m = new Regex(@"^(?<name>[^\t]+)\t+(?<value>.+)$").Match(line);
                     switch (m.Groups["name"].Value)
                     {
@@ -50,7 +79,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                         case "resourceXslt":
                             c.ResourceXslt = File.ReadAllText(convertDirPathPath + m.Groups["value"]);
                             break;
-                        case "traceLogCnv":
+                        case "traceLogLcnv":
                             c.TraceLogConvertRule = File.ReadAllText(convertDirPathPath + m.Groups["value"]);
                             break;
                     }
@@ -63,10 +92,18 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return c;
         }
 
-        public CommonFormatConverter()
+        /// <summary>
+        /// <c>CommonFormatConverter</c>のコンストラクタ プライベートである
+        /// </summary>
+        private CommonFormatConverter()
         {
         }
 
+        /// <summary>
+        /// リソースファイルを共通形式へ変換する
+        /// </summary>
+        /// <param name="resourceFilePath">変換する前のリソースファイルのパス</param>
+        /// <returns>変換後のリソースファイルの内容の文字列</returns>
         public string ConvertResourceFile(string resourceFilePath)
         {
             string res = File.ReadAllText(resourceFilePath);
@@ -92,6 +129,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return res;
         }
 
+        /// <summary>
+        /// トレースログファイルを共通形式へ変換する
+        /// </summary>
+        /// <param name="traceLogFilePath">変換する前のトレースログファイルのパス</param>
+        /// <returns>変換後のトレースログファイルの内容の文字列</returns>
         public string ConvertTraceLogFile(string traceLogFilePath)
         {
             string log = File.ReadAllText(traceLogFilePath);

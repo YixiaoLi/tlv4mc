@@ -5,6 +5,9 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
+    /// <summary>
+    /// トレースログ
+    /// </summary>
     public class TraceLog
     {
         public long Time { get; private set; }

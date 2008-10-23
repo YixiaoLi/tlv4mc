@@ -9,8 +9,17 @@ using System.Xml.Serialization;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
+    /// <summary>
+    /// トレースログを共通形式に変換するコンバータ
+    /// </summary>
     public class TraceLogConverter
     {
+        /// <summary>
+        /// トレースログを共通形式に変換する
+        /// </summary>
+        /// <param name="log">変換するトレースログ</param>
+        /// <param name="traceLogConvertRule">共通形式変換ルール</param>
+        /// <returns>共通形式トレースログ</returns>
         public static string Transform(string log, string traceLogConvertRule)
         {
             string result = log;
@@ -27,6 +36,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             // replaceを実行する
             result = doReplace(result, replaceRules);
+
+            // Subjectが未定義の場合
+            result = Regex.Replace(result, @"\](?<name>[^\.:]+)\.", "]:${name}.");
 
             return result;
         }
@@ -89,18 +101,29 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
         }
 
+        /// <summary>
+        /// トレースログを定義されたとおりか検証する
+        /// </summary>
+        /// <param name="log">検証するトレースログ</param>
+        /// <param name="pattern">検証する正規表現</param>
+        /// <returns>有効ならtrue, 無効ならfalse</returns>
         public static bool IsValid(string log, string pattern)
         {
             return Regex.IsMatch(log, pattern, RegexOptions.Multiline);
         }
 
+        /// <summary>
+        /// トレースログを有効化する。無効なログを消去しログを整える
+        /// </summary>
+        /// <param name="log">有効化する共通形式トレースログ</param>
+        /// <param name="pattern">検証する正規表現</param>
+        /// <returns>共通形式トレースログ</returns>
         public static string Validate(string log, string pattern)
         {
             string result = log;
             result = Regex.Replace(result, @"[\r\n\s]", "");
             result = Regex.Replace(result, @"\[", "\n[");
             result = Regex.Replace(result, @"^\n", "", RegexOptions.Multiline);
-            result = Regex.Replace(result, @"\](?<name>[^\.:]+)\.", "]${name}:${name}.");
 
             StringBuilder sb = new StringBuilder();
 

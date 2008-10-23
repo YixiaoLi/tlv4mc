@@ -65,7 +65,7 @@
           <rs:value>
             <xsl:value-of select ="itron4:exinf"/>
           </rs:value>
-          <rs:variableType>Decimal</rs:variableType>
+          <rs:variableType>String</rs:variableType>
           <rs:allocationType>Static</rs:allocationType>
         </rs:attribute>
         <rs:attribute>

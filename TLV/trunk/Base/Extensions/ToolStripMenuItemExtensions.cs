@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace NU.OJL.MPRTOS.TLV.Base
 {
+    /// <summary>
+    /// 表示メニューとWindowManagerを関連付ける拡張メソッド定義クラス
+    /// </summary>
     public static class ToolStripMenuItemForWindowManagerExtensions
     {
         /// <summary>
@@ -48,6 +51,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
         }
     }
 
+    /// <summary>
+    /// 元に戻る・やり直すメニューとWindowManagerを関連付ける拡張メソッド定義クラス
+    /// </summary>
     public static class ToolStripItemForTransactionManagerExtensions
     {
         /// <summary>

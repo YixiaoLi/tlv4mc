@@ -18,14 +18,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public static readonly string ConvertRulesDirectoryPath = System.IO.Path.GetDirectoryName(Application.ExecutablePath) + @"\" + Properties.Resources.ConvertRulesDirectoryPath;
         public static readonly string VisualizeRulesDirectoryPath = System.IO.Path.GetDirectoryName(Application.ExecutablePath) + @"\" + Properties.Resources.VisualizeRulesDirectoryPath;
         public static readonly string ResourceSchemaFilePath = System.IO.Path.GetDirectoryName(Application.ExecutablePath) + @"\" + Properties.Resources.ResourceSchemaFilePath;
-        public static readonly FileContext<CommonFormatTraceLog> ActiveFileContext = new FileContext<CommonFormatTraceLog>();
+        public static readonly IFileContext<CommonFormatTraceLog> ActiveFileContext = new FileContext<CommonFormatTraceLog>();
 
         static ApplicationDatas()
         {
             CommonFormatTraceLogRegex = @"^_\[T\]_(_S_:_)?_O_\._(B)_$"
                 .Replace("_", @"\s*")
                 .Replace("T", @"(?<T>\d+)")
-                .Replace("S", @"(?<S>((\w+)|(\(\s*(\s*\w+\s*=\s*\w+\s*,?\s*)+\s*\))))")
+                .Replace("S", @"(?<S>((\w*)|(\(\s*(\s*\w+\s*=\s*\w+\s*,?\s*)+\s*\))))")
                 .Replace("O", @"(?<O>((\w+)|(\(\s*(\s*\w+\s*=\s*\w+\s*,?\s*)+\s*\))))")
                 .Replace("B", @"(?<B>[^\[]+)");
         }

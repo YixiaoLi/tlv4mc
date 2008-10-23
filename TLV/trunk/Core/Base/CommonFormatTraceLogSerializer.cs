@@ -10,8 +10,16 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
+    /// <summary>
+    /// <c>CommonFormatTraceLog</c>のシリアライス、デシリアライズを行うサポート静的クラス
+    /// </summary>
     public static class CommonFormatTraceLogSerializer
     {
+        /// <summary>
+        /// パスを指定してデシリアライズする
+        /// </summary>
+        /// <param name="path">読み込むパス</param>
+        /// <returns>デシリアライズした<c>CommonFormatTraceLog</c></returns>
         public static CommonFormatTraceLog Deserialize(string path)
         {
             string tmpDirPath = Path.GetTempPath() + "tlv_convertRuleTmp_" + DateTime.Now.Ticks.ToString() + @"\";
@@ -29,6 +37,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return new CommonFormatTraceLog(res, log);
         }
 
+        /// <summary>
+        /// 保存するパスを指定して<c>CommonFormatTraceLog</c>をシリアライズする
+        /// </summary>
+        /// <param name="path">保存する先のパス</param>
+        /// <param name="data">シリアライズする<c>CommonFormatTraceLog</c></param>
         public static void Serialize(string path, CommonFormatTraceLog data)
         {
             string tmpDirPath = Path.GetTempPath() + "tlv_convertRuleTmp_" + DateTime.Now.Ticks.ToString() + @"\";

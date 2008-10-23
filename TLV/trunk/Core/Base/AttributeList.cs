@@ -10,6 +10,9 @@ using System.IO;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
+    /// <summary>
+    /// <c>Attribute</c>のリスト
+    /// </summary>
     [XmlRoot("attributes", Namespace = "http://133.6.51.8/svn/ojl-mprtos/TLV/Attribute")]
     public class AttributeList : IXmlSerializable, IEnumerable<Attribute>
     {

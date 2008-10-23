@@ -10,6 +10,9 @@ using System.IO;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
+    /// <summary>
+    /// リソースリスト
+    /// </summary>
     [XmlRoot("resources", Namespace="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource")]
     public class ResourceList : IXmlSerializable, IEnumerable<Resource>
     {

@@ -10,12 +10,21 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
+    /// <summary>
+    /// 共通形式トレースログおよびマーカー等の情報を表すクラス
+    /// </summary>
     public class CommonFormatTraceLog : IFileContextData
     {
         private bool _isDirty = false;
 
-        public event EventHandler BecameDirty = null;
+        /// <summary>
+        /// データが更新されたときに発生するイベント
+        /// </summary>
+        public event EventHandler<GeneralEventArgs<bool>> IsDirtyChanged = null;
 
+        /// <summary>
+        /// データが更新されているかどうか
+        /// </summary>
         public bool IsDirty
         {
             get { return _isDirty; }
@@ -24,18 +33,30 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 if(_isDirty != value)
                 {
                     _isDirty = value;
-                    if (BecameDirty != null)
-                        BecameDirty(this, EventArgs.Empty);
+
+                    if (IsDirtyChanged != null)
+                        IsDirtyChanged(this, new GeneralEventArgs<bool>(_isDirty));
                 }
             }
         }
+        /// <summary>
+        /// リソースのリスト
+        /// </summary>
         public ResourceList ResourceList { get; private set; }
+        /// <summary>
+        /// トレースログのリスト
+        /// </summary>
         public TraceLogList TraceLogList { get; private set; }
 
         public CommonFormatTraceLog()
         {
         }
 
+        /// <summary>
+        /// <c>CommonFormatTraceLog</c>のコンストラクタ
+        /// </summary>
+        /// <param name="resourceData">共通形式のリソースデータ</param>
+        /// <param name="traceLogData">共通形式のトレースログデータ</param>
         public CommonFormatTraceLog(string resourceData, string traceLogData)
         {
             XmlSerializer xs = new XmlSerializer(typeof(ResourceList));
@@ -43,11 +64,19 @@ namespace NU.OJL.MPRTOS.TLV.Core
             TraceLogList = new TraceLogList(traceLogData);
         }
 
+        /// <summary>
+        /// パスを指定してシリアライズ
+        /// </summary>
+        /// <param name="path">保存する先のパス</param>
         public void Serialize(string path)
         {
             CommonFormatTraceLogSerializer.Serialize(path, this);
         }
 
+        /// <summary>
+        /// パスを指定してデシリアライズ
+        /// </summary>
+        /// <param name="path">読み込むパス</param>
         public void Deserialize(string path)
         {
             CommonFormatTraceLog c = CommonFormatTraceLogSerializer.Deserialize(path);
