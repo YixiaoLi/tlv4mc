@@ -18,6 +18,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 
         protected override void action()
         {
+            ApplicationDatas.ActiveFileContext.Close();
             _form.Close();
         }
     }

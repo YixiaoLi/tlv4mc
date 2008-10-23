@@ -13,6 +13,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
     public class Xml
     {
+        public static bool IsValid(string xml, string xslt)
+        {
+            return IsValid(xml, xslt, null);
+        }
+
         public static bool IsValid(string xml, string xslt, TextWriter result)
         {
             XmlReaderSettings xs = new XmlReaderSettings();
@@ -22,7 +27,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
             try { while (xmlr.Read()) { } }
             catch (XmlSchemaValidationException e)
             {
-                result.WriteLine(e.Message);
+                if (result != null)
+                    result.WriteLine(e.Message);
+
                 return false;
             }
             finally { xmlr.Close(); }

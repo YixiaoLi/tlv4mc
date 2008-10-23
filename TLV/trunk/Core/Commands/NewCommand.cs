@@ -30,6 +30,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                         ApplicationDatas.ActiveFileContext.Data = cftl;
                         if (f.SaveFilePath != string.Empty)
                         {
+                            ApplicationDatas.ActiveFileContext.Close();
                             ApplicationDatas.ActiveFileContext.Path = f.SaveFilePath;
                             ApplicationDatas.ActiveFileContext.Save();
                         }

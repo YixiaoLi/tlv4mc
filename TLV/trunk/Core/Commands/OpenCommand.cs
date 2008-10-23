@@ -26,6 +26,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
             
             bw.DoWork += (o, e) =>
                 {
+                    ApplicationDatas.ActiveFileContext.Close();
                     ApplicationDatas.ActiveFileContext.Open(ofd.FileName);
                     bw.ReportProgress(100);
                 };
