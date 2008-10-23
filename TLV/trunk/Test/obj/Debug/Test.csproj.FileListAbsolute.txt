@@ -14,7 +14,6 @@ C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Tes
 C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\obj\Debug\NU.OJL.MPRTOS.TLV.Test.pdb
 C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Base_Accessor.dll
 C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Base_Accessor.pdb
-C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\obj\Debug\ResolveAssemblyReference.cache
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.pdb
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
@@ -27,5 +26,6 @@ C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Base.
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Third.pdb
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Base_Accessor.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Base_Accessor.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\obj\Debug\ResolveAssemblyReference.cache
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\obj\Debug\NU.OJL.MPRTOS.TLV.Test.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Test\obj\Debug\NU.OJL.MPRTOS.TLV.Test.pdb
