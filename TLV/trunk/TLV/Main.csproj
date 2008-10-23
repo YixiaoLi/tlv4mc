@@ -131,10 +131,9 @@ if not exist $(TargetDir)rules\convertRules\ResourceSchema.xsd copy $(SolutionDi
 if not exist $(TargetDir)sampleFiles\SampleITRONResources.res copy $(SolutionDir)sampleFiles\SampleITRONResources.res $(TargetDir)sampleFiles
 if not exist $(TargetDir)sampleFiles\SampleITRONTraceLog.log copy $(SolutionDir)sampleFiles\SampleITRONTraceLog.log $(TargetDir)sampleFiles
 
-move $(TargetPath) $(TargetDir)___$(TargetFileName)
-if $(ConfigurationName) == Debug $(SolutionDir)bin\ILMerge.exe /wildcards /ndebug /out:$(TargetPath) $(TargetDir)___$(TargetFileName) *.dll
+if $(ConfigurationName) == Release move $(TargetPath) $(TargetDir)___$(TargetFileName)
 if $(ConfigurationName) == Release $(SolutionDir)bin\ILMerge.exe /wildcards /out:$(TargetPath) $(TargetDir)___$(TargetFileName) *.dll
-del $(TargetDir)___$(TargetFileName)
-del $(TargetDir)*.dll</PostBuildEvent>
+if $(ConfigurationName) == Release del $(TargetDir)___$(TargetFileName)
+if $(ConfigurationName) == Release del $(TargetDir)*.dll</PostBuildEvent>
   </PropertyGroup>
 </Project>

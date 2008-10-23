@@ -20,6 +20,49 @@ namespace NU.OJL.MPRTOS.TLV.Core
             List<string[]> replaceRules = new List<string[]>();
 
             // aliasルールを抜き出す
+            getAliasRules(traceLogConvertRule, aliasRules, behaviorRules);
+
+            // replaceルールを抜き出す
+            getReplaceRules(traceLogConvertRule, aliasRules, replaceRules);
+
+            // replaceを実行する
+            result = doReplace(result, replaceRules);
+
+            return result;
+        }
+
+        private static string doReplace(string result, List<string[]> replaceRules)
+        {
+            foreach (string[] strs in replaceRules)
+            {
+                result = Regex.Replace(result, strs[0], strs[1], RegexOptions.Multiline);
+            }
+            return result;
+        }
+
+        private static void getReplaceRules(string traceLogConvertRule, List<string[]> aliasRules, List<string[]> replaceRules)
+        {
+            foreach (Match m in Regex.Matches(traceLogConvertRule, @"replace\t+(?<from>[^\t]+)\t+(?<to>[^\r\n]+)"))
+            {
+                string from = m.Groups["from"].Value;
+                string to = m.Groups["to"].Value;
+
+                foreach (Match match in Regex.Matches(to, @"\((?<name>\w+)\)"))
+                {
+                    string name = match.Groups["name"].Value;
+                    if (aliasRules.Exists((s) => { return s[0] == name; }))
+                    {
+                        string value = aliasRules.Single<string[]>((s) => { return s[0] == name; })[1];
+                        to = Regex.Replace(to, @"\(" + name + @"\)", value);
+                    }
+                }
+
+                replaceRules.Add(new string[] { from, to });
+            }
+        }
+
+        private static void getAliasRules(string traceLogConvertRule, List<string[]> aliasRules, List<string[]> behaviorRules)
+        {
             foreach (Match m in Regex.Matches(traceLogConvertRule, @"alias\t+(?<from>[^\t]+)\t+(?<to>[^\r\n]+)"))
             {
                 aliasRules.Add(new string[] { m.Groups["from"].Value, m.Groups["to"].Value });
@@ -44,44 +87,29 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
                 behaviorRules.Add(new string[] { from, to });
             }
-
-            // replaceルールを抜き出す
-            foreach (Match m in Regex.Matches(traceLogConvertRule, @"replace\t+(?<from>[^\t]+)\t+(?<to>[^\r\n]+)"))
-            {
-                string from = m.Groups["from"].Value;
-                string to = m.Groups["to"].Value;
-
-                foreach(Match match in Regex.Matches(to, @"\((?<name>\w+)\)"))
-                {
-                    string name = match.Groups["name"].Value;
-                    if (aliasRules.Exists((s) => { return s[0] == name; }))
-                    {
-                        string value = aliasRules.Single<string[]>((s) => { return s[0] == name; })[1];
-                        to = Regex.Replace(to, @"\(" + name + @"\)", value);
-                    }
-                }
-
-                replaceRules.Add(new string[] { from, to });
-            }
-
-            // replaceを実行する
-            foreach (string[] strs in replaceRules)
-            {
-                result = Regex.Replace(result, strs[0], strs[1], RegexOptions.Multiline);
-            }
-
-            // ログを整形する
-            result = Regex.Replace(result, @"[\r\n\s]", "");
-            result = Regex.Replace(result, @"\[", "\n[");
-            result = Regex.Replace(result, @"^[\r\n]", "");
-            result = Regex.Replace(result, @"\](?<name>[^\.]+)\.", "]${name}:${name}.");
-
-            return result;
         }
 
         public static bool IsValid(string log, string pattern)
         {
-            return Regex.IsMatch(log, pattern);
+            return Regex.IsMatch(log, pattern, RegexOptions.Multiline);
+        }
+
+        public static string Validate(string log, string pattern)
+        {
+            string result = log;
+            result = Regex.Replace(result, @"[\r\n\s]", "");
+            result = Regex.Replace(result, @"\[", "\n[");
+            result = Regex.Replace(result, @"^\n", "", RegexOptions.Multiline);
+            result = Regex.Replace(result, @"\](?<name>[^\.:]+)\.", "]${name}:${name}.");
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Match m in Regex.Matches(result, pattern, RegexOptions.Multiline))
+            {
+                sb.Append(m.Value + "\n");
+            }
+
+            return sb.ToString();
         }
     }
 }

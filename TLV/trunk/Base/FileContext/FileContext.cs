@@ -86,10 +86,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
         public void Close()
         {
-            IsOpened = false;
-            IsSaved = true;
             Data = null;
-            Path = string.Empty;
         }
 
         public void Open(string path)

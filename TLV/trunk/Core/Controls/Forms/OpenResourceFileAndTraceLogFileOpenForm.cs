@@ -315,6 +315,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 {
                     ResourceFilePath = Path.GetFullPath(ResourceFilePath);
                     TraceLogFilePath = Path.GetFullPath(TraceLogFilePath);
+                    SaveFilePath = Path.GetFullPath(SaveFilePath);
                     DialogResult = DialogResult.OK;
                     Close();
                 };
