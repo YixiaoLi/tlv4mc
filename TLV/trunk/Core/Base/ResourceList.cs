@@ -18,6 +18,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
     {
         private Dictionary<string, Resource> _list = new Dictionary<string, Resource>();
         public Resource this[string name] { get { return _list[name]; } }
+        public int Count { get { return _list.Count; } }
 
         public XmlSchema GetSchema()
         {

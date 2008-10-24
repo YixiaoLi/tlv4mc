@@ -117,12 +117,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
             // resourceFilePathで読み込むXMLをResourceXsltでXSLT変換
             res = Xml.Transform(res, ResourceXslt);
 
-            // 変換後のリソースファイルが有効か検証
-            if (!Xml.IsValid(File.ReadAllText(ApplicationDatas.ResourceSchemaFilePath), res, new StringWriter(sb)))
-            {
-                throw new ResourceFileValidationException("リソースファイルの共通形式への変換に失敗しました。\nリソースファイル共通形式変換ルールファイルの定義が誤っている可能性があります。\n" + sb.ToString());
+            if(File.Exists(ApplicationDatas.ResourceSchemaFilePath))
+                {
+                // 変換後のリソースファイルが有効か検証
+                if (!Xml.IsValid(File.ReadAllText(ApplicationDatas.ResourceSchemaFilePath), res, new StringWriter(sb)))
+                {
+                    throw new ResourceFileValidationException("リソースファイルの共通形式への変換に失敗しました。\nリソースファイル共通形式変換ルールファイルの定義が誤っている可能性があります。\n" + sb.ToString());
+                }
             }
-
             // 変換したxmlをDataSetで整形してtextWriterで記述
             //res = Xml.AutoIndent(res);
 

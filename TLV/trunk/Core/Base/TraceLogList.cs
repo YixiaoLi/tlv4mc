@@ -18,6 +18,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
     {
         private List<TraceLog> _list = new List<TraceLog>();
         private string _traceLogData = string.Empty;
+        public int Count { get { return _list.Count; } }
 
         public TraceLogList(string traceLogData)
         {
@@ -28,7 +29,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         private void generateTraceLogs()
         {
             // 共通形式トレースログをパースしTraceLogクラスのインスタンスを生成、_listに格納する
-            foreach (Match m in Regex.Matches(_traceLogData, ApplicationDatas.CommonFormatTraceLogRegex))
+            foreach (Match m in Regex.Matches(_traceLogData, ApplicationDatas.CommonFormatTraceLogRegex, RegexOptions.Multiline))
             {
                 _list.Add(new TraceLog(long.Parse(m.Groups["T"].Value), m.Groups["S"].Value, m.Groups["O"].Value, m.Groups["B"].Value));
             }

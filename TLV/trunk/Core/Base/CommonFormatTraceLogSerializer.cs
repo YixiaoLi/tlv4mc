@@ -22,6 +22,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <returns>デシリアライズした<c>CommonFormatTraceLog</c></returns>
         public static CommonFormatTraceLog Deserialize(string path)
         {
+            // 一時ディレクトリ作成
             string tmpDirPath = Path.GetTempPath() + "tlv_convertRuleTmp_" + DateTime.Now.Ticks.ToString() + @"\";
             Directory.CreateDirectory(tmpDirPath);
 
@@ -44,6 +45,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <param name="data">シリアライズする<c>CommonFormatTraceLog</c></param>
         public static void Serialize(string path, CommonFormatTraceLog data)
         {
+            // 一時ディレクトリ作成
             string tmpDirPath = Path.GetTempPath() + "tlv_convertRuleTmp_" + DateTime.Now.Ticks.ToString() + @"\";
             Directory.CreateDirectory(tmpDirPath);
             

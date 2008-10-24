@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionItems", "solutionIt
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{92DADFFC-3815-4346-B504-00E1C119B730}"
 	ProjectSection(SolutionItems) = preProject
+		sampleFiles\SampleITRON.tlv = sampleFiles\SampleITRON.tlv
 		sampleFiles\SampleITRONResources.res = sampleFiles\SampleITRONResources.res
 		sampleFiles\SampleITRONTraceLog.log = sampleFiles\SampleITRONTraceLog.log
 	EndProjectSection
@@ -52,6 +53,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{37F01460-E93
 	ProjectSection(SolutionItems) = preProject
 		bin\ILMerge.exe = bin\ILMerge.exe
 		bin\Zip.exe = bin\Zip.exe
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleITRON", "SampleITRON", "{68CF326A-AE7E-4F32-8BCA-0F352395DB81}"
+	ProjectSection(SolutionItems) = preProject
+		sampleFiles\SampleITRON\SampleITRON.log = sampleFiles\SampleITRON\SampleITRON.log
+		sampleFiles\SampleITRON\SampleITRON.res = sampleFiles\SampleITRON\SampleITRON.res
 	EndProjectSection
 EndProject
 Global
@@ -84,6 +91,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{68CF326A-AE7E-4F32-8BCA-0F352395DB81} = {92DADFFC-3815-4346-B504-00E1C119B730}
 		{9A7BDD9E-B480-43E9-BC3C-8327D9B04222} = {80065D5C-A54D-4547-9122-BCBDAEBADC60}
 		{E579742F-4567-4F41-8B7D-83680E2DFB01} = {80065D5C-A54D-4547-9122-BCBDAEBADC60}
 		{31AB23F1-5083-4936-B87E-E1B293D4A681} = {9A7BDD9E-B480-43E9-BC3C-8327D9B04222}

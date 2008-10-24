@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandManagerTest.cs" />
+    <Compile Include="CommonFormatConverterTest.cs" />
+    <Compile Include="CommonFormatTraceLogTest.cs" />
     <Compile Include="FileContextTest.cs" />
     <Compile Include="GeneralCommandTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,6 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Shadow Include="テストの参照\NU.OJL.MPRTOS.TLV.Base.accessor" />
+  </ItemGroup>
+  <ItemGroup>
+    <Shadow Include="テストの参照\NU.OJL.MPRTOS.TLV.Core.accessor" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
