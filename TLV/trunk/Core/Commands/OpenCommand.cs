@@ -44,19 +44,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                     bw.ReportProgress(100);
                 };
 
+            DialogResult dr = DialogResult.OK;
 
             if (_path == string.Empty)
             {
                 OpenFileDialog ofd = new OpenFileDialog();
                 ofd.DefaultExt = Properties.Resources.CommonFormatTraceLogFileExtension;
                 ofd.Filter = "Common Format TraceLog File (*." + ofd.DefaultExt + ")|*." + ofd.DefaultExt;
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    _path = ofd.FileName;
-                }
+                dr = ofd.ShowDialog();
+                _path = ofd.FileName;
             }
 
-            bw.RunWorkerAsync();
+            if (dr == DialogResult.OK)
+            {
+                bw.RunWorkerAsync();
+            }
         }
 
     }

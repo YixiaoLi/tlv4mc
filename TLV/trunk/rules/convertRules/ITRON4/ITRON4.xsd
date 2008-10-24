@@ -4,21 +4,6 @@
     xmlns:tns="http://133.6.51.8/svn/ojl-mprtos/TLV/Resource/ITRON4"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
-
-  <!-- =================================================================== -->
-  <!-- simpleTypes                                                         -->
-  <!-- =================================================================== -->
-  <xs:simpleType name="TaskStateType_type">
-    <xs:restriction base="xs:NCName">
-      <xs:enumeration value="RUNNING" />
-      <xs:enumeration value="RUNNABLE" />
-      <xs:enumeration value="WAITING" />
-      <xs:enumeration value="DORMANT" />
-      <xs:enumeration value="SUSPENDED" />
-      <xs:enumeration value="WAITING-SUSPENDED" />
-    </xs:restriction>
-  </xs:simpleType>
-
   <!-- =================================================================== -->
   <!-- complexTypes                                                        -->
   <!-- =================================================================== -->
