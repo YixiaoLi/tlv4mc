@@ -1,0 +1,3 @@
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\bin\Release\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\obj\Release\ResolveAssemblyReference.cache
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\obj\Release\NU.OJL.MPRTOS.TLV.Base.dll
