@@ -1,25 +1,18 @@
-alias		runningTask									(type=Task,state=RUNNING)
-alias		runnableTasks								(type=Task,state=RUNNABLE)
-alias		dormantTasks								(type=Task,state=DORMANT)
-alias		waitingTasks								(type=Task,state=WAITING)
-alias		waitingSuspendedTasks						(type=Task,state=WAITING-SUSPENDED)
-alias		suspendedTasks								(type=Task,state=SUSPENDED)
-
-behavior	(runningTask).preempted						state=RUNNABLE
-behavior	(runningTask).wait							state=WAITING
-behavior	(runningTask).exit							state=DORMANT
-behavior	(dormantTasks).activate						state=RUNNABLE
-behavior	(runnableTasks).dispatch					state=RUNNING
-behavior	(runnableTasks).suspend						state=SUSPENDED
-behavior	(runnableTasks).terminate					state=DORMANT
-behavior	(waitingTasks).suspend						state=WAITING-SUSPENDED
-behavior	(waitingTasks).releaseFromWaiting			state=RUNNABLE
-behavior	(waitingTasks).terminate					state=DORMANT
-behavior	(waitingSuspendedTasks).resume				state=WAITING
-behavior	(waitingSuspendedTasks).releaseFromWaiting	state=SUSPENDED
-behavior	(waitingSuspendedTasks).terminate			state=DORMANT
-behavior	(suspendedTasks).resume						state=RUNNABLE
-behavior	(suspendedTasks).terminate					state=DORMANT
-
-replace		\[(?<time>\d+)\] dispatch to task (?<taskId>\d+)\.				[${time}](runningTask).preempted[${time}](type=Task,id=${taskId}).dispatch
-replace		\[(?<time>\d+)\] task (?<taskId>\d+) becomes (?<state>\w+)\.	[${time}](type=Task,id=${taskId}).state=${state}
+{
+	"\[(?<time>\d+)\] dispatch to task (?<id>\d+)\." : [
+		{
+			"time"		:"${time}",
+			"subject"	:null,
+			"object"	:"task(id==${id})",
+			"behavior"	:"dispatch"
+		}
+	],
+	"\[(?<time>\d+)\] task (?<id>\d+) becomes (?<state>\w+)\." : [
+		{
+			"time"		:"${time}",
+			"subject"	:null,
+			"object"	:"task(Id==${id})",
+			"behavior"	:"state=${state}"
+		}
+	]
+}

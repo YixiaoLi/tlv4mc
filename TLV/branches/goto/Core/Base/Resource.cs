@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
     /// <summary>
     /// リソースを表すクラス
     /// </summary>
-    [XmlRoot("resource", Namespace = "http://133.6.51.8/svn/ojl-mprtos/TLV/Resource")]
+    [DataContract]
     public class Resource
     {
         /// <summary>
         /// リソース名
         /// </summary>
-        [XmlAttribute("name")]
+        [DataMember]
         public string Name { get; set; }
         /// <summary>
         /// 属性リスト
         /// </summary>
-        [XmlElement("attributes")]
+        [DataMember]
         public AttributeList Attributes { get; set; }
 
         /// <summary>

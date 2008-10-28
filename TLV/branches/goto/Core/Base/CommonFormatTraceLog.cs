@@ -59,9 +59,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <param name="traceLogData">共通形式のトレースログデータ</param>
         public CommonFormatTraceLog(string resourceData, string traceLogData)
         {
-            XmlSerializer xs = new XmlSerializer(typeof(ResourceList));
-            ResourceList = xs.Deserialize(new StringReader(resourceData)) as ResourceList;
-            TraceLogList = new TraceLogList(traceLogData);
+            ResourceList = ResourceList.Serialize(resourceData);
+            TraceLogList = TraceLogList.Serialize(traceLogData);
         }
 
         /// <summary>

@@ -2,45 +2,45 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
     /// <summary>
     /// リソースの属性を表すクラス
     /// </summary>
-    [DataContract]
+    [XmlRoot("attribute", Namespace = "http://133.6.51.8/svn/ojl-mprtos/TLV/Resource")]
     public class Attribute
     {
         /// <summary>
         /// 属性名
         /// </summary>
-        [DataMember]
+        [XmlAttribute("name")]
         public string Name { get; set; }
         /// <summary>
         /// 属性名を表示する際に使用されるテキスト
         /// </summary>
-        [DataMember]
+        [XmlElement("displayName")]
         public string DisplayName { get; set; }
         /// <summary>
         /// 属性の値
         /// </summary>
-        [DataMember]
+        [XmlElement("value")]
         public string Value { get; set; }
         /// <summary>
         /// 属性の変数型
         /// </summary>
-        [DataMember]
+        [XmlElement("variableType")]
         public VariableType VariableType { get; set; }
         /// <summary>
         /// 属性の配置型
         /// </summary>
-        [DataMember]
+        [XmlElement("allocationType")]
         public AllocationType AllocationType { get; set; }
         /// <summary>
         /// この属性の値を用いてグループ化するかどうか
         /// </summary>
-        [DataMember]
+        [XmlElement("grouping")]
         public bool Grouping { get; set; }
 
         /// <summary>
@@ -57,25 +57,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
         }
     }
 
-    [DataContract]
     public enum AllocationType
     {
-        [EnumMember]
         Static,
-        [EnumMember]
         Dynamic
     }
 
-    [DataContract]
     public enum VariableType
     {
-        [EnumMember]
         String,
-        [EnumMember]
         Decimal,
-        [EnumMember]
         Enumeration,
-        [EnumMember]
         Boolean
     }
 }

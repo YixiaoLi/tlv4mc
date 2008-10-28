@@ -20,7 +20,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         private string _traceLogData = string.Empty;
         public int Count { get { return _list.Count; } }
 
-        public TraceLogList(string traceLogData)
+        private TraceLogList(string traceLogData)
         {
             _traceLogData = traceLogData;
             generateTraceLogs();
@@ -48,6 +48,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public override string ToString()
         {
             return _traceLogData;
+        }
+
+        public static TraceLogList Serialize(string traceLogData)
+        {
+            return new TraceLogList(traceLogData);
+
+        }
+
+        public static string Desirialize(TraceLogList traceLogList)
+        {
+            return traceLogList._traceLogData;
         }
     }
 }
