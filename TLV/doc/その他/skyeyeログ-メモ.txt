@@ -1,0 +1,21 @@
+#define MEM_LOAD_LOG(description) if (skyeye_config.log.memlogon >= 1) { \
+                fprintf(skyeye_logfd, \
+                        "m LOAD %s: N %llx :p %x :i %x :a %x :d %x\n", \
+                        description, state->NumInstrs, state->pc, instr, \
+                        address, dest); \
+        }
+
+#define MEM_STORE_LOG(description) if (skyeye_config.log.memlogon >= 1) { \
+                fprintf(skyeye_logfd, \
+                        "m STORE %s: N %llx :p %x :i %x :a %x :d %x\n", \
+                        description, state->NumInstrs, state->pc, instr, \
+                        address, DEST); \
+        }
+
+
+
+N	state->NumInstrs
+p	state->pc
+i	instr
+a	address
+d	DEST
