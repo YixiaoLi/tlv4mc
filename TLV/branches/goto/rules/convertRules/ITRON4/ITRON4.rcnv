@@ -1,0 +1,89 @@
+{
+	"enum":{
+		"state"			:["RUNNING", "RUNNABLE", "WAITING", "SUSPENDED", "DORMANT", "WAITING-SUSPENDED"],
+		"allocationType":["STATIC", "DYNAMIC"]
+	},
+	
+	"resource":{
+		"task":{
+			"displayName" :"タスク",
+			"attribute" :{
+				"name":{
+					"valueType"		:"string",
+					"displayName"	:"名前",
+					"allocationType":"STATIC",
+					"canGrouping"	:false
+				},
+				"id":{
+					"valueType"		:"int",
+					"displayName"	:"ID",
+					"allocationType":"STATIC",
+					"canGrouping"	:false
+				},
+				"pri":{
+					"valueType"		:"int",
+					"displayName"	:"優先度",
+					"allocationType":"DYNAMIC",
+					"canGrouping"	:false,
+				},
+				"exinf":{
+					"valueType"		:"string",
+					"displayName"	:"拡張情報",
+					"allocationType":"STATIC",
+					"canGrouping"	:false,
+				},
+				"task":{
+					"valueType"		:"string",
+					"displayName"	:"起動関数",
+					"allocationType":"STATIC",
+					"canGrouping"	:false,
+				},
+				"stksz":{
+					"valueType"		:"int",
+					"displayName"	:"スタックサイズ",
+					"allocationType":"DYNAMIC",
+					"canGrouping"	:false,
+				},
+				"stk":{
+					"valueType"		:"string",
+					"displayName"	:"スタック番地",
+					"allocationType":"STATIC",
+					"canGrouping"	:false,
+				}
+			},
+			"behavior"	:{
+				"preempt":[
+					"sel(state==RUNNING)f.state=RUNNABLE"
+				],
+				"dispatch":[
+					"task(state==RUNNING).preempt",
+					"self(state==RUNNABLE).state=RUNNING"
+				],
+				"activate":[
+					"self(state==DORMANT).state=RUNNING"
+				],
+				"wait":[
+					"self(state==RUNNING).state=WAITING"
+				],
+				"exit":[
+					"self(state==RUNNING).state=DORMANT"
+				],
+				"resume":[
+					"self(state==SUSPENDED).state=RUNNABLE",
+					"self(state==WAITING-SUSPENDED).state=WAITING"
+				],
+				"suspend":[
+					"self(state==RUNNABLE).state=SUSPENDED",
+					"self(state==WAITING).state=WAITING-SUSPENDED"
+				],
+				"terminate":[
+					"self(state==SUSPENDED|RUNNABLE|WAITING-SUSPENDED|WAITING).state=DORMANT"
+				],
+				"releaseFromWaiting":[
+					"self(state==WAITING).state=RUNNABLE",
+					"self(state==WAITING-SUSPENDED).state=SUSPENDED"
+				],
+			}
+		}
+	}
+}
