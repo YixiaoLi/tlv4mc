@@ -1,0 +1,30 @@
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\obj\Debug\Core.csproj.GenerateResource.Cache
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Core.dll
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Core.pdb
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.MainForm.resources
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.dll
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.pdb
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Third.dll
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\bin\Debug\WeifenLuo.WinFormsUI.Docking.dll
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Third.pdb
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Properties.Resources.resources
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Core.dll.config
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Core.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Core.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Third.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\bin\Debug\WeifenLuo.WinFormsUI.Docking.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Third.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\obj\Debug\ResolveAssemblyReference.cache
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.BackGroundWorkForm.resources
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.OpenResourceFileAndTraceLogFileOpenForm.resources
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.MainForm.resources
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Properties.Resources.resources
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\obj\Debug\Core.csproj.GenerateResource.Cache
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.pdb

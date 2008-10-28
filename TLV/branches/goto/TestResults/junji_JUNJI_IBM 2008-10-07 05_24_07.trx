@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="d4f27bf4-3fcb-4d2a-8df2-d55e8b692cd7" name="junji@JUNJI_IBM 2008-10-07 05:24:07" runUser="JUNJI_IBM\junji" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestRunConfiguration name="ローカル テストの実行" id="f925b93b-19e8-42c9-be1f-07b649dddab7">
+    <Description>これは、ローカル テストの実行に対する既定のテストの実行構成です。</Description>
+    <Deployment runDeploymentRoot="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\TestResults\junji_JUNJI_IBM 2008-10-07 05_24_07">
+      <DeploymentItem filename="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll" />
+      <DeploymentItem filename="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Core.dll" />
+      <DeploymentItem filename="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\TLV\bin\Debug\NU.OJL.MPRTOS.TLV.exe" />
+      <DeploymentItem filename="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Third.dll" />
+    </Deployment>
+    <TestTypeSpecific />
+  </TestRunConfiguration>
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <Times creation="2008-10-07T05:24:07.0156250+09:00" queuing="2008-10-07T05:24:07.9375000+09:00" start="2008-10-07T05:24:08.2656250+09:00" finish="2008-10-07T05:24:09.7500000+09:00" />
+  <TestDefinitions>
+    <UnitTest name="HideAllSubWindowsTest" storage="c:\documents and settings\junji\my documents\visual studio 2008\projects\tlv\test\bin\debug\nu.ojl.mprtos.tlv.test.dll" id="3e348342-8790-e31d-abb3-3ec459875f94">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="2a0ab306-0ca9-44a5-bb16-811083131f32" />
+      <TestMethod codeBase="C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Test\bin\Debug\NU.OJL.MPRTOS.TLV.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="NU.OJL.MPRTOS.TLV.Test.WindowManagerTest, NU.OJL.MPRTOS.TLV.Test" name="HideAllSubWindowsTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="一覧に存在しない結果" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="読み込まれたすべての結果" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="3e348342-8790-e31d-abb3-3ec459875f94" executionId="2a0ab306-0ca9-44a5-bb16-811083131f32" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="2a0ab306-0ca9-44a5-bb16-811083131f32" testId="3e348342-8790-e31d-abb3-3ec459875f94" testName="HideAllSubWindowsTest" computerName="JUNJI_IBM" duration="00:00:00.9441378" startTime="2008-10-07T05:24:08.3281250+09:00" endTime="2008-10-07T05:24:09.6875000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>
