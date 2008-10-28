@@ -29,7 +29,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
             List<string[]> replaceRules = new List<string[]>();
 
             // aliasルールを抜き出す
-            getAliasRules(traceLogConvertRule, aliasRules, behaviorRules);
+            getAliasRules(traceLogConvertRule, aliasRules);
+
+            // behaviorルールを抜き出す
+            getBehaviorRules(traceLogConvertRule, aliasRules, behaviorRules);
 
             // replaceルールを抜き出す
             getReplaceRules(traceLogConvertRule, aliasRules, replaceRules);
@@ -52,6 +55,36 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return result;
         }
 
+        private static void getAliasRules(string traceLogConvertRule, List<string[]> aliasRules)
+        {
+            foreach (Match m in Regex.Matches(traceLogConvertRule, @"alias\t+(?<from>[^\t]+)\t+(?<to>[^\r\n]+)"))
+            {
+                aliasRules.Add(new string[] { m.Groups["from"].Value, m.Groups["to"].Value });
+            }
+        }
+
+        private static void getBehaviorRules(string traceLogConvertRule, List<string[]> aliasRules, List<string[]> behaviorRules)
+        {
+            foreach (Match m in Regex.Matches(traceLogConvertRule, @"behavior\t+(?<from>[^\t]+)\t+(?<to>[^\r\n]+)"))
+            {
+                string from = m.Groups["from"].Value;
+                string to = m.Groups["to"].Value;
+
+                foreach (Match match in Regex.Matches(from, @"\((?<name>\w+)\)"))
+                {
+                    string name = match.Groups["name"].Value;
+
+                    if (aliasRules.Exists((s) => { return s[0] == name; }))
+                    {
+                        string value = aliasRules.Single<string[]>((s) => { return s[0] == name; })[1];
+                        from = Regex.Replace(from, @"\((?<name>\w+)\)", value);
+                    }
+                }
+
+                behaviorRules.Add(new string[] { from, to });
+            }
+        }
+
         private static void getReplaceRules(string traceLogConvertRule, List<string[]> aliasRules, List<string[]> replaceRules)
         {
             foreach (Match m in Regex.Matches(traceLogConvertRule, @"replace\t+(?<from>[^\t]+)\t+(?<to>[^\r\n]+)"))
@@ -62,6 +95,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 foreach (Match match in Regex.Matches(to, @"\((?<name>\w+)\)"))
                 {
                     string name = match.Groups["name"].Value;
+
                     if (aliasRules.Exists((s) => { return s[0] == name; }))
                     {
                         string value = aliasRules.Single<string[]>((s) => { return s[0] == name; })[1];
@@ -70,34 +104,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 }
 
                 replaceRules.Add(new string[] { from, to });
-            }
-        }
-
-        private static void getAliasRules(string traceLogConvertRule, List<string[]> aliasRules, List<string[]> behaviorRules)
-        {
-            foreach (Match m in Regex.Matches(traceLogConvertRule, @"alias\t+(?<from>[^\t]+)\t+(?<to>[^\r\n]+)"))
-            {
-                aliasRules.Add(new string[] { m.Groups["from"].Value, m.Groups["to"].Value });
-            }
-
-            // behaviorルールを抜き出す
-            foreach (Match m in Regex.Matches(traceLogConvertRule, @"behavior\t+(?<from>[^\t]+)\t+(?<to>[^\r\n]+)"))
-            {
-                string from = m.Groups["from"].Value;
-                string to = m.Groups["to"].Value;
-
-                Match match = Regex.Match(from, @"\((?<name>\w+)\)\s*\.");
-                if (match.Success)
-                {
-                    string name = match.Groups["name"].Value;
-                    if (aliasRules.Exists((s) => { return s[0] == name; }))
-                    {
-                        string value = aliasRules.Single<string[]>((s) => { return s[0] == name; })[1];
-                        from = Regex.Replace(from, @"\((?<name>\w+)\)\s*\.", value + ".");
-                    }
-                }
-
-                behaviorRules.Add(new string[] { from, to });
             }
         }
 
