@@ -121,16 +121,13 @@
     <value>tlv</value>
   </data>
   <data name="ConvertRuleInfoFileName" xml:space="preserve">
-    <value>rule.txt</value>
+    <value>rule.json</value>
   </data>
   <data name="ConvertRulesDirectoryPath" xml:space="preserve">
     <value>rules\convertRules\</value>
   </data>
   <data name="ResourceFileExtension" xml:space="preserve">
     <value>res</value>
-  </data>
-  <data name="ResourceSchemaFilePath" xml:space="preserve">
-    <value>rules\convertRules\ResourceSchema.xsd</value>
   </data>
   <data name="RulesDirectoryPath" xml:space="preserve">
     <value>rules\</value>

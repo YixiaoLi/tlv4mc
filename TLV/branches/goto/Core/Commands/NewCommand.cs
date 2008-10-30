@@ -43,12 +43,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                     CommonFormatConverter cfc = CommonFormatConverter.GetInstance(f.ConvertRuleDirPath);
                     bw.ReportProgress(25);
                     if (bw.CancellationPending) { _e.Cancel = true; return; }
-                    string res = "";
-                    string log = "";
+                    ResourceData res;
+                    TraceLogList log;
                     try
                     {
                         if (bw.CancellationPending) { _e.Cancel = true; return; }
-                        res = cfc.ConvertResourceFile(f.ResourceFilePath);
+                        res = cfc.GetResourceData(f.ResourceFilePath);
                         bw.ReportProgress(50);
                         if (bw.CancellationPending) { _e.Cancel = true; return; }
                         log = cfc.ConvertTraceLogFile(f.TraceLogFilePath);

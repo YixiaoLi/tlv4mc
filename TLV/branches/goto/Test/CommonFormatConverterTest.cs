@@ -64,9 +64,6 @@ namespace NU.OJL.MPRTOS.TLV.Test
             Assert.AreEqual("ITRON4", actual.Name);
             Assert.AreEqual("ITRON4.0", actual.Description);
             Assert.AreEqual(@"C:\Junji\Work\OJL\TLV\フェーズ2\trunk\rules\convertRules\ITRON4\", actual.Path);
-            Assert.AreEqual(File.ReadAllText(@"C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\rules\convertRules\ITRON4\ITRON4.xsd"), actual.ResourceXsd);
-            Assert.AreEqual(File.ReadAllText(@"C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\rules\convertRules\ITRON4\ITRON4.xslt"), actual.ResourceXslt);
-            Assert.AreEqual(File.ReadAllText(@"C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\rules\convertRules\ITRON4\ITRON4.lcnv"), actual.TraceLogConvertRule);
         }
 
         [TestMethod()]

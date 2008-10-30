@@ -31,17 +31,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         public string Description { get; private set; }
         /// <summary>
-        /// リソースファイルのスキーマ（.xsd）
+        /// リソースヘッダファイル（.resh）
         /// </summary>
-        public string ResourceXsd { get; private set; }
+		public string[] ResourceHeaderPaths { get; private set; }
         /// <summary>
-        /// リソースファイルの変換ルール（.xslt）
+        /// トレースログの変換ルール（.cnv）
         /// </summary>
-        public string ResourceXslt { get; private set; }
-        /// <summary>
-        /// トレースログの変換ルール（.lcnv）
-        /// </summary>
-        public string TraceLogConvertRule { get; private set; }
+		public string[] TraceLogConvertRulePaths { get; private set; }
 
         /// <summary>
         /// <c>CommonFormatConverter</c>のインスタンスを生成する
@@ -52,7 +48,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public static CommonFormatConverter GetInstance(string convertDirPath)
         {
             CommonFormatConverter c = new CommonFormatConverter();
-            c.Path = System.IO.Path.GetFullPath(convertDirPath);
 
             if (! Directory.Exists(convertDirPath))
                 return null;
@@ -60,35 +55,30 @@ namespace NU.OJL.MPRTOS.TLV.Core
             try
             {
                 string ruleFilePath = convertDirPath + Properties.Resources.ConvertRuleInfoFileName;
-                string[] ruleFileLines = File.ReadAllLines(ruleFilePath);
-                foreach (string line in ruleFileLines)
-                {
-                    // タブ区切りで設定パラメータ名と値を得る
-                    Match m = new Regex(@"^(?<name>[^\t]+)\t+(?<value>.+)$").Match(line);
-                    switch (m.Groups["name"].Value)
-                    {
-                        case "name":
-                            c.Name = m.Groups["value"].Value;
-                            break;
-                        case "description":
-                            c.Description = m.Groups["value"].Value;
-                            break;
-                        case "resourceXsd":
-                            c.ResourceXsd = File.ReadAllText(convertDirPath + m.Groups["value"]);
-                            break;
-                        case "resourceXslt":
-                            c.ResourceXslt = File.ReadAllText(convertDirPath + m.Groups["value"]);
-                            break;
-                        case "traceLogLcnv":
-                            c.TraceLogConvertRule = File.ReadAllText(convertDirPath + m.Groups["value"]);
-                            break;
-                    }
-                }
+                string ruleFileData = File.ReadAllText(ruleFilePath);
+				IJsonSerializer json = ApplicationFactory.JsonSerializer;
+				Json j = json.Deserialize<Json>(ruleFileData);
+				
+				c.Name = j["Name"];
+				c.Description = j["Description"];
+				c.ResourceHeaderPaths = j["ResourceHeader"];
+				c.TraceLogConvertRulePaths = j["TraceLogConvertRule"];
+				c.Path = System.IO.Path.GetFullPath(convertDirPath);
+
+				for(int i=0; i < c.TraceLogConvertRulePaths.Length; i++ )
+				{
+					c.TraceLogConvertRulePaths[i] = System.IO.Path.GetFullPath(convertDirPath + c.TraceLogConvertRulePaths[i]);
+				}
+				for (int i = 0; i < c.ResourceHeaderPaths.Length; i++)
+				{
+					c.ResourceHeaderPaths[i] = System.IO.Path.GetFullPath(convertDirPath + c.ResourceHeaderPaths[i]);
+				}
             }
             catch
             {
                 return null;
             }
+            
             return c;
         }
 
@@ -100,35 +90,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
         }
 
         /// <summary>
-        /// リソースファイルを共通形式へ変換する
+        /// リソースデータを得る
         /// </summary>
-        /// <param name="resourceFilePath">変換する前のリソースファイルのパス</param>
-        /// <returns>変換後のリソースファイルの内容の文字列</returns>
-        public string ConvertResourceFile(string resourceFilePath)
+        /// <param name="resourceFilePath">リソースファイルのパス</param>
+        /// <returns>リソースデータ</returns>
+        public ResourceData GetResourceData(string resourceFilePath)
         {
-            string res = File.ReadAllText(resourceFilePath);
-            StringBuilder sb = new StringBuilder();
-            // resourceFilePathで読み込むXMLをResourceXsdのスキーマで検証
-            if (!Xml.IsValid(ResourceXsd, res, new StringWriter(sb)))
-            {
-                throw new ResourceFileValidationException("リソースファイルの共通形式への変換に失敗しました。\n" + resourceFilePath + "は定義されたスキーマに準拠しません。\n" + sb.ToString());
-            }
-
-            // resourceFilePathで読み込むXMLをResourceXsltでXSLT変換
-            res = Xml.Transform(res, ResourceXslt);
-
-            if(File.Exists(ApplicationDatas.ResourceSchemaFilePath))
-                {
-                // 変換後のリソースファイルが有効か検証
-                if (!Xml.IsValid(File.ReadAllText(ApplicationDatas.ResourceSchemaFilePath), res, new StringWriter(sb)))
-                {
-                    throw new ResourceFileValidationException("リソースファイルの共通形式への変換に失敗しました。\nリソースファイル共通形式変換ルールファイルの定義が誤っている可能性があります。\n" + sb.ToString());
-                }
-            }
-            // 変換したxmlをDataSetで整形してtextWriterで記述
-            //res = Xml.AutoIndent(res);
-
-            return res;
+			return new ResourceData(ResourceHeaderPaths, resourceFilePath);
         }
 
         /// <summary>
@@ -136,23 +104,44 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         /// <param name="traceLogFilePath">変換する前のトレースログファイルのパス</param>
         /// <returns>変換後のトレースログファイルの内容の文字列</returns>
-        public string ConvertTraceLogFile(string traceLogFilePath)
+		public TraceLogList ConvertTraceLogFile(string traceLogFilePath)
         {
-            string log = File.ReadAllText(traceLogFilePath);
+			List<Json> list = new List<Json>();
+			Dictionary<string, Json> dic = new Dictionary<string, Json>();
+			
+			// トレースログ変換ファイルを開きJsonValueでデシリアライズ
+			// ファイルが複数ある場合を想定している
+			foreach(string s in TraceLogConvertRulePaths)
+			{
+				Json json = ApplicationFactory.JsonSerializer.Deserialize<Json>(File.ReadAllText(s));
 
-            // トレースログを共通形式に変換
-            log = TraceLogConverter.Transform(log, TraceLogConvertRule);
+				foreach (KeyValuePair<string, Json> j in json.GetKeyValuePaierEnumerator())
+				{
+					dic.Add(j.Key, j.Value);
+				}
+			}
 
-            // 無効なトレースログを除去
-            log = TraceLogConverter.Validate(log, ApplicationDatas.CommonFormatTraceLogRegex);
+			List<TraceLog> tll = new List<TraceLog>();
 
-            // 有効なトレースログか検証
-            if (!TraceLogConverter.IsValid(log, ApplicationDatas.CommonFormatTraceLogRegex))
-            {
-                throw new ResourceFileValidationException("トレースログファイルの共通形式への変換に失敗しました。\n" + traceLogFilePath + "は定義された正規表現に準拠しません。");
-            }
+			foreach(string s in File.ReadAllLines(traceLogFilePath))
+			{
+				foreach(KeyValuePair<string, Json> kvp in dic)
+				{
+					if (Regex.IsMatch(s, kvp.Key))
+					{
+						foreach (Json j in kvp.Value)
+						{
+							string t = Regex.Replace(s, kvp.Key, (string)j["Time"]);
+							string _s = j.ContainsKey("Subject") ? Regex.Replace(s, kvp.Key, (string)j["Subject"]) : "";
+							string o = Regex.Replace(s, kvp.Key, (string)j["Object"]);
+							string b = Regex.Replace(s, kvp.Key, (string)j["Behavior"]);
+							tll.Add(new TraceLog(t, _s, o, b));
+						}
+					}
+				}
+			}
 
-            return log;
+			return new TraceLogList(tll);
         }
 
         public override string ToString()

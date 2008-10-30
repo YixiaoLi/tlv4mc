@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="CommandManagerTest.cs" />
     <Compile Include="CommonFormatConverterTest.cs" />
-    <Compile Include="CommonFormatTraceLogTest.cs" />
     <Compile Include="FileContextTest.cs" />
     <Compile Include="GeneralCommandTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

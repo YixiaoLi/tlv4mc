@@ -1,44 +1,29 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
-using System.Runtime.Serialization;
-using System.ServiceModel.Dispatcher;
+using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
     /// <summary>
-    /// リソースリスト
+    /// リソースを表すクラス
     /// </summary>
-    [CollectionDataContract]
-    public class ResourceList : IEnumerable<Resource>
+	public class ResourceList : GeneralKeyedJsonableCollection<string, Dictionary<string, string>, ResourceList>
     {
-        private Dictionary<string, Resource> _list = new Dictionary<string, Resource>();
-        public Resource this[string name] { get { return _list[name]; } }
-        public int Count { get { return _list.Count; } }
+        /// <summary>
+        /// <c>Resource</c>のインスタンスを生成する
+        /// </summary>
+		public ResourceList()
+			: base(new Dictionary<string, Dictionary<string, string>>())
+		{
+		}
 
-        public IEnumerator<Resource> GetEnumerator()
-        {
-            return _list.Values.GetEnumerator();
-        }
+		public ResourceList(IDictionary<string, Dictionary<string, string>> d)
+			:base(d)
+		{
+		}
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _list.GetEnumerator();
-        }
+	}
 
-        public static ResourceList Serialize(string resourceData)
-        {
-            return new JsonQueryStringConverter().ConvertStringToValue(resourceData, typeof(ResourceList)) as ResourceList;
-            
-        }
-
-        public static string Desirialize(ResourceList resourceList)
-        {
-            return new JsonQueryStringConverter().ConvertValueToString(resourceList, typeof(ResourceList));
-        }
-
-    }
 }

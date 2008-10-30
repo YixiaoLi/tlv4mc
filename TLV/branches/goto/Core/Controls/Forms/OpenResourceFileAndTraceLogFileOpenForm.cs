@@ -242,7 +242,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             foreach (string dirPath in Directory.GetDirectories(convertRulesDirPath))
             {
-                if (File.Exists(dirPath + @"\rule.txt"))
+                if (File.Exists(dirPath + @"\" + Properties.Resources.ConvertRuleInfoFileName))
                 {
                     CommonFormatConverter c = CommonFormatConverter.GetInstance(dirPath + @"\");
                     if(c != null)

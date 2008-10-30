@@ -56,6 +56,13 @@
     <Compile Include="CommandManager\ICommand.cs" />
     <Compile Include="CommandManager\CommandManager.cs" />
     <Compile Include="Extensions\ToolStripMenuItemExtensions.cs" />
+    <Compile Include="Json\GeneralJsonConverter.cs" />
+    <Compile Include="Json\IJsonable.cs" />
+    <Compile Include="Json\IJsonConverter.cs" />
+    <Compile Include="Json\IJsonReader.cs" />
+    <Compile Include="Json\IJsonSerializer.cs" />
+    <Compile Include="Json\IJsonWriter.cs" />
+    <Compile Include="Json\Json.cs" />
     <Compile Include="WindowManager\WindowManager.cs" />
     <Compile Include="WindowManager\IWindowManager.cs" />
     <Compile Include="WindowManager\SubWindow.cs" />

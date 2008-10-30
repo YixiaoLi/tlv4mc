@@ -40,9 +40,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
         }
         /// <summary>
-        /// リソースのリスト
+        /// リソースデータ
         /// </summary>
-        public ResourceList ResourceList { get; private set; }
+		public ResourceData ResourceData { get; private set; }
         /// <summary>
         /// トレースログのリスト
         /// </summary>
@@ -57,10 +57,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         /// <param name="resourceData">共通形式のリソースデータ</param>
         /// <param name="traceLogData">共通形式のトレースログデータ</param>
-        public CommonFormatTraceLog(string resourceData, string traceLogData)
+		public CommonFormatTraceLog(ResourceData resourceData, TraceLogList traceLogData)
         {
-            ResourceList = ResourceList.Serialize(resourceData);
-            TraceLogList = TraceLogList.Serialize(traceLogData);
+			ResourceData = resourceData;
+			TraceLogList = traceLogData;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public void Deserialize(string path)
         {
             CommonFormatTraceLog c = CommonFormatTraceLogSerializer.Deserialize(path);
-            ResourceList = c.ResourceList;
+			ResourceData = c.ResourceData;
             TraceLogList = c.TraceLogList;
         }
     }

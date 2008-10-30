@@ -1,31 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Collections;
 using System.IO;
-using System.Runtime.Serialization;
+using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
     /// <summary>
     /// <c>Attribute</c>のリスト
     /// </summary>
-    [CollectionDataContract]
-    public class AttributeList : IEnumerable<Attribute>
-    {
-        private Dictionary<string, Attribute> _list = new Dictionary<string, Attribute>();
+	public class AttributeList : GeneralKeyedJsonableCollection<string, Attribute, AttributeList>
+	{
+		public AttributeList()
+			: base(new Dictionary<string, Attribute>())
+		{
+		}
 
-        public Attribute this[string name] { get { return _list[name]; } }
-
-        public IEnumerator<Attribute> GetEnumerator()
-        {
-            return _list.Values.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _list.GetEnumerator();
-        }
-    }
+		public AttributeList(IDictionary<string, Attribute> d)
+			:base(d)
+		{
+		}
+	}
 }

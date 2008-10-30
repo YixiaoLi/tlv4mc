@@ -47,6 +47,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dll\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -61,6 +65,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NewtonsoftJson\EnumConverter.cs" />
+    <Compile Include="NewtonsoftJson\GeneralConverter.cs" />
+    <Compile Include="NewtonsoftJson\JsonReader.cs" />
+    <Compile Include="NewtonsoftJson\JsonValueConverter.cs" />
+    <Compile Include="NewtonsoftJson\JsonWriter.cs" />
+    <Compile Include="NewtonsoftJson\NewtonsoftJson.cs" />
     <Compile Include="SharpZipLibZip.cs" />
     <Compile Include="WeifenLuoWindowManager.cs" />
   </ItemGroup>

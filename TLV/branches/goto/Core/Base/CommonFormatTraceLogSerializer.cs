@@ -29,8 +29,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             string name = Path.GetFileNameWithoutExtension(path);
 
-            string res = File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.ResourceFileExtension);
-            string log = File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension);
+			ResourceData res = new ResourceData().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.ResourceFileExtension));
+            TraceLogList log = new TraceLogList().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension));
 
             return new CommonFormatTraceLog(res, log);
         }
@@ -50,8 +50,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             string name = Path.GetFileNameWithoutExtension(path);
 
-            File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.ResourceFileExtension, data.ResourceList.ToString());
-            File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension, data.TraceLogList.ToString());
+            File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.ResourceFileExtension, data.ResourceData.ToJson());
+			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension, data.TraceLogList.ToJson());
 
             zip.Compress(path, tmpDirPath);
 
