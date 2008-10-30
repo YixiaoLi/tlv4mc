@@ -10,6 +10,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
 		public object Value{get; private set;}
 		public Json this[int i] { get { return Value is List<Json> ? ((List<Json>)Value)[i] : null; } }
 		public Json this[string name] { get { return Value is Dictionary<string, Json> ? ((Dictionary<string, Json>)Value)[name] : null; } }
+
+		public Json()
+		{
+			Value = null;
+		}
+		
 		public Json(object value)
 		{
 			Value = value;

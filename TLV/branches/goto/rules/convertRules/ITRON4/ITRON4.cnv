@@ -2,14 +2,14 @@
 	"\[(?<time>\d+)\] dispatch to task (?<id>\d+)\." : [
 		{
 			"Time"		:"${time}",
-			"Object"	:"task(id==${id})",
+			"Object"	:"Task(id==${id})",
 			"Behavior"	:"dispatch"
 		}
 	],
 	"\[(?<time>\d+)\] task (?<id>\d+) becomes (?<state>\w+)\." : [
 		{
 			"Time"		:"${time}",
-			"Object"	:"task(Id==${id})",
+			"Object"	:"Task(Id==${id})",
 			"Behavior"	:"state=${state}"
 		}
 	]

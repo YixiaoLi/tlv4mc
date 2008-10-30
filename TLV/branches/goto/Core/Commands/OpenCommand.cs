@@ -36,9 +36,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                     {
                         ApplicationDatas.ActiveFileContext.Open(_path);
                     }
-                    catch
+                    catch(Exception _e)
                     {
-                        MessageBox.Show("サポートされないファイル形式です", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("サポートされないファイル形式です\n" + _e.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         ApplicationDatas.ActiveFileContext.Close();
                     }
                     bw.ReportProgress(100);

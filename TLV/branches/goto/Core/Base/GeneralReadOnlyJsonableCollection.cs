@@ -15,8 +15,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		where TList : GeneralReadOnlyJsonableCollection<T, TList>
 		where T : class
 	{
-		private static IJsonSerializer _json = ApplicationFactory.JsonSerializer;
-		
 		public GeneralReadOnlyJsonableCollection()
 			:base(new List<T>())
 		{
@@ -30,12 +28,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public TList Parse(string traceLogData)
 		{
-			return _json.Deserialize<TList>(traceLogData);
+			return ApplicationFactory.JsonSerializer.Deserialize<TList>(traceLogData);
 		}
 
 		public string ToJson()
 		{
-			return _json.Serialize<TList>((TList)this);
+			return ApplicationFactory.JsonSerializer.Serialize<TList>((TList)this);
 		}
 
 	}

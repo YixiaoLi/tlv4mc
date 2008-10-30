@@ -17,14 +17,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		private IJsonSerializer _json = ApplicationFactory.JsonSerializer;
 		public Dictionary<string, string[]> Enums { get; private set; }
 		public Dictionary<string, ResourceType> Types { get; private set; }
-		public Dictionary<string, ResourceList> Resources { get; private set; }
+		//public Dictionary<string, ResourceList> Resources { get; private set; }
+		public Json Resources { get; private set; }
 
 		public ResourceData()
 			:base()
 		{
 			Enums = new Dictionary<string, string[]>();
 			Types = new Dictionary<string, ResourceType>();
-			Resources = new Dictionary<string, ResourceList>();
+			Resources = new Json();
 		}
 
 		public ResourceData(string[] reshPath, string resPath)
@@ -56,7 +57,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				}
 			}
 
-			Resources = ApplicationFactory.JsonSerializer.Deserialize<Dictionary<string, ResourceList>>(File.ReadAllText(resPath));
+			Resources = ApplicationFactory.JsonSerializer.Deserialize<Json>(File.ReadAllText(resPath));
 		}
 
 		public ResourceData(string json)
@@ -75,7 +76,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public ResourceData Parse(string resourceData)
 		{
-			return _json.Deserialize<ResourceData>(resourceData);
+			ResourceData data = _json.Deserialize<ResourceData>(resourceData);
+			return data;
 		}
 
 	}

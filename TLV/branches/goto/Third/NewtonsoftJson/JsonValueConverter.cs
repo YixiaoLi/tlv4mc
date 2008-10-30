@@ -21,6 +21,8 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			Stack<Json> stack = new Stack<Json>();
 			Stack<string> keyStack = new Stack<string>();
 			Json result = null;
+			int objectNest = 0;
+			int arrayNest = 0;
 
 			Action<object> jsonValueSet = (object value) =>
 				{
@@ -42,11 +44,13 @@ namespace NU.OJL.MPRTOS.TLV.Third
 						if (result != null)
 							stack.Push(result);
 						result = new Json(new List<Json>());
+						arrayNest++;
 						break;
 					case JsonToken.StartObject:
 						if(result != null)
 							stack.Push(result);
 						result = new Json(new Dictionary<string, Json>());
+						objectNest++;
 						break;
 					case JsonToken.PropertyName:
 						keyStack.Push(reader.Value as string);
@@ -58,6 +62,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 							result = stack.Pop();
 							jsonValueSet(a.Value);
 						}
+						arrayNest--;
 						break;
 					case JsonToken.EndObject:
 						if (stack.Count != 0)
@@ -66,12 +71,13 @@ namespace NU.OJL.MPRTOS.TLV.Third
 							result = stack.Pop();
 							jsonValueSet(o.Value);
 						}
+						objectNest--;
 						break;
 					default:
 						jsonValueSet(reader.Value);
 						break;
 				}
-			}while(reader.Read());
+			} while (!(objectNest == 0 && arrayNest == 0) && reader.Read());
 			return result;
 		}
 
@@ -96,9 +102,49 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			{
 				writer.WriteValue((string)json.Value);
 			}
+			if (json.Value is char)
+			{
+				writer.WriteValue((char)json.Value);
+			}
+			if (json.Value is sbyte)
+			{
+				writer.WriteValue((sbyte)json.Value);
+			}
+			if (json.Value is byte)
+			{
+				writer.WriteValue((byte)json.Value);
+			}
+			if (json.Value is short)
+			{
+				writer.WriteValue((short)json.Value);
+			}
+			if (json.Value is ushort)
+			{
+				writer.WriteValue((ushort)json.Value);
+			}
 			if (json.Value is int)
 			{
 				writer.WriteValue((int)json.Value);
+			}
+			if (json.Value is uint)
+			{
+				writer.WriteValue((uint)json.Value);
+			}
+			if (json.Value is long)
+			{
+				writer.WriteValue((long)json.Value);
+			}
+			if (json.Value is ulong)
+			{
+				writer.WriteValue((ulong)json.Value);
+			}
+			if (json.Value is decimal)
+			{
+				writer.WriteValue((decimal)json.Value);
+			}
+			if (json.Value is double)
+			{
+				writer.WriteValue((double)json.Value);
 			}
 			if (json.Value is float)
 			{

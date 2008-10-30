@@ -15,7 +15,7 @@
 					"CanGrouping"	:false
 				},
 				"id":{
-					"VariableType"		:"int",
+					"VariableType"	:"int",
 					"DisplayName"	:"ID",
 					"AllocationType":"Static",
 					"CanGrouping"	:false
