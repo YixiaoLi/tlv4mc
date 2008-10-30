@@ -38,42 +38,37 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                 };
 
             bw.DoWork += (o, _e) =>
-                {
+			{
+				try
+				{
+					bw.ReportProgress(0);
                     if (bw.CancellationPending) { _e.Cancel = true; return; }
-                    CommonFormatConverter cfc = CommonFormatConverter.GetInstance(f.ConvertRuleDirPath);
+
+					CommonFormatConverter cfc = new CommonFormatConverter(f.ResourceFilePath, f.TraceLogFilePath);
+
                     bw.ReportProgress(25);
                     if (bw.CancellationPending) { _e.Cancel = true; return; }
-                    ResourceData res;
-                    TraceLogList log;
-                    try
-                    {
-                        if (bw.CancellationPending) { _e.Cancel = true; return; }
-                        res = cfc.GetResourceData(f.ResourceFilePath);
-                        bw.ReportProgress(50);
-                        if (bw.CancellationPending) { _e.Cancel = true; return; }
-                        log = cfc.ConvertTraceLogFile(f.TraceLogFilePath);
-                        bw.ReportProgress(75);
-                        if (bw.CancellationPending) { _e.Cancel = true; return; }
-                    }
-                    catch (ResourceFileValidationException e)
-                    {
-                        MessageBox.Show(e.Message, "リソースファイルの共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        _e.Cancel = true; return;
-                    }
-                    catch (TraceLogFileValidationException e)
-                    {
-                        MessageBox.Show(e.Message, "トレースログファイルの共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        _e.Cancel = true; return;
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show(e.Message, "共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        _e.Cancel = true; return;
-                    }
 
-                    cftl = new CommonFormatTraceLog(res, log);
-                    bw.ReportProgress(100);
-                };
+					ResourceData res = cfc.ResourceData;
+
+                    bw.ReportProgress(50);
+                    if (bw.CancellationPending) { _e.Cancel = true; return; }
+
+					TraceLogList log = cfc.TraceLogList;
+
+                    bw.ReportProgress(75);
+					if (bw.CancellationPending) { _e.Cancel = true; return; }
+
+					cftl = new CommonFormatTraceLog(res, log);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _e.Cancel = true;
+					return;
+                }
+                bw.ReportProgress(100);
+			};
 
             if (f.ShowDialog() == DialogResult.OK)
             {

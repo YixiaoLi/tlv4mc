@@ -46,6 +46,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
     }
 
+	/// <summary>
+	/// 属性の配置型（静的か動的か）
+	/// </summary>
     public enum AllocationType
     {
         Static,

@@ -13,10 +13,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             NONE = 0x0,
             RESOURCE_FILE_PATH = 0x1,
             TRACELOG_FILE_PATH = 0x2,
-            CONVERTRULE_FILE_PATH = 0x4,
-            SAVE_FILE_PATH = 0x8,
-            NEED = RESOURCE_FILE_PATH | TRACELOG_FILE_PATH | CONVERTRULE_FILE_PATH,
-            ALL = RESOURCE_FILE_PATH | TRACELOG_FILE_PATH | CONVERTRULE_FILE_PATH | SAVE_FILE_PATH,
+            SAVE_FILE_PATH = 0x4,
+            NEED = RESOURCE_FILE_PATH | TRACELOG_FILE_PATH,
+            ALL = RESOURCE_FILE_PATH | TRACELOG_FILE_PATH | SAVE_FILE_PATH,
         }
         [Flags]
         private enum ErrorFlags
@@ -24,17 +23,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             NONE = 0x00,
             NO_RESOURCE_FILE_PATH = 0x01,
             NO_TRACELOG_FILE_PATH = 0x02,
-            NO_CONVERTRULE_FILE_PATH = 0x04,
-            WRONG_RESOURCE_FILE_PATH = 0x08,
-            WRONG_TRACELOG_FILE_PATH = 0x10,
-            WRONG_CONVERTRULE_FILE_PATH = 0x20,
-            ALL = NO_RESOURCE_FILE_PATH | NO_TRACELOG_FILE_PATH | NO_CONVERTRULE_FILE_PATH | WRONG_RESOURCE_FILE_PATH | WRONG_TRACELOG_FILE_PATH | WRONG_CONVERTRULE_FILE_PATH,
+            WRONG_RESOURCE_FILE_PATH = 0x04,
+            WRONG_TRACELOG_FILE_PATH = 0x08,
+            ALL = NO_RESOURCE_FILE_PATH | NO_TRACELOG_FILE_PATH | WRONG_RESOURCE_FILE_PATH | WRONG_TRACELOG_FILE_PATH,
         }
         private InputFlags _inputFlags = InputFlags.NONE;
-        private ErrorFlags _errorFlags = ErrorFlags.NO_RESOURCE_FILE_PATH | ErrorFlags.NO_CONVERTRULE_FILE_PATH | ErrorFlags.NO_TRACELOG_FILE_PATH;
+        private ErrorFlags _errorFlags = ErrorFlags.NO_RESOURCE_FILE_PATH | ErrorFlags.NO_TRACELOG_FILE_PATH;
         private string _resourceFilePath = string.Empty;
         private string _traceLogFilePath = string.Empty;
-        private string _convertRuleDirPath = string.Empty;
         private string _saveFilePath = string.Empty;
         private string _resourceFileExt;
         private string _traceLogFileExt;
@@ -94,35 +90,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                         InputFlag &= ~InputFlags.TRACELOG_FILE_PATH;
                         ErrorFlag |= ErrorFlags.WRONG_TRACELOG_FILE_PATH;
                         ErrorFlag &= ~ErrorFlags.NO_TRACELOG_FILE_PATH;
-                    }
-                }
-            }
-        }
-        public string ConvertRuleDirPath
-        {
-            get { return _convertRuleDirPath; }
-            set
-            {
-                if (_convertRuleDirPath != value)
-                {
-                    _convertRuleDirPath = value;
-                    if (_convertRuleDirPath == "")
-                    {
-                        InputFlag &= ~InputFlags.CONVERTRULE_FILE_PATH;
-                        ErrorFlag |= ErrorFlags.NO_CONVERTRULE_FILE_PATH;
-                        ErrorFlag &= ~ErrorFlags.WRONG_CONVERTRULE_FILE_PATH;
-                    }
-                    else if (Directory.Exists(_convertRuleDirPath))
-                    {
-                        InputFlag |= InputFlags.CONVERTRULE_FILE_PATH;
-                        ErrorFlag &= ~ErrorFlags.WRONG_CONVERTRULE_FILE_PATH;
-                        ErrorFlag &= ~ErrorFlags.NO_CONVERTRULE_FILE_PATH;
-                    }
-                    else
-                    {
-                        InputFlag &= ~InputFlags.CONVERTRULE_FILE_PATH;
-                        ErrorFlag |= ErrorFlags.WRONG_CONVERTRULE_FILE_PATH;
-                        ErrorFlag &= ~ErrorFlags.NO_CONVERTRULE_FILE_PATH;
                     }
                 }
             }
@@ -238,27 +205,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             base.OnLoad(evntArgs);
             updateErrorMessageBox();
 
-            string convertRulesDirPath = ApplicationDatas.ConvertRulesDirectoryPath;
-
-            foreach (string dirPath in Directory.GetDirectories(convertRulesDirPath))
-            {
-                if (File.Exists(dirPath + @"\" + Properties.Resources.ConvertRuleInfoFileName))
-                {
-                    CommonFormatConverter c = CommonFormatConverter.GetInstance(dirPath + @"\");
-                    if(c != null)
-                    {
-                        convertRuleComboBox.Items.Add(c);
-                    }
-                }
-            }
-
-            if (convertRuleComboBox.Items.Count == 0)
-            {
-                MessageBox.Show("共通形式変換ルールが存在しません。\n共通形式変換ルールは\"" + convertRulesDirPath + "\"に一つ以上存在していなければなりません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                DialogResult = DialogResult.Cancel;
-                Close();
-            }
-
             resourceFilePathTextBox.TextChanged += (o, e)
                 =>
                 {
@@ -275,13 +221,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 =>
                 {
                     SaveFilePath = savePathTextBox.Text;
-                };
-
-            convertRuleComboBox.SelectedValueChanged += (o, e)
-                =>
-                {
-                    ConvertRuleDirPath = ((CommonFormatConverter)convertRuleComboBox.SelectedItem).Path;
-                    convertRuleMessageBox.Text = ((CommonFormatConverter)convertRuleComboBox.SelectedItem).Description;
                 };
 
             resourceFileRefButton.Click += (o, e)
@@ -342,11 +281,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             if ((ErrorFlag & ErrorFlags.WRONG_TRACELOG_FILE_PATH) != ErrorFlags.NONE)
             {
                 errorMessages[1] = "・指定されたトレースログファイルは存在しません。入力を確認してください。";
-            }
-            if ((ErrorFlag & ErrorFlags.NO_CONVERTRULE_FILE_PATH) != ErrorFlags.NONE)
-            {
-                errorMessages[2] = "・共通形式変換ルールを選択して下さい。";
-                convertRuleMessageBox.Text = "共通形式変換ルールを選択するとここに説明が表示されます。";
             }
             if (ErrorFlag == ErrorFlags.NONE)
             {

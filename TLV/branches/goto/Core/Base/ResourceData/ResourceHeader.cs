@@ -12,23 +12,20 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// <summary>
     /// リソースリスト
     /// </summary>
-	public class ResourceData : IJsonable<ResourceData>
+	public class ResourceHeader : IJsonable<ResourceHeader>
 	{
 		private IJsonSerializer _json = ApplicationFactory.JsonSerializer;
 		public Dictionary<string, string[]> Enums { get; private set; }
 		public Dictionary<string, ResourceType> Types { get; private set; }
-		//public Dictionary<string, ResourceList> Resources { get; private set; }
-		public Json Resources { get; private set; }
 
-		public ResourceData()
+		public ResourceHeader()
 			:base()
 		{
 			Enums = new Dictionary<string, string[]>();
 			Types = new Dictionary<string, ResourceType>();
-			Resources = new Json();
 		}
 
-		public ResourceData(string[] reshPath, string resPath)
+		public ResourceHeader(string[] reshPath, string resPath)
 			: this()
 		{
 			// リソースヘッダファイルを開きJsonValueでデシリアライズ
@@ -56,17 +53,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					}
 				}
 			}
-
-			Resources = ApplicationFactory.JsonSerializer.Deserialize<Json>(File.ReadAllText(resPath));
 		}
 
-		public ResourceData(string json)
+		public ResourceHeader(string json)
 			: this()
 		{
-			ResourceData rd = new ResourceData().Parse(json);
+			ResourceHeader rd = new ResourceHeader().Parse(json);
 			Enums = rd.Enums;
 			Types = rd.Types;
-			Resources = rd.Resources;
 		}
 
 		public string ToJson()
@@ -74,9 +68,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return _json.Serialize(this);
 		}
 
-		public ResourceData Parse(string resourceData)
+		public ResourceHeader Parse(string resourceData)
 		{
-			ResourceData data = _json.Deserialize<ResourceData>(resourceData);
+			ResourceHeader data = _json.Deserialize<ResourceHeader>(resourceData);
 			return data;
 		}
 

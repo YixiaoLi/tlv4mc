@@ -70,15 +70,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         }
         
         /// <summary>
-        ///   rule.json に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string ConvertRuleInfoFileName {
-            get {
-                return ResourceManager.GetString("ConvertRuleInfoFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   rules\convertRules\ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ConvertRulesDirectoryPath {
@@ -97,11 +88,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         }
         
         /// <summary>
+        ///   resh に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ResourceHeaderFileExtension {
+            get {
+                return ResourceManager.GetString("ResourceHeaderFileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   rules\ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string RulesDirectoryPath {
             get {
                 return ResourceManager.GetString("RulesDirectoryPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   cnv に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TraceLogConvertFileExtension {
+            get {
+                return ResourceManager.GetString("TraceLogConvertFileExtension", resourceCulture);
             }
         }
         

@@ -8,6 +8,6 @@ namespace NU.OJL.MPRTOS.TLV.Base
 	public interface IJsonable<T>
 	{
 		string ToJson();
-		T Parse(string traceLogData);
+		T Parse(string data);
 	}
 }

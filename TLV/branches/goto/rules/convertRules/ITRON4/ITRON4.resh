@@ -1,7 +1,6 @@
 {
 	"Enums":{
 		"State"			:["RUNNING", "RUNNABLE", "WAITING", "SUSPENDED", "DORMANT", "WAITING-SUSPENDED"],
-		"AllocationType":["Static", "Dynamic"]
 	},
 	
 	"Types":{
@@ -57,7 +56,7 @@
 					"CanGrouping"	:false,
 				},
 				"state":{
-					"VariableType"	:"state",
+					"VariableType"	:"State",
 					"DisplayName"	:"状態",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:false,

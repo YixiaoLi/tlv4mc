@@ -42,7 +42,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ITRON4", "ITRON4", "{31AB23
 	ProjectSection(SolutionItems) = preProject
 		rules\convertRules\ITRON4\ITRON4.cnv = rules\convertRules\ITRON4\ITRON4.cnv
 		rules\convertRules\ITRON4\ITRON4.resh = rules\convertRules\ITRON4\ITRON4.resh
-		rules\convertRules\ITRON4\rule.json = rules\convertRules\ITRON4\rule.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{37F01460-E939-41AD-B195-4219C5DF177F}"
