@@ -46,3 +46,4 @@ C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Pr
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Debug\Core.csproj.GenerateResource.Cache
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Core\bin\Debug\Newtonsoft.Json.dll
