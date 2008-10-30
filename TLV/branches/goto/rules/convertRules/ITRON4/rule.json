@@ -1,6 +1,0 @@
-{
-	"Name"					:"ITRON4",
-	"Description"			:"ITRON4.0",
-	"ResourceHeader"		:"./ITRON4.resh",
-	"TraceLogConvertRule"	:"./ITRON4.cnv"
-}
