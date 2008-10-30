@@ -127,7 +127,6 @@ if not exist $(TargetDir)rules\convertRules\ITRON4 mkdir $(TargetDir)rules\conve
 if not exist $(TargetDir)sampleFiles mkdir $(TargetDir)sampleFiles
 
 xcopy $(SolutionDir)rules\convertRules\ITRON4 $(TargetDir)rules\convertRules\ITRON4 /S /E /C /Y /D
-if not exist $(TargetDir)rules\convertRules\ResourceSchema.xsd copy $(SolutionDir)rules\convertRules\ResourceSchema.xsd $(TargetDir)rules\convertRules
 if not exist $(TargetDir)sampleFiles\SampleITRONResources.res copy $(SolutionDir)sampleFiles\SampleITRONResources.res $(TargetDir)sampleFiles
 if not exist $(TargetDir)sampleFiles\SampleITRONTraceLog.log copy $(SolutionDir)sampleFiles\SampleITRONTraceLog.log $(TargetDir)sampleFiles
 

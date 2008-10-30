@@ -10,8 +10,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
     public static class ApplicationFactory
     {
         private static readonly CommandManager _commandManager;
-        private static readonly IZip _zip;
-
+		private static readonly IZip _zip;
+		private static readonly IJsonSerializer _json;
         public static IWindowManager WindowManager
         {
             get { return new WeifenLuoWindowManager(); }
@@ -25,6 +25,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
             get { return _zip; }
         }
 
+		/// <summary>
+		/// <c>IJson</c>のインスタンス。これはシングルトンなインスタンスである。
+		/// </summary>
+		public static IJsonSerializer JsonSerializer
+		{
+			get { return _json; }
+		}
+
         /// <summary>
         /// <c>CommandManager</c>のインスタンス。これはシングルトンなインスタンスである。
         /// </summary>
@@ -36,7 +44,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
         static ApplicationFactory()
         {
             _commandManager = new CommandManager();
-            _zip = new SharpZipLibZip();
+			_zip = new SharpZipLibZip();
+			_json = new NewtonsoftJson();
         }
     }
 }

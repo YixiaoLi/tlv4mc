@@ -45,18 +45,22 @@
   <ItemGroup>
     <Compile Include="ApplicationDatas.cs" />
     <Compile Include="ApplicationFactory.cs" />
-    <Compile Include="Base\Attribute.cs" />
-    <Compile Include="Base\AttributeList.cs" />
-    <Compile Include="Base\CommonFormatConverter.cs" />
-    <Compile Include="Base\CommonFormatTraceLog.cs" />
-    <Compile Include="Base\CommonFormatTraceLogSerializer.cs" />
-    <Compile Include="Base\Resource.cs" />
-    <Compile Include="Base\ResourceFileValidationException.cs" />
-    <Compile Include="Base\ResourceList.cs" />
-    <Compile Include="Base\TraceLog.cs" />
-    <Compile Include="Base\TraceLogConverter.cs" />
-    <Compile Include="Base\TraceLogFileValidationException.cs" />
-    <Compile Include="Base\TraceLogList.cs" />
+    <Compile Include="Base\ResourceData\Attribute\Attribute.cs" />
+    <Compile Include="Base\ResourceData\Attribute\AttributeList.cs" />
+    <Compile Include="Base\ResourceData\Behavior\BehaviorList.cs" />
+    <Compile Include="Base\CommonFormatTraceLog\CommonFormatConverter.cs" />
+    <Compile Include="Base\CommonFormatTraceLog\CommonFormatTraceLog.cs" />
+    <Compile Include="Base\GeneralKeyedJsonableCollection.cs" />
+    <Compile Include="Base\GeneralReadOnlyJsonableCollection.cs" />
+    <Compile Include="Base\JsonExtention.cs" />
+    <Compile Include="Base\ResourceData\ResourceData.cs" />
+    <Compile Include="Base\ResourceData\ResourceList.cs" />
+    <Compile Include="Base\ResourceData\ResourceFileValidationException.cs" />
+    <Compile Include="Base\ResourceData\ResourceHeader.cs" />
+    <Compile Include="Base\ResourceData\ResourceType.cs" />
+    <Compile Include="Base\TraceLog\TraceLog.cs" />
+    <Compile Include="Base\TraceLog\TraceLogFileValidationException.cs" />
+    <Compile Include="Base\TraceLog\TraceLogList.cs" />
     <Compile Include="Commands\ChangeSubWindowDockStateCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowVisiblityCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowEnabledCommand.cs" />
@@ -110,6 +114,12 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
