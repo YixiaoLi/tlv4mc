@@ -18,6 +18,7 @@ C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Third\obj\Debug\NU.OJL.MPRTOS.TLV.Thir
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Third.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Third.pdb
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\bin\Debug\Newtonsoft.Json.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\bin\Debug\WeifenLuo.WinFormsUI.Docking.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
