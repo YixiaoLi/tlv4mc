@@ -1,0 +1,45 @@
+{
+	"Enum":{
+		"State"			:["RUNNING", "RUNNABLE", "WAITTING", "SUSPEND", "DORMANT"],
+		"AllocationType":["STATIC", "DYNAMIC"]
+	},
+	
+	"Resource":{
+		"Task":{
+			"DisplayName" :"タスク",
+			"Attribute" :{
+				"name":{
+					"ValueType"		:"String",
+					"DisplayName"	:"名前",
+					"AllocationType":"STATIC",
+					"CanGrouping"	:false
+				},
+				"id":{
+					"ValueType"		:"Int",
+					"DisplayName"	:"ID",
+					"AllocationType":"STATIC",
+					"CanGrouping"	:false
+				},
+				"pri":{
+					"ValueType"		:"State",
+					"DisplayName"	:"状態",
+					"AllocationType":"DYNAMIC",
+					"CanGrouping"	:false,
+					"Default"		:"DORMANT"
+				}
+			},
+			"Behavior"	:{
+				"dispatch":[
+					"Task(State==RUNNING).preempt",
+					"self(State==RUNNABLE).State=RUNNING"
+				],
+				"preempt":[
+					"sel(State==RUNNING)f.State=RUNNABLE"
+				],
+				"activate":[
+					"self(State==DORMANT).State=RUNNING"
+				]
+			}
+		}
+	}
+}

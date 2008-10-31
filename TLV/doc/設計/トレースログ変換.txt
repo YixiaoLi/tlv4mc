@@ -1,0 +1,18 @@
+{
+	"\[(?<Time>\d+)\] dispatch to task (?<Id>\d+)\." : [
+		{
+			"Time"		:"${Time}",
+			"Subject"	:null,
+			"Object"	:"Task(Id==${Id})",
+			"Behavior"	:"dispatch"
+		}
+	],
+	"\[(?<Time>\d+)\] task (?<Id>\d+) becomes (?<State>\w+)\." : [
+		{
+			"Time"		:"${Time}",
+			"Subject"	:null,
+			"Object"	:"Task(Id==${Id})",
+			"Behavior"	:"State=${State}"
+		}
+	]
+}
