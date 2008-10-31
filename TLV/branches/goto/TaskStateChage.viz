@@ -1,0 +1,10 @@
+{
+	"TaskStateChange":
+	{
+		"ResourceType"	: "Task",
+		"Attribute"		: "state",
+		"Visualize"		: {
+			
+		}
+	}
+}

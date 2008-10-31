@@ -36,6 +36,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "convertRules", "convertRules", "{9A7BDD9E-B480-43E9-BC3C-8327D9B04222}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualizeRules", "visualizeRules", "{E579742F-4567-4F41-8B7D-83680E2DFB01}"
+	ProjectSection(SolutionItems) = preProject
+		TaskStateChage.viz = TaskStateChage.viz
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ITRON4", "ITRON4", "{31AB23F1-5083-4936-B87E-E1B293D4A681}"
 	ProjectSection(SolutionItems) = preProject
