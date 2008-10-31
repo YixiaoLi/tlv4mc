@@ -9,7 +9,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ResourceType
+	public class ResourceType : IJsonable<ResourceType>
 	{
 		/// <summary>
 		/// 表示名
@@ -31,5 +31,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
 			DisplayName = string.Empty;
         }
+
+		public string ToJson()
+		{
+			return ApplicationFactory.JsonSerializer.Serialize<ResourceType>(this);
+		}
+
+		public ResourceType Parse(string data)
+		{
+			return ApplicationFactory.JsonSerializer.Deserialize<ResourceType>(data);
+		}
 	}
 }

@@ -63,6 +63,7 @@
     <Compile Include="Json\IJsonSerializer.cs" />
     <Compile Include="Json\IJsonWriter.cs" />
     <Compile Include="Json\Json.cs" />
+    <Compile Include="Json\JsonTokenType.cs" />
     <Compile Include="WindowManager\WindowManager.cs" />
     <Compile Include="WindowManager\IWindowManager.cs" />
     <Compile Include="WindowManager\SubWindow.cs" />

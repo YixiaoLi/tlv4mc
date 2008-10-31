@@ -78,15 +78,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			// リソースヘッダファイルが複数あることを想定している
 			foreach (string path in _resourceHeaderPaths)
 			{
-				Json json = ApplicationFactory.JsonSerializer.Deserialize<Json>(File.ReadAllText(path));
-
+				Json json = new Json().Parse(File.ReadAllText(path));
 				foreach (KeyValuePair<string, Json> j in json.GetKeyValuePaierEnumerator())
 				{
 					dic.Add(j.Key, j.Value);
 				}
 			}
 
-			ResourceHeader = ApplicationFactory.JsonSerializer.Deserialize<ResourceHeader>(new Json(dic).ToJsonString());
+			ResourceHeader = new ResourceHeader().Parse(new Json(dic).ToJsonString());
         }
 
         /// <summary>

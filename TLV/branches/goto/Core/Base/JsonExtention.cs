@@ -12,5 +12,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			return ApplicationFactory.JsonSerializer.Serialize<Json>(json);
 		}
+		public static Json Parse(this Json json, string str)
+		{
+			return ApplicationFactory.JsonSerializer.Deserialize<Json>(str);
+		}
 	}
 }

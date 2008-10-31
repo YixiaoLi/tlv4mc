@@ -30,8 +30,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			_resourceFilePath = resourceFilePath;
 			_traceLogFilePath = traceLogFilePath;
 
-			Json j = ApplicationFactory.JsonSerializer.Deserialize<Json>(File.ReadAllText(_resourceFilePath));
-
+			Json j = new Json().Parse(File.ReadAllText(_resourceFilePath));
 			string convertDirPath = ApplicationDatas.ConvertRulesDirectoryPath + j["Type"];
 
 			_traceLogConvertRulePaths = Directory.GetFiles(convertDirPath, @"*." + Properties.Resources.TraceLogConvertFileExtension);
@@ -47,7 +46,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
 			get
 			{
-				return ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(_resourceFilePath));
+				return new ResourceData().Parse(File.ReadAllText(_resourceFilePath));
 			}
         }
 
@@ -67,7 +66,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				// ファイルが複数ある場合を想定している
 				foreach (string s in _traceLogConvertRulePaths)
 				{
-					Json json = ApplicationFactory.JsonSerializer.Deserialize<Json>(File.ReadAllText(s));
+					Json json = new Json().Parse(File.ReadAllText(s));
 
 					foreach (KeyValuePair<string, Json> j in json.GetKeyValuePaierEnumerator())
 					{

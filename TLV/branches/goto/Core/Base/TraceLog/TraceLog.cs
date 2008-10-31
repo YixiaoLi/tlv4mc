@@ -9,7 +9,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// <summary>
     /// トレースログ
     /// </summary>
-    public class TraceLog
+    public class TraceLog : IJsonable<TraceLog>
     {
 		public string Time { get; private set; }
         public string Subject { get; private set; }
@@ -29,5 +29,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
             Behavior = behavior;
         }
 
-    }
+		public string ToJson()
+		{
+			return ApplicationFactory.JsonSerializer.Serialize<TraceLog>(this);
+		}
+
+		public TraceLog Parse(string data)
+		{
+			return ApplicationFactory.JsonSerializer.Deserialize<TraceLog>(data);
+		}
+
+	}
 }

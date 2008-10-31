@@ -12,21 +12,4 @@ namespace NU.OJL.MPRTOS.TLV.Base
 		JsonTokenType TokenType { get; }
 		object Value { get; }
 	}
-
-	public enum JsonTokenType
-	{
-		StartObject,
-		StartArray,
-		PropertyName,
-		Integer,
-		Float,
-		String,
-		Boolean,
-		Null,
-		EndObject,
-		EndArray,
-		Date,
-		Raw,
-		Undefined
-	}
 }

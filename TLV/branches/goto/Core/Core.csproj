@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ApplicationDatas.cs" />
     <Compile Include="ApplicationFactory.cs" />
+    <Compile Include="Base\ResourceData\Attribute\AllocationType.cs" />
     <Compile Include="Base\ResourceData\Attribute\Attribute.cs" />
     <Compile Include="Base\ResourceData\Attribute\AttributeList.cs" />
     <Compile Include="Base\ResourceData\Behavior\BehaviorList.cs" />
@@ -88,12 +89,6 @@
     </Compile>
     <Compile Include="Controls\Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ResourceSelectPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ResourceSelectPanel.Designer.cs">
-      <DependentUpon>ResourceSelectPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
