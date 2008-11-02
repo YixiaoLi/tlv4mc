@@ -1,7 +1,7 @@
 ﻿{
 	"TimeScale"	:"ns",
 	
-	"Type"		:"ITRON4",
+	"Target"	:"ITRON4",
 	
 	"Resources":
 	{

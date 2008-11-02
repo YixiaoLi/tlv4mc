@@ -31,25 +31,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles"
 		sampleFiles\SampleITRONTraceLog.log = sampleFiles\SampleITRONTraceLog.log
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rules", "rules", "{80065D5C-A54D-4547-9122-BCBDAEBADC60}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "convertRules", "convertRules", "{9A7BDD9E-B480-43E9-BC3C-8327D9B04222}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualizeRules", "visualizeRules", "{E579742F-4567-4F41-8B7D-83680E2DFB01}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resourceHeaders", "resourceHeaders", "{80065D5C-A54D-4547-9122-BCBDAEBADC60}"
 	ProjectSection(SolutionItems) = preProject
-		TaskStateChage.viz = TaskStateChage.viz
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ITRON4", "ITRON4", "{31AB23F1-5083-4936-B87E-E1B293D4A681}"
-	ProjectSection(SolutionItems) = preProject
-		rules\convertRules\ITRON4\ITRON4.cnv = rules\convertRules\ITRON4\ITRON4.cnv
-		rules\convertRules\ITRON4\ITRON4.resh = rules\convertRules\ITRON4\ITRON4.resh
+		resourceHeaders\ITRON4.resh = resourceHeaders\ITRON4.resh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{37F01460-E939-41AD-B195-4219C5DF177F}"
 	ProjectSection(SolutionItems) = preProject
 		bin\ILMerge.exe = bin\ILMerge.exe
 		bin\Zip.exe = bin\Zip.exe
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "convertRules", "convertRules", "{45DF08F6-ADDF-4479-877B-4694CFB4E542}"
+	ProjectSection(SolutionItems) = preProject
+		convertRules\ITRON4.cnv = convertRules\ITRON4.cnv
 	EndProjectSection
 EndProject
 Global
@@ -80,10 +75,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{9A7BDD9E-B480-43E9-BC3C-8327D9B04222} = {80065D5C-A54D-4547-9122-BCBDAEBADC60}
-		{E579742F-4567-4F41-8B7D-83680E2DFB01} = {80065D5C-A54D-4547-9122-BCBDAEBADC60}
-		{31AB23F1-5083-4936-B87E-E1B293D4A681} = {9A7BDD9E-B480-43E9-BC3C-8327D9B04222}
 	EndGlobalSection
 EndGlobal
