@@ -44,10 +44,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "convertRules", "convertRule
 		convertRules\asp.cnv = convertRules\asp.cnv
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "asp", "asp", "{6CF033A9-5DE8-4A73-9307-E7D89C4E8249}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "asp", "asp", "{375235B2-F695-4B0F-9CD4-F72F6DED0FFE}"
 	ProjectSection(SolutionItems) = preProject
-		sampleFiles\ITRON4\asp.log = sampleFiles\ITRON4\asp.log
-		sampleFiles\ITRON4\asp.res = sampleFiles\ITRON4\asp.res
+		sampleFiles\asp\asp.log = sampleFiles\asp\asp.log
+		sampleFiles\asp\asp.res = sampleFiles\asp\asp.res
 	EndProjectSection
 EndProject
 Global
@@ -80,6 +80,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6CF033A9-5DE8-4A73-9307-E7D89C4E8249} = {92DADFFC-3815-4346-B504-00E1C119B730}
+		{375235B2-F695-4B0F-9CD4-F72F6DED0FFE} = {92DADFFC-3815-4346-B504-00E1C119B730}
 	EndGlobalSection
 EndGlobal
