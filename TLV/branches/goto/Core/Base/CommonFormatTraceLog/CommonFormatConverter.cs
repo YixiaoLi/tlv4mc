@@ -18,7 +18,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// </summary>
     public class CommonFormatConverter
     {
-		private string _target;
 		private string _resourceFilePath;
 		private string _traceLogFilePath;
 
@@ -29,9 +28,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
 			_resourceFilePath = resourceFilePath;
 			_traceLogFilePath = traceLogFilePath;
-
-			_target = new Json().Parse(File.ReadAllText(_resourceFilePath))["Target"];
-
         }
 
         /// <summary>
@@ -59,17 +55,22 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				List<Json> list = new List<Json>();
 				Dictionary<string, Json> dic = new Dictionary<string, Json>();
 
+				string target = new Json().Parse(File.ReadAllText(_resourceFilePath))["ConvertRule"];
+
 				string[] convertRulePaths =  Directory.GetFiles(ApplicationDatas.Setting["ConvertRulesDirectoryPath"],"*." + Properties.Resources.ConvertRuleFileExtension);
 				// トレースログ変換ファイルを開きJsonValueでデシリアライズ
 				// ファイルが複数ある場合を想定している
 				foreach (string s in convertRulePaths)
 				{
 					Json json = new Json().Parse(File.ReadAllText(s));
-					if(json["Target"] == _target)
+					foreach (KeyValuePair<string, Json> j in json.GetKeyValuePaierEnumerator())
 					{
-						foreach (KeyValuePair<string, Json> j in json["ConvertRules"].GetKeyValuePaierEnumerator())
+						if (j.Key == target)
 						{
-							dic.Add(j.Key, j.Value);
+							foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePaierEnumerator())
+							{
+								dic.Add(_j.Key, _j.Value);
+							}
 						}
 					}
 				}

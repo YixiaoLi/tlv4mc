@@ -1,6 +1,5 @@
 {
-	"Target":"ITRON4",
-	"ConvertRules":
+	"asp":
 	{
 		"\[(?<time>\d+)\] dispatch to task (?<id>\d+)\." : [
 			{

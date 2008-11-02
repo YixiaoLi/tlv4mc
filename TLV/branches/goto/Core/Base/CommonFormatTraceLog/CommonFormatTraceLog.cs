@@ -78,11 +78,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			foreach (string path in resourceHeaderPaths)
 			{
 				Json json = new Json().Parse(File.ReadAllText(path));
-				if (json["Target"] == resourceData.Target)
+				foreach (KeyValuePair<string, Json> j in json.GetKeyValuePaierEnumerator())
 				{
-					foreach (KeyValuePair<string, Json> j in json["ResourceHeaders"].GetKeyValuePaierEnumerator())
+					if (j.Key == resourceData.ResourceHeader)
 					{
-						dic.Add(j.Key, j.Value);
+						foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePaierEnumerator())
+						{
+							dic.Add(_j.Key, _j.Value);
+						}
 					}
 				}
 			}

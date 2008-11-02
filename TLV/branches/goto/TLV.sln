@@ -27,14 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionItems", "solutionIt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{92DADFFC-3815-4346-B504-00E1C119B730}"
-	ProjectSection(SolutionItems) = preProject
-		sampleFiles\ITRON4.log = sampleFiles\ITRON4.log
-		sampleFiles\ITRON4.res = sampleFiles\ITRON4.res
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resourceHeaders", "resourceHeaders", "{80065D5C-A54D-4547-9122-BCBDAEBADC60}"
 	ProjectSection(SolutionItems) = preProject
-		resourceHeaders\ITRON4.resh = resourceHeaders\ITRON4.resh
+		resourceHeaders\asp.resh = resourceHeaders\asp.resh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{37F01460-E939-41AD-B195-4219C5DF177F}"
@@ -45,7 +41,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{37F01460-E93
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "convertRules", "convertRules", "{45DF08F6-ADDF-4479-877B-4694CFB4E542}"
 	ProjectSection(SolutionItems) = preProject
-		convertRules\ITRON4.cnv = convertRules\ITRON4.cnv
+		convertRules\asp.cnv = convertRules\asp.cnv
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "asp", "asp", "{6CF033A9-5DE8-4A73-9307-E7D89C4E8249}"
+	ProjectSection(SolutionItems) = preProject
+		sampleFiles\ITRON4\asp.log = sampleFiles\ITRON4\asp.log
+		sampleFiles\ITRON4\asp.res = sampleFiles\ITRON4\asp.res
 	EndProjectSection
 EndProject
 Global
@@ -76,5 +78,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6CF033A9-5DE8-4A73-9307-E7D89C4E8249} = {92DADFFC-3815-4346-B504-00E1C119B730}
 	EndGlobalSection
 EndGlobal

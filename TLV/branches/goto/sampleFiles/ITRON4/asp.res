@@ -1,7 +1,9 @@
 ﻿{
 	"TimeScale"	:"ns",
 	
-	"Target"	:"ITRON4",
+	"ConvertRule"	:"asp",
+	
+	"ResourceHeader":"asp",
 	
 	"Resources":
 	{
