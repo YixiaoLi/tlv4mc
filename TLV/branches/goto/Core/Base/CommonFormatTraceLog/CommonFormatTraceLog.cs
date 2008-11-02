@@ -69,19 +69,21 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
 			ResourceData = resourceData;
 			TraceLogList = traceLogList;
-			string convertDirPath = ApplicationDatas.ConvertRulesDirectoryPath + resourceData.Type;
-			string[] _resourceHeaderPaths = Directory.GetFiles(convertDirPath, @"*." + Properties.Resources.ResourceHeaderFileExtension);
+			string[] resourceHeaderPaths = Directory.GetFiles(ApplicationDatas.Setting["ResourceHeadersDirectoryPath"], @"*." + Properties.Resources.ResourceHeaderFileExtension);
 			
 			Dictionary<string, Json> dic = new Dictionary<string, Json>();
 
 			// リソースヘッダファイルを読み込みひとつのハッシュテーブルにまとめる
 			// リソースヘッダファイルが複数あることを想定している
-			foreach (string path in _resourceHeaderPaths)
+			foreach (string path in resourceHeaderPaths)
 			{
 				Json json = new Json().Parse(File.ReadAllText(path));
-				foreach (KeyValuePair<string, Json> j in json.GetKeyValuePaierEnumerator())
+				if (json["Target"] == resourceData.Target)
 				{
-					dic.Add(j.Key, j.Value);
+					foreach (KeyValuePair<string, Json> j in json["ResourceHeaders"].GetKeyValuePaierEnumerator())
+					{
+						dic.Add(j.Key, j.Value);
+					}
 				}
 			}
 

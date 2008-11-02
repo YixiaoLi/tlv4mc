@@ -30,6 +30,22 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			return Value is List<Json> ? ((List<Json>)Value).Contains(this[index]) : false;
 		}
 
+		public void Add(string name, object value)
+		{
+			if (Value is Dictionary<string, Json>)
+			{
+				((Dictionary<string, Json>)Value).Add(name, new Json(value));
+			}
+		}
+
+		public void Add(Json value)
+		{
+			if (Value is List<Json>)
+			{
+				((List<Json>)Value).Add(value);
+			}
+		}
+
 		public IEnumerator<Json> GetEnumerator()
 		{
 			if (Value is IEnumerable<Json>)

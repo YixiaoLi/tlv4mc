@@ -9,13 +9,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public class ResourceData : IJsonable<ResourceData>
 	{
 		public string TimeScale { get; private set; }
-		public string Type { get; private set; }
+		public string Target { get; private set; }
 		public ResourceList Resources { get; private set; }
 
 		public ResourceData()
 		{
 			TimeScale = string.Empty;
-			Type = string.Empty;
+			Target = string.Empty;
 			Resources = new ResourceList();
 		}
 

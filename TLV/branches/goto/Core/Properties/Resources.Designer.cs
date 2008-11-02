@@ -70,11 +70,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         }
         
         /// <summary>
-        ///   rules\convertRules\ に類似しているローカライズされた文字列を検索します。
+        ///   cnv に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ConvertRulesDirectoryPath {
+        internal static string ConvertRuleFileExtension {
             get {
-                return ResourceManager.GetString("ConvertRulesDirectoryPath", resourceCulture);
+                return ResourceManager.GetString("ConvertRuleFileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   convertRules に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DefaultConvertRulesDirectoryName {
+            get {
+                return ResourceManager.GetString("DefaultConvertRulesDirectoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   resourceHeaders に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DefaultResourceHeadersDirectoryName {
+            get {
+                return ResourceManager.GetString("DefaultResourceHeadersDirectoryName", resourceCulture);
             }
         }
         
@@ -97,20 +115,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         }
         
         /// <summary>
-        ///   rules\ に類似しているローカライズされた文字列を検索します。
+        ///   setting.json に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string RulesDirectoryPath {
+        internal static string SettingFileName {
             get {
-                return ResourceManager.GetString("RulesDirectoryPath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   cnv に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TraceLogConvertFileExtension {
-            get {
-                return ResourceManager.GetString("TraceLogConvertFileExtension", resourceCulture);
+                return ResourceManager.GetString("SettingFileName", resourceCulture);
             }
         }
         
@@ -120,15 +129,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         internal static string TraceLogFileExtension {
             get {
                 return ResourceManager.GetString("TraceLogFileExtension", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   rules\visualizeRules\ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string VisualizeRulesDirectoryPath {
-            get {
-                return ResourceManager.GetString("VisualizeRulesDirectoryPath", resourceCulture);
             }
         }
     }

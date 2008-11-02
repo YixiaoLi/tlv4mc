@@ -134,7 +134,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 {
                     _traceLogFileExt = value;
                     traceLogFileOpenFileDialog.DefaultExt = _traceLogFileExt;
-                    traceLogFileOpenFileDialog.Filter = "TraceLig File (*." + _traceLogFileExt + ")|*." + _traceLogFileExt;
+                    traceLogFileOpenFileDialog.Filter = "TraceLog File (*." + _traceLogFileExt + ")|*." + _traceLogFileExt;
                 }
             }
         }

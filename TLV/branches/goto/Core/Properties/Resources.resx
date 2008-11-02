@@ -120,8 +120,14 @@
   <data name="CommonFormatTraceLogFileExtension" xml:space="preserve">
     <value>tlv</value>
   </data>
-  <data name="ConvertRulesDirectoryPath" xml:space="preserve">
-    <value>rules\convertRules\</value>
+  <data name="ConvertRuleFileExtension" xml:space="preserve">
+    <value>cnv</value>
+  </data>
+  <data name="DefaultConvertRulesDirectoryName" xml:space="preserve">
+    <value>convertRules</value>
+  </data>
+  <data name="DefaultResourceHeadersDirectoryName" xml:space="preserve">
+    <value>resourceHeaders</value>
   </data>
   <data name="ResourceFileExtension" xml:space="preserve">
     <value>res</value>
@@ -129,16 +135,10 @@
   <data name="ResourceHeaderFileExtension" xml:space="preserve">
     <value>resh</value>
   </data>
-  <data name="RulesDirectoryPath" xml:space="preserve">
-    <value>rules\</value>
-  </data>
-  <data name="TraceLogConvertFileExtension" xml:space="preserve">
-    <value>cnv</value>
+  <data name="SettingFileName" xml:space="preserve">
+    <value>setting.json</value>
   </data>
   <data name="TraceLogFileExtension" xml:space="preserve">
     <value>log</value>
-  </data>
-  <data name="VisualizeRulesDirectoryPath" xml:space="preserve">
-    <value>rules\visualizeRules\</value>
   </data>
 </root>

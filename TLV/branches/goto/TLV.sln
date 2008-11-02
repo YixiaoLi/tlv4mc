@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dll", "dll", "{C9BAF152-4724-43A5-AD69-EBBB9A7ECB29}"
 	ProjectSection(SolutionItems) = preProject
 		dll\ICSharpCode.SharpZipLib.dll = dll\ICSharpCode.SharpZipLib.dll
+		dll\Newtonsoft.Json.dll = dll\Newtonsoft.Json.dll
 		dll\WeifenLuo.WinFormsUI.Docking.dll = dll\WeifenLuo.WinFormsUI.Docking.dll
 	EndProjectSection
 EndProject
@@ -27,8 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionItems", "solutionIt
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{92DADFFC-3815-4346-B504-00E1C119B730}"
 	ProjectSection(SolutionItems) = preProject
-		sampleFiles\SampleITRONResources.res = sampleFiles\SampleITRONResources.res
-		sampleFiles\SampleITRONTraceLog.log = sampleFiles\SampleITRONTraceLog.log
+		sampleFiles\ITRON4.log = sampleFiles\ITRON4.log
+		sampleFiles\ITRON4.res = sampleFiles\ITRON4.res
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resourceHeaders", "resourceHeaders", "{80065D5C-A54D-4547-9122-BCBDAEBADC60}"

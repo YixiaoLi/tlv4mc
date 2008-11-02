@@ -47,7 +47,7 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <DebugSymbols>false</DebugSymbols>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -120,18 +120,16 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>if not exist $(TargetDir)rules mkdir $(TargetDir)rules
-if not exist $(TargetDir)rules\visualizeRules mkdir $(TargetDir)rules\visualizeRules
-if not exist $(TargetDir)rules\convertRules mkdir $(TargetDir)rules\convertRules
-if not exist $(TargetDir)rules\convertRules\ITRON4 mkdir $(TargetDir)rules\convertRules\ITRON4
+    <PostBuildEvent>if not exist $(TargetDir)convertRules mkdir $(TargetDir)convertRules
+if not exist $(TargetDir)resourceHeaders mkdir $(TargetDir)resourceHeaders
 if not exist $(TargetDir)sampleFiles mkdir $(TargetDir)sampleFiles
 
-xcopy $(SolutionDir)rules\convertRules\ITRON4 $(TargetDir)rules\convertRules\ITRON4 /S /E /C /Y /D
-if not exist $(TargetDir)sampleFiles\SampleITRONResources.res copy $(SolutionDir)sampleFiles\SampleITRONResources.res $(TargetDir)sampleFiles
-if not exist $(TargetDir)sampleFiles\SampleITRONTraceLog.log copy $(SolutionDir)sampleFiles\SampleITRONTraceLog.log $(TargetDir)sampleFiles
+xcopy $(SolutionDir)convertRules $(TargetDir)convertRules /S /E /C /Y /D
+xcopy $(SolutionDir)resourceHeaders $(TargetDir)resourceHeaders /S /E /C /Y /D
+xcopy $(SolutionDir)sampleFiles $(TargetDir)sampleFiles /S /E /C /Y /D
 
 if $(ConfigurationName) == Release move $(TargetPath) $(TargetDir)___$(TargetFileName)
-if $(ConfigurationName) == Release $(SolutionDir)bin\ILMerge.exe /wildcards /out:$(TargetPath) $(TargetDir)___$(TargetFileName) *.dll
+if $(ConfigurationName) == Release $(SolutionDir)bin\ILMerge.exe /wildcards /ndebug /out:$(TargetPath) $(TargetDir)___$(TargetFileName) *.dll
 if $(ConfigurationName) == Release del $(TargetDir)___$(TargetFileName)
 if $(ConfigurationName) == Release del $(TargetDir)*.dll</PostBuildEvent>
   </PropertyGroup>

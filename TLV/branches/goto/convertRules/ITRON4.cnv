@@ -1,5 +1,6 @@
 {
-	"ITRON4":
+	"Target":"ITRON4",
+	"ConvertRules":
 	{
 		"\[(?<time>\d+)\] dispatch to task (?<id>\d+)\." : [
 			{
