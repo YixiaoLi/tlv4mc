@@ -95,7 +95,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				{
 					j[attr].Add(new TimeValuePair(Convert.ToInt64(time, _resourceData.TimeRadix), val));
 				}
-
 			}
 
 		}
@@ -181,48 +180,52 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		}
 		protected string getBehavior(string item)
 		{
-			return Regex.Match(item, @"\.\s*(?<behavior>\w+)").Groups["behavior"].Value.Replace(" ", "").Replace("\t", "");
+			return Regex.Match(item, @"\.\s*(?<behavior>[^\(]+\([^\(]+\))").Groups["behavior"].Value.Replace(" ", "").Replace("\t", "");
 		}
 		protected string getAttribute(string item)
 		{
-			if (Regex.IsMatch(item, @"\.\s*(?<attribute>\w+)\s*="))
+			if (Regex.IsMatch(item, @"\.\s*(?<attribute>[^\s=]+)\s*="))
 			{
-				return Regex.Match(item, @"\.\s*(?<attribute>\w+)\s*=").Groups["attribute"].Value.Replace(" ", "").Replace("\t", "");
+				return Regex.Match(item, @"\.\s*(?<attribute>[^\s=]+)\s*=").Groups["attribute"].Value.Replace(" ", "").Replace("\t", "");
 			}
 			else
 			{
-				return Regex.Match(item, @"\.\s*(?<attribute>\w+)\s*").Groups["attribute"].Value.Replace(" ", "").Replace("\t", "");
+				return Regex.Match(item, @"\.\s*(?<attribute>[^\s]+)\s*").Groups["attribute"].Value.Replace(" ", "").Replace("\t", "");
 			}
 		}
 		protected string getValue(string item)
 		{
-			return Regex.Match(item, @"\.\s*(?<attribute>\w+)\s*=\s*(?<value>\w+)").Groups["value"].Value.Replace(" ", "").Replace("\t", "");
+			return Regex.Match(item, @"\.\s*(?<attribute>[^=\s]+)\s*=\s*(?<value>\w+)").Groups["value"].Value.Replace(" ", "").Replace("\t", "");
 		}
 		protected string getObjectType(string item)
 		{
 			if(Regex.IsMatch(item, @"\[\w+\]"))
 			{
-				return Regex.Match(item, @"\]\s*(?<type>[^\(]+)\(").Groups["type"].Value.Replace(" ", "").Replace("\t", "");
+				return Regex.Match(item, @"\]\s*(?<type>[^\(]+)\([^\)]+\)\.[^=\(]+[=\(]?").Groups["type"].Value.Replace(" ", "").Replace("\t", "");
 			}
 			else
 			{
-				return Regex.Match(item, @"\s*(?<type>[^\(]+)\(").Groups["type"].Value.Replace(" ", "").Replace("\t", "");
+				return Regex.Match(item, @"\s*(?<type>[^\(]+)\([^\)]+\)\.[^=\(]+[=\(]?").Groups["type"].Value.Replace(" ", "").Replace("\t", "");
 			}
 		}
 		protected string getObjectCondition(string item)
 		{
 			if (Regex.IsMatch(item, @"\[\w+\]"))
 			{
-				return Regex.Match(item, @"\]\s*(?<type>\w+)\((?<condition>[^\(]+)\)").Groups["condition"].Value.Replace(" ", "").Replace("\t", "");
+				return Regex.Match(item, @"\]\s*(?<type>[^\s\(]+)\((?<condition>[^\(]+)\)\.[^=\(]+[=\(]?").Groups["condition"].Value.Replace(" ", "").Replace("\t", "");
 			}
 			else
 			{
-				return Regex.Match(item, @"\s*(?<type>\w+)\((?<condition>[^\(]+)\)").Groups["condition"].Value.Replace(" ", "").Replace("\t", "");
+				return Regex.Match(item, @"\s*(?<type>[^\s\(]+)\((?<condition>[^\(]+)\)\.[^=\(]+[=\(]?").Groups["condition"].Value.Replace(" ", "").Replace("\t", "");
 			}
 		}
 		protected bool hasAttribute(string item)
 		{
-			return Regex.IsMatch(item, @"\.\s*(?<attribute>\w+)\s*=");
+			return Regex.IsMatch(item, @"\.\s*(?<attribute>[^=\s]+)\s*=");
+		}
+		protected bool hasBehavior(string item)
+		{
+			return Regex.IsMatch(item, @"\.\s*(?<attribute>[^\(\s]+)\s*\(");
 		}
 	}
 

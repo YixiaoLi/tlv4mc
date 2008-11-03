@@ -134,12 +134,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				condition = Regex.Replace(condition, Regex.Escape(m.Value), traceLogManager.GetAttributeValue(m.Value));
 			}
 
-			foreach (Match m in Regex.Matches(condition, @"(?<comparisonExpression>(?<left>\w+)\s*(?<ope>(==|!=|<=|>=|>|<))\s*(?<right>\w+))"))
+			foreach (Match m in Regex.Matches(condition, @"(?<comparisonExpression>(?<left>[^\s]+)\s*(?<ope>(==|!=|<=|>=|>|<))\s*(?<right>[^\s]+))"))
 			{
 				ComparisonExpression ce = new ComparisonExpression(m.Groups["comparisonExpression"].Value);
 				condition = Regex.Replace(condition, Regex.Escape(m.Groups["comparisonExpression"].Value), ce.Result("string").ToString());
 			}
-			foreach (Match m in Regex.Matches(condition, @"(?<conditionExpression>(?<attr>\w+)\s*(?<ope>(&&|\|\|))\s*(?<val>\w+))"))
+			foreach (Match m in Regex.Matches(condition, @"(?<conditionExpression>(?<attr>[^\s]+)\s*(?<ope>(&&|\|\|))\s*(?<val>[^\s]+))"))
 			{
 				ConditionExpression ce = new ConditionExpression(m.Groups["conditionExpression"].Value);
 				condition = Regex.Replace(condition, Regex.Escape(m.Groups["conditionExpression"].Value), ce.Result().ToString());
