@@ -46,6 +46,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
             _commandManager = new CommandManager();
 			_zip = new SharpZipLibZip();
 			_json = new NewtonsoftJson();
+
+			JsonSerializer.AddConverter<ResourceHeader>(new ResourceHeaderConverter());
         }
     }
 }

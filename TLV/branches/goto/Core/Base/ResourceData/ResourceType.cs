@@ -22,7 +22,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// <summary>
 		/// 振る舞いリスト
 		/// </summary>
-		public BehaviorList Behaviors { get; set; }
+		public string[] Behaviors { get; set; }
 
         /// <summary>
         /// <c>Resource</c>のインスタンスを生成する

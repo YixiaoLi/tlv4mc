@@ -7,9 +7,29 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
 	public class Json : IEnumerable<Json>
 	{
-		public object Value{get; private set;}
-		public Json this[int i] { get { return Value is List<Json> ? ((List<Json>)Value)[i] : null; } }
-		public Json this[string name] { get { return Value is Dictionary<string, Json> ? ((Dictionary<string, Json>)Value)[name] : null; } }
+		public object Value{ get; set; }
+		public Json this[int i]
+		{
+			get { return Value is List<Json> ? ((List<Json>)Value)[i] : null; }
+			set
+			{
+				if (Value is List<Json>)
+				{
+					((List<Json>)Value)[i] = value;
+				}
+			}
+		}
+		public Json this[string name]
+		{
+			get { return Value is Dictionary<string, Json> ? ((Dictionary<string, Json>)Value)[name] : null; }
+			set
+			{
+				if (Value is Dictionary<string, Json>)
+				{
+					((Dictionary<string, Json>)Value)[name] = value;
+				}
+			}
+		}
 
 		public Json()
 		{
@@ -30,6 +50,51 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			return Value is List<Json> ? ((List<Json>)Value).Contains(this[index]) : false;
 		}
 
+		public int IndexOf(Json value)
+		{
+			if (IsArray)
+			{
+				return ((List<Json>)Value).IndexOf(value);
+			}
+			else
+			{
+				return -1;
+			}
+		}
+		public int Count
+		{
+			get
+			{
+				if (IsArray)
+				{
+					return ((List<Json>)Value).Count;
+				}
+				else
+				{
+					return 0;
+				}
+			}
+		}
+
+		public bool IsArray
+		{
+			get { return Value is List<Json>; }
+		}
+		public bool IsObject
+		{
+			get { return Value is Dictionary<string, Json>; }
+		}
+
+		public void makeObject()
+		{
+			Value = new Dictionary<string , Json>();
+		}
+
+		public void makeArray()
+		{
+			Value = new List<Json>();
+		}
+
 		public void Add(string name, object value)
 		{
 			if (Value is Dictionary<string, Json>)
@@ -38,11 +103,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			}
 		}
 
-		public void Add(Json value)
+		public void Add(object value)
 		{
 			if (Value is List<Json>)
 			{
-				((List<Json>)Value).Add(value);
+				((List<Json>)Value).Add(new Json(value));
 			}
 		}
 
@@ -202,5 +267,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			return (Dictionary<string, DateTime>)jsonValue.Value;
 		}
 
+		public override string ToString()
+		{
+			return Value.ToString();
+		}
 	}
 }

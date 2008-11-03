@@ -46,6 +46,9 @@
   <ItemGroup>
     <Compile Include="CommandManager\ICommandManager.cs" />
     <Compile Include="CommandManager\MacroCommand.cs" />
+    <Compile Include="ComparisonExpression\ComparisonExpression.cs" />
+    <Compile Include="ComparisonExpression\ComparisonExpressionList.cs" />
+    <Compile Include="ConditionExpression.cs" />
     <Compile Include="Extensions\ByteArrayExtensions.cs" />
     <Compile Include="FileContext\FileContext.cs" />
     <Compile Include="FileContext\IFileContext.cs" />

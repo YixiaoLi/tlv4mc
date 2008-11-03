@@ -11,17 +11,17 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class GeneralReadOnlyJsonableCollection<T, TList> : ReadOnlyCollection<T>, IJsonable<TList>
-		where TList : GeneralReadOnlyJsonableCollection<T, TList>
+	public class GeneralJsonableCollection<T, TList> : Collection<T>, IJsonable<TList>
+		where TList : GeneralJsonableCollection<T, TList>
 		where T : class
 	{
-		public GeneralReadOnlyJsonableCollection()
+		public GeneralJsonableCollection()
 			:base(new List<T>())
 		{
 		
 		}
 
-		public GeneralReadOnlyJsonableCollection(IList<T> list)
+		public GeneralJsonableCollection(IList<T> list)
 			: base(list)
 		{
 		}

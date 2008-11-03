@@ -2,18 +2,19 @@
 	"asp":
 	{
 		"\[(?<time>\d+)\] dispatch to task (?<id>\d+)\." : [
-			{
-				"Time"		:"${time}",
-				"Object"	:"Task(id==${id})",
-				"Behavior"	:"dispatch"
-			}
+			"[${time}]Task(state==RUNNING).state=RUNNABLE",
+			"[${time}]Task(state==RUNNING).preempt",
+			"[${time}]Task(id==${id}).state=RUNNING",
+			"[${time}]Task(id==${id}).dispatch"
 		],
 		"\[(?<time>\d+)\] task (?<id>\d+) becomes (?<state>\w+)\." : [
+			"[${time}]Task(id==${id}).state=${state}",
 			{
-				"Time"		:"${time}",
-				"Object"	:"Task(Id==${id})",
-				"Behavior"	:"state=${state}"
+				"Task(id==${id}).state==DORMANT && ${state}==RUNNABLE"	:"[${time}]Task(id==${id}).activate",
+				"Task(id==${id}).state==RUNNING && ${state}==DORMANT"	:"[${time}]Task(id==${id}).exit"
 			}
-		]
+		],
+		"\[(?<time>\d+)\] enter to (?<name>\w+) ?(?<args>.*)\."	:"[${time}]Task(state==RUNNING).enterSVC(${name}, ${args})",
+		"\[(?<time>\d+)\] leave to (?<name>\w+) ?(?<args>.*)\."	:"[${time}]Task(state==RUNNING).leaveSVC(${name}, ${args})"
 	}
 }

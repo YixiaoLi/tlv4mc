@@ -54,7 +54,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                     bw.ReportProgress(50);
                     if (bw.CancellationPending) { _e.Cancel = true; return; }
 
-					TraceLogList log = cfc.TraceLogList;
+					TraceLog log = cfc.TraceLog;
 
                     bw.ReportProgress(75);
 					if (bw.CancellationPending) { _e.Cancel = true; return; }

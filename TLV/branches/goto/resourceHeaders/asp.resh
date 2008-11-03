@@ -65,39 +65,19 @@
 						"Default"		:"DORMANT"
 					}
 				},
-				"Behaviors"	:{
-					"preempt":[
-						"self(state==RUNNING)f.state=RUNNABLE"
-					],
-					"dispatch":[
-						"Task(state==RUNNING).preempt",
-						"self(state==RUNNABLE).state=RUNNING"
-					],
-					"activate":[
-						"self(state==DORMANT).state=RUNNING"
-					],
-					"wait":[
-						"self(state==RUNNING).state=WAITING"
-					],
-					"exit":[
-						"self(state==RUNNING).state=DORMANT"
-					],
-					"resume":[
-						"self(state==SUSPENDED).state=RUNNABLE",
-						"self(state==WAITING-SUSPENDED).state=WAITING"
-					],
-					"suspend":[
-						"self(state==RUNNABLE).state=SUSPENDED",
-						"self(state==WAITING).state=WAITING-SUSPENDED"
-					],
-					"terminate":[
-						"self(state==SUSPENDED|RUNNABLE|WAITING-SUSPENDED|WAITING).state=DORMANT"
-					],
-					"releaseFromWaiting":[
-						"self(state==WAITING).state=RUNNABLE",
-						"self(state==WAITING-SUSPENDED).state=SUSPENDED"
-					],
-				}
+				"Behaviors"	:[
+					"preempt",
+					"dispatch",
+					"activate",
+					"wait",
+					"exit",
+					"resume",
+					"suspend",
+					"terminate",
+					"releaseFromWaiting",
+					"enterSVC(name, args)",
+					"leaveSVC(name, args)",
+				]
 			}
 		}
 	}

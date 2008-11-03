@@ -49,20 +49,17 @@
     <Compile Include="Base\ResourceData\Attribute\AllocationType.cs" />
     <Compile Include="Base\ResourceData\Attribute\Attribute.cs" />
     <Compile Include="Base\ResourceData\Attribute\AttributeList.cs" />
-    <Compile Include="Base\ResourceData\Behavior\BehaviorList.cs" />
     <Compile Include="Base\CommonFormatTraceLog\CommonFormatConverter.cs" />
     <Compile Include="Base\CommonFormatTraceLog\CommonFormatTraceLog.cs" />
     <Compile Include="Base\GeneralKeyedJsonableCollection.cs" />
-    <Compile Include="Base\GeneralReadOnlyJsonableCollection.cs" />
+    <Compile Include="Base\GeneralJsonableCollection.cs" />
     <Compile Include="Base\JsonExtention.cs" />
     <Compile Include="Base\ResourceData\ResourceData.cs" />
     <Compile Include="Base\ResourceData\ResourceList.cs" />
-    <Compile Include="Base\ResourceData\ResourceFileValidationException.cs" />
     <Compile Include="Base\ResourceData\ResourceHeader.cs" />
     <Compile Include="Base\ResourceData\ResourceType.cs" />
-    <Compile Include="Base\TraceLog\TraceLog.cs" />
-    <Compile Include="Base\TraceLog\TraceLogFileValidationException.cs" />
-    <Compile Include="Base\TraceLog\TraceLogList.cs" />
+    <Compile Include="Base\TraceLogData\TraceLog.cs" />
+    <Compile Include="Base\TraceLogData\TraceLogData.cs" />
     <Compile Include="Commands\ChangeSubWindowDockStateCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowVisiblityCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowEnabledCommand.cs" />
@@ -91,6 +88,7 @@
     <Compile Include="Controls\Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ResourceHeaderConverter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

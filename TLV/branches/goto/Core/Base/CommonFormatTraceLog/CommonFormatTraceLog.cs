@@ -46,11 +46,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <summary>
         /// トレースログのリスト
         /// </summary>
-        public TraceLogList TraceLogList { get; private set; }
-		/// <summary>
-		/// リソースヘッダ
-		/// </summary>
-		public ResourceHeader ResourceHeader { get; private set; }
+		public TraceLogData TraceLogData { get; private set; }
 
 		/// <summary>
 		/// <c>CommonFormatTraceLog</c>のインスタンスを生成する
@@ -59,38 +55,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
         }
 
-
 		/// <summary>
 		/// <c>CommonFormatTraceLog</c>のインスタンスを生成する
         /// </summary>
         /// <param name="resourceData">共通形式のリソースデータ</param>
         /// <param name="traceLogData">共通形式のトレースログデータ</param>
-		public CommonFormatTraceLog(ResourceData resourceData, TraceLogList traceLogList)
+		public CommonFormatTraceLog(ResourceData resourceData, TraceLog traceLog)
         {
 			ResourceData = resourceData;
-			TraceLogList = traceLogList;
-			string[] resourceHeaderPaths = Directory.GetFiles(ApplicationDatas.Setting["ResourceHeadersDirectoryPath"], @"*." + Properties.Resources.ResourceHeaderFileExtension);
-			
-			Dictionary<string, Json> dic = new Dictionary<string, Json>();
-
-			// リソースヘッダファイルを読み込みひとつのハッシュテーブルにまとめる
-			// リソースヘッダファイルが複数あることを想定している
-			foreach (string path in resourceHeaderPaths)
-			{
-				Json json = new Json().Parse(File.ReadAllText(path));
-				foreach (KeyValuePair<string, Json> j in json.GetKeyValuePaierEnumerator())
-				{
-					if (j.Key == resourceData.ResourceHeader)
-					{
-						foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePaierEnumerator())
-						{
-							dic.Add(_j.Key, _j.Value);
-						}
-					}
-				}
-			}
-
-			ResourceHeader = new ResourceHeader().Parse(new Json(dic).ToJsonString());
+			TraceLogData = new TraceLogData(traceLog, resourceData);
         }
 
         /// <summary>
@@ -108,7 +81,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			string name = Path.GetFileNameWithoutExtension(path);
 
 			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.ResourceFileExtension, ResourceData.ToJson());
-			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension, TraceLogList.ToJson());
+			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension, TraceLogData.TraceLog.ToJson());
 
 			zip.Compress(path, tmpDirPath);
 
@@ -132,11 +105,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			string name = Path.GetFileNameWithoutExtension(path);
 
 			ResourceData res = new ResourceData().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.ResourceFileExtension));
-			TraceLogList log = new TraceLogList().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension));
+			TraceLog log = new TraceLog().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension));
 
             CommonFormatTraceLog c = new CommonFormatTraceLog(res, log);
 			ResourceData = c.ResourceData;
-            TraceLogList = c.TraceLogList;
+			TraceLogData = c.TraceLogData;
         }
     }
 }

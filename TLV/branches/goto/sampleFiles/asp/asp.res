@@ -7,8 +7,9 @@
 	
 	"Resources":
 	{
-		"Task":{
-			"LOGTASK":{
+		"Task":[
+			{
+				"name"	:"LOGTASK",
 				"id"	:1,
 				"atr"	:"TA_ACT",
 				"pri"	:3,
@@ -17,7 +18,8 @@
 				"stksz"	:4096,
 				"stk"	:"NULL"
 			},
-			"TASK1":{
+			{
+				"name"	:"TASK1",
 				"id"	:2,
 				"atr"	:"TA_NULL",
 				"pri"	:10,
@@ -26,7 +28,8 @@
 				"stksz"	:4096,
 				"stk"	:"NULL"
 			},
-			"TASK2":{
+			{
+				"name"	:"TASK2",
 				"id"	:3,
 				"atr"	:"TA_NULL",
 				"pri"	:10,
@@ -35,7 +38,8 @@
 				"stksz"	:4096,
 				"stk"	:"NULL"
 			},
-			"TASK3":{
+			{
+				"name"	:"TASK3",
 				"id"	:4,
 				"atr"	:"TA_NULL",
 				"pri"	:10,
@@ -44,7 +48,8 @@
 				"stksz"	:4096,
 				"stk"	:"NULL"
 			},
-			"MAIN_TASK":{
+			{
+				"name"	:"MAIN_TASK",
 				"id"	:5,
 				"atr"	:"TA_ACT",
 				"pri"	:5,
@@ -53,6 +58,6 @@
 				"stksz"	:4096,
 				"stk"	:"NULL"
 			}
-		}
+		]
 	}
 }

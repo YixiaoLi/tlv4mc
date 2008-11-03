@@ -14,16 +14,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// <summary>
     /// トレースログリスト
     /// </summary>
-	public class TraceLogList : GeneralReadOnlyJsonableCollection<TraceLog, TraceLogList>
+	public class TraceLog : GeneralJsonableCollection<string, TraceLog>
 	{
-		public TraceLogList()
+		public TraceLog()
 			:base()
-		{
-			
-		}
-
-		public TraceLogList(IList<TraceLog> list)
-			: base(list)
 		{
 		}
 	}

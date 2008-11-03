@@ -88,6 +88,11 @@ namespace NU.OJL.MPRTOS.TLV.Third
 
 		private static void writeJson(Newtonsoft.Json.JsonWriter writer, Json json)
 		{
+			if (json.Value is Json)
+			{
+				writeJson(writer, json.Value as Json);
+			}
+
 			if (json.Value is List<Json>)
 			{
 				writeJsonArray(writer, json);

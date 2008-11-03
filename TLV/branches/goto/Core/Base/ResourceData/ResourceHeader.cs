@@ -14,7 +14,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// </summary>
 	public class ResourceHeader : IJsonable<ResourceHeader>
 	{
-		private IJsonSerializer _json = ApplicationFactory.JsonSerializer;
+		public string Name { get; private set; }
 		public Dictionary<string, string[]> Enums { get; private set; }
 		public Dictionary<string, ResourceType> Types { get; private set; }
 
@@ -25,53 +25,22 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			Types = new Dictionary<string, ResourceType>();
 		}
 
-		public ResourceHeader(string[] reshPath, string resPath)
-			: this()
+		public ResourceHeader(string name, Dictionary<string, string[]> enums, Dictionary<string, ResourceType> types)
+			:this()
 		{
-			// リソースヘッダファイルを開きJsonValueでデシリアライズ
-			// ファイルが複数ある場合を想定している
-			foreach (string p in reshPath)
-			{
-				Json reshJson = ApplicationFactory.JsonSerializer.Deserialize<Json>(File.ReadAllText(p));
-
-				foreach (KeyValuePair<string, Json> j in reshJson.GetKeyValuePaierEnumerator())
-				{
-					switch(j.Key)
-					{
-						case "Enums":
-							foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePaierEnumerator())
-							{
-								Enums.Add(_j.Key, _j.Value);
-							}
-							break;
-						case "Types":
-							foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePaierEnumerator())
-							{
-								Types.Add(_j.Key, ApplicationFactory.JsonSerializer.Deserialize<ResourceType>(_j.Value.ToJsonString()));
-							}
-							break;
-					}
-				}
-			}
-		}
-
-		public ResourceHeader(string json)
-			: this()
-		{
-			ResourceHeader rd = new ResourceHeader().Parse(json);
-			Enums = rd.Enums;
-			Types = rd.Types;
+			Name = name;
+			Enums = enums;
+			Types = types;
 		}
 
 		public string ToJson()
 		{
-			return _json.Serialize(this);
+			return ApplicationFactory.JsonSerializer.Serialize<ResourceHeader>(this);
 		}
 
-		public ResourceHeader Parse(string resourceData)
+		public ResourceHeader Parse(string data)
 		{
-			ResourceHeader data = _json.Deserialize<ResourceHeader>(resourceData);
-			return data;
+			return ApplicationFactory.JsonSerializer.Deserialize<ResourceHeader>(data);
 		}
 
 	}
