@@ -12,25 +12,22 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// <summary>
     /// リソースリスト
     /// </summary>
-	public class ResourceHeader : IJsonable<ResourceHeader>
+	public class ResourceHeader : IJsonable<ResourceHeader>, IEnumerable<KeyValuePair<string,ResourceType>>
 	{
 		public string Name { get; private set; }
-		public Dictionary<string, string[]> Enums { get; private set; }
-		public Dictionary<string, ResourceType> Types { get; private set; }
+		private Dictionary<string, ResourceType> _types = new Dictionary<string, ResourceType>();
+		public ResourceType this[string name] { get { return _types[name]; } }
 
 		public ResourceHeader()
 			:base()
 		{
-			Enums = new Dictionary<string, string[]>();
-			Types = new Dictionary<string, ResourceType>();
 		}
 
-		public ResourceHeader(string name, Dictionary<string, string[]> enums, Dictionary<string, ResourceType> types)
+		public ResourceHeader(string name, Dictionary<string, ResourceType> types)
 			:this()
 		{
 			Name = name;
-			Enums = enums;
-			Types = types;
+			_types = types;
 		}
 
 		public string ToJson()
@@ -41,6 +38,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public ResourceHeader Parse(string data)
 		{
 			return ApplicationFactory.JsonSerializer.Deserialize<ResourceHeader>(data);
+		}
+
+		public IEnumerator<KeyValuePair<string, ResourceType>> GetEnumerator()
+		{
+			return _types.GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return _types.GetEnumerator();
 		}
 
 	}

@@ -47,7 +47,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				}
 			}
 
-			foreach(KeyValuePair<string, ResourceType> type in _resourceData.ResourceHeader.Types)
+			foreach(KeyValuePair<string, ResourceType> type in _resourceData.ResourceHeader)
 			{
 				for (int i = 0; i < _data[type.Key].Count; i++)
 				{
@@ -155,7 +155,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 					ComparisonExpression ce = new ComparisonExpression(c.Right, c.Ope, value);
 
-					if (!ce.Result(_resourceData.ResourceHeader.Types[type].Attributes[c.Left].VariableType))
+					if (!ce.Result(_resourceData.ResourceHeader[type].Attributes[c.Left].VariableType))
 						f = false;
 				}
 				if(f)

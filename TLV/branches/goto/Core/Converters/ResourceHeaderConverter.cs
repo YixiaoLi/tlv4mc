@@ -18,10 +18,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			Json data = new Json();
 			data.makeObject();
-			data.Add("Enums", new Json());
-			data.Add("Types", new Json());
-			data["Enums"].makeObject();
-			data["Types"].makeObject();
 
 			string[] resourceHeadersPaths = Directory.GetFiles(ApplicationDatas.Setting["ResourceHeadersDirectoryPath"], "*." + Properties.Resources.ResourceHeaderFileExtension);
 			// トレースログ変換ファイルを開きJsonValueでデシリアライズ
@@ -35,32 +31,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					{
 						foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePaierEnumerator())
 						{
-							if (_j.Key == "Enums")
-							{
-								foreach (KeyValuePair<string, Json> __j in _j.Value.GetKeyValuePaierEnumerator())
-								{
-									data["Enums"].Add(__j.Key, __j.Value);
-								}
-							}
-							if (_j.Key == "Types")
-							{
-								foreach (KeyValuePair<string, Json> __j in _j.Value.GetKeyValuePaierEnumerator())
-								{
-									data["Types"].Add(__j.Key, __j.Value);
-								}
-							}
+							data.Add(_j.Key, _j.Value);
 						}
 					}
 				}
 			}
 
-			string enumsStr = data["Enums"].ToJsonString();
-			string typesStr = data["Types"].ToJsonString();
+			string typesStr = data.ToJsonString();
 
-			Dictionary<string, string[]> enums = ApplicationFactory.JsonSerializer.Deserialize<Dictionary<string, string[]>>(enumsStr);
 			Dictionary<string, ResourceType> types = ApplicationFactory.JsonSerializer.Deserialize<Dictionary<string, ResourceType>>(typesStr);
 
-			ResourceHeader result = new ResourceHeader(name, enums, types);
+			ResourceHeader result = new ResourceHeader(name, types);
 
 			return result;
 		}
