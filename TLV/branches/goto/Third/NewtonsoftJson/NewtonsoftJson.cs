@@ -40,7 +40,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			return sb.ToString();
 		}
 
-		public void AddConverter<T>(IJsonConverter<T> converter) where T:class
+		public void AddConverter<T>(IJsonConverter<T> converter)
 		{
 			GeneralConverter<T> cnvtr = new GeneralConverter<T>();
 			cnvtr.ReadJsonHandler += (r) =>

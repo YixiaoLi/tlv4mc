@@ -43,6 +43,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 cancelButton.Enabled = _canCancel;
             }
         }
+		public string Message
+		{
+			get { return messageLabel.Text; }
+			set { messageLabel.Text = value; }
+		}
 
         public BackGroundWorkForm()
         {

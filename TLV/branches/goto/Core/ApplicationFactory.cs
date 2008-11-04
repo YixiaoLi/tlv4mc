@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Third;
+using NU.OJL.MPRTOS.TLV.Base;
+using System.Drawing;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
@@ -48,6 +49,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			_json = new NewtonsoftJson();
 
 			JsonSerializer.AddConverter<ResourceHeader>(new ResourceHeaderConverter());
+			JsonSerializer.AddConverter<Coordinate>(new CoordinateConverter());
+			JsonSerializer.AddConverter<Color>(new ColorConverter());
+			JsonSerializer.AddConverter<VisualizeRule>(new VisualizeRuleConverter());
         }
     }
 }

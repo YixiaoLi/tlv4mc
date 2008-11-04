@@ -6,7 +6,6 @@ using System.Text;
 namespace NU.OJL.MPRTOS.TLV.Base
 {
 	public class GeneralJsonConverter<T> : IJsonConverter<T>
-		where T:class
 	{
 		public event Func<IJsonReader, T> ReadJsonHandler = null;
 		public event Action<IJsonWriter, T> WriteJsonHandler = null;
@@ -22,7 +21,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			if (ReadJsonHandler != null)
 				return ReadJsonHandler(reader);
 			else
-				return null;
+				return (T)reader.Value;
 		}
 
 	}

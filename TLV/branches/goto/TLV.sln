@@ -50,6 +50,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "asp", "asp", "{375235B2-F69
 		sampleFiles\asp\asp.res = sampleFiles\asp\asp.res
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualizeRules", "visualizeRules", "{5E36682B-2A49-4630-8E27-7ADBF39D3A20}"
+	ProjectSection(SolutionItems) = preProject
+		visualizeRules\asp.viz = visualizeRules\asp.viz
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

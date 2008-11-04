@@ -14,7 +14,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public class TraceLogData
 	{
 		private ResourceData _resourceData;
-		private Json _data = new Json();
+		private Json _data = null;
 		public long MinTime { get; private set; }
 		public long MaxTime { get; private set; }
 		public TraceLog TraceLog { get; private set; }
@@ -36,7 +36,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			MinTime = long.MaxValue;
 			MaxTime = long.MinValue;
 
-			_data.makeObject();
+			_data = new Json(new Dictionary<string, Json>());
 
 			foreach (KeyValuePair<string,Json> kvp in _resourceData.Resources)
 			{
@@ -64,7 +64,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				int i = 0;
 				foreach (Json res in kvp.Value)
 				{
-					foreach(KeyValuePair<string, Json> attr in res.GetKeyValuePaierEnumerator())
+					foreach(KeyValuePair<string, Json> attr in res.GetKeyValuePairEnumerator())
 					{
 						_data[kvp.Key][i][attr.Key][0] = new Json(new TimeValuePair( 0, attr.Value.ToString() ));
 					}

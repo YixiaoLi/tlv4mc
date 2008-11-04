@@ -57,22 +57,55 @@
 					"DisplayName"	:"状態",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:false,
-					"Default"		:"DORMANT"
+					"Default"		:"DORMANT",
+					"VisualizeRule"	:"taskState"
 				}
 			},
-			"Behaviors"	:[
-				"preempt()",
-				"dispatch()",
-				"activate()",
-				"wait()",
-				"exit()",
-				"resume()",
-				"suspend()",
-				"terminate()",
-				"releaseFromWaiting()",
-				"enterSVC(name, args)",
-				"leaveSVC(name, args)",
-			]
+			"Behaviors"	:{
+				"preempt":{
+					"DisplayName"	:"プリエンプト"
+				},
+				"dispatch":{
+					"DisplayName"	:"ディスパッチ"
+				},
+				"activate":{
+					"DisplayName"	:"起動",
+					"VisualizeRule"	:"taskActivate"
+				},
+				"wait":{
+					"DisplayName"	:"待ち"
+				},
+				"exit":{
+					"DisplayName"	:"終了",
+					"VisualizeRule"	:"taskExit"
+				},
+				"resume":{
+					"DisplayName"	:"再開"
+				},
+				"suspend":{
+					"DisplayName"	:"強制待ち"
+				},
+				"terminate":{
+					"DisplayName"	:"強制終了"
+				},
+				"releaseFromWaiting":{
+					"DisplayName"	:"待ち解除"
+				},
+				"enterSVC":{
+					"DisplayName"	:"サービスコールに入る",
+					"Arguments"		:{
+						"name" : "string",
+						"args" : "string"
+					}
+				},
+				"leaveSVC":{
+					"DisplayName"	:"サービスコールから出る",
+					"Arguments"		:{
+						"name" : "string",
+						"args" : "string"
+					}
+				},
+			}
 		}
 	}
 }

@@ -9,6 +9,6 @@ namespace NU.OJL.MPRTOS.TLV.Base
 	{
 		string Serialize<T>(T obj);
 		T Deserialize<T>(string json);
-		void AddConverter<T>(IJsonConverter<T> converter) where T:class;
+		void AddConverter<T>(IJsonConverter<T> converter);
 	}
 }

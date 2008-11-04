@@ -97,6 +97,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         }
         
         /// <summary>
+        ///   visualizeRules に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DefaultVisualizeRulesDirectoryName {
+            get {
+                return ResourceManager.GetString("DefaultVisualizeRulesDirectoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   res に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ResourceFileExtension {
@@ -129,6 +138,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         internal static string TraceLogFileExtension {
             get {
                 return ResourceManager.GetString("TraceLogFileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   viz に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string VisualizeRuleFileExtension {
+            get {
+                return ResourceManager.GetString("VisualizeRuleFileExtension", resourceCulture);
             }
         }
     }

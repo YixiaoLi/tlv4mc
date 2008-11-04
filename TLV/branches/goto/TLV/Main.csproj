@@ -122,14 +122,18 @@
   <PropertyGroup>
     <PostBuildEvent>if exist $(TargetDir)convertRules rmdir /q /s $(TargetDir)convertRules
 if exist $(TargetDir)resourceHeaders rmdir /q /s $(TargetDir)resourceHeaders
+if exist $(TargetDir)visualizeRules rmdir /q /s $(TargetDir)visualizeRules
 if exist $(TargetDir)sampleFiles rmdir /q /s $(TargetDir)sampleFiles
+if exist $(TargetDir)setting.json rm $(TargetDir)setting.json
 
 mkdir $(TargetDir)convertRules
 mkdir $(TargetDir)resourceHeaders
+mkdir $(TargetDir)visualizeRules
 mkdir $(TargetDir)sampleFiles
 
 xcopy $(SolutionDir)convertRules $(TargetDir)convertRules /e /c /q /y
 xcopy $(SolutionDir)resourceHeaders $(TargetDir)resourceHeaders /e /c /q /y
+xcopy $(SolutionDir)visualizeRules $(TargetDir)visualizeRules /e /c /q /y
 xcopy $(SolutionDir)sampleFiles $(TargetDir)sampleFiles /e /c /q /y
 
 if $(ConfigurationName) == Release move $(TargetPath) $(TargetDir)___$(TargetFileName)

@@ -129,6 +129,9 @@
   <data name="DefaultResourceHeadersDirectoryName" xml:space="preserve">
     <value>resourceHeaders</value>
   </data>
+  <data name="DefaultVisualizeRulesDirectoryName" xml:space="preserve">
+    <value>visualizeRules</value>
+  </data>
   <data name="ResourceFileExtension" xml:space="preserve">
     <value>res</value>
   </data>
@@ -140,5 +143,8 @@
   </data>
   <data name="TraceLogFileExtension" xml:space="preserve">
     <value>log</value>
+  </data>
+  <data name="VisualizeRuleFileExtension" xml:space="preserve">
+    <value>viz</value>
   </data>
 </root>

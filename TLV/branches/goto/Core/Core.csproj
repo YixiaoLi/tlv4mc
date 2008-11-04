@@ -54,12 +54,24 @@
     <Compile Include="Base\GeneralKeyedJsonableCollection.cs" />
     <Compile Include="Base\GeneralJsonableCollection.cs" />
     <Compile Include="Base\JsonExtention.cs" />
+    <Compile Include="Base\ResourceData\Behavior\ArgumentList.cs" />
+    <Compile Include="Base\ResourceData\Behavior\Behavior.cs" />
+    <Compile Include="Base\ResourceData\Behavior\BehaviorList.cs" />
     <Compile Include="Base\ResourceData\ResourceData.cs" />
     <Compile Include="Base\ResourceData\ResourceList.cs" />
     <Compile Include="Base\ResourceData\ResourceHeader.cs" />
     <Compile Include="Base\ResourceData\ResourceType.cs" />
+    <Compile Include="Base\VisualizeData\ApplyRule.cs" />
+    <Compile Include="Base\VisualizeData\Shape\Coordinate.cs" />
+    <Compile Include="Base\VisualizeData\Shape\Coordinates.cs" />
+    <Compile Include="Base\VisualizeData\Shape\Pen.cs" />
+    <Compile Include="Base\VisualizeData\Shape\Shape.cs" />
+    <Compile Include="Base\VisualizeData\Shape\Shapes.cs" />
     <Compile Include="Base\TraceLogData\TraceLog.cs" />
     <Compile Include="Base\TraceLogData\TraceLogData.cs" />
+    <Compile Include="Base\VisualizeData\VisualizeData.cs" />
+    <Compile Include="Base\VisualizeData\VisualizeRule.cs" />
+    <Compile Include="Base\VisualizeData\VisualizeRuleList.cs" />
     <Compile Include="Commands\ChangeSubWindowDockStateCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowVisiblityCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowEnabledCommand.cs" />
@@ -88,7 +100,10 @@
     <Compile Include="Controls\Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ColorConverter.cs" />
+    <Compile Include="Converters\CoordinateConverter.cs" />
     <Compile Include="Converters\ResourceHeaderConverter.cs" />
+    <Compile Include="Converters\VisualizeRuleConverter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

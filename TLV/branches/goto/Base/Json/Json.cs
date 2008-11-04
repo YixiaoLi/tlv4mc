@@ -85,14 +85,20 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			get { return Value is Dictionary<string, Json>; }
 		}
 
-		public void makeObject()
+		public void AddArray(string name)
 		{
-			Value = new Dictionary<string , Json>();
+			if (Value is Dictionary<string, Json>)
+			{
+				((Dictionary<string, Json>)Value).Add(name, new Json(new List<Json>()));
+			}
 		}
 
-		public void makeArray()
+		public void AddObject(string name)
 		{
-			Value = new List<Json>();
+			if (Value is Dictionary<string, Json>)
+			{
+				((Dictionary<string, Json>)Value).Add(name, new Json(new Dictionary<string, Json>()));
+			}
 		}
 
 		public void Add(string name, object value)
@@ -119,7 +125,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 				return null;
 		}
 
-		public IEnumerable<KeyValuePair<string, Json>> GetKeyValuePaierEnumerator()
+		public IEnumerable<KeyValuePair<string, Json>> GetKeyValuePairEnumerator()
 		{
 			if (Value is IEnumerable<KeyValuePair<string, Json>>)
 				return (IEnumerable<KeyValuePair<string, Json>>)Value;

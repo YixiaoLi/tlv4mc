@@ -22,7 +22,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
             if (ApplicationDatas.ActiveFileContext.IsOpened
                 && !ApplicationDatas.ActiveFileContext.IsSaved)
             {
-                switch (MessageBox.Show("ファイルが変更されています。\n保存しますか？", "ファイルが変更されています", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                switch (MessageBox.Show("ファイルが更新されています。\n保存しますか？", "ファイルが更新されています", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                 {
                     case DialogResult.Yes:
                         ApplicationFactory.CommandManager.Do(new SaveCommand());

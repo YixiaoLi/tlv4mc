@@ -182,7 +182,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 		private static void writeJsonObject(Newtonsoft.Json.JsonWriter writer, Json json)
 		{
 			writer.WriteStartObject();
-			foreach (KeyValuePair<string,Json> sj in json.GetKeyValuePaierEnumerator())
+			foreach (KeyValuePair<string,Json> sj in json.GetKeyValuePairEnumerator())
 			{
 				writer.WritePropertyName(sj.Key);
 				writeJson(writer, sj.Value);

@@ -47,6 +47,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// トレースログのリスト
         /// </summary>
 		public TraceLogData TraceLogData { get; private set; }
+		/// <summary>
+		/// 可視化データ
+		/// </summary>
+		public VisualizeData VisualizeData { get; set; }
 
 		/// <summary>
 		/// <c>CommonFormatTraceLog</c>のインスタンスを生成する
@@ -60,10 +64,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         /// <param name="resourceData">共通形式のリソースデータ</param>
         /// <param name="traceLogData">共通形式のトレースログデータ</param>
-		public CommonFormatTraceLog(ResourceData resourceData, TraceLog traceLog)
+		public CommonFormatTraceLog(ResourceData resourceData, TraceLog traceLog, VisualizeData visualizeData)
         {
 			ResourceData = resourceData;
 			TraceLogData = new TraceLogData(traceLog, resourceData);
+			VisualizeData = visualizeData;
         }
 
         /// <summary>
@@ -82,6 +87,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.ResourceFileExtension, ResourceData.ToJson());
 			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension, TraceLogData.TraceLog.ToJson());
+			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.VisualizeRuleFileExtension, VisualizeData.ToJson());
 
 			zip.Compress(path, tmpDirPath);
 
@@ -106,10 +112,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			ResourceData res = new ResourceData().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.ResourceFileExtension));
 			TraceLog log = new TraceLog().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension));
+			VisualizeData viz = new VisualizeData().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.VisualizeRuleFileExtension));
 
-            CommonFormatTraceLog c = new CommonFormatTraceLog(res, log);
+			CommonFormatTraceLog c = new CommonFormatTraceLog(res, log, viz);
 			ResourceData = c.ResourceData;
 			TraceLogData = c.TraceLogData;
+			VisualizeData = c.VisualizeData;
         }
     }
 }

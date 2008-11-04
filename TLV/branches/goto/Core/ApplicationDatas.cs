@@ -21,6 +21,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				Json setting = new Json(new Dictionary<string, Json>());
 				setting.Add("ResourceHeadersDirectoryPath", appPath + Properties.Resources.DefaultResourceHeadersDirectoryName);
 				setting.Add("ConvertRulesDirectoryPath", appPath + Properties.Resources.DefaultConvertRulesDirectoryName);
+				setting.Add("VisualizeRulesDirectoryPath", appPath + Properties.Resources.DefaultVisualizeRulesDirectoryName);
 				Setting = setting;
 				File.WriteAllText(appPath + Properties.Resources.SettingFileName, setting.ToJsonString());
 			}

@@ -31,17 +31,18 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// デフォルト値
 		/// </summary>
 		public string Default { get; set; }
+		/// <summary>
+		/// デフォルト可視化ルール
+		/// </summary>
+		public string VisualizeRule { get; set; }
 
         /// <summary>
         /// <c>Attribute</c>のインスタンスを生成する
         /// </summary>
         public Attribute()
         {
-			DisplayName = string.Empty;
-            VariableType = string.Empty;
             AllocationType = AllocationType.Static;
             CanGrouping = false;
-			Default = string.Empty;
         }
 
     }

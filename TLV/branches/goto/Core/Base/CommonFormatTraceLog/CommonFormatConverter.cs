@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using System.IO;
 using NU.OJL.MPRTOS.TLV.Base;
+using System;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
@@ -12,16 +13,46 @@ namespace NU.OJL.MPRTOS.TLV.Core
     public class CommonFormatConverter
     {
 		private ResourceData _resourceData;
+		private VisualizeData _visualizeData;
 		private TraceLog _traceLog;
+		public Action<int> ConstructProgressReport;
 
         /// <summary>
         /// <c>CommonFormatConverter</c>のコンストラクタ
         /// </summary>
-		public CommonFormatConverter(string resourceFilePath, string traceLogFilePath)
-        {
+		public CommonFormatConverter(string resourceFilePath, string traceLogFilePath, Action<int,string> ConstructProgressReport)
+		{
+			if (ConstructProgressReport != null)
+				ConstructProgressReport(0, "リソースデータを生成中");
+
 			_resourceData = new ResourceData().Parse(File.ReadAllText(resourceFilePath));
+
+			if (ConstructProgressReport != null)
+				ConstructProgressReport(33, "トレースログデータを生成中");
+
 			_traceLog = getTraceLog(traceLogFilePath, _resourceData);
+
+			if (ConstructProgressReport != null)
+				ConstructProgressReport(66, "可視化データを生成中");
+
+			_visualizeData = getVisualizeData(_resourceData);
+
+			if (ConstructProgressReport != null)
+				ConstructProgressReport(100, "初期化中");
         }
+
+		/// <summary>
+		/// <c>CommonFormatConverter</c>のコンストラクタ
+		/// </summary>
+		public CommonFormatConverter(string resourceFilePath, string traceLogFilePath)
+		{
+			_resourceData = new ResourceData().Parse(File.ReadAllText(resourceFilePath));
+
+			_traceLog = getTraceLog(traceLogFilePath, _resourceData);
+
+			_visualizeData = getVisualizeData(_resourceData);
+
+		}
 
         /// <summary>
         /// リソースリストを得る
@@ -49,6 +80,110 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
         }
 
+		public VisualizeData VisualizeData
+		{
+			get { return _visualizeData; }
+		}
+
+		private VisualizeData getVisualizeData(ResourceData resourceData)
+		{
+			VisualizeData visualizeData = new VisualizeData();
+
+			foreach (KeyValuePair<string, ResourceType> resh in resourceData.ResourceHeader)
+			{
+				Dictionary<string, string> attrs = new Dictionary<string, string>();
+				foreach (KeyValuePair<string, Attribute> attr in resh.Value.Attributes)
+				{
+					attrs.Add(attr.Key, attr.Value.VisualizeRule);
+				}
+				Dictionary<string, string> bhvrs = new Dictionary<string, string>();
+				foreach (KeyValuePair<string, Behavior> bhvr in resh.Value.Behaviors)
+				{
+					bhvrs.Add(bhvr.Key, bhvr.Value.VisualizeRule);
+				}
+
+				visualizeData.ApplyRules.Add(resh.Key, new ApplyRule(attrs, bhvrs));
+			}
+
+			string[] visualizeRuleFilePaths = Directory.GetFiles(ApplicationDatas.Setting["VisualizeRulesDirectoryPath"], "*." + Properties.Resources.VisualizeRuleFileExtension);
+
+			foreach (string s in visualizeRuleFilePaths)
+			{
+				VisualizeData vd = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(File.ReadAllText(s));
+
+				foreach (KeyValuePair<string, VisualizeRule> kvp in vd.VisualizeRules)
+				{
+					bool flag = false;
+					foreach (KeyValuePair<string, ApplyRule> _kvp in visualizeData.ApplyRules)
+					{
+						bool f = false;
+						foreach (string a in _kvp.Value.Attribute.Values)
+						{
+							if (kvp.Key == a)
+							{
+								f = true;
+								break;
+							}
+						}
+						foreach (string b in _kvp.Value.Behavior.Values)
+						{
+							if (kvp.Key == b)
+							{
+								f = true;
+								break;
+							}
+						}
+						if (f)
+						{
+							flag = true;
+							break;
+						}
+					}
+					if (flag)
+					{
+						visualizeData.VisualizeRules.Add(kvp.Key, kvp.Value);
+					}
+				}
+				foreach (KeyValuePair<string, Shapes> kvp in vd.Shapes)
+				{
+					bool flag = false;
+					foreach (KeyValuePair<string, VisualizeRule> _kvp in visualizeData.VisualizeRules)
+					{
+						bool f = false;
+						if (_kvp.Value.IsMapped)
+						{
+							foreach (KeyValuePair<string, string> v in _kvp.Value)
+							{
+								if (kvp.Key == v.Value)
+								{
+									f = true;
+									break;
+								}
+							}
+						}
+						else
+						{
+							if (kvp.Key == _kvp.Value)
+							{
+								f = true;
+							}
+						}
+
+						if (f)
+						{
+							flag = true;
+							break;
+						}
+					}
+					if (flag)
+					{
+						visualizeData.Shapes.Add(kvp.Key, kvp.Value);
+					}
+				}
+			}
+			return visualizeData;
+		}
+
 		private TraceLog getTraceLog(string traceLogFilePath, ResourceData resourceData)
 		{
 			Dictionary<string, Json> dic = new Dictionary<string, Json>();
@@ -61,11 +196,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			foreach (string s in convertRulePaths)
 			{
 				Json json = new Json().Parse(File.ReadAllText(s));
-				foreach (KeyValuePair<string, Json> j in json.GetKeyValuePaierEnumerator())
+				foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
 				{
 					if (j.Key == target)
 					{
-						foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePaierEnumerator())
+						foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePairEnumerator())
 						{
 							dic.Add(_j.Key, _j.Value);
 						}
@@ -116,7 +251,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		private void addTraceLogAsObject(string log, string key, Json value, TraceLogData traceLogManager)
 		{
-			foreach (KeyValuePair<string, Json> kvp in value.GetKeyValuePaierEnumerator())
+			foreach (KeyValuePair<string, Json> kvp in value.GetKeyValuePairEnumerator())
 			{
 				if (checkCondition(log, key, kvp.Key, traceLogManager))
 				{
