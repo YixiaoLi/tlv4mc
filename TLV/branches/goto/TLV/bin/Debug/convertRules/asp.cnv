@@ -1,0 +1,31 @@
+{
+	"asp":
+	{
+		"\[(?<time>\d+)\] dispatch to task (?<id>\d+)\." : [
+			"[${time}]Task(state==RUNNING).state=RUNNABLE",
+			"[${time}]Task(state==RUNNING).preempt()",
+			"[${time}]Task(id==${id}).state=RUNNING",
+			"[${time}]Task(id==${id}).dispatch()"
+		],
+		"\[(?<time>\d+)\] task (?<id>\d+) becomes (?<state>\w+)\." : [
+			"[${time}]Task(id==${id}).state=${state}",
+			{
+				"Task(id==${id}).state==DORMANT && ${state}==RUNNABLE"			:"[${time}]Task(id==${id}).activate()",
+				"Task(id==${id}).state==RUNNING && ${state}==DORMANT"			:"[${time}]Task(id==${id}).exit()",
+				"Task(id==${id}).state==RUNNING && ${state}==WAITING"			:"[${time}]Task(id==${id}).wait()",
+				"Task(id==${id}).state==RUNNABLE && ${state}==SUSPENDED"			:"[${time}]Task(id==${id}).suspend()",
+				"Task(id==${id}).state==WAITING && ${state}==WAITING-SUSPENDED"	:"[${time}]Task(id==${id}).suspend()",
+				"Task(id==${id}).state==SUSPENDED && ${state}==RUNNABLE"		:"[${time}]Task(id==${id}).resume()",
+				"Task(id==${id}).state==WAITING-SUSPENDED && ${state}==WAITING"	:"[${time}]Task(id==${id}).resume()",
+				"Task(id==${id}).state==WAITING && ${state}==RUNNABLE"			:"[${time}]Task(id==${id}).releaseFromWaiting()",
+				"Task(id==${id}).state==WAITING-SUSPENDED && ${state}==SUSPENDED"	:"[${time}]Task(id==${id}).releaseFromWaiting()",
+				"Task(id==${id}).state==SUSPENDED && ${state}==DORMANT"			:"[${time}]Task(id==${id}).terminate()",
+				"Task(id==${id}).state==WAITING-SUSPENDED && ${state}==DORMANT"	:"[${time}]Task(id==${id}).terminate()",
+				"Task(id==${id}).state==WAITING && ${state}==DORMANT"			:"[${time}]Task(id==${id}).terminate()",
+				"Task(id==${id}).state==RUNNABLE && ${state}==DORMANT"			:"[${time}]Task(id==${id}).terminate()"
+			}
+		],
+		"\[(?<time>\d+)\] enter to (?<name>\w+) ?(?<args>.*)\."	:"[${time}]Task(state==RUNNING).enterSVC(${name}, ${args})",
+		"\[(?<time>\d+)\] leave to (?<name>\w+) ?(?<args>.*)\."	:"[${time}]Task(state==RUNNING).leaveSVC(${name}, ${args})"
+	}
+}
