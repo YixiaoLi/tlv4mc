@@ -10,13 +10,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	{
 		public Dictionary<string, ApplyRule> ApplyRules { get; set; }
 		public VisualizeRuleList VisualizeRules { get; set; }
-		public Dictionary<string, Shapes> Shapes { get; set; }
+		public Dictionary<string, ShapeList> Shapes { get; set; }
 
 		public VisualizeData()
 		{
 			ApplyRules = new Dictionary<string, ApplyRule>();
 			VisualizeRules = new VisualizeRuleList();
-			Shapes = new Dictionary<string, Shapes>();
+			Shapes = new Dictionary<string, ShapeList>();
 		}
 
 		public string ToJson()

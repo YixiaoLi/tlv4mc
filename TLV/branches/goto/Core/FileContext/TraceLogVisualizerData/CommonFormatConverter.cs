@@ -144,7 +144,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						visualizeData.VisualizeRules.Add(kvp.Key, kvp.Value);
 					}
 				}
-				foreach (KeyValuePair<string, Shapes> kvp in vd.Shapes)
+				foreach (KeyValuePair<string, ShapeList> kvp in vd.Shapes)
 				{
 					bool flag = false;
 					foreach (KeyValuePair<string, VisualizeRule> _kvp in visualizeData.VisualizeRules)

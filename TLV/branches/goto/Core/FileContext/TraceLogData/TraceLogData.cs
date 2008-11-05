@@ -27,7 +27,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				Add(log);
 			}
 		}
-
 		public TraceLogData(ResourceData resourceData)
 			:base()
 		{
@@ -98,18 +97,21 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 
 		}
-
+		/// <summary>
+		/// 指定した条件の属性を得る
+		/// </summary>
+		/// <param name="condition">条件 "Type(atr1==xxx, atr2!=yyy).atr3"</param>
+		/// <returns>属性値</returns>
 		public string GetAttributeValue(string condition)
 		{
 			return GetAttributeValue(Convert.ToString(MaxTime, _resourceData.TimeRadix), condition);
 		}
-
 		/// <summary>
 		/// 指定した条件の属性の値を得る
 		/// </summary>
 		/// <param name="time">時間</param>
 		/// <param name="condition">条件 "Type(atr1==xxx, atr2!=yyy).atr3"</param>
-		/// <returns></returns>
+		/// <returns>属性値</returns>
 		public string GetAttributeValue(string time, string condition)
 		{
 			string type = getObjectType(condition);
@@ -139,7 +141,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				})).Value).Value;
 			}
 		}
-
 		private List<Json> getResources(string type, ComparisonExpressionList conditions)
 		{
 
@@ -165,7 +166,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			return result;
 		}
-
 		protected long getTime(string item)
 		{
 			return Convert.ToInt64(Regex.Match(item, @"\[\s*(?<time>\w+)\s*\]").Groups["time"].Value, _resourceData.TimeRadix);
@@ -227,17 +227,18 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			return Regex.IsMatch(item, @"\.\s*(?<attribute>[^\(\s]+)\s*\(");
 		}
-	}
-
-	public class TimeValuePair
-	{
-		public long Time { get; private set; }
-		public string Value { get; private set; }
-
-		public TimeValuePair(long time, string value)
+		
+		private struct TimeValuePair
 		{
-			Time = time;
-			Value = value;
+			public long Time { get; private set; }
+			public string Value { get; private set; }
+
+			public TimeValuePair(long time, string value)
+				:this()
+			{
+				Time = time;
+				Value = value;
+			}
 		}
 	}
 }

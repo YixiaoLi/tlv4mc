@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class Coordinates : Collection<Coordinate>
+	public class ShapeList : GeneralJsonableCollection<Shape, ShapeList>
 	{
 	}
 }

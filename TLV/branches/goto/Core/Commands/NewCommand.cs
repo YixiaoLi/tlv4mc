@@ -21,7 +21,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
             var f = new OpenResourceFileAndTraceLogFileOpenForm();
             BackGroundWorkForm bw = new BackGroundWorkForm() { Text = "共通形式トレースログへ変換中" };
 
-            CommonFormatTraceLog cftl = null;
+            TraceLogVisualizerData cftl = null;
 
             bw.RunWorkerCompleted += (o, e) =>
                 {
@@ -49,17 +49,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 							if (bw.CancellationPending) { _e.Cancel = true; return; }
 						});
 
-					ResourceData res = cfc.ResourceData;
-
-					TraceLog log = cfc.TraceLog;
-
-					VisualizeData viz = cfc.VisualizeData;
-
 					bw.ReportProgress(90);
 					bw.Invoke(new MethodInvoker(() => { bw.Message = "共通形式データを生成中"; }));
 					if (bw.CancellationPending) { _e.Cancel = true; return; }
 
-					cftl = new CommonFormatTraceLog(res, log, viz);
+					cftl = new TraceLogVisualizerData(cfc.ResourceData, cfc.TraceLog, cfc.VisualizeData);
 
 					bw.ReportProgress(100);
 					bw.Invoke(new MethodInvoker(() => { bw.Message = "完了"; }));

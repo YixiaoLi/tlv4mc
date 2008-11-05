@@ -11,7 +11,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public static readonly string Version = "1.0b";
         public static readonly string Path = Application.ExecutablePath;
 		public static readonly Json Setting;
-        public static readonly IFileContext<CommonFormatTraceLog> ActiveFileContext = new FileContext<CommonFormatTraceLog>();
+        public static readonly IFileContext<TraceLogVisualizerData> ActiveFileContext = new FileContext<TraceLogVisualizerData>();
 
 		static ApplicationDatas()
 		{

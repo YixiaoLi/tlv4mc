@@ -14,8 +14,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// </summary>
 	public class ResourceHeader : IJsonable<ResourceHeader>, IEnumerable<KeyValuePair<string,ResourceType>>
 	{
-		public string Name { get; private set; }
 		private Dictionary<string, ResourceType> _types = new Dictionary<string, ResourceType>();
+		public string Name { get; private set; }
 		public ResourceType this[string name] { get { return _types[name]; } }
 
 		public ResourceHeader()

@@ -10,7 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	{
 		public string Type { get; set; }
 		public string Value { get; set; }
-		public Coordinates Coordinates { get; set; }
+		public CoordinateList Coordinates { get; set; }
 		public Coordinate Offset { get; set; }
 		public Pen Pen { get; set; }
 		public Color Fill { get; set; }

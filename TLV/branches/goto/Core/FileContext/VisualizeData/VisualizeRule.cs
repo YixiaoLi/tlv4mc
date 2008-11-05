@@ -17,12 +17,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			_data = null;
 		}
-
 		public VisualizeRule(string data)
 		{
 			_data = data;
 		}
-
 		public VisualizeRule(Dictionary<string, string> data)
 		{
 			_data = data;
@@ -39,7 +37,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				return null;
 			}
 		}
-
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
 			if (IsMapped)

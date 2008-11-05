@@ -13,7 +13,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// <summary>
     /// 共通形式トレースログおよびマーカー等の情報を表すクラス
     /// </summary>
-    public class CommonFormatTraceLog : IFileContextData
+    public class TraceLogVisualizerData : IFileContextData
     {
         private bool _isDirty = false;
 
@@ -55,7 +55,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// <summary>
 		/// <c>CommonFormatTraceLog</c>のインスタンスを生成する
 		/// </summary>
-        public CommonFormatTraceLog()
+        public TraceLogVisualizerData()
         {
         }
 
@@ -64,7 +64,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         /// <param name="resourceData">共通形式のリソースデータ</param>
         /// <param name="traceLogData">共通形式のトレースログデータ</param>
-		public CommonFormatTraceLog(ResourceData resourceData, TraceLog traceLog, VisualizeData visualizeData)
+		public TraceLogVisualizerData(ResourceData resourceData, TraceLog traceLog, VisualizeData visualizeData)
         {
 			ResourceData = resourceData;
 			TraceLogData = new TraceLogData(traceLog, resourceData);
@@ -114,7 +114,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			TraceLog log = new TraceLog().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension));
 			VisualizeData viz = new VisualizeData().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.VisualizeRuleFileExtension));
 
-			CommonFormatTraceLog c = new CommonFormatTraceLog(res, log, viz);
+			TraceLogVisualizerData c = new TraceLogVisualizerData(res, log, viz);
 			ResourceData = c.ResourceData;
 			TraceLogData = c.TraceLogData;
 			VisualizeData = c.VisualizeData;

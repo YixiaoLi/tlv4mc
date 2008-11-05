@@ -69,7 +69,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         {
             try
             {
-                SaveAsTestHelper<CommonFormatTraceLog>(string.Empty);
+                SaveAsTestHelper<TraceLogVisualizerData>(string.Empty);
             }
             catch (Exception e)
             {
@@ -77,7 +77,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
             }
             try
             {
-                SaveAsTestHelper<CommonFormatTraceLog>(Path.GetTempFileName());
+                SaveAsTestHelper<TraceLogVisualizerData>(Path.GetTempFileName());
             }
             catch (Exception e)
             {
@@ -97,7 +97,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         {
             try
             {
-                SaveAsTestHelper<CommonFormatTraceLog>(string.Empty);
+                SaveAsTestHelper<TraceLogVisualizerData>(string.Empty);
             }
             catch (Exception e)
             {
@@ -105,7 +105,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
             }
             try
             {
-                SaveAsTestHelper<CommonFormatTraceLog>(Path.GetTempFileName());
+                SaveAsTestHelper<TraceLogVisualizerData>(Path.GetTempFileName());
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void CloseTest()
         {
-            FileContext<CommonFormatTraceLog> target = new FileContext<CommonFormatTraceLog>(); // TODO: 適切な値に初期化してください
+            FileContext<TraceLogVisualizerData> target = new FileContext<TraceLogVisualizerData>(); // TODO: 適切な値に初期化してください
             target.Close();
             Assert.AreEqual(target.IsOpened, false);
             Assert.AreEqual(target.IsSaved, false);
