@@ -3,43 +3,52 @@ using System.Text.RegularExpressions;
 using System.IO;
 using NU.OJL.MPRTOS.TLV.Base;
 using System;
+using System.Threading;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-    /// <summary>
-    /// 共通形式トレースログへ変換するためのコンバータ
-    /// コンストラクタはプライベートとなっているのでGetInstanceメソッドを使ってインスタンスを得る
-    /// </summary>
-    public class CommonFormatConverter
-    {
+	/// <summary>
+	/// 共通形式トレースログへ変換するためのコンバータ
+	/// コンストラクタはプライベートとなっているのでGetInstanceメソッドを使ってインスタンスを得る
+	/// </summary>
+	public class CommonFormatConverter
+	{
+		private readonly string[] _convertFunction = new string[] { "COUNT","EXIST" };
 		private ResourceData _resourceData;
 		private VisualizeData _visualizeData;
 		private TraceLog _traceLog;
-		public Action<int> ConstructProgressReport;
+		public Action<int, string> _constructProgressReport = null;
+		private int _from = 0;
+		private int _to = 100;
 
-        /// <summary>
-        /// <c>CommonFormatConverter</c>のコンストラクタ
-        /// </summary>
-		public CommonFormatConverter(string resourceFilePath, string traceLogFilePath, Action<int,string> ConstructProgressReport)
+		/// <summary>
+		/// <c>CommonFormatConverter</c>のコンストラクタ
+		/// </summary>
+		public CommonFormatConverter(string resourceFilePath, string traceLogFilePath, Action<int, string> ConstructProgressReport)
 		{
-			if (ConstructProgressReport != null)
-				ConstructProgressReport(0, "リソースデータを生成中");
+			_constructProgressReport = ConstructProgressReport;
 
+			if (_constructProgressReport != null)
+				_constructProgressReport(0, "リソースデータを生成中");
+			_to = 10;
 			_resourceData = new ResourceData().Parse(File.ReadAllText(resourceFilePath));
 
-			if (ConstructProgressReport != null)
-				ConstructProgressReport(33, "トレースログデータを生成中");
-
+			if (_constructProgressReport != null)
+				_constructProgressReport(_to, "トレースログデータを生成中");
+			_from = _to;
+			_to = 90;
 			_traceLog = getTraceLog(traceLogFilePath, _resourceData);
 
-			if (ConstructProgressReport != null)
-				ConstructProgressReport(66, "可視化データを生成中");
+			if (_constructProgressReport != null)
+				_constructProgressReport(_to, "可視化データを生成中");
+			_from = _to;
+			_to = 100;
 
 			_visualizeData = getVisualizeData(_resourceData);
 
-			if (ConstructProgressReport != null)
-				ConstructProgressReport(100, "初期化中");
-        }
+			if (_constructProgressReport != null)
+				_constructProgressReport(_to, "初期化中");
+		}
 
 		/// <summary>
 		/// <c>CommonFormatConverter</c>のコンストラクタ
@@ -54,31 +63,31 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		}
 
-        /// <summary>
-        /// リソースリストを得る
-        /// </summary>
-        /// <param name="resourceFilePath">リソースリストのパス</param>
+		/// <summary>
+		/// リソースリストを得る
+		/// </summary>
+		/// <param name="resourceFilePath">リソースリストのパス</param>
 		/// <returns>リソースリスト</returns>
 		public ResourceData ResourceData
-        {
+		{
 			get
 			{
 				return _resourceData;
 			}
-        }
+		}
 
-        /// <summary>
-        /// トレースログファイルを共通形式へ変換する
-        /// </summary>
-        /// <param name="traceLogFilePath">変換する前のトレースログファイルのパス</param>
-        /// <returns>変換後のトレースログファイルの内容の文字列</returns>
+		/// <summary>
+		/// トレースログファイルを共通形式へ変換する
+		/// </summary>
+		/// <param name="traceLogFilePath">変換する前のトレースログファイルのパス</param>
+		/// <returns>変換後のトレースログファイルの内容の文字列</returns>
 		public TraceLog TraceLog
-        {
+		{
 			get
 			{
 				return _traceLog;
 			}
-        }
+		}
 
 		public VisualizeData VisualizeData
 		{
@@ -211,8 +220,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			TraceLogData t = new TraceLogData(resourceData);
 
 			// トレースログを一行ずつ調べTraceLogクラスに変換しTraceLogListに追加していく
-			foreach (string s in File.ReadAllLines(traceLogFilePath))
+			string[] logs = File.ReadAllLines(traceLogFilePath);
+			float i = 1;
+			float max = logs.Length;
+			foreach (string s in logs)
 			{
+				if (_constructProgressReport != null)
+					_constructProgressReport((int)(((i / max) * (float)(_to - _from)) + (float)_from), "トレースログを共通形式へ変換中 " + i + " 行目...");
+
 				foreach (KeyValuePair<string, Json> kvp in dic)
 				{
 					if (Regex.IsMatch(s, kvp.Key))
@@ -220,69 +235,117 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						addTraceLog(s, kvp.Key, kvp.Value, t);
 					}
 				}
+				i++;
 			}
 
 			return t.TraceLog;
 		}
 
-		private void addTraceLog(string log, string key, Json value, TraceLogData traceLogManager)
+		/// <summary>
+		/// 読み込んだログがパターンにマッチした場合に変換してログを追加する
+		/// </summary>
+		/// <param name="log">読み込むログ</param>
+		/// <param name="pattern">パターン</param>
+		/// <param name="value">変換値がValue（Jsonでいうところの）</param>
+		/// <param name="traceLogManager">追加先</param>
+		private void addTraceLog(string log, string pattern, Json value, TraceLogData traceLogManager)
 		{
 			if (value.IsArray)
 			{
-				addTraceLogAsArray(log, key, value, traceLogManager);
+				addTraceLogAsArray(log, pattern, value, traceLogManager);
 			}
 			else if (value.IsObject)
 			{
-				addTraceLogAsObject(log, key, value, traceLogManager);
+				addTraceLogAsObject(log, pattern, value, traceLogManager);
 			}
 			else
 			{
-				traceLogManager.Add(Regex.Replace(log, key, (string)value));
+				// valueがstringのときログを置換して追加
+				traceLogManager.Add(Regex.Replace(log, pattern, (string)value));
 			}
 		}
 
-		private void addTraceLogAsArray(string log, string key, Json value, TraceLogData traceLogManager)
+		/// <summary>
+		/// 読み込んだログがパターンにマッチした場合に変換してログを追加する。変換値
+		/// </summary>
+		/// <param name="log">読み込むログ</param>
+		/// <param name="pattern">パターン</param>
+		/// <param name="value">変換値がArray（Jsonでいうところの）</param>
+		/// <param name="traceLogManager">追加先</param>
+		private void addTraceLogAsArray(string log, string pattern, List<Json> value, TraceLogData traceLogManager)
 		{
 			foreach (Json j in value)
 			{
-				addTraceLog(log, key, j, traceLogManager);
+				addTraceLog(log, pattern, j, traceLogManager);
 			}
 		}
 
-		private void addTraceLogAsObject(string log, string key, Json value, TraceLogData traceLogManager)
+		/// <summary>
+		/// 読み込んだログがパターンにマッチした場合に変換してログを追加する。変換値
+		/// </summary>
+		/// <param name="log">読み込むログ</param>
+		/// <param name="condition">パターン</param>
+		/// <param name="value">変換値がObject（Jsonでいうところの）</param>
+		/// <param name="traceLogManager">追加先</param>
+		private void addTraceLogAsObject(string log, string pattern, Dictionary<string, Json> value, TraceLogData traceLogManager)
 		{
-			foreach (KeyValuePair<string, Json> kvp in value.GetKeyValuePairEnumerator())
+			Dictionary<string, string> cache = new Dictionary<string, string>();
+
+			foreach (KeyValuePair<string, Json> kvp in value)
 			{
-				if (checkCondition(log, key, kvp.Key, traceLogManager))
+				string condition = Regex.Replace(log, pattern, kvp.Key);
+
+				foreach (string func in _convertFunction)
 				{
-					addTraceLog(log, key, kvp.Value, traceLogManager);
+					foreach (Match m in Regex.Matches(condition, func + @"\s*\(\s*(?<res>(?<type>[^\s\(]+)\s*\(\s*(?<cond>[^\(]+)\s*\))\s*\)\s*"))
+					{
+						if (cache.ContainsKey(m.Value))
+						{
+							condition = Regex.Replace(condition, Regex.Escape(m.Value), cache[m.Value]);
+						}
+						else
+						{
+							string val = calcConvertFunc(func, m.Groups["type"].Value, m.Groups["cond"].Value, traceLogManager);
+							condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
+							cache.Add(m.Value, val);
+						}
+					}
+				}
+
+				foreach (Match m in Regex.Matches(condition, @"(?<type>[^\s\(]+)\s*\(\s*(?<cond>[^\(]+)\s*\)\s*\.\s*(?<attr>[^\s=]+)"))
+				{
+					if (cache.ContainsKey(m.Value))
+					{
+						condition = Regex.Replace(condition, Regex.Escape(m.Value), cache[m.Value]);
+					}
+					else
+					{
+						string val = traceLogManager.GetAttributeValue(m.Groups["type"].Value, m.Groups["cond"].Value, m.Groups["attr"].Value);
+						condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
+						cache.Add(m.Value, val);
+					}
+				}
+
+				if (ConditionExpression.Result(condition))
+				{
+					addTraceLog(log, pattern, kvp.Value, traceLogManager);
 				}
 			}
 		}
 
-		private bool checkCondition(string log, string key, string condition, TraceLogData traceLogManager)
+		private string calcConvertFunc(string func, string type, string condition, TraceLogData traceLogManager)
 		{
-			condition = Regex.Replace(log, key, condition);
-
-			foreach (Match m in Regex.Matches(condition, @"(?<name>\w+)\s*\(\s*(?<attrs>[^\(]+)\s*\)\s*\.\s*(?<attr>\w+)"))
+			switch (func)
 			{
-				condition = Regex.Replace(condition, Regex.Escape(m.Value), traceLogManager.GetAttributeValue(m.Value));
+				case "COUNT":
+					return traceLogManager.GetResources(type, condition).Count.ToString();
+				case "EXIST":
+					return traceLogManager.GetResources(type, condition).Count != 0 ? "True" : "False";
+				default:
+					return "False";
 			}
-
-			foreach (Match m in Regex.Matches(condition, @"(?<comparisonExpression>(?<left>[^\s]+)\s*(?<ope>(==|!=|<=|>=|>|<))\s*(?<right>[^\s]+))"))
-			{
-				ComparisonExpression ce = new ComparisonExpression(m.Groups["comparisonExpression"].Value);
-				condition = Regex.Replace(condition, Regex.Escape(m.Groups["comparisonExpression"].Value), ce.Result("string").ToString());
-			}
-			foreach (Match m in Regex.Matches(condition, @"(?<conditionExpression>(?<attr>[^\s]+)\s*(?<ope>(&&|\|\|))\s*(?<val>[^\s]+))"))
-			{
-				ConditionExpression ce = new ConditionExpression(m.Groups["conditionExpression"].Value);
-				condition = Regex.Replace(condition, Regex.Escape(m.Groups["conditionExpression"].Value), ce.Result().ToString());
-			}
-
-
-			return bool.Parse(condition);
 		}
 
-    }
+	}
+
 }

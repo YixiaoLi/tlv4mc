@@ -44,20 +44,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 					CommonFormatConverter cfc = new CommonFormatConverter(f.ResourceFilePath, f.TraceLogFilePath, 
 						(p,s) =>
 						{
+							if (bw.CancellationPending) { _e.Cancel = true; return; }
 							bw.ReportProgress((int)((double)p * 0.8));
 							bw.Invoke(new MethodInvoker(() => { bw.Message = s; }));
-							if (bw.CancellationPending) { _e.Cancel = true; return; }
 						});
 
+					if (bw.CancellationPending) { _e.Cancel = true; return; }
 					bw.ReportProgress(90);
 					bw.Invoke(new MethodInvoker(() => { bw.Message = "共通形式データを生成中"; }));
-					if (bw.CancellationPending) { _e.Cancel = true; return; }
 
 					cftl = new TraceLogVisualizerData(cfc.ResourceData, cfc.TraceLog, cfc.VisualizeData);
 
+					if (bw.CancellationPending) { _e.Cancel = true; return; }
 					bw.ReportProgress(100);
 					bw.Invoke(new MethodInvoker(() => { bw.Message = "完了"; }));
-					if (bw.CancellationPending) { _e.Cancel = true; return; }
                 }
                 catch (Exception e)
                 {

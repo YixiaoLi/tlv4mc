@@ -9,5 +9,6 @@ namespace NU.OJL.MPRTOS.TLV.Base
 	{
 		void Write(JsonTokenType type, object value);
 		void Write(JsonTokenType type);
+		void Write(object obj);
 	}
 }

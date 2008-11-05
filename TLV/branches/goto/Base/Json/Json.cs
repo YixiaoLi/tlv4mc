@@ -147,57 +147,47 @@ namespace NU.OJL.MPRTOS.TLV.Base
 		{
 			return (string)jsonValue.Value;
 		}
-
 		public static implicit operator bool(Json jsonValue)
 		{
 			return (bool)jsonValue.Value;
 		}
-
 		public static implicit operator int(Json jsonValue)
 		{
 			return (int)jsonValue.Value;
 		}
-
 		public static implicit operator float(Json jsonValue)
 		{
 			return (float)jsonValue.Value;
 		}
-
 		public static implicit operator DateTime(Json jsonValue)
 		{
 			return (DateTime)jsonValue.Value;
 		}
-
 		public static implicit operator List<string>(Json jsonValue)
 		{
 			List<Json> jl = (List<Json>)jsonValue.Value;
 			return new List<string>(jl.Select<Json, string>((j, s) => { return j; }));
 		}
-
 		public static implicit operator List<bool>(Json jsonValue)
 		{
 			List<Json> jl = (List<Json>)jsonValue.Value;
 			return new List<bool>(jl.Select<Json, bool>((j, s) => { return j; }));
 		}
-
 		public static implicit operator List<int>(Json jsonValue)
 		{
 			List<Json> jl = (List<Json>)jsonValue.Value;
 			return new List<int>(jl.Select<Json, int>((j, s) => { return j; }));
 		}
-
 		public static implicit operator List<float>(Json jsonValue)
 		{
 			List<Json> jl = (List<Json>)jsonValue.Value;
 			return new List<float>(jl.Select<Json, float>((j, s) => { return j; }));
 		}
-
 		public static implicit operator List<DateTime>(Json jsonValue)
 		{
 			List<Json> jl = (List<Json>)jsonValue.Value;
 			return new List<DateTime>(jl.Select<Json, DateTime>((j, s) => { return j; }));
 		}
-
 		public static implicit operator string[](Json jsonValue)
 		{
 			if (jsonValue.Value is List<Json>)
@@ -207,7 +197,6 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 			return new string[] { };
 		}
-
 		public static implicit operator bool[](Json jsonValue)
 		{
 			if (jsonValue.Value is List<Json>)
@@ -217,7 +206,6 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 			return new bool[] { };
 		}
-
 		public static implicit operator int[](Json jsonValue)
 		{
 			if (jsonValue.Value is List<Json>)
@@ -227,7 +215,6 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 			return new int[] { };
 		}
-
 		public static implicit operator float[](Json jsonValue)
 		{
 			if (jsonValue.Value is List<Json>)
@@ -237,7 +224,6 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 			return new float[] { };
 		}
-
 		public static implicit operator DateTime[](Json jsonValue)
 		{
 			if (jsonValue.Value is List<Json>)
@@ -247,30 +233,33 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 			return new DateTime[] { };
 		}
-
 		public static implicit operator Dictionary<string, string>(Json jsonValue)
 		{
 			return (Dictionary<string, string>)jsonValue.Value;
 		}
-
 		public static implicit operator Dictionary<string, bool>(Json jsonValue)
 		{
 			return (Dictionary<string, bool>)jsonValue.Value;
 		}
-
 		public static implicit operator Dictionary<string, int>(Json jsonValue)
 		{
 			return (Dictionary<string, int>)jsonValue.Value;
 		}
-
 		public static implicit operator Dictionary<string, float>(Json jsonValue)
 		{
 			return (Dictionary<string, float>)jsonValue.Value;
 		}
-
 		public static implicit operator Dictionary<string, DateTime>(Json jsonValue)
 		{
 			return (Dictionary<string, DateTime>)jsonValue.Value;
+		}
+		public static implicit operator Dictionary<string, Json>(Json jsonValue)
+		{
+			return (Dictionary<string, Json>)jsonValue.Value;
+		}
+		public static implicit operator List<Json>(Json jsonValue)
+		{
+			return (List<Json>)jsonValue.Value;
 		}
 
 		public override string ToString()

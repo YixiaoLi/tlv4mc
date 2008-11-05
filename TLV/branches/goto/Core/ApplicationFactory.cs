@@ -49,9 +49,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			_json = new NewtonsoftJson();
 
 			JsonSerializer.AddConverter<ResourceHeader>(new ResourceHeaderConverter());
-			JsonSerializer.AddConverter<Coordinate>(new CoordinateConverter());
-			JsonSerializer.AddConverter<Color>(new ColorConverter());
 			JsonSerializer.AddConverter<VisualizeRule>(new VisualizeRuleConverter());
+			JsonSerializer.AddConverter<Color>(new ColorConverter());
+			JsonSerializer.AddConverter<Size>(new SizeConverter());
+			JsonSerializer.AddConverter<Arc>(new ArcConverter());
+			JsonSerializer.AddConverter<Area>(new AreaConverter());
+			JsonSerializer.AddConverter<Coordinate>(new CoordinateConverter());
         }
     }
 }

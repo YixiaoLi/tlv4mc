@@ -7,14 +7,17 @@ using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading;
 using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class TraceLogData
 	{
+		private Dictionary<string, List<Resource>> _resCache = new Dictionary<string, List<Resource>>();
+		private Dictionary<string, string> _attrCache = new Dictionary<string, string>();
 		private ResourceData _resourceData;
-		private Json _data = null;
+		private ResourceList _data = null;
 		public long MinTime { get; private set; }
 		public long MaxTime { get; private set; }
 		public TraceLog TraceLog { get; private set; }
@@ -33,16 +36,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			TraceLog = new TraceLog();
 			_resourceData = resourceData;
 			MinTime = long.MaxValue;
-			MaxTime = long.MinValue;
+			MaxTime = 0;
 
-			_data = new Json(new Dictionary<string, Json>());
+			_data = new ResourceList();
 
-			foreach (KeyValuePair<string,Json> kvp in _resourceData.Resources)
+			foreach (KeyValuePair<string, List<Resource>> kvp in _resourceData.Resources)
 			{
-				_data.Add(kvp.Key, new List<Json>());
-				foreach (Json res in kvp.Value)
+				_data.Add(kvp.Key, new List<Resource>());
+				foreach (Resource res in kvp.Value)
 				{
-					_data[kvp.Key].Add(new Dictionary<string, Json>());
+					_data[kvp.Key].Add(new Resource());
 				}
 			}
 
@@ -52,20 +55,30 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				{
 					foreach (KeyValuePair<string, Attribute> attr in type.Value.Attributes)
 					{
-						_data[type.Key][i].Add(attr.Key, new List<Json>());
-						_data[type.Key][i][attr.Key].Add(new TimeValuePair ( 0, attr.Value.Default ));
+						if (attr.Value.AllocationType == AllocationType.Dynamic)
+						{
+							_data[type.Key][i].Add(attr.Key, new Json(new List<Json>()));
+							_data[type.Key][i][attr.Key].Add(new TimeValuePair(0, attr.Value.Default));
+						}
 					}
 				}
 			}
 
-			foreach (KeyValuePair<string, Json> kvp in _resourceData.Resources)
+			foreach (KeyValuePair<string, List<Resource>> kvp in _resourceData.Resources)
 			{
 				int i = 0;
-				foreach (Json res in kvp.Value)
+				foreach (Resource res in kvp.Value)
 				{
-					foreach(KeyValuePair<string, Json> attr in res.GetKeyValuePairEnumerator())
+					foreach(KeyValuePair<string, Json> attr in res)
 					{
-						_data[kvp.Key][i][attr.Key][0] = new Json(new TimeValuePair( 0, attr.Value.ToString() ));
+						if (_resourceData.ResourceHeader[kvp.Key].Attributes[attr.Key].AllocationType == AllocationType.Dynamic)
+						{
+							_data[kvp.Key][i][attr.Key][0] = new Json(new TimeValuePair(0, attr.Value.ToString()));
+						}
+						else
+						{
+							_data[kvp.Key][i].Add(attr.Key, new Json( attr.Value.ToString()));
+						}
 					}
 					i++;
 				}
@@ -84,13 +97,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				string type = getObjectType(log);
 				string attr = getAttribute(log);
 				string val = getValue(log);
-				ComparisonExpressionList conditions = new ComparisonExpressionList();
-				foreach (string condition in getObjectCondition(log).Replace(" ", "").Split(','))
-				{
-					conditions.Add(new ComparisonExpression(condition));
-				}
+				string conditions = getObjectCondition(log);
 
-				foreach (Json j in getResources(type, conditions))
+				foreach (Resource j in GetResources(type, conditions))
 				{
 					j[attr].Add(new TimeValuePair(Convert.ToInt64(time, _resourceData.TimeRadix), val));
 				}
@@ -104,7 +113,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// <returns>属性値</returns>
 		public string GetAttributeValue(string condition)
 		{
-			return GetAttributeValue(Convert.ToString(MaxTime, _resourceData.TimeRadix), condition);
+			return GetAttributeValue(MaxTime.ToString(), condition);
 		}
 		/// <summary>
 		/// 指定した条件の属性の値を得る
@@ -114,58 +123,105 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// <returns>属性値</returns>
 		public string GetAttributeValue(string time, string condition)
 		{
+			if(_attrCache.ContainsKey(time + condition))
+				return _attrCache[time + condition];
+
 			string type = getObjectType(condition);
 			string attr = getAttribute(condition);
-			ComparisonExpressionList conditions = new ComparisonExpressionList();
-			foreach (string c in getObjectCondition(condition).Replace(" ", "").Split(','))
-			{
-				conditions.Add(new ComparisonExpression(c));
-			}
+			string cond = getObjectCondition(condition);
 
-			return getAttributeValue(Convert.ToInt64(time, _resourceData.TimeRadix), type, conditions, attr);
+			string result = getAttributeValue(Convert.ToInt64(time, _resourceData.TimeRadix), type, cond, attr);
+			_attrCache.Add(time + condition, result);
+			return result;
+		}
+		public string GetAttributeValue(string type, string objectCondition, string attribute)
+		{
+			return getAttributeValue(MaxTime, type, objectCondition, attribute);
+		}
+		public string GetAttributeValue(string time, string type, string objectCondition, string attribute)
+		{
+			if (_attrCache.ContainsKey(time + type + objectCondition + attribute))
+				return _attrCache[time + type + objectCondition + attribute];
+
+			string result = getAttributeValue(Convert.ToInt64(time, _resourceData.TimeRadix), type, objectCondition, attribute);
+
+			_attrCache.Add(time + type + objectCondition + attribute, result);
+			return result;
 		}
 
-		private string getAttributeValue(long time, string type, ComparisonExpressionList conditions, string attribute)
+		private string getAttributeValue(long time, string type, string objectCondition, string attribute)
 		{
+			if (_attrCache.ContainsKey(time + type + objectCondition + attribute))
+				return _attrCache[time + type + objectCondition + attribute];
 
-			List<Json> list = getResources(type, conditions);
-			if (list.Count != 1)
+			string result;
+
+			List<Resource> list = getResources(time, type, objectCondition);
+			if(list.Count == 0)
 			{
-				return string.Empty;
+				result = "__NONE__";
+			}
+			else if (list.Count > 1)
+			{
+				result = "__MANY__";
 			}
 			else
 			{
-				return ((TimeValuePair)(list[0][attribute].Last<Json>(j =>
-				{
-					return ((TimeValuePair)(j.Value)).Time < time;
-				})).Value).Value;
+				result = getTimeValuePair(list[0][attribute], time).Value;
 			}
+
+			_attrCache.Add(time + type + objectCondition + attribute, result);
+			return result;
 		}
-		private List<Json> getResources(string type, ComparisonExpressionList conditions)
+
+		private List<Resource> getResources(long time, string type, string objectCondition)
 		{
+			if (_resCache.ContainsKey(time + type + objectCondition))
+				return _resCache[time + type + objectCondition];
 
-			List<Json> result = new List<Json>();
-
+			List<Resource> result = new List<Resource>();
 			for (int i = 0; i < _data[type].Count; i++)
 			{
-				bool f = true;
-				foreach (ComparisonExpression c in conditions)
+				string cnd = objectCondition;
+
+				foreach (Match m in Regex.Matches(objectCondition, @"(?<attrName>[^=!<>\s]+)\s*(?<ope>(==|!=|<=|>=|<|>))"))
 				{
-					string value = ((TimeValuePair)(_data[type][i][c.Left].Last<Json>().Value)).Value;
-
-					ComparisonExpression ce = new ComparisonExpression(c.Right, c.Ope, value);
-
-					if (!ce.Result(_resourceData.ResourceHeader[type].Attributes[c.Left].VariableType))
-						f = false;
+					if(_resourceData.ResourceHeader[type].Attributes[m.Groups["attrName"].Value].AllocationType == AllocationType.Dynamic)
+					{
+						cnd = cnd.Replace(m.Groups["attrName"].Value, getTimeValuePair(_data[type][i][m.Groups["attrName"].Value], time).Value);
+					}
+					else
+					{
+						cnd = cnd.Replace(m.Groups["attrName"].Value, _data[type][i][m.Groups["attrName"].Value]);
+					}
 				}
-				if(f)
+
+				if (ConditionExpression.Result(cnd))
 				{
 					result.Add(_data[type][i]);
 				}
 			}
 
+			_resCache.Add(time + type + objectCondition, result);
 			return result;
 		}
+		public List<Resource> GetResources(string type, string objectCondition)
+		{
+			return getResources(MaxTime, type, objectCondition);
+		}
+
+		private TimeValuePair getTimeValuePair(Json json, long time)
+		{
+			return (TimeValuePair)(json.Last<Json>(j =>
+			{
+				return ((TimeValuePair)(j.Value)).Time <= time;
+			})).Value;
+		}
+		private TimeValuePair getTimeValuePair(Json json)
+		{
+			return (TimeValuePair)(json.Last<Json>()).Value;
+		}
+
 		protected long getTime(string item)
 		{
 			return Convert.ToInt64(Regex.Match(item, @"\[\s*(?<time>\w+)\s*\]").Groups["time"].Value, _resourceData.TimeRadix);
@@ -227,7 +283,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			return Regex.IsMatch(item, @"\.\s*(?<attribute>[^\(\s]+)\s*\(");
 		}
-		
+
 		private struct TimeValuePair
 		{
 			public long Time { get; private set; }

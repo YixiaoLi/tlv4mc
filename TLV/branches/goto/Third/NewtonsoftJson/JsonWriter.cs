@@ -18,6 +18,11 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			_writer = writer;
 		}
 
+		public void Write(object obj)
+		{
+			_writer.WriteValue(obj);
+		}
+
 		public void Write(NU.OJL.MPRTOS.TLV.Base.JsonTokenType type)
 		{
 			Write(type, null);

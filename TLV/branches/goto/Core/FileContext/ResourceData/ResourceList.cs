@@ -6,24 +6,9 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-    /// <summary>
-    /// リソースを表すクラス
-    /// </summary>
-	public class ResourceList : GeneralKeyedJsonableCollection<string, Json, ResourceList>
-    {
-        /// <summary>
-        /// <c>Resource</c>のインスタンスを生成する
-        /// </summary>
-		public ResourceList()
-			: base(new Dictionary<string, Json>())
-		{
-		}
-
-		public ResourceList(IDictionary<string, Json> d)
-			:base(d)
-		{
-		}
-
+	public class ResourceList : GeneralKeyedJsonableCollection<string, List<Resource>, ResourceList>
+	{
+		public new List<Resource> this[string resourceTypeName] { get { return base[resourceTypeName]; } }
 	}
 
 }

@@ -22,5 +22,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			X = c[0];
 			Y = c[1];
 		}
+
+		public override string ToString()
+		{
+			return X + "," + Y;
+		}
 	}
 }

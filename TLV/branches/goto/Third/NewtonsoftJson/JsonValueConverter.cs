@@ -26,13 +26,20 @@ namespace NU.OJL.MPRTOS.TLV.Third
 
 			Action<object> jsonValueSet = (object value) =>
 				{
-					if (result.Value is List<Json>)
+					if (result != null)
 					{
-						((List<Json>)result.Value).Add(new Json(value));
+						if (result.Value is List<Json>)
+						{
+							((List<Json>)result.Value).Add(new Json(value));
+						}
+						else if (result.Value is Dictionary<string, Json>)
+						{
+							((Dictionary<string, Json>)result.Value).Add(keyStack.Pop(), new Json(value));
+						}
 					}
-					else if (result.Value is Dictionary<string, Json>)
+					else
 					{
-						((Dictionary<string, Json>)result.Value).Add(keyStack.Pop(), new Json(value));
+						result = new Json(value);
 					}
 				};
 

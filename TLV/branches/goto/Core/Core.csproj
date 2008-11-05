@@ -46,6 +46,10 @@
   <ItemGroup>
     <Compile Include="ApplicationDatas.cs" />
     <Compile Include="ApplicationFactory.cs" />
+    <Compile Include="FileContext\ResourceData\Resource.cs" />
+    <Compile Include="JsonConverters\ArcConverter.cs" />
+    <Compile Include="JsonConverters\SizeConverter.cs" />
+    <Compile Include="JsonConverters\AreaConverter.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AllocationType.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\Attribute.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AttributeList.cs" />
@@ -62,6 +66,8 @@
     <Compile Include="FileContext\ResourceData\ResourceHeader.cs" />
     <Compile Include="FileContext\ResourceData\ResourceType.cs" />
     <Compile Include="FileContext\VisualizeData\ApplyRule.cs" />
+    <Compile Include="FileContext\VisualizeData\Shape\Arc.cs" />
+    <Compile Include="FileContext\VisualizeData\Shape\Area.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\Coordinate.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\CoordinateList.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\Pen.cs" />
@@ -69,6 +75,7 @@
     <Compile Include="FileContext\VisualizeData\Shape\ShapeList.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLog.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogData.cs" />
+    <Compile Include="FileContext\VisualizeData\Shape\Size.cs" />
     <Compile Include="FileContext\VisualizeData\VisualizeData.cs" />
     <Compile Include="FileContext\VisualizeData\VisualizeRule.cs" />
     <Compile Include="FileContext\VisualizeData\VisualizeRuleList.cs" />
@@ -100,10 +107,10 @@
     <Compile Include="Controls\Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Converters\ColorConverter.cs" />
-    <Compile Include="Converters\CoordinateConverter.cs" />
-    <Compile Include="Converters\ResourceHeaderConverter.cs" />
-    <Compile Include="Converters\VisualizeRuleConverter.cs" />
+    <Compile Include="JsonConverters\ColorConverter.cs" />
+    <Compile Include="JsonConverters\CoordinateConverter.cs" />
+    <Compile Include="JsonConverters\ResourceHeaderConverter.cs" />
+    <Compile Include="JsonConverters\VisualizeRuleConverter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

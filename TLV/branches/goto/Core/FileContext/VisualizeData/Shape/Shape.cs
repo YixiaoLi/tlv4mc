@@ -12,13 +12,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public string Value { get; set; }
 		public CoordinateList Coordinates { get; set; }
 		public Coordinate Offset { get; set; }
+		public Area Area { get; set; }
+		public Arc Arc { get; set; }	
 		public Pen Pen { get; set; }
 		public Color Fill { get; set; }
 		public ContentAlignment Align { get; set; }
 
 		public Shape()
 		{
-			Align = ContentAlignment.TopLeft;
+			Align = ContentAlignment.BottomLeft;
 		}
 	}
 }

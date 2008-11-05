@@ -16,7 +16,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	{
 		private Dictionary<string, ResourceType> _types = new Dictionary<string, ResourceType>();
 		public string Name { get; private set; }
-		public ResourceType this[string name] { get { return _types[name]; } }
+		public ResourceType this[string typeName] { get { return _types[typeName]; } }
 
 		public ResourceHeader()
 			:base()
