@@ -3,9 +3,9 @@
 	{
 		"\[(?<time>\d+)\] dispatch to task (?<id>\d+)\." : [
 			{
-				"EXIST(Task(state==RUNNING))"	:[
-					"[${time}]Task(state==RUNNING).preempt()",
-					"[${time}]Task(state==RUNNING).state=RUNNABLE"
+				"EXIST{Task(state==RUNNING)}"	:[
+					"[${time}]Task(id==ATTR{Task(state==RUNNING).id}).preempt()",
+					"[${time}]Task(id==ATTR{Task(state==RUNNING).id}).state=RUNNABLE"
 				]
 			},
 			"[${time}]Task(id==${id}).dispatch()",

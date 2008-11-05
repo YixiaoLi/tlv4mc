@@ -13,7 +13,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	/// </summary>
 	public class CommonFormatConverter
 	{
-		private readonly string[] _convertFunction = new string[] { "COUNT","EXIST" };
+		private readonly string[] _convertFunction = new string[] { "COUNT","EXIST","ATTR" };
 		private ResourceData _resourceData;
 		private VisualizeData _visualizeData;
 		private TraceLog _traceLog;
@@ -31,20 +31,41 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			if (_constructProgressReport != null)
 				_constructProgressReport(0, "リソースデータを生成中");
 			_to = 10;
-			_resourceData = new ResourceData().Parse(File.ReadAllText(resourceFilePath));
+			try
+			{
+				_resourceData = new ResourceData().Parse(File.ReadAllText(resourceFilePath));
+			}
+			catch (Exception _e)
+			{
+				throw new Exception("リソースデータの生成に失敗しました。\nリソースファイルの記述に誤りがあります。\n" + _e.Message);
+			}
 
 			if (_constructProgressReport != null)
 				_constructProgressReport(_to, "トレースログデータを生成中");
 			_from = _to;
 			_to = 90;
-			_traceLog = getTraceLog(traceLogFilePath, _resourceData);
+			try
+			{
+				_traceLog = getTraceLog(traceLogFilePath, _resourceData);
+			}
+			catch (Exception _e)
+			{
+				throw new Exception("トレースログデータの生成に失敗しました。\nトレースログ変換ルールファイルの記述に誤りがあります。\n" + _e.Message);
+			}
 
 			if (_constructProgressReport != null)
 				_constructProgressReport(_to, "可視化データを生成中");
 			_from = _to;
 			_to = 100;
-
-			_visualizeData = getVisualizeData(_resourceData);
+			
+			try
+			{
+				_visualizeData = getVisualizeData(_resourceData);
+			}
+			catch (Exception _e)
+			{
+				throw new Exception("可視化データの生成に失敗しました。\n可視化ルールファイルの記述に誤りがあります。\n" + _e.Message);
+			}
 
 			if (_constructProgressReport != null)
 				_constructProgressReport(_to, "初期化中");
@@ -261,7 +282,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			else
 			{
 				// valueがstringのときログを置換して追加
-				traceLogManager.Add(Regex.Replace(log, pattern, (string)value));
+				traceLogManager.Add(Regex.Replace(log, pattern, applyConvertFunc(traceLogManager, value)));
 			}
 		}
 
@@ -295,24 +316,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				string condition = Regex.Replace(log, pattern, kvp.Key);
 
-				foreach (string func in _convertFunction)
-				{
-					foreach (Match m in Regex.Matches(condition, func + @"\s*\(\s*(?<res>(?<type>[^\s\(]+)\s*\(\s*(?<cond>[^\(]+)\s*\))\s*\)\s*"))
-					{
-						if (cache.ContainsKey(m.Value))
-						{
-							condition = Regex.Replace(condition, Regex.Escape(m.Value), cache[m.Value]);
-						}
-						else
-						{
-							string val = calcConvertFunc(func, m.Groups["type"].Value, m.Groups["cond"].Value, traceLogManager);
-							condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
-							cache.Add(m.Value, val);
-						}
-					}
-				}
+				condition = applyConvertFunc(traceLogManager,condition);
 
-				foreach (Match m in Regex.Matches(condition, @"(?<type>[^\s\(]+)\s*\(\s*(?<cond>[^\(]+)\s*\)\s*\.\s*(?<attr>[^\s=]+)"))
+				foreach (Match m in Regex.Matches(condition, @"(?<type>[^\s\(]+)\s*\(\s*(?<cond>[^\)]+)\s*\)\s*\.\s*(?<attr>[^\s=]+)"))
 				{
 					if (cache.ContainsKey(m.Value))
 					{
@@ -320,30 +326,90 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					}
 					else
 					{
-						string val = traceLogManager.GetAttributeValue(m.Groups["type"].Value, m.Groups["cond"].Value, m.Groups["attr"].Value);
+						string val;
+						try
+						{
+							val = traceLogManager.GetAttributeValue(m.Groups["type"].Value, m.Groups["cond"].Value, m.Groups["attr"].Value);
+						}
+						catch (Exception)
+						{
+							throw new Exception("リソース条件式が異常です。\n" + "\"" + m.Groups["type"].Value + "(" + m.Groups["cond"].Value + ")." + m.Groups["attr"].Value + "\"");
+						}
 						condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
 						cache.Add(m.Value, val);
 					}
 				}
 
-				if (ConditionExpression.Result(condition))
+				bool result;
+
+				try
+				{
+					result = ConditionExpression.Result(condition);
+				}
+				catch (Exception)
+				{
+					throw new Exception("ログ条件式が異常です。\n" + "\"" + kvp.Key + "\"");
+				}
+
+				if (result)
 				{
 					addTraceLog(log, pattern, kvp.Value, traceLogManager);
 				}
 			}
 		}
 
-		private string calcConvertFunc(string func, string type, string condition, TraceLogData traceLogManager)
+		private string applyConvertFunc(TraceLogData traceLogManager, string condition)
 		{
+			foreach (string func in _convertFunction)
+			{
+				foreach (Match m in Regex.Matches(condition, func + @"\s*{\s*(?<type>[^\s\(]+)\s*\(\s*(?<cond>[^\)]+)\s*\)\s*(\.\s*(?<attr>[^\)\s]+))?\s*}\s*"))
+				{
+					string val = calcConvertFunc(func, m.Groups["type"].Value, m.Groups["cond"].Value, m.Groups["attr"].Value, traceLogManager);
+					condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
+				}
+			}
+			return condition;
+		}
+
+		private string calcConvertFunc(string func, string type, string condition, string attribute, TraceLogData traceLogManager)
+		{
+			string result;
 			switch (func)
 			{
 				case "COUNT":
-					return traceLogManager.GetResources(type, condition).Count.ToString();
+					try
+					{
+						result = traceLogManager.GetResources(type, condition).Count.ToString();
+					}
+					catch (Exception e)
+					{
+						throw new Exception("リソース条件式が異常です。\n" + "\"" + type + "(" + condition + ")" + "\"");
+					}
+					break;
 				case "EXIST":
-					return traceLogManager.GetResources(type, condition).Count != 0 ? "True" : "False";
+					try
+					{
+						result = traceLogManager.GetResources(type, condition).Count != 0 ? "True" : "False";
+					}
+					catch (Exception e)
+					{
+						throw new Exception("リソース条件式が異常です。\n" + "\"" + type + "(" + condition + ")" + "\"");
+					}
+					break;
+				case "ATTR":
+					try
+					{
+						result = traceLogManager.GetAttributeValue(type, condition, attribute).ToString();
+					}
+					catch (Exception e)
+					{
+						throw new Exception("リソース条件式が異常です。\n" + "\"" + "ATTR{" + type + "(" + condition + ")." + attribute + "}" + "\"");
+					}
+					break;
 				default:
-					return "False";
+					throw new Exception(func + "：未知の関数です。");
 			}
+			return result;
 		}
 
 	}

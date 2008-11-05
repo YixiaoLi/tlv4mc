@@ -12,62 +12,70 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public static bool Result(string expression)
 		{
-			if (cache.ContainsKey(expression))
-				return cache[expression];
-
-			Match m;
-			string e = expression;
-
-			do
+			bool result;
+			try
 			{
-				m = Regex.Match(e, @"(?<comparisonExpression>\((?<left>[^=!<>\s\(\)]+)\s*(?<ope>(==|!=|<=|>=|>|<))\s*(?<right>[^=!<>\s\(\)]+)\))");
-				if (m.Success)
-					e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), ComparisonExpression.Result<string>(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
-			} while (m.Success);
+				if (cache.ContainsKey(expression))
+					return cache[expression];
 
-			if (cache.ContainsKey(e))
-				return cache[e];
+				Match m;
+				string e = expression;
 
-			do
+				do
+				{
+					m = Regex.Match(e, @"(?<comparisonExpression>\((?<left>[^=!<>\s\(\)]+)\s*(?<ope>(==|!=|<=|>=|>|<))\s*(?<right>[^=!<>\s\(\)]+)\))");
+					if (m.Success)
+						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), ComparisonExpression.Result<string>(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
+				} while (m.Success);
+
+				if (cache.ContainsKey(e))
+					return cache[e];
+
+				do
+				{
+					m = Regex.Match(e, @"(?<comparisonExpression>\((?<left>!?[^=!<>\s\(\)]+)\s*(?<ope>(&&|\|\|))\s*(?<right>!?[^=!<>\s\(\)]+)\))");
+					if (m.Success)
+						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
+				} while (m.Success);
+
+				if (cache.ContainsKey(e))
+					return cache[e];
+
+				do
+				{
+					m = Regex.Match(e, @"(?<comparisonExpression>(?<left>[^=!<>\s\(\)]+)\s*(?<ope>(==|!=|<=|>=|>|<))\s*(?<right>[^=!<>\s\(\)]+))");
+					if (m.Success)
+						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value) + @"(?<other>[\s=!<>]|$)", ComparisonExpression.Result<string>(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + "${other}");
+				} while (m.Success);
+
+				if (cache.ContainsKey(e))
+					return cache[e];
+
+				do
+				{
+					m = Regex.Match(e, @"(?<comparisonExpression>(?<left>!?[^=!<>\s\(\)]+)\s*(?<ope>&&)\s*(?<right>!?[^=!<>\s\(\)]+))");
+					if (m.Success)
+						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value) + @"(?<other>[\s=!<>]|$)", calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + "${other}");
+				} while (m.Success);
+
+				if (cache.ContainsKey(e))
+					return cache[e];
+
+				do
+				{
+					m = Regex.Match(e, @"(?<comparisonExpression>(?<left>!?[^=!<>\s\(\)]+)\s*(?<ope>\|\|)\s*(?<right>!?[^=!<>\s\(\)]+))");
+					if (m.Success)
+						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value) + @"(?<other>[\s=!<>]|$)", calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + "${other}");
+				} while (m.Success);
+
+				result = parse(e);
+
+				cache.Add(expression, result);
+			}
+			catch
 			{
-				m = Regex.Match(e, @"(?<comparisonExpression>\((?<left>!?[^=!<>\s\(\)]+)\s*(?<ope>(&&|\|\|))\s*(?<right>!?[^=!<>\s\(\)]+)\))");
-				if (m.Success)
-					e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
-			} while (m.Success);
-
-			if (cache.ContainsKey(e))
-				return cache[e];
-
-			do
-			{
-				m = Regex.Match(e, @"(?<comparisonExpression>(?<left>[^=!<>\s\(\)]+)\s*(?<ope>(==|!=|<=|>=|>|<))\s*(?<right>[^=!<>\s\(\)]+))");
-				if (m.Success)
-					e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value) + @"(?<other>[\s=!<>]|$)", ComparisonExpression.Result<string>(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + "${other}");
-			} while (m.Success);
-
-			if (cache.ContainsKey(e))
-				return cache[e];
-
-			do
-			{
-				m = Regex.Match(e, @"(?<comparisonExpression>(?<left>!?[^=!<>\s\(\)]+)\s*(?<ope>&&)\s*(?<right>!?[^=!<>\s\(\)]+))");
-				if (m.Success)
-					e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value) + @"(?<other>[\s=!<>]|$)", calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + "${other}");
-			} while (m.Success);
-
-			if (cache.ContainsKey(e))
-				return cache[e];
-
-			do
-			{
-				m = Regex.Match(e, @"(?<comparisonExpression>(?<left>!?[^=!<>\s\(\)]+)\s*(?<ope>\|\|)\s*(?<right>!?[^=!<>\s\(\)]+))");
-				if (m.Success)
-					e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value) + @"(?<other>[\s=!<>]|$)", calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + "${other}");
-			} while (m.Success);
-
-			bool result = parse(e);
-
-			cache.Add(expression, result);
+				throw new Exception("条件式の記述が異常です。\n" + "\"" + expression + "\"");
+			}
 
 			return result;
 		}

@@ -167,7 +167,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 			else
 			{
-				result = getTimeValuePair(list[0][attribute], time).Value;
+				if (_resourceData.ResourceHeader[type].Attributes[attribute].AllocationType == AllocationType.Dynamic)
+				{
+					result = getTimeValuePair(list[0][attribute], time).Value;
+				}
+				else
+				{
+					result = list[0][attribute].Value.ToString();
+				}
 			}
 
 			_attrCache.Add(time + type + objectCondition + attribute, result);
