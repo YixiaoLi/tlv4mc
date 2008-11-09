@@ -6,10 +6,11 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class VisualizeRule : IEnumerable<KeyValuePair<string,string>>
+	public class VisualizeRule : IEnumerable<KeyValuePair<string,string>>, INamed
 	{
 		private object _data;
 
+		public string Name { get; set; }
 		public bool IsMapped { get { return _data is Dictionary<string, string>; } }
 		public string this[string name] { get { return IsMapped ? ((Dictionary<string, string>)_data)[name] : null;}}
 

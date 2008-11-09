@@ -11,11 +11,16 @@ namespace NU.OJL.MPRTOS.TLV.Third
 {
 	public class JsonReader : IJsonReader
 	{
-		private Newtonsoft.Json.JsonReader _reader;
+		private Newtonsoft.Json.JsonTextReader _reader;
 
-		public JsonReader(Newtonsoft.Json.JsonReader reader)
+		public JsonReader(Newtonsoft.Json.JsonTextReader reader)
 		{
 			_reader = reader;
+		}
+
+		public static implicit operator Newtonsoft.Json.JsonTextReader(JsonReader reader)
+		{
+			return reader._reader;
 		}
 
 		public bool Read()

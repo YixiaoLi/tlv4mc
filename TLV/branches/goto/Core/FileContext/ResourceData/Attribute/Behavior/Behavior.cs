@@ -5,8 +5,9 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class Behavior
+	public class Behavior : INamed
 	{
+		public string Name { get; set; }
 		public string DisplayName { get; set; }
 		public string VisualizeRule { get; set; }
 		public ArgumentList Arguments { get; set; }

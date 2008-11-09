@@ -14,7 +14,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class TraceLogData
 	{
-		private Dictionary<string, List<Resource>> _resCache = new Dictionary<string, List<Resource>>();
+		private Dictionary<string, Dictionary<string, Resource>> _resCache = new Dictionary<string, Dictionary<string, Resource>>();
+		private Dictionary<string, string> _objTypeNameCache = new Dictionary<string, string>();
 		private Dictionary<string, string> _attrCache = new Dictionary<string, string>();
 		private ResourceData _resourceData;
 		private ResourceList _data = null;
@@ -40,44 +41,44 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			_data = new ResourceList();
 
-			foreach (KeyValuePair<string, List<Resource>> kvp in _resourceData.Resources)
+			foreach (KeyValuePair<string, GeneralNamedCollection<Resource>> res in _resourceData.Resources)
 			{
-				_data.Add(kvp.Key, new List<Resource>());
-				foreach (Resource res in kvp.Value)
+				_data.Add(res.Key, new GeneralNamedCollection<Resource>());
+				foreach (string type in res.Value.Keys)
 				{
-					_data[kvp.Key].Add(new Resource());
+					_data[res.Key].Add(type, new Resource());
 				}
 			}
 
-			foreach(KeyValuePair<string, ResourceType> type in _resourceData.ResourceHeader)
+			foreach(string type in _resourceData.ResourceHeader.TypeNames)
 			{
-				for (int i = 0; i < _data[type.Key].Count; i++)
+				foreach (Resource res in _resourceData.Resources[type])
 				{
-					foreach (KeyValuePair<string, Attribute> attr in type.Value.Attributes)
+					foreach (AttributeType attr in _resourceData.ResourceHeader[type].Attributes)
 					{
-						if (attr.Value.AllocationType == AllocationType.Dynamic)
+						if (attr.AllocationType == AllocationType.Dynamic)
 						{
-							_data[type.Key][i].Add(attr.Key, new Json(new List<Json>()));
-							_data[type.Key][i][attr.Key].Add(new TimeValuePair(0, attr.Value.Default));
+							_data[type][res.Name].Add(attr.Name, new Json(new List<Json>()));
+							_data[type][res.Name][attr.Name].Add(new TimeValuePair(0, attr.Default));
 						}
 					}
 				}
 			}
 
-			foreach (KeyValuePair<string, List<Resource>> kvp in _resourceData.Resources)
+			foreach (KeyValuePair<string, GeneralNamedCollection<Resource>> type in _resourceData.Resources)
 			{
 				int i = 0;
-				foreach (Resource res in kvp.Value)
+				foreach (Resource res in type.Value)
 				{
 					foreach(KeyValuePair<string, Json> attr in res)
 					{
-						if (_resourceData.ResourceHeader[kvp.Key].Attributes[attr.Key].AllocationType == AllocationType.Dynamic)
+						if (_resourceData.ResourceHeader[type.Key].Attributes[attr.Key].AllocationType == AllocationType.Dynamic)
 						{
-							_data[kvp.Key][i][attr.Key][0] = new Json(new TimeValuePair(0, attr.Value.ToString()));
+							_data[type.Key][res.Key][attr.Key][0] = new Json(new TimeValuePair(0, attr.Value.ToString()));
 						}
 						else
 						{
-							_data[kvp.Key][i].Add(attr.Key, new Json( attr.Value.ToString()));
+							_data[type.Key][res.Key].Add(attr.Key, new Json(attr.Value.ToString()));
 						}
 					}
 					i++;
@@ -87,134 +88,102 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public void Add(string log)
 		{
+			long time = timeToLong(getTime(log));
 			TraceLog.Add(log);
-			MinTime = MinTime > getTime(log) ? getTime(log) : MinTime;
-			MaxTime = MaxTime < getTime(log) ? getTime(log) : MaxTime;
+			MinTime = MinTime > time ? time : MinTime;
+			MaxTime = MaxTime < time ? time : MaxTime;
 
-			if (hasAttribute(log))
+			if (isAttributeChangeLog(log))
 			{
-				string time = Convert.ToString(getTime(log), _resourceData.TimeRadix);
-				string type = getObjectType(log);
-				string attr = getAttribute(log);
-				string val = getValue(log);
-				string conditions = getObjectCondition(log);
-
-				foreach (Resource j in GetResources(type, conditions))
+				foreach (Resource res in GetResources(log).Values)
 				{
-					j[attr].Add(new TimeValuePair(Convert.ToInt64(time, _resourceData.TimeRadix), val));
+					res[getAttribute(log)].Add(new TimeValuePair(time, getValue(log)));
 				}
 			}
 
 		}
-		/// <summary>
-		/// 指定した条件の属性を得る
-		/// </summary>
-		/// <param name="condition">条件 "Type(atr1==xxx, atr2!=yyy).atr3"</param>
-		/// <returns>属性値</returns>
+
 		public string GetAttributeValue(string condition)
 		{
-			return GetAttributeValue(MaxTime.ToString(), condition);
-		}
-		/// <summary>
-		/// 指定した条件の属性の値を得る
-		/// </summary>
-		/// <param name="time">時間</param>
-		/// <param name="condition">条件 "Type(atr1==xxx, atr2!=yyy).atr3"</param>
-		/// <returns>属性値</returns>
-		public string GetAttributeValue(string time, string condition)
-		{
-			if(_attrCache.ContainsKey(time + condition))
-				return _attrCache[time + condition];
+			condition = condition.Replace(" ", "").Replace("\t", "");
 
-			string type = getObjectType(condition);
-			string attr = getAttribute(condition);
-			string cond = getObjectCondition(condition);
+			string time = string.Empty;
+			if (!hasTime(condition))
+				time = timeToString(MaxTime);
 
-			string result = getAttributeValue(Convert.ToInt64(time, _resourceData.TimeRadix), type, cond, attr);
-			_attrCache.Add(time + condition, result);
-			return result;
-		}
-		public string GetAttributeValue(string type, string objectCondition, string attribute)
-		{
-			return getAttributeValue(MaxTime, type, objectCondition, attribute);
-		}
-		public string GetAttributeValue(string time, string type, string objectCondition, string attribute)
-		{
-			if (_attrCache.ContainsKey(time + type + objectCondition + attribute))
-				return _attrCache[time + type + objectCondition + attribute];
+			if (_attrCache.ContainsKey(time + condition))
+				return _attrCache[condition];
 
-			string result = getAttributeValue(Convert.ToInt64(time, _resourceData.TimeRadix), type, objectCondition, attribute);
-
-			_attrCache.Add(time + type + objectCondition + attribute, result);
-			return result;
-		}
-
-		private string getAttributeValue(long time, string type, string objectCondition, string attribute)
-		{
-			if (_attrCache.ContainsKey(time + type + objectCondition + attribute))
-				return _attrCache[time + type + objectCondition + attribute];
+			if (!Regex.IsMatch(condition, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*(\.\s*[^=!<>\(\s]+)?\s*$"))
+				throw new Exception("属性指定の条件式が異常です。\n" + "\"" + condition + "\"");
 
 			string result;
 
-			List<Resource> list = getResources(time, type, objectCondition);
-			if(list.Count == 0)
+			Dictionary<string, Resource> list = GetResources(condition);
+
+			if (list.Count > 1)
 			{
-				result = "__NONE__";
+				throw new Exception("複数のリソースがマッチします。\n" + "\"" + condition + "\"");
 			}
-			else if (list.Count > 1)
+			else if (list.Count == 0)
 			{
-				result = "__MANY__";
+				throw new Exception("マッチするリソースがありません。\n" + "\"" + condition + "\"");
 			}
 			else
 			{
 				if (_resourceData.ResourceHeader[type].Attributes[attribute].AllocationType == AllocationType.Dynamic)
 				{
-					result = getTimeValuePair(list[0][attribute], time).Value;
+					result = getTimeValuePair(list.First().Value[attribute], time).Value;
 				}
 				else
 				{
-					result = list[0][attribute].Value.ToString();
+					result = list.First().Value[attribute].Value.ToString();
 				}
 			}
 
-			_attrCache.Add(time + type + objectCondition + attribute, result);
+			_attrCache.Add(time + condition, result);
 			return result;
 		}
-
-		private List<Resource> getResources(long time, string type, string objectCondition)
+		public Dictionary<string, Resource> GetResources(string condition)
 		{
-			if (_resCache.ContainsKey(time + type + objectCondition))
-				return _resCache[time + type + objectCondition];
+			condition = condition.Replace(" ", "").Replace("\t", "");
 
-			List<Resource> result = new List<Resource>();
-			for (int i = 0; i < _data[type].Count; i++)
+			string time = string.Empty;
+			if (!hasTime(condition))
+				time = timeToString(MaxTime);
+
+			if (_resCache.ContainsKey(time + condition))
+				return _resCache[condition];
+
+			if (!Regex.IsMatch(condition, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*$"))
+				throw new Exception("リソース指定の条件式が異常です。\n" + "\"" + condition + "\"");
+
+			Dictionary<string, Resource> result = new Dictionary<string, Resource>();
+			foreach (KeyValuePair<string, Resource> res in _data[getObjectType(condition)])
 			{
-				string cnd = objectCondition;
+				string cnd = condition;
 
-				foreach (Match m in Regex.Matches(objectCondition, @"(?<attrName>[^=!<>\s]+)\s*(?<ope>(==|!=|<=|>=|<|>))"))
+				foreach (Match m in Regex.Matches(condition, @"(?<attrName>[^=!<>\s]+)\s*(?<ope>(==|!=|<=|>=|<|>))"))
 				{
-					if(_resourceData.ResourceHeader[type].Attributes[m.Groups["attrName"].Value].AllocationType == AllocationType.Dynamic)
+					if (_resourceData.ResourceHeader[type].Attributes[m.Groups["attrName"].Value].AllocationType == AllocationType.Dynamic)
 					{
-						cnd = cnd.Replace(m.Groups["attrName"].Value, getTimeValuePair(_data[type][i][m.Groups["attrName"].Value], time).Value);
+						cnd = cnd.Replace(m.Groups["attrName"].Value, getTimeValuePair(_data[type][res.Key][m.Groups["attrName"].Value], time).Value);
 					}
 					else
 					{
-						cnd = cnd.Replace(m.Groups["attrName"].Value, _data[type][i][m.Groups["attrName"].Value]);
+						cnd = cnd.Replace(m.Groups["attrName"].Value, _data[type][res.Key][m.Groups["attrName"].Value]);
 					}
 				}
 
 				if (ConditionExpression.Result(cnd))
 				{
-					result.Add(_data[type][i]);
+					result.Add(res.Key, _data[type][res.Key]);
 				}
 			}
 
-			_resCache.Add(time + type + objectCondition, result);
+			_resCache.Add(time + condition, result);
+
 			return result;
-		}
-		public List<Resource> GetResources(string type, string objectCondition)
-		{
-			return getResources(MaxTime, type, objectCondition);
 		}
 
 		private TimeValuePair getTimeValuePair(Json json, long time)
@@ -229,66 +198,124 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return (TimeValuePair)(json.Last<Json>()).Value;
 		}
 
-		protected long getTime(string item)
+		protected string getTime(string log)
 		{
-			return Convert.ToInt64(Regex.Match(item, @"\[\s*(?<time>\w+)\s*\]").Groups["time"].Value, _resourceData.TimeRadix);
+			Match m = Regex.Match(log, @"\s*\[\s*(?<time>[0-9a-fA-F]+)\s*\]\s*");
+
+			if (m.Success)
+				return m.Groups["time"].Value.Replace(" ", "").Replace("\t", "");
+			else
+				throw new Exception("時間指定のフォーマットが異常です。\n" + "\"" + log + "\"");
 		}
-		protected string getSubject(string item)
+		protected string getObject(string log)
 		{
-			return Regex.Match(item, @"\s*(?<subject>[^:]+):").Groups["subject"].Value.Replace(" ", "").Replace("\t", "");
+			Match m = Regex.Match(log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<object>[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?)\s*(\.\s*[^=!<>\(\s]+)?\s*$");
+
+			if (m.Success)
+				return m.Groups["object"].Value.Replace(" ", "").Replace("\t", "");
+			else
+				throw new Exception("オブジェクト指定のフォーマットが異常です。\n" + "\"" + log + "\"");
 		}
-		protected string getObject(string item)
+		protected string getBehavior(string log)
 		{
-			return Regex.Match(item, @"\]?\s*(?<object>[^\.]+)\.").Groups["object"].Value.Replace(" ", "").Replace("\t", "");
+			Match m = Regex.Match(log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)?)\s*\.\s*(?<behavior>[^=!<>\(\s]+\s*\([^\)]+\))\s*$");
+
+			if (m.Success)
+				return m.Groups["behavior"].Value.Replace(" ", "").Replace("\t", "");
+			else
+				throw new Exception("振舞い指定のフォーマットが異常です。\n" + "\"" + log + "\"");
 		}
-		protected string getBehavior(string item)
+		protected string getAttribute(string log)
 		{
-			return Regex.Match(item, @"\.\s*(?<behavior>[^\(]+\([^\(]+\))").Groups["behavior"].Value.Replace(" ", "").Replace("\t", "");
+			Match m = Regex.Match(log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)?)\s*\.\s*(?<attribute>[^=!<>\(\s]+)\s*$");
+
+			if (m.Success)
+				return m.Groups["attribute"].Value.Replace(" ", "").Replace("\t", "");
+			else
+				throw new Exception("属性指定のフォーマットが異常です。\n" + "\"" + log + "\"");
 		}
-		protected string getAttribute(string item)
+		protected string getObjectType(string log)
 		{
-			if (Regex.IsMatch(item, @"\.\s*(?<attribute>[^\s=]+)\s*="))
+			Match m = Regex.Match(log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<object>[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?)\s*(\.\s*[^=!<>\(\s]+)?\s*$");
+
+			if (!m.Success)
+				throw new Exception("オブジェクト指定のフォーマットが異常です。\n" + "\"" + log + "\"");
+
+			string obj = m.Groups["object"].Value.Replace(" ", "").Replace("\t", "");
+
+			m = Regex.Match(log, @"^\s*(?<typeName>[^\[\]\(\)\.\s]+)\s*\([^\)]+\)\s*$");
+
+			if (m.Success)
 			{
-				return Regex.Match(item, @"\.\s*(?<attribute>[^\s=]+)\s*=").Groups["attribute"].Value.Replace(" ", "").Replace("\t", "");
+				string o = m.Groups["typeName"].Value.Replace(" ", "").Replace("\t", "");
+
+				if (_resourceData.ResourceHeader.TypeNames.Contains<string>(o))
+					return o;
+				else
+					throw new Exception("\"" + o + "\"というリソースの型は定義されていません。");
 			}
 			else
 			{
-				return Regex.Match(item, @"\.\s*(?<attribute>[^\s]+)\s*").Groups["attribute"].Value.Replace(" ", "").Replace("\t", "");
+				m = Regex.Match(log, @"^\s*(?<resName>[^\[\]\(\)\.\s]+)\s*$");
+				
+				string o = m.Groups["resName"].Value.Replace(" ", "").Replace("\t", "");
+
+				if (_objTypeNameCache.ContainsKey(log))
+					return _objTypeNameCache[log];
+
+				string result = string.Empty;
+
+				foreach(KeyValuePair<string, Dictionary<string, Resource>> resTypeList in _resourceData.Resources)
+				{
+					foreach(KeyValuePair<string, Resource> resList in resTypeList.Value)
+					{
+						if (resList.Key == o)
+						{
+							if (result != string.Empty)
+								throw new Exception("\"" + o + "\"という名前のリソースは複数定義されています。");
+
+							result = resTypeList.Key;
+						}
+					}
+				}
+
+				_objTypeNameCache.Add(log, o);
+
+				throw new Exception("\"" + o + "\"という名前のリソースは定義されていません。");
 			}
 		}
-		protected string getValue(string item)
+		protected string getValue(string log)
 		{
-			return Regex.Match(item, @"\.\s*(?<attribute>[^=\s]+)\s*=\s*(?<value>\w+)").Groups["value"].Value.Replace(" ", "").Replace("\t", "");
-		}
-		protected string getObjectType(string item)
-		{
-			if(Regex.IsMatch(item, @"\[\w+\]"))
-			{
-				return Regex.Match(item, @"\]\s*(?<type>[^\(]+)\([^\)]+\)\.[^=\(]+[=\(]?").Groups["type"].Value.Replace(" ", "").Replace("\t", "");
-			}
+			Match m = Regex.Match(log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)?)\s*\.\s*[^=\s]+\s*=\s*(?<value>[^\s$]+)$");
+
+			if (m.Success)
+				return m.Groups["value"].Value.Replace(" ", "").Replace("\t", "");
 			else
-			{
-				return Regex.Match(item, @"\s*(?<type>[^\(]+)\([^\)]+\)\.[^=\(]+[=\(]?").Groups["type"].Value.Replace(" ", "").Replace("\t", "");
-			}
+				throw new Exception("属性代入式のフォーマットが異常です。\n" + "\"" + log + "\"");
 		}
-		protected string getObjectCondition(string item)
+
+		protected bool hasTime(string condition)
 		{
-			if (Regex.IsMatch(item, @"\[\w+\]"))
-			{
-				return Regex.Match(item, @"\]\s*(?<type>[^\s\(]+)\((?<condition>[^\(]+)\)\.[^=\(]+[=\(]?").Groups["condition"].Value.Replace(" ", "").Replace("\t", "");
-			}
+			return Regex.IsMatch(condition, @"\s*\[\s*[0-9a-fA-F]+\s*\]\s*");
+		}
+
+		protected bool isAttributeChangeLog(string log)
+		{
+			Match m = Regex.Match(log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)?)\s*\.\s*(?<attribute>[^=\s]+)\s*=\s*[^\s$]+$");
+
+			if (m.Success)
+				return true;
 			else
-			{
-				return Regex.Match(item, @"\s*(?<type>[^\s\(]+)\((?<condition>[^\(]+)\)\.[^=\(]+[=\(]?").Groups["condition"].Value.Replace(" ", "").Replace("\t", "");
-			}
+				return false;
 		}
-		protected bool hasAttribute(string item)
+
+		protected long timeToLong(string time)
 		{
-			return Regex.IsMatch(item, @"\.\s*(?<attribute>[^=\s]+)\s*=");
+			return Convert.ToInt64(time, _resourceData.TimeRadix);
 		}
-		protected bool hasBehavior(string item)
+		protected string timeToString(long time)
 		{
-			return Regex.IsMatch(item, @"\.\s*(?<attribute>[^\(\s]+)\s*\(");
+			return Convert.ToString(time, _resourceData.TimeRadix);
 		}
 
 		private struct TimeValuePair

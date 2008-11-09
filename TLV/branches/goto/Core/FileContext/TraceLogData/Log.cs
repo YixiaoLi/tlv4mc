@@ -5,7 +5,8 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class BehaviorList : GeneralKeyedJsonableCollection<string, Behavior, BehaviorList>
+	public class Log
 	{
+		public Time Time { get; set; }
 	}
 }

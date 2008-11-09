@@ -23,7 +23,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 		{
 			if (ReadJsonHandler != null)
 			{
-				return ReadJsonHandler(new JsonReader(reader));
+				return ReadJsonHandler(new JsonReader((JsonTextReader)reader));
 			}
 			else
 			{
@@ -35,7 +35,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 		{
 			if (WriteJsonHandler != null)
 			{
-				WriteJsonHandler(new JsonWriter(writer), (T)value);
+				WriteJsonHandler(new JsonWriter((JsonTextWriter)writer), (T)value);
 			}
 		}
 	}

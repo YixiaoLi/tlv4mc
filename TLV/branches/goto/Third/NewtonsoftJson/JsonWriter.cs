@@ -11,11 +11,17 @@ namespace NU.OJL.MPRTOS.TLV.Third
 {
 	public class JsonWriter : IJsonWriter
 	{
-		private Newtonsoft.Json.JsonWriter _writer;
+		private Newtonsoft.Json.JsonTextWriter _writer;
 
-		public JsonWriter(Newtonsoft.Json.JsonWriter writer)
+		public JsonWriter(Newtonsoft.Json.JsonTextWriter writer)
 		{
 			_writer = writer;
+			_writer.Formatting = Formatting.Indented;
+		}
+
+		public static implicit operator Newtonsoft.Json.JsonTextWriter(JsonWriter writer)
+		{
+			return writer._writer;
 		}
 
 		public void Write(object obj)

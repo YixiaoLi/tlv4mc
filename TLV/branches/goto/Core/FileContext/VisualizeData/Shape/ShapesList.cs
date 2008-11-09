@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ShapeList : GeneralJsonableCollection<Shape, ShapeList>
+	public class ShapesList : GeneralNamedCollection<Shapes>
 	{
 	}
 }

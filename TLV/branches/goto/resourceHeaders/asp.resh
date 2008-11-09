@@ -4,12 +4,6 @@
 		"Task":{
 			"DisplayName" :"タスク",
 			"Attributes" :{
-				"name":{
-					"VariableType"	:"string",
-					"DisplayName"	:"名前",
-					"AllocationType":"Static",
-					"CanGrouping"	:false
-				},
 				"id":{
 					"VariableType"	:"int",
 					"DisplayName"	:"ID",

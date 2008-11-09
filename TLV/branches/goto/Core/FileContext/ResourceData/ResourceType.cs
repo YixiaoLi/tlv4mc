@@ -9,8 +9,9 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ResourceType : IJsonable<ResourceType>
+	public class ResourceType : IJsonable<ResourceType>, INamed
 	{
+		public string Name { get; set; }
 		/// <summary>
 		/// 表示名
 		/// </summary>
@@ -34,7 +35,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public string ToJson()
 		{
-			return ApplicationFactory.JsonSerializer.Serialize<ResourceType>(this);
+			return ApplicationFactory.JsonSerializer.Serialize(this);
 		}
 
 		public ResourceType Parse(string data)

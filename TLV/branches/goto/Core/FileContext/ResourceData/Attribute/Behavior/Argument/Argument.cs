@@ -5,7 +5,9 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ArgumentList : GeneralKeyedJsonableCollection<string, string, ArgumentList>
+	public class Argument: INamed
 	{
+		public string Name { get; set; }
+		public string Value { get; set; }
 	}
 }

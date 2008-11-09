@@ -1,15 +1,11 @@
 ﻿{
-	"TimeScale"	:"ns",
-	
+	"TimeScale"		:"ns",
 	"ConvertRule"	:"asp",
-	
 	"ResourceHeader":"asp",
-	
 	"Resources":
 	{
-		"Task":[
-			{
-				"name"	:"LOGTASK",
+		"Task":{
+			"LOGTASK":{
 				"id"	:1,
 				"atr"	:"TA_ACT",
 				"pri"	:3,
@@ -18,8 +14,7 @@
 				"stksz"	:4096,
 				"stk"	:"NULL"
 			},
-			{
-				"name"	:"TASK1",
+			"TASK1":{
 				"id"	:2,
 				"atr"	:"TA_NULL",
 				"pri"	:10,
@@ -28,8 +23,7 @@
 				"stksz"	:4096,
 				"stk"	:"NULL"
 			},
-			{
-				"name"	:"TASK2",
+			"TASK2":{
 				"id"	:3,
 				"atr"	:"TA_NULL",
 				"pri"	:10,
@@ -38,8 +32,7 @@
 				"stksz"	:4096,
 				"stk"	:"NULL"
 			},
-			{
-				"name"	:"TASK3",
+			"TASK3":{
 				"id"	:4,
 				"atr"	:"TA_NULL",
 				"pri"	:10,
@@ -48,8 +41,7 @@
 				"stksz"	:4096,
 				"stk"	:"NULL"
 			},
-			{
-				"name"	:"MAIN_TASK",
+			"MAIN_TASK":{
 				"id"	:5,
 				"atr"	:"TA_ACT",
 				"pri"	:5,
@@ -58,6 +50,6 @@
 				"stksz"	:4096,
 				"stk"	:"NULL"
 			}
-		]
+		}
 	}
 }

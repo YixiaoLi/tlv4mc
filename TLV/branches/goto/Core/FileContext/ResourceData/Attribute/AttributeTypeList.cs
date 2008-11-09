@@ -12,16 +12,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// <summary>
     /// <c>Attribute</c>のリスト
     /// </summary>
-	public class AttributeList : GeneralKeyedJsonableCollection<string, Attribute, AttributeList>
+	public class AttributeList : GeneralNamedCollection<AttributeType>
 	{
-		public AttributeList()
-			: base(new Dictionary<string, Attribute>())
-		{
-		}
-
-		public AttributeList(IDictionary<string, Attribute> d)
-			:base(d)
-		{
-		}
 	}
 }

@@ -50,5 +50,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return _types.GetEnumerator();
 		}
 
+		public IEnumerable<string> TypeNames
+		{
+			get { return _types.Keys; }
+		}
+
+		public IEnumerable<ResourceType> ResourceTypes
+		{
+			get { return _types.Values; }
+		}
 	}
 }

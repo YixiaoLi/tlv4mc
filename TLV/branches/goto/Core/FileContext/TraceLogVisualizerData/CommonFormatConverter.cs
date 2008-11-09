@@ -122,7 +122,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			foreach (KeyValuePair<string, ResourceType> resh in resourceData.ResourceHeader)
 			{
 				Dictionary<string, string> attrs = new Dictionary<string, string>();
-				foreach (KeyValuePair<string, Attribute> attr in resh.Value.Attributes)
+				foreach (KeyValuePair<string, AttributeType> attr in resh.Value.Attributes)
 				{
 					attrs.Add(attr.Key, attr.Value.VisualizeRule);
 				}
@@ -174,7 +174,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						visualizeData.VisualizeRules.Add(kvp.Key, kvp.Value);
 					}
 				}
-				foreach (KeyValuePair<string, ShapeList> kvp in vd.Shapes)
+				foreach (KeyValuePair<string, Shapes> kvp in vd.Shapes)
 				{
 					bool flag = false;
 					foreach (KeyValuePair<string, VisualizeRule> _kvp in visualizeData.VisualizeRules)
@@ -318,7 +318,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 				condition = applyConvertFunc(traceLogManager,condition);
 
-				foreach (Match m in Regex.Matches(condition, @"(?<type>[^\s\(]+)\s*\(\s*(?<cond>[^\)]+)\s*\)\s*\.\s*(?<attr>[^\s=]+)"))
+				foreach (Match m in Regex.Matches(condition, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*(\.\s*[^=!<>\(]+)?\s*$"))
 				{
 					if (cache.ContainsKey(m.Value))
 					{
@@ -329,11 +329,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						string val;
 						try
 						{
-							val = traceLogManager.GetAttributeValue(m.Groups["type"].Value, m.Groups["cond"].Value, m.Groups["attr"].Value);
+							val = traceLogManager.GetAttributeValue(m.Value);
 						}
-						catch (Exception)
+						catch (Exception e)
 						{
-							throw new Exception("リソース条件式が異常です。\n" + "\"" + m.Groups["type"].Value + "(" + m.Groups["cond"].Value + ")." + m.Groups["attr"].Value + "\"");
+							throw new Exception("リソース条件式が異常です。\n" + "\"" + m.Value + "\"\n" + e.Message);
 						}
 						condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
 						cache.Add(m.Value, val);
@@ -346,9 +346,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				{
 					result = ConditionExpression.Result(condition);
 				}
-				catch (Exception)
+				catch (Exception e)
 				{
-					throw new Exception("ログ条件式が異常です。\n" + "\"" + kvp.Key + "\"");
+					throw new Exception("ログ条件式が異常です。\n" + "\"" + kvp.Key + "\"\n" + e.Message);
 				}
 
 				if (result)
@@ -362,16 +362,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			foreach (string func in _convertFunction)
 			{
-				foreach (Match m in Regex.Matches(condition, func + @"\s*{\s*(?<type>[^\s\(]+)\s*\(\s*(?<cond>[^\)]+)\s*\)\s*(\.\s*(?<attr>[^\)\s]+))?\s*}\s*"))
+				foreach (Match m in Regex.Matches(condition, func + @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*(\.\s*[^=!<>\(]+)?\s*$"))
 				{
-					string val = calcConvertFunc(func, m.Groups["type"].Value, m.Groups["cond"].Value, m.Groups["attr"].Value, traceLogManager);
+					string val = calcConvertFunc(func, m.Value, traceLogManager);
 					condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
 				}
 			}
 			return condition;
 		}
 
-		private string calcConvertFunc(string func, string type, string condition, string attribute, TraceLogData traceLogManager)
+		private string calcConvertFunc(string func, string condition, TraceLogData traceLogManager)
 		{
 			string result;
 			switch (func)
@@ -379,31 +379,31 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				case "COUNT":
 					try
 					{
-						result = traceLogManager.GetResources(type, condition).Count.ToString();
+						result = traceLogManager.GetResources(condition).Count.ToString();
 					}
 					catch (Exception e)
 					{
-						throw new Exception("リソース条件式が異常です。\n" + "\"" + type + "(" + condition + ")" + "\"");
+						throw new Exception("リソース条件式が異常です。\n" + "\"" + condition + "\"\n" + e.Message);
 					}
 					break;
 				case "EXIST":
 					try
 					{
-						result = traceLogManager.GetResources(type, condition).Count != 0 ? "True" : "False";
+						result = traceLogManager.GetResources(condition).Count != 0 ? "True" : "False";
 					}
 					catch (Exception e)
 					{
-						throw new Exception("リソース条件式が異常です。\n" + "\"" + type + "(" + condition + ")" + "\"");
+						throw new Exception("リソース条件式が異常です。\n" + "\"" + condition + "\"\n" + e.Message);
 					}
 					break;
 				case "ATTR":
 					try
 					{
-						result = traceLogManager.GetAttributeValue(type, condition, attribute).ToString();
+						result = traceLogManager.GetAttributeValue(condition).ToString();
 					}
 					catch (Exception e)
 					{
-						throw new Exception("リソース条件式が異常です。\n" + "\"" + "ATTR{" + type + "(" + condition + ")." + attribute + "}" + "\"");
+						throw new Exception("リソース条件式が異常です。\n" + "\"" + "ATTR{" + condition + "}" + "\"\n" + e.Message);
 					}
 					break;
 				default:
