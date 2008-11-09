@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class LogList : GeneralJsonableCollection<Log, LogList>
+	public class LogDataBase : GeneralJsonableCollection<LogData, LogDataBase>
 	{
 	}
 }

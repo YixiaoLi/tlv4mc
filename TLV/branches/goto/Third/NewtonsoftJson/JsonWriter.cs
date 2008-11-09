@@ -47,11 +47,8 @@ namespace NU.OJL.MPRTOS.TLV.Third
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.PropertyName:
 					_writer.WritePropertyName((string)value);
 					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Integer:
-					_writer.WriteValue((int)value);
-					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Float:
-					_writer.WriteValue((float)value);
+				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Decimal:
+					_writer.WriteValue((decimal)value);
 					break;
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.String:
 					_writer.WriteValue((string)value);
@@ -67,9 +64,6 @@ namespace NU.OJL.MPRTOS.TLV.Third
 					break;
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.EndArray:
 					_writer.WriteEndArray();
-					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Date:
-					_writer.WriteValue((DateTime)value);
 					break;
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Raw:
 					_writer.WriteRawValue((string)value);

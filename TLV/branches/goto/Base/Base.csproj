@@ -48,7 +48,6 @@
     <Compile Include="CommandManager\MacroCommand.cs" />
     <Compile Include="Expression\ComparisonExpression.cs" />
     <Compile Include="Expression\ConditionExpression.cs" />
-    <Compile Include="Extensions\ByteArrayExtensions.cs" />
     <Compile Include="FileContext\FileContext.cs" />
     <Compile Include="FileContext\IFileContext.cs" />
     <Compile Include="FileContext\IFileContextData.cs" />
@@ -66,6 +65,7 @@
     <Compile Include="Json\IJsonWriter.cs" />
     <Compile Include="Json\Json.cs" />
     <Compile Include="Json\JsonTokenType.cs" />
+    <Compile Include="Json\JsonValueType.cs" />
     <Compile Include="WindowManager\WindowManager.cs" />
     <Compile Include="WindowManager\IWindowManager.cs" />
     <Compile Include="WindowManager\SubWindow.cs" />

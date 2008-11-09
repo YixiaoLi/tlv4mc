@@ -41,7 +41,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 			{
 				try
 				{
-					CommonFormatConverter cfc = new CommonFormatConverter(f.ResourceFilePath, f.TraceLogFilePath, 
+					StandartFormatConverter cfc = new StandartFormatConverter(f.ResourceFilePath, f.TraceLogFilePath, 
 						(p,s) =>
 						{
 							if (bw.CancellationPending) { _e.Cancel = true; return; }
@@ -53,7 +53,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 					bw.ReportProgress(90);
 					bw.Invoke(new MethodInvoker(() => { bw.Message = "共通形式データを生成中"; }));
 
-					cftl = new TraceLogVisualizerData(cfc.ResourceData, cfc.TraceLog, cfc.VisualizeData);
+					cftl = new TraceLogVisualizerData(cfc.ResourceData, cfc.TraceLogList, cfc.VisualizeData);
 
 					if (bw.CancellationPending) { _e.Cancel = true; return; }
 					bw.ReportProgress(100);

@@ -39,7 +39,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			get
 			{
-				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<object>[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?)\s*(\.\s*[^=!<>\(\s]+)?\s*$");
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<object>[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)))\s*(\.\s*[^=!<>\(\s]+)?\s*$");
 
 				if (m.Success)
 					return m.Groups["object"].Value.Replace(" ", "").Replace("\t", "");
@@ -51,7 +51,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			get
 			{
-				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)?)\s*\.\s*(?<behavior>[^=!<>\(\s]+\s*\([^\)]+\))\s*$");
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))\s*\.\s*(?<behavior>[^=!<>\(\s]+\s*\([^\)]+\))\s*$");
 
 				if (m.Success)
 					return m.Groups["behavior"].Value.Replace(" ", "").Replace("\t", "");
@@ -63,7 +63,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			get
 			{
-				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)?)\s*\.\s*(?<attribute>[^=!<>\(\s]+)\s*$");
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))\s*\.\s*(?<attribute>[^=!<>\(\s]+)\s*$");
 
 				if (m.Success)
 					return m.Groups["attribute"].Value.Replace(" ", "").Replace("\t", "");
@@ -71,59 +71,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					throw new Exception("属性指定のフォーマットが異常です。\n" + "\"" + _log + "\"");
 			}
 		}
-		public string ObjectType(ResourceData resData)
-		{
-			Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<object>[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?)\s*(\.\s*[^=!<>\(\s]+)?\s*$");
-
-			if (!m.Success)
-				throw new Exception("オブジェクト指定のフォーマットが異常です。\n" + "\"" + _log + "\"");
-
-			string obj = m.Groups["object"].Value.Replace(" ", "").Replace("\t", "");
-
-			m = Regex.Match(obj, @"^\s*(?<typeName>[^\[\]\(\)\.\s]+)\s*\([^\)]+\)\s*$");
-
-			if (m.Success)
-			{
-				string o = m.Groups["typeName"].Value.Replace(" ", "").Replace("\t", "");
-
-				if (resData.ResourceHeader.TypeNames.Contains<string>(o))
-					return o;
-				else
-					throw new Exception("\"" + o + "\"というリソースの型は定義されていません。");
-			}
-			else
-			{
-				m = Regex.Match(obj, @"^\s*(?<resName>[^\[\]\(\)\.\s]+)\s*$");
-
-				string o = m.Groups["resName"].Value.Replace(" ", "").Replace("\t", "");
-
-				string result = string.Empty;
-
-				foreach (KeyValuePair<string, GeneralNamedCollection<Resource>> resTypeList in resData.Resources)
-				{
-					foreach (Resource res in resTypeList.Value)
-					{
-						if (res.Name == o)
-						{
-							if (result != string.Empty)
-								throw new Exception("\"" + o + "\"という名前のリソースは複数定義されています。");
-
-							result = resTypeList.Key;
-						}
-					}
-				}
-
-				if (result != string.Empty)
-					return result;
-				else
-					throw new Exception("\"" + o + "\"という名前のリソースは定義されていません。");
-			}
-		}
 		public string Value
 		{
 			get
 			{
-				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)?)\s*\.\s*[^=\s]+\s*=\s*(?<value>[^\s$]+)$");
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))\s*\.\s*[^=\s]+\s*=\s*(?<value>[^\s$]+)$");
 
 				if (m.Success)
 					return m.Groups["value"].Value.Replace(" ", "").Replace("\t", "");
@@ -131,18 +83,30 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					throw new Exception("属性代入式のフォーマットが異常です。\n" + "\"" + _log + "\"");
 			}
 		}
-		public bool hasTime
+		public string Arguments
 		{
 			get
 			{
-				return Regex.IsMatch(condition, @"\s*\[\s*[0-9a-fA-F]+\s*\]\s*");
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))\s*\.\s*[^=!<>\(\s]+\s*\((?<args>[^\)]+)\)\s*$");
+
+				if (m.Success)
+					return m.Groups["args"].Value.Replace(" ", "").Replace("\t", "");
+				else
+					throw new Exception("振舞いの引数指定フォーマットが異常です。\n" + "\"" + _log + "\"");
 			}
 		}
-		public bool isAttributeChangeLog
+		public bool HasTime
 		{
 			get
 			{
-				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\([^\)]+\))?\s*\.\s*[^=\s]+\s*=\s*[^\s$]+$");
+				return Regex.IsMatch(_log, @"\s*\[\s*[0-9a-fA-F]+\s*\]\s*");
+			}
+		}
+		public bool IsAttributeChangeLog
+		{
+			get
+			{
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\([^\)]+\))\s*\.\s*[^=\s]+\s*=\s*[^\s$]+$");
 
 				if (m.Success)
 					return true;
@@ -150,11 +114,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					return false;
 			}
 		}
-		public bool isBehaviorCallLog
+		public bool IsBehaviorCallLog
 		{
 			get
 			{
-				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\([^\)]+\))?\s*\.\s*[^=\s]+\s*\([^\)]*\)\s*$");
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\([^\)]+\))\s*\.\s*[^=\s]+\s*\([^\)]*\)\s*$");
 
 				if (m.Success)
 					return true;

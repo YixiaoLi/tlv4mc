@@ -5,49 +5,49 @@
 			"DisplayName" :"タスク",
 			"Attributes" :{
 				"id":{
-					"VariableType"	:"int",
+					"VariableType"	:"Decimal",
 					"DisplayName"	:"ID",
 					"AllocationType":"Static",
 					"CanGrouping"	:false
 				},
 				"atr":{
-					"VariableType"	:"string",
+					"VariableType"	:"String",
 					"DisplayName"	:"属性",
 					"AllocationType":"Static",
 					"CanGrouping"	:false,
 				},
 				"pri":{
-					"VariableType"	:"int",
+					"VariableType"	:"Decimal",
 					"DisplayName"	:"優先度",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:false,
 				},
 				"exinf":{
-					"VariableType"	:"string",
+					"VariableType"	:"String",
 					"DisplayName"	:"拡張情報",
 					"AllocationType":"Static",
 					"CanGrouping"	:false,
 				},
 				"task":{
-					"VariableType"	:"string",
+					"VariableType"	:"String",
 					"DisplayName"	:"起動関数",
 					"AllocationType":"Static",
 					"CanGrouping"	:false,
 				},
 				"stksz":{
-					"VariableType"	:"int",
+					"VariableType"	:"Decimal",
 					"DisplayName"	:"スタックサイズ",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:false,
 				},
 				"stk":{
-					"VariableType"	:"string",
+					"VariableType"	:"String",
 					"DisplayName"	:"スタック番地",
 					"AllocationType":"Static",
 					"CanGrouping"	:false,
 				},
 				"state":{
-					"VariableType"	:"string",
+					"VariableType"	:"String",
 					"DisplayName"	:"状態",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:false,
@@ -88,15 +88,15 @@
 				"enterSVC":{
 					"DisplayName"	:"サービスコールに入る",
 					"Arguments"		:{
-						"name" : "string",
-						"args" : "string"
+						"name" : "String",
+						"args" : "String"
 					}
 				},
 				"leaveSVC":{
 					"DisplayName"	:"サービスコールから出る",
 					"Arguments"		:{
-						"name" : "string",
-						"args" : "string"
+						"name" : "String",
+						"args" : "String"
 					}
 				},
 			}

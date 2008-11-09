@@ -50,15 +50,17 @@
     <Compile Include="Base\INamed.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\Attribute.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AttributeList.cs" />
-    <Compile Include="FileContext\ResourceData\Behavior\Argument\Argument.cs" />
+    <Compile Include="FileContext\ResourceData\Behavior\Argument\ArgumentType\ArgumentType.cs" />
+    <Compile Include="FileContext\ResourceData\Behavior\Argument\ArgumentType\ArgumentTypeList.cs" />
     <Compile Include="FileContext\ResourceData\Resource.cs" />
-    <Compile Include="FileContext\TraceLogData\Log\BehaviorCallEvent.cs" />
-    <Compile Include="FileContext\TraceLogData\Log\Log.cs" />
-    <Compile Include="FileContext\TraceLogData\Log\LogList.cs" />
-    <Compile Include="FileContext\TraceLogData\Log\LogType.cs" />
-    <Compile Include="FileContext\TraceLogData\Log\AttributeChangeEvent.cs" />
-    <Compile Include="FileContext\TraceLogData\Log\Time.cs" />
+    <Compile Include="FileContext\TraceLogData\LogDataBase\BehaviorCallLogData.cs" />
+    <Compile Include="FileContext\TraceLogData\LogDataBase\LogData.cs" />
+    <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataBase.cs" />
+    <Compile Include="FileContext\TraceLogData\LogDataBase\LogType.cs" />
+    <Compile Include="FileContext\TraceLogData\LogDataBase\AttributeChangeLogData.cs" />
+    <Compile Include="FileContext\TraceLogData\LogDataBase\Time.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLog.cs" />
+    <Compile Include="FileContext\TraceLogData\TraceLogList.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\ShapesList.cs" />
     <Compile Include="JsonConverters\ArcConverter.cs" />
     <Compile Include="JsonConverters\GeneralNamedCollectionConverter.cs" />
@@ -70,7 +72,7 @@
     <Compile Include="FileContext\ResourceData\Attribute\AttributeType\AllocationType.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AttributeType\AttributeType.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AttributeType\AttributeTypeList.cs" />
-    <Compile Include="FileContext\TraceLogVisualizerData\CommonFormatConverter.cs" />
+    <Compile Include="FileContext\TraceLogVisualizerData\StandartFormatConverter.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogVisualizerData.cs" />
     <Compile Include="Base\GeneralKeyedJsonableCollection.cs" />
     <Compile Include="Base\GeneralJsonableCollection.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="JsonConverters\ColorConverter.cs" />
     <Compile Include="JsonConverters\CoordinateConverter.cs" />
     <Compile Include="JsonConverters\ResourceHeaderConverter.cs" />
+    <Compile Include="JsonConverters\TraceLogConverter.cs" />
     <Compile Include="JsonConverters\VisualizeRuleConverter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

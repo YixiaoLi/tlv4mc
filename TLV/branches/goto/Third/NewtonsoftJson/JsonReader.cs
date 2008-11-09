@@ -46,9 +46,9 @@ namespace NU.OJL.MPRTOS.TLV.Third
 					case JsonToken.PropertyName:
 						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.PropertyName;
 					case JsonToken.Integer:
-						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Integer;
+						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Decimal;
 					case JsonToken.Float:
-						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Float;
+						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Decimal;
 					case JsonToken.String:
 						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.String;
 					case JsonToken.Boolean:
@@ -59,8 +59,6 @@ namespace NU.OJL.MPRTOS.TLV.Third
 						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.EndObject;
 					case JsonToken.EndArray:
 						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.EndArray;
-					case JsonToken.Date:
-						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Date;
 					default:
 						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Undefined;
 				}

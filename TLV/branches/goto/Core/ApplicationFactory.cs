@@ -50,7 +50,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			
 			JsonSerializer.AddConverter(new INamedConverter<Attribute>());
 			JsonSerializer.AddConverter(new INamedConverter<AttributeType>());
-			JsonSerializer.AddConverter(new INamedConverter<Argument>());
 			JsonSerializer.AddConverter(new INamedConverter<Behavior>());
 			JsonSerializer.AddConverter(new INamedConverter<ResourceType>());
 			JsonSerializer.AddConverter(new INamedConverter<Shapes>());
@@ -58,12 +57,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Attribute>());
 			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<AttributeType>());
-			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Argument>());
 			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Behavior>());
 			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<ResourceType>());
 			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Shapes>());
 			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<VisualizeRule>());
 
+			JsonSerializer.AddConverter(new TraceLogConverter());
 			JsonSerializer.AddConverter(new ArcConverter());
 			JsonSerializer.AddConverter(new AreaConverter());
 			JsonSerializer.AddConverter(new ColorConverter());

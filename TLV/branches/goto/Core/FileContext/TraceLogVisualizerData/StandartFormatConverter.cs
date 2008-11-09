@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using NU.OJL.MPRTOS.TLV.Base;
 using System;
+using System.Linq;
 using System.Threading;
 
 namespace NU.OJL.MPRTOS.TLV.Core
@@ -11,12 +12,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	/// 共通形式トレースログへ変換するためのコンバータ
 	/// コンストラクタはプライベートとなっているのでGetInstanceメソッドを使ってインスタンスを得る
 	/// </summary>
-	public class CommonFormatConverter
+	public class StandartFormatConverter
 	{
 		private readonly string[] _convertFunction = new string[] { "COUNT","EXIST","ATTR" };
 		private ResourceData _resourceData;
 		private VisualizeData _visualizeData;
-		private TraceLog _traceLog;
+		private TraceLogList _traceLogList;
 		public Action<int, string> _constructProgressReport = null;
 		private int _from = 0;
 		private int _to = 100;
@@ -24,7 +25,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// <summary>
 		/// <c>CommonFormatConverter</c>のコンストラクタ
 		/// </summary>
-		public CommonFormatConverter(string resourceFilePath, string traceLogFilePath, Action<int, string> ConstructProgressReport)
+		public StandartFormatConverter(string resourceFilePath, string traceLogFilePath, Action<int, string> ConstructProgressReport)
 		{
 			_constructProgressReport = ConstructProgressReport;
 
@@ -46,7 +47,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			_to = 90;
 			try
 			{
-				_traceLog = getTraceLog(traceLogFilePath, _resourceData);
+				_traceLogList = getTraceLogList(traceLogFilePath, _resourceData);
 			}
 			catch (Exception _e)
 			{
@@ -74,11 +75,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// <summary>
 		/// <c>CommonFormatConverter</c>のコンストラクタ
 		/// </summary>
-		public CommonFormatConverter(string resourceFilePath, string traceLogFilePath)
+		public StandartFormatConverter(string resourceFilePath, string traceLogFilePath)
 		{
 			_resourceData = new ResourceData().Parse(File.ReadAllText(resourceFilePath));
 
-			_traceLog = getTraceLog(traceLogFilePath, _resourceData);
+			_traceLogList = getTraceLogList(traceLogFilePath, _resourceData);
 
 			_visualizeData = getVisualizeData(_resourceData);
 
@@ -102,11 +103,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// </summary>
 		/// <param name="traceLogFilePath">変換する前のトレースログファイルのパス</param>
 		/// <returns>変換後のトレースログファイルの内容の文字列</returns>
-		public TraceLog TraceLog
+		public TraceLogList TraceLogList
 		{
 			get
 			{
-				return _traceLog;
+				return _traceLogList;
 			}
 		}
 
@@ -214,7 +215,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return visualizeData;
 		}
 
-		private TraceLog getTraceLog(string traceLogFilePath, ResourceData resourceData)
+		private TraceLogList getTraceLogList(string traceLogFilePath, ResourceData resourceData)
 		{
 			Dictionary<string, Json> dic = new Dictionary<string, Json>();
 
@@ -247,7 +248,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			foreach (string s in logs)
 			{
 				if (_constructProgressReport != null)
-					_constructProgressReport((int)(((i / max) * (float)(_to - _from)) + (float)_from), "トレースログを共通形式へ変換中 " + i + " 行目...");
+					_constructProgressReport((int)(((i / max) * (float)(_to - _from)) + (float)_from), "トレースログを共通形式へ変換中 " + i + "/" + max + " 行目...");
 
 				foreach (KeyValuePair<string, Json> kvp in dic)
 				{
@@ -259,7 +260,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				i++;
 			}
 
-			return t.TraceLog;
+			return t.TraceLogList;
 		}
 
 		/// <summary>
@@ -269,20 +270,20 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// <param name="pattern">パターン</param>
 		/// <param name="value">変換値がValue（Jsonでいうところの）</param>
 		/// <param name="traceLogManager">追加先</param>
-		private void addTraceLog(string log, string pattern, Json value, TraceLogData traceLogManager)
+		private void addTraceLog(string log, string pattern, Json value, TraceLogData traceLogData)
 		{
-			if (value.IsArray)
+			if (value.Type == JsonValueType.Array)
 			{
-				addTraceLogAsArray(log, pattern, value, traceLogManager);
+				addTraceLogAsArray(log, pattern, value, traceLogData);
 			}
-			else if (value.IsObject)
+			else if (value.Type == JsonValueType.Object)
 			{
-				addTraceLogAsObject(log, pattern, value, traceLogManager);
+				addTraceLogAsObject(log, pattern, value, traceLogData);
 			}
 			else
 			{
 				// valueがstringのときログを置換して追加
-				traceLogManager.Add(Regex.Replace(log, pattern, applyConvertFunc(traceLogManager, value)));
+				traceLogData.TraceLogList.Add(new TraceLog(Regex.Replace(log, pattern, applyConvertFunc(traceLogData, value))));
 			}
 		}
 
@@ -293,11 +294,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// <param name="pattern">パターン</param>
 		/// <param name="value">変換値がArray（Jsonでいうところの）</param>
 		/// <param name="traceLogManager">追加先</param>
-		private void addTraceLogAsArray(string log, string pattern, List<Json> value, TraceLogData traceLogManager)
+		private void addTraceLogAsArray(string log, string pattern, List<Json> value, TraceLogData traceLogData)
 		{
 			foreach (Json j in value)
 			{
-				addTraceLog(log, pattern, j, traceLogManager);
+				addTraceLog(log, pattern, j, traceLogData);
 			}
 		}
 
@@ -318,7 +319,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 				condition = applyConvertFunc(traceLogManager,condition);
 
-				foreach (Match m in Regex.Matches(condition, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*(\.\s*[^=!<>\(]+)?\s*$"))
+				foreach (Match m in Regex.Matches(condition, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)\s*(\.\s*[^=!<>\(]+)?\s*$"))
 				{
 					if (cache.ContainsKey(m.Value))
 					{
@@ -358,20 +359,20 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 		}
 
-		private string applyConvertFunc(TraceLogData traceLogManager, string condition)
+		private string applyConvertFunc(TraceLogData traceLogData, string condition)
 		{
 			foreach (string func in _convertFunction)
 			{
-				foreach (Match m in Regex.Matches(condition, func + @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*(\.\s*[^=!<>\(]+)?\s*$"))
+				foreach (Match m in Regex.Matches(condition, func + @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)\s*(\.\s*[^=!<>\(]+)?\s*$"))
 				{
-					string val = calcConvertFunc(func, m.Value, traceLogManager);
+					string val = calcConvertFunc(func, m.Value, traceLogData);
 					condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
 				}
 			}
 			return condition;
 		}
 
-		private string calcConvertFunc(string func, string condition, TraceLogData traceLogManager)
+		private string calcConvertFunc(string func, string condition, TraceLogData traceLogData)
 		{
 			string result;
 			switch (func)
@@ -379,7 +380,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				case "COUNT":
 					try
 					{
-						result = traceLogManager.GetResources(condition).Count.ToString();
+						result = traceLogData.GetObject(condition).Count().ToString();
 					}
 					catch (Exception e)
 					{
@@ -389,7 +390,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				case "EXIST":
 					try
 					{
-						result = traceLogManager.GetResources(condition).Count != 0 ? "True" : "False";
+						result = traceLogData.GetObject(condition).Count() != 0 ? "True" : "False";
 					}
 					catch (Exception e)
 					{
@@ -399,7 +400,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				case "ATTR":
 					try
 					{
-						result = traceLogManager.GetAttributeValue(condition).ToString();
+						result = traceLogData.GetAttributeValue(condition).ToString();
 					}
 					catch (Exception e)
 					{

@@ -14,19 +14,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class TraceLogData
 	{
-		private Dictionary<string, Dictionary<string, Resource>> _resCache = new Dictionary<string, Dictionary<string, Resource>>();
-		private Dictionary<string, string> _objTypeNameCache = new Dictionary<string, string>();
-		private Dictionary<string, string> _attrCache = new Dictionary<string, string>();
 		private ResourceData _resourceData;
-		private ResourceList _data = null;
-		public long MinTime { get; private set; }
-		public long MaxTime { get; private set; }
-		public TraceLog TraceLog { get; private set; }
+		private LogDataBase _data = new LogDataBase();
+		
+		public Time MinTime { get; private set; }
+		public Time MaxTime { get; private set; }
+		public TraceLogList TraceLogList { get; private set; }
 
-		public TraceLogData(TraceLog traceLog, ResourceData resourceData)
+		public TraceLogData(TraceLogList traceLog, ResourceData resourceData)
 			: this(resourceData)
 		{
-			foreach(string log in traceLog)
+			foreach(TraceLog log in traceLog)
 			{
 				Add(log);
 			}
@@ -34,277 +32,172 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public TraceLogData(ResourceData resourceData)
 			:base()
 		{
-			TraceLog = new TraceLog();
+			TraceLogList = new TraceLogList();
 			_resourceData = resourceData;
-			MinTime = long.MaxValue;
-			MaxTime = 0;
-
-			_data = new ResourceList();
-
-			foreach (KeyValuePair<string, GeneralNamedCollection<Resource>> res in _resourceData.Resources)
-			{
-				_data.Add(res.Key, new GeneralNamedCollection<Resource>());
-				foreach (string type in res.Value.Keys)
-				{
-					_data[res.Key].Add(type, new Resource());
-				}
-			}
-
-			foreach(string type in _resourceData.ResourceHeader.TypeNames)
-			{
-				foreach (Resource res in _resourceData.Resources[type])
-				{
-					foreach (AttributeType attr in _resourceData.ResourceHeader[type].Attributes)
-					{
-						if (attr.AllocationType == AllocationType.Dynamic)
-						{
-							_data[type][res.Name].Add(attr.Name, new Attribute() { Name = attr.Name, Value = new Json(new List<Json>()) });
-							((Json)(_data[type][res.Name][attr.Name])).Add(new TimeValuePair(0, attr.Default));
-						}
-					}
-				}
-			}
-
-			foreach (KeyValuePair<string, GeneralNamedCollection<Resource>> type in _resourceData.Resources)
-			{
-				int i = 0;
-				foreach (Resource res in type.Value)
-				{
-					foreach(KeyValuePair<string, Json> attr in res)
-					{
-						if (_resourceData.ResourceHeader[type.Key].Attributes[attr.Key].AllocationType == AllocationType.Dynamic)
-						{
-							_data[type.Key][res.Key][attr.Key][0] = new Json(new TimeValuePair(0, attr.Value.ToString()));
-						}
-						else
-						{
-							_data[type.Key][res.Key].Add(attr.Key, new Json(attr.Value.ToString()));
-						}
-					}
-					i++;
-				}
-			}
+			MinTime = new Time(long.MaxValue.ToString(), _resourceData.TimeRadix);
+			MinTime = new Time("0", _resourceData.TimeRadix);
 		}
 
-		public void Add(string log)
+		public void Add(TraceLog log)
 		{
-			long time = timeToLong(getTime(log));
-			TraceLog.Add(log);
+			TraceLogList.Add(log);
+
+			if (!log.HasTime)
+				throw new Exception("ログに時間指定がありません。\n" + "\"" + log + "\"");
+
+			Time time = new Time(log.Time, _resourceData.TimeRadix);
+
 			MinTime = MinTime > time ? time : MinTime;
 			MaxTime = MaxTime < time ? time : MaxTime;
 
-			if (isAttributeChangeLog(log))
+			if (log.IsAttributeChangeLog)
 			{
-				foreach (Resource res in GetResources(log).Values)
+				foreach (Resource res in GetObject(log))
 				{
-					res[getAttribute(log)].Add(new TimeValuePair(time, getValue(log)));
+					AttributeChangeLogData logData = new AttributeChangeLogData(time, res, log.Attribute, getValue(log.Value, res.Type, log.Attribute));
+					_data.Add(logData);
+				}
+			}
+			else if(log.IsBehaviorCallLog)
+			{
+				foreach (Resource res in GetObject(log))
+				{
+					BehaviorCallLogData logData = new BehaviorCallLogData(time, res, log.Behavior, getArguments(log.Arguments, res.Type, log.Behavior));
+					_data.Add(logData);
 				}
 			}
 
 		}
 
-		public string GetAttributeValue(string condition)
+		private Json getValue(string value, string type, string attr)
 		{
-			condition = condition.Replace(" ", "").Replace("\t", "");
-
-			string time = string.Empty;
-			if (!hasTime(condition))
-				time = timeToString(MaxTime);
-
-			if (_attrCache.ContainsKey(time + condition))
-				return _attrCache[condition];
-
-			if (!Regex.IsMatch(condition, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*(\.\s*[^=!<>\(\s]+)?\s*$"))
-				throw new Exception("属性指定の条件式が異常です。\n" + "\"" + condition + "\"");
-
-			string result;
-
-			Dictionary<string, Resource> list = GetResources(condition);
-
-			if (list.Count > 1)
+			switch (_resourceData.ResourceHeader[type].Attributes[attr].VariableType)
 			{
+				case JsonValueType.String:
+					return new Json(value);
+				case JsonValueType.Decimal:
+					return new Json(Convert.ToDecimal(value));
+				case JsonValueType.Boolean:
+					return new Json(Convert.ToBoolean(value));
+				default:
+					return new Json("null");
+			}
+		}
+
+		private ArgumentList getArguments(string arguments, string type, string behavior)
+		{
+			string[] args = arguments.Split(',');
+			ArgumentList argList = new ArgumentList();
+
+			for(int i = 0; i < args.Length; i++)
+			{
+				switch (_resourceData.ResourceHeader[type].Behaviors[behavior].Arguments[i].Type)
+				{
+					case JsonValueType.String:
+						argList.Add(new Json(args[i]));
+						break;
+					case JsonValueType.Decimal:
+						argList.Add(new Json(Convert.ToDecimal(args[i])));
+						break;
+					case JsonValueType.Boolean:
+						argList.Add(new Json(Convert.ToBoolean(args[i])));
+						break;
+					default:
+						argList.Add(new Json("null"));
+						break;
+				}
+			}
+
+			return argList;
+		}
+
+		public Json GetAttributeValue(string condition)
+		{
+			return GetAttributeValue(new TraceLog(condition));
+		}
+
+		public Json GetAttributeValue(TraceLog condition)
+		{
+			Json result;
+
+			IEnumerable<Resource> objs = GetObject(condition);
+
+			if (objs.Count() > 1)
 				throw new Exception("複数のリソースがマッチします。\n" + "\"" + condition + "\"");
-			}
-			else if (list.Count == 0)
-			{
-				throw new Exception("マッチするリソースがありません。\n" + "\"" + condition + "\"");
-			}
-			else
-			{
-				if (_resourceData.ResourceHeader[type].Attributes[attribute].AllocationType == AllocationType.Dynamic)
-				{
-					result = getTimeValuePair(list.First().Value[attribute], time).Value;
-				}
-				else
-				{
-					result = list.First().Value[attribute].Value.ToString();
-				}
-			}
 
-			_attrCache.Add(time + condition, result);
+			if (objs.Count() == 0)
+				throw new Exception("マッチするリソースがありません。\n" + "\"" + condition + "\"");
+
+			Resource obj = objs.First();
+			Time time = condition.HasTime ? new Time(condition.Time, _resourceData.TimeRadix) : MaxTime;
+			result = ((AttributeChangeLogData)(_data.Where<LogData>( (d) =>
+						{
+							return  d.Object.Name == obj.Name
+								&& d.Type == LogType.AttributeChange
+								&& ((AttributeChangeLogData)d).Attribute == condition.Attribute;
+						}).Last<LogData>(d=>d.Time <= time))).Value;
+
 			return result;
 		}
-		public Dictionary<string, Resource> GetResources(string condition)
+
+		public IEnumerable<Resource> GetObject(string log)
 		{
-			condition = condition.Replace(" ", "").Replace("\t", "");
+			return GetObject(new TraceLog(log));
+		}
 
-			string time = string.Empty;
-			if (!hasTime(condition))
-				time = timeToString(MaxTime);
+		public IEnumerable<Resource> GetObject(TraceLog log)
+		{
+			string obj = log.Object;
+			Match m = Regex.Match(obj, @"^\s*(?<type>[^\[\]\(\)\.\s]+)\s*\((?<condition>[^\)]+)\)\s*$");
 
-			if (_resCache.ContainsKey(time + condition))
-				return _resCache[condition];
+			if (m.Success)
+				throw new Exception("オブジェクト指定のフォーマットが異常です。\n" + "\"" + obj + "\"");
 
-			if (!Regex.IsMatch(condition, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*$"))
-				throw new Exception("リソース指定の条件式が異常です。\n" + "\"" + condition + "\"");
+			string type = m.Groups["type"].Value.Replace(" ", "").Replace("\t", "");
+			string condition = m.Groups["condition"].Value.Replace(" ", "").Replace("\t", "");
 
-			Dictionary<string, Resource> result = new Dictionary<string, Resource>();
-			foreach (KeyValuePair<string, Resource> res in _data[getObjectType(condition)])
+			if (!_resourceData.ResourceHeader.TypeNames.Contains<string>(type))
+				throw new Exception("\"" + type + "\"というリソースの型は定義されていません。");
+
+			Dictionary<string, string> attrOpeDic = new Dictionary<string, string>();
+			Dictionary<string, string> replacedConditions = new Dictionary<string, string>();
+
+			foreach (Match _m in Regex.Matches(condition, @"(?<attr>[^=!<>\s]+)\s*(?<ope>(==|!=|<=|>=|<|>))"))
+			{
+				attrOpeDic.Add(_m.Groups["attr"].Value, _m.Groups["ope"].Value);
+			}
+
+			Time time = log.HasTime ? new Time(log.Time, _resourceData.TimeRadix) : MaxTime;
+
+			foreach (Resource res in _resourceData.Resources[type])
 			{
 				string cnd = condition;
-
-				foreach (Match m in Regex.Matches(condition, @"(?<attrName>[^=!<>\s]+)\s*(?<ope>(==|!=|<=|>=|<|>))"))
+				foreach (KeyValuePair<string, string> kvp in attrOpeDic)
 				{
-					if (_resourceData.ResourceHeader[type].Attributes[m.Groups["attrName"].Value].AllocationType == AllocationType.Dynamic)
+					LogData logData = _data.Last<LogData>((d) =>
 					{
-						cnd = cnd.Replace(m.Groups["attrName"].Value, getTimeValuePair(_data[type][res.Key][m.Groups["attrName"].Value], time).Value);
-					}
-					else
-					{
-						cnd = cnd.Replace(m.Groups["attrName"].Value, _data[type][res.Key][m.Groups["attrName"].Value]);
-					}
-				}
+						return d.Object.Name == res.Name
+							&& d.Type == LogType.AttributeChange
+							&& ((AttributeChangeLogData)d).Attribute == kvp.Key
+							&& d.Time <= time;
+					});
 
+					string value;
+
+					if (logData != null)
+						value = ((AttributeChangeLogData)logData).Value.ToString();
+					else if (_resourceData.ResourceHeader[type].Attributes[kvp.Key].Default != null)
+						value = _resourceData.ResourceHeader[type].Attributes[kvp.Key].Default;
+					else
+						value = "null";
+
+					cnd.Replace(kvp.Key, value);
+				}
 				if (ConditionExpression.Result(cnd))
 				{
-					result.Add(res.Key, _data[type][res.Key]);
+					yield return res;
 				}
 			}
-
-			_resCache.Add(time + condition, result);
-
-			return result;
 		}
-
-		protected string getTime(string log)
-		{
-			Match m = Regex.Match(log, @"\s*\[\s*(?<time>[0-9a-fA-F]+)\s*\]\s*");
-
-			if (m.Success)
-				return m.Groups["time"].Value.Replace(" ", "").Replace("\t", "");
-			else
-				throw new Exception("時間指定のフォーマットが異常です。\n" + "\"" + log + "\"");
-		}
-		protected string getObject(string log)
-		{
-			Match m = Regex.Match(log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<object>[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?)\s*(\.\s*[^=!<>\(\s]+)?\s*$");
-
-			if (m.Success)
-				return m.Groups["object"].Value.Replace(" ", "").Replace("\t", "");
-			else
-				throw new Exception("オブジェクト指定のフォーマットが異常です。\n" + "\"" + log + "\"");
-		}
-		protected string getBehavior(string log)
-		{
-			Match m = Regex.Match(log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)?)\s*\.\s*(?<behavior>[^=!<>\(\s]+\s*\([^\)]+\))\s*$");
-
-			if (m.Success)
-				return m.Groups["behavior"].Value.Replace(" ", "").Replace("\t", "");
-			else
-				throw new Exception("振舞い指定のフォーマットが異常です。\n" + "\"" + log + "\"");
-		}
-		protected string getAttribute(string log)
-		{
-			Match m = Regex.Match(log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)?)\s*\.\s*(?<attribute>[^=!<>\(\s]+)\s*$");
-
-			if (m.Success)
-				return m.Groups["attribute"].Value.Replace(" ", "").Replace("\t", "");
-			else
-				throw new Exception("属性指定のフォーマットが異常です。\n" + "\"" + log + "\"");
-		}
-		protected string getObjectType(string log)
-		{
-			Match m = Regex.Match(log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<object>[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?)\s*(\.\s*[^=!<>\(\s]+)?\s*$");
-
-			if (!m.Success)
-				throw new Exception("オブジェクト指定のフォーマットが異常です。\n" + "\"" + log + "\"");
-
-			string obj = m.Groups["object"].Value.Replace(" ", "").Replace("\t", "");
-
-			m = Regex.Match(log, @"^\s*(?<typeName>[^\[\]\(\)\.\s]+)\s*\([^\)]+\)\s*$");
-
-			if (m.Success)
-			{
-				string o = m.Groups["typeName"].Value.Replace(" ", "").Replace("\t", "");
-
-				if (_resourceData.ResourceHeader.TypeNames.Contains<string>(o))
-					return o;
-				else
-					throw new Exception("\"" + o + "\"というリソースの型は定義されていません。");
-			}
-			else
-			{
-				m = Regex.Match(log, @"^\s*(?<resName>[^\[\]\(\)\.\s]+)\s*$");
-				
-				string o = m.Groups["resName"].Value.Replace(" ", "").Replace("\t", "");
-
-				if (_objTypeNameCache.ContainsKey(log))
-					return _objTypeNameCache[log];
-
-				string result = string.Empty;
-
-				foreach(KeyValuePair<string, Dictionary<string, Resource>> resTypeList in _resourceData.Resources)
-				{
-					foreach(KeyValuePair<string, Resource> resList in resTypeList.Value)
-					{
-						if (resList.Key == o)
-						{
-							if (result != string.Empty)
-								throw new Exception("\"" + o + "\"という名前のリソースは複数定義されています。");
-
-							result = resTypeList.Key;
-						}
-					}
-				}
-
-				_objTypeNameCache.Add(log, o);
-
-				throw new Exception("\"" + o + "\"という名前のリソースは定義されていません。");
-			}
-		}
-		protected string getValue(string log)
-		{
-			Match m = Regex.Match(log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)?)\s*\.\s*[^=\s]+\s*=\s*(?<value>[^\s$]+)$");
-
-			if (m.Success)
-				return m.Groups["value"].Value.Replace(" ", "").Replace("\t", "");
-			else
-				throw new Exception("属性代入式のフォーマットが異常です。\n" + "\"" + log + "\"");
-		}
-
-		protected bool hasTime(string condition)
-		{
-			return Regex.IsMatch(condition, @"\s*\[\s*[0-9a-fA-F]+\s*\]\s*");
-		}
-
-		protected bool isAttributeChangeLog(string log)
-		{
-			Match m = Regex.Match(log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)?)\s*\.\s*(?<attribute>[^=\s]+)\s*=\s*[^\s$]+$");
-
-			if (m.Success)
-				return true;
-			else
-				return false;
-		}
-
-		protected long timeToLong(string time)
-		{
-			return Convert.ToInt64(time, _resourceData.TimeRadix);
-		}
-		protected string timeToString(long time)
-		{
-			return Convert.ToString(time, _resourceData.TimeRadix);
-		}
-
 	}
 }

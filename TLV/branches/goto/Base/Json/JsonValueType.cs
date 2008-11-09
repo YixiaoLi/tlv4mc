@@ -5,18 +5,13 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Base
 {
-	public enum JsonTokenType
+	public enum JsonValueType
 	{
-		StartObject,
-		StartArray,
-		PropertyName,
 		Decimal,
 		String,
 		Boolean,
-		Null,
-		EndObject,
-		EndArray,
-		Raw,
-		Undefined
+		Object,
+		Array,
+		Null
 	}
 }

@@ -10,6 +10,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public string Name { get; set; }
 		public string DisplayName { get; set; }
 		public string VisualizeRule { get; set; }
-		public ArgumentList Arguments { get; set; }
+		public ArgumentTypeList Arguments { get; set; }
 	}
 }

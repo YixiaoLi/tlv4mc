@@ -99,80 +99,77 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			{
 				writeJson(writer, json.Value as Json);
 			}
-
-			if (json.Value is List<Json>)
+			else if (json.Value is List<Json>)
 			{
 				writeJsonArray(writer, json);
 			}
-
-			if (json.Value is Dictionary<string, Json>)
+			else if (json.Value is Dictionary<string, Json>)
 			{
 				writeJsonObject(writer, json);
 			}
-
-			if (json.Value is string)
+			else if (json.Value is string)
 			{
 				writer.WriteValue((string)json.Value);
 			}
-			if (json.Value is char)
+			else if (json.Value is char)
 			{
-				writer.WriteValue((char)json.Value);
+				writer.WriteValue(((char)json.Value).ToString());
 			}
-			if (json.Value is sbyte)
-			{
-				writer.WriteValue((sbyte)json.Value);
-			}
-			if (json.Value is byte)
-			{
-				writer.WriteValue((byte)json.Value);
-			}
-			if (json.Value is short)
-			{
-				writer.WriteValue((short)json.Value);
-			}
-			if (json.Value is ushort)
-			{
-				writer.WriteValue((ushort)json.Value);
-			}
-			if (json.Value is int)
-			{
-				writer.WriteValue((int)json.Value);
-			}
-			if (json.Value is uint)
-			{
-				writer.WriteValue((uint)json.Value);
-			}
-			if (json.Value is long)
-			{
-				writer.WriteValue((long)json.Value);
-			}
-			if (json.Value is ulong)
-			{
-				writer.WriteValue((ulong)json.Value);
-			}
-			if (json.Value is decimal)
+			else if (json.Value is sbyte)
 			{
 				writer.WriteValue((decimal)json.Value);
 			}
-			if (json.Value is double)
+			else if (json.Value is byte)
 			{
-				writer.WriteValue((double)json.Value);
+				writer.WriteValue((decimal)json.Value);
 			}
-			if (json.Value is float)
+			else if (json.Value is short)
 			{
-				writer.WriteValue((float)json.Value);
+				writer.WriteValue((decimal)json.Value);
 			}
-			if (json.Value is DateTime)
+			else if (json.Value is ushort)
 			{
-				writer.WriteValue((DateTime)json.Value);
+				writer.WriteValue((decimal)json.Value);
 			}
-			if (json.Value is bool)
+			else if (json.Value is int)
+			{
+				writer.WriteValue((decimal)json.Value);
+			}
+			else if (json.Value is uint)
+			{
+				writer.WriteValue((decimal)json.Value);
+			}
+			else if (json.Value is long)
+			{
+				writer.WriteValue((decimal)json.Value);
+			}
+			else if (json.Value is ulong)
+			{
+				writer.WriteValue((decimal)json.Value);
+			}
+			else if (json.Value is decimal)
+			{
+				writer.WriteValue((decimal)json.Value);
+			}
+			else if (json.Value is double)
+			{
+				writer.WriteValue((decimal)json.Value);
+			}
+			else if (json.Value is float)
+			{
+				writer.WriteValue((decimal)json.Value);
+			}
+			else if (json.Value is bool)
 			{
 				writer.WriteValue((bool)json.Value);
 			}
-			if (json.Value == null)
+			else if (json.Value == null)
 			{
 				writer.WriteNull();
+			}
+			else
+			{
+				writer.WriteUndefined();
 			}
 		}
 
