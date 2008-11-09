@@ -32,7 +32,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public string ToJson()
 		{
-			return ApplicationFactory.JsonSerializer.Serialize<ResourceHeader>(this);
+			return ApplicationFactory.JsonSerializer.Serialize(this);
 		}
 
 		public ResourceHeader Parse(string data)

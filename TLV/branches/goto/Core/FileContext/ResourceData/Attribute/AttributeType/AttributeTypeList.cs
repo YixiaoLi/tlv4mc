@@ -12,7 +12,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// <summary>
     /// <c>Attribute</c>のリスト
     /// </summary>
-	public class AttributeList : GeneralNamedCollection<AttributeType>
+	public class AttributeTypeList : GeneralNamedCollection<AttributeType>
 	{
 	}
 }

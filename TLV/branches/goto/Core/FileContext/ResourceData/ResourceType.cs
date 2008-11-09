@@ -19,7 +19,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <summary>
         /// 属性リスト
         /// </summary>
-        public AttributeList Attributes { get; set; }
+        public AttributeTypeList Attributes { get; set; }
 		/// <summary>
 		/// 振る舞いリスト
 		/// </summary>

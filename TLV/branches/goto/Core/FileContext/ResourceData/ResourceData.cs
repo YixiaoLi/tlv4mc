@@ -25,7 +25,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public string ToJson()
 		{
-			return ApplicationFactory.JsonSerializer.Serialize<ResourceData>(this);
+			return ApplicationFactory.JsonSerializer.Serialize(this);
 		}
 
 		public ResourceData Parse(string resourceData)

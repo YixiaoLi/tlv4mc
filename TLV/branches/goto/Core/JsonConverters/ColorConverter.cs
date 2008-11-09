@@ -7,14 +7,16 @@ using System;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ColorConverter : IJsonConverter<Color>
+	public class ColorConverter : IJsonConverter
 	{
-		public void WriteJson(IJsonWriter writer, Color obj)
+		public Type Type { get { return typeof(Color); } }
+
+		public void WriteJson(IJsonWriter writer, object obj)
 		{
-			writer.Write(JsonTokenType.String, obj.ToArgb().ToString("x8"));
+			writer.Write(JsonTokenType.String, ((Color)obj).ToArgb().ToString("x8"));
 		}
 
-		public Color ReadJson(IJsonReader reader)
+		public object ReadJson(IJsonReader reader)
 		{
 			string value = (string)reader.Value;
 			return Color.FromArgb(Convert.ToInt32(value, 16));

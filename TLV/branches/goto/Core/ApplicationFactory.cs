@@ -47,14 +47,32 @@ namespace NU.OJL.MPRTOS.TLV.Core
             _commandManager = new CommandManager();
 			_zip = new SharpZipLibZip();
 			_json = new NewtonsoftJson();
+			
+			JsonSerializer.AddConverter(new INamedConverter<Attribute>());
+			JsonSerializer.AddConverter(new INamedConverter<AttributeType>());
+			JsonSerializer.AddConverter(new INamedConverter<Argument>());
+			JsonSerializer.AddConverter(new INamedConverter<Behavior>());
+			JsonSerializer.AddConverter(new INamedConverter<ResourceType>());
+			JsonSerializer.AddConverter(new INamedConverter<Shapes>());
+			JsonSerializer.AddConverter(new INamedConverter<VisualizeRule>());
 
-			JsonSerializer.AddConverter<ResourceHeader>(new ResourceHeaderConverter());
-			JsonSerializer.AddConverter<VisualizeRule>(new VisualizeRuleConverter());
-			JsonSerializer.AddConverter<Color>(new ColorConverter());
-			JsonSerializer.AddConverter<Size>(new SizeConverter());
-			JsonSerializer.AddConverter<Arc>(new ArcConverter());
-			JsonSerializer.AddConverter<Area>(new AreaConverter());
-			JsonSerializer.AddConverter<Coordinate>(new CoordinateConverter());
+			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Attribute>());
+			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<AttributeType>());
+			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Argument>());
+			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Behavior>());
+			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<ResourceType>());
+			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Shapes>());
+			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<VisualizeRule>());
+
+			JsonSerializer.AddConverter(new ArcConverter());
+			JsonSerializer.AddConverter(new AreaConverter());
+			JsonSerializer.AddConverter(new ColorConverter());
+			JsonSerializer.AddConverter(new CoordinateConverter());
+			JsonSerializer.AddConverter(new ResourceConverter());
+			JsonSerializer.AddConverter(new ResourceHeaderConverter());
+			JsonSerializer.AddConverter(new ResourceListConverter());
+			JsonSerializer.AddConverter(new SizeConverter());
+			JsonSerializer.AddConverter(new VisualizeRuleConverter());
         }
     }
 }

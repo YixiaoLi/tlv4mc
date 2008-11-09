@@ -8,14 +8,16 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class VisualizeRuleConverter : IJsonConverter<VisualizeRule>
+	public class VisualizeRuleConverter : IJsonConverter
 	{
-		public void WriteJson(IJsonWriter writer, VisualizeRule obj)
+		public Type Type { get { return typeof(VisualizeRule); } }
+
+		public void WriteJson(IJsonWriter writer, object obj)
 		{
-			if (obj.IsMapped)
+			if (((VisualizeRule)obj).IsMapped)
 			{
 				writer.Write(JsonTokenType.StartObject);
-				foreach(KeyValuePair<string,string> kvp in obj)
+				foreach (KeyValuePair<string, string> kvp in ((VisualizeRule)obj))
 				{
 					writer.Write(JsonTokenType.PropertyName, kvp.Key);
 					writer.Write(JsonTokenType.String, kvp.Value);
@@ -24,11 +26,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 			else
 			{
-				writer.Write(JsonTokenType.String, obj.ToString());
+				writer.Write(JsonTokenType.String, ((VisualizeRule)obj).ToString());
 			}
 		}
 
-		public VisualizeRule ReadJson(IJsonReader reader)
+		public object ReadJson(IJsonReader reader)
 		{
 			if (reader.TokenType == JsonTokenType.String)
 			{

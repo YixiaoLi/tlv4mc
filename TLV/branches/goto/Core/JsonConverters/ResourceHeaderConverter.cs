@@ -2,17 +2,20 @@
 using System.Text.RegularExpressions;
 using System.IO;
 using NU.OJL.MPRTOS.TLV.Base;
+using System;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ResourceHeaderConverter : IJsonConverter<ResourceHeader>
+	public class ResourceHeaderConverter : IJsonConverter
 	{
-		public void WriteJson(IJsonWriter writer, ResourceHeader obj)
+		public Type Type { get { return typeof(ResourceHeader);} }
+
+		public void WriteJson(IJsonWriter writer, object obj)
 		{
-			writer.Write(JsonTokenType.String, obj.Name);
+			writer.Write(JsonTokenType.String, ((ResourceHeader)obj).Name);
 		}
 
-		public ResourceHeader ReadJson(IJsonReader reader)
+		public object ReadJson(IJsonReader reader)
 		{
 			string name = (string)reader.Value;
 

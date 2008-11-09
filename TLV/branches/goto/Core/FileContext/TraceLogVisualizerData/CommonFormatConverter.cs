@@ -122,14 +122,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			foreach (KeyValuePair<string, ResourceType> resh in resourceData.ResourceHeader)
 			{
 				Dictionary<string, string> attrs = new Dictionary<string, string>();
-				foreach (KeyValuePair<string, AttributeType> attr in resh.Value.Attributes)
+				foreach (AttributeType attr in resh.Value.Attributes)
 				{
-					attrs.Add(attr.Key, attr.Value.VisualizeRule);
+					attrs.Add(attr.Name, attr.VisualizeRule);
 				}
 				Dictionary<string, string> bhvrs = new Dictionary<string, string>();
-				foreach (KeyValuePair<string, Behavior> bhvr in resh.Value.Behaviors)
+				foreach (Behavior bhvr in resh.Value.Behaviors)
 				{
-					bhvrs.Add(bhvr.Key, bhvr.Value.VisualizeRule);
+					bhvrs.Add(bhvr.Name, bhvr.VisualizeRule);
 				}
 
 				visualizeData.ApplyRules.Add(resh.Key, new ApplyRule(attrs, bhvrs));
@@ -141,7 +141,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				VisualizeData vd = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(File.ReadAllText(s));
 
-				foreach (KeyValuePair<string, VisualizeRule> kvp in vd.VisualizeRules)
+				foreach (VisualizeRule vr in vd.VisualizeRules)
 				{
 					bool flag = false;
 					foreach (KeyValuePair<string, ApplyRule> _kvp in visualizeData.ApplyRules)
@@ -149,7 +149,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						bool f = false;
 						foreach (string a in _kvp.Value.Attribute.Values)
 						{
-							if (kvp.Key == a)
+							if (vr.Name == a)
 							{
 								f = true;
 								break;
@@ -157,7 +157,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						}
 						foreach (string b in _kvp.Value.Behavior.Values)
 						{
-							if (kvp.Key == b)
+							if (vr.Name == b)
 							{
 								f = true;
 								break;
@@ -171,18 +171,18 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					}
 					if (flag)
 					{
-						visualizeData.VisualizeRules.Add(kvp.Key, kvp.Value);
+						visualizeData.VisualizeRules.Add(vr.Name, vr);
 					}
 				}
 				foreach (KeyValuePair<string, Shapes> kvp in vd.Shapes)
 				{
 					bool flag = false;
-					foreach (KeyValuePair<string, VisualizeRule> _kvp in visualizeData.VisualizeRules)
+					foreach (VisualizeRule vr in visualizeData.VisualizeRules)
 					{
 						bool f = false;
-						if (_kvp.Value.IsMapped)
+						if (vr.IsMapped)
 						{
-							foreach (KeyValuePair<string, string> v in _kvp.Value)
+							foreach (KeyValuePair<string, string> v in vr)
 							{
 								if (kvp.Key == v.Value)
 								{
@@ -193,7 +193,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						}
 						else
 						{
-							if (kvp.Key == _kvp.Value)
+							if (kvp.Key == vr)
 							{
 								f = true;
 							}

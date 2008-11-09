@@ -10,7 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	{
 		public static string ToJsonString(this Json json)
 		{
-			return ApplicationFactory.JsonSerializer.Serialize<Json>(json);
+			return ApplicationFactory.JsonSerializer.Serialize(json);
 		}
 		public static Json Parse(this Json json, string str)
 		{

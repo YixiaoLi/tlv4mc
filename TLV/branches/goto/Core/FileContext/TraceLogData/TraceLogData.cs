@@ -58,8 +58,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					{
 						if (attr.AllocationType == AllocationType.Dynamic)
 						{
-							_data[type][res.Name].Add(attr.Name, new Json(new List<Json>()));
-							_data[type][res.Name][attr.Name].Add(new TimeValuePair(0, attr.Default));
+							_data[type][res.Name].Add(attr.Name, new Attribute() { Name = attr.Name, Value = new Json(new List<Json>()) });
+							((Json)(_data[type][res.Name][attr.Name])).Add(new TimeValuePair(0, attr.Default));
 						}
 					}
 				}
@@ -186,18 +186,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return result;
 		}
 
-		private TimeValuePair getTimeValuePair(Json json, long time)
-		{
-			return (TimeValuePair)(json.Last<Json>(j =>
-			{
-				return ((TimeValuePair)(j.Value)).Time <= time;
-			})).Value;
-		}
-		private TimeValuePair getTimeValuePair(Json json)
-		{
-			return (TimeValuePair)(json.Last<Json>()).Value;
-		}
-
 		protected string getTime(string log)
 		{
 			Match m = Regex.Match(log, @"\s*\[\s*(?<time>[0-9a-fA-F]+)\s*\]\s*");
@@ -318,17 +306,5 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return Convert.ToString(time, _resourceData.TimeRadix);
 		}
 
-		private struct TimeValuePair
-		{
-			public long Time { get; private set; }
-			public string Value { get; private set; }
-
-			public TimeValuePair(long time, string value)
-				:this()
-			{
-				Time = time;
-				Value = value;
-			}
-		}
 	}
 }

@@ -6,21 +6,23 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class GeneralNamedCollectionConverter<T> : IJsonConverter<GeneralNamedCollection<T>>
+	public class GeneralNamedCollectionConverter<T> : IJsonConverter
 		where T : class, INamed
 	{
-		public void WriteJson(IJsonWriter writer, GeneralNamedCollection<T> obj)
+		public Type Type { get { return typeof(GeneralNamedCollection<T>); } }
+
+		public void WriteJson(IJsonWriter writer, object obj)
 		{
 			writer.Write(JsonTokenType.StartObject);
-			foreach (KeyValuePair<string, T> kvp in obj)
+			foreach (T t in (GeneralNamedCollection<T>)obj)
 			{
-				writer.Write(JsonTokenType.PropertyName, kvp.Key);
-				ApplicationFactory.JsonSerializer.Serialize(writer, kvp.Value);
+				writer.Write(JsonTokenType.PropertyName, t.Name);
+				ApplicationFactory.JsonSerializer.Serialize(writer, t);
 			}
 			writer.Write(JsonTokenType.EndObject);
 		}
 
-		public GeneralNamedCollection<T> ReadJson(IJsonReader reader)
+		public object ReadJson(IJsonReader reader)
 		{
 			GeneralNamedCollection<T> gnc = new GeneralNamedCollection<T>();
 
@@ -30,7 +32,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				{
 					string key = (string)reader.Value;
 					reader.Read();
-					T obj = (T)reader.Value;
+					T obj = ApplicationFactory.JsonSerializer.Deserialize<T>(reader);
 					obj.Name = key;
 					gnc.Add(obj.Name, obj);
 				}

@@ -7,20 +7,22 @@ using System.Reflection;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class INamedConverter<T> : IJsonConverter<T>
+	public class INamedConverter<T> : IJsonConverter
 		where T:INamed, new()
 	{
-		public void WriteJson(IJsonWriter writer, T obj)
+		public Type Type { get { return typeof(T); } }
+
+		public void WriteJson(IJsonWriter writer, object obj)
 		{
 			if(ApplicationFactory.JsonSerializer.HasConverter(typeof(T)))
 			{
-				ApplicationFactory.JsonSerializer.Serialize(writer, obj);
+				ApplicationFactory.JsonSerializer.Serialize(writer, ((T)obj));
 			}
 			else
 			{
 				writer.Write(JsonTokenType.StartObject);
 
-				foreach (PropertyInfo pi in obj.GetType().GetProperties())
+				foreach (PropertyInfo pi in ((T)obj).GetType().GetProperties())
 				{
 					if (pi.CanRead && pi.Name != "Name")
 					{
@@ -33,7 +35,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 		}
 
-		public T ReadJson(IJsonReader reader)
+		public object ReadJson(IJsonReader reader)
 		{
 			T obj = new T();
 

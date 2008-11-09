@@ -9,14 +9,20 @@ using Newtonsoft.Json.Converters;
 
 namespace NU.OJL.MPRTOS.TLV.Third
 {
-	public class GeneralConverter<T> : JsonConverter
+	public class GeneralConverter : JsonConverter
 	{
-		public event Func<IJsonReader, T> ReadJsonHandler;
-		public event Action<IJsonWriter, T> WriteJsonHandler;
-		
+		private Type _type;
+		public event Func<IJsonReader, object> ReadJsonHandler;
+		public event Action<IJsonWriter, object> WriteJsonHandler;
+
+		public GeneralConverter(Type t)
+		{
+			_type = t;
+		}
+
 		public override bool CanConvert(Type objectType)
 		{
-			return objectType.IsAssignableFrom(typeof(T));
+			return objectType.IsAssignableFrom(_type);
 		}
 
 		public override object ReadJson(Newtonsoft.Json.JsonReader reader, Type objectType)
@@ -35,7 +41,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 		{
 			if (WriteJsonHandler != null)
 			{
-				WriteJsonHandler(new JsonWriter((JsonTextWriter)writer), (T)value);
+				WriteJsonHandler(new JsonWriter((JsonTextWriter)writer), value);
 			}
 		}
 	}

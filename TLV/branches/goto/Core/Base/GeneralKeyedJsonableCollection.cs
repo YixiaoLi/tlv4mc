@@ -32,7 +32,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public string ToJson()
 		{
-			return ApplicationFactory.JsonSerializer.Serialize<TList>((TList)this);
+			return ApplicationFactory.JsonSerializer.Serialize((TList)this);
 		}
 
 	}

@@ -5,8 +5,9 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class Log
+	public enum LogType
 	{
-		public Time Time { get; set; }
+		AttributeChange,
+		BehaviorCall
 	}
 }

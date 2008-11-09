@@ -46,11 +46,9 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			return (T)Deserialize(json, typeof(T));
 		}
 
-		public string Serialize(IJsonWriter writer, object obj)
+		public void Serialize(IJsonWriter writer, object obj)
 		{
-			StringBuilder sb = new StringBuilder();
 			_serializer.Serialize((JsonWriter)writer, obj);
-			return sb.ToString();
 		}
 
 		public string Serialize(object obj)
@@ -62,9 +60,9 @@ namespace NU.OJL.MPRTOS.TLV.Third
 		}
 
 
-		public void AddConverter<T>(IJsonConverter<T> converter)
+		public void AddConverter(IJsonConverter converter)
 		{
-			GeneralConverter<T> cnvtr = new GeneralConverter<T>();
+			GeneralConverter cnvtr = new GeneralConverter(converter.Type);
 			cnvtr.ReadJsonHandler += (r) =>
 			{
 				return converter.ReadJson(r);
@@ -75,7 +73,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			};
 			_serializer.Converters.Add(cnvtr);
 
-			_converterList.Add(typeof(T));
+			_converterList.Add(converter.Type);
 		}
 
 		public bool HasConverter(Type type)
