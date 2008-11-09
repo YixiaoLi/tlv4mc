@@ -20,8 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionItems", "solutionIt
 	ProjectSection(SolutionItems) = preProject
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 		readme.txt = readme.txt
-		TLV2.vsmdi = TLV2.vsmdi
-		TLV3.vsmdi = TLV3.vsmdi
+		TLV1.vsmdi = TLV1.vsmdi
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{92DADFFC-3815-4346-B504-00E1C119B730}"
@@ -53,6 +52,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualizeRules", "visualize
 		visualizeRules\asp.viz = visualizeRules\asp.viz
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{94C75166-FFDC-44D8-9030-0F6EF109BD8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +76,10 @@ Global
 		{C2A4F798-30E4-4F03-AA49-F060FFD09B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2A4F798-30E4-4F03-AA49-F060FFD09B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2A4F798-30E4-4F03-AA49-F060FFD09B48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94C75166-FFDC-44D8-9030-0F6EF109BD8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94C75166-FFDC-44D8-9030-0F6EF109BD8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94C75166-FFDC-44D8-9030-0F6EF109BD8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94C75166-FFDC-44D8-9030-0F6EF109BD8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
