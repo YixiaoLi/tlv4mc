@@ -16,11 +16,8 @@
 		"runningShapes":[
 			{
 				"Type":"Rectangle",
-				"Coordinates":["f(0),80%","t(0),0"],
-				"Pen":{
-					"Color":"0000ff00",
-					"Width":3.0
-				},
+				"Area":["0,0","100%,80%"],
+				"Pen":{"Color":"0000ff00","Width":3.0},
 				"Fill":"6600ff00"
 			}
 		],
@@ -61,16 +58,16 @@
 		],
 		"activateShapes":[
 			{
-				"Type":"Arrow",
+				"Type":"Line",
 				"Coordinates":["0,0","0,80%"],
-				"Pen":{"Color":"00000000","Width":3}
+				"Pen":{"Color":"00000000","Width":3,"EndCap":"ArrowAnchor"}
 			}
 		],
 		"exitShapes":[
 			{
-				"Type":"Arrow",
-				"Coordinates":["0,80%","0,0"],
-				"Pen":{"Color":"00000000","Width":3}
+				"Type":"Line",
+				"Coordinates":["0,0","0,80%"],
+				"Pen":{"Color":"00000000","Width":3,"StartCap":"ArrowAnchor"}
 			}
 		]
 	}

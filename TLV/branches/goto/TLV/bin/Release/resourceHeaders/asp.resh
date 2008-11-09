@@ -53,7 +53,7 @@
 					"CanGrouping"	:false,
 				},
 				"state":{
-					"VariableType"	:"State",
+					"VariableType"	:"string",
 					"DisplayName"	:"状態",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:false,
