@@ -58,6 +58,7 @@
     <Compile Include="FileContext\TraceLogData\Log\LogType.cs" />
     <Compile Include="FileContext\TraceLogData\Log\AttributeChangeEvent.cs" />
     <Compile Include="FileContext\TraceLogData\Log\Time.cs" />
+    <Compile Include="FileContext\TraceLogData\TraceLog.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\ShapesList.cs" />
     <Compile Include="JsonConverters\ArcConverter.cs" />
     <Compile Include="JsonConverters\GeneralNamedCollectionConverter.cs" />
