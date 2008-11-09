@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dll", "dll", "{C9BAF152-472
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Third", "Third\Third.csproj", "{C2A4F798-30E4-4F03-AA49-F060FFD09B48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{1BFB4EF8-CB6F-48FF-811B-0D1898ABE03E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionItems", "solutionItems", "{A9D965DA-0F3D-40DA-A0B4-67E6E61C5DE5}"
 	ProjectSection(SolutionItems) = preProject
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
@@ -77,9 +75,6 @@ Global
 		{C2A4F798-30E4-4F03-AA49-F060FFD09B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2A4F798-30E4-4F03-AA49-F060FFD09B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2A4F798-30E4-4F03-AA49-F060FFD09B48}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BFB4EF8-CB6F-48FF-811B-0D1898ABE03E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1BFB4EF8-CB6F-48FF-811B-0D1898ABE03E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1BFB4EF8-CB6F-48FF-811B-0D1898ABE03E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
