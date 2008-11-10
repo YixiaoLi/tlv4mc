@@ -64,10 +64,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         /// <param name="resourceData">共通形式のリソースデータ</param>
         /// <param name="traceLogData">共通形式のトレースログデータ</param>
-		public TraceLogVisualizerData(ResourceData resourceData, TraceLogList traceLogList, VisualizeData visualizeData)
+		public TraceLogVisualizerData(ResourceData resourceData, TraceLogData traceLogData, VisualizeData visualizeData)
         {
 			ResourceData = resourceData;
-			TraceLogData = new TraceLogData(traceLogList, resourceData);
+			TraceLogData = traceLogData;
 			VisualizeData = visualizeData;
         }
 
@@ -86,7 +86,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			string name = Path.GetFileNameWithoutExtension(path);
 
 			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.ResourceFileExtension, ResourceData.ToJson());
-			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension, TraceLogData.TraceLogList.ToJson());
+			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension, TraceLogData.TraceLogs.ToJson());
 			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.VisualizeRuleFileExtension, VisualizeData.ToJson());
 
 			zip.Compress(path, tmpDirPath);
@@ -114,10 +114,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			TraceLogList log = new TraceLogList().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension));
 			VisualizeData viz = new VisualizeData().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.VisualizeRuleFileExtension));
 
-			TraceLogVisualizerData c = new TraceLogVisualizerData(res, log, viz);
-			ResourceData = c.ResourceData;
-			TraceLogData = c.TraceLogData;
-			VisualizeData = c.VisualizeData;
+			ResourceData = res;
+			TraceLogData = new TraceLogData(log, res);
+			VisualizeData = viz;
         }
     }
 }

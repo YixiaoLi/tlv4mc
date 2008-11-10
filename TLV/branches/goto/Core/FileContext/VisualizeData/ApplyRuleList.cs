@@ -6,7 +6,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class AttributeList : GeneralKeyedJsonableCollection<string, Json, AttributeList>
+	public class ApplyRuleList : GeneralNamedCollection<ApplyRule>
 	{
 	}
 }

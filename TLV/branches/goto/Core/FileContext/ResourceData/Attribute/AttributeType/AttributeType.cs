@@ -32,16 +32,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					switch(value)
 					{
 						case JsonValueType.String:
-							Default = "";
+							Default = new Json(string.Empty);
 							break;
 						case JsonValueType.Decimal:
-							Default = "0";
+							Default = new Json(0);
 							break;
 						case JsonValueType.Boolean:
-							Default = "Flase";
+							Default = new Json(false);
 							break;
 						default:
-							Default = "null";
+							Default = new Json();
 							break;
 					}
 				}
@@ -58,7 +58,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// <summary>
 		/// デフォルト値
 		/// </summary>
-		public string Default { get; set; }
+		public Json Default { get; set; }
 		/// <summary>
 		/// デフォルト可視化ルール
 		/// </summary>

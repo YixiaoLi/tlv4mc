@@ -39,7 +39,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			get
 			{
-				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<object>[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)))\s*(\.\s*[^=!<>\(\s]+)?\s*$");
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<object>[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?)\s*(\.\s*[^\s]+)?\s*$");
 
 				if (m.Success)
 					return m.Groups["object"].Value.Replace(" ", "").Replace("\t", "");
@@ -51,7 +51,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			get
 			{
-				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))\s*\.\s*(?<behavior>[^=!<>\(\s]+\s*\([^\)]+\))\s*$");
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?\s*\.\s*(?<behavior>[^\(\s]+\s*\([^\)]*\))\s*$");
 
 				if (m.Success)
 					return m.Groups["behavior"].Value.Replace(" ", "").Replace("\t", "");
@@ -63,7 +63,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			get
 			{
-				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))\s*\.\s*(?<attribute>[^=!<>\(\s]+)\s*$");
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?\s*\.\s*(?<attribute>[^=!<>\(\s]+).*$");
 
 				if (m.Success)
 					return m.Groups["attribute"].Value.Replace(" ", "").Replace("\t", "");
@@ -75,7 +75,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			get
 			{
-				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))\s*\.\s*[^=\s]+\s*=\s*(?<value>[^\s$]+)$");
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?\s*\.\s*[^=\s]+\s*=\s*(?<value>[^\s$]+)$");
 
 				if (m.Success)
 					return m.Groups["value"].Value.Replace(" ", "").Replace("\t", "");
@@ -87,7 +87,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			get
 			{
-				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))\s*\.\s*[^=!<>\(\s]+\s*\((?<args>[^\)]+)\)\s*$");
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?\s*\.\s*[^=!<>\(\s]+\s*\((?<args>[^\)]*)\)\s*$");
 
 				if (m.Success)
 					return m.Groups["args"].Value.Replace(" ", "").Replace("\t", "");
@@ -106,7 +106,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			get
 			{
-				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\([^\)]+\))\s*\.\s*[^=\s]+\s*=\s*[^\s$]+$");
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\([^\)]+\))?\s*\.\s*[^=\s]+\s*=\s*[^\s$]+$");
 
 				if (m.Success)
 					return true;
@@ -118,7 +118,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			get
 			{
-				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\([^\)]+\))\s*\.\s*[^=\s]+\s*\([^\)]*\)\s*$");
+				Match m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\([^\)]+\))?\s*\.\s*[^=\s]+\s*\([^\)]*\)\s*$");
 
 				if (m.Success)
 					return true;

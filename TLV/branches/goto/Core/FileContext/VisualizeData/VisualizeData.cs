@@ -8,15 +8,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class VisualizeData : IJsonable<VisualizeData>
 	{
-		public Dictionary<string, ApplyRule> ApplyRules { get; set; }
+		public ApplyRuleList ApplyRules { get; set; }
 		public VisualizeRuleList VisualizeRules { get; set; }
-		public Dictionary<string, Shapes> Shapes { get; set; }
+		public ShapesList Shapes { get; set; }
 
 		public VisualizeData()
 		{
-			ApplyRules = new Dictionary<string, ApplyRule>();
-			VisualizeRules = new VisualizeRuleList();
-			Shapes = new Dictionary<string, Shapes>();
 		}
 
 		public string ToJson()

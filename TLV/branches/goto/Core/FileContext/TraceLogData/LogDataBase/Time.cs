@@ -7,33 +7,33 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class Time : IComparable<Time>
 	{
-		private long _value;
 		public int Radix { get; private set; }
+		public long Value { get; private set; }
 
 		public Time(string value, int radix)
 		{
 			Radix = radix;
-			_value = Convert.ToInt64(value, radix);
+			Value = Convert.ToInt64(value, Radix);
 		}
 
 		public static implicit operator long(Time time)
 		{
-			return time._value;
-		}
-
-		public static implicit operator string(Time time)
-		{
-			return Convert.ToString(time._value, time.Radix);
+			return time.Value;
 		}
 
 		public int CompareTo(Time other)
 		{
-			if ((long)this == (long)other)
+			if (Value == other.Value)
 				return 0;
-			else if ((long)this > (long)other)
+			else if (Value > other.Value)
 				return 1;
 			else
 				return -1;
 		}
+
+		public override string ToString()
+		{
+			return Convert.ToString(Value, Radix);
+		} 
 	}
 }

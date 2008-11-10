@@ -47,11 +47,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
             _commandManager = new CommandManager();
 			_zip = new SharpZipLibZip();
 			_json = new NewtonsoftJson();
-			
+
 			JsonSerializer.AddConverter(new TraceLogConverter());
 			JsonSerializer.AddConverter(new ArcConverter());
 			JsonSerializer.AddConverter(new AreaConverter());
-			JsonSerializer.AddConverter(new AttributeConverter());
 			JsonSerializer.AddConverter(new ColorConverter());
 			JsonSerializer.AddConverter(new CoordinateConverter());
 			JsonSerializer.AddConverter(new ResourceHeaderConverter());
@@ -59,13 +58,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			JsonSerializer.AddConverter(new VisualizeRuleConverter());
 
 			JsonSerializer.AddConverter(new INamedConverter<AttributeType>());
+			JsonSerializer.AddConverter(new INamedConverter<ApplyRule>());
 			JsonSerializer.AddConverter(new INamedConverter<Behavior>());
 			JsonSerializer.AddConverter(new INamedConverter<ResourceType>());
 			JsonSerializer.AddConverter(new INamedConverter<Resource>());
-			JsonSerializer.AddConverter(new INamedConverter<Shapes>());
 
-			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Attribute, AttributeList>());
 			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<AttributeType, AttributeTypeList>());
+			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<ApplyRule, ApplyRuleList>());
 			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Behavior, BehaviorList>());
 			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<ResourceType, ResourceTypeList>());
 			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Resource, ResourceList>());

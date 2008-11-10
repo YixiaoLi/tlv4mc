@@ -52,7 +52,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 		public string Serialize(object obj)
 		{
 			StringBuilder sb = new StringBuilder();
-			Serialize(new JsonWriter(new JsonTextWriter(new StringWriter(sb))), obj);
+			Serialize(new JsonWriter(new JsonTextWriter(new StringWriter(sb)) { Formatting = Formatting.Indented }), obj);
 			return sb.ToString();
 		}
 

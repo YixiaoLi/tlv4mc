@@ -190,7 +190,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public static implicit operator string(Json jsonValue)
 		{
-			return (string)jsonValue.Value;
+			return jsonValue.Value.ToString();
 		}
 		public static implicit operator bool(Json jsonValue)
 		{

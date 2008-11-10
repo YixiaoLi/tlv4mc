@@ -27,23 +27,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			S gnc = new S();
 
-			for ( ; ; )
+			while (reader.TokenType != JsonTokenType.EndObject)
 			{
 				if (reader.TokenType == JsonTokenType.PropertyName)
 				{
 					string key = (string)reader.Value;
-
-					reader.Read();
-
 					T obj = ApplicationFactory.JsonSerializer.Deserialize<T>(reader);
 					obj.Name = key;
 					gnc.Add(obj.Name, obj);
 				}
 
 				reader.Read();
-
-				if (reader.TokenType == JsonTokenType.EndObject)
-					break;
 			}
 
 			return gnc;

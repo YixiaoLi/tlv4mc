@@ -17,7 +17,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		private readonly string[] _convertFunction = new string[] { "COUNT","EXIST","ATTR" };
 		private ResourceData _resourceData;
 		private VisualizeData _visualizeData;
-		private TraceLogList _traceLogList;
+		private TraceLogData _traceLogData;
 		public Action<int, string> _constructProgressReport = null;
 		private int _from = 0;
 		private int _to = 100;
@@ -42,23 +42,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 
 			if (_constructProgressReport != null)
-				_constructProgressReport(_to, "トレースログデータを生成中");
-			_from = _to;
-			_to = 90;
-			try
-			{
-				_traceLogList = getTraceLogList(traceLogFilePath, _resourceData);
-			}
-			catch (Exception _e)
-			{
-				throw new Exception("トレースログデータの生成に失敗しました。\nトレースログ変換ルールファイルの記述に誤りがあります。\n" + _e.Message);
-			}
-
-			if (_constructProgressReport != null)
 				_constructProgressReport(_to, "可視化データを生成中");
 			_from = _to;
-			_to = 100;
-			
+			_to = 20;
+
 			try
 			{
 				_visualizeData = getVisualizeData(_resourceData);
@@ -66,6 +53,19 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			catch (Exception _e)
 			{
 				throw new Exception("可視化データの生成に失敗しました。\n可視化ルールファイルの記述に誤りがあります。\n" + _e.Message);
+			}
+
+			if (_constructProgressReport != null)
+				_constructProgressReport(_to, "トレースログデータを生成中");
+			_from = _to;
+			_to = 99;
+			try
+			{
+				_traceLogData = getTraceLogData(traceLogFilePath, _resourceData);
+			}
+			catch (Exception _e)
+			{
+				throw new Exception("トレースログデータの生成に失敗しました。\nトレースログ変換ルールファイルの記述に誤りがあります。\n" + _e.Message);
 			}
 
 			if (_constructProgressReport != null)
@@ -79,9 +79,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			_resourceData = new ResourceData().Parse(File.ReadAllText(resourceFilePath));
 
-			_traceLogList = getTraceLogList(traceLogFilePath, _resourceData);
-
 			_visualizeData = getVisualizeData(_resourceData);
+
+			_traceLogData = getTraceLogData(traceLogFilePath, _resourceData);
 
 		}
 
@@ -103,11 +103,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// </summary>
 		/// <param name="traceLogFilePath">変換する前のトレースログファイルのパス</param>
 		/// <returns>変換後のトレースログファイルの内容の文字列</returns>
-		public TraceLogList TraceLogList
+		public TraceLogData TraceLogData
 		{
 			get
 			{
-				return _traceLogList;
+				return _traceLogData;
 			}
 		}
 
@@ -119,6 +119,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		private VisualizeData getVisualizeData(ResourceData resourceData)
 		{
 			VisualizeData visualizeData = new VisualizeData();
+			visualizeData.ApplyRules = new ApplyRuleList();
+			visualizeData.VisualizeRules = new VisualizeRuleList();
+			visualizeData.Shapes = new ShapesList();
 
 			foreach (ResourceType resh in resourceData.ResourceHeader)
 			{
@@ -133,7 +136,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					bhvrs.Add(bhvr.Name, bhvr.VisualizeRule);
 				}
 
-				visualizeData.ApplyRules.Add(resh.Name, new ApplyRule(attrs, bhvrs));
+				visualizeData.ApplyRules.Add(resh.Name, new ApplyRule(attrs, bhvrs) { Name = resh.Name });
 			}
 
 			string[] visualizeRuleFilePaths = Directory.GetFiles(ApplicationDatas.Setting["VisualizeRulesDirectoryPath"], "*." + Properties.Resources.VisualizeRuleFileExtension);
@@ -145,10 +148,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				foreach (VisualizeRule vr in vd.VisualizeRules)
 				{
 					bool flag = false;
-					foreach (KeyValuePair<string, ApplyRule> _kvp in visualizeData.ApplyRules)
+					foreach (ApplyRule r in visualizeData.ApplyRules)
 					{
 						bool f = false;
-						foreach (string a in _kvp.Value.Attribute.Values)
+						foreach (string a in r.Attribute.Values)
 						{
 							if (vr.Name == a)
 							{
@@ -156,7 +159,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 								break;
 							}
 						}
-						foreach (string b in _kvp.Value.Behavior.Values)
+						foreach (string b in r.Behavior.Values)
 						{
 							if (vr.Name == b)
 							{
@@ -175,7 +178,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						visualizeData.VisualizeRules.Add(vr.Name, vr);
 					}
 				}
-				foreach (KeyValuePair<string, Shapes> kvp in vd.Shapes)
+				foreach (Shapes sp in vd.Shapes)
 				{
 					bool flag = false;
 					foreach (VisualizeRule vr in visualizeData.VisualizeRules)
@@ -185,7 +188,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						{
 							foreach (KeyValuePair<string, string> v in vr)
 							{
-								if (kvp.Key == v.Value)
+								if (sp.Name == v.Value)
 								{
 									f = true;
 									break;
@@ -194,7 +197,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						}
 						else
 						{
-							if (kvp.Key == vr)
+							if (sp.Name == vr)
 							{
 								f = true;
 							}
@@ -208,14 +211,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					}
 					if (flag)
 					{
-						visualizeData.Shapes.Add(kvp.Key, kvp.Value);
+						visualizeData.Shapes.Add(sp.Name, sp);
 					}
 				}
 			}
 			return visualizeData;
 		}
 
-		private TraceLogList getTraceLogList(string traceLogFilePath, ResourceData resourceData)
+		private TraceLogData getTraceLogData(string traceLogFilePath, ResourceData resourceData)
 		{
 			Dictionary<string, Json> dic = new Dictionary<string, Json>();
 
@@ -260,7 +263,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				i++;
 			}
 
-			return t.TraceLogList;
+			return t;
 		}
 
 		/// <summary>
@@ -283,7 +286,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			else
 			{
 				// valueがstringのときログを置換して追加
-				traceLogData.TraceLogList.Add(new TraceLog(Regex.Replace(log, pattern, applyConvertFunc(traceLogData, value))));
+				traceLogData.Add(new TraceLog(Regex.Replace(log, pattern, applyConvertFunc(traceLogData, value))));
 			}
 		}
 
@@ -309,7 +312,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// <param name="condition">パターン</param>
 		/// <param name="value">変換値がObject（Jsonでいうところの）</param>
 		/// <param name="traceLogManager">追加先</param>
-		private void addTraceLogAsObject(string log, string pattern, Dictionary<string, Json> value, TraceLogData traceLogManager)
+		private void addTraceLogAsObject(string log, string pattern, Dictionary<string, Json> value, TraceLogData traceLogData)
 		{
 			Dictionary<string, string> cache = new Dictionary<string, string>();
 
@@ -317,9 +320,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				string condition = Regex.Replace(log, pattern, kvp.Key);
 
-				condition = applyConvertFunc(traceLogManager,condition);
+				condition = applyConvertFunc(traceLogData,condition);
 
-				foreach (Match m in Regex.Matches(condition, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)\s*(\.\s*[^=!<>\(]+)?\s*$"))
+				foreach (Match m in Regex.Matches(condition, @"\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*\.\s*[^=!<>\(]+\s*"))
 				{
 					if (cache.ContainsKey(m.Value))
 					{
@@ -330,7 +333,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						string val;
 						try
 						{
-							val = traceLogManager.GetAttributeValue(m.Value);
+							val = traceLogData.GetAttributeValue(m.Value);
 						}
 						catch (Exception e)
 						{
@@ -354,7 +357,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 				if (result)
 				{
-					addTraceLog(log, pattern, kvp.Value, traceLogManager);
+					addTraceLog(log, pattern, kvp.Value, traceLogData);
 				}
 			}
 		}
@@ -363,9 +366,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			foreach (string func in _convertFunction)
 			{
-				foreach (Match m in Regex.Matches(condition, func + @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)\s*(\.\s*[^=!<>\(]+)?\s*$"))
+				foreach (Match m in Regex.Matches(condition, func + @"{(?<condition>\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*(\.\s*[^=!<>\(]+)?\s*)}"))
 				{
-					string val = calcConvertFunc(func, m.Value, traceLogData);
+					string val = calcConvertFunc(func, m.Groups["condition"].Value, traceLogData);
 					condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
 				}
 			}

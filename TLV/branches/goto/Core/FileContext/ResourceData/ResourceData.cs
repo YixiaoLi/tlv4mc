@@ -11,8 +11,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public string TimeScale { get; private set; }
 		public int TimeRadix { get; private set; }
 		public string ConvertRule { get; private set; }
-		public ResourceHeader ResourceHeader { get; private set; }
 		public ResourceList Resources { get; private set; }
+		public ResourceHeader ResourceHeader { get; private set; }
 
 		public ResourceData()
 		{
@@ -20,7 +20,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			TimeRadix = 10;
 			ConvertRule = string.Empty;
 			ResourceHeader = null;
-			Resources = new ResourceList();
+			Resources = null;
 		}
 
 		public string ToJson()

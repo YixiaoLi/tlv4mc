@@ -61,10 +61,9 @@
     <Compile Include="FileContext\TraceLogData\LogDataBase\Time.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLog.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogList.cs" />
+    <Compile Include="FileContext\VisualizeData\ApplyRuleList.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\ShapesList.cs" />
     <Compile Include="JsonConverters\ArcConverter.cs" />
-    <Compile Include="JsonConverters\AttributeConverter.cs" />
-    <Compile Include="JsonConverters\GeneralJsonableCollectionConverter.cs" />
     <Compile Include="JsonConverters\GeneralNamedCollectionConverter.cs" />
     <Compile Include="JsonConverters\INamedConverter.cs" />
     <Compile Include="JsonConverters\SizeConverter.cs" />

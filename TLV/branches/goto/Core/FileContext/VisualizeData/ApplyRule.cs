@@ -5,8 +5,9 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ApplyRule
+	public class ApplyRule : INamed
 	{
+		public string Name { get; set; }
 		public Dictionary<string, string> Attribute { get; set; }
 		public Dictionary<string, string> Behavior { get; set; }
 

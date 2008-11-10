@@ -50,7 +50,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 					_writer.WriteValue(value);
 					break;
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.String:
-					_writer.WriteValue((string)value);
+					_writer.WriteValue(value.ToString());
 					break;
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Boolean:
 					_writer.WriteValue((bool)value);
