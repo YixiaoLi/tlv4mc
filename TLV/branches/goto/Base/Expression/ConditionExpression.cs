@@ -12,6 +12,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public static bool Result(string expression)
 		{
+			expression = expression.Replace(" ", "").Replace("\t", "");
 			bool result;
 			try
 			{
@@ -29,7 +30,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
 				} while (m.Success);
 
 				if (cache.ContainsKey(e))
+				{
+					cache.Add(expression, cache[e]);
 					return cache[e];
+				}
 
 				do
 				{
@@ -39,7 +43,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
 				} while (m.Success);
 
 				if (cache.ContainsKey(e))
+				{
+					cache.Add(expression, cache[e]);
 					return cache[e];
+				}
 
 				do
 				{
@@ -49,7 +56,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
 				} while (m.Success);
 
 				if (cache.ContainsKey(e))
+				{
+					cache.Add(expression, cache[e]);
 					return cache[e];
+				}
 
 				do
 				{
@@ -59,7 +69,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
 				} while (m.Success);
 
 				if (cache.ContainsKey(e))
+				{
+					cache.Add(expression, cache[e]);
 					return cache[e];
+				}
 
 				do
 				{

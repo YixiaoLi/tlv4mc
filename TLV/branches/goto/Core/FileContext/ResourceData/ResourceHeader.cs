@@ -15,7 +15,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public class ResourceHeader : IJsonable<ResourceHeader>, IEnumerable<ResourceType>
 	{
 		private ResourceTypeList _types = new ResourceTypeList();
-		public string Name { get; private set; }
+		public string Name { get; set; }
 		public ResourceType this[string typeName] { get { return _types[typeName]; } }
 
 		public ResourceHeader()

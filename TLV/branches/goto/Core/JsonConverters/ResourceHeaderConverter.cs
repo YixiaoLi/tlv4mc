@@ -12,39 +12,66 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public void WriteJson(IJsonWriter writer, object obj)
 		{
-			writer.Write(JsonTokenType.String, ((ResourceHeader)obj).Name);
+			writer.Write(JsonTokenType.StartObject);
+			foreach(ResourceType rt in (ResourceHeader)obj)
+			{
+				writer.Write(JsonTokenType.PropertyName, rt.Name);
+				ApplicationFactory.JsonSerializer.Serialize(writer, rt);
+			}
+			writer.Write(JsonTokenType.EndObject);
 		}
 
 		public object ReadJson(IJsonReader reader)
 		{
-			string name = (string)reader.Value;
-
-			Json data = new Json(new Dictionary<string, Json>());
-
-			string[] resourceHeadersPaths = Directory.GetFiles(ApplicationDatas.Setting["ResourceHeadersDirectoryPath"], "*." + Properties.Resources.ResourceHeaderFileExtension);
-
-			foreach (string s in resourceHeadersPaths)
+			if (reader.TokenType == JsonTokenType.StartObject)
 			{
-				Json json = new Json().Parse(File.ReadAllText(s));
-				foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
+				ResourceTypeList resTypes = new ResourceTypeList();
+				while(reader.TokenType != JsonTokenType.EndObject)
 				{
-					if (j.Key == name)
+					if (reader.TokenType == JsonTokenType.PropertyName)
 					{
-						foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePairEnumerator())
+						string name = (string)reader.Value;
+						ResourceType resType = ApplicationFactory.JsonSerializer.Deserialize<ResourceType>(reader);
+						resType.Name = name;
+						resTypes.Add(name, resType);
+					}
+					reader.Read();
+				}
+
+				ResourceHeader resh = new ResourceHeader("", resTypes);
+				return resh;
+			}
+			else
+			{
+				string name = (string)reader.Value;
+
+				Json data = new Json(new Dictionary<string, Json>());
+
+				string[] resourceHeadersPaths = Directory.GetFiles(ApplicationDatas.Setting["ResourceHeadersDirectoryPath"], "*." + Properties.Resources.ResourceHeaderFileExtension);
+
+				foreach (string s in resourceHeadersPaths)
+				{
+					Json json = new Json().Parse(File.ReadAllText(s));
+					foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
+					{
+						if (j.Key == name)
 						{
-							data.Add(_j.Key, _j.Value.Value);
+							foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePairEnumerator())
+							{
+								data.Add(_j.Key, _j.Value.Value);
+							}
 						}
 					}
 				}
+
+				string typesStr = data.ToJsonString();
+
+				ResourceTypeList types = ApplicationFactory.JsonSerializer.Deserialize<ResourceTypeList>(typesStr);
+
+				ResourceHeader result = new ResourceHeader(name, types);
+
+				return result;
 			}
-
-			string typesStr = data.ToJsonString();
-
-			ResourceTypeList types = ApplicationFactory.JsonSerializer.Deserialize<ResourceTypeList>(typesStr);
-
-			ResourceHeader result = new ResourceHeader(name, types);
-
-			return result;
 		}
 	}
 }

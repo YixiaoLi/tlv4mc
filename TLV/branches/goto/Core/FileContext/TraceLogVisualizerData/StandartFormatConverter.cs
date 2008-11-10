@@ -38,7 +38,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 			catch (Exception _e)
 			{
-				throw new Exception("リソースデータの生成に失敗しました。\nリソースファイルの記述に誤りがあります。\n" + _e.Message);
+				throw new Exception("リソースデータの生成に失敗しました。\nリソースファイルの記述に誤りがある可能性があります。\n" + _e.Message);
 			}
 
 			if (_constructProgressReport != null)
@@ -52,7 +52,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 			catch (Exception _e)
 			{
-				throw new Exception("可視化データの生成に失敗しました。\n可視化ルールファイルの記述に誤りがあります。\n" + _e.Message);
+				throw new Exception("可視化データの生成に失敗しました。\n可視化ルールファイルの記述に誤りがある可能性があります。\n" + _e.Message);
 			}
 
 			if (_constructProgressReport != null)
@@ -65,7 +65,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 			catch (Exception _e)
 			{
-				throw new Exception("トレースログデータの生成に失敗しました。\nトレースログ変換ルールファイルの記述に誤りがあります。\n" + _e.Message);
+				throw new Exception("トレースログデータの生成に失敗しました。\nトレースログ変換ルールファイルの記述に誤りがある可能性があります。\n" + _e.Message);
 			}
 
 			if (_constructProgressReport != null)
@@ -314,8 +314,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// <param name="traceLogManager">追加先</param>
 		private void addTraceLogAsObject(string log, string pattern, Dictionary<string, Json> value, TraceLogData traceLogData)
 		{
-			Dictionary<string, string> cache = new Dictionary<string, string>();
-
 			foreach (KeyValuePair<string, Json> kvp in value)
 			{
 				string condition = Regex.Replace(log, pattern, kvp.Key);
@@ -324,24 +322,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 				foreach (Match m in Regex.Matches(condition, @"\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*\.\s*[^=!<>\(]+\s*"))
 				{
-					if (cache.ContainsKey(m.Value))
+					string val;
+					try
 					{
-						condition = Regex.Replace(condition, Regex.Escape(m.Value), cache[m.Value]);
+						val = traceLogData.GetAttributeValue(m.Value);
 					}
-					else
+					catch (Exception e)
 					{
-						string val;
-						try
-						{
-							val = traceLogData.GetAttributeValue(m.Value);
-						}
-						catch (Exception e)
-						{
-							throw new Exception("リソース条件式が異常です。\n" + "\"" + m.Value + "\"\n" + e.Message);
-						}
-						condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
-						cache.Add(m.Value, val);
+						throw new Exception("リソース条件式が異常です。\n" + "\"" + m.Value + "\"\n" + e.Message);
 					}
+					condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
 				}
 
 				bool result;

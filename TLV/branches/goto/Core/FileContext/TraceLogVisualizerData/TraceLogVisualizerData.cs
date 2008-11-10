@@ -108,11 +108,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			zip.Extract(path, tmpDirPath);
 
-			string name = Path.GetFileNameWithoutExtension(path);
+			string resFilePath = Directory.GetFiles(tmpDirPath, "*." + Properties.Resources.ResourceFileExtension)[0];
+			string logFilePath = Directory.GetFiles(tmpDirPath, "*." + Properties.Resources.TraceLogFileExtension)[0];
+			string vixFilePath = Directory.GetFiles(tmpDirPath, "*." + Properties.Resources.VisualizeRuleFileExtension)[0];
 
-			ResourceData res = new ResourceData().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.ResourceFileExtension));
-			TraceLogList log = new TraceLogList().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension));
-			VisualizeData viz = new VisualizeData().Parse(File.ReadAllText(tmpDirPath + name + "." + Properties.Resources.VisualizeRuleFileExtension));
+			ResourceData res = new ResourceData().Parse(File.ReadAllText(resFilePath));
+			TraceLogList log = new TraceLogList().Parse(File.ReadAllText(logFilePath));
+			VisualizeData viz = new VisualizeData().Parse(File.ReadAllText(vixFilePath));
 
 			ResourceData = res;
 			TraceLogData = new TraceLogData(log, res);
