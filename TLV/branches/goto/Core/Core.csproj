@@ -48,7 +48,6 @@
     <Compile Include="ApplicationFactory.cs" />
     <Compile Include="Base\GeneralNamedCollection.cs" />
     <Compile Include="Base\INamed.cs" />
-    <Compile Include="FileContext\ResourceData\Attribute\Attribute.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AttributeList.cs" />
     <Compile Include="FileContext\ResourceData\Behavior\Argument\ArgumentType\ArgumentType.cs" />
     <Compile Include="FileContext\ResourceData\Behavior\Argument\ArgumentType\ArgumentTypeList.cs" />
@@ -64,10 +63,10 @@
     <Compile Include="FileContext\TraceLogData\TraceLogList.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\ShapesList.cs" />
     <Compile Include="JsonConverters\ArcConverter.cs" />
+    <Compile Include="JsonConverters\AttributeConverter.cs" />
     <Compile Include="JsonConverters\GeneralJsonableCollectionConverter.cs" />
     <Compile Include="JsonConverters\GeneralNamedCollectionConverter.cs" />
     <Compile Include="JsonConverters\INamedConverter.cs" />
-    <Compile Include="JsonConverters\ResourceListConverter.cs" />
     <Compile Include="JsonConverters\SizeConverter.cs" />
     <Compile Include="JsonConverters\AreaConverter.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AttributeType\AllocationType.cs" />

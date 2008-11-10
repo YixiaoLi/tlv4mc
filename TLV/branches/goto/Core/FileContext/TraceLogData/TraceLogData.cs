@@ -169,7 +169,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			Time time = log.HasTime ? new Time(log.Time, _resourceData.TimeRadix) : MaxTime;
 
-			foreach (Resource res in _resourceData.Resources[type])
+			foreach (Resource res in _resourceData.Resources.Where<Resource>(r => r.Type == type))
 			{
 				string cnd = condition;
 				foreach (KeyValuePair<string, string> kvp in attrOpeDic)

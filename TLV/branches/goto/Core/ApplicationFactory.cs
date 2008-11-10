@@ -51,9 +51,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			JsonSerializer.AddConverter(new TraceLogConverter());
 			JsonSerializer.AddConverter(new ArcConverter());
 			JsonSerializer.AddConverter(new AreaConverter());
+			JsonSerializer.AddConverter(new AttributeConverter());
 			JsonSerializer.AddConverter(new ColorConverter());
 			JsonSerializer.AddConverter(new CoordinateConverter());
-			JsonSerializer.AddConverter(new ResourceListConverter());
 			JsonSerializer.AddConverter(new ResourceHeaderConverter());
 			JsonSerializer.AddConverter(new SizeConverter());
 			JsonSerializer.AddConverter(new VisualizeRuleConverter());
