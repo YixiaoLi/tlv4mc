@@ -9,7 +9,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Third
 {
-	public class JsonValueConverter : JsonConverter
+	public class JsonValueConverter : Newtonsoft.Json.JsonConverter
 	{
 		public override bool CanConvert(Type objectType)
 		{

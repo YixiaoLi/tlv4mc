@@ -7,16 +7,22 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
 	public enum JsonTokenType
 	{
+		None,
 		StartObject,
 		StartArray,
+		StartConstructor,
 		PropertyName,
-		Decimal,
+		Comment,
+		Raw,
+		Integer,
+		Float,
 		String,
 		Boolean,
 		Null,
+		Undefined,
 		EndObject,
 		EndArray,
-		Raw,
-		Undefined
+		EndConstructor,
+		Date
 	}
 }

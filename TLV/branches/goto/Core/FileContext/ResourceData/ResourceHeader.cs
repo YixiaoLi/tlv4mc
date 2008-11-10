@@ -12,9 +12,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// <summary>
     /// リソースリスト
     /// </summary>
-	public class ResourceHeader : IJsonable<ResourceHeader>, IEnumerable<KeyValuePair<string,ResourceType>>
+	public class ResourceHeader : IJsonable<ResourceHeader>, IEnumerable<ResourceType>
 	{
-		private Dictionary<string, ResourceType> _types = new Dictionary<string, ResourceType>();
+		private ResourceTypeList _types = new ResourceTypeList();
 		public string Name { get; private set; }
 		public ResourceType this[string typeName] { get { return _types[typeName]; } }
 
@@ -23,7 +23,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 		}
 
-		public ResourceHeader(string name, Dictionary<string, ResourceType> types)
+		public ResourceHeader(string name, ResourceTypeList types)
 			:this()
 		{
 			Name = name;
@@ -40,7 +40,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return ApplicationFactory.JsonSerializer.Deserialize<ResourceHeader>(data);
 		}
 
-		public IEnumerator<KeyValuePair<string, ResourceType>> GetEnumerator()
+		public IEnumerator<ResourceType> GetEnumerator()
 		{
 			return _types.GetEnumerator();
 		}

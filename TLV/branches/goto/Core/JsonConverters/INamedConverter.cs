@@ -38,19 +38,19 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public object ReadJson(IJsonReader reader)
 		{
 			T obj = new T();
-
-			if (ApplicationFactory.JsonSerializer.HasConverter(typeof(T)))
+			if (ApplicationFactory.JsonSerializer.HasConverter(typeof(T)) && !ApplicationFactory.JsonSerializer.GetConverter(typeof(T)).GetType().IsAssignableFrom(typeof(INamedConverter<T>)))
 			{
 				obj = ApplicationFactory.JsonSerializer.Deserialize<T>(reader);
 			}
 			else
 			{
-				while (reader.TokenType != JsonTokenType.EndObject)
+
+				for ( ; ; )
 				{
 					if (reader.TokenType == JsonTokenType.PropertyName)
 					{
+
 						string key = (string)reader.Value;
-						reader.Read();
 
 						PropertyInfo pi = obj.GetType().GetProperties().Single<PropertyInfo>(p => p.Name == key);
 
@@ -58,6 +58,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 						pi.SetValue(obj, o, null);
 					}
+
+					reader.Read();
+
+					if (reader.TokenType == JsonTokenType.EndObject)
+						break;
+
 				}
 			}
 

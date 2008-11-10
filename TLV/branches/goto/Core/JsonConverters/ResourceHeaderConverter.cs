@@ -22,8 +22,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			Json data = new Json(new Dictionary<string, Json>());
 
 			string[] resourceHeadersPaths = Directory.GetFiles(ApplicationDatas.Setting["ResourceHeadersDirectoryPath"], "*." + Properties.Resources.ResourceHeaderFileExtension);
-			// トレースログ変換ファイルを開きJsonValueでデシリアライズ
-			// ファイルが複数ある場合を想定している
+
 			foreach (string s in resourceHeadersPaths)
 			{
 				Json json = new Json().Parse(File.ReadAllText(s));
@@ -33,7 +32,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					{
 						foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePairEnumerator())
 						{
-							data.Add(_j.Key, _j.Value);
+							data.Add(_j.Key, _j.Value.Value);
 						}
 					}
 				}
@@ -41,7 +40,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			string typesStr = data.ToJsonString();
 
-			Dictionary<string, ResourceType> types = ApplicationFactory.JsonSerializer.Deserialize<Dictionary<string, ResourceType>>(typesStr);
+			ResourceTypeList types = ApplicationFactory.JsonSerializer.Deserialize<ResourceTypeList>(typesStr);
 
 			ResourceHeader result = new ResourceHeader(name, types);
 

@@ -14,45 +14,46 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			get { return _value; }
 			set
 			{
-				if (value is List<Json>)
-				{
-					Type = JsonValueType.Array;
-					_value = value;
-				}
-				else if (value is Dictionary<string, Json>)
-				{
-					Type = JsonValueType.Object;
-					_value = value;
-				}
-				else if (value is string || value is char)
-				{
-					Type = JsonValueType.String;
-					_value = value.ToString();
-				}
-				else if (value is sbyte
-					|| value is byte
-					|| value is short
-					|| value is ushort
-					|| value is int
-					|| value is uint
-					|| value is long
-					|| value is ulong
-					|| value is decimal
-					|| value is double
-					|| value is float)
-				{
-					Type = JsonValueType.Decimal;
-					_value = (decimal)value;
-				}
-				else if (value is bool)
-				{
-					Type = JsonValueType.Boolean;
-					_value = value;
-				}
-				else if (value == null)
+				object obj = value;
+				if (obj == null)
 				{
 					Type = JsonValueType.Null;
 					_value = null;
+				}
+				else if (obj.GetType() == typeof(List<Json>))
+				{
+					Type = JsonValueType.Array;
+					_value = obj;
+				}
+				else if (obj.GetType() == typeof(Dictionary<string, Json>))
+				{
+					Type = JsonValueType.Object;
+					_value = obj;
+				}
+				else if (obj.GetType() == typeof(string) || obj.GetType() == typeof(char))
+				{
+					Type = JsonValueType.String;
+					_value = obj.ToString();
+				}
+				else if (obj.GetType() == typeof(sbyte)
+					|| obj.GetType() == typeof(byte)
+					|| obj.GetType() == typeof(short)
+					|| obj.GetType() == typeof(ushort)
+					|| obj.GetType() == typeof(int)
+					|| obj.GetType() == typeof(uint)
+					|| obj.GetType() == typeof(long)
+					|| obj.GetType() == typeof(ulong)
+					|| obj.GetType() == typeof(decimal)
+					|| obj.GetType() == typeof(double)
+					|| obj.GetType() == typeof(float))
+				{
+					Type = JsonValueType.Decimal;
+					_value = Convert.ToDecimal(obj);
+				}
+				else if (obj.GetType() == typeof(bool))
+				{
+					Type = JsonValueType.Boolean;
+					_value = obj;
 				}
 				else
 				{
@@ -96,11 +97,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public bool ContainsKey(string name)
 		{
-			return Value is Dictionary<string, Json> ? ((Dictionary<string, Json>)Value).ContainsKey(name) : false;
+			return Type == JsonValueType.Object ? ((Dictionary<string, Json>)Value).ContainsKey(name) : false;
 		}
 		public bool ContainsKey(int index)
 		{
-			return Value is List<Json> ? ((List<Json>)Value).Contains(this[index]) : false;
+			return Type == JsonValueType.Array ? ((List<Json>)Value).Contains(this[index]) : false;
 		}
 
 		public int IndexOf(Json value)
@@ -131,7 +132,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public void AddArray(string name)
 		{
-			if (Value is Dictionary<string, Json>)
+			if (Type == JsonValueType.Object)
 			{
 				((Dictionary<string, Json>)Value).Add(name, new Json(new List<Json>()));
 			}
@@ -139,7 +140,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public void AddObject(string name)
 		{
-			if (Value is Dictionary<string, Json>)
+			if (Type == JsonValueType.Object)
 			{
 				((Dictionary<string, Json>)Value).Add(name, new Json(new Dictionary<string, Json>()));
 			}

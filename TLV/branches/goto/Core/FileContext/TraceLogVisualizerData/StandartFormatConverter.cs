@@ -34,7 +34,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			_to = 10;
 			try
 			{
-				_resourceData = new ResourceData().Parse(File.ReadAllText(resourceFilePath));
+				_resourceData = ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(resourceFilePath));
 			}
 			catch (Exception _e)
 			{
@@ -120,20 +120,20 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			VisualizeData visualizeData = new VisualizeData();
 
-			foreach (KeyValuePair<string, ResourceType> resh in resourceData.ResourceHeader)
+			foreach (ResourceType resh in resourceData.ResourceHeader)
 			{
 				Dictionary<string, string> attrs = new Dictionary<string, string>();
-				foreach (AttributeType attr in resh.Value.Attributes)
+				foreach (AttributeType attr in resh.Attributes)
 				{
 					attrs.Add(attr.Name, attr.VisualizeRule);
 				}
 				Dictionary<string, string> bhvrs = new Dictionary<string, string>();
-				foreach (Behavior bhvr in resh.Value.Behaviors)
+				foreach (Behavior bhvr in resh.Behaviors)
 				{
 					bhvrs.Add(bhvr.Name, bhvr.VisualizeRule);
 				}
 
-				visualizeData.ApplyRules.Add(resh.Key, new ApplyRule(attrs, bhvrs));
+				visualizeData.ApplyRules.Add(resh.Name, new ApplyRule(attrs, bhvrs));
 			}
 
 			string[] visualizeRuleFilePaths = Directory.GetFiles(ApplicationDatas.Setting["VisualizeRulesDirectoryPath"], "*." + Properties.Resources.VisualizeRuleFileExtension);

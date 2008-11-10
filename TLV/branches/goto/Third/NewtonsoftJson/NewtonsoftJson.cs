@@ -14,7 +14,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 	{
 		private JsonSerializer _serializer = new JsonSerializer();
 
-		private List<Type> _converterList = new List<Type>();
+		private Dictionary<Type, IJsonConverter> _converterList = new Dictionary<Type, IJsonConverter>();
 
 		public NewtonsoftJson()
 		{
@@ -28,15 +28,6 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			_serializer.DefaultValueHandling = DefaultValueHandling.Ignore;
 		}
 
-		public object Deserialize(IJsonReader reader, Type type)
-		{
-			return _serializer.Deserialize((JsonReader)reader, type);
-		}
-		public object Deserialize(string json, Type type)
-		{
-			return _serializer.Deserialize(new JsonTextReader(new StringReader(json)), type);
-		}
-
 		public T Deserialize<T>(IJsonReader reader)
 		{
 			return (T)Deserialize(reader, typeof(T));
@@ -45,40 +36,41 @@ namespace NU.OJL.MPRTOS.TLV.Third
 		{
 			return (T)Deserialize(json, typeof(T));
 		}
+		public object Deserialize(IJsonReader reader, Type type)
+		{
+			return _serializer.Deserialize(((JsonReader)reader).Reader, type);
+		}
+		public object Deserialize(string json, Type type)
+		{
+			return Deserialize(new JsonReader(new JsonTextReader(new StringReader(json))), type);
+		}
 
 		public void Serialize(IJsonWriter writer, object obj)
 		{
-			_serializer.Serialize((JsonWriter)writer, obj);
+			_serializer.Serialize(((JsonWriter)writer).Writer, obj);
 		}
-
 		public string Serialize(object obj)
 		{
 			StringBuilder sb = new StringBuilder();
-			JsonTextWriter writer = new JsonTextWriter(new StringWriter(sb));
-			_serializer.Serialize(writer, obj);
+			Serialize(new JsonWriter(new JsonTextWriter(new StringWriter(sb))), obj);
 			return sb.ToString();
 		}
 
-
 		public void AddConverter(IJsonConverter converter)
 		{
-			GeneralConverter cnvtr = new GeneralConverter(converter.Type);
-			cnvtr.ReadJsonHandler += (r) =>
-			{
-				return converter.ReadJson(r);
-			};
-			cnvtr.WriteJsonHandler += (w, o) =>
-			{
-				converter.WriteJson(w, o);
-			};
+			GeneralConverter cnvtr = new GeneralConverter(converter);
+
 			_serializer.Converters.Add(cnvtr);
 
-			_converterList.Add(converter.Type);
+			_converterList.Add(converter.Type, converter);
 		}
-
 		public bool HasConverter(Type type)
 		{
-			return _converterList.Contains(type);
+			return _converterList.ContainsKey(type);
+		}
+		public IJsonConverter GetConverter(Type type)
+		{
+			return _converterList[type];
 		}
 
 	}

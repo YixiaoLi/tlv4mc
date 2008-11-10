@@ -9,40 +9,28 @@ using Newtonsoft.Json.Converters;
 
 namespace NU.OJL.MPRTOS.TLV.Third
 {
-	public class GeneralConverter : JsonConverter
+	public class GeneralConverter : Newtonsoft.Json.JsonConverter
 	{
-		private Type _type;
-		public event Func<IJsonReader, object> ReadJsonHandler;
-		public event Action<IJsonWriter, object> WriteJsonHandler;
+		private IJsonConverter _converter;
 
-		public GeneralConverter(Type t)
+		public GeneralConverter(IJsonConverter converter)
 		{
-			_type = t;
+			_converter = converter;
 		}
 
 		public override bool CanConvert(Type objectType)
 		{
-			return objectType.IsAssignableFrom(_type);
+			return _converter.Type.IsAssignableFrom(objectType);
 		}
 
 		public override object ReadJson(Newtonsoft.Json.JsonReader reader, Type objectType)
 		{
-			if (ReadJsonHandler != null)
-			{
-				return ReadJsonHandler(new JsonReader((JsonTextReader)reader));
-			}
-			else
-			{
-				return null;
-			}
+			return _converter.ReadJson(new JsonReader(reader));
 		}
 
 		public override void WriteJson(Newtonsoft.Json.JsonWriter writer, object value)
 		{
-			if (WriteJsonHandler != null)
-			{
-				WriteJsonHandler(new JsonWriter((JsonTextWriter)writer), value);
-			}
+			_converter.WriteJson(new JsonWriter(writer), value);
 		}
 	}
 }

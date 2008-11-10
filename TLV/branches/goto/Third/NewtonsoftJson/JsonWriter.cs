@@ -11,17 +11,13 @@ namespace NU.OJL.MPRTOS.TLV.Third
 {
 	public class JsonWriter : IJsonWriter
 	{
-		private Newtonsoft.Json.JsonTextWriter _writer;
+		private Newtonsoft.Json.JsonWriter _writer;
 
-		public JsonWriter(Newtonsoft.Json.JsonTextWriter writer)
+		public Newtonsoft.Json.JsonWriter Writer { get { return _writer; } }
+
+		public JsonWriter( Newtonsoft.Json.JsonWriter writer)
 		{
 			_writer = writer;
-			_writer.Formatting = Formatting.Indented;
-		}
-
-		public static implicit operator Newtonsoft.Json.JsonTextWriter(JsonWriter writer)
-		{
-			return writer._writer;
 		}
 
 		public void Write(object obj)
@@ -47,8 +43,11 @@ namespace NU.OJL.MPRTOS.TLV.Third
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.PropertyName:
 					_writer.WritePropertyName((string)value);
 					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Decimal:
-					_writer.WriteValue((decimal)value);
+				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Integer:
+					_writer.WriteValue(value);
+					break;
+				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Float:
+					_writer.WriteValue(value);
 					break;
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.String:
 					_writer.WriteValue((string)value);
@@ -72,5 +71,12 @@ namespace NU.OJL.MPRTOS.TLV.Third
 					break;
 			}
 		}
+
+
+		public void Flush()
+		{
+			_writer.Flush();
+		}
+
 	}
 }

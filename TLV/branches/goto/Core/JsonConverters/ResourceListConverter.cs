@@ -37,26 +37,42 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			ResourceList resList = new ResourceList();
 
-			while(reader.TokenType != JsonTokenType.EndObject)
+			for ( ; ; )
 			{
 				if(reader.TokenType == JsonTokenType.PropertyName)
 				{
 					string type = (string)reader.Value;
+
+					reader.Read();
+
 					GeneralNamedCollection<Resource> ress = new GeneralNamedCollection<Resource>();
-					while (reader.TokenType != JsonTokenType.EndObject)
+
+					for (; ; )
 					{
 						if (reader.TokenType == JsonTokenType.PropertyName)
 						{
 							string name = (string)reader.Value;
+
 							reader.Read();
+
 							Resource res = ApplicationFactory.JsonSerializer.Deserialize<Resource>(reader);
 							res.Type = type;
 							res.Name = name;
 							ress.Add(name, res);
 						}
+
+						reader.Read();
+
+						if (reader.TokenType == JsonTokenType.EndObject)
+							break;
 					}
 					resList.Add(type, ress);
 				}
+
+				reader.Read();
+
+				if (reader.TokenType == JsonTokenType.EndObject)
+					break;
 			}
 			return resList;
 		}

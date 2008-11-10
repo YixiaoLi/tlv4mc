@@ -14,37 +14,37 @@
 					"VariableType"	:"String",
 					"DisplayName"	:"属性",
 					"AllocationType":"Static",
-					"CanGrouping"	:false,
+					"CanGrouping"	:false
 				},
 				"pri":{
 					"VariableType"	:"Decimal",
 					"DisplayName"	:"優先度",
 					"AllocationType":"Dynamic",
-					"CanGrouping"	:false,
+					"CanGrouping"	:false
 				},
 				"exinf":{
 					"VariableType"	:"String",
 					"DisplayName"	:"拡張情報",
 					"AllocationType":"Static",
-					"CanGrouping"	:false,
+					"CanGrouping"	:false
 				},
 				"task":{
 					"VariableType"	:"String",
 					"DisplayName"	:"起動関数",
 					"AllocationType":"Static",
-					"CanGrouping"	:false,
+					"CanGrouping"	:false
 				},
 				"stksz":{
 					"VariableType"	:"Decimal",
 					"DisplayName"	:"スタックサイズ",
 					"AllocationType":"Dynamic",
-					"CanGrouping"	:false,
+					"CanGrouping"	:false
 				},
 				"stk":{
 					"VariableType"	:"String",
 					"DisplayName"	:"スタック番地",
 					"AllocationType":"Static",
-					"CanGrouping"	:false,
+					"CanGrouping"	:false
 				},
 				"state":{
 					"VariableType"	:"String",
@@ -87,18 +87,30 @@
 				},
 				"enterSVC":{
 					"DisplayName"	:"サービスコールに入る",
-					"Arguments"		:{
-						"name" : "String",
-						"args" : "String"
-					}
+					"Arguments"		:[
+						{
+							"Name":"name",
+							"Type":"String"
+						},
+						{
+							"Name":"args",
+							"Type":"String"
+						}
+					]
 				},
 				"leaveSVC":{
 					"DisplayName"	:"サービスコールから出る",
-					"Arguments"		:{
-						"name" : "String",
-						"args" : "String"
-					}
-				},
+					"Arguments"		:[
+						{
+							"Name":"name",
+							"Type":"String"
+						},
+						{
+							"Name":"args",
+							"Type":"String"
+						}
+					]
+				}
 			}
 		}
 	}
