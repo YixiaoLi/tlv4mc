@@ -43,12 +43,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 cancelButton.Enabled = _canCancel;
             }
         }
+		public string Message
+		{
+			get { return messageLabel.Text; }
+			set { messageLabel.Text = value; }
+		}
 
         public BackGroundWorkForm()
         {
             InitializeComponent();
             _backgroundWorker = new BackgroundWorker();
-            _backgroundWorker.WorkerReportsProgress = true;
+			_backgroundWorker.WorkerReportsProgress = true;
+			_backgroundWorker.WorkerSupportsCancellation = true;
             _backgroundWorker.ProgressChanged += (o, e) =>
                 {
                     Text = _text + " (" + e.ProgressPercentage + " %)";

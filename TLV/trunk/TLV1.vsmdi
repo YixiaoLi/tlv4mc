@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <TestLists xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
   <TestList name="テストの一覧" id="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
-    <RunConfiguration id="f925b93b-19e8-42c9-be1f-07b649dddab7" name="ローカル テストの実行" storage="localtestrun.testrunconfig" type="Microsoft.VisualStudio.TestTools.Common.TestRunConfiguration, Microsoft.VisualStudio.QualityTools.Common,   PublicKeyToken=b03f5f7f11d50a3a" />
-  </TestList>
-  <TestList name="一覧に存在しないテスト" id="8c84fa94-04c1-424b-9868-57a2d4851a1d">
-    <TestLinks>
-      <TestLink id="d3263807-0142-8940-44cd-87e220f195e5" name="addMenuItemTest" storage="test\bin\release\nu.ojl.mprtos.tlv.test.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="84f04356-b181-c0fb-c212-0908be9170ac" name="OnSubWindowVisibleChangedTest" storage="test\bin\release\nu.ojl.mprtos.tlv.test.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="ca9e5778-747f-3118-71cf-5a5499e1b14d" name="OnSubWindowDockStateChangedTest" storage="test\bin\release\nu.ojl.mprtos.tlv.test.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="a73e0b0b-e3c2-a500-0148-09e78e3c879c" name="WindowManagerConstructorTest" storage="test\bin\release\nu.ojl.mprtos.tlv.test.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-    </TestLinks>
+    <RunConfiguration id="4d7058a2-bc70-4aee-839c-835fd9a2a49d" name="ローカル テストの実行" storage="localtestrun.testrunconfig" type="Microsoft.VisualStudio.TestTools.Common.TestRunConfiguration, Microsoft.VisualStudio.QualityTools.Common,   PublicKeyToken=b03f5f7f11d50a3a" />
   </TestList>
 </TestLists>

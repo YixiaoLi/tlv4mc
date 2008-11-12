@@ -30,16 +30,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
             BackGroundWorkForm bw = new BackGroundWorkForm() { Text = "共通形式トレースログファイルを展開中", CanCancel = false };
             
             bw.DoWork += (o, e) =>
-                {
-                    ApplicationDatas.ActiveFileContext.Close();
+				{
+					bw.ReportProgress(0);
+                    ApplicationData.ActiveFileContext.Close();
                     try
                     {
-                        ApplicationDatas.ActiveFileContext.Open(_path);
+                        ApplicationData.ActiveFileContext.Open(_path);
                     }
                     catch(Exception _e)
                     {
-                        MessageBox.Show("サポートされないファイル形式です\n" + _e.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        ApplicationDatas.ActiveFileContext.Close();
+                        MessageBox.Show("ファイルのオープンに失敗しました\n" + _e.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        ApplicationData.ActiveFileContext.Close();
                     }
                     bw.ReportProgress(100);
                 };

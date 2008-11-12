@@ -13,9 +13,16 @@ namespace NU.OJL.MPRTOS.TLV.Third
 	{
 		private Newtonsoft.Json.JsonWriter _writer;
 
-		public JsonWriter(Newtonsoft.Json.JsonWriter writer)
+		public Newtonsoft.Json.JsonWriter Writer { get { return _writer; } }
+
+		public JsonWriter( Newtonsoft.Json.JsonWriter writer)
 		{
 			_writer = writer;
+		}
+
+		public void Write(object obj)
+		{
+			_writer.WriteValue(obj);
 		}
 
 		public void Write(NU.OJL.MPRTOS.TLV.Base.JsonTokenType type)
@@ -37,13 +44,13 @@ namespace NU.OJL.MPRTOS.TLV.Third
 					_writer.WritePropertyName((string)value);
 					break;
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Integer:
-					_writer.WriteValue((int)value);
+					_writer.WriteValue(value);
 					break;
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Float:
-					_writer.WriteValue((float)value);
+					_writer.WriteValue(value);
 					break;
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.String:
-					_writer.WriteValue((string)value);
+					_writer.WriteValue(value.ToString());
 					break;
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Boolean:
 					_writer.WriteValue((bool)value);
@@ -57,9 +64,6 @@ namespace NU.OJL.MPRTOS.TLV.Third
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.EndArray:
 					_writer.WriteEndArray();
 					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Date:
-					_writer.WriteValue((DateTime)value);
-					break;
 				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Raw:
 					_writer.WriteRawValue((string)value);
 					break;
@@ -67,5 +71,12 @@ namespace NU.OJL.MPRTOS.TLV.Third
 					break;
 			}
 		}
+
+
+		public void Flush()
+		{
+			_writer.Flush();
+		}
+
 	}
 }

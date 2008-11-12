@@ -46,7 +46,9 @@
   <ItemGroup>
     <Compile Include="CommandManager\ICommandManager.cs" />
     <Compile Include="CommandManager\MacroCommand.cs" />
-    <Compile Include="Extensions\ByteArrayExtensions.cs" />
+    <Compile Include="Expression\ComparisonExpression.cs" />
+    <Compile Include="Expression\ConditionExpression.cs" />
+    <Compile Include="Extensions\ColorExtension.cs" />
     <Compile Include="FileContext\FileContext.cs" />
     <Compile Include="FileContext\IFileContext.cs" />
     <Compile Include="FileContext\IFileContextData.cs" />
@@ -57,7 +59,6 @@
     <Compile Include="CommandManager\ICommand.cs" />
     <Compile Include="CommandManager\CommandManager.cs" />
     <Compile Include="Extensions\ToolStripMenuItemExtensions.cs" />
-    <Compile Include="Json\GeneralJsonConverter.cs" />
     <Compile Include="Json\IJsonable.cs" />
     <Compile Include="Json\IJsonConverter.cs" />
     <Compile Include="Json\IJsonReader.cs" />
@@ -65,6 +66,8 @@
     <Compile Include="Json\IJsonWriter.cs" />
     <Compile Include="Json\Json.cs" />
     <Compile Include="Json\JsonTokenType.cs" />
+    <Compile Include="Json\JsonValueType.cs" />
+    <Compile Include="SortableBindingList.cs" />
     <Compile Include="WindowManager\WindowManager.cs" />
     <Compile Include="WindowManager\IWindowManager.cs" />
     <Compile Include="WindowManager\SubWindow.cs" />

@@ -7,9 +7,29 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
 	public class Json : IEnumerable<Json>
 	{
-		public object Value{get; private set;}
-		public Json this[int i] { get { return Value is List<Json> ? ((List<Json>)Value)[i] : null; } }
-		public Json this[string name] { get { return Value is Dictionary<string, Json> ? ((Dictionary<string, Json>)Value)[name] : null; } }
+		public object Value { get; set; }
+		public Json this[int i]
+		{
+			get { return Value is List<Json> ? ((List<Json>)Value)[i] : null; }
+			set
+			{
+				if (Value is List<Json>)
+				{
+					((List<Json>)Value)[i] = value;
+				}
+			}
+		}
+		public Json this[string name]
+		{
+			get { return Value is Dictionary<string, Json> ? ((Dictionary<string, Json>)Value)[name] : null; }
+			set
+			{
+				if (Value is Dictionary<string, Json>)
+				{
+					((Dictionary<string, Json>)Value)[name] = value;
+				}
+			}
+		}
 
 		public Json()
 		{
@@ -30,6 +50,51 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			return Value is List<Json> ? ((List<Json>)Value).Contains(this[index]) : false;
 		}
 
+		public int IndexOf(Json value)
+		{
+			if (Value is List<Json>)
+			{
+				return ((List<Json>)Value).IndexOf(value);
+			}
+			else
+			{
+				return -1;
+			}
+		}
+		public int Count
+		{
+			get
+			{
+				if (Value is List<Json>)
+				{
+					return ((List<Json>)Value).Count;
+				}
+				else
+				{
+					return 0;
+				}
+			}
+		}
+
+		public bool IsArray { get { return Value is List<Json>; } }
+		public bool IsObject { get { return Value is Dictionary<string, Json>; } }
+
+		public void AddArray(string name)
+		{
+			if (Value is Dictionary<string, Json>)
+			{
+				((Dictionary<string, Json>)Value).Add(name, new Json(new List<Json>()));
+			}
+		}
+
+		public void AddObject(string name)
+		{
+			if (Value is Dictionary<string, Json>)
+			{
+				((Dictionary<string, Json>)Value).Add(name, new Json(new Dictionary<string, Json>()));
+			}
+		}
+
 		public void Add(string name, object value)
 		{
 			if (Value is Dictionary<string, Json>)
@@ -38,11 +103,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			}
 		}
 
-		public void Add(Json value)
+		public void Add(object value)
 		{
 			if (Value is List<Json>)
 			{
-				((List<Json>)Value).Add(value);
+				((List<Json>)Value).Add(new Json(value));
 			}
 		}
 
@@ -54,7 +119,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 				return null;
 		}
 
-		public IEnumerable<KeyValuePair<string, Json>> GetKeyValuePaierEnumerator()
+		public IEnumerable<KeyValuePair<string, Json>> GetKeyValuePairEnumerator()
 		{
 			if (Value is IEnumerable<KeyValuePair<string, Json>>)
 				return (IEnumerable<KeyValuePair<string, Json>>)Value;
@@ -74,133 +139,28 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public static implicit operator string(Json jsonValue)
 		{
-			return (string)jsonValue.Value;
+			return jsonValue.ToString();
 		}
-
 		public static implicit operator bool(Json jsonValue)
 		{
 			return (bool)jsonValue.Value;
 		}
-
-		public static implicit operator int(Json jsonValue)
+		public static implicit operator decimal(Json jsonValue)
 		{
-			return (int)jsonValue.Value;
+			return (decimal)jsonValue.Value;
+		}
+		public static implicit operator List<Json>(Json jsonValue)
+		{
+			return (List<Json>)jsonValue.Value;
+		}
+		public static implicit operator Dictionary<string,Json>(Json jsonValue)
+		{
+			return (Dictionary<string, Json>)jsonValue.Value;
 		}
 
-		public static implicit operator float(Json jsonValue)
+		public override string ToString()
 		{
-			return (float)jsonValue.Value;
+			return Value.ToString();
 		}
-
-		public static implicit operator DateTime(Json jsonValue)
-		{
-			return (DateTime)jsonValue.Value;
-		}
-
-		public static implicit operator List<string>(Json jsonValue)
-		{
-			List<Json> jl = (List<Json>)jsonValue.Value;
-			return new List<string>(jl.Select<Json, string>((j, s) => { return j; }));
-		}
-
-		public static implicit operator List<bool>(Json jsonValue)
-		{
-			List<Json> jl = (List<Json>)jsonValue.Value;
-			return new List<bool>(jl.Select<Json, bool>((j, s) => { return j; }));
-		}
-
-		public static implicit operator List<int>(Json jsonValue)
-		{
-			List<Json> jl = (List<Json>)jsonValue.Value;
-			return new List<int>(jl.Select<Json, int>((j, s) => { return j; }));
-		}
-
-		public static implicit operator List<float>(Json jsonValue)
-		{
-			List<Json> jl = (List<Json>)jsonValue.Value;
-			return new List<float>(jl.Select<Json, float>((j, s) => { return j; }));
-		}
-
-		public static implicit operator List<DateTime>(Json jsonValue)
-		{
-			List<Json> jl = (List<Json>)jsonValue.Value;
-			return new List<DateTime>(jl.Select<Json, DateTime>((j, s) => { return j; }));
-		}
-
-		public static implicit operator string[](Json jsonValue)
-		{
-			if (jsonValue.Value is List<Json>)
-				return ((List<string>)jsonValue).ToArray<string>();
-			if (jsonValue.Value is string)
-				return new string[] { jsonValue };
-
-			return new string[] { };
-		}
-
-		public static implicit operator bool[](Json jsonValue)
-		{
-			if (jsonValue.Value is List<Json>)
-				return ((List<bool>)jsonValue).ToArray<bool>();
-			if (jsonValue.Value is bool)
-				return new bool[] { jsonValue };
-
-			return new bool[] { };
-		}
-
-		public static implicit operator int[](Json jsonValue)
-		{
-			if (jsonValue.Value is List<Json>)
-				return ((List<int>)jsonValue).ToArray<int>();
-			if (jsonValue.Value is int)
-				return new int[] { jsonValue };
-
-			return new int[] { };
-		}
-
-		public static implicit operator float[](Json jsonValue)
-		{
-			if (jsonValue.Value is List<Json>)
-				return ((List<float>)jsonValue).ToArray<float>();
-			if (jsonValue.Value is float)
-				return new float[] { jsonValue };
-
-			return new float[] { };
-		}
-
-		public static implicit operator DateTime[](Json jsonValue)
-		{
-			if (jsonValue.Value is List<Json>)
-				return ((List<DateTime>)jsonValue).ToArray<DateTime>();
-			if (jsonValue.Value is DateTime)
-				return new DateTime[] { jsonValue };
-
-			return new DateTime[] { };
-		}
-
-		public static implicit operator Dictionary<string, string>(Json jsonValue)
-		{
-			return (Dictionary<string, string>)jsonValue.Value;
-		}
-
-		public static implicit operator Dictionary<string, bool>(Json jsonValue)
-		{
-			return (Dictionary<string, bool>)jsonValue.Value;
-		}
-
-		public static implicit operator Dictionary<string, int>(Json jsonValue)
-		{
-			return (Dictionary<string, int>)jsonValue.Value;
-		}
-
-		public static implicit operator Dictionary<string, float>(Json jsonValue)
-		{
-			return (Dictionary<string, float>)jsonValue.Value;
-		}
-
-		public static implicit operator Dictionary<string, DateTime>(Json jsonValue)
-		{
-			return (Dictionary<string, DateTime>)jsonValue.Value;
-		}
-
 	}
 }

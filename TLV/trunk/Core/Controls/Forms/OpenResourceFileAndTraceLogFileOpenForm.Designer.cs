@@ -53,7 +53,7 @@
 			this.okButton.Location = new System.Drawing.Point(274, 158);
 			this.okButton.Name = "okButton";
 			this.okButton.Size = new System.Drawing.Size(75, 23);
-			this.okButton.TabIndex = 7;
+			this.okButton.TabIndex = 3;
 			this.okButton.Text = "OK";
 			this.okButton.UseVisualStyleBackColor = true;
 			// 
@@ -64,7 +64,7 @@
 			this.cancelButton.Location = new System.Drawing.Point(355, 158);
 			this.cancelButton.Name = "cancelButton";
 			this.cancelButton.Size = new System.Drawing.Size(75, 23);
-			this.cancelButton.TabIndex = 8;
+			this.cancelButton.TabIndex = 4;
 			this.cancelButton.Text = "キャンセル";
 			this.cancelButton.UseVisualStyleBackColor = true;
 			// 
@@ -92,7 +92,7 @@
 			this.traceLogFileRefButton.Location = new System.Drawing.Point(355, 33);
 			this.traceLogFileRefButton.Name = "traceLogFileRefButton";
 			this.traceLogFileRefButton.Size = new System.Drawing.Size(75, 23);
-			this.traceLogFileRefButton.TabIndex = 3;
+			this.traceLogFileRefButton.TabIndex = 1;
 			this.traceLogFileRefButton.Text = "参照";
 			this.traceLogFileRefButton.UseVisualStyleBackColor = true;
 			// 
@@ -103,7 +103,7 @@
 			this.traceLogFilePathTextBox.Location = new System.Drawing.Point(126, 35);
 			this.traceLogFilePathTextBox.Name = "traceLogFilePathTextBox";
 			this.traceLogFilePathTextBox.Size = new System.Drawing.Size(223, 19);
-			this.traceLogFilePathTextBox.TabIndex = 2;
+			this.traceLogFilePathTextBox.TabIndex = 100;
 			// 
 			// resourceFileRefButton
 			// 
@@ -111,7 +111,7 @@
 			this.resourceFileRefButton.Location = new System.Drawing.Point(355, 4);
 			this.resourceFileRefButton.Name = "resourceFileRefButton";
 			this.resourceFileRefButton.Size = new System.Drawing.Size(75, 23);
-			this.resourceFileRefButton.TabIndex = 1;
+			this.resourceFileRefButton.TabIndex = 0;
 			this.resourceFileRefButton.Text = "参照";
 			this.resourceFileRefButton.UseVisualStyleBackColor = true;
 			// 
@@ -122,7 +122,7 @@
 			this.resourceFilePathTextBox.Location = new System.Drawing.Point(126, 6);
 			this.resourceFilePathTextBox.Name = "resourceFilePathTextBox";
 			this.resourceFilePathTextBox.Size = new System.Drawing.Size(223, 19);
-			this.resourceFilePathTextBox.TabIndex = 0;
+			this.resourceFilePathTextBox.TabIndex = 100;
 			// 
 			// label5
 			// 
@@ -139,7 +139,7 @@
 			this.savePathRefButton.Location = new System.Drawing.Point(355, 62);
 			this.savePathRefButton.Name = "savePathRefButton";
 			this.savePathRefButton.Size = new System.Drawing.Size(75, 23);
-			this.savePathRefButton.TabIndex = 6;
+			this.savePathRefButton.TabIndex = 2;
 			this.savePathRefButton.Text = "参照";
 			this.savePathRefButton.UseVisualStyleBackColor = true;
 			// 
@@ -150,7 +150,7 @@
 			this.savePathTextBox.Location = new System.Drawing.Point(126, 64);
 			this.savePathTextBox.Name = "savePathTextBox";
 			this.savePathTextBox.Size = new System.Drawing.Size(223, 19);
-			this.savePathTextBox.TabIndex = 5;
+			this.savePathTextBox.TabIndex = 100;
 			// 
 			// errorMessageBox
 			// 
@@ -164,7 +164,7 @@
 			this.errorMessageBox.ReadOnly = true;
 			this.errorMessageBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.errorMessageBox.Size = new System.Drawing.Size(416, 49);
-			this.errorMessageBox.TabIndex = 26;
+			this.errorMessageBox.TabIndex = 100;
 			// 
 			// label6
 			// 

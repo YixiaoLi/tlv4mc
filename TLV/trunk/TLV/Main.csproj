@@ -120,17 +120,15 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>if exist $(TargetDir)convertRules rmdir /q /s $(TargetDir)convertRules
-if exist $(TargetDir)resourceHeaders rmdir /q /s $(TargetDir)resourceHeaders
-if exist $(TargetDir)sampleFiles rmdir /q /s $(TargetDir)sampleFiles
+    <PostBuildEvent>if not exist $(TargetDir)convertRules mkdir $(TargetDir)convertRules
+if not exist $(TargetDir)resourceHeaders mkdir $(TargetDir)resourceHeaders
+if not exist $(TargetDir)visualizeRules mkdir $(TargetDir)visualizeRules
+if not exist $(TargetDir)sampleFiles mkdir $(TargetDir)sampleFiles
 
-mkdir $(TargetDir)convertRules
-mkdir $(TargetDir)resourceHeaders
-mkdir $(TargetDir)sampleFiles
-
-xcopy $(SolutionDir)convertRules $(TargetDir)convertRules /e /c /q /y
-xcopy $(SolutionDir)resourceHeaders $(TargetDir)resourceHeaders /e /c /q /y
-xcopy $(SolutionDir)sampleFiles $(TargetDir)sampleFiles /e /c /q /y
+xcopy $(SolutionDir)convertRules $(TargetDir)convertRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+xcopy $(SolutionDir)resourceHeaders $(TargetDir)resourceHeaders /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+xcopy $(SolutionDir)visualizeRules $(TargetDir)visualizeRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+xcopy $(SolutionDir)sampleFiles $(TargetDir)sampleFiles /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
 
 if $(ConfigurationName) == Release move $(TargetPath) $(TargetDir)___$(TargetFileName)
 if $(ConfigurationName) == Release $(SolutionDir)bin\ILMerge.exe /wildcards /ndebug /out:$(TargetPath) $(TargetDir)___$(TargetFileName) *.dll

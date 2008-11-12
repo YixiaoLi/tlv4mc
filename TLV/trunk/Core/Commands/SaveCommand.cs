@@ -18,11 +18,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 
         public void Do()
         {
-            if(ApplicationDatas.ActiveFileContext.IsOpened)
+            if(ApplicationData.ActiveFileContext.IsOpened)
             {
                 try
                 {
-                    ApplicationDatas.ActiveFileContext.Save();
+                    ApplicationData.ActiveFileContext.Save();
                 }
                 catch (FilePathUndefinedException)
                 {

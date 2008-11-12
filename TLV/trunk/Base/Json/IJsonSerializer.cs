@@ -7,8 +7,16 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
 	public interface IJsonSerializer
 	{
-		string Serialize<T>(T obj);
+		string Serialize(object obj);
+		void Serialize(IJsonWriter writer, object obj);
+
 		T Deserialize<T>(string json);
-		void AddConverter<T>(IJsonConverter<T> converter) where T:class;
+		object Deserialize(string json, Type type);
+		T Deserialize<T>(IJsonReader reader);
+		object Deserialize(IJsonReader reader, Type type);
+
+		void AddConverter(IJsonConverter converter);
+		bool HasConverter(Type type);
+		IJsonConverter GetConverter(Type type);
 	}
 }

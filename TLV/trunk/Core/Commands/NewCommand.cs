@@ -21,18 +21,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
             var f = new OpenResourceFileAndTraceLogFileOpenForm();
             BackGroundWorkForm bw = new BackGroundWorkForm() { Text = "共通形式トレースログへ変換中" };
 
-            CommonFormatTraceLog cftl = null;
+            TraceLogVisualizerData cftl = null;
 
             bw.RunWorkerCompleted += (o, e) =>
                 {
                     if (!e.Cancelled)
                     {
-                        ApplicationDatas.ActiveFileContext.Close();
-                        ApplicationDatas.ActiveFileContext.Data = cftl;
+                        ApplicationData.ActiveFileContext.Close();
+                        ApplicationData.ActiveFileContext.Data = cftl;
                         if (f.SaveFilePath != string.Empty)
                         {
-                            ApplicationDatas.ActiveFileContext.Path = f.SaveFilePath;
-                            ApplicationDatas.ActiveFileContext.Save();
+                            ApplicationData.ActiveFileContext.Path = f.SaveFilePath;
+                            ApplicationData.ActiveFileContext.Save();
                         }
                     }
                 };
@@ -41,25 +41,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 			{
 				try
 				{
-					bw.ReportProgress(0);
-                    if (bw.CancellationPending) { _e.Cancel = true; return; }
+					StandartFormatConverter cfc = new StandartFormatConverter(f.ResourceFilePath, f.TraceLogFilePath, 
+						(p,s) =>
+						{
+							if (bw.CancellationPending) { _e.Cancel = true; return; }
+							bw.ReportProgress((int)((double)p * 0.8));
+							bw.Invoke(new MethodInvoker(() => { bw.Message = s; }));
+						});
 
-					CommonFormatConverter cfc = new CommonFormatConverter(f.ResourceFilePath, f.TraceLogFilePath);
-
-                    bw.ReportProgress(25);
-                    if (bw.CancellationPending) { _e.Cancel = true; return; }
-
-					ResourceData res = cfc.ResourceData;
-
-                    bw.ReportProgress(50);
-                    if (bw.CancellationPending) { _e.Cancel = true; return; }
-
-					TraceLogList log = cfc.TraceLogList;
-
-                    bw.ReportProgress(75);
 					if (bw.CancellationPending) { _e.Cancel = true; return; }
+					bw.ReportProgress(90);
+					bw.Invoke(new MethodInvoker(() => { bw.Message = "共通形式データを生成中"; }));
 
-					cftl = new CommonFormatTraceLog(res, log);
+					cftl = new TraceLogVisualizerData(cfc.ResourceData, cfc.TraceLogData, cfc.VisualizeData);
+
+					if (bw.CancellationPending) { _e.Cancel = true; return; }
+					bw.ReportProgress(100);
+					bw.Invoke(new MethodInvoker(() => { bw.Message = "完了"; }));
                 }
                 catch (Exception e)
                 {
@@ -67,7 +65,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                     _e.Cancel = true;
 					return;
                 }
-                bw.ReportProgress(100);
 			};
 
             if (f.ShowDialog() == DialogResult.OK)

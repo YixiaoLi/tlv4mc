@@ -43,3 +43,4 @@ C:\Junji\Work\OJL\TLV\フェーズ2\src\TLV\obj\Debug\NU.OJL.MPRTOS.TLV.Properti
 C:\Junji\Work\OJL\TLV\フェーズ2\src\TLV\obj\Debug\Main.csproj.GenerateResource.Cache
 C:\Junji\Work\OJL\TLV\フェーズ2\src\TLV\obj\Debug\TraceLogVisualizer.exe
 C:\Junji\Work\OJL\TLV\フェーズ2\src\TLV\obj\Debug\TraceLogVisualizer.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\TLV\bin\Debug\Newtonsoft.Json.dll

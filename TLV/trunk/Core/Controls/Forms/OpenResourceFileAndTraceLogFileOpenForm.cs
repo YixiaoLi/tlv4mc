@@ -289,11 +289,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 {
                     errorMessages[1] = "・保存先を設定することが出来ます。設定せずに作成することもできます。";
                 }
-                errorMessageBox.ForeColor = Color.Green;
+				errorMessageBox.ForeColor = System.Drawing.Color.Green;
             }
             else
             {
-                errorMessageBox.ForeColor = Color.Red;
+				errorMessageBox.ForeColor = System.Drawing.Color.Red;
             }
             errorMessageBox.Lines = errorMessages;
         }

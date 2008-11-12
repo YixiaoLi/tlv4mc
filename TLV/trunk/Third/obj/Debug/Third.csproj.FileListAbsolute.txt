@@ -25,3 +25,4 @@ C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Base.p
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\obj\Debug\ResolveAssemblyReference.cache
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\obj\Debug\NU.OJL.MPRTOS.TLV.Third.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\obj\Debug\NU.OJL.MPRTOS.TLV.Third.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Third\bin\Debug\Newtonsoft.Json.dll

@@ -8,7 +8,7 @@ using Newtonsoft.Json.Converters;
 
 namespace NU.OJL.MPRTOS.TLV.Third
 {
-	public class EnumConverter : JsonConverter
+	public class EnumConverter : Newtonsoft.Json.JsonConverter
 	{
 		public override bool CanConvert(Type objectType)
 		{

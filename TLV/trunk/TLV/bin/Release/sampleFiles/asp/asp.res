@@ -1,14 +1,13 @@
 ﻿{
-	"TimeScale"	:"ns",
-	
+	"TimeScale"		:"ns",
 	"ConvertRule"	:"asp",
-	
 	"ResourceHeader":"asp",
-	
 	"Resources":
 	{
-		"Task":{
-			"LOGTASK":{
+		"LOGTASK":{
+			"Type"	:"Task",
+			"Attributes":
+			{
 				"id"	:1,
 				"atr"	:"TA_ACT",
 				"pri"	:3,
@@ -16,8 +15,12 @@
 				"task"	:"logtask_main",
 				"stksz"	:4096,
 				"stk"	:"NULL"
-			},
-			"TASK1":{
+			}
+		},
+		"TASK1":{
+			"Type"	:"Task",
+			"Attributes":
+			{
 				"id"	:2,
 				"atr"	:"TA_NULL",
 				"pri"	:10,
@@ -25,8 +28,12 @@
 				"task"	:"task",
 				"stksz"	:4096,
 				"stk"	:"NULL"
-			},
-			"TASK2":{
+			}
+		},
+		"TASK2":{
+			"Type"	:"Task",
+			"Attributes":
+			{
 				"id"	:3,
 				"atr"	:"TA_NULL",
 				"pri"	:10,
@@ -34,8 +41,12 @@
 				"task"	:"task",
 				"stksz"	:4096,
 				"stk"	:"NULL"
-			},
-			"TASK3":{
+			}
+		},
+		"TASK3":{
+			"Type"	:"Task",
+			"Attributes":
+			{
 				"id"	:4,
 				"atr"	:"TA_NULL",
 				"pri"	:10,
@@ -43,8 +54,12 @@
 				"task"	:"task",
 				"stksz"	:4096,
 				"stk"	:"NULL"
-			},
-			"MAIN_TASK":{
+			}
+		},
+		"MAIN_TASK":{
+			"Type"	:"Task",
+			"Attributes":
+			{
 				"id"	:5,
 				"atr"	:"TA_ACT",
 				"pri"	:5,

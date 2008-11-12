@@ -13,6 +13,8 @@ namespace NU.OJL.MPRTOS.TLV.Third
 	{
 		private Newtonsoft.Json.JsonReader _reader;
 
+		public Newtonsoft.Json.JsonReader Reader { get { return _reader; } }
+
 		public JsonReader(Newtonsoft.Json.JsonReader reader)
 		{
 			_reader = reader;
@@ -23,21 +25,24 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			return _reader.Read();
 		}
 
-		public void Skip()
-		{
-			_reader.Skip();
-		}
-
-		public NU.OJL.MPRTOS.TLV.Base.JsonTokenType TokenType
+		public  NU.OJL.MPRTOS.TLV.Base.JsonTokenType TokenType
 		{
 			get
 			{
-				switch(_reader.TokenType)
+				switch (_reader.TokenType)
 				{
 					case JsonToken.StartObject:
 						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.StartObject;
 					case JsonToken.StartArray:
 						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.StartArray;
+					case JsonToken.EndObject:
+						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.EndObject;
+					case JsonToken.EndArray:
+						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.EndArray;
+					case JsonToken.StartConstructor:
+						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.StartConstructor;
+					case JsonToken.EndConstructor:
+						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.EndConstructor;
 					case JsonToken.PropertyName:
 						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.PropertyName;
 					case JsonToken.Integer:
@@ -50,12 +55,16 @@ namespace NU.OJL.MPRTOS.TLV.Third
 						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Boolean;
 					case JsonToken.Null:
 						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Null;
-					case JsonToken.EndObject:
-						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.EndObject;
-					case JsonToken.EndArray:
-						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.EndArray;
+					case JsonToken.Comment:
+						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Comment;
 					case JsonToken.Date:
 						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Date;
+					case JsonToken.None:
+						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.None;
+					case JsonToken.Raw:
+						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Raw;
+					case JsonToken.Undefined:
+						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Undefined;
 					default:
 						return NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Undefined;
 				}
@@ -66,5 +75,11 @@ namespace NU.OJL.MPRTOS.TLV.Third
 		{
 			get { return _reader.Value; }
 		}
+
+		public void Skip()
+		{
+			_reader.Skip();
+		}
+
 	}
 }

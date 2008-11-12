@@ -113,21 +113,6 @@ namespace NU.OJL.MPRTOS.TLV.Test
         }
 
         [TestMethod()]
-        [DeploymentItem("NU.OJL.MPRTOS.TLV.Base.dll")]
-        public void ControlTest()
-        {
-            string name = "test"; // TODO: 適切な値に初期化してください
-            Control control = new Control(); // TODO: 適切な値に初期化してください
-            DockState dockState = DockState.DockLeft; // TODO: 適切な値に初期化してください
-            SubWindow_Accessor target = new SubWindow_Accessor(name, control, dockState); // TODO: 適切な値に初期化してください
-            Control expected = new Control("control test"); // TODO: 適切な値に初期化してください
-            Control actual;
-            target.Control = expected;
-            actual = target.Control;
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod()]
         public void SubWindowConstructorTest()
         {
             string name = "test"; // TODO: 適切な値に初期化してください
