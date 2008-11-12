@@ -1,4 +1,4 @@
-﻿namespace NU.OJL.MPRTOS.TLV.Core.Controls
+﻿namespace NU.OJL.MPRTOS.TLV.Base.Controls
 {
     partial class BackGroundWorkForm
     {

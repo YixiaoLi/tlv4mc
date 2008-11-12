@@ -20,62 +20,33 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			_writer = writer;
 		}
 
-		public void Write(object obj)
+		public void WriteValue(object obj, IJsonSerializer serializer)
+		{
+			serializer.Serialize(this, obj);
+		}
+
+		public void WriteValue(object obj)
 		{
 			_writer.WriteValue(obj);
 		}
 
-		public void Write(NU.OJL.MPRTOS.TLV.Base.JsonTokenType type)
+		public void WriteProperty(string name)
 		{
-			Write(type, null);
+			_writer.WritePropertyName(name);
 		}
 
-		public void  Write(NU.OJL.MPRTOS.TLV.Base.JsonTokenType type, object value)
+		public void WriteArray(Action<IJsonWriter> contents)
 		{
-			switch (type)
-			{
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.StartObject:
-					_writer.WriteStartObject();
-					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.StartArray:
-					_writer.WriteStartArray();
-					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.PropertyName:
-					_writer.WritePropertyName((string)value);
-					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Integer:
-					_writer.WriteValue(value);
-					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Float:
-					_writer.WriteValue(value);
-					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.String:
-					_writer.WriteValue(value.ToString());
-					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Boolean:
-					_writer.WriteValue((bool)value);
-					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Null:
-					_writer.WriteNull();
-					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.EndObject:
-					_writer.WriteEndObject();
-					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.EndArray:
-					_writer.WriteEndArray();
-					break;
-				case NU.OJL.MPRTOS.TLV.Base.JsonTokenType.Raw:
-					_writer.WriteRawValue((string)value);
-					break;
-				default:
-					break;
-			}
+			_writer.WriteStartArray();
+			contents(this);
+			_writer.WriteEndArray();
 		}
 
-
-		public void Flush()
+		public void WriteObject(Action<IJsonWriter> contents)
 		{
-			_writer.Flush();
+			_writer.WriteStartObject();
+			contents(this);
+			_writer.WriteEndObject();
 		}
 
 	}

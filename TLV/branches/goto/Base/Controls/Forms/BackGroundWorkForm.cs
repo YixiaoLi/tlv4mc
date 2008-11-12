@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace NU.OJL.MPRTOS.TLV.Core.Controls
+namespace NU.OJL.MPRTOS.TLV.Base.Controls
 {
     public partial class BackGroundWorkForm : Form
     {

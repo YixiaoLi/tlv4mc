@@ -46,6 +46,15 @@
   <ItemGroup>
     <Compile Include="CommandManager\ICommandManager.cs" />
     <Compile Include="CommandManager\MacroCommand.cs" />
+    <Compile Include="Controls\Forms\BackGroundWorkForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Forms\BackGroundWorkForm.Designer.cs">
+      <DependentUpon>BackGroundWorkForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NativeScrollDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Expression\ComparisonExpression.cs" />
     <Compile Include="Expression\ConditionExpression.cs" />
     <Compile Include="Extensions\ColorExtension.cs" />
@@ -67,6 +76,7 @@
     <Compile Include="Json\Json.cs" />
     <Compile Include="Json\JsonTokenType.cs" />
     <Compile Include="Json\JsonValueType.cs" />
+    <Compile Include="NativeScrollBar.cs" />
     <Compile Include="SortableBindingList.cs" />
     <Compile Include="WindowManager\WindowManager.cs" />
     <Compile Include="WindowManager\IWindowManager.cs" />
@@ -84,5 +94,11 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\Forms\BackGroundWorkForm.resx">
+      <DependentUpon>BackGroundWorkForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

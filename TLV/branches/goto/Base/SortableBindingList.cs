@@ -2,11 +2,14 @@
 using System.Reflection;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 
 namespace NU.OJL.MPRTOS.TLV.Base
 {
     public class SortableBindingList<T> : BindingList<T>
     {
+		public event EventHandler Sorting = null;
+		public event EventHandler Sorted = null;
 		private PropertyDescriptor _sortProperty = null;
 		private PropertyDescriptor _secondSortProperty = null;
 		public string SecondSortPropertyName { get; set; }
@@ -19,45 +22,57 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
         protected override void ApplySortCore(PropertyDescriptor property, ListSortDirection direction)
         {
-			List<T> list = (List<T>)Items;
-            if (list != null)
+
+			Thread thread = new Thread(new ThreadStart(() =>
 			{
-				if(SecondSortPropertyName != null)
-				{
-					PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
-					_secondSortProperty = properties.Find(SecondSortPropertyName, false);
-					if (property.Name == _secondSortProperty.Name)
-						_secondSortDirection = direction;
-				}
-				else if (_secondSortProperty != _sortProperty && property != _sortProperty)
-				{
-					_secondSortProperty = _sortProperty;
-					_secondSortDirection = _sortDirection;
-				}
-				_sortProperty = property;
-				_sortDirection = direction;
+				if (Sorting != null)
+					Sorting(this, EventArgs.Empty);
 
-				IComparer<T> firstComparer = PropertyComparerFactory.Factory<T>(_sortProperty, _sortDirection);
-				IComparer<T> secondComparer = null;
-
-				if (_secondSortProperty != null)
-				{
-					secondComparer = PropertyComparerFactory.Factory<T>(_secondSortProperty, _secondSortDirection);
-				}
-
-				list.Sort((t1,t2) =>
+					List<T> list = (List<T>)Items;
+					if (list != null)
 					{
-						int f = firstComparer.Compare(t1, t2);
-						int s = 0;
-						if (secondComparer != null)
-							s = secondComparer.Compare(t1, t2);
-						return f == 0 ? s : f;
-					});
+						if(SecondSortPropertyName != null)
+						{
+							PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+							_secondSortProperty = properties.Find(SecondSortPropertyName, false);
+							if (property.Name == _secondSortProperty.Name)
+								_secondSortDirection = direction;
+						}
+						else if (_secondSortProperty != _sortProperty && property != _sortProperty)
+						{
+							_secondSortProperty = _sortProperty;
+							_secondSortDirection = _sortDirection;
+						}
+						_sortProperty = property;
+						_sortDirection = direction;
 
-                _isSorted = true;
+						IComparer<T> firstComparer = PropertyComparerFactory.Factory<T>(_sortProperty, _sortDirection);
+						IComparer<T> secondComparer = null;
 
-                OnListChanged(new ListChangedEventArgs(ListChangedType.Reset, -1));
-            }
+						if (_secondSortProperty != null)
+						{
+							secondComparer = PropertyComparerFactory.Factory<T>(_secondSortProperty, _secondSortDirection);
+						}
+
+						list.Sort((t1,t2) =>
+							{
+								int f = firstComparer.Compare(t1, t2);
+								int s = 0;
+								if (secondComparer != null)
+									s = secondComparer.Compare(t1, t2);
+								return f == 0 ? s : f;
+							});
+
+						_isSorted = true;
+
+						if (Sorted != null)
+							Sorted(this, EventArgs.Empty);
+					}
+				}));
+			thread.IsBackground = true;
+			thread.Start();
+
+			//OnListChanged(new ListChangedEventArgs(ListChangedType.Reset, -1));
         }
 
         protected override bool SupportsSortingCore { get { return true; } }

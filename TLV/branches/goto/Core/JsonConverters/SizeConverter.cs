@@ -12,7 +12,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public void WriteJson(IJsonWriter writer, object obj)
 		{
-			writer.Write(JsonTokenType.String, ((Size)obj).Width + "," + ((Size)obj).Height);
+			writer.WriteValue(((Size)obj).Width + "," + ((Size)obj).Height);
 		}
 
 		public object ReadJson(IJsonReader reader)

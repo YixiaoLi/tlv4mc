@@ -7,9 +7,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
 	public interface IJsonWriter
 	{
-		void Write(JsonTokenType type, object value);
-		void Write(JsonTokenType type);
-		void Write(object obj);
-		void Flush();
+		void WriteArray(Action<IJsonWriter> contents);
+		void WriteObject(Action<IJsonWriter> contents);
+		void WriteValue(object obj);
+		void WriteValue(object obj, IJsonSerializer serializer);
+		void WriteProperty(string name);
 	}
 }

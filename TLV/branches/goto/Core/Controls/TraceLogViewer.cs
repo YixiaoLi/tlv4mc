@@ -15,6 +15,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		private Dictionary<string, Color> _resColorCache = new Dictionary<string, Color>();
 		private Dictionary<string, Color> _resTypeColorCache = new Dictionary<string, Color>();
 
+		private SortableBindingList<TraceLog> _dataSource = new SortableBindingList<TraceLog>();
+
 		private TraceLogData _traceLogData;
 		private ResourceData _resourceData;
 		private Json _colorTable = new Json(new Dictionary<string, Json>());
@@ -68,29 +70,32 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			dataGridView.KeyUp += (o, _e) => hintTextUpdate();
 			dataGridView.MouseMove += (o, _e) => hintTextUpdate();
 			dataGridView.MouseLeave += (o, _e) => hintTextUpdate();
+
 		}
 
 		private void hintTextUpdate()
 		{
 
+			hintStatusLabel.Text = "";
+
 			if (new Rectangle(0, 0, dataGridView.Width, dataGridView.ColumnHeadersHeight).Contains(dataGridView.PointToClient(Control.MousePosition)))
 			{
 				hintStatusLabel.Text = "列ヘッダクリックでソート";
-				return;
 			}
-
+			else if (new Rectangle(0, dataGridView.ColumnHeadersHeight, dataGridView.Width, dataGridView.Height -  dataGridView.ColumnHeadersHeight).Contains(dataGridView.PointToClient(Control.MousePosition)))
+			{
+				hintStatusLabel.Text = "右クリックメニューから表示項目の選択";
+			}
+			
 			if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
 			{
 				hintStatusLabel.Text = "Ctrl + ホイールで文字サイズの変更";
-				enableCtrlKey.Visible = false;
-				return;
+				enableCtrlKey.BorderStyle = Border3DStyle.SunkenOuter;
 			}
 			else
 			{
-				enableCtrlKey.Visible = true;
+				enableCtrlKey.BorderStyle = Border3DStyle.RaisedInner;
 			}
-
-			hintStatusLabel.Text = "ここにヒントが表示されます";
 		}
 
 		private void dataGridViewMouseWheel(object sender, MouseEventArgs e)
@@ -196,7 +201,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			if (_traceLogData != null)
 			{
-				dataGridView.DataSource = new SortableBindingList<TraceLog>(_traceLogData.LogDataBase.Select(ld =>
+				_dataSource = new SortableBindingList<TraceLog>(_traceLogData.LogDataBase.Select(ld =>
 				{
 					if (ld.Type == LogType.AttributeChange)
 						return new TraceLog(ld.Time, _resourceData.ResourceHeader[ld.Object.Type].Name, ld.Object.Name, _resourceData.ResourceHeader[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute].Name + " = " +((AttributeChangeLogData)ld).Value.ToString());
@@ -205,6 +210,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					else
 						return new TraceLog(ld.Time, ld.Object.Type, ld.Object.Name, "undefined");
 				}).ToList()) { SecondSortPropertyName = "Id" };
+
+				dataGridView.DataSource = _dataSource;
+
+				_dataSource.Sorting += (o, e) =>
+					{
+						this.Invoke(new MethodInvoker(()=>
+						{
+							processingImage.Text = "ソート中";
+							processingImage.Visible = true;
+							hintStatusLabel.Visible = false;
+						}));
+					};
+				_dataSource.Sorted += (o, e) =>
+					{
+						this.Invoke(new MethodInvoker(() =>
+						{
+							processingImage.Text = "";
+							processingImage.Visible = false;
+							hintStatusLabel.Visible = true;
+						}));
+					};
 			}
 		}
 

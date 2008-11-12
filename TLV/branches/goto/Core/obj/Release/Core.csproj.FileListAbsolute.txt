@@ -19,7 +19,6 @@ C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\bin\Release\WeifenLuo.WinFormsUI.Do
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\bin\Release\ICSharpCode.SharpZipLib.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\bin\Release\Newtonsoft.Json.dll
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Release\ResolveAssemblyReference.cache
-C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Release\NU.OJL.MPRTOS.TLV.Core.Controls.BackGroundWorkForm.resources
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Release\NU.OJL.MPRTOS.TLV.Core.Controls.OpenResourceFileAndTraceLogFileOpenForm.resources
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Release\NU.OJL.MPRTOS.TLV.Core.Controls.MainForm.resources
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Release\NU.OJL.MPRTOS.TLV.Core.Properties.Resources.resources

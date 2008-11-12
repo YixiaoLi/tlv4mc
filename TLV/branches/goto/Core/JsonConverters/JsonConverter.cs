@@ -79,114 +79,49 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						break;
 				}
 			} while (!(objectNest == 0 && arrayNest == 0) && reader.Read());
+
+			if (objectNest != 0)
+				throw new Exception("Jsonの記述に誤りがあります。\n{と}の対応が取れていません。");
+
+			if (arrayNest != 0)
+				throw new Exception("Jsonの記述に誤りがあります。\n[と]の対応が取れていません。");
+
 			return result;
 		}
 
 		public void WriteJson(IJsonWriter writer, object obj)
 		{
-			writeJson(writer, (Json)obj);
-		}
-
-		private static void writeJson(IJsonWriter writer, Json json)
-		{
+			Json json = (Json)obj;
 			if (json.Value is Json)
 			{
-				writeJson(writer, json.Value as Json);
+				WriteJson(writer, (Json)json.Value);
 			}
 			else if (json.Value is List<Json>)
 			{
-				writeJsonArray(writer, json);
+				writer.WriteArray(w =>
+					{
+						foreach (Json j in json)
+						{
+							WriteJson(w, j);
+						}
+					});
 			}
 			else if (json.Value is Dictionary<string, Json>)
 			{
-				writeJsonObject(writer, json);
-			}
-			else if (json.Value is string)
-			{
-				writer.Write(JsonTokenType.String, (string)json.Value);
-			}
-			else if (json.Value is char)
-			{
-				writer.Write(JsonTokenType.String, ((char)json.Value).ToString());
-			}
-			else if (json.Value is sbyte)
-			{
-				writer.Write(JsonTokenType.Integer, Convert.ToDecimal(json.Value));
-			}
-			else if (json.Value is byte)
-			{
-				writer.Write(JsonTokenType.Integer, Convert.ToDecimal(json.Value));
-			}
-			else if (json.Value is short)
-			{
-				writer.Write(JsonTokenType.Integer, Convert.ToDecimal(json.Value));
-			}
-			else if (json.Value is ushort)
-			{
-				writer.Write(JsonTokenType.Integer, Convert.ToDecimal(json.Value));
-			}
-			else if (json.Value is int)
-			{
-				writer.Write(JsonTokenType.Integer, Convert.ToDecimal(json.Value));
-			}
-			else if (json.Value is uint)
-			{
-				writer.Write(JsonTokenType.Integer, Convert.ToDecimal(json.Value));
-			}
-			else if (json.Value is long)
-			{
-				writer.Write(JsonTokenType.Integer, Convert.ToDecimal(json.Value));
-			}
-			else if (json.Value is ulong)
-			{
-				writer.Write(JsonTokenType.Integer, Convert.ToDecimal(json.Value));
-			}
-			else if (json.Value is decimal)
-			{
-				writer.Write(JsonTokenType.Integer, Convert.ToDecimal(json.Value));
-			}
-			else if (json.Value is double)
-			{
-				writer.Write(JsonTokenType.Float, Convert.ToDecimal(json.Value));
-			}
-			else if (json.Value is float)
-			{
-				writer.Write(JsonTokenType.Float, Convert.ToDecimal(json.Value));
-			}
-			else if (json.Value is bool)
-			{
-				writer.Write(JsonTokenType.Boolean, (bool)json.Value);
-			}
-			else if (json.Value == null)
-			{
-				writer.Write(JsonTokenType.Null);
+				writer.WriteObject(w =>
+				{
+					foreach (KeyValuePair<string, Json> sj in json.GetKeyValuePairEnumerator())
+					{
+						w.WriteProperty( sj.Key);
+						WriteJson(w, sj.Value);
+					}
+				});
 			}
 			else
 			{
-				ApplicationFactory.JsonSerializer.Serialize(writer, json.Value);
+				writer.WriteValue(json.Value);
 			}
 		}
-
-		private static void writeJsonArray(IJsonWriter writer, Json json)
-		{
-			writer.Write(JsonTokenType.StartArray);
-			foreach (Json j in json)
-			{
-				writeJson(writer, j);
-			}
-			writer.Write(JsonTokenType.EndArray);
-		}
-
-		private static void writeJsonObject(IJsonWriter writer, Json json)
-		{
-			writer.Write(JsonTokenType.StartObject);
-			foreach (KeyValuePair<string, Json> sj in json.GetKeyValuePairEnumerator())
-			{
-				writer.Write(JsonTokenType.PropertyName, sj.Key);
-				writeJson(writer, sj.Value);
-			}
-			writer.Write(JsonTokenType.EndObject);
-		}
-
 	}
 }
+

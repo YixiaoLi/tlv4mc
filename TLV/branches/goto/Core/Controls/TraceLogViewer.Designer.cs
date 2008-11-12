@@ -30,10 +30,12 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			this.dataGridView = new System.Windows.Forms.DataGridView();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TraceLogViewer));
+			this.dataGridView = new NU.OJL.MPRTOS.TLV.Base.Controls.NativeScrollDataGridView();
 			this.dataGridViewContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
+			this.processingImage = new System.Windows.Forms.ToolStripStatusLabel();
 			this.hintStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.enableCtrlKey = new System.Windows.Forms.ToolStripStatusLabel();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -73,7 +75,6 @@
 			this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridView.Size = new System.Drawing.Size(281, 206);
 			this.dataGridView.TabIndex = 0;
-			this.dataGridView.VirtualMode = true;
 			// 
 			// dataGridViewContextMenuStrip
 			// 
@@ -102,14 +103,28 @@
 			// 
 			this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.processingImage,
             this.hintStatusLabel,
             this.enableCtrlKey});
-			this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
 			this.statusStrip.Location = new System.Drawing.Point(0, 0);
 			this.statusStrip.Name = "statusStrip";
+			this.statusStrip.ShowItemToolTips = true;
 			this.statusStrip.Size = new System.Drawing.Size(281, 23);
 			this.statusStrip.SizingGrip = false;
 			this.statusStrip.TabIndex = 0;
+			// 
+			// processingImage
+			// 
+			this.processingImage.BackColor = System.Drawing.SystemColors.Control;
+			this.processingImage.Image = ((System.Drawing.Image)(resources.GetObject("processingImage.Image")));
+			this.processingImage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.processingImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.processingImage.Name = "processingImage";
+			this.processingImage.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+			this.processingImage.Size = new System.Drawing.Size(45, 18);
+			this.processingImage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.processingImage.ToolTipText = "処理中";
+			this.processingImage.Visible = false;
 			// 
 			// hintStatusLabel
 			// 
@@ -118,22 +133,26 @@
 						| System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
 						| System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
 			this.hintStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Adjust;
+			this.hintStatusLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.hintStatusLabel.Name = "hintStatusLabel";
 			this.hintStatusLabel.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
-			this.hintStatusLabel.Size = new System.Drawing.Size(139, 18);
-			this.hintStatusLabel.Text = "ここにヒントが表示されます";
+			this.hintStatusLabel.Size = new System.Drawing.Size(160, 18);
+			this.hintStatusLabel.Spring = true;
+			this.hintStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// enableCtrlKey
 			// 
-			this.enableCtrlKey.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
 			this.enableCtrlKey.BackColor = System.Drawing.SystemColors.Control;
 			this.enableCtrlKey.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
 						| System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
 						| System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
 			this.enableCtrlKey.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedInner;
+			this.enableCtrlKey.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.enableCtrlKey.Name = "enableCtrlKey";
+			this.enableCtrlKey.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
 			this.enableCtrlKey.Size = new System.Drawing.Size(30, 18);
 			this.enableCtrlKey.Text = "Ctrl";
+			this.enableCtrlKey.ToolTipText = "Ctrlキーを押すと操作ヒントが表示されます";
 			// 
 			// TraceLogViewer
 			// 
@@ -158,11 +177,12 @@
 
 		#endregion
 
-		private System.Windows.Forms.DataGridView dataGridView;
 		private System.Windows.Forms.ContextMenuStrip dataGridViewContextMenuStrip;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer;
 		private System.Windows.Forms.StatusStrip statusStrip;
 		private System.Windows.Forms.ToolStripStatusLabel hintStatusLabel;
 		private System.Windows.Forms.ToolStripStatusLabel enableCtrlKey;
+		private System.Windows.Forms.ToolStripStatusLabel processingImage;
+		private NU.OJL.MPRTOS.TLV.Base.Controls.NativeScrollDataGridView dataGridView;
 	}
 }

@@ -3,6 +3,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Base;
+using NU.OJL.MPRTOS.TLV.Base.Controls;
 using NU.OJL.MPRTOS.TLV.Core.Controls;
 using System.ComponentModel;
 

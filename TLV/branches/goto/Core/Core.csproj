@@ -115,12 +115,6 @@
     <Compile Include="Commands\SaveAsCommand.cs" />
     <Compile Include="Commands\SaveCommand.cs" />
     <Compile Include="Commands\CloseCommand.cs" />
-    <Compile Include="Controls\Forms\BackGroundWorkForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\Forms\BackGroundWorkForm.Designer.cs">
-      <DependentUpon>BackGroundWorkForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Forms\OpenResourceFileAndTraceLogFileOpenForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,10 +170,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\Forms\BackGroundWorkForm.resx">
-      <DependentUpon>BackGroundWorkForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Forms\OpenResourceFileAndTraceLogFileOpenForm.resx">
       <DependentUpon>OpenResourceFileAndTraceLogFileOpenForm.cs</DependentUpon>
       <SubType>Designer</SubType>

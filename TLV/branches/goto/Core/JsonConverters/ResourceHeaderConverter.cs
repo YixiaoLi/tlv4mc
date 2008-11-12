@@ -12,13 +12,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public void WriteJson(IJsonWriter writer, object obj)
 		{
-			writer.Write(JsonTokenType.StartObject);
-			foreach(ResourceType rt in (ResourceHeader)obj)
-			{
-				writer.Write(JsonTokenType.PropertyName, rt.Name);
-				ApplicationFactory.JsonSerializer.Serialize(writer, rt);
-			}
-			writer.Write(JsonTokenType.EndObject);
+			writer.WriteObject(w =>
+				{
+					foreach (ResourceType rt in (ResourceHeader)obj)
+					{
+						w.WriteProperty(rt.Name);
+						w.WriteValue(rt, ApplicationFactory.JsonSerializer);
+					}
+				});
 		}
 
 		public object ReadJson(IJsonReader reader)

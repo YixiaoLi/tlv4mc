@@ -16,17 +16,18 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			if (((VisualizeRule)obj).IsMapped)
 			{
-				writer.Write(JsonTokenType.StartObject);
-				foreach (KeyValuePair<string, string> kvp in ((VisualizeRule)obj))
-				{
-					writer.Write(JsonTokenType.PropertyName, kvp.Key);
-					writer.Write(JsonTokenType.String, kvp.Value);
-				}
-				writer.Write(JsonTokenType.EndObject);
+				writer.WriteObject(w =>
+					{
+						foreach (KeyValuePair<string, string> kvp in ((VisualizeRule)obj))
+						{
+							w.WriteProperty(kvp.Key);
+							w.WriteValue(kvp.Value);
+						}
+					});
 			}
 			else
 			{
-				writer.Write(JsonTokenType.String, ((VisualizeRule)obj).ToString());
+				writer.WriteValue(((VisualizeRule)obj).ToString());
 			}
 		}
 
