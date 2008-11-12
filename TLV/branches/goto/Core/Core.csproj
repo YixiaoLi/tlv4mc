@@ -44,15 +44,23 @@
   </Target>
   -->
   <ItemGroup>
-    <Compile Include="ApplicationDatas.cs" />
+    <Compile Include="ApplicationData.cs" />
     <Compile Include="ApplicationFactory.cs" />
+    <Compile Include="Base\Extensions\ColorExtension.cs" />
     <Compile Include="Base\GeneralNamedCollection.cs" />
     <Compile Include="Base\INamed.cs" />
+    <Compile Include="Controls\TraceLogViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TraceLogViewer.Designer.cs">
+      <DependentUpon>TraceLogViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileContext\ResourceData\Attribute\AttributeList.cs" />
     <Compile Include="FileContext\ResourceData\Behavior\Argument\ArgumentType\ArgumentType.cs" />
     <Compile Include="FileContext\ResourceData\Behavior\Argument\ArgumentType\ArgumentTypeList.cs" />
     <Compile Include="FileContext\ResourceData\Resource.cs" />
     <Compile Include="FileContext\ResourceData\ResourceTypeList.cs" />
+    <Compile Include="FileContext\Setting\Setting.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\BehaviorCallLogData.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogData.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataBase.cs" />
@@ -66,6 +74,7 @@
     <Compile Include="JsonConverters\ArcConverter.cs" />
     <Compile Include="JsonConverters\GeneralNamedCollectionConverter.cs" />
     <Compile Include="JsonConverters\INamedConverter.cs" />
+    <Compile Include="JsonConverters\JsonConverter.cs" />
     <Compile Include="JsonConverters\SizeConverter.cs" />
     <Compile Include="JsonConverters\AreaConverter.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AttributeType\AllocationType.cs" />
@@ -75,7 +84,7 @@
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogVisualizerData.cs" />
     <Compile Include="Base\GeneralKeyedJsonableCollection.cs" />
     <Compile Include="Base\GeneralJsonableCollection.cs" />
-    <Compile Include="Base\JsonExtention.cs" />
+    <Compile Include="Base\Extensions\JsonExtension.cs" />
     <Compile Include="FileContext\ResourceData\Behavior\Argument\ArgumentList.cs" />
     <Compile Include="FileContext\ResourceData\Behavior\Behavior.cs" />
     <Compile Include="FileContext\ResourceData\Behavior\BehaviorList.cs" />
@@ -177,6 +186,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TraceLogViewer.resx">
+      <DependentUpon>TraceLogViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

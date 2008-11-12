@@ -25,7 +25,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             _windowManager = ApplicationFactory.WindowManager;
             _commandManager = ApplicationFactory.CommandManager;
-            Text = ApplicationDatas.Name + " " + ApplicationDatas.Version;
+            Text = ApplicationData.Name + " " + ApplicationData.Version;
         }
 
         protected override void OnLoad(EventArgs evntArgs)
@@ -33,40 +33,45 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             base.OnLoad(evntArgs);
 
             #region ApplicationDatasイベント設定
-            ApplicationDatas.ActiveFileContext.PathChanged += (o, e) =>
+            ApplicationData.ActiveFileContext.PathChanged += (o, e) =>
             {
                 Invoke((MethodInvoker)(() => 
                 {
                     textReflesh();
                 }));
             };
-            ApplicationDatas.ActiveFileContext.IsSavedChanged += (o, e) =>
+            ApplicationData.ActiveFileContext.IsSavedChanged += (o, e) =>
             {
                 Invoke((MethodInvoker)(() => 
                 {
                     textReflesh();
-                    saveSToolStripMenuItem.Enabled = !ApplicationDatas.ActiveFileContext.IsSaved;
-                    saveToolStripButton.Enabled = !ApplicationDatas.ActiveFileContext.IsSaved;
+                    saveSToolStripMenuItem.Enabled = !ApplicationData.ActiveFileContext.IsSaved;
+                    saveToolStripButton.Enabled = !ApplicationData.ActiveFileContext.IsSaved;
                 }));
             };
-            ApplicationDatas.ActiveFileContext.IsOpenedChanged += (o, e) =>
+            ApplicationData.ActiveFileContext.IsOpenedChanged += (o, e) =>
             {
                 Invoke((MethodInvoker)(() =>
                 {
                     textReflesh();
-                    closeToolStripMenuItem.Enabled = ApplicationDatas.ActiveFileContext.IsOpened;
-                    saveAsToolStripMenuItem.Enabled = ApplicationDatas.ActiveFileContext.IsOpened;
+                    closeToolStripMenuItem.Enabled = ApplicationData.ActiveFileContext.IsOpened;
+                    saveAsToolStripMenuItem.Enabled = ApplicationData.ActiveFileContext.IsOpened;
                 }));
             };
-            ApplicationDatas.ActiveFileContext.DataChanged += (o, e) =>
+            ApplicationData.ActiveFileContext.DataChanged += (o, e) =>
             {
                 Invoke((MethodInvoker)(() =>
                 {
-                    if (ApplicationDatas.ActiveFileContext.Data == null)
-                    {
-                        saveSToolStripMenuItem.Enabled = false;
-                        saveToolStripButton.Enabled = false;
-                    }
+					if (ApplicationData.ActiveFileContext.Data == null)
+					{
+						saveSToolStripMenuItem.Enabled = false;
+						saveToolStripButton.Enabled = false;
+						((TraceLogViewer)(_windowManager.SubWindows.Single<SubWindow>(s => s.Name == "traceLogViewer").Control)).ClearData();
+					}
+					else
+					{
+						((TraceLogViewer)(_windowManager.SubWindows.Single<SubWindow>(s => s.Name == "traceLogViewer").Control)).SetData(ApplicationData.ActiveFileContext.Data.TraceLogData, ApplicationData.ActiveFileContext.Data.ResourceData);
+					}
                     textReflesh();
                 }));
             };
@@ -82,9 +87,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region サブウィンドウ管理初期化
             SubWindow[] sws = new[]
             {
-                new SubWindow("sb1", new Control(), DockState.DockLeft) { Text = "サブウィンドウ1" },
-                new SubWindow("sb2", new Control(), DockState.DockLeft) { Text = "サブウィンドウ2" },
-                new SubWindow("sb3", new Control(), DockState.DockRight) { Text = "サブウィンドウ3" },
+                new SubWindow("traceLogViewer", new TraceLogViewer(), DockState.DockRight) { Text = "トレースログ" },
             };
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
             _windowManager.MainPanel = new Control();
@@ -190,8 +193,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             settingSave();
 
-            if (ApplicationDatas.ActiveFileContext.IsOpened
-                && !ApplicationDatas.ActiveFileContext.IsSaved)
+            if (ApplicationData.ActiveFileContext.IsOpened
+                && !ApplicationData.ActiveFileContext.IsSaved)
             {
                 e.Cancel = true;
                 _commandManager.Do(new ExitCommand(this));
@@ -224,13 +227,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         private void settingLoad()
         {
+			ApplicationFactory.Setup();
+			ApplicationData.Setup();
             ClientSize = Properties.Settings.Default.ClientSize;
             Location = Properties.Settings.Default.Location;
             WindowState = Properties.Settings.Default.WindowState;
         }
 
         private void settingSave()
-        {
+		{
+			ApplicationData.Setting.Save();
             Properties.Settings.Default.ClientSize = ClientSize;
             Properties.Settings.Default.Location = Location;
             Properties.Settings.Default.WindowState = WindowState;
@@ -241,19 +247,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             Text = "";
 
-            if(ApplicationDatas.ActiveFileContext.Data != null)
+            if(ApplicationData.ActiveFileContext.Data != null)
             {
-                if (ApplicationDatas.ActiveFileContext.Path == string.Empty)
+                if (ApplicationData.ActiveFileContext.Path == string.Empty)
                     Text += "新規トレースログ";
                 else
-                    Text += Path.GetFileNameWithoutExtension(ApplicationDatas.ActiveFileContext.Path);
+                    Text += Path.GetFileNameWithoutExtension(ApplicationData.ActiveFileContext.Path);
 
-                if (!ApplicationDatas.ActiveFileContext.IsSaved)
+                if (!ApplicationData.ActiveFileContext.IsSaved)
                     Text += " *";
 
                 Text += " - ";
             }
-            Text += ApplicationDatas.Name + " " + ApplicationDatas.Version;
+            Text += ApplicationData.Name + " " + ApplicationData.Version;
         }
     }
 }

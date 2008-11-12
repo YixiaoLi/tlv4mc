@@ -139,7 +139,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				visualizeData.ApplyRules.Add(resh.Name, new ApplyRule(attrs, bhvrs) { Name = resh.Name });
 			}
 
-			string[] visualizeRuleFilePaths = Directory.GetFiles(ApplicationDatas.Setting["VisualizeRulesDirectoryPath"], "*." + Properties.Resources.VisualizeRuleFileExtension);
+			string[] visualizeRuleFilePaths = Directory.GetFiles(ApplicationData.Setting.Data["VisualizeRulesDirectoryPath"], "*." + Properties.Resources.VisualizeRuleFileExtension);
 
 			foreach (string s in visualizeRuleFilePaths)
 			{
@@ -224,7 +224,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			string target = resourceData.ConvertRule;
 
-			string[] convertRulePaths = Directory.GetFiles(ApplicationDatas.Setting["ConvertRulesDirectoryPath"], "*." + Properties.Resources.ConvertRuleFileExtension);
+			string[] convertRulePaths = Directory.GetFiles(ApplicationData.Setting.Data["ConvertRulesDirectoryPath"], "*." + Properties.Resources.ConvertRuleFileExtension);
 			// トレースログ変換ファイルを開きJsonValueでデシリアライズ
 			// ファイルが複数ある場合を想定している
 			foreach (string s in convertRulePaths)
@@ -275,17 +275,18 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// <param name="traceLogManager">追加先</param>
 		private void addTraceLog(string log, string pattern, Json value, TraceLogData traceLogData)
 		{
-			if (value.Type == JsonValueType.Array)
+			if (value.IsArray)
 			{
 				addTraceLogAsArray(log, pattern, value, traceLogData);
 			}
-			else if (value.Type == JsonValueType.Object)
+			else if (value.IsObject)
 			{
 				addTraceLogAsObject(log, pattern, value, traceLogData);
 			}
 			else
 			{
 				// valueがstringのときログを置換して追加
+
 				traceLogData.Add(new TraceLog(Regex.Replace(log, pattern, applyConvertFunc(traceLogData, value))));
 			}
 		}

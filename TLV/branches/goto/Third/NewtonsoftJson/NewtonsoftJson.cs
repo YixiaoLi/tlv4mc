@@ -20,7 +20,6 @@ namespace NU.OJL.MPRTOS.TLV.Third
 		{
 			_serializer.Converters.Add(new IsoDateTimeConverter());
 			_serializer.Converters.Add(new EnumConverter());
-			_serializer.Converters.Add(new JsonValueConverter());
 			_serializer.NullValueHandling = NullValueHandling.Ignore;
 			_serializer.MissingMemberHandling = MissingMemberHandling.Ignore;
 			_serializer.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;

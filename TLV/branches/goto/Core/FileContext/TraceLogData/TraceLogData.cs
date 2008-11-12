@@ -20,6 +20,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public Time MinTime { get; private set; }
 		public Time MaxTime { get; private set; }
 		public TraceLogList TraceLogs { get; private set; }
+		public LogDataBase LogDataBase { get { return _data; } }
 
 		public TraceLogData(TraceLogList traceLogs, ResourceData resourceData)
 			: this(resourceData)
@@ -40,6 +41,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public void Add(TraceLog log)
 		{
+			log = objectFinalize(log);
 			TraceLogs.Add(log);
 
 			if (!log.HasTime)
@@ -62,11 +64,18 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				foreach (Resource res in GetObject(log))
 				{
-					BehaviorCallLogData logData = new BehaviorCallLogData(time, res, log.Behavior, getArguments(log.Arguments, res.Type, log.Behavior));
+					BehaviorCallLogData logData = new BehaviorCallLogData(time, res, log.Behavior, getArguments(res.Type, log.Behavior, log.Arguments));
 					_data.Add(logData);
 				}
 			}
 
+		}
+
+		private TraceLog objectFinalize(TraceLog log)
+		{
+			Resource res = GetObject(log).First();
+			log.Object = res.Name;
+			return log;
 		}
 
 		private Json getValue(string value, string type, string attr)
@@ -84,10 +93,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 		}
 
-		private ArgumentList getArguments(string arguments, string type, string behavior)
+		private ArgumentList getArguments(string type, string behavior, string arguments)
 		{
 			if (arguments == string.Empty)
-				return null;
+				return new ArgumentList();
 
 			string[] args = arguments.Split(',');
 			ArgumentList argList = new ArgumentList();

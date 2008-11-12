@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionItems", "solutionIt
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 		readme.txt = readme.txt
 		TLV1.vsmdi = TLV1.vsmdi
+		xcopyExcludeFile.txt = xcopyExcludeFile.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{92DADFFC-3815-4346-B504-00E1C119B730}"

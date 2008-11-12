@@ -27,12 +27,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                 {
                     if (!e.Cancelled)
                     {
-                        ApplicationDatas.ActiveFileContext.Close();
-                        ApplicationDatas.ActiveFileContext.Data = cftl;
+                        ApplicationData.ActiveFileContext.Close();
+                        ApplicationData.ActiveFileContext.Data = cftl;
                         if (f.SaveFilePath != string.Empty)
                         {
-                            ApplicationDatas.ActiveFileContext.Path = f.SaveFilePath;
-                            ApplicationDatas.ActiveFileContext.Save();
+                            ApplicationData.ActiveFileContext.Path = f.SaveFilePath;
+                            ApplicationData.ActiveFileContext.Save();
                         }
                     }
                 };

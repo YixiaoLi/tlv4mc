@@ -12,8 +12,18 @@ namespace NU.OJL.MPRTOS.TLV.Core
     public class AttributeType : INamed
 	{
 		private JsonValueType _variableType;
+		private string _name = string.Empty;
 
-		public string Name { get; set; }
+		public string Name
+		{
+			get { return _name; }
+			set
+			{
+				_name = value;
+				if (DisplayName == null)
+					DisplayName = value;
+			}
+		}
         /// <summary>
         /// 属性名を表示する際に使用されるテキスト
         /// </summary>

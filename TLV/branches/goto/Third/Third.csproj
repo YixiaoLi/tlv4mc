@@ -69,7 +69,6 @@
     <Compile Include="NewtonsoftJson\EnumConverter.cs" />
     <Compile Include="NewtonsoftJson\GeneralConverter.cs" />
     <Compile Include="NewtonsoftJson\JsonReader.cs" />
-    <Compile Include="NewtonsoftJson\JsonValueConverter.cs" />
     <Compile Include="NewtonsoftJson\JsonWriter.cs" />
     <Compile Include="NewtonsoftJson\NewtonsoftJson.cs" />
     <Compile Include="SharpZipLibZip.cs" />

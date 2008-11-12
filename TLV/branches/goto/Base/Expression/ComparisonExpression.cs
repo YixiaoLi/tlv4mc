@@ -30,7 +30,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			if (cache.ContainsKey(condition))
 				return cache[condition];
 
-			Match m = Regex.Match(condition, @"(?<left>[^=!<>\s]+)\s*(?<ope>(==|!=|<=|>=|>|<))\s*(?<right>[^=!<>\s]+)");
+			Match m = Regex.Match(condition, @"(?<left>[^=!<>&\|\s]+)\s*(?<ope>(==|!=|<=|>=|>|<))\s*(?<right>[^=!<>&\|\s]+)\s");
 			string left = m.Groups["left"].Value;
 			string ope = m.Groups["ope"].Value;
 			string right = m.Groups["right"].Value;

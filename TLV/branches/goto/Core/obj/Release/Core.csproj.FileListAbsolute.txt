@@ -25,3 +25,4 @@ C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Release\NU.OJL.MPRTOS.TLV.Core.
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Release\NU.OJL.MPRTOS.TLV.Core.Properties.Resources.resources
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Release\Core.csproj.GenerateResource.Cache
 C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Release\NU.OJL.MPRTOS.TLV.Core.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\obj\Release\NU.OJL.MPRTOS.TLV.Core.Controls.TraceLogViewer.resources

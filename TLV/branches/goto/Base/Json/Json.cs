@@ -7,61 +7,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
 	public class Json : IEnumerable<Json>
 	{
-		private object _value;
-		public JsonValueType Type { get; private set; }
-		public object Value
-		{
-			get { return _value; }
-			set
-			{
-				object obj = value;
-				if (obj == null)
-				{
-					Type = JsonValueType.Null;
-					_value = null;
-				}
-				else if (obj.GetType() == typeof(List<Json>))
-				{
-					Type = JsonValueType.Array;
-					_value = obj;
-				}
-				else if (obj.GetType() == typeof(Dictionary<string, Json>))
-				{
-					Type = JsonValueType.Object;
-					_value = obj;
-				}
-				else if (obj.GetType() == typeof(string) || obj.GetType() == typeof(char))
-				{
-					Type = JsonValueType.String;
-					_value = obj.ToString();
-				}
-				else if (obj.GetType() == typeof(sbyte)
-					|| obj.GetType() == typeof(byte)
-					|| obj.GetType() == typeof(short)
-					|| obj.GetType() == typeof(ushort)
-					|| obj.GetType() == typeof(int)
-					|| obj.GetType() == typeof(uint)
-					|| obj.GetType() == typeof(long)
-					|| obj.GetType() == typeof(ulong)
-					|| obj.GetType() == typeof(decimal)
-					|| obj.GetType() == typeof(double)
-					|| obj.GetType() == typeof(float))
-				{
-					Type = JsonValueType.Decimal;
-					_value = Convert.ToDecimal(obj);
-				}
-				else if (obj.GetType() == typeof(bool))
-				{
-					Type = JsonValueType.Boolean;
-					_value = obj;
-				}
-				else
-				{
-					Type = JsonValueType.Null;
-					_value = null;
-				}
-			}
-		}
+		public object Value { get; set; }
 		public Json this[int i]
 		{
 			get { return Value is List<Json> ? ((List<Json>)Value)[i] : null; }
@@ -97,16 +43,16 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public bool ContainsKey(string name)
 		{
-			return Type == JsonValueType.Object ? ((Dictionary<string, Json>)Value).ContainsKey(name) : false;
+			return Value is Dictionary<string, Json> ? ((Dictionary<string, Json>)Value).ContainsKey(name) : false;
 		}
 		public bool ContainsKey(int index)
 		{
-			return Type == JsonValueType.Array ? ((List<Json>)Value).Contains(this[index]) : false;
+			return Value is List<Json> ? ((List<Json>)Value).Contains(this[index]) : false;
 		}
 
 		public int IndexOf(Json value)
 		{
-			if (value.Type == JsonValueType.Array)
+			if (Value is List<Json>)
 			{
 				return ((List<Json>)Value).IndexOf(value);
 			}
@@ -119,7 +65,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 		{
 			get
 			{
-				if (Type == JsonValueType.Array)
+				if (Value is List<Json>)
 				{
 					return ((List<Json>)Value).Count;
 				}
@@ -130,9 +76,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			}
 		}
 
+		public bool IsArray { get { return Value is List<Json>; } }
+		public bool IsObject { get { return Value is Dictionary<string, Json>; } }
+
 		public void AddArray(string name)
 		{
-			if (Type == JsonValueType.Object)
+			if (Value is Dictionary<string, Json>)
 			{
 				((Dictionary<string, Json>)Value).Add(name, new Json(new List<Json>()));
 			}
@@ -140,7 +89,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public void AddObject(string name)
 		{
-			if (Type == JsonValueType.Object)
+			if (Value is Dictionary<string, Json>)
 			{
 				((Dictionary<string, Json>)Value).Add(name, new Json(new Dictionary<string, Json>()));
 			}
@@ -148,7 +97,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public void Add(string name, object value)
 		{
-			if (Type == JsonValueType.Object)
+			if (Value is Dictionary<string, Json>)
 			{
 				((Dictionary<string, Json>)Value).Add(name, new Json(value));
 			}
@@ -156,7 +105,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public void Add(object value)
 		{
-			if (Type == JsonValueType.Array)
+			if (Value is List<Json>)
 			{
 				((List<Json>)Value).Add(new Json(value));
 			}
@@ -190,7 +139,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public static implicit operator string(Json jsonValue)
 		{
-			return jsonValue.Value.ToString();
+			return jsonValue.ToString();
 		}
 		public static implicit operator bool(Json jsonValue)
 		{

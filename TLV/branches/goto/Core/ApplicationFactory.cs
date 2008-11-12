@@ -10,9 +10,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
     public static class ApplicationFactory
     {
-        private static readonly CommandManager _commandManager;
-		private static readonly IZip _zip;
-		private static readonly IJsonSerializer _json;
+		private static readonly CommandManager _commandManager = new CommandManager();
+		private static readonly IZip _zip = new SharpZipLibZip();
+		private static readonly IJsonSerializer _json = new NewtonsoftJson();
         public static IWindowManager WindowManager
         {
             get { return new WeifenLuoWindowManager(); }
@@ -42,12 +42,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
             get { return _commandManager; }
         }
 
-        static ApplicationFactory()
+        public static void Setup()
         {
-            _commandManager = new CommandManager();
-			_zip = new SharpZipLibZip();
-			_json = new NewtonsoftJson();
-
 			JsonSerializer.AddConverter(new TraceLogConverter());
 			JsonSerializer.AddConverter(new ArcConverter());
 			JsonSerializer.AddConverter(new AreaConverter());
@@ -56,6 +52,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			JsonSerializer.AddConverter(new ResourceHeaderConverter());
 			JsonSerializer.AddConverter(new SizeConverter());
 			JsonSerializer.AddConverter(new VisualizeRuleConverter());
+			JsonSerializer.AddConverter(new JsonConverter());
 
 			JsonSerializer.AddConverter(new INamedConverter<AttributeType>());
 			JsonSerializer.AddConverter(new INamedConverter<ApplyRule>());

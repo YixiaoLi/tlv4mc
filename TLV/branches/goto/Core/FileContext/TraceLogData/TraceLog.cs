@@ -15,6 +15,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	{
 		private string _time = null;
 		private string _object = null;
+		private string _objectName = null;
+		private string _objectType = null;
 		private string _behavior = null;
 		private string _attribute = null;
 		private string _value = null;
@@ -27,8 +29,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public TraceLog(string log)
 		{
-			_log = log;
 			Match m;
+
+			_log = log.Replace(" ", "").Replace("\t", "");
 
 			m = Regex.Match(_log, @"\s*\[\s*(?<time>[0-9a-fA-F]+)\s*\]\s*");
 			if (m.Success)
@@ -38,7 +41,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			if (m.Success)
 				_object = m.Groups["object"].Value.Replace(" ", "").Replace("\t", "");
 
-			m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?\s*\.\s*(?<behavior>[^\(\s]+\s*\([^\)]*\))\s*$");
+			m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?\s*\.\s*(?<behavior>[^\(\s]+)\s*\([^\)]*\)\s*$");
 			if (m.Success)
 				_behavior =  m.Groups["behavior"].Value.Replace(" ", "").Replace("\t", "");
 
@@ -61,7 +64,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		}
 		public static implicit operator string(TraceLog stdlog)
 		{
-			return stdlog._log;
+			return stdlog.ToString();
+		}
+
+		public override string ToString()
+		{
+			return _log;
 		}
 
 		public string Time
@@ -86,6 +94,32 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					return _object;
 				else
 					throw new Exception("オブジェクト指定のフォーマットが異常です。\n" + "\"" + _log + "\"");
+			}
+			set
+			{
+				_object = value;
+			}
+		}
+		public string ObjectName
+		{
+			get
+			{
+				return _objectName;
+			}
+			set
+			{
+				_objectName = value;
+			}
+		}
+		public string ObjectType
+		{
+			get
+			{
+				return _objectType;
+			}
+			set
+			{
+				_objectType = value;
 			}
 		}
 		public string Behavior

@@ -13,13 +13,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public void WriteJson(IJsonWriter writer, object obj)
 		{
-			writer.Write(JsonTokenType.String, ((Color)obj).ToArgb().ToString("x8"));
+			writer.Write(JsonTokenType.String, ((Color)obj).ToString());
 		}
 
 		public object ReadJson(IJsonReader reader)
 		{
-			string value = (string)reader.Value;
-			return Color.FromArgb(Convert.ToInt32(value, 16));
+			return new Color().FromHexString((string)reader.Value);
 		}
 	}
 }

@@ -6,7 +6,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public static class JsonExtention
+	public static class JsonExtension
 	{
 		public static string ToJsonString(this Json json)
 		{

@@ -24,7 +24,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 				do
 				{
-					m = Regex.Match(e, @"(?<comparisonExpression>\((?<left>[^=!<>\s\(\)]+)\s*(?<ope>(==|!=|<=|>=|>|<))\s*(?<right>[^=!<>\s\(\)]+)\))");
+					m = Regex.Match(e, @"(?<comparisonExpression>\((?<left>[^=!<>\(\)&\|]+)(?<ope>(==|!=|<=|>=|>|<))(?<right>[^=!<>\(\)&\|]+)\))");
 					if (m.Success)
 						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), ComparisonExpression.Result<string>(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
 				} while (m.Success);
@@ -37,7 +37,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 				do
 				{
-					m = Regex.Match(e, @"(?<comparisonExpression>\((?<left>!?[^=!<>\s\(\)]+)\s*(?<ope>(&&|\|\|))\s*(?<right>!?[^=!<>\s\(\)]+)\))");
+					m = Regex.Match(e, @"(?<comparisonExpression>\((?<left>!?[^=!<>\(\)&\|]+)(?<ope>(&&|\|\|))(?<right>!?[^=!<>\(\)&\|]+)\))");
 					if (m.Success)
 						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
 				} while (m.Success);
@@ -50,9 +50,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 				do
 				{
-					m = Regex.Match(e, @"(?<comparisonExpression>(?<left>[^=!<>\s\(\)]+)\s*(?<ope>(==|!=|<=|>=|>|<))\s*(?<right>[^=!<>\s\(\)]+))");
+					m = Regex.Match(e, @"(?<comparisonExpression>(?<left>[^=!<>\(\)&\|]+)(?<ope>(==|!=|<=|>=|>|<))(?<right>[^=!<>\(\)&\|]+))");
 					if (m.Success)
-						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value) + @"(?<other>[\s=!<>]|$)", ComparisonExpression.Result<string>(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + "${other}");
+						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), ComparisonExpression.Result<string>(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
 				} while (m.Success);
 
 				if (cache.ContainsKey(e))
@@ -63,9 +63,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 				do
 				{
-					m = Regex.Match(e, @"(?<comparisonExpression>(?<left>!?[^=!<>\s\(\)]+)\s*(?<ope>&&)\s*(?<right>!?[^=!<>\s\(\)]+))");
+					m = Regex.Match(e, @"(?<comparisonExpression>(?<left>!?[^=!<>\(\)&\|]+)(?<ope>&&)(?<right>!?[^=!<>\(\)&\|]+))");
 					if (m.Success)
-						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value) + @"(?<other>[\s=!<>]|$)", calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + "${other}");
+						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
 				} while (m.Success);
 
 				if (cache.ContainsKey(e))
@@ -76,9 +76,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 				do
 				{
-					m = Regex.Match(e, @"(?<comparisonExpression>(?<left>!?[^=!<>\s\(\)]+)\s*(?<ope>\|\|)\s*(?<right>!?[^=!<>\s\(\)]+))");
+					m = Regex.Match(e, @"(?<comparisonExpression>(?<left>!?[^=!<>\(\)&\|]+)(?<ope>\|\|)(?<right>!?[^=!<>\(\)&\|]+))");
 					if (m.Success)
-						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value) + @"(?<other>[\s=!<>]|$)", calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + "${other}");
+						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
 				} while (m.Success);
 
 				result = parse(e);
