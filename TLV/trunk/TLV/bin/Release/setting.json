@@ -1,0 +1,35 @@
+{
+  "ResourceHeadersDirectoryPath": "C:\\Junji\\Work\\OJL\\TLV\\フェーズ2\\src\\TLV\\bin\\Release\\resourceHeaders",
+  "ConvertRulesDirectoryPath": "C:\\Junji\\Work\\OJL\\TLV\\フェーズ2\\src\\TLV\\bin\\Release\\convertRules",
+  "VisualizeRulesDirectoryPath": "C:\\Junji\\Work\\OJL\\TLV\\フェーズ2\\src\\TLV\\bin\\Release\\visualizeRules",
+  "TraceLogViewerColors": {
+    "ResourceColors": {
+      "LOGTASK": "28ff0000",
+      "TASK1": "28ffff00",
+      "TASK2": "2821ff21",
+      "TASK3": "2821ffff",
+      "MAIN_TASK": "2811ff51"
+    },
+    "ResourceTypeColors": {
+      "Task": "2814c0ff"
+    },
+    "AttributeColors": {
+      "pri": "2814ffeb",
+      "stksz": "28071cff",
+      "state": "2814d3ff"
+    },
+    "BehaviorColors": {
+      "preempt": "285028ff",
+      "dispatch": "282da0ff",
+      "activate": "288928ff",
+      "wait": "281b02ff",
+      "exit": "28ff2dea",
+      "resume": "286f1cff",
+      "suspend": "28ff28b0",
+      "terminate": "28b432ff",
+      "releaseFromWaiting": "28ff2877",
+      "enterSVC": "28ff2dc3",
+      "leaveSVC": "28ff5816"
+    }
+  }
+}
