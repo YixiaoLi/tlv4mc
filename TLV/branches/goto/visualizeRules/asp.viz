@@ -17,57 +17,57 @@
 			{
 				"Type":"Rectangle",
 				"Area":["0,0","100%,80%"],
-				"Pen":{"Color":"0000ff00","Width":3.0},
+				"Pen":{},
 				"Fill":"6600ff00"
 			}
 		],
 		"runnableShapes":[
 			{
 				"Type":"Line",
-				"Coordinates":["f(0),40%","t(0),40%"],
-				"Pen":{"Color":"00ffff00","Width":3}
+				"Coordinates":["l(0),40%","r(0),40%"],
+				"Pen":{"Color":"ffffff00","Width":3}
 			}
 		],
 		"waitingShapes":[
 			{
 				"Type":"Line",
-				"Coordinates":["f(0),20%","t(0),20%"],
-				"Pen":{"Color":"00ff0000","Width":3}
+				"Coordinates":["l(0),20%","r(0),20%"],
+				"Pen":{"Color":"ffff0000","Width":3}
 			}
 		],
 		"dormantShapes":[
 			{
 				"Type":"Line",
-				"Coordinates":["f(0),0","t(0),0"],
-				"Pen":{"Color":"00999999","Width":3}
+				"Coordinates":["l(0),0","r(0),0"],
+				"Pen":{"Color":"ff999999","Width":3}
 			}
 		],
 		"suspendShapes":[
 			{
 				"Type":"Line",
-				"Coordinates":["f(0),20%","t(0),20%"],
-				"Pen":{"Color":"000000ff","Width":3}
+				"Coordinates":["l(0),20%","r(0),20%"],
+				"Pen":{"Color":"ff0000ff","Width":3}
 			}
 		],
 		"waitingSuspendedShapes":[
 			{
 				"Type":"Line",
-				"Coordinates":["f(0),20%","t(0),20%"],
-				"Pen":{"Color":"00ff00ff","Width":3}
+				"Coordinates":["l(0),20%","r(0),20%"],
+				"Pen":{"Color":"ffff00ff","Width":3}
 			}
 		],
 		"activateShapes":[
 			{
 				"Type":"Line",
 				"Coordinates":["0,0","0,80%"],
-				"Pen":{"Color":"00000000","Width":3,"EndCap":"ArrowAnchor"}
+				"Pen":{"Color":"ff000000","Width":3,"EndCap":"ArrowAnchor"}
 			}
 		],
 		"exitShapes":[
 			{
 				"Type":"Line",
 				"Coordinates":["0,0","0,80%"],
-				"Pen":{"Color":"00000000","Width":3,"StartCap":"ArrowAnchor"}
+				"Pen":{"Color":"ff000000","Width":3,"StartCap":"ArrowAnchor"}
 			}
 		]
 	}

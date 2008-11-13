@@ -55,6 +55,8 @@
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.undoToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.redoToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer.SuspendLayout();
 			this.menuStrip.SuspendLayout();
@@ -66,6 +68,7 @@
 			// 
 			// toolStripContainer.ContentPanel
 			// 
+			this.toolStripContainer.ContentPanel.Controls.Add(this.panel1);
 			this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(792, 524);
 			this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
@@ -288,6 +291,15 @@
 			this.redoToolStripButton.Size = new System.Drawing.Size(23, 22);
 			this.redoToolStripButton.Text = "やり直す";
 			// 
+			// panel1
+			// 
+			this.panel1.BackColor = System.Drawing.Color.Gainsboro;
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel1.Location = new System.Drawing.Point(0, 0);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(792, 524);
+			this.panel1.TabIndex = 0;
+			// 
 			// MainForm
 			// 
 			this.AllowDrop = true;
@@ -298,6 +310,7 @@
 			this.MainMenuStrip = this.menuStrip;
 			this.Name = "MainForm";
 			this.Text = "MainForm";
+			this.toolStripContainer.ContentPanel.ResumeLayout(false);
 			this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
 			this.toolStripContainer.TopToolStripPanel.PerformLayout();
 			this.toolStripContainer.ResumeLayout(false);
@@ -338,5 +351,6 @@
         private System.Windows.Forms.ToolStripButton newToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+		private System.Windows.Forms.Panel panel1;
     }
 }

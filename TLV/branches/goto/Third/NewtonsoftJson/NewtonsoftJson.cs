@@ -37,6 +37,8 @@ namespace NU.OJL.MPRTOS.TLV.Third
 		}
 		public object Deserialize(IJsonReader reader, Type type)
 		{
+			if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+				type = type.GetGenericArguments()[0];
 			return _serializer.Deserialize(((JsonReader)reader).Reader, type);
 		}
 		public object Deserialize(string json, Type type)

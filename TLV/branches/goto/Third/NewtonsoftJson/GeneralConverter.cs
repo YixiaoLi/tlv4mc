@@ -20,7 +20,10 @@ namespace NU.OJL.MPRTOS.TLV.Third
 
 		public override bool CanConvert(Type objectType)
 		{
-			return _converter.Type.IsAssignableFrom(objectType);
+			if (objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(Nullable<>))
+				objectType = objectType.GetGenericArguments()[0];
+
+			return _converter.Type.IsAssignableFrom(objectType) || objectType.IsSubclassOf(_converter.Type);
 		}
 
 		public override object ReadJson(Newtonsoft.Json.JsonReader reader, Type objectType)

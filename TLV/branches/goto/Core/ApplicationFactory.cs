@@ -53,6 +53,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			JsonSerializer.AddConverter(new SizeConverter());
 			JsonSerializer.AddConverter(new VisualizeRuleConverter());
 			JsonSerializer.AddConverter(new JsonConverter());
+			JsonSerializer.AddConverter(new ClassHasNullablePropertyConverter<Pen>());
+			JsonSerializer.AddConverter(new ClassHasNullablePropertyConverter<Shape>());
 
 			JsonSerializer.AddConverter(new INamedConverter<AttributeType>());
 			JsonSerializer.AddConverter(new INamedConverter<ApplyRule>());

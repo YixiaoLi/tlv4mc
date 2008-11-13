@@ -71,10 +71,13 @@
     <Compile Include="FileContext\TraceLogData\TraceLogList.cs" />
     <Compile Include="FileContext\VisualizeData\ApplyRuleList.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\ShapesList.cs" />
+    <Compile Include="FileContext\VisualizeData\Shape\ShapeType.cs" />
     <Compile Include="JsonConverters\ArcConverter.cs" />
+    <Compile Include="JsonConverters\GeneralConverter.cs" />
     <Compile Include="JsonConverters\GeneralNamedCollectionConverter.cs" />
     <Compile Include="JsonConverters\INamedConverter.cs" />
     <Compile Include="JsonConverters\JsonConverter.cs" />
+    <Compile Include="JsonConverters\ClassHasNullablePropertyConverter.cs" />
     <Compile Include="JsonConverters\SizeConverter.cs" />
     <Compile Include="JsonConverters\AreaConverter.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AttributeType\AllocationType.cs" />

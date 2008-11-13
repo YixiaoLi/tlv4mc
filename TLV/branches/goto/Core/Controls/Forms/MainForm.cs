@@ -185,6 +185,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             #endregion
 
+			panel1.Paint += (o, e) =>
+				{
+					if (ApplicationData.ActiveFileContext.IsOpened)
+					{
+						float i = 0.0f;
+						foreach (Shapes ss in ApplicationData.ActiveFileContext.Data.VisualizeData.Shapes)
+						{
+							float w = e.ClipRectangle.Width / ApplicationData.ActiveFileContext.Data.VisualizeData.Shapes.Count;
+							foreach (Shape s in ss)
+							{
+								e.Graphics.FillRectangle(new SolidBrush(Color.White), new RectangleF(w * i, 0.0f, w, w));
+								e.Graphics.DrawRectangle(new System.Drawing.Pen(Color.Black), new Rectangle((int)(w * i), 0, (int)w, (int)w));
+
+								s.Draw(e.Graphics, new RectangleF(w * i, 0.0f, w, w));
+							}
+							i++;
+						}
+					}
+				};
+
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -237,9 +257,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private void settingSave()
 		{
 			ApplicationData.Setting.Save();
-            Properties.Settings.Default.ClientSize = ClientSize;
             Properties.Settings.Default.Location = Location;
-            Properties.Settings.Default.WindowState = WindowState;
+			Properties.Settings.Default.WindowState = WindowState;
+			if (WindowState == FormWindowState.Normal)
+				Properties.Settings.Default.ClientSize = ClientSize;
             Properties.Settings.Default.Save();
         }
 
