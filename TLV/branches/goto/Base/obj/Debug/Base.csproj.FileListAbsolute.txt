@@ -1,0 +1,18 @@
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.BackGroundWorkForm.resources
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.StatusManager.StatusManagerResource.resources
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\obj\Debug\Base.csproj.GenerateResource.Cache
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb

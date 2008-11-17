@@ -1,0 +1,123 @@
+{
+	"asp":
+	{
+		"Task":{
+			"DisplayName" :"タスク",
+			"Attributes" :{
+				"prcId":{
+					"VariableType"	:"Decimal",
+					"DisplayName"	:"プロセッサID",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:true
+				},
+				"id":{
+					"VariableType"	:"Decimal",
+					"DisplayName"	:"ID",
+					"AllocationType":"Static",
+					"CanGrouping"	:false
+				},
+				"atr":{
+					"VariableType"	:"String",
+					"DisplayName"	:"属性",
+					"AllocationType":"Static",
+					"CanGrouping"	:false
+				},
+				"pri":{
+					"VariableType"	:"Decimal",
+					"DisplayName"	:"優先度",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:true
+				},
+				"exinf":{
+					"VariableType"	:"String",
+					"DisplayName"	:"拡張情報",
+					"AllocationType":"Static",
+					"CanGrouping"	:false
+				},
+				"task":{
+					"VariableType"	:"String",
+					"DisplayName"	:"起動関数",
+					"AllocationType":"Static",
+					"CanGrouping"	:false
+				},
+				"stksz":{
+					"VariableType"	:"Decimal",
+					"DisplayName"	:"スタックサイズ",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false
+				},
+				"stk":{
+					"VariableType"	:"String",
+					"DisplayName"	:"スタック番地",
+					"AllocationType":"Static",
+					"CanGrouping"	:false
+				},
+				"state":{
+					"VariableType"	:"String",
+					"DisplayName"	:"状態",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false,
+					"Default"		:"DORMANT",
+					"VisualizeRule"	:"taskState"
+				}
+			},
+			"Behaviors"	:{
+				"preempt":{
+					"DisplayName"	:"プリエンプト"
+				},
+				"dispatch":{
+					"DisplayName"	:"ディスパッチ"
+				},
+				"activate":{
+					"DisplayName"	:"起動",
+					"VisualizeRule"	:"taskActivate"
+				},
+				"wait":{
+					"DisplayName"	:"待ち"
+				},
+				"exit":{
+					"DisplayName"	:"終了",
+					"VisualizeRule"	:"taskExit"
+				},
+				"resume":{
+					"DisplayName"	:"再開"
+				},
+				"suspend":{
+					"DisplayName"	:"強制待ち"
+				},
+				"terminate":{
+					"DisplayName"	:"強制終了"
+				},
+				"releaseFromWaiting":{
+					"DisplayName"	:"待ち解除"
+				},
+				"enterSVC":{
+					"DisplayName"	:"サービスコールに入る",
+					"Arguments"		:[
+						{
+							"Name":"name",
+							"Type":"String"
+						},
+						{
+							"Name":"args",
+							"Type":"String"
+						}
+					]
+				},
+				"leaveSVC":{
+					"DisplayName"	:"サービスコールから出る",
+					"Arguments"		:[
+						{
+							"Name":"name",
+							"Type":"String"
+						},
+						{
+							"Name":"args",
+							"Type":"String"
+						}
+					]
+				}
+			}
+		}
+	}
+}

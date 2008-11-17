@@ -1,0 +1,147 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace NU.OJL.MPRTOS.TLV.Base
+{
+	public class StatusManager
+	{
+		public StatusStrip StatusStrip { get; set; }
+		private Dictionary<string, ToolStripStatusLabel> _infos = new Dictionary<string, ToolStripStatusLabel>();
+		private Dictionary<string, ToolStripStatusLabel> _processings = new Dictionary<string, ToolStripStatusLabel>();
+		private Dictionary<string, List<ToolStripStatusLabel>> _hints = new Dictionary<string, List<ToolStripStatusLabel>>();
+
+		public Border3DStyle InfoBorder { get; set; }
+		public Border3DStyle HistBorder { get; set; }
+
+		public StatusManager()
+		{
+			StatusStrip = null;
+
+			InfoBorder = Border3DStyle.SunkenOuter;
+			HistBorder = Border3DStyle.Raised;
+		}
+
+		public void ShowInfo(string name, string text)
+		{
+			if (StatusStrip == null)
+				throw new NullReferenceException();
+
+			ToolStripStatusLabel label = new ToolStripStatusLabel(text);
+			label.BorderSides = ToolStripStatusLabelBorderSides.All;
+			label.BorderStyle = InfoBorder;
+			label.Visible = true;
+
+			if (_infos.ContainsKey(name))
+			{
+				_infos[name].Visible = true;
+				_infos[name].Text = text;
+			}
+			else
+			{
+				_infos.Add(name, label);
+				updateStatusStrip();
+			}
+		}
+		public void HideInfo(string name)
+		{
+			if (_infos.ContainsKey(name))
+				_infos[name].Visible = false;
+		}
+
+		public void ShowProcessing(string name, string text)
+		{
+			if (StatusStrip == null)
+				throw new NullReferenceException();
+
+			ToolStripStatusLabel label = new ToolStripStatusLabel(text);
+			label.BorderSides = ToolStripStatusLabelBorderSides.None;
+			label.Image = StatusManagerResource.status_anim;
+			label.ImageScaling = ToolStripItemImageScaling.None;
+			label.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			label.TextImageRelation = TextImageRelation.ImageBeforeText;
+			label.Visible = true;
+
+			if (_processings.ContainsKey(name))
+			{
+				_processings[name].Visible = true;
+				_processings[name].Text = text;
+			}
+			else
+			{
+				_processings.Add(name, label);
+				updateStatusStrip();
+			}
+		}
+		public void HideProcessing(string name)
+		{
+			if (_processings.ContainsKey(name))
+				_processings[name].Visible = false;
+		}
+
+		public void ShowHint(string name, string discription, params string[] text)
+		{
+			if (StatusStrip == null)
+				throw new NullReferenceException();
+
+			List<ToolStripStatusLabel> modifyKeyLabels = new List<ToolStripStatusLabel>();
+
+			for (int i = 0; i < text.Length; i++)
+			{
+				ToolStripStatusLabel keyLabel = new ToolStripStatusLabel(text[i]);
+				keyLabel.BorderSides = ToolStripStatusLabelBorderSides.All;
+				keyLabel.BorderStyle = HistBorder;
+				keyLabel.Visible = true;
+
+				modifyKeyLabels.Add(keyLabel);
+
+				if(i != text.Length - 1)
+					modifyKeyLabels.Add(new ToolStripStatusLabel("+") { BorderSides = ToolStripStatusLabelBorderSides.None });
+			}
+
+			modifyKeyLabels.Add(new ToolStripStatusLabel(":") { BorderSides = ToolStripStatusLabelBorderSides.None });
+
+			ToolStripStatusLabel label = new ToolStripStatusLabel(discription) { BorderSides = ToolStripStatusLabelBorderSides.None };
+			label.Margin = new Padding(label.Margin.Left, label.Margin.Top, label.Margin.Right + 10, label.Margin.Bottom);
+			modifyKeyLabels.Add(label);
+
+			if (_hints.ContainsKey(name))
+			{
+				_hints[name].ForEach((t) => { t.Visible = true; });
+				_hints[name].Last().Text = discription;
+			}
+			else
+			{
+				_hints.Add(name, modifyKeyLabels);
+				updateStatusStrip();
+			}
+		}
+		public void HideHint(string name)
+		{
+			if (_hints.ContainsKey(name))
+			{
+				_hints[name].ForEach((t) => { t.Visible = false; });
+			}
+		}
+
+		private void updateStatusStrip()
+		{
+			StatusStrip.Items.Clear();
+
+			foreach (List<ToolStripStatusLabel> labels in _hints.Values)
+			{
+				StatusStrip.Items.AddRange(labels.ToArray());
+			}
+
+			StatusStrip.Items.Add(new ToolStripStatusLabel() { Spring = true });
+
+			StatusStrip.Items.AddRange(_processings.Values.ToArray());
+
+			StatusStrip.Items.Add(new ToolStripStatusLabel() { Spring = true });
+
+			StatusStrip.Items.AddRange(_infos.Values.ToArray());
+		}
+	}
+}
