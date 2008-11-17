@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace NU.OJL.MPRTOS.TLV.Core
@@ -15,15 +15,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		private string _size;
 		public string Width { get; set; }
 		public string Height { get; set; }
-		private SizeUnit widthSizeUnit;
-		private SizeUnit heightSizeUnit;
+		private VisualizeAreaUnit widthSizeUnit;
+		private VisualizeAreaUnit heightSizeUnit;
 
-		public Size(string width, string height)
-			:this(width + "," + height)
-		{
-			Width = width;
-			Height = height;
-		}
 		public Size(string size)
 		{
 			_size = size;
@@ -41,14 +35,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				throw new Exception("サイズ指定が異常です。\n" + size);
 
 			if (Regex.IsMatch(w, @"^" + num + @"%$"))
-				widthSizeUnit = SizeUnit.Percentage;
+				widthSizeUnit = VisualizeAreaUnit.Percentage;
 			if (Regex.IsMatch(w, num + @"^" + num + @"(px)?$"))
-				widthSizeUnit = SizeUnit.Pixel;
+				widthSizeUnit = VisualizeAreaUnit.Pixel;
 
 			if (Regex.IsMatch(h, @"^" + num + @"%$"))
-				heightSizeUnit = SizeUnit.Percentage;
+				heightSizeUnit = VisualizeAreaUnit.Percentage;
 			if (Regex.IsMatch(h, num + @"^" + num + @"(px)?$"))
-				heightSizeUnit = SizeUnit.Pixel;
+				heightSizeUnit = VisualizeAreaUnit.Pixel;
 
 			w = w.Replace("%", "").Replace("px", "").Replace("(", "").Replace(")", "").Replace("l", "").Replace("r", "");
 			h = h.Replace("%", "").Replace("px", "").Replace("(", "").Replace(")", "").Replace("t", "").Replace("b", "");
@@ -68,30 +62,24 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			switch (widthSizeUnit)
 			{
-				case SizeUnit.Percentage:
+				case VisualizeAreaUnit.Percentage:
 					size.Width = rect.Width * _width / 100.0f;
 					break;
-				case SizeUnit.Pixel:
+				case VisualizeAreaUnit.Pixel:
 					size.Width = _width;
 					break;
 			}
 			switch (heightSizeUnit)
 			{
-				case SizeUnit.Percentage:
+				case VisualizeAreaUnit.Percentage:
 					size.Height = rect.Height * _height / 100.0f;
 					break;
-				case SizeUnit.Pixel:
+				case VisualizeAreaUnit.Pixel:
 					size.Height = _height;
 					break;
 			}
 
 			return size;
 		}
-	}
-
-	enum SizeUnit
-	{
-		Percentage,
-		Pixel
 	}
 }

@@ -52,12 +52,15 @@
     <Compile Include="Controls\Forms\BackGroundWorkForm.Designer.cs">
       <DependentUpon>BackGroundWorkForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\NativeScrollDataGridView.cs">
+    <Compile Include="Controls\NativeScrollBar\NativeScrollBarHelper.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\NativeScrollBar\NativeScrollBarApplier.cs">
     </Compile>
     <Compile Include="Expression\ComparisonExpression.cs" />
     <Compile Include="Expression\ConditionExpression.cs" />
     <Compile Include="Extensions\ColorExtension.cs" />
+    <Compile Include="Extensions\ControlExtension.cs" />
     <Compile Include="FileContext\FileContext.cs" />
     <Compile Include="FileContext\IFileContext.cs" />
     <Compile Include="FileContext\IFileContextData.cs" />
@@ -76,8 +79,15 @@
     <Compile Include="Json\Json.cs" />
     <Compile Include="Json\JsonTokenType.cs" />
     <Compile Include="Json\JsonValueType.cs" />
-    <Compile Include="NativeScrollBar.cs" />
+    <Compile Include="Controls\NativeScrollBar\NativeScrollBar.cs" />
+    <Compile Include="ObservableDictionary.cs" />
     <Compile Include="SortableBindingList.cs" />
+    <Compile Include="StatusManager\StatusManager.cs" />
+    <Compile Include="StatusManager\StatusManagerResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StatusManagerResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="WindowManager\WindowManager.cs" />
     <Compile Include="WindowManager\IWindowManager.cs" />
     <Compile Include="WindowManager\SubWindow.cs" />
@@ -94,11 +104,22 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\Forms\BackGroundWorkForm.resx">
       <DependentUpon>BackGroundWorkForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="StatusManager\StatusManagerResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StatusManagerResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\status_anim.gif" />
   </ItemGroup>
 </Project>

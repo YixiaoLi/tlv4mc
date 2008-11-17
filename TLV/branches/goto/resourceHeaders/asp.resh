@@ -4,6 +4,12 @@
 		"Task":{
 			"DisplayName" :"タスク",
 			"Attributes" :{
+				"prcId":{
+					"VariableType"	:"Decimal",
+					"DisplayName"	:"プロセッサID",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:true
+				},
 				"id":{
 					"VariableType"	:"Decimal",
 					"DisplayName"	:"ID",
@@ -20,7 +26,7 @@
 					"VariableType"	:"Decimal",
 					"DisplayName"	:"優先度",
 					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
+					"CanGrouping"	:true
 				},
 				"exinf":{
 					"VariableType"	:"String",

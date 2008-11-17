@@ -10,8 +10,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		Undefined,
 		Rectangle,
 		Line,
+		Arrow,
 		Polygon,
 		Pie,
-		Ellipse
+		Ellipse,
+		String
 	}
 }

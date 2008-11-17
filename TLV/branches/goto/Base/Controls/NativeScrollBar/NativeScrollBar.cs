@@ -11,7 +11,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         private const int WS_CHILD = 0x40000000;
         private const int WS_VISIBLE = 0x10000000;
         private const int SBS_HORZ = 0x0000;
-        private const int SBS_VERT = 0x0001;
+		private const int SBS_VERT = 0x0001;
 
         public NativeScrollBar(Control parent)
         {
@@ -30,8 +30,8 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			cp.Style = WS_VISIBLE | SBS_HORZ | WS_CHILD;
 
             IntPtr modHandle = NativeScrollBar.GetModuleHandle(null);
-            IntPtr handleCreated = IntPtr.Zero;
-            int lastWin32Error = 0;
+			int lastWin32Error = 0;
+			IntPtr handleCreated = IntPtr.Zero;
 
             try
             {
@@ -57,8 +57,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 throw new Win32Exception(lastWin32Error, "System error creating Native Window");
             }
 
-            this.AssignHandle(handleCreated);
-
+			this.AssignHandle(handleCreated);
         }
 
         [DllImport("USER32.DLL", EntryPoint = "CreateWindowEx", CharSet = CharSet.Auto, SetLastError = true)]

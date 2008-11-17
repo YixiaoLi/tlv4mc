@@ -106,6 +106,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		}
 
+		public static Color Reverse(this Color color)
+		{
+			return new Color().FromHsv(((int)color.GetHue() + 180) % 360, (int)(color.GetSaturation() * 100), (int)(color.GetBrightness() * 100));
+		}
+
 		public static Color RandomNextColor(this Color color)
 		{
 			Color Result = color.FromHsv(hue, saturation, value);
@@ -149,6 +154,14 @@ namespace NU.OJL.MPRTOS.TLV.Base
 		{
 			i = 1;
 			hue = new Random().Next(0, 360);
+			saturation = 100;
+			value = 100;
+		}
+
+		public static void HueRotateColorRandomSet(this Color color)
+		{
+			i = 1;
+			hue = new Random().Next(0, new Random().Next(0, 360));
 			saturation = 100;
 			value = 100;
 		}

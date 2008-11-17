@@ -14,7 +14,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			writer.WriteArray(w =>
 			{
-				writer.WriteValue(((Area)obj).Location.ToString());
+				writer.WriteValue(((Area)obj).Point.ToString());
 				writer.WriteValue(((Area)obj).Size.ToString());
 			});
 		}

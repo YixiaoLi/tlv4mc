@@ -13,7 +13,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
     public class WindowManager : IWindowManager
     {
         private SubWindowCollection _subWindows = new SubWindowCollection();
-        private Control _mainPanel = null;
+		private Control _mainPanel = null;
 
         /// <summary>
         /// <c>SubWindow</c>を追加したときに発生するイベント
@@ -31,7 +31,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <summary>
         /// この<c>WindowManager</c>を格納する<c>Control</c>
         /// </summary>
-        public virtual Control Parent { get; set; }
+		public virtual Control Parent { get; set; }
         /// <summary>
         /// <c>MainPanel</c>にFillされる<c>Contorl</c>
         /// </summary>
@@ -201,5 +201,19 @@ namespace NU.OJL.MPRTOS.TLV.Base
             if (SubWindowVisibleChanged != null)
                 SubWindowVisibleChanged(sender, e);
         }
+
+		public virtual void Save()
+		{
+
+		}
+		public virtual void Load()
+		{
+
+		}
+		public virtual void Show()
+		{
+
+		}
+
     }
 }

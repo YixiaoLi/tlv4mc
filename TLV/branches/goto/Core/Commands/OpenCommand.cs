@@ -33,15 +33,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
             bw.DoWork += (o, e) =>
 				{
 					bw.ReportProgress(0);
-                    ApplicationData.ActiveFileContext.Close();
+                    ApplicationData.FileContext.Close();
                     try
                     {
-                        ApplicationData.ActiveFileContext.Open(_path);
+                        ApplicationData.FileContext.Open(_path);
                     }
                     catch(Exception _e)
                     {
                         MessageBox.Show("ファイルのオープンに失敗しました\n" + _e.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        ApplicationData.ActiveFileContext.Close();
+                        ApplicationData.FileContext.Close();
                     }
                     bw.ReportProgress(100);
                 };

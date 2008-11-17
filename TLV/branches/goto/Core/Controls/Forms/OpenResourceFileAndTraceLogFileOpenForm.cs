@@ -44,23 +44,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 if(_resourceFilePath != value)
                 {
                     _resourceFilePath = value;
-                    if (_resourceFilePath == "" || Path.GetExtension(_resourceFilePath) != "." + _resourceFileExt)
+                    if (_resourceFilePath == "")
                     {
                         InputFlag &= ~InputFlags.RESOURCE_FILE_PATH;
                         ErrorFlag |= ErrorFlags.NO_RESOURCE_FILE_PATH;
                         ErrorFlag &= ~ErrorFlags.WRONG_RESOURCE_FILE_PATH;
                     }
-                    else if (File.Exists(_resourceFilePath))
+					else if (!File.Exists(_resourceFilePath) || Path.GetExtension(_resourceFilePath) != "." + _resourceFileExt)
                     {
-                        InputFlag |= InputFlags.RESOURCE_FILE_PATH;
-                        ErrorFlag &= ~ErrorFlags.WRONG_RESOURCE_FILE_PATH;
-                        ErrorFlag &= ~ErrorFlags.NO_RESOURCE_FILE_PATH;
+                        InputFlag &= ~InputFlags.RESOURCE_FILE_PATH;
+						ErrorFlag &= ~ErrorFlags.NO_RESOURCE_FILE_PATH;
+						ErrorFlag |= ErrorFlags.WRONG_RESOURCE_FILE_PATH;
                     }
                     else
                     {
-                        InputFlag &= ~InputFlags.RESOURCE_FILE_PATH;
-                        ErrorFlag |= ErrorFlags.WRONG_RESOURCE_FILE_PATH;
-                        ErrorFlag &= ~ErrorFlags.NO_RESOURCE_FILE_PATH;
+                        InputFlag |= InputFlags.RESOURCE_FILE_PATH;
+						ErrorFlag &= ~ErrorFlags.NO_RESOURCE_FILE_PATH;
+						ErrorFlag &= ~ErrorFlags.WRONG_RESOURCE_FILE_PATH;
                     }
                 }
             }
@@ -73,23 +73,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 if (_traceLogFilePath != value)
                 {
                     _traceLogFilePath = value;
-                    if (_traceLogFilePath == "" || Path.GetExtension(_traceLogFilePath) != "." + _traceLogFileExt)
+					if (_traceLogFilePath == "")
                     {
                         InputFlag &= ~InputFlags.TRACELOG_FILE_PATH;
                         ErrorFlag |= ErrorFlags.NO_TRACELOG_FILE_PATH;
                         ErrorFlag &= ~ErrorFlags.WRONG_TRACELOG_FILE_PATH;
                     }
-                    else if (File.Exists(_traceLogFilePath))
+					else if (!File.Exists(_traceLogFilePath) || Path.GetExtension(_traceLogFilePath) != "." + _traceLogFileExt)
                     {
-                        InputFlag |= InputFlags.TRACELOG_FILE_PATH;
-                        ErrorFlag &= ~ErrorFlags.WRONG_TRACELOG_FILE_PATH;
-                        ErrorFlag &= ~ErrorFlags.NO_TRACELOG_FILE_PATH;
+                        InputFlag &= ~InputFlags.TRACELOG_FILE_PATH;
+						ErrorFlag &= ~ErrorFlags.NO_TRACELOG_FILE_PATH;
+						ErrorFlag |= ErrorFlags.WRONG_TRACELOG_FILE_PATH;
                     }
                     else
                     {
-                        InputFlag &= ~InputFlags.TRACELOG_FILE_PATH;
-                        ErrorFlag |= ErrorFlags.WRONG_TRACELOG_FILE_PATH;
-                        ErrorFlag &= ~ErrorFlags.NO_TRACELOG_FILE_PATH;
+                        InputFlag |= InputFlags.TRACELOG_FILE_PATH;
+						ErrorFlag &= ~ErrorFlags.NO_TRACELOG_FILE_PATH;
+						ErrorFlag &= ~ErrorFlags.WRONG_TRACELOG_FILE_PATH;
                     }
                 }
             }
@@ -266,22 +266,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             errorMessageBox.Clear();
             string[] errorMessages = new string[3];
 
-            if((ErrorFlag & ErrorFlags.NO_RESOURCE_FILE_PATH) != ErrorFlags.NONE)
-            {
-                errorMessages[0] = "・リソースファイルのパスを入力して下さい。";
-            }
-            if ((ErrorFlag & ErrorFlags.WRONG_RESOURCE_FILE_PATH) != ErrorFlags.NONE)
-            {
-                errorMessages[0] = "・指定されたリソースファイルは存在しません。入力を確認してください。";
-            }
+			if ((ErrorFlag & ErrorFlags.NO_RESOURCE_FILE_PATH) != ErrorFlags.NONE)
+			{
+				errorMessages[0] = "・リソースファイルのパスを入力して下さい。";
+			}
+			else if ((ErrorFlag & ErrorFlags.WRONG_RESOURCE_FILE_PATH) != ErrorFlags.NONE)
+			{
+				errorMessages[0] = "・リソースファイルとして指定されたファイルはリソースファイルではありません。";
+			}
             if ((ErrorFlag & ErrorFlags.NO_TRACELOG_FILE_PATH) != ErrorFlags.NONE)
             {
-                errorMessages[1] = "・トレースログファイルのパスを入力して下さい。";
+				errorMessages[errorMessages[0] == null ? 0 : 1] = "・トレースログファイルのパスを入力して下さい。";
             }
-            if ((ErrorFlag & ErrorFlags.WRONG_TRACELOG_FILE_PATH) != ErrorFlags.NONE)
-            {
-                errorMessages[1] = "・指定されたトレースログファイルは存在しません。入力を確認してください。";
-            }
+			else if ((ErrorFlag & ErrorFlags.WRONG_TRACELOG_FILE_PATH) != ErrorFlags.NONE)
+			{
+				errorMessages[errorMessages[0] == null ? 0 : 1] = "・トレースログファイルとして指定されたファイルはトレースログファイルではありません。";
+			}
             if (ErrorFlag == ErrorFlags.NONE)
             {
                 errorMessages[0] = "・OKボタンで確定して下さい。キャンセルボタンで確定せずに終了出来ます。";

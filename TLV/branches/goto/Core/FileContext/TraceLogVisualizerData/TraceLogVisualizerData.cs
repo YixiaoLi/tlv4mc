@@ -51,6 +51,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// 可視化データ
 		/// </summary>
 		public VisualizeData VisualizeData { get; set; }
+		/// <summary>
+		/// 設定データ
+		/// </summary>
+		public SettingData SettingData { get; set; }
 
 		/// <summary>
 		/// <c>CommonFormatTraceLog</c>のインスタンスを生成する
@@ -64,11 +68,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         /// <param name="resourceData">共通形式のリソースデータ</param>
         /// <param name="traceLogData">共通形式のトレースログデータ</param>
-		public TraceLogVisualizerData(ResourceData resourceData, TraceLogData traceLogData, VisualizeData visualizeData)
+		public TraceLogVisualizerData(ResourceData resourceData, TraceLogData traceLogData, VisualizeData visualizeData, SettingData settingData)
         {
 			ResourceData = resourceData;
 			TraceLogData = traceLogData;
 			VisualizeData = visualizeData;
+			SettingData = settingData;
         }
 
         /// <summary>
@@ -88,6 +93,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.ResourceFileExtension, ResourceData.ToJson());
 			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension, TraceLogData.TraceLogs.ToJson());
 			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.VisualizeRuleFileExtension, VisualizeData.ToJson());
+			File.WriteAllText(tmpDirPath + name + "." + Properties.Resources.SettingFileExtension, SettingData.ToJson());
 
 			zip.Compress(path, tmpDirPath);
 
@@ -111,14 +117,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			string resFilePath = Directory.GetFiles(tmpDirPath, "*." + Properties.Resources.ResourceFileExtension)[0];
 			string logFilePath = Directory.GetFiles(tmpDirPath, "*." + Properties.Resources.TraceLogFileExtension)[0];
 			string vixFilePath = Directory.GetFiles(tmpDirPath, "*." + Properties.Resources.VisualizeRuleFileExtension)[0];
+			string settingFilePath = Directory.GetFiles(tmpDirPath, "*." + Properties.Resources.SettingFileExtension)[0];
 
-			ResourceData res = new ResourceData().Parse(File.ReadAllText(resFilePath));
-			TraceLogList log = new TraceLogList().Parse(File.ReadAllText(logFilePath));
-			VisualizeData viz = new VisualizeData().Parse(File.ReadAllText(vixFilePath));
-
+			ResourceData res = ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(resFilePath));
+			TraceLogList log = ApplicationFactory.JsonSerializer.Deserialize<TraceLogList>(File.ReadAllText(logFilePath));
+			VisualizeData viz = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(File.ReadAllText(vixFilePath));
+			SettingData setting = ApplicationFactory.JsonSerializer.Deserialize<SettingData>(File.ReadAllText(settingFilePath));
+			
 			ResourceData = res;
 			TraceLogData = new TraceLogData(log, res);
 			VisualizeData = viz;
+			SettingData = setting;
         }
     }
 }

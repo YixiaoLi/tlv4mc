@@ -29,6 +29,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         void ShowSubWindow(string name);
         void HideSubWindow(string name);
         void AutoHideSubWindow(string name);
+		void Show();
 
     }
 

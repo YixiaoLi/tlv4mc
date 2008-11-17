@@ -48,7 +48,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 				Json data = new Json(new Dictionary<string, Json>());
 
-				string[] resourceHeadersPaths = Directory.GetFiles(ApplicationData.Setting.Data["ResourceHeadersDirectoryPath"], "*." + Properties.Resources.ResourceHeaderFileExtension);
+				string[] resourceHeadersPaths = Directory.GetFiles(ApplicationData.Setting.ResourceHeadersDirectoryPath, "*." + Properties.Resources.ResourceHeaderFileExtension);
 
 				foreach (string s in resourceHeadersPaths)
 				{

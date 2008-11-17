@@ -28,12 +28,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                 {
                     if (!e.Cancelled)
                     {
-                        ApplicationData.ActiveFileContext.Close();
-                        ApplicationData.ActiveFileContext.Data = cftl;
+                        ApplicationData.FileContext.Close();
+                        ApplicationData.FileContext.Data = cftl;
                         if (f.SaveFilePath != string.Empty)
                         {
-                            ApplicationData.ActiveFileContext.Path = f.SaveFilePath;
-                            ApplicationData.ActiveFileContext.Save();
+                            ApplicationData.FileContext.Path = f.SaveFilePath;
+                            ApplicationData.FileContext.Save();
                         }
                     }
                 };
@@ -42,7 +42,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 			{
 				try
 				{
-					StandartFormatConverter cfc = new StandartFormatConverter(f.ResourceFilePath, f.TraceLogFilePath, 
+					string[] visualizeRuleFilePaths = Directory.GetFiles(ApplicationData.Setting.VisualizeRulesDirectoryPath, "*." + Properties.Resources.VisualizeRuleFileExtension);
+
+					StandartFormatConverter cfc = new StandartFormatConverter(
+						f.ResourceFilePath,
+						f.TraceLogFilePath, 
+						visualizeRuleFilePaths,
 						(p,s) =>
 						{
 							if (bw.CancellationPending) { _e.Cancel = true; return; }
@@ -54,7 +59,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 					bw.ReportProgress(90);
 					bw.Invoke(new MethodInvoker(() => { bw.Message = "共通形式データを生成中"; }));
 
-					cftl = new TraceLogVisualizerData(cfc.ResourceData, cfc.TraceLogData, cfc.VisualizeData);
+					cftl = new TraceLogVisualizerData(cfc.ResourceData, cfc.TraceLogData, cfc.VisualizeData, cfc.SettingData);
 
 					if (bw.CancellationPending) { _e.Cancel = true; return; }
 					bw.ReportProgress(100);

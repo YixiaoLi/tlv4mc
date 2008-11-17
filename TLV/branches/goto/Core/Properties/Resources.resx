@@ -138,8 +138,8 @@
   <data name="ResourceHeaderFileExtension" xml:space="preserve">
     <value>resh</value>
   </data>
-  <data name="SettingFileName" xml:space="preserve">
-    <value>setting.json</value>
+  <data name="SettingFileExtension" xml:space="preserve">
+    <value>setting</value>
   </data>
   <data name="TraceLogFileExtension" xml:space="preserve">
     <value>log</value>

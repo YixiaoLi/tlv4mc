@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Base;
@@ -14,8 +10,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
     public partial class MainForm : Form
     {
-        private IWindowManager _windowManager;
+        private WindowManager _windowManager;
         private CommandManager _commandManager;
+		private StatusManager _statusManager;
 
         public MainForm()
         {
@@ -33,44 +30,39 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             base.OnLoad(evntArgs);
 
             #region ApplicationDatasイベント設定
-            ApplicationData.ActiveFileContext.PathChanged += (o, e) =>
+            ApplicationData.FileContext.PathChanged += (o, e) =>
             {
                 Invoke((MethodInvoker)(() => 
                 {
                     textReflesh();
                 }));
             };
-            ApplicationData.ActiveFileContext.IsSavedChanged += (o, e) =>
+            ApplicationData.FileContext.IsSavedChanged += (o, e) =>
             {
                 Invoke((MethodInvoker)(() => 
                 {
                     textReflesh();
-                    saveSToolStripMenuItem.Enabled = !ApplicationData.ActiveFileContext.IsSaved;
-                    saveToolStripButton.Enabled = !ApplicationData.ActiveFileContext.IsSaved;
+                    saveSToolStripMenuItem.Enabled = !ApplicationData.FileContext.IsSaved;
+                    saveToolStripButton.Enabled = !ApplicationData.FileContext.IsSaved;
                 }));
             };
-            ApplicationData.ActiveFileContext.IsOpenedChanged += (o, e) =>
+            ApplicationData.FileContext.IsOpenedChanged += (o, e) =>
             {
                 Invoke((MethodInvoker)(() =>
                 {
                     textReflesh();
-                    closeToolStripMenuItem.Enabled = ApplicationData.ActiveFileContext.IsOpened;
-                    saveAsToolStripMenuItem.Enabled = ApplicationData.ActiveFileContext.IsOpened;
+                    closeToolStripMenuItem.Enabled = ApplicationData.FileContext.IsOpened;
+                    saveAsToolStripMenuItem.Enabled = ApplicationData.FileContext.IsOpened;
                 }));
             };
-            ApplicationData.ActiveFileContext.DataChanged += (o, e) =>
+            ApplicationData.FileContext.DataChanged += (o, e) =>
             {
                 Invoke((MethodInvoker)(() =>
                 {
-					if (ApplicationData.ActiveFileContext.Data == null)
+					if (ApplicationData.FileContext.Data == null)
 					{
 						saveSToolStripMenuItem.Enabled = false;
 						saveToolStripButton.Enabled = false;
-						((TraceLogViewer)(_windowManager.SubWindows.Single<SubWindow>(s => s.Name == "traceLogViewer").Control)).ClearData();
-					}
-					else
-					{
-						((TraceLogViewer)(_windowManager.SubWindows.Single<SubWindow>(s => s.Name == "traceLogViewer").Control)).SetData(ApplicationData.ActiveFileContext.Data.TraceLogData, ApplicationData.ActiveFileContext.Data.ResourceData);
 					}
                     textReflesh();
                 }));
@@ -87,11 +79,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region サブウィンドウ管理初期化
             SubWindow[] sws = new[]
             {
-                new SubWindow("traceLogViewer", new TraceLogViewer(), DockState.DockRight) { Text = "トレースログ" },
+                new SubWindow("traceLogViewer", new TraceLogViewer(), DockState.DockRight) { Text = "トレースログビューア" },
+                new SubWindow("resourceExplorer", new ResourceExplorer(), DockState.DockLeft) { Text = "リソースエクスプローラ" },
+                new SubWindow("resourceTypeExplorer", new ResourceTypeExplorer(), DockState.DockLeft) { Text = "リソースタイプエクスプローラ" },
             };
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
             _windowManager.MainPanel = new Control();
-            _windowManager.AddSubWindow(sws);
+			_windowManager.AddSubWindow(sws);
+			_windowManager.Load();
+			_windowManager.Show();
             _windowManager.SubWindowDockStateChanged += (o, e) => { _commandManager.Done(new ChangeSubWindowDockStateCommand(((SubWindow)o), e.Old, e.New)); };
             EventHandler<GeneralChangedEventArgs<bool>> v = (o, e) => { _commandManager.Done(new ChangeSubWindowVisiblityCommand(((SubWindow)o), e.New)); };
             _windowManager.SubWindowVisibleChanged += v;
@@ -166,9 +162,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             #endregion
 
-            #region ツールバーイベント設定
+			#region ステータスバー設定
 
-            newToolStripButton.Click += (o, e) =>
+			_statusManager = ApplicationFactory.StatusManager;
+			_statusManager.StatusStrip = statusStrip;
+
+			#endregion
+
+			#region ツールバーイベント設定
+
+			newToolStripButton.Click += (o, e) =>
             {
                 _commandManager.Do(new NewCommand());
             };
@@ -185,26 +188,28 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             #endregion
 
-			panel1.Paint += (o, e) =>
-				{
-					if (ApplicationData.ActiveFileContext.IsOpened)
-					{
-						float i = 0.0f;
-						foreach (Shapes ss in ApplicationData.ActiveFileContext.Data.VisualizeData.Shapes)
-						{
-							float w = e.ClipRectangle.Width / ApplicationData.ActiveFileContext.Data.VisualizeData.Shapes.Count;
-							foreach (Shape s in ss)
-							{
-								e.Graphics.FillRectangle(new SolidBrush(Color.White), new RectangleF(w * i, 0.0f, w, w));
-								e.Graphics.DrawRectangle(new System.Drawing.Pen(Color.Black), new Rectangle((int)(w * i), 0, (int)w, (int)w));
+			//_windowManager.MainPanel.Resize += (o, e) => _windowManager.MainPanel.Invalidate();
+			//_windowManager.MainPanel.Paint += (o, e) =>
+			//    {
+			//        e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+			//        if (ApplicationData.FileContext.IsOpened)
+			//        {
+			//            float i = 0.0f;
+			//            foreach (Shapes ss in ApplicationData.FileContext.Data.VisualizeData.Shapes)
+			//            {
+			//                float w = (float)_windowManager.MainPanel.ClientSize.Width / (float)ApplicationData.FileContext.Data.VisualizeData.Shapes.Count;
 
-								s.Draw(e.Graphics, new RectangleF(w * i, 0.0f, w, w));
-							}
-							i++;
-						}
-					}
-				};
+			//                e.Graphics.FillRectangle(new SolidBrush(Color.White), new RectangleF(w * i, 0.0f, w, w));
+			//                e.Graphics.DrawRectangle(new System.Drawing.Pen(Color.Black), new Rectangle((int)(w * i), 0, (int)w, (int)w));
 
+			//                foreach (Shape s in ss)
+			//                {
+			//                    e.Graphics.DrawShape(s, new RectangleF(w * i, 0.0f, w, w));
+			//                }
+			//                i++;
+			//            }
+			//        }
+			//    };
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -213,8 +218,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             settingSave();
 
-            if (ApplicationData.ActiveFileContext.IsOpened
-                && !ApplicationData.ActiveFileContext.IsSaved)
+            if (ApplicationData.FileContext.IsOpened
+                && !ApplicationData.FileContext.IsSaved)
             {
                 e.Cancel = true;
                 _commandManager.Do(new ExitCommand(this));
@@ -247,35 +252,36 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         private void settingLoad()
         {
-			ApplicationFactory.Setup();
-			ApplicationData.Setup();
-            ClientSize = Properties.Settings.Default.ClientSize;
-            Location = Properties.Settings.Default.Location;
-            WindowState = Properties.Settings.Default.WindowState;
+			ClientSize = Properties.Settings.Default.ClientSize;
+			Location = Properties.Settings.Default.Location;
+			WindowState = Properties.Settings.Default.WindowState;
         }
 
         private void settingSave()
 		{
 			ApplicationData.Setting.Save();
-            Properties.Settings.Default.Location = Location;
+
+			_windowManager.Save();
+
+			Properties.Settings.Default.Location = Location;
 			Properties.Settings.Default.WindowState = WindowState;
 			if (WindowState == FormWindowState.Normal)
 				Properties.Settings.Default.ClientSize = ClientSize;
-            Properties.Settings.Default.Save();
+			Properties.Settings.Default.Save();
         }
 
         protected void textReflesh()
         {
             Text = "";
 
-            if(ApplicationData.ActiveFileContext.Data != null)
+            if(ApplicationData.FileContext.Data != null)
             {
-                if (ApplicationData.ActiveFileContext.Path == string.Empty)
+                if (ApplicationData.FileContext.Path == string.Empty)
                     Text += "新規トレースログ";
                 else
-                    Text += Path.GetFileNameWithoutExtension(ApplicationData.ActiveFileContext.Path);
+                    Text += Path.GetFileNameWithoutExtension(ApplicationData.FileContext.Path);
 
-                if (!ApplicationData.ActiveFileContext.IsSaved)
+                if (!ApplicationData.FileContext.IsSaved)
                     Text += " *";
 
                 Text += " - ";

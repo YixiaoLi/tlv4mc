@@ -9,26 +9,41 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class Area
 	{
-		public Coordinate Location { get; set; }
+		public Point Point { get; set; }
 		public Size Size { get; set; }
-		public Area(Coordinate location, Size size)
+		public Area(Point location, Size size)
 		{
-			Location = location;
+			Point = location;
 			Size = size;
 		}
 		public Area(string location, string size)
 		{
-			Location = new Coordinate(location);
+			Point = new Point(location);
 			Size = new Size(size);
 		}
 		public override string ToString()
 		{
-			return "[" + Location.ToString() + "," + Size.ToString() + "]";
+			return "[" + Point.ToString() + "," + Size.ToString() + "]";
 		}
 
-		public RectangleF ToRectangleF(Coordinate offset, RectangleF rect)
+		public RectangleF ToRectangleF(Point offset, ContentAlignment align, RectangleF rect)
 		{
-			return new RectangleF(Location.ToPointF(offset, rect), Size.ToSizeF(rect));
+			PointF point = Point.ToPointF(offset, rect);
+			SizeF size = Size.ToSizeF(rect);
+
+			if (align == ContentAlignment.BottomCenter || align == ContentAlignment.BottomLeft || align == ContentAlignment.BottomRight)
+				point.Y -= size.Height;
+
+			if (align == ContentAlignment.BottomRight || align == ContentAlignment.MiddleRight || align == ContentAlignment.TopRight)
+				point.X -= size.Width;
+
+			if (align == ContentAlignment.BottomCenter || align == ContentAlignment.MiddleCenter || align == ContentAlignment.TopCenter)
+				point.X -= size.Width / 2;
+
+			if (align == ContentAlignment.MiddleCenter || align == ContentAlignment.MiddleLeft || align == ContentAlignment.MiddleRight)
+				point.Y -= size.Height / 2;
+
+			return new RectangleF(point, size);
 		}
 	}
 }

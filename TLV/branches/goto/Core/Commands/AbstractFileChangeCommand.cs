@@ -19,14 +19,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 
         public void Do()
         {
-            if (ApplicationData.ActiveFileContext.IsOpened
-                && !ApplicationData.ActiveFileContext.IsSaved)
+            if (ApplicationData.FileContext.IsOpened
+                && !ApplicationData.FileContext.IsSaved)
             {
                 switch (MessageBox.Show("ファイルが更新されています。\n保存しますか？", "ファイルが更新されています", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                 {
                     case DialogResult.Yes:
                         ApplicationFactory.CommandManager.Do(new SaveCommand());
-                        if (ApplicationData.ActiveFileContext.IsSaved)
+                        if (ApplicationData.FileContext.IsSaved)
                         {
                             action();
                         }

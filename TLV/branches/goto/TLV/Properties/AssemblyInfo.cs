@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("TraceLogVisualizer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Nagoya Univ")]
+[assembly: AssemblyCompany("TOPPERS")]
 [assembly: AssemblyProduct("TraceLogVisualizer")]
-[assembly: AssemblyCopyright("Copyright ©Nagoya Univ 2008")]
+[assembly: AssemblyCopyright("Copyright ©TOPPERS 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

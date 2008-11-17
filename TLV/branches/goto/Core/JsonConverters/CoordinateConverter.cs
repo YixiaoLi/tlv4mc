@@ -8,17 +8,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class CoordinateConverter : IJsonConverter
 	{
-		public Type Type { get { return typeof(Coordinate); } }
+		public Type Type { get { return typeof(Point); } }
 
 		public void WriteJson(IJsonWriter writer, object obj)
 		{
-			writer.WriteValue(((Coordinate)obj).ToString());
+			writer.WriteValue(((Point)obj).ToString());
 		}
 
 		public object ReadJson(IJsonReader reader)
 		{
 			string value = (string)reader.Value;
-			return new Coordinate(value);
+			return new Point(value);
 		}
 	}
 }

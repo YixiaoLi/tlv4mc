@@ -30,6 +30,7 @@
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
+			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,8 +56,7 @@
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.undoToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.redoToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.toolStripContainer.ContentPanel.SuspendLayout();
+			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer.SuspendLayout();
 			this.menuStrip.SuspendLayout();
@@ -66,10 +66,13 @@
 			// toolStripContainer
 			// 
 			// 
+			// toolStripContainer.BottomToolStripPanel
+			// 
+			this.toolStripContainer.BottomToolStripPanel.Controls.Add(this.statusStrip);
+			// 
 			// toolStripContainer.ContentPanel
 			// 
-			this.toolStripContainer.ContentPanel.Controls.Add(this.panel1);
-			this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(792, 524);
+			this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(792, 502);
 			this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer.Name = "toolStripContainer";
@@ -81,6 +84,15 @@
 			// 
 			this.toolStripContainer.TopToolStripPanel.Controls.Add(this.menuStrip);
 			this.toolStripContainer.TopToolStripPanel.Controls.Add(this.mainToolStrip);
+			// 
+			// statusStrip
+			// 
+			this.statusStrip.AutoSize = false;
+			this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
+			this.statusStrip.Location = new System.Drawing.Point(0, 0);
+			this.statusStrip.Name = "statusStrip";
+			this.statusStrip.Size = new System.Drawing.Size(792, 22);
+			this.statusStrip.TabIndex = 0;
 			// 
 			// menuStrip
 			// 
@@ -115,57 +127,57 @@
 			// 
 			this.newToolStripMenuItem.Name = "newToolStripMenuItem";
 			this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-			this.newToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-			this.newToolStripMenuItem.Text = "新規作成(&N)";
+			this.newToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.newToolStripMenuItem.Text = "新規作成(&N)...";
 			// 
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
 			this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
 			this.openToolStripMenuItem.Text = "開く(&O)";
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(175, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(181, 6);
 			// 
 			// closeToolStripMenuItem
 			// 
 			this.closeToolStripMenuItem.Enabled = false;
 			this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-			this.closeToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+			this.closeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
 			this.closeToolStripMenuItem.Text = "閉じる(&C)";
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(175, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(181, 6);
 			// 
 			// saveSToolStripMenuItem
 			// 
 			this.saveSToolStripMenuItem.Enabled = false;
 			this.saveSToolStripMenuItem.Name = "saveSToolStripMenuItem";
 			this.saveSToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-			this.saveSToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+			this.saveSToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
 			this.saveSToolStripMenuItem.Text = "保存(&S)";
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Enabled = false;
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
 			this.saveAsToolStripMenuItem.Text = "名前をつけて保存(&A)";
 			// 
 			// toolStripSeparator5
 			// 
 			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(175, 6);
+			this.toolStripSeparator5.Size = new System.Drawing.Size(181, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
 			this.exitToolStripMenuItem.Text = "終了(&X)";
 			// 
 			// editToolStripMenuItem
@@ -234,7 +246,7 @@
             this.redoToolStripButton});
 			this.mainToolStrip.Location = new System.Drawing.Point(3, 24);
 			this.mainToolStrip.Name = "mainToolStrip";
-			this.mainToolStrip.Size = new System.Drawing.Size(131, 25);
+			this.mainToolStrip.Size = new System.Drawing.Size(133, 25);
 			this.mainToolStrip.TabIndex = 0;
 			this.mainToolStrip.Text = "toolStrip1";
 			// 
@@ -291,15 +303,6 @@
 			this.redoToolStripButton.Size = new System.Drawing.Size(23, 22);
 			this.redoToolStripButton.Text = "やり直す";
 			// 
-			// panel1
-			// 
-			this.panel1.BackColor = System.Drawing.Color.Gainsboro;
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(0, 0);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(792, 524);
-			this.panel1.TabIndex = 0;
-			// 
 			// MainForm
 			// 
 			this.AllowDrop = true;
@@ -310,7 +313,7 @@
 			this.MainMenuStrip = this.menuStrip;
 			this.Name = "MainForm";
 			this.Text = "MainForm";
-			this.toolStripContainer.ContentPanel.ResumeLayout(false);
+			this.toolStripContainer.BottomToolStripPanel.ResumeLayout(false);
 			this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
 			this.toolStripContainer.TopToolStripPanel.PerformLayout();
 			this.toolStripContainer.ResumeLayout(false);
@@ -350,7 +353,7 @@
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton newToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+		private System.Windows.Forms.StatusStrip statusStrip;
     }
 }

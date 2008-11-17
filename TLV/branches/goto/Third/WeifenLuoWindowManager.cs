@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Diagnostics;
 using NU.OJL.MPRTOS.TLV.Base;
 using WeifenLuo.WinFormsUI.Docking;
+using System.IO;
 
 namespace NU.OJL.MPRTOS.TLV.Third
 {
@@ -16,8 +18,11 @@ namespace NU.OJL.MPRTOS.TLV.Third
     /// </summary>
     public class WeifenLuoWindowManager : WindowManager
     {
-        Dictionary<string, DockContent> _dockContents = new Dictionary<string, DockContent>();
+		private readonly string path = Path.Combine(Application.LocalUserAppDataPath, "windowManager.setting");
+        private Dictionary<string, DockContent> _dockContents = new Dictionary<string, DockContent>();
         private DockPanel _dockPanel = null;
+		private DockPanel _settingDockPanel;
+		private DockContent _mainContent = new DockContent();
 
         public override Control Parent
         {
@@ -25,8 +30,6 @@ namespace NU.OJL.MPRTOS.TLV.Third
             set
             {
                 base.Parent = value;
-                base.Parent.Controls.Add(_dockPanel);
-                _dockPanel.Dock = DockStyle.Fill;
             }
         }
 
@@ -35,11 +38,11 @@ namespace NU.OJL.MPRTOS.TLV.Third
             get { return base.MainPanel; }
             set
             {
-                base.MainPanel = value;
-                DockContent dc = new DockContent();
-                dc.Controls.Add(base.MainPanel);
-                dc.DockPanel = _dockPanel;
-                dc.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Document;
+				base.MainPanel = value;
+				_mainContent.Controls.Add(base.MainPanel);
+				_mainContent.DockPanel = _dockPanel;
+				_mainContent.Name = "___mainContent";
+				_mainContent.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Document;
             }
         }
 
@@ -55,22 +58,24 @@ namespace NU.OJL.MPRTOS.TLV.Third
                 dc.DockAreas = DockAreas.DockBottom | DockAreas.DockLeft | DockAreas.DockRight | DockAreas.DockTop | DockAreas.Float;
                 dc.DockState = sw.DockState.Specialize();
                 dc.HideOnClose = true;
-
-                dc.DockStateChanged += (o, e) =>
-                {
-                    SubWindow s = this.GetSubWindow(((DockContent)o).Name);
-                    if (((DockContent)o).DockState == WeifenLuo.WinFormsUI.Docking.DockState.Hidden)
-                    {
-                        s.Visible = false;
-                    }
-                    else
-                    {
-                        s.DockState = ((DockContent)o).DockState.Generalize();
-                        s.Visible = true;
-                    }
-                };
-
+				dc.DockStateChanged += (o, e) =>
+				{
+					DockContent docc = ((DockContent)o);
+					SubWindow subwin = GetSubWindow(docc.Name);
+					if (docc.DockState == WeifenLuo.WinFormsUI.Docking.DockState.Hidden)
+					{
+						subwin.Visible = false;
+						if (docc.Pane != null)
+							subwin.DockState = docc.Pane.DockState.Generalize();
+					}
+					else
+					{
+						subwin.Visible = true;
+						subwin.DockState = docc.DockState.Generalize();
+					}
+				};
                 _dockContents.Add(sw.Name, dc);
+
             }
 
             base.AddSubWindow(subWindows);
@@ -80,13 +85,13 @@ namespace NU.OJL.MPRTOS.TLV.Third
         public override void ShowSubWindow(string name)
         {
             base.ShowSubWindow(name);
-            _dockContents[name].Show();
+			_dockContents[name].Show();
         }
 
         public override void HideSubWindow(string name)
         {
-            base.HideSubWindow(name);
-            _dockContents[name].DockState = WeifenLuo.WinFormsUI.Docking.DockState.Hidden;
+			base.HideSubWindow(name);
+			_dockContents[name].DockState = WeifenLuo.WinFormsUI.Docking.DockState.Hidden;
         }
 
         public override void AutoHideSubWindow(string name)
@@ -134,9 +139,58 @@ namespace NU.OJL.MPRTOS.TLV.Third
         public WeifenLuoWindowManager()
         {
             _dockPanel = new DockPanel();
-            _dockPanel.DocumentStyle = DocumentStyle.DockingSdi;
-        }
+			_dockPanel.DocumentStyle = DocumentStyle.DockingSdi;
+			_dockPanel.Dock = DockStyle.Fill;
+		}
 
+		public override void Save()
+		{
+			base.Save();
+			_dockPanel.SaveAsXml(path);
+		}
+
+		public override void Load()
+		{
+			base.Load();
+
+			if (File.Exists(path) && _dockContents.Count != 0)
+			{
+				_settingDockPanel = new DockPanel();
+				_settingDockPanel.DocumentStyle = DocumentStyle.DockingSdi;
+				_settingDockPanel.Dock = DockStyle.Fill;
+				_settingDockPanel.LoadFromXml(path, (s) =>
+					{
+						foreach (DockContent dc in _dockContents.Values)
+						{
+							if (s == dc.Name + ":" + dc.GetType().ToString())
+							{
+								dc.DockPanel = _settingDockPanel;
+								return dc;
+							}
+						}
+						if (s == _mainContent.Name + ":" + _mainContent.GetType().ToString())
+							return _mainContent;
+						else
+							return null;
+					});
+
+				_dockPanel = _settingDockPanel;
+				foreach(DockContent dc in _dockContents.Values)
+				{
+					if (dc.DockState == WeifenLuo.WinFormsUI.Docking.DockState.Hidden)
+					{
+						GetSubWindow(dc.Name).DockState = dc.Pane.DockState.Generalize();
+						GetSubWindow(dc.Name).Visible = false;
+					}
+				}
+			}
+		}
+
+		public override void Show()
+		{
+			base.Show();
+			Parent.Controls.Add(_dockPanel);
+		}
     }
 
     static class DockStateExtensions

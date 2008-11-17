@@ -124,11 +124,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         }
         
         /// <summary>
-        ///   setting.json に類似しているローカライズされた文字列を検索します。
+        ///   setting に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string SettingFileName {
+        internal static string SettingFileExtension {
             get {
-                return ResourceManager.GetString("SettingFileName", resourceCulture);
+                return ResourceManager.GetString("SettingFileExtension", resourceCulture);
             }
         }
         

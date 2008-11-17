@@ -48,6 +48,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualizeRules", "visualize
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{94C75166-FFDC-44D8-9030-0F6EF109BD8E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dll", "dll", "{0296E089-0644-4562-8509-A95AC6A6590D}"
+	ProjectSection(SolutionItems) = preProject
+		dll\ExpandableGridView.dll = dll\ExpandableGridView.dll
+		dll\ICSharpCode.SharpZipLib.dll = dll\ICSharpCode.SharpZipLib.dll
+		dll\Newtonsoft.Json.dll = dll\Newtonsoft.Json.dll
+		dll\WeifenLuo.WinFormsUI.Docking.dll = dll\WeifenLuo.WinFormsUI.Docking.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

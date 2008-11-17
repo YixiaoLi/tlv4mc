@@ -7,6 +7,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
 	public class Json : IEnumerable<Json>
 	{
+		public static Json Object { get { return new Json(new Dictionary<string, Json>()); } }
+		public static Json Array { get { return new Json(new List<Json>()); } }
+
 		public object Value { get; set; }
 		public Json this[int i]
 		{

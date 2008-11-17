@@ -1,4 +1,4 @@
-{
+﻿{
 	"VisualizeRules":{
 		"taskState":{
 			"RUNNING":"runningShapes",
@@ -16,58 +16,60 @@
 		"runningShapes":[
 			{
 				"Type":"Rectangle",
-				"Area":["0,0","100%,80%"],
-				"Pen":{},
+				"Location":"0,0",
+				"Size":"100%,80%",
+				"Align":"BottomLeft",
+				"Pen":{"Color":"ff00ff00","Width":3},
 				"Fill":"6600ff00"
 			}
 		],
 		"runnableShapes":[
 			{
 				"Type":"Line",
-				"Coordinates":["l(0),40%","r(0),40%"],
-				"Pen":{"Color":"ffffff00","Width":3}
+				"Points":["l(0),80%","r(0),80%"],
+				"Pen":{"Color":"ffffaa00","Width":3}
 			}
 		],
 		"waitingShapes":[
 			{
 				"Type":"Line",
-				"Coordinates":["l(0),20%","r(0),20%"],
+				"Points":["l(0),40%","r(0),40%"],
 				"Pen":{"Color":"ffff0000","Width":3}
-			}
-		],
-		"dormantShapes":[
-			{
-				"Type":"Line",
-				"Coordinates":["l(0),0","r(0),0"],
-				"Pen":{"Color":"ff999999","Width":3}
 			}
 		],
 		"suspendShapes":[
 			{
 				"Type":"Line",
-				"Coordinates":["l(0),20%","r(0),20%"],
+				"Points":["l(0),20%","r(0),20%"],
 				"Pen":{"Color":"ff0000ff","Width":3}
 			}
 		],
 		"waitingSuspendedShapes":[
 			{
 				"Type":"Line",
-				"Coordinates":["l(0),20%","r(0),20%"],
+				"Points":["l(0),10%","r(0),10%"],
 				"Pen":{"Color":"ffff00ff","Width":3}
+			}
+		],
+		"dormantShapes":[
+			{
+				"Type":"Line",
+				"Points":["l(0),0","r(0),0"],
+				"Pen":{"Color":"ff999999","Width":3}
 			}
 		],
 		"activateShapes":[
 			{
-				"Type":"Line",
-				"Coordinates":["0,0","0,80%"],
-				"Pen":{"Color":"ff000000","Width":3,"EndCap":"ArrowAnchor"}
+				"Type":"Arrow",
+				"Points":["0,0","0,80%"],
+				"Pen":{"Color":"ff000000","Width":3}
 			}
 		],
 		"exitShapes":[
 			{
-				"Type":"Line",
-				"Coordinates":["0,0","0,80%"],
-				"Pen":{"Color":"ff000000","Width":3,"StartCap":"ArrowAnchor"}
+				"Type":"Arrow",
+				"Points":["0,80%", "0,0"],
+				"Pen":{"Color":"ff000000","Width":3}
 			}
 		]
 	}

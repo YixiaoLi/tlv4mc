@@ -19,14 +19,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 
         public void Do()
         {
-            if (ApplicationData.ActiveFileContext.IsOpened)
+            if (ApplicationData.FileContext.IsOpened)
             {
                 var sfd = new SaveFileDialog();
                 sfd.DefaultExt = Properties.Resources.CommonFormatTraceLogFileExtension;
                 sfd.Filter = "Common Format TraceLog File (*." + sfd.DefaultExt + ")|*." + sfd.DefaultExt;
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
-                    ApplicationData.ActiveFileContext.SaveAs(sfd.FileName);
+                    ApplicationData.FileContext.SaveAs(sfd.FileName);
                 }
             }
         }
