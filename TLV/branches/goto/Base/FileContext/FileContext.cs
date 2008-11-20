@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace NU.OJL.MPRTOS.TLV.Base
 {
@@ -155,8 +156,16 @@ namespace NU.OJL.MPRTOS.TLV.Base
             if (Path == string.Empty)
                 throw new FilePathUndefinedException("保存先のパスが未設定です。");
 
-            IsSaved = true;
-            Data.Serialize(Path);
+			Thread thread = new Thread(new ThreadStart(() =>
+				{
+					if (Saving != null)
+						Saving(this, EventArgs.Empty);
+
+					Data.Serialize(Path);
+					IsSaved = true;
+				}));
+			thread.IsBackground = true;
+			thread.Start();
         }
 
         /// <summary>
@@ -169,5 +178,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             Save();
         }
 
-    }
+		public event EventHandler Saving = null;
+
+	}
 }

@@ -26,7 +26,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                 sfd.Filter = "Common Format TraceLog File (*." + sfd.DefaultExt + ")|*." + sfd.DefaultExt;
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
-                    ApplicationData.FileContext.SaveAs(sfd.FileName);
+					try
+					{
+						ApplicationData.FileContext.SaveAs(sfd.FileName);
+					}
+					catch (Exception e)
+					{
+						throw new Exception("保存に失敗しました。\n" + e.Message);
+					}
                 }
             }
         }

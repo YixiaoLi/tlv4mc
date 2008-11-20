@@ -81,6 +81,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             AllocationType = AllocationType.Static;
             CanGrouping = false;
+			Default = new Json("");
         }
 
 	}

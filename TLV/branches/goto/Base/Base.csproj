@@ -57,6 +57,9 @@
     </Compile>
     <Compile Include="Controls\NativeScrollBar\NativeScrollBarApplier.cs">
     </Compile>
+    <Compile Include="Controls\TreeGridView\ITreeGirdViewNode.cs" />
+    <Compile Include="Controls\TreeGridView\ITreeGridViewColumn.cs" />
+    <Compile Include="Controls\TreeGridView\ITreeGridView.cs" />
     <Compile Include="Expression\ComparisonExpression.cs" />
     <Compile Include="Expression\ConditionExpression.cs" />
     <Compile Include="Extensions\ColorExtension.cs" />

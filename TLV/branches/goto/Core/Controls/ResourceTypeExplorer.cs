@@ -33,6 +33,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					else
 					{
 						SetData(ApplicationData.FileContext.Data.ResourceData);
+
+						ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility.CollectionChanged += (_o, __e) =>
+						{
+							foreach (KeyValuePair<string, bool> kvp in (IList<KeyValuePair<string, bool>>)_o)
+							{
+								foreach (TreeNode tn in _treeView.Nodes)
+								{
+									if (tn.Name == kvp.Key)
+										tn.Checked = kvp.Value;
+								}
+							}
+						};
 					}
 				}));
 			};
@@ -44,42 +56,30 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			{
 				_treeView.Nodes.Add(resType.Name, resType.DisplayName);
 
-				_treeView.Nodes[resType.Name].Nodes.Add("attributes", "属性");
+				_treeView.Nodes[resType.Name].Nodes.Add(ResourceTypeExplorerSetting.AttributeSeparateText, "属性");
 				foreach (AttributeType attrType in resType.Attributes)
 				{
-					string name = resType.Name + ":attributes:" + attrType.Name;
+					string name = resType.Name + ResourceTypeExplorerSetting.AttributeSeparateText + attrType.Name;
 					if (!ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility.ContainsKey(name))
 					{
 						ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility.Add(name, false);
 					}
-					_treeView.Nodes[resType.Name].Nodes["attributes"].Nodes.Add(name, attrType.DisplayName);
-					_treeView.Nodes[resType.Name].Nodes["attributes"].Nodes[name].Checked = ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility[name];
+					_treeView.Nodes[resType.Name].Nodes[ResourceTypeExplorerSetting.AttributeSeparateText].Nodes.Add(name, attrType.DisplayName);
+					_treeView.Nodes[resType.Name].Nodes[ResourceTypeExplorerSetting.AttributeSeparateText].Nodes[name].Checked = ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility[name];
 				}
 
-				_treeView.Nodes[resType.Name].Nodes.Add("behaviors", "振舞い");
+				_treeView.Nodes[resType.Name].Nodes.Add(ResourceTypeExplorerSetting.BehaviorSeparateText, "振舞い");
 				foreach (Behavior bhvr in resType.Behaviors)
 				{
-					string name = resType.Name + ":behaviors:" + bhvr.Name;
+					string name = resType.Name + ResourceTypeExplorerSetting.BehaviorSeparateText + bhvr.Name;
 					if (!ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility.ContainsKey(name))
 					{
 						ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility.Add(name, false);
 					}
-					_treeView.Nodes[resType.Name].Nodes["behaviors"].Nodes.Add(name, bhvr.DisplayName);
-					_treeView.Nodes[resType.Name].Nodes["behaviors"].Nodes[name].Checked = ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility[name];
+					_treeView.Nodes[resType.Name].Nodes[ResourceTypeExplorerSetting.BehaviorSeparateText].Nodes.Add(name, bhvr.DisplayName);
+					_treeView.Nodes[resType.Name].Nodes[ResourceTypeExplorerSetting.BehaviorSeparateText].Nodes[name].Checked = ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility[name];
 				}
 			}
-
-			ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility.CollectionChanged += (o, e) =>
-			{
-				foreach (KeyValuePair<string, bool> kvp in (IList<KeyValuePair<string, bool>>)o)
-				{
-					foreach (TreeNode tn in _treeView.Nodes)
-					{
-						if (tn.Name == kvp.Key)
-							tn.Checked = kvp.Value;
-					}
-				}
-			};
 
 			_treeView.MouseEnter += (o, e) =>
 			{

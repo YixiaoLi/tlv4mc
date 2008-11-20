@@ -22,5 +22,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public string DisplayName { get; set; }
 		public string VisualizeRule { get; set; }
 		public ArgumentTypeList Arguments { get; set; }
+
+		public Behavior()
+		{
+			Arguments = new ArgumentTypeList();
+		}
 	}
 }

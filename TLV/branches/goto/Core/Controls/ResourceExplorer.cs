@@ -47,6 +47,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					else
 					{
 						SetData(ApplicationData.FileContext.Data.ResourceData);
+
+						ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.CollectionChanged += (_o, __e) =>
+						{
+							foreach (KeyValuePair<string, bool> kvp in (IList<KeyValuePair<string, bool>>)_o)
+							{
+								foreach (TreeView tv in _treeViews.Values)
+								{
+									foreach (TreeNode tn in tv.Nodes)
+									{
+										foreach (TreeNode _tn in tn.Nodes)
+										{
+											if (_tn.Name == kvp.Key)
+												_tn.Checked = kvp.Value;
+										}
+									}
+								}
+							}
+						};
 					}
 				}));
 			};
@@ -99,24 +117,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				}
 			}
 
-			ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.CollectionChanged += (o, e) =>
-			{
-				foreach (KeyValuePair<string, bool> kvp in (IList<KeyValuePair<string, bool>>)o)
-				{
-					foreach (TreeView tv in _treeViews.Values)
-					{
-						foreach (TreeNode tn in tv.Nodes)
-						{
-							foreach (TreeNode _tn in tn.Nodes)
-							{
-								if (_tn.Name == kvp.Key)
-									_tn.Checked = kvp.Value;
-							}
-						}
-					}
-				}
-			};
-
 			foreach (TreeView tv in _treeViews.Values)
 			{
 				tv.MouseEnter += (o, e) =>
@@ -150,9 +150,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					}
 					else
 					{
-						if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(e.Node.Name)
-							&& ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility[e.Node.Name] != e.Node.Checked)
-							ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility[e.Node.Name] = e.Node.Checked;
+						string name = e.Node.Name;
+						if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(name)
+							&& ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility[name] != e.Node.Checked)
+							ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility[name] = e.Node.Checked;
 
 						setParentNodeCheck(e.Node.Parent);
 						setParentNodeCheck(e.Node.Parent);
@@ -199,14 +200,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 				foreach (Resource res in data.List)
 				{
-					treeView.Nodes[name + ":" + data.Name].Nodes.Add(res.Name, res.Name);
-					if (!ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Name))
+					string resName = res.Type + ResourceExplorerSetting.ResourceSeparateText + res.Name;
+
+					treeView.Nodes[name + ":" + data.Name].Nodes.Add(resName, res.Name);
+
+					if (!ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(resName))
 					{
-						ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.Add(res.Name, false);
+						ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.Add(resName, false);
 					}
 					else
 					{
-						treeView.Nodes[name + ":" + data.Name].Nodes[res.Name].Checked = ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility[res.Name];
+						treeView.Nodes[name + ":" + data.Name].Nodes[resName].Checked = ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility[resName];
 					}
 				}
 			}

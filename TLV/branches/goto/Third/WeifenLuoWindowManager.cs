@@ -43,6 +43,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 				_mainContent.DockPanel = _dockPanel;
 				_mainContent.Name = "___mainContent";
 				_mainContent.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Document;
+				_mainContent.Pane.BorderStyle = BorderStyle.None;
             }
         }
 

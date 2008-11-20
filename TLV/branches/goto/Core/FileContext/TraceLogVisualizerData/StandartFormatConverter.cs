@@ -98,7 +98,23 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		private ResourceData getResourceData(string resourceFilePath)
 		{
-			return ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(resourceFilePath));
+			ResourceData resData = ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(resourceFilePath));
+
+			foreach(ResourceType resType in resData.ResourceHeader.ResourceTypes)
+			{
+				foreach (Resource res in resData.Resources.Where<Resource>(r=>r.Type == resType.Name))
+				{
+					foreach(AttributeType attrType in resType.Attributes)
+					{
+						if (!res.Attributes.ContainsKey(attrType.Name))
+						{
+							res.Attributes.Add(attrType.Name, attrType.Default);
+						}
+					}
+				}
+			}
+
+			return resData;
 		}
 		private VisualizeData getVisualizeData(string[] visualizeRuleFilePaths)
 		{

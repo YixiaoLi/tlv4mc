@@ -60,6 +60,16 @@
     <Compile Include="Controls\ResourceTypeExplorer.Designer.cs">
       <DependentUpon>ResourceTypeExplorer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\ITimeLineControl.cs" />
+    <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLine.cs" />
+    <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLineCell.cs" />
+    <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLineColumn.cs" />
+    <Compile Include="Controls\TraceLogDisplayPanel\TraceLogDisplayPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TraceLogDisplayPanel\TraceLogDisplayPanel.Designer.cs">
+      <DependentUpon>TraceLogDisplayPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileContext\SettingData\ISetting.cs" />
     <Compile Include="FileContext\SettingData\ResourceExplorerSetting.cs" />
     <Compile Include="FileContext\SettingData\SettingData.cs" />
@@ -210,6 +220,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ResourceTypeExplorer.resx">
       <DependentUpon>ResourceTypeExplorer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TraceLogDisplayPanel\TraceLogDisplayPanel.resx">
+      <DependentUpon>TraceLogDisplayPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TraceLogViewer.resx">

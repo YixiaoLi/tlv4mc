@@ -3,7 +3,8 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
     public interface IFileContext<T>
      where T : class, NU.OJL.MPRTOS.TLV.Base.IFileContextData, new()
-    {
+	{
+		event EventHandler Saving;
         void Close();
         T Data { get; set; }
         event EventHandler<NU.OJL.MPRTOS.TLV.Base.GeneralEventArgs<T>> DataChanged;

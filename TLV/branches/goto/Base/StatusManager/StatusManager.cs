@@ -29,11 +29,6 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			if (StatusStrip == null)
 				throw new NullReferenceException();
 
-			ToolStripStatusLabel label = new ToolStripStatusLabel(text);
-			label.BorderSides = ToolStripStatusLabelBorderSides.All;
-			label.BorderStyle = InfoBorder;
-			label.Visible = true;
-
 			if (_infos.ContainsKey(name))
 			{
 				_infos[name].Visible = true;
@@ -41,6 +36,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			}
 			else
 			{
+				ToolStripStatusLabel label = new ToolStripStatusLabel(text);
+				label.BorderSides = ToolStripStatusLabelBorderSides.All;
+				label.BorderStyle = InfoBorder;
+				label.Visible = true;
 				_infos.Add(name, label);
 				updateStatusStrip();
 			}
@@ -50,19 +49,18 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			if (_infos.ContainsKey(name))
 				_infos[name].Visible = false;
 		}
+		public bool IsInfoShown(string name)
+		{
+			if (!_infos.ContainsKey(name))
+				return false;
+
+			return _infos[name].Visible;
+		}
 
 		public void ShowProcessing(string name, string text)
 		{
 			if (StatusStrip == null)
 				throw new NullReferenceException();
-
-			ToolStripStatusLabel label = new ToolStripStatusLabel(text);
-			label.BorderSides = ToolStripStatusLabelBorderSides.None;
-			label.Image = StatusManagerResource.status_anim;
-			label.ImageScaling = ToolStripItemImageScaling.None;
-			label.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			label.TextImageRelation = TextImageRelation.ImageBeforeText;
-			label.Visible = true;
 
 			if (_processings.ContainsKey(name))
 			{
@@ -71,6 +69,13 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			}
 			else
 			{
+				ToolStripStatusLabel label = new ToolStripStatusLabel(text);
+				label.BorderSides = ToolStripStatusLabelBorderSides.None;
+				label.Image = StatusManagerResource.status_anim;
+				label.ImageScaling = ToolStripItemImageScaling.None;
+				label.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+				label.TextImageRelation = TextImageRelation.ImageBeforeText;
+				label.Visible = true;
 				_processings.Add(name, label);
 				updateStatusStrip();
 			}
@@ -80,32 +85,18 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			if (_processings.ContainsKey(name))
 				_processings[name].Visible = false;
 		}
+		public bool IsProcessingShown(string name)
+		{
+			if (!_processings.ContainsKey(name))
+				return false;
+
+			return _processings[name].Visible;
+		}
 
 		public void ShowHint(string name, string discription, params string[] text)
 		{
 			if (StatusStrip == null)
 				throw new NullReferenceException();
-
-			List<ToolStripStatusLabel> modifyKeyLabels = new List<ToolStripStatusLabel>();
-
-			for (int i = 0; i < text.Length; i++)
-			{
-				ToolStripStatusLabel keyLabel = new ToolStripStatusLabel(text[i]);
-				keyLabel.BorderSides = ToolStripStatusLabelBorderSides.All;
-				keyLabel.BorderStyle = HistBorder;
-				keyLabel.Visible = true;
-
-				modifyKeyLabels.Add(keyLabel);
-
-				if(i != text.Length - 1)
-					modifyKeyLabels.Add(new ToolStripStatusLabel("+") { BorderSides = ToolStripStatusLabelBorderSides.None });
-			}
-
-			modifyKeyLabels.Add(new ToolStripStatusLabel(":") { BorderSides = ToolStripStatusLabelBorderSides.None });
-
-			ToolStripStatusLabel label = new ToolStripStatusLabel(discription) { BorderSides = ToolStripStatusLabelBorderSides.None };
-			label.Margin = new Padding(label.Margin.Left, label.Margin.Top, label.Margin.Right + 10, label.Margin.Bottom);
-			modifyKeyLabels.Add(label);
 
 			if (_hints.ContainsKey(name))
 			{
@@ -114,6 +105,27 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			}
 			else
 			{
+				List<ToolStripStatusLabel> modifyKeyLabels = new List<ToolStripStatusLabel>();
+
+				for (int i = 0; i < text.Length; i++)
+				{
+					ToolStripStatusLabel keyLabel = new ToolStripStatusLabel(text[i]);
+					keyLabel.BorderSides = ToolStripStatusLabelBorderSides.All;
+					keyLabel.BorderStyle = HistBorder;
+					keyLabel.Visible = true;
+
+					modifyKeyLabels.Add(keyLabel);
+
+					if (i != text.Length - 1)
+						modifyKeyLabels.Add(new ToolStripStatusLabel("+") { BorderSides = ToolStripStatusLabelBorderSides.None });
+				}
+
+				modifyKeyLabels.Add(new ToolStripStatusLabel(":") { BorderSides = ToolStripStatusLabelBorderSides.None });
+
+				ToolStripStatusLabel label = new ToolStripStatusLabel(discription) { BorderSides = ToolStripStatusLabelBorderSides.None };
+				label.Margin = new Padding(label.Margin.Left, label.Margin.Top, label.Margin.Right + 10, label.Margin.Bottom);
+				modifyKeyLabels.Add(label);
+
 				_hints.Add(name, modifyKeyLabels);
 				updateStatusStrip();
 			}
@@ -124,6 +136,13 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			{
 				_hints[name].ForEach((t) => { t.Visible = false; });
 			}
+		}
+		public bool IsHintShown(string name)
+		{
+			if (!_hints.ContainsKey(name))
+				return false;
+
+			return _hints[name][0].Visible;
 		}
 
 		private void updateStatusStrip()
@@ -137,11 +156,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 			StatusStrip.Items.Add(new ToolStripStatusLabel() { Spring = true });
 
-			StatusStrip.Items.AddRange(_processings.Values.ToArray());
-
-			StatusStrip.Items.Add(new ToolStripStatusLabel() { Spring = true });
-
 			StatusStrip.Items.AddRange(_infos.Values.ToArray());
+
+			StatusStrip.Items.AddRange(_processings.Values.ToArray());
 		}
 	}
 }

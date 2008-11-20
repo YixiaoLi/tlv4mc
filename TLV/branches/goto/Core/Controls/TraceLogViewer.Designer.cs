@@ -52,7 +52,7 @@
 			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
 			dataGridViewCellStyle1.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
+			dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;

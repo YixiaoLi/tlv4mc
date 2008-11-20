@@ -12,6 +12,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	{
 		public event EventHandler BecameDirty = null;
 		public ObservableDictionary<string, bool> ResourceTypeVisibility { get; set; }
+		public const string AttributeSeparateText = ":attribute:";
+		public const string BehaviorSeparateText = ":behavir:";
 
 		public ResourceTypeExplorerSetting()
 		{

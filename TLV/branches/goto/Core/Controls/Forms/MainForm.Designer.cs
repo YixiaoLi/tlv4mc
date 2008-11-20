@@ -246,7 +246,7 @@
             this.redoToolStripButton});
 			this.mainToolStrip.Location = new System.Drawing.Point(3, 24);
 			this.mainToolStrip.Name = "mainToolStrip";
-			this.mainToolStrip.Size = new System.Drawing.Size(133, 25);
+			this.mainToolStrip.Size = new System.Drawing.Size(131, 25);
 			this.mainToolStrip.TabIndex = 0;
 			this.mainToolStrip.Text = "toolStrip1";
 			// 
