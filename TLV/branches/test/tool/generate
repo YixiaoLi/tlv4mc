@@ -1,0 +1,22 @@
+#!/bin/zsh
+# pathとクラスの対応表
+echo "generte (path-class)"
+egrep 'class[[:space:]]+*[A-Z]' {Base,Core,Third}/**/*.cs  | ../tool/path-class.rb > path-class.csv.$$
+
+# クラス-メソッドの正規化
+echo "normalize (package-class-method)"
+../tool/normalize $@ > package-class-method.csv.$$
+
+# ディレクトリの付加
+echo "merge (path-class) and (package-class-method)"
+../tool/merge -m path-class.csv.$$  package-class-method.csv.$$ > merged.csv.$$
+
+# 分割
+echo "spliting"
+for i in Base Core Third; do
+    grep "TLV.${i}" merged.csv.$$ | \
+	grep -v 'get_\|set_\|add_\|remove_' > ${i}_main.csv
+    grep "TLV.${i}" merged.csv.$$ | \
+	grep 'get_\|set_\|add_\|remove_' > ${i}_aux.csv
+done
+rm *.$$
