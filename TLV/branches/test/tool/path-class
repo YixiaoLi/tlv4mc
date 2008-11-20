@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+for i in Core Base Third; do
+    egrep 'class[[:space:]]+*[A-Z]' $i/**/*.cs  | ruby ../tool/path-class.rb > "${i}(path-class).csv"
+done
