@@ -1,0 +1,29 @@
+Third,TLV.Third,SharpZipLibZip,"void Compress(string, string)"
+Third,TLV.Third,SharpZipLibZip,"void Extract(string, string)"
+Third/NewtonsoftJson,TLV.Third,NewtonsoftJson,T Deserialize[T](TLV.Base.IJsonReader)
+Third/NewtonsoftJson,TLV.Third,NewtonsoftJson,T Deserialize[T](string)
+Third/NewtonsoftJson,TLV.Third,NewtonsoftJson,"object Deserialize(TLV.Base.IJsonReader, System.Type)"
+Third/NewtonsoftJson,TLV.Third,NewtonsoftJson,"object Deserialize(string, System.Type)"
+Third/NewtonsoftJson,TLV.Third,NewtonsoftJson,"void Serialize(TLV.Base.IJsonWriter, object)"
+Third/NewtonsoftJson,TLV.Third,NewtonsoftJson,string Serialize(object)
+Third/NewtonsoftJson,TLV.Third,NewtonsoftJson,void AddConverter(TLV.Base.IJsonConverter)
+Third/NewtonsoftJson,TLV.Third,NewtonsoftJson,bool HasConverter(System.Type)
+Third/NewtonsoftJson,TLV.Third,NewtonsoftJson,TLV.Base.IJsonConverter GetConverter(System.Type)
+Third,TLV.Third,WeifenLuoWindowManager,void AddSubWindow(TLV.Base.SubWindow[])
+Third,TLV.Third,WeifenLuoWindowManager,void ShowSubWindow(string)
+Third,TLV.Third,WeifenLuoWindowManager,void HideSubWindow(string)
+Third,TLV.Third,WeifenLuoWindowManager,void AutoHideSubWindow(string)
+Third,TLV.Third,DockStateExtensions,WeifenLuo.WinFormsUI.Docking.DockState Specialize(TLV.Base.DockState)
+Third,TLV.Third,DockStateExtensions,TLV.Base.DockState Generalize(WeifenLuo.WinFormsUI.Docking.DockState)
+Third/NewtonsoftJson,TLV.Third,GeneralConverter,bool CanConvert(System.Type)
+Third/NewtonsoftJson,TLV.Third,GeneralConverter,"object ReadJson(Newtonsoft.Json.JsonReader, System.Type)"
+Third/NewtonsoftJson,TLV.Third,GeneralConverter,"void WriteJson(Newtonsoft.Json.JsonWriter, object)"
+Third/NewtonsoftJson,TLV.Third,EnumConverter,bool CanConvert(System.Type)
+Third/NewtonsoftJson,TLV.Third,EnumConverter,"object ReadJson(Newtonsoft.Json.JsonReader, System.Type)"
+Third/NewtonsoftJson,TLV.Third,EnumConverter,"void WriteJson(Newtonsoft.Json.JsonWriter, object)"
+Third/NewtonsoftJson,TLV.Third,JsonWriter,void Write(object)
+Third/NewtonsoftJson,TLV.Third,JsonWriter,void Write(TLV.Base.JsonTokenType)
+Third/NewtonsoftJson,TLV.Third,JsonWriter,"void Write(TLV.Base.JsonTokenType, object)"
+Third/NewtonsoftJson,TLV.Third,JsonWriter,void Flush()
+Third/NewtonsoftJson,TLV.Third,JsonReader,bool Read()
+Third/NewtonsoftJson,TLV.Third,JsonReader,void Skip()
