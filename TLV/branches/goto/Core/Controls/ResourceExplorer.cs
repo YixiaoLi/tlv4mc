@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Core;
+using System.Text.RegularExpressions;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
@@ -135,7 +136,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				foreach (TreeNode tn in tv.Nodes)
 				{
 					setParentNodeCheck(tn);
-					setParentNodeCheck(tn);
 				}
 
 				tv.AfterCheck += (o, e) =>
@@ -155,7 +155,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 							&& ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility[name] != e.Node.Checked)
 							ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility[name] = e.Node.Checked;
 
-						setParentNodeCheck(e.Node.Parent);
 						setParentNodeCheck(e.Node.Parent);
 					}
 
@@ -184,7 +183,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			if (flag)
 			{
 				if (parent.Checked != f)
+				{
 					parent.Checked = f;
+				}
 			}
 		}
 

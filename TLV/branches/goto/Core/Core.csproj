@@ -242,4 +242,13 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\attribute.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\behavior.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LegendHS.png" />
+  </ItemGroup>
 </Project>

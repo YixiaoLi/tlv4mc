@@ -13,6 +13,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 	{
 		public event DataGridViewRowEventHandler RowHeightChanged = null;
 		public event CollectionChangeEventHandler RowCountChanged = null;
+		public DataGridView DataGridView { get { return treeGridView; } }
 
 		AdvancedDataGridView.TreeGridView treeGridView = new AdvancedDataGridView.TreeGridView();
 
@@ -32,6 +33,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 
 		public TreeGridView()
 		{
+			treeGridView.ApplyNativeScroll();
 			treeGridView.RowHeightChanged += (o,e) => RowHeightChanged(o,e);
 			treeGridView.Rows.CollectionChanged += (o, e) => RowCountChanged(o, e);
 			treeGridView.ShowLines = true;
@@ -73,9 +75,20 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			_nodes.Clear();
 		}
 
-		public int RowsCount
+		public int VisibleRowsCount
 		{
-			get { return treeGridView.Rows.Count; }
+			get
+			{
+				int num = 0;
+
+				foreach(DataGridViewRow row in treeGridView.Rows)
+				{
+					if (row.Visible)
+						num++;
+				}
+
+				return num;
+			}
 		}
 
 		public int RowHeight

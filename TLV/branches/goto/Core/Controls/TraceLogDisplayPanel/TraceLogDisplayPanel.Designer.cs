@@ -39,7 +39,6 @@
 			this.treeGridView.Name = "treeGridView";
 			this.treeGridView.Size = new System.Drawing.Size(404, 23);
 			this.treeGridView.TabIndex = 0;
-			this.treeGridView.Text = "treeGridView1";
 			// 
 			// TraceLogDisplayPanel
 			// 

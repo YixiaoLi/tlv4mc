@@ -45,5 +45,6 @@ namespace NU.OJL.MPRTOS.TLV.Third
 		}
 
 		public new DataGridView DataGridView { get; private set; }
+
 	}
 }

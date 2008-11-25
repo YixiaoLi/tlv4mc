@@ -60,6 +60,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap attribute {
+            get {
+                object obj = ResourceManager.GetObject("attribute", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap behavior {
+            get {
+                object obj = ResourceManager.GetObject("behavior", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   tlv に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -102,6 +116,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         internal static string DefaultVisualizeRulesDirectoryName {
             get {
                 return ResourceManager.GetString("DefaultVisualizeRulesDirectoryName", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap resource {
+            get {
+                object obj = ResourceManager.GetObject("resource", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

@@ -28,17 +28,28 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this._treeView = new System.Windows.Forms.TreeView();
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.SuspendLayout();
 			// 
 			// _treeView
 			// 
 			this._treeView.CheckBoxes = true;
 			this._treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this._treeView.ImageIndex = 0;
+			this._treeView.ImageList = this.imageList;
 			this._treeView.Location = new System.Drawing.Point(0, 0);
 			this._treeView.Name = "_treeView";
+			this._treeView.SelectedImageIndex = 0;
 			this._treeView.Size = new System.Drawing.Size(238, 264);
 			this._treeView.TabIndex = 0;
+			// 
+			// imageList
+			// 
+			this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+			this.imageList.ImageSize = new System.Drawing.Size(16, 16);
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			// 
 			// ResourceTypeExplorer
 			// 
@@ -54,6 +65,7 @@
 		#endregion
 
 		private System.Windows.Forms.TreeView _treeView;
+		private System.Windows.Forms.ImageList imageList;
 
 
 	}

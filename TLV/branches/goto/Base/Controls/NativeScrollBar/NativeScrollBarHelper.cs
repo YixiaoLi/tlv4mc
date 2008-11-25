@@ -33,6 +33,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			_scrollBars = scrollBars;
 			_nsb = new NativeScrollBar(this);
 			_control.Controls.Add(this);
+
 		}
 
 		protected override void OnHandleDestroyed(EventArgs e)
