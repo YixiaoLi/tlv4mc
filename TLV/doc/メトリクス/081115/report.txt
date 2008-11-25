@@ -1,0 +1,1795 @@
+Solution Name: TLV.sln
+Total Number of Projects: 10
+Total Lines: 10118
+Effective Lines: 5712
+Comments: 860
+Classes: 121
+Structures: 13
+Delegates: 1
+Interfaces: 0
+Enumerations: 11
+
+	Project Name: Main
+	Assembly Name: TraceLogVisualizer
+	Project File Name: C:\Junji\Work\OJL\TLV\フェーズ2\src\TLV\Main.csproj
+	Total Number of Files: 1
+	Total Lines: 87
+	Effective Lines: 37
+	Comments: 29
+	Empty Lines: 11
+	Classes: 2
+	Structures: 0
+	Delegates: 0
+	Interfaces: 0
+	Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\TLV
+		File Name: Program.cs
+		Total Lines: 25
+		Effective Lines: 14
+		Comments: 3
+		Classes: 1
+		Empty Lines: 2
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\TLV\Properties
+		File Name: AssemblyInfo.cs
+		Total Lines: 36
+		Effective Lines: 15
+		Comments: 17
+		Classes: 0
+		Empty Lines: 4
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\TLV\Properties
+		File Name: Settings.Designer.cs
+		Total Lines: 26
+		Effective Lines: 8
+		Comments: 9
+		Classes: 1
+		Empty Lines: 5
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+	Project Name: Core
+	Assembly Name: NU.OJL.MPRTOS.TLV.Core
+	Project File Name: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Core.csproj
+	Total Number of Files: 2
+	Total Lines: 5790
+	Effective Lines: 3342
+	Comments: 393
+	Empty Lines: 585
+	Classes: 78
+	Structures: 1
+	Delegates: 0
+	Interfaces: 0
+	Enumerations: 8
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core
+		File Name: ApplicationData.cs
+		Total Lines: 34
+		Effective Lines: 22
+		Comments: 0
+		Classes: 1
+		Empty Lines: 2
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core
+		File Name: ApplicationFactory.cs
+		Total Lines: 76
+		Effective Lines: 46
+		Comments: 9
+		Classes: 1
+		Empty Lines: 7
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: ArcConverter.cs
+		Total Lines: 32
+		Effective Lines: 20
+		Comments: 0
+		Classes: 1
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: FontFamilyConverter.cs
+		Total Lines: 22
+		Effective Lines: 12
+		Comments: 0
+		Classes: 1
+		Empty Lines: 2
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: GeneralConverter.cs
+		Total Lines: 22
+		Effective Lines: 12
+		Comments: 0
+		Classes: 1
+		Empty Lines: 4
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: GeneralNamedCollectionConverter.cs
+		Total Lines: 47
+		Effective Lines: 26
+		Comments: 0
+		Classes: 1
+		Empty Lines: 6
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: INamedConverter.cs
+		Total Lines: 52
+		Effective Lines: 27
+		Comments: 0
+		Classes: 1
+		Empty Lines: 8
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: JsonConverter.cs
+		Total Lines: 127
+		Effective Lines: 80
+		Comments: 0
+		Classes: 1
+		Empty Lines: 9
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: ClassHavingNullablePropertyConverter.cs
+		Total Lines: 52
+		Effective Lines: 27
+		Comments: 0
+		Classes: 1
+		Empty Lines: 8
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: SizeConverter.cs
+		Total Lines: 24
+		Effective Lines: 13
+		Comments: 0
+		Classes: 1
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: AreaConverter.cs
+		Total Lines: 32
+		Effective Lines: 20
+		Comments: 0
+		Classes: 1
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: ColorConverter.cs
+		Total Lines: 24
+		Effective Lines: 13
+		Comments: 0
+		Classes: 1
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: CoordinateConverter.cs
+		Total Lines: 24
+		Effective Lines: 13
+		Comments: 0
+		Classes: 1
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: ResourceHeaderConverter.cs
+		Total Lines: 78
+		Effective Lines: 40
+		Comments: 0
+		Classes: 1
+		Empty Lines: 11
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: TraceLogConverter.cs
+		Total Lines: 26
+		Effective Lines: 13
+		Comments: 0
+		Classes: 1
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\JsonConverters
+		File Name: VisualizeRuleConverter.cs
+		Total Lines: 60
+		Effective Lines: 34
+		Comments: 0
+		Classes: 1
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Commands
+		File Name: ChangeSubWindowDockStateCommand.cs
+		Total Lines: 51
+		Effective Lines: 27
+		Comments: 0
+		Classes: 1
+		Empty Lines: 8
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Commands
+		File Name: ChangeSubWindowVisiblityCommand.cs
+		Total Lines: 49
+		Effective Lines: 26
+		Comments: 0
+		Classes: 1
+		Empty Lines: 7
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Commands
+		File Name: ChangeSubWindowEnabledCommand.cs
+		Total Lines: 49
+		Effective Lines: 26
+		Comments: 0
+		Classes: 1
+		Empty Lines: 7
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Commands
+		File Name: ExitCommand.cs
+		Total Lines: 25
+		Effective Lines: 14
+		Comments: 0
+		Classes: 1
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Commands
+		File Name: AbstractFileChangeCommand.cs
+		Total Lines: 60
+		Effective Lines: 31
+		Comments: 0
+		Classes: 1
+		Empty Lines: 7
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Commands
+		File Name: OpenCommand.cs
+		Total Lines: 67
+		Effective Lines: 37
+		Comments: 0
+		Classes: 1
+		Empty Lines: 11
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Commands
+		File Name: NewCommand.cs
+		Total Lines: 77
+		Effective Lines: 46
+		Comments: 0
+		Classes: 1
+		Empty Lines: 10
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Commands
+		File Name: SaveAsCommand.cs
+		Total Lines: 44
+		Effective Lines: 22
+		Comments: 0
+		Classes: 1
+		Empty Lines: 6
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Commands
+		File Name: SaveCommand.cs
+		Total Lines: 44
+		Effective Lines: 20
+		Comments: 0
+		Classes: 1
+		Empty Lines: 6
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Commands
+		File Name: CloseCommand.cs
+		Total Lines: 18
+		Effective Lines: 11
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Properties
+		File Name: Resources.Designer.cs
+		Total Lines: 153
+		Effective Lines: 53
+		Comments: 53
+		Classes: 1
+		Empty Lines: 18
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Properties
+		File Name: Settings.Designer.cs
+		Total Lines: 62
+		Effective Lines: 32
+		Comments: 9
+		Classes: 1
+		Empty Lines: 8
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Base
+		File Name: GeneralNamedCollection.cs
+		Total Lines: 17
+		Effective Lines: 9
+		Comments: 0
+		Classes: 1
+		Empty Lines: 2
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Base
+		File Name: INamed.cs
+		Total Lines: 12
+		Effective Lines: 7
+		Comments: 0
+		Classes: 0
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 1
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Base
+		File Name: GeneralKeyedJsonableCollection.cs
+		Total Lines: 39
+		Effective Lines: 22
+		Comments: 0
+		Classes: 1
+		Empty Lines: 5
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Base
+		File Name: GeneralJsonableCollection.cs
+		Total Lines: 40
+		Effective Lines: 22
+		Comments: 0
+		Classes: 1
+		Empty Lines: 6
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Base\Extensions
+		File Name: ColorExtension.cs
+		Total Lines: 20
+		Effective Lines: 11
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Base\Extensions
+		File Name: JsonExtension.cs
+		Total Lines: 20
+		Effective Lines: 11
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\TraceLogData
+		File Name: TraceLog.cs
+		Total Lines: 187
+		Effective Lines: 111
+		Comments: 0
+		Classes: 1
+		Empty Lines: 14
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\TraceLogData
+		File Name: TraceLogList.cs
+		Total Lines: 11
+		Effective Lines: 6
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\TraceLogData
+		File Name: TraceLogData.cs
+		Total Lines: 270
+		Effective Lines: 155
+		Comments: 0
+		Classes: 1
+		Empty Lines: 41
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\TraceLogData\LogDataBase
+		File Name: BehaviorCallLogData.cs
+		Total Lines: 21
+		Effective Lines: 13
+		Comments: 0
+		Classes: 1
+		Empty Lines: 2
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\TraceLogData\LogDataBase
+		File Name: LogData.cs
+		Total Lines: 20
+		Effective Lines: 12
+		Comments: 0
+		Classes: 1
+		Empty Lines: 2
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\TraceLogData\LogDataBase
+		File Name: LogDataBase.cs
+		Total Lines: 11
+		Effective Lines: 6
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\TraceLogData\LogDataBase
+		File Name: LogType.cs
+		Total Lines: 29
+		Effective Lines: 17
+		Comments: 0
+		Classes: 1
+		Empty Lines: 2
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 1
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\TraceLogData\LogDataBase
+		File Name: AttributeChangeLogData.cs
+		Total Lines: 22
+		Effective Lines: 14
+		Comments: 0
+		Classes: 1
+		Empty Lines: 2
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\TraceLogData\LogDataBase
+		File Name: Time.cs
+		Total Lines: 40
+		Effective Lines: 22
+		Comments: 0
+		Classes: 1
+		Empty Lines: 6
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\TraceLogVisualizerData
+		File Name: StandartFormatConverter.cs
+		Total Lines: 412
+		Effective Lines: 186
+		Comments: 45
+		Classes: 1
+		Empty Lines: 41
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\TraceLogVisualizerData
+		File Name: TraceLogVisualizerData.cs
+		Total Lines: 124
+		Effective Lines: 52
+		Comments: 36
+		Classes: 1
+		Empty Lines: 18
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\Setting
+		File Name: Setting.cs
+		Total Lines: 45
+		Effective Lines: 23
+		Comments: 0
+		Classes: 1
+		Empty Lines: 6
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData
+		File Name: ApplyRuleList.cs
+		Total Lines: 12
+		Effective Lines: 7
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData
+		File Name: ApplyRule.cs
+		Total Lines: 26
+		Effective Lines: 15
+		Comments: 0
+		Classes: 1
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData
+		File Name: VisualizeData.cs
+		Total Lines: 29
+		Effective Lines: 15
+		Comments: 0
+		Classes: 1
+		Empty Lines: 4
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData
+		File Name: VisualizeRule.cs
+		Total Lines: 75
+		Effective Lines: 36
+		Comments: 0
+		Classes: 1
+		Empty Lines: 7
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData
+		File Name: VisualizeRuleList.cs
+		Total Lines: 12
+		Effective Lines: 7
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData\Shape
+		File Name: Font.cs
+		Total Lines: 44
+		Effective Lines: 31
+		Comments: 0
+		Classes: 1
+		Empty Lines: 7
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData\Shape
+		File Name: GraphicsExtension.cs
+		Total Lines: 191
+		Effective Lines: 150
+		Comments: 0
+		Classes: 1
+		Empty Lines: 19
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData\Shape
+		File Name: ShapesList.cs
+		Total Lines: 12
+		Effective Lines: 7
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData\Shape
+		File Name: ShapeType.cs
+		Total Lines: 19
+		Effective Lines: 14
+		Comments: 0
+		Classes: 0
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 1
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData\Shape
+		File Name: VisualizeAreaUnit.cs
+		Total Lines: 13
+		Effective Lines: 8
+		Comments: 0
+		Classes: 0
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 1
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData\Shape
+		File Name: Arc.cs
+		Total Lines: 25
+		Effective Lines: 14
+		Comments: 0
+		Classes: 1
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData\Shape
+		File Name: Area.cs
+		Total Lines: 49
+		Effective Lines: 30
+		Comments: 0
+		Classes: 1
+		Empty Lines: 7
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData\Shape
+		File Name: Point.cs
+		Total Lines: 167
+		Effective Lines: 114
+		Comments: 0
+		Classes: 1
+		Empty Lines: 21
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 2
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData\Shape
+		File Name: PointList.cs
+		Total Lines: 29
+		Effective Lines: 16
+		Comments: 0
+		Classes: 1
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData\Shape
+		File Name: Pen.cs
+		Total Lines: 59
+		Effective Lines: 36
+		Comments: 0
+		Classes: 1
+		Empty Lines: 9
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData\Shape
+		File Name: Shape.cs
+		Total Lines: 73
+		Effective Lines: 52
+		Comments: 0
+		Classes: 1
+		Empty Lines: 5
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData\Shape
+		File Name: Shapes.cs
+		Total Lines: 13
+		Effective Lines: 8
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\VisualizeData\Shape
+		File Name: Size.cs
+		Total Lines: 92
+		Effective Lines: 62
+		Comments: 0
+		Classes: 1
+		Empty Lines: 14
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData
+		File Name: Resource.cs
+		Total Lines: 15
+		Effective Lines: 10
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData
+		File Name: ResourceTypeList.cs
+		Total Lines: 12
+		Effective Lines: 7
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData
+		File Name: ResourceData.cs
+		Total Lines: 37
+		Effective Lines: 22
+		Comments: 0
+		Classes: 1
+		Empty Lines: 5
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData
+		File Name: ResourceList.cs
+		Total Lines: 13
+		Effective Lines: 7
+		Comments: 0
+		Classes: 1
+		Empty Lines: 2
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData
+		File Name: ResourceHeader.cs
+		Total Lines: 63
+		Effective Lines: 31
+		Comments: 3
+		Classes: 1
+		Empty Lines: 9
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData
+		File Name: ResourceType.cs
+		Total Lines: 57
+		Effective Lines: 26
+		Comments: 12
+		Classes: 1
+		Empty Lines: 5
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData\Behavior
+		File Name: Behavior.cs
+		Total Lines: 26
+		Effective Lines: 16
+		Comments: 0
+		Classes: 1
+		Empty Lines: 2
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData\Behavior
+		File Name: BehaviorList.cs
+		Total Lines: 11
+		Effective Lines: 6
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData\Behavior\Argument
+		File Name: ArgumentList.cs
+		Total Lines: 25
+		Effective Lines: 14
+		Comments: 0
+		Classes: 1
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData\Behavior\Argument\ArgumentType
+		File Name: ArgumentType.cs
+		Total Lines: 14
+		Effective Lines: 9
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData\Behavior\Argument\ArgumentType
+		File Name: ArgumentTypeList.cs
+		Total Lines: 12
+		Effective Lines: 7
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData\Attribute
+		File Name: AttributeList.cs
+		Total Lines: 12
+		Effective Lines: 7
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData\Attribute\AttributeType
+		File Name: AllocationType.cs
+		Total Lines: 16
+		Effective Lines: 8
+		Comments: 3
+		Classes: 0
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 1
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData\Attribute\AttributeType
+		File Name: AttributeType.cs
+		Total Lines: 88
+		Effective Lines: 41
+		Comments: 24
+		Classes: 1
+		Empty Lines: 5
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\FileContext\ResourceData\Attribute\AttributeType
+		File Name: AttributeTypeList.cs
+		Total Lines: 18
+		Effective Lines: 10
+		Comments: 3
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Controls
+		File Name: TraceLogViewer.cs
+		Total Lines: 306
+		Effective Lines: 175
+		Comments: 0
+		Classes: 2
+		Empty Lines: 43
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Controls
+		File Name: TraceLogViewer.Designer.cs
+		Total Lines: 188
+		Effective Lines: 129
+		Comments: 41
+		Classes: 1
+		Empty Lines: 6
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Controls\Forms
+		File Name: OpenResourceFileAndTraceLogFileOpenForm.cs
+		Total Lines: 301
+		Effective Lines: 176
+		Comments: 0
+		Classes: 1
+		Empty Lines: 13
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 2
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Controls\Forms
+		File Name: OpenResourceFileAndTraceLogFileOpenForm.Designer.cs
+		Total Lines: 231
+		Effective Lines: 160
+		Comments: 53
+		Classes: 1
+		Empty Lines: 6
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Controls\Forms
+		File Name: MainForm.cs
+		Total Lines: 292
+		Effective Lines: 171
+		Comments: 4
+		Classes: 1
+		Empty Lines: 42
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Core\Controls\Forms
+		File Name: MainForm.Designer.cs
+		Total Lines: 342
+		Effective Lines: 226
+		Comments: 98
+		Classes: 1
+		Empty Lines: 6
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+	Project Name: Base
+	Assembly Name: NU.OJL.MPRTOS.TLV.Base
+	Project File Name: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Base.csproj
+	Total Number of Files: 3
+	Total Lines: 2484
+	Effective Lines: 1360
+	Comments: 233
+	Empty Lines: 259
+	Classes: 26
+	Structures: 12
+	Delegates: 1
+	Interfaces: 0
+	Enumerations: 3
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base
+		File Name: GeneralEventArgs.cs
+		Total Lines: 34
+		Effective Lines: 19
+		Comments: 0
+		Classes: 2
+		Empty Lines: 5
+		Structures: 0
+		Delegates: 1
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base
+		File Name: NativeScrollBar.cs
+		Total Lines: 82
+		Effective Lines: 55
+		Comments: 0
+		Classes: 1
+		Empty Lines: 15
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base
+		File Name: SortableBindingList.cs
+		Total Lines: 120
+		Effective Lines: 74
+		Comments: 1
+		Classes: 3
+		Empty Lines: 19
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\WindowManager
+		File Name: WindowManager.cs
+		Total Lines: 205
+		Effective Lines: 75
+		Comments: 71
+		Classes: 1
+		Empty Lines: 7
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\WindowManager
+		File Name: IWindowManager.cs
+		Total Lines: 78
+		Effective Lines: 57
+		Comments: 5
+		Classes: 1
+		Empty Lines: 4
+		Structures: 0
+		Delegates: 0
+		Interfaces: 1
+		Enumerations: 1
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\WindowManager
+		File Name: SubWindow.cs
+		Total Lines: 129
+		Effective Lines: 52
+		Comments: 36
+		Classes: 1
+		Empty Lines: 13
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\WindowManager
+		File Name: SubWindowCollection.cs
+		Total Lines: 61
+		Effective Lines: 29
+		Comments: 0
+		Classes: 1
+		Empty Lines: 10
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Json
+		File Name: IJsonable.cs
+		Total Lines: 13
+		Effective Lines: 8
+		Comments: 0
+		Classes: 0
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 1
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Json
+		File Name: IJsonConverter.cs
+		Total Lines: 14
+		Effective Lines: 9
+		Comments: 0
+		Classes: 0
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 1
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Json
+		File Name: IJsonReader.cs
+		Total Lines: 15
+		Effective Lines: 10
+		Comments: 0
+		Classes: 0
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 1
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Json
+		File Name: IJsonSerializer.cs
+		Total Lines: 22
+		Effective Lines: 15
+		Comments: 0
+		Classes: 0
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 1
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Json
+		File Name: IJsonWriter.cs
+		Total Lines: 16
+		Effective Lines: 11
+		Comments: 0
+		Classes: 0
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 1
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Json
+		File Name: Json.cs
+		Total Lines: 166
+		Effective Lines: 79
+		Comments: 0
+		Classes: 1
+		Empty Lines: 15
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Json
+		File Name: JsonTokenType.cs
+		Total Lines: 28
+		Effective Lines: 23
+		Comments: 0
+		Classes: 0
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 1
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Json
+		File Name: JsonValueType.cs
+		Total Lines: 17
+		Effective Lines: 12
+		Comments: 0
+		Classes: 0
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 1
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Zip
+		File Name: IZip.cs
+		Total Lines: 29
+		Effective Lines: 14
+		Comments: 0
+		Classes: 1
+		Empty Lines: 5
+		Structures: 0
+		Delegates: 0
+		Interfaces: 1
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Xml
+		File Name: Xml.cs
+		Total Lines: 59
+		Effective Lines: 40
+		Comments: 0
+		Classes: 1
+		Empty Lines: 5
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\FileContext
+		File Name: FileContext.cs
+		Total Lines: 173
+		Effective Lines: 72
+		Comments: 46
+		Classes: 1
+		Empty Lines: 16
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\FileContext
+		File Name: IFileContext.cs
+		Total Lines: 20
+		Effective Lines: 16
+		Comments: 0
+		Classes: 0
+		Empty Lines: 0
+		Structures: 0
+		Delegates: 0
+		Interfaces: 1
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\FileContext
+		File Name: IFileContextData.cs
+		Total Lines: 23
+		Effective Lines: 8
+		Comments: 9
+		Classes: 0
+		Empty Lines: 2
+		Structures: 0
+		Delegates: 0
+		Interfaces: 1
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\FileContext
+		File Name: FilePathUndefinedException.cs
+		Total Lines: 22
+		Effective Lines: 11
+		Comments: 0
+		Classes: 1
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\FileContext
+		File Name: ISerializable.cs
+		Total Lines: 13
+		Effective Lines: 8
+		Comments: 0
+		Classes: 0
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 1
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Controls
+		File Name: NativeScrollDataGridView.cs
+		Total Lines: 121
+		Effective Lines: 66
+		Comments: 0
+		Classes: 1
+		Empty Lines: 9
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Controls\Forms
+		File Name: BackGroundWorkForm.cs
+		Total Lines: 95
+		Effective Lines: 59
+		Comments: 0
+		Classes: 1
+		Empty Lines: 6
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Controls\Forms
+		File Name: BackGroundWorkForm.Designer.cs
+		Total Lines: 104
+		Effective Lines: 60
+		Comments: 26
+		Classes: 1
+		Empty Lines: 6
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\CommandManager
+		File Name: ICommandManager.cs
+		Total Lines: 26
+		Effective Lines: 19
+		Comments: 0
+		Classes: 0
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 1
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\CommandManager
+		File Name: MacroCommand.cs
+		Total Lines: 67
+		Effective Lines: 31
+		Comments: 0
+		Classes: 1
+		Empty Lines: 8
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\CommandManager
+		File Name: GeneralCommand.cs
+		Total Lines: 46
+		Effective Lines: 21
+		Comments: 6
+		Classes: 1
+		Empty Lines: 5
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\CommandManager
+		File Name: ICommand.cs
+		Total Lines: 15
+		Effective Lines: 10
+		Comments: 0
+		Classes: 0
+		Empty Lines: 1
+		Structures: 0
+		Delegates: 0
+		Interfaces: 1
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\CommandManager
+		File Name: CommandManager.cs
+		Total Lines: 199
+		Effective Lines: 110
+		Comments: 18
+		Classes: 1
+		Empty Lines: 24
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Extensions
+		File Name: ColorExtension.cs
+		Total Lines: 165
+		Effective Lines: 104
+		Comments: 0
+		Classes: 1
+		Empty Lines: 33
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Extensions
+		File Name: ToolStripMenuItemExtensions.cs
+		Total Lines: 111
+		Effective Lines: 58
+		Comments: 15
+		Classes: 2
+		Empty Lines: 9
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Expression
+		File Name: ComparisonExpression.cs
+		Total Lines: 72
+		Effective Lines: 49
+		Comments: 0
+		Classes: 1
+		Empty Lines: 11
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\Expression
+		File Name: ConditionExpression.cs
+		Total Lines: 124
+		Effective Lines: 76
+		Comments: 0
+		Classes: 1
+		Empty Lines: 17
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+	Project Name: Third
+	Assembly Name: NU.OJL.MPRTOS.TLV.Third
+	Project File Name: C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\Third.csproj
+	Total Number of Files: 2
+	Total Lines: 507
+	Effective Lines: 307
+	Comments: 5
+	Empty Lines: 58
+	Classes: 8
+	Structures: 0
+	Delegates: 0
+	Interfaces: 0
+	Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Third
+		File Name: SharpZipLibZip.cs
+		Total Lines: 25
+		Effective Lines: 13
+		Comments: 0
+		Classes: 1
+		Empty Lines: 4
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Third
+		File Name: WeifenLuoWindowManager.cs
+		Total Lines: 199
+		Effective Lines: 126
+		Comments: 5
+		Classes: 2
+		Empty Lines: 19
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\NewtonsoftJson
+		File Name: EnumConverter.cs
+		Total Lines: 28
+		Effective Lines: 15
+		Comments: 0
+		Classes: 1
+		Empty Lines: 3
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\NewtonsoftJson
+		File Name: GeneralConverter.cs
+		Total Lines: 39
+		Effective Lines: 21
+		Comments: 0
+		Classes: 1
+		Empty Lines: 6
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\NewtonsoftJson
+		File Name: JsonReader.cs
+		Total Lines: 85
+		Effective Lines: 59
+		Comments: 0
+		Classes: 1
+		Empty Lines: 8
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\NewtonsoftJson
+		File Name: JsonWriter.cs
+		Total Lines: 53
+		Effective Lines: 28
+		Comments: 0
+		Classes: 1
+		Empty Lines: 9
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Third\NewtonsoftJson
+		File Name: NewtonsoftJson.cs
+		Total Lines: 78
+		Effective Lines: 45
+		Comments: 0
+		Classes: 1
+		Empty Lines: 9
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+	Project Name: C:\...\sampleFiles
+	Assembly Name: Auto Generated Based On C:\Junji\Work\OJL\TLV\フェーズ2\src\sampleFiles
+	Project File Name: C:\Junji\Work\OJL\TLV\フェーズ2\src\sampleFiles
+	Total Number of Files: 0
+	Total Lines: 0
+	Effective Lines: 0
+	Comments: 0
+	Empty Lines: 0
+	Classes: 0
+	Structures: 0
+	Delegates: 0
+	Interfaces: 0
+	Enumerations: 0
+
+	Project Name: C:\...\resourceHeaders
+	Assembly Name: Auto Generated Based On C:\Junji\Work\OJL\TLV\フェーズ2\src\resourceHeaders
+	Project File Name: C:\Junji\Work\OJL\TLV\フェーズ2\src\resourceHeaders
+	Total Number of Files: 0
+	Total Lines: 0
+	Effective Lines: 0
+	Comments: 0
+	Empty Lines: 0
+	Classes: 0
+	Structures: 0
+	Delegates: 0
+	Interfaces: 0
+	Enumerations: 0
+
+	Project Name: C:\...\bin
+	Assembly Name: Auto Generated Based On C:\Junji\Work\OJL\TLV\フェーズ2\src\bin
+	Project File Name: C:\Junji\Work\OJL\TLV\フェーズ2\src\bin
+	Total Number of Files: 0
+	Total Lines: 0
+	Effective Lines: 0
+	Comments: 0
+	Empty Lines: 0
+	Classes: 0
+	Structures: 0
+	Delegates: 0
+	Interfaces: 0
+	Enumerations: 0
+
+	Project Name: C:\...\convertRules
+	Assembly Name: Auto Generated Based On C:\Junji\Work\OJL\TLV\フェーズ2\src\convertRules
+	Project File Name: C:\Junji\Work\OJL\TLV\フェーズ2\src\convertRules
+	Total Number of Files: 0
+	Total Lines: 0
+	Effective Lines: 0
+	Comments: 0
+	Empty Lines: 0
+	Classes: 0
+	Structures: 0
+	Delegates: 0
+	Interfaces: 0
+	Enumerations: 0
+
+	Project Name: C:\...\visualizeRules
+	Assembly Name: Auto Generated Based On C:\Junji\Work\OJL\TLV\フェーズ2\src\visualizeRules
+	Project File Name: C:\Junji\Work\OJL\TLV\フェーズ2\src\visualizeRules
+	Total Number of Files: 0
+	Total Lines: 0
+	Effective Lines: 0
+	Comments: 0
+	Empty Lines: 0
+	Classes: 0
+	Structures: 0
+	Delegates: 0
+	Interfaces: 0
+	Enumerations: 0
+
+	Project Name: Test
+	Assembly Name: Test
+	Project File Name: C:\Junji\Work\OJL\TLV\フェーズ2\src\Test\Test.csproj
+	Total Number of Files: 7
+	Total Lines: 1250
+	Effective Lines: 666
+	Comments: 200
+	Empty Lines: 162
+	Classes: 7
+	Structures: 0
+	Delegates: 0
+	Interfaces: 0
+	Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Test
+		File Name: CommandManagerTest.cs
+		Total Lines: 145
+		Effective Lines: 74
+		Comments: 27
+		Classes: 1
+		Empty Lines: 16
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Test
+		File Name: FileContextTest.cs
+		Total Lines: 127
+		Effective Lines: 50
+		Comments: 27
+		Classes: 1
+		Empty Lines: 12
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Test
+		File Name: GeneralCommandTest.cs
+		Total Lines: 147
+		Effective Lines: 80
+		Comments: 27
+		Classes: 1
+		Empty Lines: 16
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Test
+		File Name: SubWindowCollectionTest.cs
+		Total Lines: 158
+		Effective Lines: 88
+		Comments: 27
+		Classes: 1
+		Empty Lines: 15
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Test
+		File Name: SubWindowTest.cs
+		Total Lines: 145
+		Effective Lines: 80
+		Comments: 27
+		Classes: 1
+		Empty Lines: 14
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Test
+		File Name: WindowManagerTest.cs
+		Total Lines: 321
+		Effective Lines: 174
+		Comments: 27
+		Classes: 1
+		Empty Lines: 65
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Test
+		File Name: サブウィンドウ管理.cs
+		Total Lines: 172
+		Effective Lines: 105
+		Comments: 22
+		Classes: 1
+		Empty Lines: 20
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
+		File Directory: C:\Junji\Work\OJL\TLV\フェーズ2\src\Test\Properties
+		File Name: AssemblyInfo.cs
+		Total Lines: 35
+		Effective Lines: 15
+		Comments: 16
+		Classes: 0
+		Empty Lines: 4
+		Structures: 0
+		Delegates: 0
+		Interfaces: 0
+		Enumerations: 0
+
