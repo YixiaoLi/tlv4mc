@@ -44,16 +44,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                     textReflesh();
                     saveSToolStripMenuItem.Enabled = !ApplicationData.FileContext.IsSaved;
                     saveToolStripButton.Enabled = !ApplicationData.FileContext.IsSaved;
-
-					if(ApplicationData.FileContext.IsSaved)
-					{
-						if(Cursor.Current == Cursors.WaitCursor)
-							Cursor.Current = Cursors.Default;
-
-						if (_statusManager.IsProcessingShown(this.GetType().ToString() + ":saving"))
-							_statusManager.HideProcessing(this.GetType().ToString() + ":saving");
-					}
-
                 }));
             };
             ApplicationData.FileContext.IsOpenedChanged += (o, e) =>
@@ -78,13 +68,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }));
             };
 			ApplicationData.FileContext.Saving += (o, e) =>
+			{
+				Invoke((MethodInvoker)(() => 
 				{
-					Invoke((MethodInvoker)(() => 
-					{
-						Cursor.Current = Cursors.WaitCursor;
-						_statusManager.ShowProcessing(this.GetType().ToString() + ":saving", "保存中");
-					}));
-				};
+					Cursor.Current = Cursors.WaitCursor;
+					_statusManager.ShowProcessing(this.GetType().ToString() + ":saving", "保存中");
+				}));
+			};
+			ApplicationData.FileContext.Saved += (o, e) =>
+			{
+				Invoke((MethodInvoker)(() => 
+				{
+					if (Cursor.Current == Cursors.WaitCursor)
+						Cursor.Current = Cursors.Default;
+
+					if (_statusManager.IsProcessingShown(this.GetType().ToString() + ":saving"))
+						_statusManager.HideProcessing(this.GetType().ToString() + ":saving");
+				}));
+			};
             #endregion
 
             #region コマンド管理初期化

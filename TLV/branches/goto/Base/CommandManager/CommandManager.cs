@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace NU.OJL.MPRTOS.TLV.Base
 {
@@ -75,7 +76,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         public void Do(ICommand command)
         {
             command.Do();
-            Done(command);
+			Done(command);
         }
         /// <summary>
         /// <paramref name="command"/>で行う処理が既に行われてしまったときに実行する

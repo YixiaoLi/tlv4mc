@@ -19,7 +19,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
         protected override void action()
 		{
 			ApplicationData.FileContext.Close();
-            _form.Close();
+			_form.Invoke((MethodInvoker)(() =>
+				{
+					_form.Close();
+				}));
         }
     }
 }

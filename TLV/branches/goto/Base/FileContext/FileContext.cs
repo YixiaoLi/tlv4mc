@@ -21,7 +21,15 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <summary>
         /// <c>IsSaved</c>プロパティが変更されるときに発生する
         /// </summary>
-        public event EventHandler<GeneralEventArgs<bool>> IsSavedChanged = null;
+		public event EventHandler<GeneralEventArgs<bool>> IsSavedChanged = null;
+		/// <summary>
+		/// Saveされたときに発生する
+		/// </summary>
+		public event EventHandler Saved = null;
+		/// <summary>
+		/// Openされたときに発生する
+		/// </summary>
+		public event EventHandler Opened = null;
         /// <summary>
         /// <c>IsOpened</c>プロパティが変更されるときに発生する
         /// </summary>
@@ -114,7 +122,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <c>FileContext</c>のインスタンスを生成する
         /// </summary>
         public FileContext()
-        {
+		{
         }
 
         /// <summary>
@@ -142,7 +150,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
             IsSaved = true;
 
             if (DataChanged != null)
-                DataChanged(this, new GeneralEventArgs<T>(_data));
+				DataChanged(this, new GeneralEventArgs<T>(_data));
+
+			if (Opened != null)
+				Opened(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -157,14 +168,28 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 throw new FilePathUndefinedException("保存先のパスが未設定です。");
 
 			Thread thread = new Thread(new ThreadStart(() =>
+			{
+				if (Saving != null)
+					Saving(this, EventArgs.Empty);
+				
+				try
 				{
-					if (Saving != null)
-						Saving(this, EventArgs.Empty);
-
 					Data.Serialize(Path);
-					IsSaved = true;
-				}));
+				}
+				catch (Exception e)
+				{
+					throw new Exception("ファイルの保存中にエラーが発生しました。\n" + e.Message);
+				}
+				
+				IsSaved = true;
+
+				if (Saved != null)
+				{
+					Saved(this, EventArgs.Empty);
+				}
+			}));
 			thread.IsBackground = true;
+
 			thread.Start();
         }
 
