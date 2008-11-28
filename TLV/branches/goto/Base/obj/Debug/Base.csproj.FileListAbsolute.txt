@@ -24,3 +24,11 @@ C:\junji\Documents\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.StatusManag
 C:\junji\Documents\OJL\TLV\src\Base\obj\Debug\Base.csproj.GenerateResource.Cache
 C:\junji\Documents\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
 C:\junji\Documents\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Documents\School\OJL\TLV\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Documents\School\OJL\TLV\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Documents\School\OJL\TLV\src\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\Junji\Documents\School\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.BackGroundWorkForm.resources
+C:\Junji\Documents\School\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.StatusManager.StatusManagerResource.resources
+C:\Junji\Documents\School\OJL\TLV\src\Base\obj\Debug\Base.csproj.GenerateResource.Cache
+C:\Junji\Documents\School\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Documents\School\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb

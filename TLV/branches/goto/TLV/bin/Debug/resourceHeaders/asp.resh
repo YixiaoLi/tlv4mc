@@ -93,29 +93,17 @@
 				},
 				"enterSVC":{
 					"DisplayName"	:"サービスコールに入る",
-					"Arguments"		:[
-						{
-							"Name":"name",
-							"Type":"String"
-						},
-						{
-							"Name":"args",
-							"Type":"String"
-						}
-					]
+					"Arguments"		:{
+						"name":"String",
+						"args":"String"
+					}
 				},
 				"leaveSVC":{
 					"DisplayName"	:"サービスコールから出る",
-					"Arguments"		:[
-						{
-							"Name":"name",
-							"Type":"String"
-						},
-						{
-							"Name":"args",
-							"Type":"String"
-						}
-					]
+					"Arguments"		:{
+						"name":"String",
+						"args":"String"
+					}
 				}
 			}
 		}
