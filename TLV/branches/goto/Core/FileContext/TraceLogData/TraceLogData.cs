@@ -101,9 +101,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			string[] args = arguments.Split(',');
 			ArgumentList argList = new ArgumentList();
 
-			for(int i = 0; i < args.Length; i++)
+			int i = 0;
+			foreach (ArgumentType argType in _resourceData.ResourceHeader[type].Behaviors[behavior].Arguments)
 			{
-				switch (_resourceData.ResourceHeader[type].Behaviors[behavior].Arguments[i].Type)
+				switch (argType.Type)
 				{
 					case JsonValueType.String:
 						argList.Add(new Json(args[i]));
@@ -118,6 +119,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						argList.Add(new Json("null"));
 						break;
 				}
+				i++;
 			}
 
 			return argList;

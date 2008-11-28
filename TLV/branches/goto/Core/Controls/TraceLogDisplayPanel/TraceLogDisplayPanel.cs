@@ -53,47 +53,91 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						SetData(ApplicationData.FileContext.Data.ResourceData);
 						treeGridViewRowChanged(this, EventArgs.Empty);
 
-						ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.CollectionChanged += (_o, __e) =>
-						{
-							foreach (KeyValuePair<string, bool> kvp in (IList<KeyValuePair<string, bool>>)_o)
+						ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility.CollectionChanged += (_o, __e) =>
 							{
-								Match m = Regex.Match(kvp.Key, @"(?<type>.*)" + ResourceExplorerSetting.ResourceSeparateText + @"(?<name>.*)");
-								if(m.Success)
+
+								foreach (KeyValuePair<string, bool> kvp in (IList<KeyValuePair<string, bool>>)_o)
 								{
-									treeGridView.Nodes[m.Groups["type"].Value].Nodes[m.Groups["name"].Value].Visible = kvp.Value;
-									foreach (ITreeGirdViewNode node in treeGridView.Nodes[m.Groups["type"].Value].Nodes[m.Groups["name"].Value].Nodes.Values)
+									treeGridView.Nodes[kvp.Key].Visible = kvp.Value;
+
+									foreach (ITreeGirdViewNode res in treeGridView.Nodes[kvp.Key].Nodes.Values)
 									{
 										if (kvp.Value
-											&& ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility.ContainsKey(m.Groups["type"].Value + node.Name))
+											&& ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(kvp.Key + ResourceExplorerSetting.ResourceSeparateText + res.Name))
 										{
-											node.Visible = ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility[m.Groups["type"].Value + node.Name];
+											res.Visible = ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility[kvp.Key + ResourceExplorerSetting.ResourceSeparateText + res.Name];
+
+											foreach (ITreeGirdViewNode prop in treeGridView.Nodes[kvp.Key].Nodes[res.Name].Nodes.Values)
+											{
+												if (res.Visible
+													&& ApplicationData.FileContext.Data.SettingData.ResourcePropertyExplorerSetting.ResourcePropertyVisibility.ContainsKey(kvp.Key + prop.Name))
+												{
+													prop.Visible = ApplicationData.FileContext.Data.SettingData.ResourcePropertyExplorerSetting.ResourcePropertyVisibility[kvp.Key + prop.Name];
+												}
+											}
 										}
 										else
 										{
-											node.Visible = false;
+											res.Visible = false;
+
+											foreach (ITreeGirdViewNode prop in treeGridView.Nodes[kvp.Key].Nodes[res.Name].Nodes.Values)
+											{
+												prop.Visible = false;
+											}
+										}
+										treeGridViewRowChanged(this, EventArgs.Empty);
+									}
+								}
+							};
+
+						ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.CollectionChanged += (_o, __e) =>
+							{
+								foreach (KeyValuePair<string, bool> kvp in (IList<KeyValuePair<string, bool>>)_o)
+								{
+									Match m = Regex.Match(kvp.Key, @"(?<type>.*)" + ResourceExplorerSetting.ResourceSeparateText + @"(?<name>.*)");
+									if(m.Success)
+									{
+										if (treeGridView.Nodes[m.Groups["type"].Value].Visible)
+										{
+											treeGridView.Nodes[m.Groups["type"].Value].Nodes[m.Groups["name"].Value].Visible = kvp.Value;
+
+											foreach (ITreeGirdViewNode node in treeGridView.Nodes[m.Groups["type"].Value].Nodes[m.Groups["name"].Value].Nodes.Values)
+											{
+												if (kvp.Value
+													&& ApplicationData.FileContext.Data.SettingData.ResourcePropertyExplorerSetting.ResourcePropertyVisibility.ContainsKey(m.Groups["type"].Value + node.Name))
+												{
+													node.Visible = ApplicationData.FileContext.Data.SettingData.ResourcePropertyExplorerSetting.ResourcePropertyVisibility[m.Groups["type"].Value + node.Name];
+												}
+												else
+												{
+													node.Visible = false;
+												}
+											}
+											treeGridViewRowChanged(this, EventArgs.Empty);
 										}
 									}
-									treeGridViewRowChanged(this, EventArgs.Empty);
 								}
-							}
-						};
+							};
 
-						ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility.CollectionChanged += (_o, __e) =>
-						{
-							foreach (KeyValuePair<string, bool> kvp in (IList<KeyValuePair<string, bool>>)_o)
+						ApplicationData.FileContext.Data.SettingData.ResourcePropertyExplorerSetting.ResourcePropertyVisibility.CollectionChanged += (_o, __e) =>
 							{
-								Match m = Regex.Match(kvp.Key, @"(?<type>.*)(?<attr_or_bhvr>(" + ResourceTypeExplorerSetting.AttributeSeparateText + @"|" + ResourceTypeExplorerSetting.BehaviorSeparateText + @"))(?<name>.*)");
-								if(m.Success)
+								foreach (KeyValuePair<string, bool> kvp in (IList<KeyValuePair<string, bool>>)_o)
 								{
-									foreach (ITreeGirdViewNode node in treeGridView.Nodes[m.Groups["type"].Value].Nodes.Values)
+									Match m = Regex.Match(kvp.Key, @"(?<type>.*)(?<attr_or_bhvr>(" + ResourcePropertyExplorerSetting.AttributeSeparateText + @"|" + ResourcePropertyExplorerSetting.BehaviorSeparateText + @"))(?<name>.*)");
+									if(m.Success)
 									{
-										if(node.Visible)
-											node.Nodes[m.Groups["attr_or_bhvr"].Value + m.Groups["name"].Value].Visible = kvp.Value;
+										if (treeGridView.Nodes[m.Groups["type"].Value].Visible)
+										{
+											foreach (ITreeGirdViewNode node in treeGridView.Nodes[m.Groups["type"].Value].Nodes.Values)
+											{
+												if(node.Visible)
+													node.Nodes[m.Groups["attr_or_bhvr"].Value + m.Groups["name"].Value].Visible = kvp.Value;
+											}
+											treeGridViewRowChanged(this, EventArgs.Empty);
+										}
 									}
-									treeGridViewRowChanged(this, EventArgs.Empty);
 								}
-							}
-						};
+							};
 					}
 				}));
 			};
@@ -114,20 +158,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 					foreach (AttributeType attrType in resType.Attributes.Where<AttributeType>(a=>a.AllocationType == AllocationType.Dynamic && a.VisualizeRule != null))
 					{
-						treeGridView.Nodes[resType.Name].Nodes[res.Name].Add(ResourceTypeExplorerSetting.AttributeSeparateText + attrType.Name, attrType.DisplayName, res.Attributes[attrType.Name].Value.ToString(), new TimeLine());
-						treeGridView.Nodes[resType.Name].Nodes[res.Name].Nodes[ResourceTypeExplorerSetting.AttributeSeparateText + attrType.Name].Image = Properties.Resources.attribute;
+						treeGridView.Nodes[resType.Name].Nodes[res.Name].Add(ResourcePropertyExplorerSetting.AttributeSeparateText + attrType.Name, attrType.DisplayName, res.Attributes[attrType.Name].Value.ToString(), new TimeLine());
+						treeGridView.Nodes[resType.Name].Nodes[res.Name].Nodes[ResourcePropertyExplorerSetting.AttributeSeparateText + attrType.Name].Image = Properties.Resources.attribute;
 
-						if (ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility.ContainsKey(resType.Name + ResourceTypeExplorerSetting.AttributeSeparateText + attrType.Name))
-							treeGridView.Nodes[resType.Name].Nodes[res.Name].Nodes[ResourceTypeExplorerSetting.AttributeSeparateText + attrType.Name].Visible = ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility[resType.Name + ResourceTypeExplorerSetting.AttributeSeparateText + attrType.Name];
+						if (ApplicationData.FileContext.Data.SettingData.ResourcePropertyExplorerSetting.ResourcePropertyVisibility.ContainsKey(resType.Name + ResourcePropertyExplorerSetting.AttributeSeparateText + attrType.Name))
+							treeGridView.Nodes[resType.Name].Nodes[res.Name].Nodes[ResourcePropertyExplorerSetting.AttributeSeparateText + attrType.Name].Visible = ApplicationData.FileContext.Data.SettingData.ResourcePropertyExplorerSetting.ResourcePropertyVisibility[resType.Name + ResourcePropertyExplorerSetting.AttributeSeparateText + attrType.Name];
 					}
 
 					foreach (Behavior bhvr in resType.Behaviors.Where<Behavior>(b=>b.VisualizeRule != null))
 					{
-						treeGridView.Nodes[resType.Name].Nodes[res.Name].Add(ResourceTypeExplorerSetting.BehaviorSeparateText + bhvr.Name, bhvr.DisplayName, bhvr.Arguments.ToString(), new TimeLine());
-						treeGridView.Nodes[resType.Name].Nodes[res.Name].Nodes[ResourceTypeExplorerSetting.BehaviorSeparateText + bhvr.Name].Image = Properties.Resources.behavior;
+						treeGridView.Nodes[resType.Name].Nodes[res.Name].Add(ResourcePropertyExplorerSetting.BehaviorSeparateText + bhvr.Name, bhvr.DisplayName, bhvr.Arguments.ToString(), new TimeLine());
+						treeGridView.Nodes[resType.Name].Nodes[res.Name].Nodes[ResourcePropertyExplorerSetting.BehaviorSeparateText + bhvr.Name].Image = Properties.Resources.behavior;
 
-						if (ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility.ContainsKey(resType.Name + ResourceTypeExplorerSetting.BehaviorSeparateText + bhvr.Name))
-							treeGridView.Nodes[resType.Name].Nodes[res.Name].Nodes[ResourceTypeExplorerSetting.BehaviorSeparateText + bhvr.Name].Visible = ApplicationData.FileContext.Data.SettingData.ResourceTypeExplorerSetting.ResourceTypeVisibility[resType.Name + ResourceTypeExplorerSetting.BehaviorSeparateText + bhvr.Name];
+						if (ApplicationData.FileContext.Data.SettingData.ResourcePropertyExplorerSetting.ResourcePropertyVisibility.ContainsKey(resType.Name + ResourcePropertyExplorerSetting.BehaviorSeparateText + bhvr.Name))
+							treeGridView.Nodes[resType.Name].Nodes[res.Name].Nodes[ResourcePropertyExplorerSetting.BehaviorSeparateText + bhvr.Name].Visible = ApplicationData.FileContext.Data.SettingData.ResourcePropertyExplorerSetting.ResourcePropertyVisibility[resType.Name + ResourcePropertyExplorerSetting.BehaviorSeparateText + bhvr.Name];
 					}
 				}
 			}

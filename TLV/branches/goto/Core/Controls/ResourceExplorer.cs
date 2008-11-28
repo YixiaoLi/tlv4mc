@@ -150,10 +150,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					}
 					else
 					{
-						string name = e.Node.Name;
-						if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(name)
-							&& ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility[name] != e.Node.Checked)
-							ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility[name] = e.Node.Checked;
+						if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(e.Node.Name)
+							&& ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility[e.Node.Name] != e.Node.Checked)
+							ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility[e.Node.Name] = e.Node.Checked;
 
 						setParentNodeCheck(e.Node.Parent);
 					}

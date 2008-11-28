@@ -11,6 +11,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	{
 		public TraceLogViewerSetting TraceLogViewerSetting { get; set; }
 		public ResourceExplorerSetting ResourceExplorerSetting { get; set; }
+		public ResourcePropertyExplorerSetting ResourcePropertyExplorerSetting { get; set; }
 		public ResourceTypeExplorerSetting ResourceTypeExplorerSetting { get; set; }
 
 		public string ToJson()
@@ -28,10 +29,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			TraceLogViewerSetting = new TraceLogViewerSetting();
 			ResourceExplorerSetting = new ResourceExplorerSetting();
 			ResourceTypeExplorerSetting = new ResourceTypeExplorerSetting();
+			ResourcePropertyExplorerSetting = new ResourcePropertyExplorerSetting();
 
 			TraceLogViewerSetting.BecameDirty += BecameDirty;
 			ResourceExplorerSetting.BecameDirty += BecameDirty;
 			ResourceTypeExplorerSetting.BecameDirty += BecameDirty;
+			ResourcePropertyExplorerSetting.BecameDirty += BecameDirty;
 		}
 
 		void BecameDirty(object sender, EventArgs e)

@@ -4,49 +4,119 @@ using System.Linq;
 using System.Text;
 using NU.OJL.MPRTOS.TLV.Base;
 using System.Reflection;
+using System.Collections;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class INamedConverter<T> : IJsonConverter
-		where T:INamed, new()
+	public class INamedConverter : GeneralConverter<INamed>
 	{
-		public Type Type { get { return typeof(T); } }
+		private Stack<Type> _types = new Stack<Type>();
 
-		public void WriteJson(IJsonWriter writer, object obj)
+		public override bool CanConvert(Type type)
 		{
-			writer.WriteObject(w =>
-				{
-					foreach (PropertyInfo pi in ((T)obj).GetType().GetProperties())
-					{
-						if (pi.Name != "Name")
-						{
-							w.WriteProperty(pi.Name);
-							w.WriteValue(pi.GetValue(obj, null), ApplicationFactory.JsonSerializer);
-						}
-					}
-				});
+			if (base.CanConvert(type))
+			{
+				_types.Push(type);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
-		public object ReadJson(IJsonReader reader)
+		protected override void WriteJson(IJsonWriter writer, INamed obj)
 		{
-			T obj = new T();
-
-			while (reader.TokenType != JsonTokenType.EndObject)
+			if (isCollection(obj.GetType()))
 			{
-				if (reader.TokenType == JsonTokenType.PropertyName)
+				writer.WriteArray(w =>
+					{
+						foreach (object o in (IList)obj)
+						{
+							w.WriteValue(o, ApplicationFactory.JsonSerializer);
+						}
+					});
+			}
+			else
+			{
+				writer.WriteObject(w =>
+					{
+						foreach (PropertyInfo pi in obj.GetType().GetProperties())
+						{
+							if (pi.Name != "Name")
+							{
+								w.WriteProperty(pi.Name);
+								w.WriteValue(pi.GetValue(obj, null), ApplicationFactory.JsonSerializer);
+							}
+						}
+					});
+			}
+		}
+
+		public override object ReadJson(IJsonReader reader)
+		{
+			Type type = _types.Pop();
+			object obj;
+
+			if (isCollection(type))
+			{
+				List<object> list = new List<object>();
+				while (reader.TokenType != JsonTokenType.EndArray)
 				{
-					string key = (string)reader.Value;
-
-					PropertyInfo pi = obj.GetType().GetProperties().Single<PropertyInfo>(p => p.Name == key);
-
-					object o = ApplicationFactory.JsonSerializer.Deserialize(reader, pi.PropertyType);
-
-					pi.SetValue(obj, o, null);
+					Type t = getCollectionType(type).GetGenericArguments()[0];
+					list.Add(ApplicationFactory.JsonSerializer.Deserialize(reader, t));
+					reader.Read();
 				}
-				reader.Read();
+				obj = Activator.CreateInstance(type);
+				foreach(object o in list)
+				{
+					((IList)obj).Add(o);
+				}
+			}
+			else
+			{
+				obj = Activator.CreateInstance(type);
+				while (reader.TokenType != JsonTokenType.EndObject)
+				{
+					if (reader.TokenType == JsonTokenType.PropertyName)
+					{
+						string key = (string)reader.Value;
+
+						PropertyInfo pi = type.GetProperties().Single<PropertyInfo>(p => p.Name == key);
+
+						object o = ApplicationFactory.JsonSerializer.Deserialize(reader, pi.PropertyType);
+
+						pi.SetValue(obj, o, null);
+					}
+					reader.Read();
+				}
 			}
 
-			return (T)obj;
+			return obj;
+		}
+
+		private bool isCollection(Type type)
+		{
+			if (type.IsGenericType && typeof(ICollection).IsAssignableFrom(type))
+			{
+				return true;
+			}
+			else if (type != typeof(object))
+			{
+				return isCollection(type.BaseType);
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		private Type getCollectionType(Type type)
+		{
+			if (type.IsGenericType && typeof(ICollection).IsAssignableFrom(type))
+				return type;
+			else
+				return getCollectionType(type.BaseType);
 		}
 	}
 }

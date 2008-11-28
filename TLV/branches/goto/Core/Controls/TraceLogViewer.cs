@@ -58,11 +58,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			base.OnLoad(e);
 
-			addColumn("time", "時間", "Time");
-			addColumn("resourceType", "リソースタイプ", "ResourceType", false);
-			addColumn("resource", "リソース", "Resource");
-			addColumn("event", "イベント", "Event");
+			addColumn("eventType", "", "EventType", typeof(DataGridViewImageColumn));
+			addColumn("time", "時間", "Time", typeof(DataGridViewTextBoxColumn));
+			addColumn("resourceType", "リソースタイプ", "ResourceType", typeof(DataGridViewTextBoxColumn), false);
+			addColumn("resource", "リソース", "Resource", typeof(DataGridViewTextBoxColumn));
+			addColumn("event", "イベント", "Event", typeof(DataGridViewTextBoxColumn));
 
+			dataGridView.Columns["eventType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+			dataGridView.Columns["eventType"].Width = 22;
 			dataGridView.ApplyNativeScroll();
 			dataGridView.AutoGenerateColumns = false;
 			dataGridView.CellPainting += new DataGridViewCellPaintingEventHandler(dataGridViewCellPainting);
@@ -145,16 +148,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		private void dataGridViewCellPainting(object sender, DataGridViewCellPaintingEventArgs e)
 		{
-			bool isResource = e.ColumnIndex == dataGridView.Columns["Resource"].Index;
-			bool isResourceType = e.ColumnIndex == dataGridView.Columns["ResourceType"].Index;
-			bool isEvent = e.ColumnIndex == dataGridView.Columns["Event"].Index;
-
-			e.PaintBackground(e.ClipBounds, true);
+			bool isResourceColumn = e.ColumnIndex == dataGridView.Columns["Resource"].Index;
+			bool isResourceTypeColumn = e.ColumnIndex == dataGridView.Columns["ResourceType"].Index;
+			bool isEventColumn = e.ColumnIndex == dataGridView.Columns["Event"].Index;
 
 			DataGridViewPaintParts dgvpp = e.PaintParts;
 
+			e.PaintBackground(e.ClipBounds, true);
+
 			if (e.RowIndex >= 0
-				&& (isResource || isResourceType || isEvent)
+				&& (isResourceColumn || isResourceTypeColumn || isEventColumn)
 				&& (dgvpp & DataGridViewPaintParts.Background) == DataGridViewPaintParts.Background)
 			{
 				string value = (string)e.Value;
@@ -164,7 +167,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				string val = null;
 				string attr_val = null;
 
-				if (isResource)
+				if (isResourceColumn)
 				{
 					if (_resColorCache.ContainsKey(value))
 					{
@@ -184,7 +187,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						_resColorCache.Add(value, color);
 					}
 				}
-				else if (isResourceType)
+				else if (isResourceTypeColumn)
 				{
 					if (_resTypeColorCache.ContainsKey(value))
 					{
@@ -204,7 +207,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						_resTypeColorCache.Add(value, color);
 					}
 				}
-				else if (isEvent)
+				else if (isEventColumn)
 				{
 					if (_eventColorCache.ContainsKey(value) && _valTypeColorCache.ContainsKey(value))
 					{
@@ -319,9 +322,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			e.Handled = true;
 		}
 
-		private void addColumn(string name, string str, string propertyName, bool visibility)
+		private void addColumn(string name, string str, string propertyName, Type columnType, bool visibility)
 		{
-			DataGridViewColumn dgvc = new DataGridViewTextBoxColumn() { Name = name, HeaderText = str, DataPropertyName = propertyName, SortMode = DataGridViewColumnSortMode.Automatic, Visible = visibility };
+			DataGridViewColumn dgvc = (DataGridViewColumn)Activator.CreateInstance(columnType);
+			dgvc.Name = name;
+			dgvc.HeaderText = str;
+			dgvc.DataPropertyName = propertyName;
+			dgvc.SortMode = DataGridViewColumnSortMode.Automatic;
+			dgvc.Visible = visibility;
 
 			dataGridView.Columns.Add(dgvc);
 
@@ -337,9 +345,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			dataGridView.ContextMenuStrip.Items.Add(item);
 		}
-		private void addColumn(string name, string str, string propertyName)
+		private void addColumn(string name, string str, string propertyName, Type columnType)
 		{
-			addColumn(name, str, propertyName, true);
+			addColumn(name, str, propertyName, columnType, true);
 		}
 
 		private void setDataGridViewDataSource()
@@ -349,12 +357,35 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				_dataSource = new SortableBindingList<TraceLog>(_traceLogData.LogDataBase.Select(ld =>
 				{
 					if (ld.Type == LogType.AttributeChange)
-						return new TraceLog(ld.Time, _resourceData.ResourceHeader[ld.Object.Type].Name, ld.Object.Name, _resourceData.ResourceHeader[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute].Name + " = " +((AttributeChangeLogData)ld).Value.ToString());
+					{
+						Image image = Properties.Resources.attribute;
+						image.Tag = "attribute";
+						return new TraceLog(image, ld.Time, _resourceData.ResourceHeader[ld.Object.Type].Name, ld.Object.Name, _resourceData.ResourceHeader[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute].Name + " = " + ((AttributeChangeLogData)ld).Value.ToString());
+					}
 					else if (ld.Type == LogType.BehaviorCall)
-						return new TraceLog(ld.Time, _resourceData.ResourceHeader[ld.Object.Type].Name, ld.Object.Name, _resourceData.ResourceHeader[ld.Object.Type].Behaviors[((BehaviorCallLogData)ld).Behavior].Name + "(" + ((BehaviorCallLogData)ld).Arguments.ToString() + ")");
+					{
+						Image image = Properties.Resources.behavior;
+						image.Tag = "behavior";
+						return new TraceLog(image, ld.Time, _resourceData.ResourceHeader[ld.Object.Type].Name, ld.Object.Name, _resourceData.ResourceHeader[ld.Object.Type].Behaviors[((BehaviorCallLogData)ld).Behavior].Name + "(" + ((BehaviorCallLogData)ld).Arguments.ToString() + ")");
+					}
 					else
-						return new TraceLog(ld.Time, ld.Object.Type, ld.Object.Name, "undefined");
-				}).ToList()) { SecondSortPropertyName = "Id" };
+					{
+						Image image = Properties.Resources.warning;
+						image.Tag = "undefined";
+						return new TraceLog(image, ld.Time, ld.Object.Type, ld.Object.Name, "undefined");
+					}
+				}).ToList());
+				_dataSource.SecondSortPropertyName = "Id";
+				_dataSource.Comparisoins.Add("EventType", (t1, t2) =>
+					{
+						int result = t1.EventType.Tag.ToString().CompareTo(t2.EventType.Tag.ToString());
+						return result;
+					});
+				_dataSource.Comparisoins.Add("Time", (t1, t2) =>
+					{
+						int result = t1.Id.CompareTo(t2.Id);
+						return result;
+					});
 
 				dataGridView.DataSource = _dataSource;
 
@@ -380,14 +411,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	class TraceLog
 	{
 		public long Id { get; private set; }
+		public Image EventType { get; set; }
 		public Time Time { get; set; }
 		public string ResourceType { get; set; }
 		public string Resource { get; set; }
 		public string Event { get; set; }
 
-		public TraceLog(Time time, string resType, string res, string evnt)
+		public TraceLog(Image eventType, Time time, string resType, string res, string evnt)
 		{
 			Id = _id++;
+			EventType = eventType;
 			Time = time;
 			ResourceType = resType;
 			Resource = res;

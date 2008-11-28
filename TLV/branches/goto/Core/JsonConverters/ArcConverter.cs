@@ -6,20 +6,18 @@ using System;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ArcConverter : IJsonConverter
+	public class ArcConverter : GeneralConverter<Arc>
 	{
-		public Type Type { get { return typeof(Arc); } }
-
-		public void WriteJson(IJsonWriter writer, object obj)
+		protected override void WriteJson(IJsonWriter writer, Arc arc)
 		{
 			writer.WriteArray(w =>
 				{
-					writer.WriteValue(((Arc)obj).Start);
-					writer.WriteValue(((Arc)obj).Sweep);
+					writer.WriteValue(arc.Start);
+					writer.WriteValue(arc.Sweep);
 				});
 		}
 
-		public object ReadJson(IJsonReader reader)
+		public override object ReadJson(IJsonReader reader)
 		{
 			reader.Read();
 			Single st = Convert.ToSingle(reader.Value);

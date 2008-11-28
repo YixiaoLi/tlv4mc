@@ -170,5 +170,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
                 return ResourceManager.GetString("VisualizeRuleFileExtension", resourceCulture);
             }
         }
+        
+        internal static System.Drawing.Bitmap warning {
+            get {
+                object obj = ResourceManager.GetObject("warning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

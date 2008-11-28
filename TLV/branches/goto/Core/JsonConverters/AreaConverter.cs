@@ -6,20 +6,18 @@ using System;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class AreaConverter : IJsonConverter
+	public class AreaConverter : GeneralConverter<Area>
 	{
-		public Type Type { get { return typeof(Area); } }
-
-		public void WriteJson(IJsonWriter writer, object obj)
+		protected override void WriteJson(IJsonWriter writer, Area area)
 		{
 			writer.WriteArray(w =>
 			{
-				writer.WriteValue(((Area)obj).Point.ToString());
-				writer.WriteValue(((Area)obj).Size.ToString());
+				writer.WriteValue(area.Point.ToString());
+				writer.WriteValue(area.Size.ToString());
 			});
 		}
 
-		public object ReadJson(IJsonReader reader)
+		public override object ReadJson(IJsonReader reader)
 		{
 			reader.Read();
 			string l = (string)reader.Value;

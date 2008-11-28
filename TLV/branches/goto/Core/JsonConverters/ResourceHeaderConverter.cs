@@ -6,15 +6,13 @@ using System;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ResourceHeaderConverter : IJsonConverter
+	public class ResourceHeaderConverter : GeneralConverter<ResourceHeader>
 	{
-		public Type Type { get { return typeof(ResourceHeader);} }
-
-		public void WriteJson(IJsonWriter writer, object obj)
+		protected override void WriteJson(IJsonWriter writer, ResourceHeader resh)
 		{
 			writer.WriteObject(w =>
 				{
-					foreach (ResourceType rt in (ResourceHeader)obj)
+					foreach (ResourceType rt in resh)
 					{
 						w.WriteProperty(rt.Name);
 						w.WriteValue(rt, ApplicationFactory.JsonSerializer);
@@ -22,11 +20,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				});
 		}
 
-		public object ReadJson(IJsonReader reader)
+		public override object ReadJson(IJsonReader reader)
 		{
 			if (reader.TokenType == JsonTokenType.StartObject)
 			{
-				ResourceTypeList resTypes = new ResourceTypeList();
+				GeneralNamedCollection<ResourceType> resTypes = new GeneralNamedCollection<ResourceType>();
 				while(reader.TokenType != JsonTokenType.EndObject)
 				{
 					if (reader.TokenType == JsonTokenType.PropertyName)
@@ -67,7 +65,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 				string typesStr = data.ToJsonString();
 
-				ResourceTypeList types = ApplicationFactory.JsonSerializer.Deserialize<ResourceTypeList>(typesStr);
+				GeneralNamedCollection<ResourceType> types = ApplicationFactory.JsonSerializer.Deserialize<GeneralNamedCollection<ResourceType>>(typesStr);
 
 				ResourceHeader result = new ResourceHeader(name, types);
 

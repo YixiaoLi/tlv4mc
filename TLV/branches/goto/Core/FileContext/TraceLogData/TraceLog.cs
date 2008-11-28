@@ -58,7 +58,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				_arguments = m.Groups["args"].Value.Replace(" ", "").Replace("\t", "");
 
 			_hasTime = Regex.IsMatch(_log, @"\s*\[\s*[0-9a-fA-F]+\s*\]\s*");
-			_isAttributeChageLog = Regex.IsMatch(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\([^\)]+\))?\s*\.\s*[^=\s]+\s*=\s*[^\s$]+$");
+			_isAttributeChageLog = Regex.IsMatch(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\([^\)]+\))?\s*\.\s*[^\(\)=\s]+\s*=\s*[^\s$]+$");
 			_isBehaviorLog = Regex.IsMatch(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\([^\)]+\))?\s*\.\s*[^=\s]+\s*\([^\)]*\)\s*$");
 
 		}

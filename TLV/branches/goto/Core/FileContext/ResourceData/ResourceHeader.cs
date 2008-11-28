@@ -14,7 +14,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// </summary>
 	public class ResourceHeader : IJsonable<ResourceHeader>, IEnumerable<ResourceType>
 	{
-		private ResourceTypeList _types = new ResourceTypeList();
+		private GeneralNamedCollection<ResourceType> _types = new GeneralNamedCollection<ResourceType>();
 		public string Name { get; set; }
 		public ResourceType this[string typeName] { get { return _types[typeName]; } }
 
@@ -23,7 +23,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 		}
 
-		public ResourceHeader(string name, ResourceTypeList types)
+		public ResourceHeader(string name, GeneralNamedCollection<ResourceType> types)
 			:this()
 		{
 			Name = name;

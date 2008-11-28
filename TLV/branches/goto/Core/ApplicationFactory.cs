@@ -60,21 +60,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			JsonSerializer.AddConverter(new VisualizeRuleConverter());
 			JsonSerializer.AddConverter(new JsonConverter());
 			JsonSerializer.AddConverter(new FontFamilyConverter());
-			JsonSerializer.AddConverter(new ClassHavingNullablePropertyConverter<Pen>());
-			JsonSerializer.AddConverter(new ClassHavingNullablePropertyConverter<Font>());
-			JsonSerializer.AddConverter(new ClassHavingNullablePropertyConverter<Shape>());
+			JsonSerializer.AddConverter(new ArgumentTypeConverter());
 
-			JsonSerializer.AddConverter(new INamedConverter<AttributeType>());
-			JsonSerializer.AddConverter(new INamedConverter<Behavior>());
-			JsonSerializer.AddConverter(new INamedConverter<ResourceType>());
-			JsonSerializer.AddConverter(new INamedConverter<Resource>());
-
-			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<AttributeType, AttributeTypeList>());
-			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Behavior, BehaviorList>());
-			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<ResourceType, ResourceTypeList>());
-			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Resource, ResourceList>());
-			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<Shapes, ShapesList>());
-			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter<VisualizeRule, VisualizeRuleList>());
+			JsonSerializer.AddConverter(new ClassHavingNullablePropertyConverter());
+			JsonSerializer.AddConverter(new INamedConverter());
+			JsonSerializer.AddConverter(new GeneralNamedCollectionConverter());
 		}
     }
 }

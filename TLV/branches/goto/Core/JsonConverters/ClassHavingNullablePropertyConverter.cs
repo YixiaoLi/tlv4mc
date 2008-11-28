@@ -7,12 +7,27 @@ using System.Reflection;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ClassHavingNullablePropertyConverter<T> : GeneralConverter<T>
-		where T:class, new()
+	public class ClassHavingNullablePropertyConverter : GeneralConverter<IHavingNullableProperty>
 	{
+		private Stack<Type> _types = new Stack<Type>();
+
+		public override bool CanConvert(Type type)
+		{
+			if (base.CanConvert(type))
+			{
+				_types.Push(type);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		public override object ReadJson(IJsonReader reader)
 		{
-			T t = new T();
+			Type type = _types.Pop();
+			object obj = Activator.CreateInstance(type);
 
 			while (reader.TokenType != JsonTokenType.EndObject)
 			{
@@ -20,19 +35,19 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				{
 					string key = (string)reader.Value;
 
-					PropertyInfo pi = t.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).Single<PropertyInfo>(p => p.Name == key);
+					PropertyInfo pi = type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Single<PropertyInfo>(p => p.Name == key);
 
 					object o = ApplicationFactory.JsonSerializer.Deserialize(reader, pi.PropertyType);
 
-					pi.SetValue(t, o, null);
+					pi.SetValue(obj, o, null);
 				}
 				reader.Read();
 			}
 
-			return t;
+			return obj;
 		}
 
-		protected override void WriteJson(IJsonWriter writer, T obj)
+		protected override void WriteJson(IJsonWriter writer, IHavingNullableProperty obj)
 		{
 			writer.WriteObject(w =>
 			{

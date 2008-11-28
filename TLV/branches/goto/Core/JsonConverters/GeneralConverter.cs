@@ -9,6 +9,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public abstract class GeneralConverter<T> : IJsonConverter
 	{
 		public Type Type { get { return typeof(T); } }
+		
+		public virtual bool CanConvert(Type type)
+		{
+			if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+				type = type.GetGenericArguments()[0];
+
+			return Type.IsAssignableFrom(type) || type.IsSubclassOf(Type);
+		}
 
 		public void WriteJson(IJsonWriter writer, object obj)
 		{
@@ -18,5 +26,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public abstract object ReadJson(IJsonReader reader);
 
 		protected abstract void WriteJson(IJsonWriter writer, T obj);
+
 	}
 }

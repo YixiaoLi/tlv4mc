@@ -6,16 +6,14 @@ using System;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class SizeConverter : IJsonConverter
+	public class SizeConverter : GeneralConverter<Size>
 	{
-		public Type Type { get { return typeof(Size); } }
-
-		public void WriteJson(IJsonWriter writer, object obj)
+		protected override void WriteJson(IJsonWriter writer, Size size)
 		{
-			writer.WriteValue(((Size)obj).ToString());
+			writer.WriteValue(size.ToString());
 		}
 
-		public object ReadJson(IJsonReader reader)
+		public override object ReadJson(IJsonReader reader)
 		{
 			string value = (string)reader.Value;
 			return new Size(value);

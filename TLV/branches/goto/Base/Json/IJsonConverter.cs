@@ -8,6 +8,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 	public interface IJsonConverter
 	{
 		Type Type { get; }
+		bool CanConvert(Type type);
 		void WriteJson(IJsonWriter writer, object obj);
 		object ReadJson(IJsonReader reader);
 	}

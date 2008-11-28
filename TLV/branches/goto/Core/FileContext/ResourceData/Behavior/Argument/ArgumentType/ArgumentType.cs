@@ -6,7 +6,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ArgumentType
+	public class ArgumentType : INamed
 	{
 		public string Name { get; set; }
 		public JsonValueType Type { get; set; }

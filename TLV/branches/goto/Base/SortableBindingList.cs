@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 
 namespace NU.OJL.MPRTOS.TLV.Base
@@ -19,6 +20,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public SortableBindingList() { }
         public SortableBindingList(IList<T> list) : base(list) { }
+		public Dictionary<string, Comparison<T>> Comparisoins { get { return _comparisoins; } }
+
+		private Dictionary<string, Comparison<T>> _comparisoins = new Dictionary<string, Comparison<T>>();
 
         protected override void ApplySortCore(PropertyDescriptor property, ListSortDirection direction)
         {
@@ -56,10 +60,27 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 						list.Sort((t1,t2) =>
 							{
-								int f = firstComparer.Compare(t1, t2);
+								int f = 0;
+								if (_comparisoins.ContainsKey(_sortProperty.Name))
+								{
+									f = _comparisoins[_sortProperty.Name].Invoke(t1, t2) * (_sortDirection == ListSortDirection.Ascending ? 1 : -1);
+								}
+								else
+								{
+									f = firstComparer.Compare(t1, t2);
+								}
 								int s = 0;
 								if (secondComparer != null)
-									s = secondComparer.Compare(t1, t2);
+								{
+									if (_comparisoins.ContainsKey(_secondSortProperty.Name))
+									{
+										s = _comparisoins[_secondSortProperty.Name].Invoke(t1, t2) * (_secondSortDirection == ListSortDirection.Ascending ? 1 : -1);
+									}
+									else
+									{
+										s = secondComparer.Compare(t1, t2);
+									}
+								}
 								return f == 0 ? s : f;
 							});
 
@@ -110,10 +131,17 @@ namespace NU.OJL.MPRTOS.TLV.Base
             U xValue = (U)_property.GetValue(x);
             U yValue = (U)_property.GetValue(y);
 
-            if (_direction == ListSortDirection.Ascending)
-                return _comparer.Compare(xValue, yValue);
-            else
-                return _comparer.Compare(yValue, xValue);
+			if (typeof(IComparable).IsAssignableFrom(typeof(U)) || typeof(U).GetInterfaces().Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IComparable<>)))
+			{
+				if (_direction == ListSortDirection.Ascending)
+					return _comparer.Compare(xValue, yValue);
+				else
+					return _comparer.Compare(yValue, xValue);
+			}
+			else
+			{
+				return 0;
+			}
         }
     }
 

@@ -30,11 +30,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <summary>
         /// 属性リスト
         /// </summary>
-        public AttributeTypeList Attributes { get; set; }
+		public GeneralNamedCollection<AttributeType> Attributes { get; set; }
 		/// <summary>
 		/// 振る舞いリスト
 		/// </summary>
-		public BehaviorList Behaviors { get; set; }
+		public GeneralNamedCollection<Behavior> Behaviors { get; set; }
 
         /// <summary>
         /// <c>Resource</c>のインスタンスを生成する

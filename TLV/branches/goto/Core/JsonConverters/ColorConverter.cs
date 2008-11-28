@@ -7,16 +7,14 @@ using System;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ColorConverter : IJsonConverter
+	public class ColorConverter : GeneralConverter<Color>
 	{
-		public Type Type { get { return typeof(Color); } }
-
-		public void WriteJson(IJsonWriter writer, object obj)
+		protected override void WriteJson(IJsonWriter writer, Color color)
 		{
-			writer.WriteValue(((Color)obj).ToHexString());
+			writer.WriteValue(color.ToHexString());
 		}
 
-		public object ReadJson(IJsonReader reader)
+		public override object ReadJson(IJsonReader reader)
 		{
 			return new Color().FromHexString((string)reader.Value);
 		}

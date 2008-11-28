@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Core.Commands;
+using System.Drawing;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
@@ -99,8 +100,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             SubWindow[] sws = new[]
             {
                 new SubWindow("traceLogViewer", new TraceLogViewer(), DockState.DockRight) { Text = "トレースログビューア" },
-                new SubWindow("resourceExplorer", new ResourceExplorer(), DockState.DockLeft) { Text = "リソースエクスプローラ" },
                 new SubWindow("resourceTypeExplorer", new ResourceTypeExplorer(), DockState.DockLeft) { Text = "リソースタイプエクスプローラ" },
+                new SubWindow("resourceExplorer", new ResourceExplorer(), DockState.DockLeft) { Text = "リソースエクスプローラ" },
+                new SubWindow("resourcePropertyExplorer", new ResourcePropertyExplorer(), DockState.DockLeft) { Text = "リソースプロパティエクスプローラ" },
             };
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
 			_windowManager.MainPanel = new TraceLogDisplayPanel();
@@ -207,28 +209,28 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             #endregion
 
-			//_windowManager.MainPanel.Resize += (o, e) => _windowManager.MainPanel.Invalidate();
-			//_windowManager.MainPanel.Paint += (o, e) =>
-			//    {
-			//        e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-			//        if (ApplicationData.FileContext.IsOpened)
-			//        {
-			//            float i = 0.0f;
-			//            foreach (Shapes ss in ApplicationData.FileContext.Data.VisualizeData.Shapes)
-			//            {
-			//                float w = (float)_windowManager.MainPanel.ClientSize.Width / (float)ApplicationData.FileContext.Data.VisualizeData.Shapes.Count;
+			_windowManager.MainPanel.Resize += (o, e) => _windowManager.MainPanel.Invalidate();
+			_windowManager.MainPanel.Paint += (o, e) =>
+				{
+					e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+					if (ApplicationData.FileContext.IsOpened)
+					{
+						float i = 0.0f;
+						foreach (Shapes ss in ApplicationData.FileContext.Data.VisualizeData.Shapes)
+						{
+							float w = (float)_windowManager.MainPanel.ClientSize.Width / (float)ApplicationData.FileContext.Data.VisualizeData.Shapes.Count;
 
-			//                e.Graphics.FillRectangle(new SolidBrush(Color.White), new RectangleF(w * i, 0.0f, w, w));
-			//                e.Graphics.DrawRectangle(new System.Drawing.Pen(Color.Black), new Rectangle((int)(w * i), 0, (int)w, (int)w));
+							e.Graphics.FillRectangle(new SolidBrush(Color.White), new RectangleF(w * i, 0.0f, w, w));
+							e.Graphics.DrawRectangle(new System.Drawing.Pen(Color.Black), new Rectangle((int)(w * i), 0, (int)w, (int)w));
 
-			//                foreach (Shape s in ss)
-			//                {
-			//                    e.Graphics.DrawShape(s, new RectangleF(w * i, 0.0f, w, w));
-			//                }
-			//                i++;
-			//            }
-			//        }
-			//    };
+							foreach (Shape s in ss)
+							{
+								e.Graphics.DrawShape(s, new RectangleF(w * i, 0.0f, w, w));
+							}
+							i++;
+						}
+					}
+				};
         }
 
         protected override void OnClosing(CancelEventArgs e)

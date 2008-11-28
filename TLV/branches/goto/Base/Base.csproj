@@ -83,7 +83,9 @@
     <Compile Include="Json\JsonTokenType.cs" />
     <Compile Include="Json\JsonValueType.cs" />
     <Compile Include="Controls\NativeScrollBar\NativeScrollBar.cs" />
+    <Compile Include="KeyedObserabledList.cs" />
     <Compile Include="ObservableDictionary.cs" />
+    <Compile Include="Pair.cs" />
     <Compile Include="SortableBindingList.cs" />
     <Compile Include="StatusManager\StatusManager.cs" />
     <Compile Include="StatusManager\StatusManagerResource.Designer.cs">
@@ -91,6 +93,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StatusManagerResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Triplet.cs" />
     <Compile Include="WindowManager\WindowManager.cs" />
     <Compile Include="WindowManager\IWindowManager.cs" />
     <Compile Include="WindowManager\SubWindow.cs" />

@@ -6,17 +6,21 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ArgumentTypeList : GeneralJsonableCollection<ArgumentType, ArgumentTypeList>
+	public class ArgumentTypeList : GeneralNamedCollection<ArgumentType>
 	{
 		public override string ToString()
 		{
 			StringBuilder sb = new StringBuilder();
 
-			for (int i = 0; i < Count; i++)
+			int i = 0;
+			foreach(ArgumentType argType in this)
 			{
-				sb.Append(this[i].Type.ToString() + " " + this[i].Name.ToString());
+				sb.Append(argType.Type.ToString() + " " + argType.Name.ToString());
+
 				if (i != Count - 1)
 					sb.Append(", ");
+
+				i++;
 			}
 
 			return sb.ToString();

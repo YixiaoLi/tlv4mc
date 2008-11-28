@@ -8,15 +8,17 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class ResourceTypeExplorerSetting : ISetting
+	public class ResourcePropertyExplorerSetting : ISetting
 	{
 		public event EventHandler BecameDirty = null;
-		public ObservableDictionary<string, bool> ResourceTypeVisibility { get; set; }
+		public ObservableDictionary<string, bool> ResourcePropertyVisibility { get; set; }
+		public const string AttributeSeparateText = ":attribute:";
+		public const string BehaviorSeparateText = ":behavir:";
 
-		public ResourceTypeExplorerSetting()
+		public ResourcePropertyExplorerSetting()
 		{
-			ResourceTypeVisibility = new ObservableDictionary<string, bool>();
-			ResourceTypeVisibility.CollectionChanged += CollectionChanged;
+			ResourcePropertyVisibility = new ObservableDictionary<string, bool>();
+			ResourcePropertyVisibility.CollectionChanged += CollectionChanged;
 		}
 
 		void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

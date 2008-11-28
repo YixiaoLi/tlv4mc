@@ -6,19 +6,14 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class TraceLogConverter : IJsonConverter
+	public class TraceLogConverter : GeneralConverter<TraceLog>
 	{
-		public Type Type
+		protected override void WriteJson(IJsonWriter writer, TraceLog traceLog)
 		{
-			get { return typeof(TraceLog); }
+			writer.WriteValue(traceLog.ToString());
 		}
 
-		public void WriteJson(IJsonWriter writer, object obj)
-		{
-			writer.WriteValue(((TraceLog)obj).ToString());
-		}
-
-		public object ReadJson(IJsonReader reader)
+		public override object ReadJson(IJsonReader reader)
 		{
 			return new TraceLog(((string)reader.Value));
 		}

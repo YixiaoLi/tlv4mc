@@ -6,17 +6,31 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class GeneralNamedCollectionConverter<T,S> : IJsonConverter
-		where T : class, INamed
-		where S : GeneralNamedCollection<T>, new()
+	public class GeneralNamedCollectionConverter : IJsonConverter
 	{
-		public Type Type { get { return typeof(S); } }
+		public Type Type { get { return typeof(GeneralNamedCollection<>); } }
+
+		private Stack<Type> _types = new Stack<Type>();
+
+		public bool CanConvert(Type type)
+		{
+			if ((type.IsGenericType && type.GetGenericTypeDefinition() == Type)
+				|| (type.BaseType.IsGenericType && type.BaseType.GetGenericTypeDefinition() == Type))
+			{
+				_types.Push(type);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 
 		public void WriteJson(IJsonWriter writer, object obj)
 		{
 			writer.WriteObject(w =>
 				{
-					foreach (T t in (S)obj)
+					foreach (INamed t in ((INamedCollection)obj).GetINameEnumerator())
 					{
 						w.WriteProperty(t.Name);
 						w.WriteValue(t, ApplicationFactory.JsonSerializer);
@@ -26,14 +40,20 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public object ReadJson(IJsonReader reader)
 		{
-			S gnc = new S();
+			Type type = _types.Pop();
+
+			INamedCollection gnc = (INamedCollection)Activator.CreateInstance(type);
+
+			if (type.BaseType.IsGenericType && type.BaseType.GetGenericTypeDefinition() == Type)
+				type = type.BaseType;
 
 			while (reader.TokenType != JsonTokenType.EndObject)
 			{
 				if (reader.TokenType == JsonTokenType.PropertyName)
 				{
 					string key = (string)reader.Value;
-					T obj = ApplicationFactory.JsonSerializer.Deserialize<T>(reader);
+
+					INamed obj = (INamed)ApplicationFactory.JsonSerializer.Deserialize(reader, type.GetGenericArguments()[0]);
 					obj.Name = key;
 					gnc.Add(obj.Name, obj);
 				}

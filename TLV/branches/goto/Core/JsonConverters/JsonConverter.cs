@@ -6,11 +6,9 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class JsonConverter : IJsonConverter
+	public class JsonConverter : GeneralConverter<Json>
 	{
-		public Type Type { get { return typeof(Json); } }
-
-		public object ReadJson(IJsonReader reader)
+		public override object ReadJson(IJsonReader reader)
 		{
 			Stack<Json> stack = new Stack<Json>();
 			Stack<string> keyStack = new Stack<string>();
@@ -89,9 +87,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return result;
 		}
 
-		public void WriteJson(IJsonWriter writer, object obj)
+		protected override void WriteJson(IJsonWriter writer, Json json)
 		{
-			Json json = (Json)obj;
 			if (json.Value is Json)
 			{
 				WriteJson(writer, (Json)json.Value);

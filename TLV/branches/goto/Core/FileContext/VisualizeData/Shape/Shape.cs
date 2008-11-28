@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class Shape
+	public class Shape : IHavingNullableProperty
 	{
 		public static Shape Default
 		{

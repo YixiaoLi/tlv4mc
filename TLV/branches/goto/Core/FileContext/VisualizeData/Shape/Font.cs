@@ -7,7 +7,7 @@ using System.Drawing.Drawing2D;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class Font
+	public class Font : IHavingNullableProperty
 	{
 		public FontFamily Family { get; set; } 
 		public FontStyle? Style { get; set; }

@@ -7,7 +7,7 @@ using System.Drawing.Drawing2D;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class Pen
+	public class Pen : IHavingNullableProperty
 	{
 		public Color? Color { get; set; }
 		public float? Width { get; set; }

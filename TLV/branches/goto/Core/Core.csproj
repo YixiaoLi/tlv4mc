@@ -48,17 +48,19 @@
     <Compile Include="ApplicationFactory.cs" />
     <Compile Include="ApplicationSetting.cs" />
     <Compile Include="Base\Extensions\ColorExtension.cs" />
+    <Compile Include="Base\IHavingNullableProperty.cs" />
+    <Compile Include="Base\INamedCollection.cs" />
     <Compile Include="Controls\ResourceExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ResourceExplorer.Designer.cs">
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ResourceTypeExplorer.cs">
+    <Compile Include="Controls\ResourcePropertyExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ResourceTypeExplorer.Designer.cs">
-      <DependentUpon>ResourceTypeExplorer.cs</DependentUpon>
+    <Compile Include="Controls\ResourcePropertyExplorer.Designer.cs">
+      <DependentUpon>ResourcePropertyExplorer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\ITimeLineControl.cs" />
     <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLine.cs" />
@@ -70,10 +72,17 @@
     <Compile Include="Controls\TraceLogDisplayPanel\TraceLogDisplayPanel.Designer.cs">
       <DependentUpon>TraceLogDisplayPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ResourceTypeExplorer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ResourceTypeExplorer.Designer.cs">
+      <DependentUpon>ResourceTypeExplorer.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileContext\SettingData\ISetting.cs" />
     <Compile Include="FileContext\SettingData\ResourceExplorerSetting.cs" />
     <Compile Include="FileContext\SettingData\SettingData.cs" />
     <Compile Include="FileContext\SettingData\TraceLogViewerSetting.cs" />
+    <Compile Include="FileContext\SettingData\ResourcePropertyExplorerSetting.cs" />
     <Compile Include="FileContext\SettingData\ResourceTypeExplorerSetting.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogGenerator.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\Font.cs" />
@@ -90,7 +99,6 @@
     <Compile Include="FileContext\ResourceData\Behavior\Argument\ArgumentType\ArgumentType.cs" />
     <Compile Include="FileContext\ResourceData\Behavior\Argument\ArgumentType\ArgumentTypeList.cs" />
     <Compile Include="FileContext\ResourceData\Resource.cs" />
-    <Compile Include="FileContext\ResourceData\ResourceTypeList.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\BehaviorCallLogData.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogData.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataBase.cs" />
@@ -99,10 +107,10 @@
     <Compile Include="FileContext\TraceLogData\LogDataBase\Time.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLog.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogList.cs" />
-    <Compile Include="FileContext\VisualizeData\Shape\ShapesList.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\ShapeType.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\VisualizeAreaUnit.cs" />
     <Compile Include="JsonConverters\ArcConverter.cs" />
+    <Compile Include="JsonConverters\ArgumentTypeConverter.cs" />
     <Compile Include="JsonConverters\FontFamilyConverter.cs" />
     <Compile Include="JsonConverters\GeneralConverter.cs" />
     <Compile Include="JsonConverters\GeneralNamedCollectionConverter.cs" />
@@ -113,7 +121,6 @@
     <Compile Include="JsonConverters\AreaConverter.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AttributeType\AllocationType.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AttributeType\AttributeType.cs" />
-    <Compile Include="FileContext\ResourceData\Attribute\AttributeType\AttributeTypeList.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\StandartFormatConverter.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogVisualizerData.cs" />
     <Compile Include="Base\GeneralKeyedJsonableCollection.cs" />
@@ -121,9 +128,7 @@
     <Compile Include="Base\Extensions\JsonExtension.cs" />
     <Compile Include="FileContext\ResourceData\Behavior\Argument\ArgumentList.cs" />
     <Compile Include="FileContext\ResourceData\Behavior\Behavior.cs" />
-    <Compile Include="FileContext\ResourceData\Behavior\BehaviorList.cs" />
     <Compile Include="FileContext\ResourceData\ResourceData.cs" />
-    <Compile Include="FileContext\ResourceData\ResourceList.cs" />
     <Compile Include="FileContext\ResourceData\ResourceHeader.cs" />
     <Compile Include="FileContext\ResourceData\ResourceType.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\Arc.cs" />
@@ -137,7 +142,6 @@
     <Compile Include="FileContext\VisualizeData\Shape\Size.cs" />
     <Compile Include="FileContext\VisualizeData\VisualizeData.cs" />
     <Compile Include="FileContext\VisualizeData\VisualizeRule.cs" />
-    <Compile Include="FileContext\VisualizeData\VisualizeRuleList.cs" />
     <Compile Include="Commands\ChangeSubWindowDockStateCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowVisiblityCommand.cs" />
     <Compile Include="Commands\ChangeSubWindowEnabledCommand.cs" />
@@ -218,8 +222,8 @@
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ResourceTypeExplorer.resx">
-      <DependentUpon>ResourceTypeExplorer.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ResourcePropertyExplorer.resx">
+      <DependentUpon>ResourcePropertyExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TraceLogDisplayPanel\TraceLogDisplayPanel.resx">
@@ -228,6 +232,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TraceLogViewer.resx">
       <DependentUpon>TraceLogViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ResourceTypeExplorer.resx">
+      <DependentUpon>ResourceTypeExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -250,5 +258,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\LegendHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WarningHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\resource.png" />
   </ItemGroup>
 </Project>

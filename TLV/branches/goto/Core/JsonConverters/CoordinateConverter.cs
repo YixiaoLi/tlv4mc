@@ -6,16 +6,14 @@ using System;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class CoordinateConverter : IJsonConverter
+	public class CoordinateConverter : GeneralConverter<Point>
 	{
-		public Type Type { get { return typeof(Point); } }
-
-		public void WriteJson(IJsonWriter writer, object obj)
+		protected override void WriteJson(IJsonWriter writer, Point point)
 		{
-			writer.WriteValue(((Point)obj).ToString());
+			writer.WriteValue(point.ToString());
 		}
 
-		public object ReadJson(IJsonReader reader)
+		public override object ReadJson(IJsonReader reader)
 		{
 			string value = (string)reader.Value;
 			return new Point(value);

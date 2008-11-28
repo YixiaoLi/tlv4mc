@@ -119,8 +119,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		private VisualizeData getVisualizeData(string[] visualizeRuleFilePaths)
 		{
 			VisualizeData visualizeData = new VisualizeData();
-			visualizeData.VisualizeRules = new VisualizeRuleList();
-			visualizeData.Shapes = new ShapesList();
+			visualizeData.VisualizeRules = new GeneralNamedCollection<VisualizeRule>();
+			visualizeData.Shapes = new GeneralNamedCollection<Shapes>();
 
 			foreach (string visualizeRuleFilePath in visualizeRuleFilePaths)
 			{

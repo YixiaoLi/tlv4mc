@@ -8,8 +8,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class VisualizeData : IJsonable<VisualizeData>
 	{
-		public VisualizeRuleList VisualizeRules { get; set; }
-		public ShapesList Shapes { get; set; }
+		public GeneralNamedCollection<VisualizeRule> VisualizeRules { get; set; }
+		public GeneralNamedCollection<Shapes> Shapes { get; set; }
 
 		public VisualizeData()
 		{
