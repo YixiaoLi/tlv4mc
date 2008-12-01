@@ -14,6 +14,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		Polygon,
 		Pie,
 		Ellipse,
-		String
+		Text
 	}
 }

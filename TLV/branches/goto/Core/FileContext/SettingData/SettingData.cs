@@ -9,10 +9,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class SettingData : IJsonable<SettingData>
 	{
-		public TraceLogViewerSetting TraceLogViewerSetting { get; set; }
+		public ColorSetting ColorSetting { get; set; }
 		public ResourceExplorerSetting ResourceExplorerSetting { get; set; }
-		public ResourcePropertyExplorerSetting ResourcePropertyExplorerSetting { get; set; }
-		public ResourceTypeExplorerSetting ResourceTypeExplorerSetting { get; set; }
+		public VisualizeRuleExplorerSetting VisualizeRuleExplorerSetting { get; set; }
 
 		public string ToJson()
 		{
@@ -26,15 +25,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public SettingData()
 		{
-			TraceLogViewerSetting = new TraceLogViewerSetting();
+			ColorSetting = new ColorSetting();
 			ResourceExplorerSetting = new ResourceExplorerSetting();
-			ResourceTypeExplorerSetting = new ResourceTypeExplorerSetting();
-			ResourcePropertyExplorerSetting = new ResourcePropertyExplorerSetting();
+			VisualizeRuleExplorerSetting = new VisualizeRuleExplorerSetting();
 
-			TraceLogViewerSetting.BecameDirty += BecameDirty;
+			ColorSetting.BecameDirty += BecameDirty;
 			ResourceExplorerSetting.BecameDirty += BecameDirty;
-			ResourceTypeExplorerSetting.BecameDirty += BecameDirty;
-			ResourcePropertyExplorerSetting.BecameDirty += BecameDirty;
+			VisualizeRuleExplorerSetting.BecameDirty += BecameDirty;
 		}
 
 		void BecameDirty(object sender, EventArgs e)

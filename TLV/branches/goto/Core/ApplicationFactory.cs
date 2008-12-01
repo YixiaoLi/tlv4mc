@@ -57,10 +57,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			JsonSerializer.AddConverter(new CoordinateConverter());
 			JsonSerializer.AddConverter(new ResourceHeaderConverter());
 			JsonSerializer.AddConverter(new SizeConverter());
-			JsonSerializer.AddConverter(new VisualizeRuleConverter());
 			JsonSerializer.AddConverter(new JsonConverter());
 			JsonSerializer.AddConverter(new FontFamilyConverter());
 			JsonSerializer.AddConverter(new ArgumentTypeConverter());
+			JsonSerializer.AddConverter(new ShapesConverter());
+			JsonSerializer.AddConverter(new ShapeArgPairConverter());
+			JsonSerializer.AddConverter(new ShapesListConverter());
+			JsonSerializer.AddConverter(new ShapeConverter());
 
 			JsonSerializer.AddConverter(new ClassHavingNullablePropertyConverter());
 			JsonSerializer.AddConverter(new INamedConverter());

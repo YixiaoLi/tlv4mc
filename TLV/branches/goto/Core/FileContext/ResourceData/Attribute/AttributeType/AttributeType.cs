@@ -69,10 +69,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// デフォルト値
 		/// </summary>
 		public Json Default { get; set; }
-		/// <summary>
-		/// デフォルト可視化ルール
-		/// </summary>
-		public string VisualizeRule { get; set; }
 
         /// <summary>
         /// <c>Attribute</c>のインスタンスを生成する

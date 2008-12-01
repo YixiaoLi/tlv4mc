@@ -175,14 +175,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					}
 					else
 					{
-						if (ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.ResourceColors.ContainsKey(value))
+						if (ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceColors.ContainsKey(value))
 						{
-							color = ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.ResourceColors[value];
+							color = ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceColors[value];
 						}
 						else
 						{
 							color = Color.FromArgb(_alpha, color.HueRotateNextColor());
-							ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.ResourceColors.Add(value, color);
+							ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceColors.Add(value, color);
 						}
 						_resColorCache.Add(value, color);
 					}
@@ -195,14 +195,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					}
 					else
 					{
-						if (ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.ResourceTypeColors.ContainsKey(value))
+						if (ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceTypeColors.ContainsKey(value))
 						{
-							color = ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.ResourceTypeColors[value];
+							color = ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceTypeColors[value];
 						}
 						else
 						{
 							color = Color.FromArgb(_alpha, color.HueRotateNextColor());
-							ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.ResourceTypeColors.Add(value, color);
+							ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceTypeColors.Add(value, color);
 						}
 						_resTypeColorCache.Add(value, color);
 					}
@@ -233,14 +233,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 							}
 							else
 							{
-								if (ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.AttributeColors.ContainsKey(attr))
+								if (ApplicationData.FileContext.Data.SettingData.ColorSetting.AttributeColors.ContainsKey(attr))
 								{
-									color = ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.AttributeColors[attr];
+									color = ApplicationData.FileContext.Data.SettingData.ColorSetting.AttributeColors[attr];
 								}
 								else
 								{
 									color = Color.FromArgb(_alpha, color.HueRotateNextColor());
-									ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.AttributeColors.Add(attr, color);
+									ApplicationData.FileContext.Data.SettingData.ColorSetting.AttributeColors.Add(attr, color);
 								}
 								_eventColorCache.Add(value, color);
 							}
@@ -251,14 +251,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 							}
 							else
 							{
-								if (ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.ValueColors.ContainsKey(attr + val))
+								if (ApplicationData.FileContext.Data.SettingData.ColorSetting.ValueColors.ContainsKey(attr + val))
 								{
-									txtColor = ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.ValueColors[attr + val];
+									txtColor = ApplicationData.FileContext.Data.SettingData.ColorSetting.ValueColors[attr + val];
 								}
 								else
 								{
 									txtColor = txtColor.RandomNextColor();
-									ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.ValueColors.Add(attr + val, txtColor);
+									ApplicationData.FileContext.Data.SettingData.ColorSetting.ValueColors.Add(attr + val, txtColor);
 								}
 
 								valTextColor = new KeyValuePair<string[], Color>(new[] { attr, attr_val, val }, txtColor);
@@ -269,14 +269,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						if (m.Groups["bhvr"].Success)
 						{
 							string bhvr = m.Groups["bhvr"].Value;
-							if (ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.BehaviorColors.ContainsKey(bhvr))
+							if (ApplicationData.FileContext.Data.SettingData.ColorSetting.BehaviorColors.ContainsKey(bhvr))
 							{
-								color = ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.BehaviorColors[bhvr];
+								color = ApplicationData.FileContext.Data.SettingData.ColorSetting.BehaviorColors[bhvr];
 							}
 							else
 							{
 								color = Color.FromArgb(_alpha, color.HueRotateNextColor());
-								ApplicationData.FileContext.Data.SettingData.TraceLogViewerSetting.BehaviorColors.Add(bhvr, color);
+								ApplicationData.FileContext.Data.SettingData.ColorSetting.BehaviorColors.Add(bhvr, color);
 							}
 						}
 					}
@@ -360,13 +360,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					{
 						Image image = Properties.Resources.attribute;
 						image.Tag = "attribute";
-						return new TraceLog(image, ld.Time, _resourceData.ResourceHeader[ld.Object.Type].Name, ld.Object.Name, _resourceData.ResourceHeader[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute].Name + " = " + ((AttributeChangeLogData)ld).Value.ToString());
+						return new TraceLog(image, ld.Time, _resourceData.ResourceHeaders[ld.Object.Type].Name, ld.Object.Name, _resourceData.ResourceHeaders[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute].Name + " = " + ((AttributeChangeLogData)ld).Value.ToString());
 					}
 					else if (ld.Type == LogType.BehaviorCall)
 					{
 						Image image = Properties.Resources.behavior;
 						image.Tag = "behavior";
-						return new TraceLog(image, ld.Time, _resourceData.ResourceHeader[ld.Object.Type].Name, ld.Object.Name, _resourceData.ResourceHeader[ld.Object.Type].Behaviors[((BehaviorCallLogData)ld).Behavior].Name + "(" + ((BehaviorCallLogData)ld).Arguments.ToString() + ")");
+						return new TraceLog(image, ld.Time, _resourceData.ResourceHeaders[ld.Object.Type].Name, ld.Object.Name, _resourceData.ResourceHeaders[ld.Object.Type].Behaviors[((BehaviorCallLogData)ld).Behavior].Name + "(" + ((BehaviorCallLogData)ld).Arguments.ToString() + ")");
 					}
 					else
 					{

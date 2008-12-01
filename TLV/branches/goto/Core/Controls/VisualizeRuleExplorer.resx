@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,47 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="attribute" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\attribute.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="behavior" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\behavior.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CommonFormatTraceLogFileExtension" xml:space="preserve">
-    <value>tlv</value>
-  </data>
-  <data name="ConvertRuleFileExtension" xml:space="preserve">
-    <value>cnv</value>
-  </data>
-  <data name="DefaultConvertRulesDirectoryName" xml:space="preserve">
-    <value>convertRules</value>
-  </data>
-  <data name="DefaultResourceHeadersDirectoryName" xml:space="preserve">
-    <value>resourceHeaders</value>
-  </data>
-  <data name="DefaultVisualizeRulesDirectoryName" xml:space="preserve">
-    <value>visualizeRules</value>
-  </data>
-  <data name="ResourceFileExtension" xml:space="preserve">
-    <value>res</value>
-  </data>
-  <data name="ResourceHeaderFileExtension" xml:space="preserve">
-    <value>resh</value>
-  </data>
-  <data name="SettingFileExtension" xml:space="preserve">
-    <value>setting</value>
-  </data>
-  <data name="TraceLogFileExtension" xml:space="preserve">
-    <value>log</value>
-  </data>
-  <data name="VisualizeRuleFileExtension" xml:space="preserve">
-    <value>viz</value>
-  </data>
-  <data name="resource" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resource.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WarningHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
+  <metadata name="imageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

@@ -64,6 +64,7 @@
     <Compile Include="Expression\ConditionExpression.cs" />
     <Compile Include="Extensions\ColorExtension.cs" />
     <Compile Include="Extensions\ControlExtension.cs" />
+    <Compile Include="Extensions\TypeExtension.cs" />
     <Compile Include="FileContext\FileContext.cs" />
     <Compile Include="FileContext\IFileContext.cs" />
     <Compile Include="FileContext\IFileContextData.cs" />

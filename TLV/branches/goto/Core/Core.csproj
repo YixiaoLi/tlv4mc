@@ -56,11 +56,11 @@
     <Compile Include="Controls\ResourceExplorer.Designer.cs">
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ResourcePropertyExplorer.cs">
+    <Compile Include="Controls\VisualizeRuleExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ResourcePropertyExplorer.Designer.cs">
-      <DependentUpon>ResourcePropertyExplorer.cs</DependentUpon>
+    <Compile Include="Controls\VisualizeRuleExplorer.Designer.cs">
+      <DependentUpon>VisualizeRuleExplorer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\ITimeLineControl.cs" />
     <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLine.cs" />
@@ -72,19 +72,13 @@
     <Compile Include="Controls\TraceLogDisplayPanel\TraceLogDisplayPanel.Designer.cs">
       <DependentUpon>TraceLogDisplayPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ResourceTypeExplorer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ResourceTypeExplorer.Designer.cs">
-      <DependentUpon>ResourceTypeExplorer.cs</DependentUpon>
-    </Compile>
     <Compile Include="FileContext\SettingData\ISetting.cs" />
     <Compile Include="FileContext\SettingData\ResourceExplorerSetting.cs" />
     <Compile Include="FileContext\SettingData\SettingData.cs" />
-    <Compile Include="FileContext\SettingData\TraceLogViewerSetting.cs" />
-    <Compile Include="FileContext\SettingData\ResourcePropertyExplorerSetting.cs" />
-    <Compile Include="FileContext\SettingData\ResourceTypeExplorerSetting.cs" />
+    <Compile Include="FileContext\SettingData\ColorSetting.cs" />
+    <Compile Include="FileContext\SettingData\VisualizeRuleExplorerSetting.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogGenerator.cs" />
+    <Compile Include="FileContext\VisualizeData\Event.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\Font.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\GraphicsExtension.cs" />
     <Compile Include="Base\GeneralNamedCollection.cs" />
@@ -117,6 +111,10 @@
     <Compile Include="JsonConverters\INamedConverter.cs" />
     <Compile Include="JsonConverters\JsonConverter.cs" />
     <Compile Include="JsonConverters\ClassHavingNullablePropertyConverter.cs" />
+    <Compile Include="JsonConverters\ShapeArgPairConverter.cs" />
+    <Compile Include="JsonConverters\ShapeConverter.cs" />
+    <Compile Include="JsonConverters\ShapesConverter.cs" />
+    <Compile Include="JsonConverters\ShapesListConverter.cs" />
     <Compile Include="JsonConverters\SizeConverter.cs" />
     <Compile Include="JsonConverters\AreaConverter.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AttributeType\AllocationType.cs" />
@@ -168,16 +166,15 @@
     <Compile Include="JsonConverters\CoordinateConverter.cs" />
     <Compile Include="JsonConverters\ResourceHeaderConverter.cs" />
     <Compile Include="JsonConverters\TraceLogConverter.cs" />
-    <Compile Include="JsonConverters\VisualizeRuleConverter.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -222,8 +219,8 @@
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ResourcePropertyExplorer.resx">
-      <DependentUpon>ResourcePropertyExplorer.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\VisualizeRuleExplorer.resx">
+      <DependentUpon>VisualizeRuleExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TraceLogDisplayPanel\TraceLogDisplayPanel.resx">
@@ -234,14 +231,10 @@
       <DependentUpon>TraceLogViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ResourceTypeExplorer.resx">
-      <DependentUpon>ResourceTypeExplorer.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -251,18 +244,45 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\attribute.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\behavior.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\LegendHS.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\WarningHS.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\visualizeRule.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\resources.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bhr2atr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\visualize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\attribute.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bhv2bhv.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\behavior.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\resource.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\atr2bhr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\atr2atr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bhr2bhr.png" />
   </ItemGroup>
 </Project>

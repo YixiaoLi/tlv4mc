@@ -5,11 +5,15 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection;
+using NU.OJL.MPRTOS.TLV.Base;
+using System.Text.RegularExpressions;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class Shape : IHavingNullableProperty
 	{
+		private Json _metaData;
+		private List<string> _argPropList = new List<string>();
 		public static Shape Default
 		{
 			get
@@ -20,6 +24,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				shape.Pen.Color = Color.Black;
 				shape.Pen.DashCap = DashCap.Flat;
 				shape.Pen.DashStyle = DashStyle.Solid;
+				shape.Pen.Alpha = 255;
 				shape.Pen.DashPattern = new float[] { 1.0f, 1.0f };
 				shape.Font = new Font();
 				shape.Font.Color = Color.Black;
@@ -37,6 +42,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				shape.Fill = Color.White;
 				shape.Offset = new Point("0,0");
 				shape.Text = string.Empty;
+				shape.Alpha = 255;
 				return shape;
 			}
 		}
@@ -53,6 +59,57 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public Color? Fill { get; set; }
 		public ContentAlignment? Align { get; set; }
 		public Area Area { get; set; }
+		public int? Alpha { get; set; }
+
+		public Json MetaData
+		{
+			get { return _metaData; }
+			set
+			{
+				_metaData = value;
+
+				PropertyInfo[] pis = typeof(Shape).GetProperties();
+
+				foreach (KeyValuePair<string,Json> kvp in _metaData.GetKeyValuePairEnumerator())
+				{
+					PropertyInfo pi;
+
+					try
+					{
+						pi = pis.Single(p => p.Name == kvp.Key);
+					}
+					catch
+					{
+						continue;
+					}
+					if (!kvp.Value.ToJsonString().Contains("args"))
+					{
+						object obj = ApplicationFactory.JsonSerializer.Deserialize(kvp.Value.ToJsonString(), pi.PropertyType);
+						pi.SetValue(this, obj, null);
+					}
+					else
+					{
+						_argPropList.Add(kvp.Key);
+					}
+				}
+			}
+		}
+
+		public void SetArgs(params Json[] args)
+		{
+			foreach(string str in _argPropList)
+			{
+				PropertyInfo pi = typeof(Shape).GetProperties().Single(p=>p.Name == str);
+				string value = _metaData[str].ToJsonString();
+				foreach(Match m in Regex.Matches(value, @"args\[(?<id>\d+)\]"))
+				{
+					int i = int.Parse(m.Groups["id"].Value);
+					if (args != null && args.Length - 1 > i)
+						value = value.Replace(m.Value, args[i].ToJsonString());
+				}
+				pi.SetValue(this, ApplicationFactory.JsonSerializer.Deserialize(value, pi.PropertyType), null);
+			}
+		}
 
 		public Shape()
 		{
@@ -60,7 +117,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public void SetDefaultValueToNullProperty()
 		{
-			foreach (PropertyInfo pi in this.GetType().GetProperties())
+			foreach (PropertyInfo pi in typeof(Shape).GetProperties())
 			{
 				if (pi.GetValue(this, null) == null)
 				{

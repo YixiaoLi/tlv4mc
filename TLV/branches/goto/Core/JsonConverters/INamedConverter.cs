@@ -27,7 +27,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		protected override void WriteJson(IJsonWriter writer, INamed obj)
 		{
-			if (isCollection(obj.GetType()))
+			if (obj.GetType().IsCollection())
 			{
 				writer.WriteArray(w =>
 					{
@@ -58,7 +58,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			Type type = _types.Pop();
 			object obj;
 
-			if (isCollection(type))
+			if (type.IsCollection())
 			{
 				List<object> list = new List<object>();
 				while (reader.TokenType != JsonTokenType.EndArray)
@@ -93,22 +93,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 
 			return obj;
-		}
-
-		private bool isCollection(Type type)
-		{
-			if (type.IsGenericType && typeof(ICollection).IsAssignableFrom(type))
-			{
-				return true;
-			}
-			else if (type != typeof(object))
-			{
-				return isCollection(type.BaseType);
-			}
-			else
-			{
-				return false;
-			}
 		}
 
 		private Type getCollectionType(Type type)

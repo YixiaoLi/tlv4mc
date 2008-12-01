@@ -80,7 +80,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		private Json getValue(string value, string type, string attr)
 		{
-			switch (_resourceData.ResourceHeader[type].Attributes[attr].VariableType)
+			switch (_resourceData.ResourceHeaders[type].Attributes[attr].VariableType)
 			{
 				case JsonValueType.String:
 					return new Json(value);
@@ -102,7 +102,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			ArgumentList argList = new ArgumentList();
 
 			int i = 0;
-			foreach (ArgumentType argType in _resourceData.ResourceHeader[type].Behaviors[behavior].Arguments)
+			foreach (ArgumentType argType in _resourceData.ResourceHeaders[type].Behaviors[behavior].Arguments)
 			{
 				switch (argType.Type)
 				{
@@ -147,7 +147,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			Time time = condition.HasTime ? new Time(condition.Time, _resourceData.TimeRadix) : MaxTime;
 
-			if (_resourceData.ResourceHeader[res.Type].Attributes[condition.Attribute].AllocationType == AllocationType.Static)
+			if (_resourceData.ResourceHeaders[res.Type].Attributes[condition.Attribute].AllocationType == AllocationType.Static)
 			{
 				result = res.Attributes[condition.Attribute];
 			}
@@ -164,8 +164,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				}
 				catch
 				{
-					if (_resourceData.ResourceHeader[res.Type].Attributes[condition.Attribute].Default != null)
-						result = _resourceData.ResourceHeader[res.Type].Attributes[condition.Attribute].Default;
+					if (_resourceData.ResourceHeaders[res.Type].Attributes[condition.Attribute].Default != null)
+						result = _resourceData.ResourceHeaders[res.Type].Attributes[condition.Attribute].Default;
 				}
 			}
 
@@ -198,7 +198,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				string condition = m.Groups["condition"].Value.Replace(" ", "").Replace("\t", "");
 
-				if (!_resourceData.ResourceHeader.TypeNames.Contains<string>(type))
+				if (!_resourceData.ResourceHeaders.TypeNames.Contains<string>(type))
 					throw new Exception("\"" + type + "\"というリソースの型は定義されていません。");
 
 				Dictionary<string, string> attrOpeDic = new Dictionary<string, string>();
@@ -219,7 +219,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						LogData logData;
 						string value;
 
-						if (_resourceData.ResourceHeader[type].Attributes[kvp.Key].AllocationType == AllocationType.Static)
+						if (_resourceData.ResourceHeaders[type].Attributes[kvp.Key].AllocationType == AllocationType.Static)
 						{
 							value = res.Attributes[kvp.Key];
 						}
@@ -242,8 +242,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 							if (logData != null)
 								value = ((AttributeChangeLogData)logData).Value.ToString();
-							else if (_resourceData.ResourceHeader[type].Attributes[kvp.Key].Default != null)
-								value = _resourceData.ResourceHeader[type].Attributes[kvp.Key].Default;
+							else if (_resourceData.ResourceHeaders[type].Attributes[kvp.Key].Default != null)
+								value = _resourceData.ResourceHeaders[type].Attributes[kvp.Key].Default;
 							else
 								value = "null";
 						}

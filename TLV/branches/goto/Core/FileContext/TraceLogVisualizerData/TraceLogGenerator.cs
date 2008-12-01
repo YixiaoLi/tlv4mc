@@ -30,7 +30,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			Dictionary<string, Json> dic = new Dictionary<string, Json>();
 
-			string target = _resourceData.ConvertRule;
+			string[] target = _resourceData.ConvertRules.ToArray();
 
 			string[] convertRulePaths = Directory.GetFiles(ApplicationData.Setting.ConvertRulesDirectoryPath, "*." + Properties.Resources.ConvertRuleFileExtension);
 			// トレースログ変換ファイルを開きJsonValueでデシリアライズ
@@ -40,7 +40,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				Json json = new Json().Parse(File.ReadAllText(s));
 				foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
 				{
-					if (j.Key == target)
+					if (target.Contains(j.Key))
 					{
 						foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePairEnumerator())
 						{

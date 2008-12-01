@@ -11,13 +11,31 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public class ResourceExplorerSetting : ISetting
 	{
 		public event EventHandler BecameDirty = null;
-		public ObservableDictionary<string, bool> ResourceVisibility { get; set; }
-		public const string ResourceSeparateText = ":";
+		public ObservableDictionary<string, bool> ResourceVisibilityVisibility { get; set; }
+		public void SetResourceVisibilityVisibility(string resType, string name, bool value)
+		{
+			if (!ContainsResourceVisibilityVisibility(resType, name))
+				ResourceVisibilityVisibility.Add(resType + ":" + name, value);
+			else
+				ResourceVisibilityVisibility[resType + ":" + name] = value;
+		}
+		public bool GetResourceVisibilityVisibility(string resType, string name)
+		{
+			return ResourceVisibilityVisibility[resType + ":" + name];
+		}
+		public bool ContainsResourceVisibilityVisibility(string resType, string name)
+		{
+			return ResourceVisibilityVisibility.ContainsKey(resType + ":" + name);
+		}
+		public IEnumerable<KeyValuePair<string[], bool>> GetResourceEnumeralor()
+		{
+			return ResourceVisibilityVisibility.Select(kvp=>new KeyValuePair<string[], bool>(kvp.Key.Split(':'),kvp.Value));
+		}
 
 		public ResourceExplorerSetting()
 		{
-			ResourceVisibility = new ObservableDictionary<string, bool>();
-			ResourceVisibility.CollectionChanged += CollectionChanged;
+			ResourceVisibilityVisibility = new ObservableDictionary<string, bool>();
+			ResourceVisibilityVisibility.CollectionChanged += CollectionChanged;
 		}
 
 		void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

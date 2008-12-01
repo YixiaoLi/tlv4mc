@@ -3,73 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NU.OJL.MPRTOS.TLV.Base;
+using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class VisualizeRule : IEnumerable<KeyValuePair<string,string>>, INamed
+	public class VisualizeRule : INamed
 	{
-		private object _data;
-
 		public string Name { get; set; }
-		public bool IsMapped { get { return _data is Dictionary<string, string>; } }
-		public string this[string name] { get { return IsMapped ? ((Dictionary<string, string>)_data)[name] : null;}}
+		public string DisplayName { get; set; }
+		public string Target { get; set; }
+		public Event[] Events { get; set; }
 
-		public VisualizeRule()
+		public bool IsBelongedTargetResourceType()
 		{
-			_data = null;
-		}
-		public VisualizeRule(string data)
-		{
-			_data = data;
-		}
-		public VisualizeRule(Dictionary<string, string> data)
-		{
-			_data = data;
-		}
-
-		public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
-		{
-			if (IsMapped)
-			{
-				return ((Dictionary<string, string>)_data).GetEnumerator();
-			}
-			else
-			{
-				return null;
-			}
-		}
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-		{
-			if (IsMapped)
-			{
-				return ((Dictionary<string, string>)_data).GetEnumerator();
-			}
-			else
-			{
-				return null;
-			}
-		}
-
-		public void Add(string name, string value)
-		{
-			if (IsMapped)
-			{
-				((Dictionary<string, string>)_data).Add(name, value);
-			}
-		}
-
-		public static implicit operator string(VisualizeRule data)
-		{
-			return (string)data._data;
-		}
-		public static implicit operator Dictionary<string, string>(VisualizeRule data)
-		{
-			return (Dictionary<string, string>)data._data;
-		}
-
-		public override string ToString()
-		{
-			return _data.ToString();
+			return Target != null;
 		}
 	}
 }

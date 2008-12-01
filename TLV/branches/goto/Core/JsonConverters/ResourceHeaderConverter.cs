@@ -37,40 +37,56 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					reader.Read();
 				}
 
-				ResourceHeader resh = new ResourceHeader("", resTypes);
+				ResourceHeader resh = new ResourceHeader(resTypes);
 				return resh;
+			}
+			else if (reader.TokenType == JsonTokenType.StartArray)
+			{
+				ResourceHeader result = getResourceHeader(reader);
+				return result;
 			}
 			else
 			{
-				string name = (string)reader.Value;
+				throw new Exception("ResourceHeader記述の文法が間違っています。");
+			}
+		}
 
-				Json data = new Json(new Dictionary<string, Json>());
+		private static ResourceHeader getResourceHeader(IJsonReader reader)
+		{
 
-				string[] resourceHeadersPaths = Directory.GetFiles(ApplicationData.Setting.ResourceHeadersDirectoryPath, "*." + Properties.Resources.ResourceHeaderFileExtension);
+			Json data = new Json(new Dictionary<string, Json>());
 
-				foreach (string s in resourceHeadersPaths)
+			while(reader.TokenType != JsonTokenType.EndArray)
+			{
+				if (reader.TokenType == JsonTokenType.String)
 				{
-					Json json = new Json().Parse(File.ReadAllText(s));
-					foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
+					string name = (string)reader.Value;
+
+					string[] resourceHeadersPaths = Directory.GetFiles(ApplicationData.Setting.ResourceHeadersDirectoryPath, "*." + Properties.Resources.ResourceHeaderFileExtension);
+
+					foreach (string s in resourceHeadersPaths)
 					{
-						if (j.Key == name)
+						Json json = new Json().Parse(File.ReadAllText(s));
+						foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
 						{
-							foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePairEnumerator())
+							if (j.Key == name)
 							{
-								data.Add(_j.Key, _j.Value.Value);
+								foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePairEnumerator())
+								{
+									data.Add(_j.Key, _j.Value.Value);
+								}
 							}
 						}
 					}
 				}
-
-				string typesStr = data.ToJsonString();
-
-				GeneralNamedCollection<ResourceType> types = ApplicationFactory.JsonSerializer.Deserialize<GeneralNamedCollection<ResourceType>>(typesStr);
-
-				ResourceHeader result = new ResourceHeader(name, types);
-
-				return result;
+				reader.Read();
 			}
+
+			string typesStr = data.ToJsonString();
+
+			GeneralNamedCollection<ResourceType> types = ApplicationFactory.JsonSerializer.Deserialize<GeneralNamedCollection<ResourceType>>(typesStr);
+			ResourceHeader result = new ResourceHeader(types);
+			return result;
 		}
 	}
 }

@@ -35,6 +35,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				}
 			};
 
+			if (reader.TokenType == JsonTokenType.PropertyName)
+			{
+				if (result != null)
+					stack.Push(result);
+				result = new Json(new Dictionary<string, Json>());
+				objectNest++;
+				keyStack.Push(reader.Value as string);
+			}
+
 			do
 			{
 				switch (reader.TokenType)

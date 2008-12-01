@@ -100,7 +100,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			ResourceData resData = ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(resourceFilePath));
 
-			foreach(ResourceType resType in resData.ResourceHeader.ResourceTypes)
+			// 未記述の属性についてデフォルト値で追加する
+			foreach (ResourceType resType in resData.ResourceHeaders.ResourceTypes)
 			{
 				foreach (Resource res in resData.Resources.Where<Resource>(r=>r.Type == resType.Name))
 				{
@@ -128,71 +129,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 				foreach (VisualizeRule vizRule in vizData.VisualizeRules)
 				{
-					bool flag = false;
-					foreach (ResourceType resh in _resourceData.ResourceHeader)
-					{
-						bool f = false;
-						foreach (AttributeType attr in resh.Attributes)
-						{
-							if (vizRule.Name == attr.VisualizeRule)
-							{
-								f = true;
-								break;
-							}
-						}
-						foreach (Behavior bhvr in resh.Behaviors)
-						{
-							if (vizRule.Name == bhvr.VisualizeRule)
-							{
-								f = true;
-								break;
-							}
-						}
-						if (f)
-						{
-							flag = true;
-							break;
-						}
-					}
-					if (flag)
-					{
-						visualizeData.VisualizeRules.Add(vizRule.Name, vizRule);
-					}
+					visualizeData.VisualizeRules.Add(vizRule.Name, vizRule);
 				}
 				foreach (Shapes sp in vizData.Shapes)
 				{
-					bool flag = false;
-					foreach (VisualizeRule vizRule in visualizeData.VisualizeRules)
-					{
-						bool f = false;
-						if (vizRule.IsMapped)
-						{
-							foreach (KeyValuePair<string, string> v in vizRule)
-							{
-								if (sp.Name == v.Value)
-								{
-									f = true;
-									break;
-								}
-							}
-						}
-						else
-						{
-							if (sp.Name == vizRule)
-							{
-								f = true;
-							}
-						}
-						if (f)
-						{
-							flag = true;
-							break;
-						}
-					}
-					if (flag)
-					{
-						visualizeData.Shapes.Add(sp.Name, sp);
-					}
+					visualizeData.Shapes.Add(sp.Name, sp);
 				}
 			}
 			return visualizeData;

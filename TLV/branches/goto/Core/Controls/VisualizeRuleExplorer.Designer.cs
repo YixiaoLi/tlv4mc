@@ -1,6 +1,6 @@
 ﻿namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
-	partial class ResourceExplorer
+	partial class VisualizeRuleExplorer
 	{
 		/// <summary> 
 		/// 必要なデザイナ変数です。
@@ -28,19 +28,22 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tabControl = new System.Windows.Forms.TabControl();
 			this.components = new System.ComponentModel.Container();
+			this._treeView = new System.Windows.Forms.TreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.SuspendLayout();
 			// 
-			// tabControl
+			// _treeView
 			// 
-			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl.Location = new System.Drawing.Point(0, 0);
-			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(238, 264);
-			this.tabControl.TabIndex = 0;
+			this._treeView.CheckBoxes = true;
+			this._treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this._treeView.ImageIndex = 0;
+			this._treeView.ImageList = this.imageList;
+			this._treeView.Location = new System.Drawing.Point(0, 0);
+			this._treeView.Name = "_treeView";
+			this._treeView.SelectedImageIndex = 0;
+			this._treeView.Size = new System.Drawing.Size(238, 264);
+			this._treeView.TabIndex = 0;
 			// 
 			// imageList
 			// 
@@ -48,12 +51,12 @@
 			this.imageList.ImageSize = new System.Drawing.Size(16, 16);
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			// 
-			// ResourceExplorer
+			// ResourceTypeExplorer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.tabControl);
-			this.Name = "ResourceExplorer";
+			this.Controls.Add(this._treeView);
+			this.Name = "ResourceTypeExplorer";
 			this.Size = new System.Drawing.Size(238, 264);
 			this.ResumeLayout(false);
 
@@ -61,8 +64,9 @@
 
 		#endregion
 
-		private System.Windows.Forms.TabControl tabControl;
+		private System.Windows.Forms.TreeView _treeView;
 		private System.Windows.Forms.ImageList imageList;
+
 
 	}
 }

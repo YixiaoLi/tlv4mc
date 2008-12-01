@@ -14,6 +14,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public DashStyle? DashStyle { get; set; }
 		public float[] DashPattern { get; set; }
 		public DashCap? DashCap { get; set; }
+		public int? Alpha { get; set; }
 
 		public Pen()
 		{

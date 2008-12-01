@@ -10,8 +10,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public static class GraphicsExtension
 	{
-		public static void DrawShape(this Graphics graphics, Shape shape, RectangleF rect)
+		public static void DrawShape(this Graphics graphics, Shape shape, RectangleF rect, params Json[] args)
 		{
+
+			shape.SetArgs(args);
+
 			throwException(shape);
 
 			Area a;
@@ -84,7 +87,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					if (shape.Pen != null)
 						graphics.DrawPolygon(shape.Pen, points);
 					break;
-				case ShapeType.String:
+				case ShapeType.Text:
 					string value;
 					Color color;
 					StringAlignment align = StringAlignment.Center;
@@ -179,9 +182,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					if (shape.Fill == null && shape.Pen == null)
 						throw new Exception("Polygonの描画にはFillまたはPenの指定が必要です。");
 					break;
-				case ShapeType.String:
+				case ShapeType.Text:
 					if (shape.Area == null && (shape.Location == null && shape.Size == null))
-						throw new Exception("Stringの描画にはAreaまたはPointとSizeの指定が必要です。");
+						throw new Exception("Textの描画にはAreaまたはPointとSizeの指定が必要です。");
 					break;
 				default:
 					throw new Exception("未知の図形でず。");

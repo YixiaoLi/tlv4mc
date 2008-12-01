@@ -27,7 +27,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             cp.Width = 0;
 
             cp.Parent = parent.Handle;
-			cp.Style = WS_VISIBLE | SBS_HORZ | WS_CHILD;
+			cp.Style = WS_VISIBLE | SBS_HORZ | WS_CHILD | SBS_VERT;
 
             IntPtr modHandle = NativeScrollBar.GetModuleHandle(null);
 			int lastWin32Error = 0;

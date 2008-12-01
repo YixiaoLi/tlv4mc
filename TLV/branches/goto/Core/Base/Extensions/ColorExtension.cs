@@ -14,7 +14,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		}
 		public static Color FromHexString(this Color color, string str)
 		{
-			return Color.FromArgb(Convert.ToInt32(str, 16));
+			try
+			{
+				return Color.FromArgb(Convert.ToInt32(str, 16));
+			}
+			catch
+			{
+				return Color.Empty;
+			}
 		}
 	}
 }
