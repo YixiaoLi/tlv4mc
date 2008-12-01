@@ -244,12 +244,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\LegendHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\WarningHS.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\visualizeRule.png" />
   </ItemGroup>
   <ItemGroup>
