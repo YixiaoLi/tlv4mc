@@ -1,7 +1,8 @@
 ﻿{
 	"TimeScale"		:"ns",
-	"ConvertRule"	:"asp",
-	"ResourceHeader":"asp",
+	"ConvertRules"	:["asp"],
+	"VisualizeRules":["asp"],
+	"ResourceHeaders":["asp"],
 	"Resources":
 	{
 		"LOGTASK":{

@@ -48,3 +48,14 @@ C:\Junji\Documents\School\OJL\TLV\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
 C:\Junji\Documents\School\OJL\TLV\src\Third\obj\Debug\ResolveAssemblyReference.cache
 C:\Junji\Documents\School\OJL\TLV\src\Third\obj\Debug\NU.OJL.MPRTOS.TLV.Third.dll
 C:\Junji\Documents\School\OJL\TLV\src\Third\obj\Debug\NU.OJL.MPRTOS.TLV.Third.pdb
+C:\junji\doc\school\ojl\tlv\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Third.dll
+C:\junji\doc\school\ojl\tlv\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Third.pdb
+C:\junji\doc\school\ojl\tlv\src\Third\bin\Debug\ExpandableGridView.dll
+C:\junji\doc\school\ojl\tlv\src\Third\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\junji\doc\school\ojl\tlv\src\Third\bin\Debug\Newtonsoft.Json.dll
+C:\junji\doc\school\ojl\tlv\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\doc\school\ojl\tlv\src\Third\bin\Debug\WeifenLuo.WinFormsUI.Docking.dll
+C:\junji\doc\school\ojl\tlv\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\junji\doc\school\ojl\tlv\src\Third\obj\Debug\ResolveAssemblyReference.cache
+C:\junji\doc\school\ojl\tlv\src\Third\obj\Debug\NU.OJL.MPRTOS.TLV.Third.dll
+C:\junji\doc\school\ojl\tlv\src\Third\obj\Debug\NU.OJL.MPRTOS.TLV.Third.pdb

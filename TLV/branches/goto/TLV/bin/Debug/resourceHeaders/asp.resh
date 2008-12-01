@@ -57,8 +57,7 @@
 					"DisplayName"	:"状態",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:false,
-					"Default"		:"DORMANT",
-					"VisualizeRule"	:"taskState"
+					"Default"		:"DORMANT"
 				}
 			},
 			"Behaviors"	:{
@@ -69,15 +68,13 @@
 					"DisplayName"	:"ディスパッチ"
 				},
 				"activate":{
-					"DisplayName"	:"起動",
-					"VisualizeRule"	:"taskActivate"
+					"DisplayName"	:"起動"
 				},
 				"wait":{
 					"DisplayName"	:"待ち"
 				},
 				"exit":{
-					"DisplayName"	:"終了",
-					"VisualizeRule"	:"taskExit"
+					"DisplayName"	:"終了"
 				},
 				"resume":{
 					"DisplayName"	:"再開"
