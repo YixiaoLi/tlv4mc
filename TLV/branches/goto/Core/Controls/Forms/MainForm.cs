@@ -244,6 +244,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 e.Cancel = true;
                 _commandManager.Do(new ExitCommand(this));
             }
+
+			if (Directory.Exists(ApplicationData.Setting.TemporaryDirectoryPath))
+				Directory.Delete(ApplicationData.Setting.TemporaryDirectoryPath, true);
         }
 
         protected override void OnDragEnter(DragEventArgs drgevent)

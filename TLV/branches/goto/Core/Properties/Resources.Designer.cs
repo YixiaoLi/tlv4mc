@@ -139,6 +139,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         }
         
         /// <summary>
+        ///   TraceLogVisualizer に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DefaultTemporaryDirectoryName {
+            get {
+                return ResourceManager.GetString("DefaultTemporaryDirectoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   visualizeRules に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DefaultVisualizeRulesDirectoryName {
