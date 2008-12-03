@@ -52,7 +52,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			if (BecameDirty != null)
-				BecameDirty(this, EventArgs.Empty);
+				BecameDirty(sender, EventArgs.Empty);
 		}
 
 		private string arrayToString(params string[] name)

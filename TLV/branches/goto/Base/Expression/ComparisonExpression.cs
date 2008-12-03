@@ -13,12 +13,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public static bool Result<T>(string left, string ope, string right) where T : IComparable, IConvertible
 		{
-			if (cache.ContainsKey(left + ope + right))
-				return cache[left + ope + right];
+			if (cache.ContainsKey(typeof(T).ToString() + left + ope + right))
+				return cache[typeof(T).ToString() + left + ope + right];
 
 			bool result = compare<T>(left, ope, right);
 
-			cache.Add(left + ope + right, result);
+			cache.Add(typeof(T).ToString() + left + ope + right, result);
 
 			return result;
 		}
@@ -27,8 +27,8 @@ namespace NU.OJL.MPRTOS.TLV.Base
 		{
 			condition = condition.Replace(" ", "").Replace("\t", "");
 
-			if (cache.ContainsKey(condition))
-				return cache[condition];
+			if (cache.ContainsKey(typeof(T).ToString() + condition))
+				return cache[typeof(T).ToString() + condition];
 
 			Match m = Regex.Match(condition, @"(?<left>[^=!<>&\|\s]+)\s*(?<ope>(==|!=|<=|>=|>|<))\s*(?<right>[^=!<>&\|\s]+)\s");
 			string left = m.Groups["left"].Value;
@@ -36,7 +36,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			string right = m.Groups["right"].Value;
 			bool result = compare<T>(left, ope, right);
 
-			cache.Add(condition, result);
+			cache.Add(typeof(T).ToString() + condition, result);
 
 			return result;
 		}
