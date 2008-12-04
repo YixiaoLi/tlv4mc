@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this._treeView = new System.Windows.Forms.TreeView();
+			this._treeView = new NU.OJL.MPRTOS.TLV.Base.Controls.ExTreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.SuspendLayout();
 			// 
@@ -64,7 +64,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.TreeView _treeView;
+		private NU.OJL.MPRTOS.TLV.Base.Controls.ExTreeView _treeView;
 		private System.Windows.Forms.ImageList imageList;
 
 

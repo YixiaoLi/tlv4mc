@@ -25,12 +25,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public static bool Result<T>(string condition) where T : IComparable, IConvertible
 		{
-			condition = condition.Replace(" ", "").Replace("\t", "");
+			condition = Regex.Replace(condition, @"\s", "");
 
 			if (cache.ContainsKey(typeof(T).ToString() + condition))
 				return cache[typeof(T).ToString() + condition];
 
-			Match m = Regex.Match(condition, @"(?<left>[^=!<>&\|\s]+)\s*(?<ope>(==|!=|<=|>=|>|<))\s*(?<right>[^=!<>&\|\s]+)\s");
+			Match m = Regex.Match(condition, @"(?<left>[^=!<>&\|]+)(?<ope>(==|!=|<=|>=|>|<))(?<right>[^=!<>&\|]+)");
 			string left = m.Groups["left"].Value;
 			string ope = m.Groups["ope"].Value;
 			string right = m.Groups["right"].Value;

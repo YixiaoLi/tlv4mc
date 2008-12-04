@@ -1,11 +1,30 @@
 ﻿{
 	"asp":{
 		"VisualizeRules":{
-			"callSvc":{
-				"DisplayName":"システムコール",
-				"ResourceType":"Task",
+			"runningTaskChange":{
+				"DisplayName":"実行タスク変化",
 				"Events":[
 					{
+						"DisplayName":"実行タスク",
+						"From":{
+							"Attribute":"Task.state",
+							"Value":"(?<state>.+)"
+						},
+						"To":{
+							"Attribute":"Task.state(state==RUNNING)"
+						},
+						"Shapes":{
+							"${state}==RUNNING":{"runningTaskChangeShapes":["COLOR{${Target}}", "${Target.name}"]}
+						}
+					}
+				]
+			},
+			"callSvc":{
+				"DisplayName":"システムコール",
+				"Target":"Task",
+				"Events":[
+					{
+						"DisplayName":"act_tsk開始～終了",
 						"From":{
 							"Behavior":"enterSVC",
 							"Arguments":["(?<enterSvcName>.+)","tskid=(?<enverTaskId>[^\.]+)."]
@@ -22,9 +41,10 @@
 			},
 			"taskStateChange":{
 				"DisplayName":"状態遷移",
-				"ResourceType":"Task",
+				"Target":"Task",
 				"Events":[
 					{
+						"DisplayName":"状態",
 						"From":{
 							"Attribute":"state",
 							"Value":"(?<state>.+)"
@@ -42,12 +62,14 @@
 						}
 					},
 					{
+						"DisplayName":"終了",
 						"When":{
 							"Behavior":"exit"
 						},
 						"Shapes":"exitShapes"
 					},
 					{
+						"DisplayName":"起動",
 						"When":{
 							"Behavior":"activate"
 						},
@@ -57,9 +79,10 @@
 			},
 			"taskPrcIdChange":{
 				"DisplayName":"所属プロセッサ",
-				"ResourceType":"Task",
+				"Target":"Task",
 				"Events":[
 					{
+						"DisplayName":"プロセッサID",
 						"From":{
 							"Attribute":"prcId",
 							"Value":"(?<prcId>.+)"
@@ -79,24 +102,29 @@
 							"${prcId==8}":{"prcIdShapes":["ff0066ff", "330066ff"]},
 							"${prcId==9}":{"prcIdShapes":["ffff0066", "33ff0066"]}
 						}
-					},
-					{
-						"When":{
-							"Behavior":"exit"
-						},
-						"Shapes":"exitShapes"
-					},
-					{
-						"When":{
-							"Behavior":"activate"
-						},
-						"Shapes":"activateShapes"
 					}
 				]
 			}
 		},
 		"Shapes":
 		{
+			"runningTaskChangeShapes":[
+				{
+					"Type":"Rectangle",
+					"Location":"0,0",
+					"Size":"100%,100%",
+					"Pen":{"Color":"args[0]","Width":3,"Alpha":255},
+					"Fill":"args[0]",
+					"Alpha":200
+				},
+				{
+					"Type":"Text",
+					"Location":"0,0",
+					"Size":"100%,100%",
+					"Font":{"Align":"MiddleLeft"},
+					"Value":"args[1]"
+				}
+			],
 			"prcIdShapes":[
 				{
 					"Type":"Rectangle",

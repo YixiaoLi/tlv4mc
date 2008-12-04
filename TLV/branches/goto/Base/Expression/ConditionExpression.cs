@@ -12,7 +12,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public static bool Result(string expression)
 		{
-			expression = expression.Replace(" ", "").Replace("\t", "");
+			expression = Regex.Replace(expression, @"\s", "");
 			bool result;
 			try
 			{

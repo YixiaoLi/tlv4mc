@@ -11,6 +11,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Base.Controls;
 using NU.OJL.MPRTOS.TLV.Third;
 using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
+using System.Collections;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
@@ -56,7 +57,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 						ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.BecameDirty += (_o, __e) =>
 							{
-								foreach (KeyValuePair<string, bool> kvp in (IEnumerable<KeyValuePair<string, bool>>)_o)
+								foreach (KeyValuePair<string, bool> kvp in (IList)_o)
 								{
 									if (treeGridView.Nodes[kvp.Key].Visible != kvp.Value)
 									{
@@ -67,36 +68,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 											string[] res = node.Name.Split(':');
 
 											if (kvp.Value
-												&& ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.ContainsVisualizeRuleBelongedResourceVisibility(res[0], res[2]))
+												&& ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2]))
 											{
-												node.Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.GetVisualizeRuleBelongedResourceVisibility(res[0], res[2]);
+												node.Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2]);
 											}
 											else
 											{
 												node.Visible = false;
 											}
+
+											foreach (ITreeGirdViewNode n in node.Nodes.Values)
+											{
+												if (kvp.Value
+													&& ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2], n.Name))
+												{
+													n.Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2], n.Name);
+												}
+												else
+												{
+													n.Visible = false;
+												}
+											}
 										}
 									}
 								}
-
-								//if (treeGridView.Nodes[res[0]].Visible)
-								//{
-								//    treeGridView.Nodes[res[0]].Nodes[res[1]].Visible = kvp.Value;
-
-								//    foreach (ITreeGirdViewNode node in treeGridView.Nodes[res[0]].Nodes[res[1]].Nodes.Values)
-								//    {
-								//        if (kvp.Value
-								//            && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.ResourcePropertyVisibility.ContainsKey(m.Groups["type"].Value + node.Name))
-								//        {
-								//            node.Visible = ApplicationData.FileContext.Data.SettingData.ResourcePropertyExplorerSetting.ResourcePropertyVisibility[m.Groups["type"].Value + node.Name];
-								//        }
-								//        else
-								//        {
-								//            node.Visible = false;
-								//        }
-								//    }
-								//    treeGridViewRowChanged(this, EventArgs.Empty);
-								//}
+								treeGridViewRowChanged(this, EventArgs.Empty);
 							};
 
 						//ApplicationData.FileContext.Data.SettingData.ResourcePropertyExplorerSetting.ResourcePropertyVisibility.CollectionChanged += (_o, __e) =>
