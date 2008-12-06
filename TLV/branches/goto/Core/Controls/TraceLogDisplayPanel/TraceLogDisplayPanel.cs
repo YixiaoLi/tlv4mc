@@ -116,26 +116,30 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 									if (keys.Length == 1)
 									{
-										if (!(node.Name.Split(':').Length > 1 && !ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], node.Name.Split(':')[1])))
+										if (node.Name.Split(':').Length > 1)
+										{
+											if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys[0], node.Name.Split(':')[1]) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], node.Name.Split(':')[1]) : ApplicationData.Setting.DefaultResourceVisible)
+												node.Visible = kvp.Value;
+										}
+										else if (node.Name.Split(':').Length == 1)
+										{
 											node.Visible = kvp.Value;
+										}
 									}
 									else
 									{
 										foreach (ITreeGirdViewNode n in node.Nodes.Values.Where(n => n.Name.Split(':').Last() == keys[1]))
 										{
-											if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], n.Name.Split(':')[1]))
+											if (n.HasChildren && keys.Length == 3)
 											{
-												if (n.HasChildren && keys.Length == 3)
+												foreach (ITreeGirdViewNode _n in n.Nodes.Values.Where(_n => _n.Name == keys[2]))
 												{
-													foreach (ITreeGirdViewNode _n in n.Nodes.Values.Where(_n => _n.Name == keys[2]))
-													{
-														_n.Visible = kvp.Value;
-													}
+													_n.Visible = kvp.Value;
 												}
-												else
-												{
-													n.Visible = kvp.Value;
-												}
+											}
+											else
+											{
+												n.Visible = kvp.Value;
 											}
 										}
 									}
