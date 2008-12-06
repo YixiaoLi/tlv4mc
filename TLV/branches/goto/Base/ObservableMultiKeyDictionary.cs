@@ -9,14 +9,14 @@ namespace NU.OJL.MPRTOS.TLV.Base
 	{
 		public void SetValue(T value, params string[] name)
 		{
-			if (!ContainsKey(name))
-				this.Add(arrayToString(name), value);
-			else if (!this[arrayToString(name)].Equals(value))
-				this[arrayToString(name)] = value;
+			if (!this.ContainsKey(name))
+				base.Add(arrayToString(name), value);
+			else if (!base[arrayToString(name)].Equals(value))
+				base[arrayToString(name)] = value;
 		}
 		public T GetValue(params string[] name)
 		{
-			return this[arrayToString(name)];
+			return base[arrayToString(name)];
 		}
 		public bool ContainsKey(params string[] name)
 		{

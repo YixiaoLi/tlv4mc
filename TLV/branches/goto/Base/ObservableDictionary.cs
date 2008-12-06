@@ -23,7 +23,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			if(! ContainsKey(key))
 				throw new Exception(key.ToString() + "というキーはディクショナリ内に存在しません");
 
-			return this.IndexOf(this.Single<KeyValuePair<K, T>>(kvp => kvp.Key.Equals(key)));
+			return base.IndexOf(this.Single<KeyValuePair<K, T>>(kvp => kvp.Key.Equals(key)));
 		}
 
 		public bool ContainsKey(K key)
@@ -40,7 +40,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 		{
 			if (ContainsKey(key))
 			{
-				this.RemoveItem(this.IndexOf(this.Single<KeyValuePair<K, T>>(kvp => kvp.Key.Equals(key))));
+				this.RemoveItem(this.IndexOf(key));
 				return true;
 			}
 			else

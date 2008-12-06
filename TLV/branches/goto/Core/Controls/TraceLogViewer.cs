@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Text.RegularExpressions;
 using NU.OJL.MPRTOS.TLV.Base;
 using System.Text;
+using System.ComponentModel;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
@@ -58,7 +59,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			base.OnLoad(e);
 
-			addColumn("eventType", "", "EventType", typeof(DataGridViewImageColumn));
+			addColumn("eventType", "", "アイコン", "EventType", typeof(DataGridViewImageColumn));
 			addColumn("time", "時間", "Time", typeof(DataGridViewTextBoxColumn));
 			addColumn("resourceType", "リソースタイプ", "ResourceType", typeof(DataGridViewTextBoxColumn), false);
 			addColumn("resource", "リソース", "Resource", typeof(DataGridViewTextBoxColumn));
@@ -118,6 +119,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						}
 					}
 				};
+			dataGridView.ColumnHeaderMouseClick += (o, _e) =>
+				{
+					DataGridViewColumn clickedColumn = dataGridView.Columns[_e.ColumnIndex];
+					if (clickedColumn.SortMode != DataGridViewColumnSortMode.Automatic)
+						sortDataGridViewRows(clickedColumn, true);
+				};
 			ApplicationData.FileContext.DataChanged += (o, _e) =>
 			{
 				Invoke((MethodInvoker)(() =>
@@ -134,15 +141,55 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			};
 		}
 
+		/// <summary>
+		/// 指定された列を基準にして並び替えを行う
+		/// </summary>
+		/// <param name="sortColumn">基準にする列</param>
+		/// <param name="orderToggle">並び替えの方向をトグルで変更する</param>
+		private void sortDataGridViewRows(DataGridViewColumn sortColumn, bool orderToggle)
+		{
+			if (sortColumn == null)
+				return;
+
+			//今までの並び替えグリフを消す
+			if (sortColumn.SortMode == DataGridViewColumnSortMode.Programmatic
+				&& dataGridView.SortedColumn != null
+				&& !dataGridView.SortedColumn.Equals(sortColumn))
+			{
+				dataGridView.SortedColumn.HeaderCell.SortGlyphDirection = SortOrder.None;
+			}
+
+			ListSortDirection sortDirection;
+
+			//並び替えの方向（昇順か降順か）を決める
+			if (orderToggle)
+				sortDirection = dataGridView.SortOrder == SortOrder.Descending ? ListSortDirection.Ascending : ListSortDirection.Descending;
+			else
+				sortDirection = dataGridView.SortOrder == SortOrder.Descending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+
+			SortOrder sortOrder = sortDirection == ListSortDirection.Ascending ? SortOrder.Ascending : SortOrder.Descending;
+
+			//並び替えグリフを変更
+			if (sortColumn.SortMode == DataGridViewColumnSortMode.Programmatic)
+				sortColumn.HeaderCell.SortGlyphDirection = sortOrder;
+
+			//並び替えを行う
+			dataGridView.Sort(sortColumn, sortDirection);
+		}
+
 		private void dataGridViewMouseWheel(object sender, MouseEventArgs e)
 		{
 			if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
 			{
 				int v = e.Delta > 0 ? 1 : -1;
 				if (dataGridView.DefaultCellStyle.Font.Size + v > 1 && dataGridView.DefaultCellStyle.Font.Size + v < 100)
+				{
 					dataGridView.DefaultCellStyle.Font = new System.Drawing.Font(dataGridView.DefaultCellStyle.Font.FontFamily, dataGridView.DefaultCellStyle.Font.Size + v);
+				}
 				if (dataGridView.ColumnHeadersDefaultCellStyle.Font.Size + v > 1 && dataGridView.ColumnHeadersDefaultCellStyle.Font.Size + v < 100)
+				{
 					dataGridView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font(dataGridView.ColumnHeadersDefaultCellStyle.Font.FontFamily, dataGridView.ColumnHeadersDefaultCellStyle.Font.Size + v);
+				}
 			}
 		}
 
@@ -163,6 +210,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				string value = (string)e.Value;
 				KeyValuePair<string[], Color>?  valTextColor = null;
 				Color color = Color.White;
+				RotateColorFactory colorFactory = new RotateColorFactory();
 				string attr = null;
 				string val = null;
 				string attr_val = null;
@@ -181,7 +229,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						}
 						else
 						{
-							color = Color.FromArgb(_alpha, color.HueRotateNextColor());
+							color = Color.FromArgb(_alpha, colorFactory.RotateColor());
 							ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceColors.Add(value, color);
 						}
 						_resColorCache.Add(value, color);
@@ -201,7 +249,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						}
 						else
 						{
-							color = Color.FromArgb(_alpha, color.HueRotateNextColor());
+							color = Color.FromArgb(_alpha, colorFactory.RotateColor());
 							ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceTypeColors.Add(value, color);
 						}
 						_resTypeColorCache.Add(value, color);
@@ -225,8 +273,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 							attr_val = m.Groups["attr_val"].Value;
 							val = m.Groups["val"].Value;
 
-							color.HueRotateColorRandomSet();
-
 							if (_eventColorCache.ContainsKey(value))
 							{
 								color = _eventColorCache[value];
@@ -239,7 +285,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 								}
 								else
 								{
-									color = Color.FromArgb(_alpha, color.HueRotateNextColor());
+									color = Color.FromArgb(_alpha, colorFactory.RotateColor());
 									ApplicationData.FileContext.Data.SettingData.ColorSetting.AttributeColors.Add(attr, color);
 								}
 								_eventColorCache.Add(value, color);
@@ -257,7 +303,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 								}
 								else
 								{
-									txtColor = txtColor.RandomNextColor();
+									txtColor = colorFactory.RotateColor();
 									ApplicationData.FileContext.Data.SettingData.ColorSetting.ValueColors.Add(attr + val, txtColor);
 								}
 
@@ -275,7 +321,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 							}
 							else
 							{
-								color = Color.FromArgb(_alpha, color.HueRotateNextColor());
+								color = Color.FromArgb(_alpha, colorFactory.RotateColor());
 								ApplicationData.FileContext.Data.SettingData.ColorSetting.BehaviorColors.Add(bhvr, color);
 							}
 						}
@@ -296,7 +342,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					else
 					{
 						foreColor = e.CellStyle.SelectionForeColor;
-						valForeColor = valTextColor.Value.Value.Reverse();
+						valForeColor = valTextColor.Value.Value.ComplementaryColor();
 					}
 
 					dgvpp &= ~DataGridViewPaintParts.ContentForeground;
@@ -322,18 +368,30 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			e.Handled = true;
 		}
 
-		private void addColumn(string name, string str, string propertyName, Type columnType, bool visibility)
+		private void addColumn(string name, string displayName, string propertyName, Type columnType, bool visibility)
+		{
+			addColumn(name, displayName, displayName, propertyName, columnType, visibility);
+		}
+		private void addColumn(string name, string displayName, string propertyName, Type columnType)
+		{
+			addColumn(name, displayName, displayName, propertyName, columnType, true);
+		}
+		private void addColumn(string name, string displayName, string contextMenuDisplayName, string propertyName, Type columnType)
+		{
+			addColumn(name, displayName, contextMenuDisplayName, propertyName, columnType, true);
+		}
+		private void addColumn(string name, string displayName, string contextMenuDisplayName, string propertyName, Type columnType, bool visibility)
 		{
 			DataGridViewColumn dgvc = (DataGridViewColumn)Activator.CreateInstance(columnType);
 			dgvc.Name = name;
-			dgvc.HeaderText = str;
+			dgvc.HeaderText = displayName;
 			dgvc.DataPropertyName = propertyName;
-			dgvc.SortMode = DataGridViewColumnSortMode.Automatic;
+			dgvc.SortMode = DataGridViewColumnSortMode.Programmatic;
 			dgvc.Visible = visibility;
 
 			dataGridView.Columns.Add(dgvc);
 
-			ToolStripMenuItem item = new ToolStripMenuItem(str) { CheckOnClick = true, Checked = visibility };
+			ToolStripMenuItem item = new ToolStripMenuItem(contextMenuDisplayName) { CheckOnClick = true, Checked = visibility };
 
 			item.CheckedChanged += (o, e) =>
 			{
@@ -344,10 +402,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			};
 
 			dataGridView.ContextMenuStrip.Items.Add(item);
-		}
-		private void addColumn(string name, string str, string propertyName, Type columnType)
-		{
-			addColumn(name, str, propertyName, columnType, true);
 		}
 
 		private void setDataGridViewDataSource()
@@ -375,19 +429,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						return new TraceLog(image, ld.Time, ld.Object.Type, ld.Object.Name, "undefined");
 					}
 				}).ToList());
-				_dataSource.SecondSortPropertyName = "Id";
+				_dataSource.BasePropertyName = "Id";
 				_dataSource.Comparisoins.Add("EventType", (t1, t2) =>
 					{
-						int result = t1.EventType.Tag.ToString().CompareTo(t2.EventType.Tag.ToString());
-						return result;
+						return t1.EventType.Tag.ToString().CompareTo(t2.EventType.Tag.ToString());
 					});
 				_dataSource.Comparisoins.Add("Time", (t1, t2) =>
 					{
-						int result = t1.Id.CompareTo(t2.Id);
-						return result;
+						return t1.Id.CompareTo(t2.Id);
 					});
-
-				dataGridView.DataSource = _dataSource;
 
 				_dataSource.Sorting += (o, e) =>
 					{
@@ -400,9 +450,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					{
 						this.Invoke(new MethodInvoker(() =>
 						{
+							dataGridView.Refresh();
 							ApplicationFactory.StatusManager.HideProcessing(this.GetType().ToString() + ":sorting");
 						}));
 					};
+				dataGridView.DataSource = _dataSource;
 			}
 		}
 

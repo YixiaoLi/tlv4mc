@@ -23,6 +23,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		[UserScopedSetting]
 		public string TemporaryDirectoryPath { get { return (string)this["TemporaryDirectoryPath"]; } set { this["TemporaryDirectoryPath"] = value; } }
 
+		[UserScopedSetting]
+		public bool DefaultResourceVisible { get { return (bool)this["DefaultResourceVisible"]; } set { this["DefaultResourceVisible"] = value; } }
+
 		public ApplicationSetting()
 		{
 			if (ResourceHeadersDirectoryPath == null)
@@ -37,6 +40,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			if (TemporaryDirectoryPath == null)
 				TemporaryDirectoryPath = Path.Combine(Path.GetTempPath(), NU.OJL.MPRTOS.TLV.Core.Properties.Resources.DefaultTemporaryDirectoryName);
 
+			if (this["DefaultResourceVisible"] == null)
+				DefaultResourceVisible = true;
 		}
 	}
 }

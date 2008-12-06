@@ -91,6 +91,7 @@
     <Compile Include="ObservableDictionary.cs" />
     <Compile Include="ObservableMultiKeyDictionary.cs" />
     <Compile Include="Pair.cs" />
+    <Compile Include="RotateColorFactory.cs" />
     <Compile Include="SortableBindingList.cs" />
     <Compile Include="StatusManager\StatusManager.cs" />
     <Compile Include="StatusManager\StatusManagerResource.Designer.cs">

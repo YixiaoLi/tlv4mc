@@ -29,9 +29,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						BecameDirty(e.NewItems, EventArgs.Empty);
 						break;
 
-					case NotifyCollectionChangedAction.Remove:
-						BecameDirty(e.OldItems, EventArgs.Empty);
-						break;
+					//case NotifyCollectionChangedAction.Remove:
+					//    BecameDirty(e.OldItems, EventArgs.Empty);
+					//    break;
 				}
 			}
 		}

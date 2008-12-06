@@ -211,24 +211,55 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			//_windowManager.MainPanel.Resize += (o, e) => _windowManager.MainPanel.Invalidate();
 			//_windowManager.MainPanel.Paint += (o, e) =>
 			//    {
-			//        e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-			//        if (ApplicationData.FileContext.IsOpened)
+			//        RotateColorFactory colorFactory = new RotateColorFactory();
+
+			//        int a = 50;
+
+			//        float w = _windowManager.MainPanel.ClientSize.Width / a / 2;
+			//        float h = _windowManager.MainPanel.ClientSize.Height / a;
+
+			//        for (int j = 0; j < a; j++)
 			//        {
-			//            float i = 0.0f;
-			//            foreach (Shapes ss in ApplicationData.FileContext.Data.VisualizeData.Shapes)
+			//            for (int i = 0; i < a; i++ )
 			//            {
-			//                float w = (float)_windowManager.MainPanel.ClientSize.Width / (float)ApplicationData.FileContext.Data.VisualizeData.Shapes.Count;
-
-			//                e.Graphics.FillRectangle(new SolidBrush(Color.White), new RectangleF(w * i, 0.0f, w, w));
-			//                e.Graphics.DrawRectangle(new System.Drawing.Pen(Color.Black), new Rectangle((int)(w * i), 0, (int)w, (int)w));
-
-			//                foreach (Shape s in ss)
-			//                {
-			//                    e.Graphics.DrawShape(s, new RectangleF(w * i, 0.0f, w, w));
-			//                }
-			//                i++;
+			//                Color c = colorFactory.RamdomColor();
+			//                float x = w * i;
+			//                float y = h * j;
+			//                e.Graphics.FillRectangle(new SolidBrush(c), x, y, w, h);
 			//            }
 			//        }
+
+			//        colorFactory.Saturation = 100;
+			//        colorFactory.Value = 100;
+
+			//        for (int j = 0; j < a; j++)
+			//        {
+			//            for (int i = 0; i < a; i++)
+			//            {
+			//                Color c = colorFactory.RotateColor();
+			//                float x = w * i + (_windowManager.MainPanel.ClientSize.Width / 2);
+			//                float y = h * j;
+			//                e.Graphics.FillRectangle(new SolidBrush(c), x, y, w, h);
+			//            }
+			//        }
+
+			//        //if (ApplicationData.FileContext.IsOpened)
+			//        //{
+			//        //    float i = 0.0f;
+			//        //    foreach (Shapes ss in ApplicationData.FileContext.Data.VisualizeData.Shapes)
+			//        //    {
+			//        //        float w = (float)_windowManager.MainPanel.ClientSize.Width / (float)ApplicationData.FileContext.Data.VisualizeData.Shapes.Count;
+
+			//        //        e.Graphics.FillRectangle(new SolidBrush(Color.White), new RectangleF(w * i, 0.0f, w, w));
+			//        //        e.Graphics.DrawRectangle(new System.Drawing.Pen(Color.Black), new Rectangle((int)(w * i), 0, (int)w, (int)w));
+
+			//        //        foreach (Shape s in ss)
+			//        //        {
+			//        //            e.Graphics.DrawShape(s, new RectangleF(w * i, 0.0f, w, w));
+			//        //        }
+			//        //        i++;
+			//        //    }
+			//        //}
 			//    };
         }
 

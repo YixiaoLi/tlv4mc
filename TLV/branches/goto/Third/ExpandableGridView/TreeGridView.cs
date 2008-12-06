@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Base.Controls;
+using System.Drawing;
 
 namespace NU.OJL.MPRTOS.TLV.Third
 {
@@ -36,7 +37,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			treeGridView.ApplyNativeScroll();
 			treeGridView.RowHeightChanged += (o,e) => RowHeightChanged(o,e);
 			treeGridView.Rows.CollectionChanged += (o, e) => RowCountChanged(o, e);
-			treeGridView.ShowLines = true;
+			treeGridView.ShowLines = false;
 			treeGridView.Dock = DockStyle.Fill;
 			treeGridView.AllowUserToAddRows = false;
 			treeGridView.AllowUserToDeleteRows = false;
@@ -100,5 +101,6 @@ namespace NU.OJL.MPRTOS.TLV.Third
 		{
 			get { return treeGridView.ColumnHeadersHeight; }
 		}
+
 	}
 }

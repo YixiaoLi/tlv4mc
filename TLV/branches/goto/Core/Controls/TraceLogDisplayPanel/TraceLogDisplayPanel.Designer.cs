@@ -28,8 +28,16 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.treeGridView = new NU.OJL.MPRTOS.TLV.Third.TreeGridView();
 			this.SuspendLayout();
+			// 
+			// imageList
+			// 
+			this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+			this.imageList.ImageSize = new System.Drawing.Size(16, 16);
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			// 
 			// treeGridView
 			// 
@@ -53,6 +61,7 @@
 		#endregion
 
 		private NU.OJL.MPRTOS.TLV.Third.TreeGridView treeGridView;
+		private System.Windows.Forms.ImageList imageList;
 
 
 	}

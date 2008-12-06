@@ -26,6 +26,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			base.OnLoad(e);
 
+			imageList.Images.Add("visualize", Properties.Resources.visualize);
+			imageList.Images.Add("resource", Properties.Resources.resource);
+			imageList.Images.Add("bhr2bhr", Properties.Resources.bhr2bhr);
+			imageList.Images.Add("atr2atr", Properties.Resources.atr2atr);
+			imageList.Images.Add("atr2bhr", Properties.Resources.atr2bhr);
+			imageList.Images.Add("bhr2atr", Properties.Resources.bhr2atr);
+			imageList.Images.Add("attribute", Properties.Resources.attribute);
+			imageList.Images.Add("behavior", Properties.Resources.behavior);
+			imageList.Images.Add("warning", Properties.Resources.warning);
+
 			treeGridView.AddColumn(new TreeGridViewColumn() { Name = "resourceName", HeaderText = "リソース" });
 			treeGridView.AddColumn(new DataGridViewTextBoxColumn() { Name = "attributeValue", HeaderText = "値" });
 			treeGridView.AddColumn(new TimeLineColumn() { Name = "timeLine", HeaderText = "タイムライン", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
@@ -95,25 +105,44 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 								treeGridViewRowChanged(this, EventArgs.Empty);
 							};
 
-						//ApplicationData.FileContext.Data.SettingData.ResourcePropertyExplorerSetting.ResourcePropertyVisibility.CollectionChanged += (_o, __e) =>
-						//    {
-						//        foreach (KeyValuePair<string, bool> kvp in (IList<KeyValuePair<string, bool>>)_o)
-						//        {
-						//            Match m = Regex.Match(kvp.Key, @"(?<type>.*)(?<attr_or_bhvr>(" + ResourcePropertyExplorerSetting.AttributeSeparateText + @"|" + ResourcePropertyExplorerSetting.BehaviorSeparateText + @"))(?<name>.*)");
-						//            if(m.Success)
-						//            {
-						//                if (treeGridView.Nodes[m.Groups["type"].Value].Visible)
-						//                {
-						//                    foreach (ITreeGirdViewNode node in treeGridView.Nodes[m.Groups["type"].Value].Nodes.Values)
-						//                    {
-						//                        if(node.Visible)
-						//                            node.Nodes[m.Groups["attr_or_bhvr"].Value + m.Groups["name"].Value].Visible = kvp.Value;
-						//                    }
-						//                    treeGridViewRowChanged(this, EventArgs.Empty);
-						//                }
-						//            }
-						//        }
-						//    };
+						ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.BecameDirty += (_o, __e) =>
+						{
+							foreach (KeyValuePair<string, bool> kvp in (IList)_o)
+							{
+								string[] keys = kvp.Key.Split(':');
+
+								foreach (ITreeGirdViewNode node in treeGridView.Nodes.Values.Where(n => n.Name.Split(':')[0] == keys[0]))
+								{
+
+									if (keys.Length == 1)
+									{
+										if (!(node.Name.Split(':').Length > 1 && !ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], node.Name.Split(':')[1])))
+											node.Visible = kvp.Value;
+									}
+									else
+									{
+										foreach (ITreeGirdViewNode n in node.Nodes.Values.Where(n => n.Name.Split(':').Last() == keys[1]))
+										{
+											if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], n.Name.Split(':')[1]))
+											{
+												if (n.HasChildren && keys.Length == 3)
+												{
+													foreach (ITreeGirdViewNode _n in n.Nodes.Values.Where(_n => _n.Name == keys[2]))
+													{
+														_n.Visible = kvp.Value;
+													}
+												}
+												else
+												{
+													n.Visible = kvp.Value;
+												}
+											}
+										}
+									}
+								}
+							}
+							treeGridViewRowChanged(this, EventArgs.Empty);
+						};
 					}
 				}));
 			};
@@ -124,9 +153,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			foreach (VisualizeRule vizRule in data.VisualizeData.VisualizeRules.Where<VisualizeRule>(v => !v.IsBelongedTargetResourceType()))
 			{
 				treeGridView.Add(vizRule.Name, vizRule.DisplayName, "", new TimeLine());
+				treeGridView.Nodes[vizRule.Name].Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name) : ApplicationData.Setting.DefaultResourceVisible;
+				treeGridView.Nodes[vizRule.Name].Image = imageList.Images["visualize"];
 				foreach(Event e in vizRule.Events)
 				{
 					treeGridView.Nodes[vizRule.Name].Add(e.DisplayName, e.DisplayName, "", new TimeLine());
+					treeGridView.Nodes[vizRule.Name].Nodes[e.DisplayName].Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name, e.DisplayName) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultResourceVisible;
+					setEventImage(treeGridView.Nodes[vizRule.Name].Nodes[e.DisplayName], e);
 				}
 			}
 			foreach (VisualizeRule vizRule in data.VisualizeData.VisualizeRules.Where<VisualizeRule>(v => v.IsBelongedTargetResourceType()))
@@ -136,15 +169,63 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					if (!treeGridView.Nodes.ContainsKey(res.Type + ":" + res.Name))
 					{
 						treeGridView.Add(res.Type + ":" + res.Name, res.DisplayName, "", new TimeLine());
+						treeGridView.Nodes[res.Type + ":" + res.Name].Visible = ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Type + ":" + res.Name) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(res.Type + ":" + res.Name) : ApplicationData.Setting.DefaultResourceVisible;
+						treeGridView.Nodes[res.Type + ":" + res.Name].Image = imageList.Images["resource"];
 					}
 
 					treeGridView.Nodes[res.Type + ":" + res.Name].Add(res.Type + ":" + res.Name + ":" + vizRule.Name, vizRule.DisplayName, "", new TimeLine());
+					treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Visible && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name) : ApplicationData.Setting.DefaultResourceVisible;
+					treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Image = imageList.Images["visualize"];
 
 					foreach (Event e in vizRule.Events)
 					{
 						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Add(e.DisplayName, e.DisplayName, "", new TimeLine());
+						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Nodes[e.DisplayName].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name, e.DisplayName) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultResourceVisible;
+						setEventImage(treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Nodes[e.DisplayName], e);
 					}
 				}
+			}
+		}
+
+		private void setEventImage(ITreeGirdViewNode tn, Event e)
+		{
+			if ((e.Type & EventTypes.FromAttributeChange) == EventTypes.FromAttributeChange
+				&& (e.Type & EventTypes.ToAttributeChange) == EventTypes.ToAttributeChange)
+			{
+				tn.Image = imageList.Images["atr2atr"];
+			}
+
+			if ((e.Type & EventTypes.FromBehaviorHappen) == EventTypes.FromBehaviorHappen
+				&& (e.Type & EventTypes.ToBehaviorHappen) == EventTypes.ToBehaviorHappen)
+			{
+				tn.Image = imageList.Images["bhr2bhr"];
+			}
+
+			if ((e.Type & EventTypes.FromAttributeChange) == EventTypes.FromAttributeChange
+				&& (e.Type & EventTypes.ToBehaviorHappen) == EventTypes.ToBehaviorHappen)
+			{
+				tn.Image = imageList.Images["atr2bhr"];
+			}
+
+			if ((e.Type & EventTypes.FromBehaviorHappen) == EventTypes.FromBehaviorHappen
+				&& (e.Type & EventTypes.ToAttributeChange) == EventTypes.ToAttributeChange)
+			{
+				tn.Image = imageList.Images["bhr2atr"];
+			}
+
+			if ((e.Type & EventTypes.WhenAttributeChange) == EventTypes.WhenAttributeChange)
+			{
+				tn.Image = imageList.Images["attribute"];
+			}
+
+			if ((e.Type & EventTypes.WhenBehaviorHappen) == EventTypes.WhenBehaviorHappen)
+			{
+				tn.Image = imageList.Images["behavior"];
+			}
+
+			if ((e.Type & EventTypes.Error) == EventTypes.Error)
+			{
+				tn.Image = imageList.Images["warning"];
 			}
 		}
 

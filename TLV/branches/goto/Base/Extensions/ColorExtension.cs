@@ -106,73 +106,22 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		}
 
-		public static Color Reverse(this Color color)
+		public static Color ComplementaryColor(this Color color)
 		{
 			return new Color().FromHsv(((int)color.GetHue() + 180) % 360, (int)(color.GetSaturation() * 100), (int)(color.GetBrightness() * 100));
 		}
 
-		public static Color RandomNextColor(this Color color)
+		public static Color Random(this Color color)
 		{
-			Color Result = color.FromHsv(hue, saturation, value);
+			Random r = new Random(DateTime.Now.Millisecond);
 
-			hue = r.Next(0, 360);
-			saturation = r.Next(80, 100);
+			int hue =  r.Next(0, 360);
+			int saturation = r.Next(80, 100);
+			int value = r.Next(80, 100);
 
-			return Result;
+			return color.FromHsv(hue, saturation, value);
+
 		}
 
-		public static Color HueRotateNextColor(this Color color)
-		{
-			Color Result = color.FromHsv(hue, saturation, value);
-
-			hue += rotateRange + (((i % (360 / rotateRange)) == 0) ? incrementRange : 0);
-
-			if (i % (rotateRange / incrementRange) == 0)
-			{
-				saturation = r.Next(80, 100);
-
-				incrementRange /= 2;
-
-				if (incrementRange < 15)
-				{
-					hue += new Random().Next(0, 360);
-					incrementRange = new Random().Next(15, rotateRange);
-				}
-			}
-			i++;
-
-			if (i == uint.MaxValue)
-				i = 0;
-
-			if (hue > 360)
-				hue %= 360;
-
-			return Result;
-		}
-
-		public static void HueRotateColorReset(this Color color)
-		{
-			i = 1;
-			hue = new Random().Next(0, 360);
-			saturation = 100;
-			value = 100;
-		}
-
-		public static void HueRotateColorRandomSet(this Color color)
-		{
-			i = 1;
-			hue = new Random().Next(0, new Random().Next(0, 360));
-			saturation = 100;
-			value = 100;
-		}
-
-		static uint i = 1;
-		static int hue = 0;
-		static int saturation = 100;
-		static int value = 100;
-		static Random r = new Random();
-
-		static int rotateRange = 60;
-		static int incrementRange = rotateRange/2;
 	}
 }

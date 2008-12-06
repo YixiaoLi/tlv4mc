@@ -62,9 +62,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 								foreach (TreeView tv in _treeViews.Values)
 								{
-									foreach (TreeNode tn in tv.Nodes.Find(tv.Name + ":" + k[0], false))
+									foreach (TreeNode tn in tv.Nodes)
 									{
-										foreach (TreeNode _tn in tn.Nodes.Find(k[0] + ":" +k[1], false))
+										foreach (TreeNode _tn in tn.Nodes.Find(k[0] + ":" + k[1], false))
 										{
 											if (_tn.Checked != kvp.Value)
 												_tn.Checked = kvp.Value;
@@ -145,18 +145,25 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					if (e.Node.Level == 1)
 					{
 						string[] res = e.Node.Name.Split(':');
-						if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res[0], res[1])
-							&& ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(res[0], res[1]) != e.Node.Checked)
-							ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.SetValue(e.Node.Checked, res[0], res[1]);
-					}
 
+						setVisibility(e.Node.Checked, res);
+					}
 				};
 
 				tv.ExpandAll();
 			}
 		}
 
-		private void setData(string name, string displayName, List<NamedResourceList> datas)
+		private void setVisibility(bool value, params string[] keys)
+		{
+			if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys)
+				&& (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys) == value))
+				return;
+			else
+				ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.SetValue(value, keys);
+		}
+
+		private void setData(string name, string displayName, List<NamedResourceList> groups)
 		{
 			tabControl.TabPages.Add(name, displayName + "別");
 			ExTreeView treeView = new ExTreeView();
@@ -164,26 +171,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			treeView.Dock = DockStyle.Fill;
 			treeView.CheckBoxes = true;
 			treeView.Name = name;
-			foreach (NamedResourceList data in datas)
+			foreach (NamedResourceList group in groups)
 			{
-				treeView.Nodes.Add(name + ":" + data.Name, data.DisplayName);
-				treeView.Nodes[name + ":" + data.Name].ImageKey = "resources";
-				treeView.Nodes[name + ":" + data.Name].SelectedImageKey = "resources";
+				treeView.Nodes.Add(name + ":" + group.Name, group.DisplayName);
+				treeView.Nodes[name + ":" + group.Name].ImageKey = "resources";
+				treeView.Nodes[name + ":" + group.Name].SelectedImageKey = "resources";
 
-				foreach (Resource res in data.List)
+				foreach (Resource res in group.List)
 				{
-					treeView.Nodes[name + ":" + data.Name].Nodes.Add(res.Type + ":" + res.Name, res.DisplayName);
-					treeView.Nodes[name + ":" + data.Name].Nodes[res.Type + ":" + res.Name].ImageKey = "resource";
-					treeView.Nodes[name + ":" + data.Name].Nodes[res.Type + ":" + res.Name].SelectedImageKey = "resource";
+					treeView.Nodes[name + ":" + group.Name].Nodes.Add(res.Type + ":" + res.Name, res.DisplayName);
+					treeView.Nodes[name + ":" + group.Name].Nodes[res.Type + ":" + res.Name].ImageKey = "resource";
+					treeView.Nodes[name + ":" + group.Name].Nodes[res.Type + ":" + res.Name].SelectedImageKey = "resource";
 
-					if (!ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Type, res.Name))
-					{
-						ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.SetValue(false, res.Type, res.Name);
-					}
-					else
-					{
-						treeView.Nodes[name + ":" + data.Name].Nodes[res.Type + ":" + res.Name].Checked = ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(res.Type, res.Name);
-					}
+					treeView.Nodes[name + ":" + group.Name].Nodes[res.Type + ":" + res.Name].Checked = ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Type, res.Name) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(res.Type, res.Name) : ApplicationData.Setting.DefaultResourceVisible;
 				}
 			}
 			tabControl.TabPages[name].Controls.Add(treeView);
