@@ -101,6 +101,7 @@ namespace Test
 
         [TestMethod()]
         public void NotTest() {
+            // see ticket #11
             Assert.AreEqual(false, ConditionExpression.Result("true && !true"));
             Assert.AreEqual(false, ConditionExpression.Result("!true"));
             Assert.AreEqual(true, ConditionExpression.Result("!false"));
@@ -114,6 +115,8 @@ namespace Test
             Assert.AreEqual(false, ConditionExpression.Result("false"));
             Assert.AreEqual(true, ConditionExpression.Result("true == true"));
             Assert.AreEqual(false, ConditionExpression.Result("true == false"));
+
+            // see ticket #12
             Assert.AreEqual(true, ConditionExpression.Result("(1 < 3) == true"));
 
             Assert.AreEqual(true, ConditionExpression.Result("true && true"));
