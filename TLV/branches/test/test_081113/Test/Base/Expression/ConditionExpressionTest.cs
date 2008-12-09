@@ -101,8 +101,9 @@ namespace Test
 
         [TestMethod()]
         public void NotTest() {
-            Assert.AreEqual(false, ConditionExpression.Result("! true"));
-            Assert.AreEqual(true, ConditionExpression.Result("! false"));
+            Assert.AreEqual(false, ConditionExpression.Result("true && !true"));
+            Assert.AreEqual(false, ConditionExpression.Result("!true"));
+            Assert.AreEqual(true, ConditionExpression.Result("!false"));
             Assert.AreEqual(false, ConditionExpression.Result("! (1 < 3)"));
             Assert.AreEqual(true, ConditionExpression.Result("! (3 < 1)"));
         }
@@ -113,6 +114,7 @@ namespace Test
             Assert.AreEqual(false, ConditionExpression.Result("false"));
             Assert.AreEqual(true, ConditionExpression.Result("true == true"));
             Assert.AreEqual(false, ConditionExpression.Result("true == false"));
+            Assert.AreEqual(true, ConditionExpression.Result("(1 < 3) == true"));
 
             Assert.AreEqual(true, ConditionExpression.Result("true && true"));
             Assert.AreEqual(false, ConditionExpression.Result("true && false"));
@@ -122,7 +124,8 @@ namespace Test
 
         [TestMethod()]
         public void ParenTest() {
-            Assert.AreEqual(true, ConditionExpression.Result("(1 < 3) == true"));
+            Assert.AreEqual(true, ConditionExpression.Result("(1 < 3)"));
+            Assert.AreEqual(true, ConditionExpression.Result("(1 < 3) || false"));
         }
         
     }
