@@ -14,7 +14,7 @@
 							"Attribute":"Task.state(state==RUNNING)"
 						},
 						"Shapes":{
-							"${state}==RUNNING":{"runningTaskChangeShapes":["COLOR{${Target}}", "${Target.name}"]}
+							"${state}==RUNNING":{"runningTaskChangeShapes":["COLOR{${Target}}", "${Target._name}"]}
 						}
 					}
 				]
@@ -27,14 +27,15 @@
 						"DisplayName":"act_tsk開始～終了",
 						"From":{
 							"Behavior":"enterSVC",
-							"Arguments":["(?<enterSvcName>.+)","tskid=(?<enverTaskId>[^\.]+)."]
+							"Arguments":["(?<enterSvcName>.+)","(?<enterArgs>.+)"]
 						},
 						"To":{
 							"Behavior":"leaveSVC",
-							"Arguments":["(?<leaveSvcName>.+)","tskid=(?<leaveTaskId>[^\.]+)."]
+							"Arguments":["(?<leaveSvcName>.+)","(?<leaveArgs>.+)"]
 						},
 						"Shapes":{
-							"${enterSvcName}==${leaveSvcName} && ${enterSvcName}==act_tsk && ${enverTaskId}==${leaveTaskId}":{"svcShapes":["ffff0000","66ff0000","act_tsk(ATTR{Task(id==${enverTaskId}).name})"]}
+							"${enterSvcName}==${leaveSvcName} && ${enterSvcName}==act_tsk" :{"svcShapes":["ffff0000","66ff0000","act_tsk(${enterArgs})", "${leaveArgs}"]},
+							"${enterSvcName}==${leaveSvcName} && ${enterSvcName}==dly_tsk" :{"svcShapes":["ffffff00","66ffff00","dly_tsk(${enterArgs})", "${leaveArgs}"]}
 						}
 					}
 				]
@@ -53,12 +54,12 @@
 							"Attribute":"state"
 						},
 						"Shapes":{
-							"${state}==RUNNING":"runningShapes",
-							"${state}==RUNNABLE":"runnableShapes",
-							"${state}==WAITING":"waitingShapes",
-							"${state}==DORMANT":"dormantShapes",
-							"${state}==SUSPENDED":"suspendShapes",
-							"${state}==WAITING-SUSPENDED":"waitingSuspendedShapes"
+							"${state}==RUNNING"             :"runningShapes",
+							"${state}==RUNNABLE"            :"runnableShapes",
+							"${state}==WAITING"             :"waitingShapes",
+							"${state}==DORMANT"             :"dormantShapes",
+							"${state}==SUSPENDED"           :"suspendShapes",
+							"${state}==WAITING-SUSPENDED"   :"waitingSuspendedShapes"
 						}
 					},
 					{
@@ -106,8 +107,7 @@
 				]
 			}
 		},
-		"Shapes":
-		{
+		"Shapes":{
 			"runningTaskChangeShapes":[
 				{
 					"Type":"Rectangle",
@@ -148,6 +148,13 @@
 					"Size":"100%,100%",
 					"Font":{"Align":"MiddleLeft"},
 					"Value":"args[2]"
+				},
+				{
+					"Type":"Text",
+					"Location":"0,0",
+					"Size":"100%,100%",
+					"Font":{"Align":"MiddleRight"},
+					"Value":"args[3]"
 				}
 			],
 			"runningShapes":[

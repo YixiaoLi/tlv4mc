@@ -77,27 +77,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 										{
 											string[] res = node.Name.Split(':');
 
-											if (kvp.Value
-												&& ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2]))
-											{
-												node.Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2]);
-											}
+											if (kvp.Value)
+												node.Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2]) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2]) : ApplicationData.Setting.DefaultResourceVisible;
 											else
-											{
 												node.Visible = false;
-											}
 
 											foreach (ITreeGirdViewNode n in node.Nodes.Values)
 											{
-												if (kvp.Value
-													&& ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2], n.Name))
-												{
-													n.Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2], n.Name);
-												}
+												if (kvp.Value)
+													n.Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2], n.Name) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2], n.Name) : ApplicationData.Setting.DefaultResourceVisible;
 												else
-												{
 													n.Visible = false;
-												}
 											}
 										}
 									}
@@ -109,6 +99,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						{
 							foreach (KeyValuePair<string, bool> kvp in (IList)_o)
 							{
+								// リソースタイプ:可視化ルール:イベント
 								string[] keys = kvp.Key.Split(':');
 
 								foreach (ITreeGirdViewNode node in treeGridView.Nodes.Values.Where(n => n.Name.Split(':')[0] == keys[0]))
@@ -120,18 +111,37 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 										{
 											if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys[0], node.Name.Split(':')[1]) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], node.Name.Split(':')[1]) : ApplicationData.Setting.DefaultResourceVisible)
 												node.Visible = kvp.Value;
+											else
+												node.Visible = false;
 										}
 										else if (node.Name.Split(':').Length == 1)
 										{
 											node.Visible = kvp.Value;
+
+											if (node.HasChildren)
+											{
+												foreach (ITreeGirdViewNode n in node.Nodes.Values)
+												{
+													if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys[0], n.Name) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], n.Name) : ApplicationData.Setting.DefaultResourceVisible)
+														n.Visible = kvp.Value;
+													else
+														n.Visible = false;
+												}
+											}
 										}
 									}
 									else
 									{
 										foreach (ITreeGirdViewNode n in node.Nodes.Values.Where(n => n.Name.Split(':').Last() == keys[1]))
 										{
+											if (kvp.Value && !node.Visible)
+												continue;
+
 											if (n.HasChildren && keys.Length == 3)
 											{
+												if (kvp.Value && !n.Visible)
+													continue;
+
 												foreach (ITreeGirdViewNode _n in n.Nodes.Values.Where(_n => _n.Name == keys[2]))
 												{
 													_n.Visible = kvp.Value;

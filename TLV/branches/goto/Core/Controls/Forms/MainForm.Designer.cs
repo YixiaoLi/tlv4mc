@@ -120,64 +120,64 @@
             this.toolStripSeparator5,
             this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
 			this.fileToolStripMenuItem.Text = "ファイル(&F)";
 			// 
 			// newToolStripMenuItem
 			// 
 			this.newToolStripMenuItem.Name = "newToolStripMenuItem";
 			this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-			this.newToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.newToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
 			this.newToolStripMenuItem.Text = "新規作成(&N)...";
 			// 
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
 			this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
 			this.openToolStripMenuItem.Text = "開く(&O)";
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(181, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(171, 6);
 			// 
 			// closeToolStripMenuItem
 			// 
 			this.closeToolStripMenuItem.Enabled = false;
 			this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-			this.closeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.closeToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
 			this.closeToolStripMenuItem.Text = "閉じる(&C)";
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(181, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(171, 6);
 			// 
 			// saveSToolStripMenuItem
 			// 
 			this.saveSToolStripMenuItem.Enabled = false;
 			this.saveSToolStripMenuItem.Name = "saveSToolStripMenuItem";
 			this.saveSToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-			this.saveSToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.saveSToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
 			this.saveSToolStripMenuItem.Text = "保存(&S)";
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Enabled = false;
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
 			this.saveAsToolStripMenuItem.Text = "名前をつけて保存(&A)";
 			// 
 			// toolStripSeparator5
 			// 
 			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(181, 6);
+			this.toolStripSeparator5.Size = new System.Drawing.Size(171, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
 			this.exitToolStripMenuItem.Text = "終了(&X)";
 			// 
 			// editToolStripMenuItem
@@ -186,7 +186,7 @@
             this.undoToolStripMenuItem,
             this.redoToolStripMenuItem});
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-			this.editToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+			this.editToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
 			this.editToolStripMenuItem.Text = "編集(&E)";
 			// 
 			// undoToolStripMenuItem
@@ -195,7 +195,7 @@
 			this.undoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("undoToolStripMenuItem.Image")));
 			this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
 			this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-			this.undoToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+			this.undoToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
 			this.undoToolStripMenuItem.Text = "元に戻す(&U)";
 			// 
 			// redoToolStripMenuItem
@@ -204,7 +204,7 @@
 			this.redoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("redoToolStripMenuItem.Image")));
 			this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
 			this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-			this.redoToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+			this.redoToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
 			this.redoToolStripMenuItem.Text = "やり直す(&R)";
 			// 
 			// viewToolStripMenuItem
@@ -214,25 +214,25 @@
             this.hideAllToolStripMenuItem,
             this.toolStripSeparator1});
 			this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-			this.viewToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+			this.viewToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
 			this.viewToolStripMenuItem.Text = "表示(&V)";
 			// 
 			// showAllToolStripMenuItem
 			// 
 			this.showAllToolStripMenuItem.Name = "showAllToolStripMenuItem";
-			this.showAllToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+			this.showAllToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 			this.showAllToolStripMenuItem.Text = "全てを表示(&S)";
 			// 
 			// hideAllToolStripMenuItem
 			// 
 			this.hideAllToolStripMenuItem.Name = "hideAllToolStripMenuItem";
-			this.hideAllToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+			this.hideAllToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 			this.hideAllToolStripMenuItem.Text = "全てを非表示(&H)";
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(153, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(145, 6);
 			// 
 			// mainToolStrip
 			// 
@@ -310,6 +310,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(792, 573);
 			this.Controls.Add(this.toolStripContainer);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip;
 			this.Name = "MainForm";
 			this.Text = "MainForm";

@@ -147,25 +147,39 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			Time time = condition.HasTime ? new Time(condition.Time, _resourceData.TimeRadix) : MaxTime;
 
-			if (_resourceData.ResourceHeaders[res.Type].Attributes[condition.Attribute].AllocationType == AllocationType.Static)
-			{
-				result = res.Attributes[condition.Attribute];
-			}
+			if (condition.Attribute == "_name")
+				result = new Json(res.Name);
+			else if (condition.Attribute == "_displayName")
+				result = new Json(res.DisplayName);
+			else if (condition.Attribute == "_type")
+				result = new Json(res.Type);
 			else
 			{
-				try
+
+				if (!_resourceData.ResourceHeaders[res.Type].Attributes.ContainsKey(condition.Attribute))
+					throw new Exception("リソースタイプ" + condition.ObjectType + "は指定された属性" + condition.Attribute + "を持っていません。\n" + "\"" + condition + "\"");
+
+
+				if (_resourceData.ResourceHeaders[res.Type].Attributes[condition.Attribute].AllocationType == AllocationType.Static)
 				{
-					result = ((AttributeChangeLogData)(_data.Where<LogData>((d) =>
-					{
-						return d.Object.Name == res.Name
-							&& d.Type == LogType.AttributeChange
-							&& ((AttributeChangeLogData)d).Attribute == condition.Attribute;
-					}).Last<LogData>(d => d.Time <= time))).Value;
+					result = res.Attributes[condition.Attribute];
 				}
-				catch
+				else
 				{
-					if (_resourceData.ResourceHeaders[res.Type].Attributes[condition.Attribute].Default != null)
-						result = _resourceData.ResourceHeaders[res.Type].Attributes[condition.Attribute].Default;
+					try
+					{
+						result = ((AttributeChangeLogData)(_data.Where<LogData>((d) =>
+						{
+							return d.Object.Name == res.Name
+								&& d.Type == LogType.AttributeChange
+								&& ((AttributeChangeLogData)d).Attribute == condition.Attribute;
+						}).Last<LogData>(d => d.Time <= time))).Value;
+					}
+					catch
+					{
+						if (_resourceData.ResourceHeaders[res.Type].Attributes[condition.Attribute].Default != null)
+							result = _resourceData.ResourceHeaders[res.Type].Attributes[condition.Attribute].Default;
+					}
 				}
 			}
 

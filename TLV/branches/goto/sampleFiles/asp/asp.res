@@ -6,6 +6,7 @@
 	"Resources":
 	{
 		"LOGTASK":{
+			"DisplayName":"ログタスク",
 			"Type"	:"Task",
 			"Attributes":
 			{

@@ -414,19 +414,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					{
 						Image image = Properties.Resources.attribute;
 						image.Tag = "attribute";
-						return new TraceLog(image, ld.Time, _resourceData.ResourceHeaders[ld.Object.Type].Name, ld.Object.Name, _resourceData.ResourceHeaders[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute].Name + " = " + ((AttributeChangeLogData)ld).Value.ToString());
+						return new TraceLog(image, ld.Time, _resourceData.ResourceHeaders[ld.Object.Type].Name, ld.Object.DisplayName, _resourceData.ResourceHeaders[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute].Name + " = " + ((AttributeChangeLogData)ld).Value.ToString());
 					}
 					else if (ld.Type == LogType.BehaviorCall)
 					{
 						Image image = Properties.Resources.behavior;
 						image.Tag = "behavior";
-						return new TraceLog(image, ld.Time, _resourceData.ResourceHeaders[ld.Object.Type].Name, ld.Object.Name, _resourceData.ResourceHeaders[ld.Object.Type].Behaviors[((BehaviorCallLogData)ld).Behavior].Name + "(" + ((BehaviorCallLogData)ld).Arguments.ToString() + ")");
+						return new TraceLog(image, ld.Time, _resourceData.ResourceHeaders[ld.Object.Type].Name, ld.Object.DisplayName, _resourceData.ResourceHeaders[ld.Object.Type].Behaviors[((BehaviorCallLogData)ld).Behavior].Name + "(" + ((BehaviorCallLogData)ld).Arguments.ToString() + ")");
 					}
 					else
 					{
 						Image image = Properties.Resources.warning;
 						image.Tag = "undefined";
-						return new TraceLog(image, ld.Time, ld.Object.Type, ld.Object.Name, "undefined");
+						return new TraceLog(image, ld.Time, ld.Object.Type, ld.Object.DisplayName, "undefined");
 					}
 				}).ToList());
 				_dataSource.BasePropertyName = "Id";

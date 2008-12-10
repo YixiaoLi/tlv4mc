@@ -41,6 +41,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			if (m.Success)
 				_object = m.Groups["object"].Value.Replace(" ", "").Replace("\t", "");
 
+			m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<objectName>[^\[\]\(\)\.\s]+)\s*(\.\s*[^\s]+)?\s*$");
+			if (m.Success)
+				_objectName = m.Groups["objectName"].Value.Replace(" ", "").Replace("\t", "");
+
+			m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<objectType>[^\[\]\(\)\.\s]+)\s*(\s*\([^\)]+\))?\s*(\.\s*[^\s]+)?\s*$");
+			if (m.Success)
+				_objectType = m.Groups["objectType"].Value.Replace(" ", "").Replace("\t", "");
+
 			m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?\s*\.\s*(?<behavior>[^\(\s]+)\s*\([^\)]*\)\s*$");
 			if (m.Success)
 				_behavior =  m.Groups["behavior"].Value.Replace(" ", "").Replace("\t", "");

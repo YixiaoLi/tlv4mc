@@ -62,24 +62,27 @@ namespace NU.OJL.MPRTOS.TLV.Third
 				}
 			}
 
+			// 下にあるノードの方がネストが深い場合
 			if (Level < bottomLevel)
 			{
-				graphics.DrawLine(new Pen(DataGridView.DefaultCellStyle.BackColor), rowBounds.X + 1, rowBounds.Y + rowBounds.Height - 1, rowBounds.X + (16 * Level) - (1 * Level), rowBounds.Y + rowBounds.Height - 1);
+				graphics.DrawLine(new Pen(DataGridView.DefaultCellStyle.BackColor), rowBounds.X + 1, rowBounds.Y + rowBounds.Height - 1, rowBounds.X + (16 * Level) - 2, rowBounds.Y + rowBounds.Height - 1);
 			}
+			// トップレベルでなく、下にあるノードとネストの深さが同じである場合
 			else if (Level == bottomLevel && Level > 1)
 			{
-				graphics.DrawLine(new Pen(DataGridView.DefaultCellStyle.BackColor), rowBounds.X + 1, rowBounds.Y + rowBounds.Height - 1, rowBounds.X + (16 * (Level - 1)) - (1 * (Level - 1)), rowBounds.Y + rowBounds.Height - 1);
+				graphics.DrawLine(new Pen(DataGridView.DefaultCellStyle.BackColor), rowBounds.X + 1, rowBounds.Y + rowBounds.Height - 1, rowBounds.X + (16 * (Level - 1)) - 2, rowBounds.Y + rowBounds.Height - 1);
 			}
+			// トップレベルでなく、下にあるノードの方がネストが浅い場合
 			else if (Level > bottomLevel && bottomLevel > 1)
 			{
-				graphics.DrawLine(new Pen(DataGridView.DefaultCellStyle.BackColor), rowBounds.X + 1, rowBounds.Y + rowBounds.Height - 1, rowBounds.X + (16 * (bottomLevel - 1)) - (1 * (bottomLevel - 1)), rowBounds.Y + rowBounds.Height - 1);
+				graphics.DrawLine(new Pen(DataGridView.DefaultCellStyle.BackColor), rowBounds.X + 1, rowBounds.Y + rowBounds.Height - 1, rowBounds.X + (16 * (bottomLevel - 1)) - 2, rowBounds.Y + rowBounds.Height - 1);
 			}
 
 			if (Level > 1)
 			{
 				for (int j = 1; j <= Level; j++)
 				{
-					graphics.DrawLine(new Pen(DataGridView.GridColor), rowBounds.X + (16 * (j - 1)) - 1, rowBounds.Y - 1, rowBounds.X + (16 * (j - 1)) - 1, rowBounds.Y + rowBounds.Height);
+					graphics.DrawLine(new Pen(DataGridView.GridColor), rowBounds.X + (16 * (j - 1)) - 1, rowBounds.Y -1, rowBounds.X + (16 * (j - 1)) - 1, rowBounds.Y + rowBounds.Height);
 				}
 			}
 		}

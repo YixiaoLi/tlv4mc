@@ -9,7 +9,18 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class VisualizeRule : INamed
 	{
-		public string Name { get; set; }
+		private string _name = string.Empty;
+
+		public string Name
+		{
+			get { return _name; }
+			set
+			{
+				_name = value;
+				if (DisplayName == null)
+					DisplayName = value;
+			}
+		}
 		public string DisplayName { get; set; }
 		public string Target { get; set; }
 		public Event[] Events { get; set; }

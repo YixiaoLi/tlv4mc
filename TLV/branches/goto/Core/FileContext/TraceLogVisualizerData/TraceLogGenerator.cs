@@ -10,7 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class TraceLogGenerator
 	{
-		private readonly string[] _convertFunction = new string[] { "COUNT", "EXIST", "ATTR" };
+		private readonly string[] _convertFunction = new string[] { "COUNT", "EXIST", "ATTR", "NAME", "DISPLAYNAME" };
 		private string _traceLogFilePath;
 		private ResourceData _resourceData;
 		public Action<int, string> _constructProgressReport = null;
@@ -94,8 +94,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			else
 			{
 				// valueがstringのときログを置換して追加
+				string s = Regex.Replace(log, pattern, value);
+				s = applyConvertFunc(traceLogData, s);
 
-				traceLogData.Add(new TraceLog(Regex.Replace(log, pattern, applyConvertFunc(traceLogData, value))));
+				traceLogData.Add(new TraceLog(s));
 			}
 		}
 
@@ -207,6 +209,26 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					catch (Exception e)
 					{
 						throw new Exception("リソース条件式が異常です。\n" + "\"" + "ATTR{" + condition + "}" + "\"\n" + e.Message);
+					}
+					break;
+				case "NAME":
+					try
+					{
+						result = traceLogData.GetAttributeValue(condition + "._name").ToString();
+					}
+					catch (Exception e)
+					{
+						throw new Exception("リソース条件式が異常です。\n" + "\"" + "NAME{" + condition + "}" + "\"\n" + e.Message);
+					}
+					break;
+				case "DISPLAYNAME":
+					try
+					{
+						result = traceLogData.GetAttributeValue(condition + "._displayName").ToString();
+					}
+					catch (Exception e)
+					{
+						throw new Exception("リソース条件式が異常です。\n" + "\"" + "NAME{" + condition + "}" + "\"\n" + e.Message);
 					}
 					break;
 				default:
