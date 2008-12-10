@@ -53,12 +53,12 @@
 							"Attribute":"state"
 						},
 						"Shapes":{
-							"${state}==RUNNING":"runningShapes",
-							"${state}==RUNNABLE":"runnableShapes",
-							"${state}==WAITING":"waitingShapes",
-							"${state}==DORMANT":"dormantShapes",
-							"${state}==SUSPENDED":"suspendShapes",
-							"${state}==WAITING-SUSPENDED":"waitingSuspendedShapes"
+							"${state}==RUNNING"             :"runningShapes",
+							"${state}==RUNNABLE"            :"runnableShapes",
+							"${state}==WAITING"             :"waitingShapes",
+							"${state}==DORMANT"             :"dormantShapes",
+							"${state}==SUSPENDED"           :"suspendShapes",
+							"${state}==WAITING-SUSPENDED"   :"waitingSuspendedShapes"
 						}
 					},
 					{
@@ -106,8 +106,7 @@
 				]
 			}
 		},
-		"Shapes":
-		{
+		"Shapes":{
 			"runningTaskChangeShapes":[
 				{
 					"Type":"Rectangle",
