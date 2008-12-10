@@ -42,11 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\CommandManager\CommandManagerTest.cs" />
+    <Compile Include="Base\CommandManager\GeneralCommandTest.cs" />
     <Compile Include="Base\Expression\ConditionExpressionTest.cs" />
-    <Compile Include="CommandManagerTest.cs" />
+    <Compile Include="Base\Extensions\ColorExtensionTest.cs" />
+    <Compile Include="Base\FileContext\FileContextTest.cs" />
+    <Compile Include="Base\Json\JsonTest.cs" />
     <Compile Include="Base\Expression\ComparisonExpressionTest.cs" />
-    <Compile Include="FileContextTest.cs" />
-    <Compile Include="GeneralCommandTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubWindowCollectionTest.cs" />
     <Compile Include="SubWindowTest.cs" />
