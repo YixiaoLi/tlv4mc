@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+require 'csv'
+
+ARGF.each do|line|
+  klass,meth = CSV.parse_line(line)
+  
+  if klass =~ /(.*)\.(.*)/
+    package = $1
+    name    = $2.gsub(/`\d\[(.*)\]/){
+      "<#{$1}>"
+    }
+    next if name =~ /\AI.*/
+    puts CSV.generate_line([package,name,meth])
+  end
+end

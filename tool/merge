@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require 'csv'
+require 'optparse'
+
+map = Hash.new('<ERROR!!!!>')
+
+opt = OptionParser.new
+opt.on('-m MAP'){|csv|
+  CSV.foreach(csv)do|dir,klass|
+    if map.key? klass then
+      STDERR.puts "#{klass} is duplicated"
+      map[klass] = '<ERROR!!!!>'
+    else
+      map[klass] = dir
+    end
+  end
+}
+opt.parse!(ARGV)
+
+ARGF.each do|line|
+  pkg,klass,meth = CSV.parse_line(line)
+
+  puts CSV.generate_line([map[klass],pkg,klass,meth])
+end
