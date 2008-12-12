@@ -10,7 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class ColorSetting : ISetting
 	{
-		public event EventHandler BecameDirty = null;
+		public event SettingChangeEventHandler BecameDirty = null;
 		public ObservableDictionary<string, Color> ResourceColors { get; set; }
 		public ObservableDictionary<string, Color> ResourceTypeColors { get; set; }
 		public ObservableDictionary<string, Color> AttributeColors { get; set; }
@@ -25,17 +25,31 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			BehaviorColors = new ObservableDictionary<string, Color>();
 			ValueColors = new ObservableDictionary<string, Color>();
 
-			ResourceColors.CollectionChanged += CollectionChanged;
-			ResourceTypeColors.CollectionChanged += CollectionChanged;
-			AttributeColors.CollectionChanged += CollectionChanged;
-			ValueColors.CollectionChanged += CollectionChanged;
-			BehaviorColors.CollectionChanged += CollectionChanged;
+			ResourceColors.CollectionChanged += CollectionChangedFactory("ResourceColors");
+			ResourceTypeColors.CollectionChanged += CollectionChangedFactory("ResourceTypeColors");
+			AttributeColors.CollectionChanged += CollectionChangedFactory("AttributeColors");
+			ValueColors.CollectionChanged += CollectionChangedFactory("ValueColors");
+			BehaviorColors.CollectionChanged += CollectionChangedFactory("BehaviorColors");
 		}
 
-		void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		NotifyCollectionChangedEventHandler CollectionChangedFactory(string propertyName)
 		{
-			if (BecameDirty != null)
-				BecameDirty(this, EventArgs.Empty);
+			return (object sender, NotifyCollectionChangedEventArgs e) =>
+					{
+						if (BecameDirty != null)
+						{
+							switch (e.Action)
+							{
+								case NotifyCollectionChangedAction.Add:
+									BecameDirty(e.NewItems, propertyName);
+									break;
+
+								//case NotifyCollectionChangedAction.Remove:
+								//    BecameDirty(e.OldItems, EventArgs.Empty);
+								//    break;
+							}
+						}
+					};
 		}
 	}
 }

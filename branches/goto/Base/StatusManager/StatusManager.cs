@@ -160,5 +160,13 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 			StatusStrip.Items.AddRange(_processings.Values.ToArray());
 		}
+
+		public void Clear()
+		{
+			StatusStrip.Items.Clear();
+			_infos = new Dictionary<string, ToolStripStatusLabel>();
+			_processings = new Dictionary<string, ToolStripStatusLabel>();
+			_hints = new Dictionary<string, List<ToolStripStatusLabel>>();
+		}
 	}
 }

@@ -10,30 +10,33 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class ResourceExplorerSetting : ISetting
 	{
-		public event EventHandler BecameDirty = null;
+		public event SettingChangeEventHandler BecameDirty = null;
 		public ObservableMultiKeyDictionary<bool> ResourceVisibility { get; set; }
 
 		public ResourceExplorerSetting()
 		{
 			ResourceVisibility = new ObservableMultiKeyDictionary<bool>();
-			ResourceVisibility.CollectionChanged += CollectionChanged;
+			ResourceVisibility.CollectionChanged += CollectionChangedFactory("ResourceVisibility");
 		}
 
-		void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		NotifyCollectionChangedEventHandler CollectionChangedFactory(string propertyName)
 		{
-			if (BecameDirty != null)
+			return (object sender, NotifyCollectionChangedEventArgs e) =>
 			{
-				switch(e.Action)
+				if (BecameDirty != null)
 				{
-					case NotifyCollectionChangedAction.Add:
-						BecameDirty(e.NewItems, EventArgs.Empty);
-						break;
+					switch (e.Action)
+					{
+						case NotifyCollectionChangedAction.Add:
+							BecameDirty(e.NewItems, propertyName);
+							break;
 
-					//case NotifyCollectionChangedAction.Remove:
-					//    BecameDirty(e.OldItems, EventArgs.Empty);
-					//    break;
+						//case NotifyCollectionChangedAction.Remove:
+						//    BecameDirty(e.OldItems, EventArgs.Empty);
+						//    break;
+					}
 				}
-			}
+			};
 		}
 	}
 }

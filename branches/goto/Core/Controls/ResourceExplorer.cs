@@ -16,6 +16,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
 	public partial class ResourceExplorer : UserControl
 	{
+
 		private Dictionary<string, TreeView> _treeViews = new Dictionary<string,TreeView>();
 
 		public ResourceExplorer()
@@ -164,9 +165,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys)
 				&& (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys) == value))
+			{
 				return;
+			}
 			else
-				ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.SetValue(value, keys);
+			{
+				ApplicationFactory.CommandManager.Do(new GeneralCommand(Text + " 可視化表示リソース切替え",
+					() => { ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.SetValue(value, keys); },
+					() => { ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.SetValue(!value, keys); }));
+			}
 		}
 
 		private void setData(string name, string displayName, List<NamedResourceList> groups)

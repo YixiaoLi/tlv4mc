@@ -180,7 +180,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				sortColumn.HeaderCell.SortGlyphDirection = sortOrder;
 
 			//並び替えを行う
-			dataGridView.Sort(sortColumn, sortDirection);
+			ApplicationFactory.CommandManager.Do(new GeneralCommand(Text + " 並び替え",
+				() => { dataGridView.Sort(sortColumn, sortDirection); },
+				() => { dataGridView.Sort(sortColumn, sortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending); }));
 		}
 
 		private void dataGridViewMouseWheel(object sender, MouseEventArgs e)
@@ -196,7 +198,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					dataGridView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font(dataGridView.ColumnHeadersDefaultCellStyle.Font.FontFamily, dataGridView.ColumnHeadersDefaultCellStyle.Font.Size + v);
 				}
-				((ExMouseEventArgs)e).Handled = true;
+
+				if (e.GetType() == typeof(ExMouseEventArgs))
+					((ExMouseEventArgs)e).Handled = true;
 			}
 		}
 

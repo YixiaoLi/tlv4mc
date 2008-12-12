@@ -99,9 +99,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region サブウィンドウ管理初期化
             SubWindow[] sws = new[]
             {
-                new SubWindow("traceLogViewer", new TraceLogViewer(), DockState.DockRight) { Text = "トレースログビューア" },
-                new SubWindow("resourceExplorer", new ResourceExplorer(), DockState.DockLeft) { Text = "リソースエクスプローラ" },
-                new SubWindow("visualizeRuleExplorer", new VisualizeRuleExplorer(), DockState.DockLeft) { Text = "可視化ルールエクスプローラ" },
+                new SubWindow("traceLogViewer", new TraceLogViewer(){ Text = "トレースログビューア" }, DockState.DockRight) { Text = "トレースログビューア" },
+                new SubWindow("resourceExplorer", new ResourceExplorer(){ Text = "リソースエクスプローラ" }, DockState.DockLeft) { Text = "リソースエクスプローラ" },
+                new SubWindow("visualizeRuleExplorer", new VisualizeRuleExplorer(){ Text = "可視化ルールエクスプローラ" }, DockState.DockLeft) { Text = "可視化ルールエクスプローラ" },
             };
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
 			_windowManager.MainPanel = new TraceLogDisplayPanel();

@@ -28,7 +28,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			paintParts &= ~DataGridViewPaintParts.Focus & ~DataGridViewPaintParts.SelectionBackground;
 			base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, cellStyle, advancedBorderStyle, paintParts);
-			((ITimeLine)value).Draw(graphics, new Rectangle(cellBounds.X, cellBounds.Y, cellBounds.Width - 1, cellBounds.Height - 1));
+			((ITimeLine)value).Draw(new PaintEventArgs(graphics, new Rectangle(cellBounds.X, cellBounds.Y, cellBounds.Width - 2, cellBounds.Height - 2)));
 		}
 	}
 }

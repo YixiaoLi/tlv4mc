@@ -9,12 +9,12 @@ using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Core;
 using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
 using System.Collections;
+using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
 	public partial class VisualizeRuleExplorer : UserControl
 	{
-
 		public VisualizeRuleExplorer()
 		{
 			InitializeComponent();
@@ -136,11 +136,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 					foreach (TreeNode tn in _treeView.Nodes.Find(k[0], false))
 					{
-						if (k.Length > 1)
+						if (k.Length > 1 && tn.Nodes != null && tn.Nodes.Count != 0)
 						{
 							foreach (TreeNode _tn in tn.Nodes.Find(k[1], false))
 							{
-								if (k.Length == 3 && _tn.Nodes != null && _tn.Nodes.Count != 0)
+								if (k.Length == 2)
+								{
+									if (_tn.Checked != kvp.Value)
+										_tn.Checked = kvp.Value;
+								}
+								else if (k.Length == 3 && _tn.Nodes != null && _tn.Nodes.Count != 0)
 								{
 									foreach (TreeNode __tn in _tn.Nodes.Find(k[2], false))
 									{
@@ -148,12 +153,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 											__tn.Checked = kvp.Value;
 									}
 								}
-								else
-								{
-									if (_tn.Checked != kvp.Value)
-										_tn.Checked = kvp.Value;
-								}
 							}
+						}
+						else
+						{
+							if (tn.Checked != kvp.Value)
+								tn.Checked = kvp.Value;
 						}
 					}
 				}
@@ -164,9 +169,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			if (ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(keys)
 				&& (ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(keys) == value))
+			{
 				return;
+			}
 			else
-				ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.SetValue(value, keys);
+			{
+				ApplicationFactory.CommandManager.Do(new GeneralCommand(Text + " 可視化ルール表示切替え",
+					() => { ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.SetValue(value, keys); },
+					() => { ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.SetValue(!value, keys); }));
+			}
 		}
 
 		private void setEventImage(TreeNode tn, Event e)

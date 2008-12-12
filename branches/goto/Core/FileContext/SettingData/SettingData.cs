@@ -12,6 +12,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public ColorSetting ColorSetting { get; set; }
 		public ResourceExplorerSetting ResourceExplorerSetting { get; set; }
 		public VisualizeRuleExplorerSetting VisualizeRuleExplorerSetting { get; set; }
+		public TraceLogDisplayPanelSetting TraceLogDisplayPanelSetting { get; set; }
 
 		public string ToJson()
 		{
@@ -28,15 +29,20 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			ColorSetting = new ColorSetting();
 			ResourceExplorerSetting = new ResourceExplorerSetting();
 			VisualizeRuleExplorerSetting = new VisualizeRuleExplorerSetting();
+			TraceLogDisplayPanelSetting = new TraceLogDisplayPanelSetting();
 
-			ColorSetting.BecameDirty += BecameDirty;
-			ResourceExplorerSetting.BecameDirty += BecameDirty;
-			VisualizeRuleExplorerSetting.BecameDirty += BecameDirty;
+			ColorSetting.BecameDirty += BecameDirtyFactory("ColorSetting");
+			ResourceExplorerSetting.BecameDirty += BecameDirtyFactory("ResourceExplorerSetting");
+			VisualizeRuleExplorerSetting.BecameDirty += BecameDirtyFactory("VisualizeRuleExplorerSetting");
+			TraceLogDisplayPanelSetting.BecameDirty += BecameDirtyFactory("TraceLogDisplayPanelSetting");
 		}
 
-		void BecameDirty(object sender, EventArgs e)
+		SettingChangeEventHandler BecameDirtyFactory(string propertyName)
 		{
-			ApplicationData.FileContext.Data.IsDirty = true;
+			return (o, p) =>
+				{
+					ApplicationData.FileContext.Data.IsDirty = true;
+				};
 		}
 	}
 }

@@ -93,6 +93,7 @@
     <Compile Include="FileContext\SettingData\ResourceExplorerSetting.cs" />
     <Compile Include="FileContext\SettingData\SettingData.cs" />
     <Compile Include="FileContext\SettingData\ColorSetting.cs" />
+    <Compile Include="FileContext\SettingData\TraceLogDisplayPanelSetting.cs" />
     <Compile Include="FileContext\SettingData\VisualizeRuleExplorerSetting.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogGenerator.cs" />
     <Compile Include="FileContext\VisualizeData\Event.cs" />

@@ -14,6 +14,8 @@ namespace NU.OJL.MPRTOS.TLV.Third
 		private Dictionary<string, ITreeGirdViewNode> _nodes = new Dictionary<string, ITreeGirdViewNode>();
 		private string _imageKey = string.Empty;
 
+		public object this[string columnName] { get { return base.Cells[columnName].Value; } }
+
 		public bool HasChild(string name)
 		{
 			return Nodes.Values.Any<ITreeGirdViewNode>(n => n.Name == name);

@@ -45,6 +45,20 @@
 				"Target":"Task",
 				"Events":[
 					{
+						"DisplayName":"起動",
+						"When":{
+							"Behavior":"activate"
+						},
+						"Shapes":"activateShapes"
+					},
+					{
+						"DisplayName":"終了",
+						"When":{
+							"Behavior":"exit"
+						},
+						"Shapes":"exitShapes"
+					},
+					{
 						"DisplayName":"状態",
 						"From":{
 							"Attribute":"state",
@@ -61,20 +75,6 @@
 							"${state}==SUSPENDED"           :"suspendShapes",
 							"${state}==WAITING-SUSPENDED"   :"waitingSuspendedShapes"
 						}
-					},
-					{
-						"DisplayName":"終了",
-						"When":{
-							"Behavior":"exit"
-						},
-						"Shapes":"exitShapes"
-					},
-					{
-						"DisplayName":"起動",
-						"When":{
-							"Behavior":"activate"
-						},
-						"Shapes":"activateShapes"
 					}
 				]
 			},

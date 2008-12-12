@@ -20,5 +20,6 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
 		Dictionary<string, ITreeGirdViewNode> Nodes { get; }
 		void Add(string name, params object[] values);
 		Image Image { get; set; }
+		object this[string columnName] { get; }
 	}
 }

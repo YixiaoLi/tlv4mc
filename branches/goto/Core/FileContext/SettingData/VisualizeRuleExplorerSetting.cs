@@ -10,30 +10,34 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class VisualizeRuleExplorerSetting : ISetting
 	{
-		public event EventHandler BecameDirty = null;
+		public event SettingChangeEventHandler BecameDirty = null;
 		public ObservableMultiKeyDictionary<bool> VisualizeRuleVisibility { get; set; }
 
 		public VisualizeRuleExplorerSetting()
 		{
 			VisualizeRuleVisibility = new ObservableMultiKeyDictionary<bool>();
-			VisualizeRuleVisibility.CollectionChanged += CollectionChanged;
+			VisualizeRuleVisibility.CollectionChanged += CollectionChangedFactory("VisualizeRuleVisibility");
 		}
 
-		void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			if (BecameDirty != null)
-			{
-				switch (e.Action)
-				{
-					case NotifyCollectionChangedAction.Add:
-						BecameDirty(e.NewItems, EventArgs.Empty);
-						break;
 
-					//case NotifyCollectionChangedAction.Remove:
-					//    BecameDirty(e.OldItems, EventArgs.Empty);
-					//    break;
+		NotifyCollectionChangedEventHandler CollectionChangedFactory(string propertyName)
+		{
+			return (object sender, NotifyCollectionChangedEventArgs e) =>
+			{
+				if (BecameDirty != null)
+				{
+					switch (e.Action)
+					{
+						case NotifyCollectionChangedAction.Add:
+							BecameDirty(e.NewItems, propertyName);
+							break;
+
+						//case NotifyCollectionChangedAction.Remove:
+						//    BecameDirty(e.OldItems, EventArgs.Empty);
+						//    break;
+					}
 				}
-			}
+			};
 		}
 	}
 }

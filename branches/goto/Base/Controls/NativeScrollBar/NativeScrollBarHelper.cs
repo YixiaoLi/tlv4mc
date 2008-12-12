@@ -82,24 +82,24 @@ namespace NU.OJL.MPRTOS.TLV.Base
 							if (e.Handled)
 								return;
 
-							if (vScrollBar.Value + vScrollBar.SmallChange > vScrollBar.Maximum && sb == SB_LINEDOWN)
+							if (vScrollBar.Value + vScrollBar.SmallChange >= vScrollBar.Maximum && sb == SB_LINEDOWN)
 							{
-								vScrollBar.Value = vScrollBar.Maximum - vScrollBar.LargeChange;
+								vScrollBar.Value = vScrollBar.Maximum - vScrollBar.LargeChange + 1;
 							}
-							else if (vScrollBar.Value + vScrollBar.LargeChange > vScrollBar.Maximum && sb == SB_PAGEDOWN)
+							else if (vScrollBar.Value + vScrollBar.LargeChange >= vScrollBar.Maximum && sb == SB_PAGEDOWN)
 							{
-								vScrollBar.Value = vScrollBar.Maximum - vScrollBar.LargeChange;
+								vScrollBar.Value = vScrollBar.Maximum - vScrollBar.LargeChange + 1;
 							}
-							else if (vScrollBar.Value - vScrollBar.SmallChange < vScrollBar.Minimum && sb == SB_LINEUP)
+							else if (vScrollBar.Value - vScrollBar.SmallChange <= vScrollBar.Minimum && sb == SB_LINEUP)
 							{
 								vScrollBar.Value = vScrollBar.Minimum;
 							}
-							else if (vScrollBar.Value - vScrollBar.LargeChange < vScrollBar.Minimum && sb == SB_PAGEUP)
+							else if (vScrollBar.Value - vScrollBar.LargeChange <= vScrollBar.Minimum && sb == SB_PAGEUP)
 							{
 								vScrollBar.Value = vScrollBar.Minimum;
 							}
 							else if (!(vScrollBar.Value == vScrollBar.Minimum && (sb == SB_LINEUP || sb == SB_PAGEUP))
-								&& !(vScrollBar.Value >= vScrollBar.Maximum - vScrollBar.LargeChange && (sb == SB_LINEDOWN || sb == SB_PAGEDOWN)))
+								&& !(vScrollBar.Value == vScrollBar.Maximum - vScrollBar.LargeChange + 1 && (sb == SB_LINEDOWN || sb == SB_PAGEDOWN)))
 							{
 								Control.ReflectMessage(vScrollBar.Handle, ref m);
 							}
@@ -113,24 +113,24 @@ namespace NU.OJL.MPRTOS.TLV.Base
 						{
 							int sb = m.WParam.ToInt32();
 
-							if (hScrollBar.Value + hScrollBar.SmallChange > hScrollBar.Maximum && sb == SB_LINERIGHT)
+							if (hScrollBar.Value + hScrollBar.SmallChange >= hScrollBar.Maximum && sb == SB_LINERIGHT)
 							{
-								hScrollBar.Value = hScrollBar.Maximum - hScrollBar.LargeChange;
+								hScrollBar.Value = hScrollBar.Maximum - hScrollBar.LargeChange + 1;
 							}
-							else if (hScrollBar.Value + hScrollBar.LargeChange > hScrollBar.Maximum && sb == SB_PAGERIGHT)
+							else if (hScrollBar.Value + hScrollBar.LargeChange >= hScrollBar.Maximum && sb == SB_PAGERIGHT)
 							{
-								hScrollBar.Value = hScrollBar.Maximum - hScrollBar.LargeChange;
+								hScrollBar.Value = hScrollBar.Maximum - hScrollBar.LargeChange + 1;
 							}
-							else if (hScrollBar.Value - hScrollBar.SmallChange < hScrollBar.Minimum && sb == SB_LINELEFT)
+							else if (hScrollBar.Value - hScrollBar.SmallChange <= hScrollBar.Minimum && sb == SB_LINELEFT)
 							{
 								hScrollBar.Value = hScrollBar.Minimum;
 							}
-							else if (hScrollBar.Value - hScrollBar.LargeChange < hScrollBar.Minimum && sb == SB_PAGELEFT)
+							else if (hScrollBar.Value - hScrollBar.LargeChange <= hScrollBar.Minimum && sb == SB_PAGELEFT)
 							{
 								hScrollBar.Value = hScrollBar.Minimum;
 							}
 							else if (!(hScrollBar.Value == hScrollBar.Minimum && (sb == SB_PAGELEFT || sb == SB_LINELEFT))
-								&& !(hScrollBar.Value >= hScrollBar.Maximum - hScrollBar.LargeChange && (sb == SB_PAGERIGHT || sb == SB_LINERIGHT)))
+								&& !(hScrollBar.Value == hScrollBar.Maximum - hScrollBar.LargeChange + 1 && (sb == SB_PAGERIGHT || sb == SB_LINERIGHT)))
 							{
 								Control.ReflectMessage(hScrollBar.Handle, ref m);
 							}
