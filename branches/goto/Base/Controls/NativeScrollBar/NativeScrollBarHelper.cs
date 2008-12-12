@@ -5,13 +5,15 @@ using System.Windows.Forms;
 using System.Text;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Reflection;
 
 namespace NU.OJL.MPRTOS.TLV.Base
 {
 
 	public class NativeScrollBarHelper : Control
 	{
-		private NativeScrollBar _nsb;
+		private NativeScrollBar _nsbV;
+		private NativeScrollBar _nsbH;
 		private Control _control;
 		private ScrollBar[] _scrollBars;
 
@@ -27,20 +29,25 @@ namespace NU.OJL.MPRTOS.TLV.Base
 		private const int SB_PAGEUP = 2;
 		private const int SB_PAGEDOWN = 3;
 
-		public NativeScrollBarHelper(Control control, ScrollBar[] scrollBars)
+		public NativeScrollBarHelper(Control control, params ScrollBar[] scrollBars)
 		{
 			_control = control;
 			_scrollBars = scrollBars;
-			_nsb = new NativeScrollBar(this);
+			_nsbV = new NativeScrollBar(this, ScrollBarType.Vertical);
+			_nsbH = new NativeScrollBar(this, ScrollBarType.Horizontal);
 			_control.Controls.Add(this);
 
 		}
 
 		protected override void OnHandleDestroyed(EventArgs e)
 		{
-			if (_nsb != null)
+			if (_nsbV != null)
 			{
-				_nsb.DestroyHandle();
+				_nsbV.DestroyHandle();
+			}
+			if (_nsbH != null)
+			{
+				_nsbH.DestroyHandle();
 			}
 		}
 
@@ -51,18 +58,29 @@ namespace NU.OJL.MPRTOS.TLV.Base
 				case WM_VSCROLL:
 					foreach (ScrollBar vScrollBar in _scrollBars.Where(s => s.GetType() == typeof(VScrollBar)))
 					{
-						if (vScrollBar != null && m.LParam != vScrollBar.Handle && vScrollBar.Visible)
+						if (vScrollBar != null && m.LParam != vScrollBar.Handle)
 						{
 							int sb = m.WParam.ToInt32();
 
-							if (sb == SB_LINEDOWN)
+							int d = 0;
+
+							if (sb == SB_LINEDOWN || sb == SB_PAGEDOWN)
 							{
-								SendMessage(_control.Handle.ToInt32(), WM_MOUSEWHEEL, 0x78, 0);
+								d = -120;
+								//SendMessage(_control.Handle.ToInt32(), WM_MOUSEWHEEL, 0x78, 0);
 							}
-							else
+							else if (sb == SB_LINEUP || sb == SB_PAGEUP)
 							{
-								SendMessage(_control.Handle.ToInt32(), WM_MOUSEWHEEL, 0xffff88, 0);
+								d = 120;
+								//SendMessage(_control.Handle.ToInt32(), WM_MOUSEWHEEL, 0xffff88, 0);
 							}
+
+							MethodInfo method = _control.GetType().GetMethod("OnMouseWheel",BindingFlags.Instance | BindingFlags.NonPublic);
+							ExMouseEventArgs e = new ExMouseEventArgs(MouseButtons.None, 0, 0, 0, d);
+							method.Invoke(_control, new object[] { e });
+
+							if (e.Handled)
+								return;
 
 							if (vScrollBar.Value + vScrollBar.SmallChange > vScrollBar.Maximum && sb == SB_LINEDOWN)
 							{
@@ -91,7 +109,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 				case WM_HSCROLL:
 					foreach (ScrollBar hScrollBar in _scrollBars.Where(s => s.GetType() == typeof(HScrollBar)))
 					{
-						if (hScrollBar != null && m.LParam != hScrollBar.Handle && hScrollBar.Visible)
+						if (hScrollBar != null && m.LParam != hScrollBar.Handle)
 						{
 							int sb = m.WParam.ToInt32();
 
@@ -124,12 +142,19 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			base.WndProc(ref m);
 		}
 
-		[DllImport("user32.dll")]
-		public static extern int SendMessage(
-			  int hWnd,
-			  uint Msg,
-			  long wParam,
-			  long lParam
-			  );
+		//[DllImport("user32.dll")]
+		//public static extern int SendMessage(
+		//      int hWnd,
+		//      uint Msg,
+		//      long wParam,
+		//      long lParam
+		//      );
+	}
+
+	public class ExMouseEventArgs : MouseEventArgs
+	{
+		public bool Handled { get; set; }
+
+		public ExMouseEventArgs(MouseButtons mb, int click, int x, int y, int delta):base(mb, click, x, y, delta)  { }
 	}
 }

@@ -45,11 +45,40 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			treeGridView.RowHeightChanged += treeGridViewRowChanged;
 			treeGridView.RowCountChanged += treeGridViewRowChanged;
+			treeGridView.SizeChanged += (o, _e) =>
+				{
+					bottomTimeLineScale.Location = new System.Drawing.Point(bottomTimeLineScale.Location.X, 1 + topTimeLineScale.Height + treeGridView.Height);
+					hScrollBar.Location = new System.Drawing.Point(hScrollBar.Location.X, 1 + topTimeLineScale.Height + treeGridView.Height + bottomTimeLineScale.Height);
+				};
+			treeGridView.DataGridView.ColumnWidthChanged += (o, _e) =>
+				{
+					int w = 0;
+					for (int i = 0; i < treeGridView.DataGridView.Columns["timeLine"].Index; i++)
+					{
+						w += treeGridView.DataGridView.Columns[i].Width;
+					}
+					topTimeLineScale.Width = treeGridView.DataGridView.Columns["timeLine"].Width;
+					topTimeLineScale.Location = new System.Drawing.Point(w + 2, topTimeLineScale.Location.Y);
+					bottomTimeLineScale.Width = treeGridView.DataGridView.Columns["timeLine"].Width;
+					bottomTimeLineScale.Location = new System.Drawing.Point(w + 2, bottomTimeLineScale.Location.Y);
+					hScrollBar.Width = treeGridView.DataGridView.Columns["timeLine"].Width;
+					hScrollBar.Location = new System.Drawing.Point(w + 2, hScrollBar.Location.Y);
+				};
+			treeGridView.DataGridView.ScrollBars = ScrollBars.Vertical;
 
 			treeGridView.DataGridView.CellPainting += (o, _e) =>
 				{
 					_e.Paint(_e.ClipBounds, _e.PaintParts & ~DataGridViewPaintParts.Focus);
 					_e.Handled = true;
+				};
+			treeGridView.DataGridView.MouseWheel += (o, _e) =>
+				{
+					if((Control.ModifierKeys  & Keys.Control) == Keys.Control)
+					{
+						hScrollBar.Value += _e.Delta > 0 ? hScrollBar.Value < hScrollBar.Maximum ? 1 : 0 : hScrollBar.Value > hScrollBar.Minimum ? - 1 : 0;
+
+						((ExMouseEventArgs)_e).Handled = true;
+					}
 				};
 
 			ApplicationData.FileContext.DataChanged += (o, _e) =>
@@ -99,7 +128,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						{
 							foreach (KeyValuePair<string, bool> kvp in (IList)_o)
 							{
-								// リソースタイプ:可視化ルール:イベント
 								string[] keys = kvp.Key.Split(':');
 
 								foreach (ITreeGirdViewNode node in treeGridView.Nodes.Values.Where(n => n.Name.Split(':')[0] == keys[0]))
@@ -150,6 +178,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 											else
 											{
 												n.Visible = kvp.Value;
+
+												if (n.HasChildren)
+												{
+													foreach (ITreeGirdViewNode _n in n.Nodes.Values)
+													{
+														if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys[0], keys[1], _n.Name) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], keys[1], _n.Name) : ApplicationData.Setting.DefaultResourceVisible)
+															_n.Visible = kvp.Value;
+														else
+															_n.Visible = false;
+													}
+												}
 											}
 										}
 									}
@@ -166,12 +205,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			foreach (VisualizeRule vizRule in data.VisualizeData.VisualizeRules.Where<VisualizeRule>(v => !v.IsBelongedTargetResourceType()))
 			{
-				treeGridView.Add(vizRule.Name, vizRule.DisplayName, "", new TimeLine());
+				treeGridView.Add(vizRule.Name, vizRule.DisplayName, "", new TimeLineVisualizer());
 				treeGridView.Nodes[vizRule.Name].Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name) : ApplicationData.Setting.DefaultResourceVisible;
 				treeGridView.Nodes[vizRule.Name].Image = imageList.Images["visualize"];
 				foreach(Event e in vizRule.Events)
 				{
-					treeGridView.Nodes[vizRule.Name].Add(e.DisplayName, e.DisplayName, "", new TimeLine());
+					treeGridView.Nodes[vizRule.Name].Add(e.DisplayName, e.DisplayName, "", new TimeLineVisualizer());
 					treeGridView.Nodes[vizRule.Name].Nodes[e.DisplayName].Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name, e.DisplayName) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultResourceVisible;
 					setEventImage(treeGridView.Nodes[vizRule.Name].Nodes[e.DisplayName], e);
 				}
@@ -182,18 +221,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					if (!treeGridView.Nodes.ContainsKey(res.Type + ":" + res.Name))
 					{
-						treeGridView.Add(res.Type + ":" + res.Name, res.DisplayName, "", new TimeLine());
+						treeGridView.Add(res.Type + ":" + res.Name, res.DisplayName, "", new TimeLineVisualizer());
 						treeGridView.Nodes[res.Type + ":" + res.Name].Visible = ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Type + ":" + res.Name) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(res.Type + ":" + res.Name) : ApplicationData.Setting.DefaultResourceVisible;
 						treeGridView.Nodes[res.Type + ":" + res.Name].Image = imageList.Images["resource"];
 					}
 
-					treeGridView.Nodes[res.Type + ":" + res.Name].Add(res.Type + ":" + res.Name + ":" + vizRule.Name, vizRule.DisplayName, "", new TimeLine());
+					treeGridView.Nodes[res.Type + ":" + res.Name].Add(res.Type + ":" + res.Name + ":" + vizRule.Name, vizRule.DisplayName, "", new TimeLineVisualizer());
 					treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Visible && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name) : ApplicationData.Setting.DefaultResourceVisible;
 					treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Image = imageList.Images["visualize"];
 
 					foreach (Event e in vizRule.Events)
 					{
-						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Add(e.DisplayName, e.DisplayName, "", new TimeLine());
+						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Add(e.DisplayName, e.DisplayName, "", new TimeLineVisualizer());
 						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Nodes[e.DisplayName].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name, e.DisplayName) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultResourceVisible;
 						setEventImage(treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Nodes[e.DisplayName], e);
 					}
@@ -260,7 +299,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			allRowHeight += treeGridView.DataGridView.ColumnHeadersVisible ? treeGridView.ColumnHeadersHeight : 1;
 
-			int maxHeight = Height - 2;
+			int maxHeight = Height - 2 - topTimeLineScale.Height - bottomTimeLineScale.Height - hScrollBar.Height;
+
+			if(allRowHeight == 1)
+			{
+				treeGridView.Visible = false;
+				topTimeLineScale.Visible = false;
+				bottomTimeLineScale.Visible = false;
+				hScrollBar.Visible = false;
+			}
+			else
+			{
+				if (!treeGridView.Visible)
+					treeGridView.Visible = true;
+				if (!topTimeLineScale.Visible)
+					topTimeLineScale.Visible = true;
+				if (!bottomTimeLineScale.Visible)
+					bottomTimeLineScale.Visible = true;
+				if (!hScrollBar.Visible)
+					hScrollBar.Visible = true;
+			}
 
 			if ( allRowHeight > maxHeight)
 			{

@@ -83,3 +83,6 @@ C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Properties
 C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\Core.csproj.GenerateResource.Cache
 C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.dll
 C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.pdb
+C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.TimeLine.resources
+C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.TimeLineScale.resources
+C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.TimeLineVisualizer.resources

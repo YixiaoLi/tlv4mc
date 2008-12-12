@@ -6,6 +6,12 @@ using System.Collections.Generic;
 
 namespace NU.OJL.MPRTOS.TLV.Base
 {
+	public enum ScrollBarType
+	{
+		Vertical,
+		Horizontal
+	}
+
     public class NativeScrollBar : NativeWindow
     {
         private const int WS_CHILD = 0x40000000;
@@ -13,7 +19,13 @@ namespace NU.OJL.MPRTOS.TLV.Base
         private const int SBS_HORZ = 0x0000;
 		private const int SBS_VERT = 0x0001;
 
-        public NativeScrollBar(Control parent)
+		public NativeScrollBar(Control parent)
+			:this(parent, ScrollBarType.Vertical)
+		{
+
+		}
+
+        public NativeScrollBar(Control parent, ScrollBarType type)
         {
 
             CreateParams cp = new CreateParams();
@@ -27,7 +39,15 @@ namespace NU.OJL.MPRTOS.TLV.Base
             cp.Width = 0;
 
             cp.Parent = parent.Handle;
-			cp.Style = WS_VISIBLE | SBS_HORZ | WS_CHILD | SBS_VERT;
+			switch (type)
+			{
+				case ScrollBarType.Horizontal:
+					cp.Style = WS_VISIBLE | SBS_HORZ | WS_CHILD;
+					break;
+				case ScrollBarType.Vertical:
+					cp.Style = WS_VISIBLE | WS_CHILD | SBS_VERT;
+					break;
+			}
 
             IntPtr modHandle = NativeScrollBar.GetModuleHandle(null);
 			int lastWin32Error = 0;

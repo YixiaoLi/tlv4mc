@@ -190,6 +190,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					dataGridView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font(dataGridView.ColumnHeadersDefaultCellStyle.Font.FontFamily, dataGridView.ColumnHeadersDefaultCellStyle.Font.Size + v);
 				}
+				((ExMouseEventArgs)e).Handled = true;
 			}
 		}
 
