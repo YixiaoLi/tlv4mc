@@ -17,192 +17,48 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
 	public partial class TraceLogDisplayPanel : UserControl
 	{
+		private int _timeLineX = 0;
+		private int _timeLineWidth = 0;
+		public int TimeLineX
+		{
+			get { return _timeLineX; }
+			private set
+			{
+				if (_timeLineX != value)
+				{
+					_timeLineX = value;
+
+					topTimeLineScale.Location = new System.Drawing.Point(_timeLineX, topTimeLineScale.Location.Y);
+					bottomTimeLineScale.Location = new System.Drawing.Point(_timeLineX, bottomTimeLineScale.Location.Y);
+					hScrollBar.Location = new System.Drawing.Point(_timeLineX, hScrollBar.Location.Y);
+				}
+			}
+		}
+		public int TimeLineWidth
+		{
+			get { return _timeLineWidth; }
+			private set
+			{
+				if (_timeLineWidth != value)
+				{
+					_timeLineWidth = value;
+
+					topTimeLineScale.Width = _timeLineWidth;
+					bottomTimeLineScale.Width = _timeLineWidth;
+					hScrollBar.Width = _timeLineWidth;
+				}
+			}
+		}
+
 		public TraceLogDisplayPanel()
 		{
 			InitializeComponent();
 		}
 
-		protected override void OnLoad(EventArgs e)
-		{
-			base.OnLoad(e);
-
-			imageList.Images.Add("visualize", Properties.Resources.visualize);
-			imageList.Images.Add("resource", Properties.Resources.resource);
-			imageList.Images.Add("bhr2bhr", Properties.Resources.bhr2bhr);
-			imageList.Images.Add("atr2atr", Properties.Resources.atr2atr);
-			imageList.Images.Add("atr2bhr", Properties.Resources.atr2bhr);
-			imageList.Images.Add("bhr2atr", Properties.Resources.bhr2atr);
-			imageList.Images.Add("attribute", Properties.Resources.attribute);
-			imageList.Images.Add("behavior", Properties.Resources.behavior);
-			imageList.Images.Add("warning", Properties.Resources.warning);
-
-			treeGridView.AddColumn(new TreeGridViewColumn() { Name = "resourceName", HeaderText = "リソース" });
-			treeGridView.AddColumn(new DataGridViewTextBoxColumn() { Name = "attributeValue", HeaderText = "値" });
-			treeGridView.AddColumn(new TimeLineColumn() { Name = "timeLine", HeaderText = "タイムライン", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
-
-			treeGridView.DataGridView.ColumnHeadersVisible = false;
-			treeGridView.DataGridView.MultiSelect = false;
-
-			treeGridView.RowHeightChanged += treeGridViewRowChanged;
-			treeGridView.RowCountChanged += treeGridViewRowChanged;
-			treeGridView.SizeChanged += (o, _e) =>
-				{
-					bottomTimeLineScale.Location = new System.Drawing.Point(bottomTimeLineScale.Location.X, 1 + topTimeLineScale.Height + treeGridView.Height);
-					hScrollBar.Location = new System.Drawing.Point(hScrollBar.Location.X, 1 + topTimeLineScale.Height + treeGridView.Height + bottomTimeLineScale.Height);
-				};
-			treeGridView.DataGridView.ColumnWidthChanged += (o, _e) =>
-				{
-					int w = 0;
-					for (int i = 0; i < treeGridView.DataGridView.Columns["timeLine"].Index; i++)
-					{
-						w += treeGridView.DataGridView.Columns[i].Width;
-					}
-					topTimeLineScale.Width = treeGridView.DataGridView.Columns["timeLine"].Width;
-					topTimeLineScale.Location = new System.Drawing.Point(w + 2, topTimeLineScale.Location.Y);
-					bottomTimeLineScale.Width = treeGridView.DataGridView.Columns["timeLine"].Width;
-					bottomTimeLineScale.Location = new System.Drawing.Point(w + 2, bottomTimeLineScale.Location.Y);
-					hScrollBar.Width = treeGridView.DataGridView.Columns["timeLine"].Width;
-					hScrollBar.Location = new System.Drawing.Point(w + 2, hScrollBar.Location.Y);
-				};
-			treeGridView.DataGridView.ScrollBars = ScrollBars.Vertical;
-
-			treeGridView.DataGridView.CellPainting += (o, _e) =>
-				{
-					_e.Paint(_e.ClipBounds, _e.PaintParts & ~DataGridViewPaintParts.Focus);
-					_e.Handled = true;
-				};
-			treeGridView.DataGridView.MouseWheel += (o, _e) =>
-				{
-					if((Control.ModifierKeys  & Keys.Control) == Keys.Control)
-					{
-						hScrollBar.Value += _e.Delta > 0 ? hScrollBar.Value < hScrollBar.Maximum ? 1 : 0 : hScrollBar.Value > hScrollBar.Minimum ? - 1 : 0;
-
-						((ExMouseEventArgs)_e).Handled = true;
-					}
-				};
-
-			ApplicationData.FileContext.DataChanged += (o, _e) =>
-			{
-				Invoke((MethodInvoker)(() =>
-				{
-					if (ApplicationData.FileContext.Data == null)
-					{
-						ClearData();
-					}
-					else
-					{
-						SetData(ApplicationData.FileContext.Data);
-						treeGridViewRowChanged(this, EventArgs.Empty);
-
-						ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.BecameDirty += (_o, __e) =>
-							{
-								foreach (KeyValuePair<string, bool> kvp in (IList)_o)
-								{
-									if (treeGridView.Nodes[kvp.Key].Visible != kvp.Value)
-									{
-										treeGridView.Nodes[kvp.Key].Visible = kvp.Value;
-
-										foreach(ITreeGirdViewNode node in treeGridView.Nodes[kvp.Key].Nodes.Values)
-										{
-											string[] res = node.Name.Split(':');
-
-											if (kvp.Value)
-												node.Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2]) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2]) : ApplicationData.Setting.DefaultResourceVisible;
-											else
-												node.Visible = false;
-
-											foreach (ITreeGirdViewNode n in node.Nodes.Values)
-											{
-												if (kvp.Value)
-													n.Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2], n.Name) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2], n.Name) : ApplicationData.Setting.DefaultResourceVisible;
-												else
-													n.Visible = false;
-											}
-										}
-									}
-								}
-								treeGridViewRowChanged(this, EventArgs.Empty);
-							};
-
-						ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.BecameDirty += (_o, __e) =>
-						{
-							foreach (KeyValuePair<string, bool> kvp in (IList)_o)
-							{
-								string[] keys = kvp.Key.Split(':');
-
-								foreach (ITreeGirdViewNode node in treeGridView.Nodes.Values.Where(n => n.Name.Split(':')[0] == keys[0]))
-								{
-
-									if (keys.Length == 1)
-									{
-										if (node.Name.Split(':').Length > 1)
-										{
-											if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys[0], node.Name.Split(':')[1]) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], node.Name.Split(':')[1]) : ApplicationData.Setting.DefaultResourceVisible)
-												node.Visible = kvp.Value;
-											else
-												node.Visible = false;
-										}
-										else if (node.Name.Split(':').Length == 1)
-										{
-											node.Visible = kvp.Value;
-
-											if (node.HasChildren)
-											{
-												foreach (ITreeGirdViewNode n in node.Nodes.Values)
-												{
-													if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys[0], n.Name) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], n.Name) : ApplicationData.Setting.DefaultResourceVisible)
-														n.Visible = kvp.Value;
-													else
-														n.Visible = false;
-												}
-											}
-										}
-									}
-									else
-									{
-										foreach (ITreeGirdViewNode n in node.Nodes.Values.Where(n => n.Name.Split(':').Last() == keys[1]))
-										{
-											if (kvp.Value && !node.Visible)
-												continue;
-
-											if (n.HasChildren && keys.Length == 3)
-											{
-												if (kvp.Value && !n.Visible)
-													continue;
-
-												foreach (ITreeGirdViewNode _n in n.Nodes.Values.Where(_n => _n.Name == keys[2]))
-												{
-													_n.Visible = kvp.Value;
-												}
-											}
-											else
-											{
-												n.Visible = kvp.Value;
-
-												if (n.HasChildren)
-												{
-													foreach (ITreeGirdViewNode _n in n.Nodes.Values)
-													{
-														if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys[0], keys[1], _n.Name) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], keys[1], _n.Name) : ApplicationData.Setting.DefaultResourceVisible)
-															_n.Visible = kvp.Value;
-														else
-															_n.Visible = false;
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-							treeGridViewRowChanged(this, EventArgs.Empty);
-						};
-					}
-				}));
-			};
-		}
-
 		public void SetData(TraceLogVisualizerData data)
 		{
+			ClearData();
+
 			foreach (VisualizeRule vizRule in data.VisualizeData.VisualizeRules.Where<VisualizeRule>(v => !v.IsBelongedTargetResourceType()))
 			{
 				treeGridView.Add(vizRule.Name, vizRule.DisplayName, "", new TimeLineVisualizer());
@@ -238,9 +94,86 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					}
 				}
 			}
+
+			treeGridViewRowChanged(this, EventArgs.Empty);
+
+			ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.BecameDirty += new EventHandler(resourceExplorerSettingBecameDirty);
+
+			ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.BecameDirty += new EventHandler(visualizeRuleExplorerSettingBecameDirty);
+
 		}
 
-		private void setEventImage(ITreeGirdViewNode tn, Event e)
+		public void ClearData()
+		{
+			treeGridView.Clear();
+		}
+
+		protected override void OnLoad(EventArgs e)
+		{
+			base.OnLoad(e);
+
+			imageList.Images.Add("visualize", Properties.Resources.visualize);
+			imageList.Images.Add("resource", Properties.Resources.resource);
+			imageList.Images.Add("bhr2bhr", Properties.Resources.bhr2bhr);
+			imageList.Images.Add("atr2atr", Properties.Resources.atr2atr);
+			imageList.Images.Add("atr2bhr", Properties.Resources.atr2bhr);
+			imageList.Images.Add("bhr2atr", Properties.Resources.bhr2atr);
+			imageList.Images.Add("attribute", Properties.Resources.attribute);
+			imageList.Images.Add("behavior", Properties.Resources.behavior);
+			imageList.Images.Add("warning", Properties.Resources.warning);
+
+			treeGridView.AddColumn(new TreeGridViewColumn() { Name = "resourceName", HeaderText = "リソース" });
+			treeGridView.AddColumn(new DataGridViewTextBoxColumn() { Name = "attributeValue", HeaderText = "値" });
+			treeGridView.AddColumn(new TimeLineColumn() { Name = "timeLine", HeaderText = "タイムライン", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
+
+			treeGridView.DataGridView.ColumnHeadersVisible = false;
+			treeGridView.DataGridView.MultiSelect = false;
+
+			treeGridView.RowHeightChanged += treeGridViewRowChanged;
+			treeGridView.RowCountChanged += treeGridViewRowChanged;
+			treeGridView.SizeChanged += (o, _e) =>
+			{
+				bottomTimeLineScale.Location = new System.Drawing.Point(bottomTimeLineScale.Location.X, 1 + topTimeLineScale.Height + treeGridView.Height);
+				hScrollBar.Location = new System.Drawing.Point(hScrollBar.Location.X, 1 + topTimeLineScale.Height + treeGridView.Height + bottomTimeLineScale.Height);
+			};
+			treeGridView.DataGridView.ColumnWidthChanged += (o, _e) =>
+			{
+				int w = 0;
+				for (int i = 0; i < treeGridView.DataGridView.Columns["timeLine"].Index; i++)
+				{
+					w += treeGridView.DataGridView.Columns[i].Width;
+				}
+				TimeLineX = w + 2;
+				TimeLineWidth = treeGridView.DataGridView.Columns["timeLine"].Width;
+			};
+			treeGridView.DataGridView.ScrollBars = ScrollBars.Vertical;
+
+			treeGridView.DataGridView.CellPainting += (o, _e) =>
+			{
+				_e.Paint(_e.ClipBounds, _e.PaintParts & ~DataGridViewPaintParts.Focus);
+				_e.Handled = true;
+			};
+			treeGridView.DataGridView.MouseWheel += (o, _e) =>
+			{
+				if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+				{
+					hScrollBar.Value += _e.Delta > 0 ? hScrollBar.Value < hScrollBar.Maximum ? 1 : 0 : hScrollBar.Value > hScrollBar.Minimum ? -1 : 0;
+
+					((ExMouseEventArgs)_e).Handled = true;
+				}
+			};
+
+			ApplicationData.FileContext.DataChanged += new EventHandler<GeneralEventArgs<TraceLogVisualizerData>>(fileContextDataChanged);
+
+		}
+
+		protected override void OnSizeChanged(EventArgs e)
+		{
+			base.OnSizeChanged(e);
+			treeGridViewRowChanged(this, e);
+		}
+
+		protected void setEventImage(ITreeGirdViewNode tn, Event e)
 		{
 			if ((e.Type & EventTypes.FromAttributeChange) == EventTypes.FromAttributeChange
 				&& (e.Type & EventTypes.ToAttributeChange) == EventTypes.ToAttributeChange)
@@ -282,18 +215,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		}
 
-		public void ClearData()
-		{
-			treeGridView.Clear();
-		}
-
-		protected override void OnSizeChanged(EventArgs e)
-		{
-			base.OnSizeChanged(e);
-			treeGridViewRowChanged(this, e);
-		}
-
-		void treeGridViewRowChanged(object sender, EventArgs e)
+		protected void treeGridViewRowChanged(object sender, EventArgs e)
 		{
 			int allRowHeight = treeGridView.VisibleRowsCount * treeGridView.RowHeight;
 
@@ -328,6 +250,124 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			{
 				treeGridView.Height = allRowHeight;
 			}
+		}
+
+		protected void fileContextDataChanged(object sender, GeneralEventArgs<TraceLogVisualizerData> e)
+		{
+			Invoke((MethodInvoker)(() =>
+			{
+				if (ApplicationData.FileContext.Data == null)
+				{
+					ClearData();
+				}
+				else
+				{
+					SetData(ApplicationData.FileContext.Data);
+				}
+			}));
+		}
+
+		protected void visualizeRuleExplorerSettingBecameDirty(object sender, EventArgs e)
+		{
+			foreach (KeyValuePair<string, bool> kvp in (IList)sender)
+			{
+				string[] keys = kvp.Key.Split(':');
+
+				foreach (ITreeGirdViewNode node in treeGridView.Nodes.Values.Where(n => n.Name.Split(':')[0] == keys[0]))
+				{
+
+					if (keys.Length == 1)
+					{
+						if (node.Name.Split(':').Length > 1)
+						{
+							if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys[0], node.Name.Split(':')[1]) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], node.Name.Split(':')[1]) : ApplicationData.Setting.DefaultResourceVisible)
+								node.Visible = kvp.Value;
+							else
+								node.Visible = false;
+						}
+						else if (node.Name.Split(':').Length == 1)
+						{
+							node.Visible = kvp.Value;
+
+							if (node.HasChildren)
+							{
+								foreach (ITreeGirdViewNode n in node.Nodes.Values)
+								{
+									if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys[0], n.Name) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], n.Name) : ApplicationData.Setting.DefaultResourceVisible)
+										n.Visible = kvp.Value;
+									else
+										n.Visible = false;
+								}
+							}
+						}
+					}
+					else
+					{
+						foreach (ITreeGirdViewNode n in node.Nodes.Values.Where(n => n.Name.Split(':').Last() == keys[1]))
+						{
+							if (kvp.Value && !node.Visible)
+								continue;
+
+							if (n.HasChildren && keys.Length == 3)
+							{
+								if (kvp.Value && !n.Visible)
+									continue;
+
+								foreach (ITreeGirdViewNode _n in n.Nodes.Values.Where(_n => _n.Name == keys[2]))
+								{
+									_n.Visible = kvp.Value;
+								}
+							}
+							else
+							{
+								n.Visible = kvp.Value;
+
+								if (n.HasChildren)
+								{
+									foreach (ITreeGirdViewNode _n in n.Nodes.Values)
+									{
+										if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys[0], keys[1], _n.Name) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], keys[1], _n.Name) : ApplicationData.Setting.DefaultResourceVisible)
+											_n.Visible = kvp.Value;
+										else
+											_n.Visible = false;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			treeGridViewRowChanged(this, EventArgs.Empty);
+		}
+
+		protected void resourceExplorerSettingBecameDirty(object sender, EventArgs e)
+		{
+			foreach (KeyValuePair<string, bool> kvp in (IList)sender)
+			{
+				if (treeGridView.Nodes[kvp.Key].Visible != kvp.Value)
+				{
+					treeGridView.Nodes[kvp.Key].Visible = kvp.Value;
+
+					foreach (ITreeGirdViewNode node in treeGridView.Nodes[kvp.Key].Nodes.Values)
+					{
+						string[] res = node.Name.Split(':');
+
+						if (kvp.Value)
+							node.Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2]) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2]) : ApplicationData.Setting.DefaultResourceVisible;
+						else
+							node.Visible = false;
+
+						foreach (ITreeGirdViewNode n in node.Nodes.Values)
+						{
+							if (kvp.Value)
+								n.Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2], n.Name) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2], n.Name) : ApplicationData.Setting.DefaultResourceVisible;
+							else
+								n.Visible = false;
+						}
+					}
+				}
+			}
+			treeGridViewRowChanged(this, EventArgs.Empty);
 		}
 
 	}

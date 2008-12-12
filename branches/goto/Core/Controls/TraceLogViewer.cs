@@ -31,6 +31,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		public void SetData(TraceLogData traceLogData, ResourceData resourceData)
 		{
+			ClearData();
+
 			_traceLogData = traceLogData;
 			_resourceData = resourceData;
 
@@ -45,14 +47,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				dataGridView.Columns["time"].HeaderText = "時間";
 			}
 
-			if (_traceLogData == null)
-				dataGridView.DataSource = null;
-
 		}
 
 		public void ClearData()
 		{
-			SetData(null, null);
+			_traceLogData = null;
+			_resourceData = null;
+			_dataSource = new SortableBindingList<TraceLog>();
+			_eventColorCache = new Dictionary<string, Color>();
+			_resColorCache = new Dictionary<string, Color>();
+			_resTypeColorCache = new Dictionary<string, Color>();
+			_valTypeColorCache = new Dictionary<string, KeyValuePair<string[], Color>>();
+			dataGridView.DataSource = null;
 		}
 
 		protected override void OnLoad(EventArgs e)

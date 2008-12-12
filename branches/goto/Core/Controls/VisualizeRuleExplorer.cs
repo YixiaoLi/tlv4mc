@@ -45,37 +45,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					else
 					{
 						SetData(ApplicationData.FileContext.Data);
-
-						ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.BecameDirty += (_o, __e) =>
-						{
-							foreach (KeyValuePair<string, bool> kvp in (IList)_o)
-							{
-								string[] k = kvp.Key.Split(':');
-
-								foreach (TreeNode tn in _treeView.Nodes.Find(k[0], false))
-								{
-									if (k.Length > 1)
-									{
-										foreach (TreeNode _tn in tn.Nodes.Find(k[1], false))
-										{
-											if (k.Length == 3 && _tn.Nodes != null && _tn.Nodes.Count != 0)
-											{
-												foreach (TreeNode __tn in _tn.Nodes.Find(k[2], false))
-												{
-													if (__tn.Checked != kvp.Value)
-														__tn.Checked = kvp.Value;
-												}
-											}
-											else
-											{
-												if (_tn.Checked != kvp.Value)
-													_tn.Checked = kvp.Value;
-											}
-										}
-									}
-								}
-							}
-						};
 					}
 				}));
 			};
@@ -83,6 +52,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		public void SetData(TraceLogVisualizerData data)
 		{
+			ClearData();
+
 			foreach (VisualizeRule vizRule in data.VisualizeData.VisualizeRules)
 			{
 				TreeNodeCollection tnc;
@@ -156,6 +127,37 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			_treeView.ExpandAll();
 
+
+			ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.BecameDirty += (_o, __e) =>
+			{
+				foreach (KeyValuePair<string, bool> kvp in (IList)_o)
+				{
+					string[] k = kvp.Key.Split(':');
+
+					foreach (TreeNode tn in _treeView.Nodes.Find(k[0], false))
+					{
+						if (k.Length > 1)
+						{
+							foreach (TreeNode _tn in tn.Nodes.Find(k[1], false))
+							{
+								if (k.Length == 3 && _tn.Nodes != null && _tn.Nodes.Count != 0)
+								{
+									foreach (TreeNode __tn in _tn.Nodes.Find(k[2], false))
+									{
+										if (__tn.Checked != kvp.Value)
+											__tn.Checked = kvp.Value;
+									}
+								}
+								else
+								{
+									if (_tn.Checked != kvp.Value)
+										_tn.Checked = kvp.Value;
+								}
+							}
+						}
+					}
+				}
+			};
 		}
 
 		private void setVisibility(bool value, params string[] keys)

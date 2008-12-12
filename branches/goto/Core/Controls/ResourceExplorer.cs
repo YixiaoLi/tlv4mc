@@ -10,6 +10,7 @@ using NU.OJL.MPRTOS.TLV.Core;
 using System.Text.RegularExpressions;
 using NU.OJL.MPRTOS.TLV.Base.Controls;
 using System.Collections;
+using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
@@ -42,44 +43,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				ApplicationFactory.StatusManager.HideHint(tabControl.GetType().ToString() + ":checkIs");
 			};
 
-			ApplicationData.FileContext.DataChanged += (o, _e) =>
+			ApplicationData.FileContext.DataChanged += new EventHandler<NU.OJL.MPRTOS.TLV.Base.GeneralEventArgs<TraceLogVisualizerData>>(fileContextDataChanged);
+
+		}
+
+		protected void fileContextDataChanged(object sender, GeneralEventArgs<TraceLogVisualizerData> e)
+		{
+			Invoke((MethodInvoker)(() =>
 			{
-				Invoke((MethodInvoker)(() =>
+				if (ApplicationData.FileContext.Data == null)
 				{
-					if (ApplicationData.FileContext.Data == null)
-					{
-						ClearData();
-					}
-					else
-					{
-						SetData(ApplicationData.FileContext.Data.ResourceData);
-
-						ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.BecameDirty += (_o, __e) =>
-						{
-							foreach (KeyValuePair<string, bool> kvp in (IList)_o)
-							{
-								string[] k = kvp.Key.Split(':');
-
-								foreach (TreeView tv in _treeViews.Values)
-								{
-									foreach (TreeNode tn in tv.Nodes)
-									{
-										foreach (TreeNode _tn in tn.Nodes.Find(k[0] + ":" + k[1], false))
-										{
-											if (_tn.Checked != kvp.Value)
-												_tn.Checked = kvp.Value;
-										}
-									}
-								}
-							}
-						};
-					}
-				}));
-			};
+					ClearData();
+				}
+				else
+				{
+					SetData(ApplicationData.FileContext.Data.ResourceData);
+				}
+			}));
 		}
 
 		public void SetData(ResourceData resourceData)
 		{
+			ClearData();
+
 			List<NamedResourceList> resTypeClass = new List<NamedResourceList>();
 
 			foreach(ResourceType resType in resourceData.ResourceHeaders.ResourceTypes)
@@ -152,6 +138,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 				tv.ExpandAll();
 			}
+
+			ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.BecameDirty += (_o, __e) =>
+			{
+				foreach (KeyValuePair<string, bool> kvp in (IList)_o)
+				{
+					string[] k = kvp.Key.Split(':');
+
+					foreach (TreeView tv in _treeViews.Values)
+					{
+						foreach (TreeNode tn in tv.Nodes)
+						{
+							foreach (TreeNode _tn in tn.Nodes.Find(k[0] + ":" + k[1], false))
+							{
+								if (_tn.Checked != kvp.Value)
+									_tn.Checked = kvp.Value;
+							}
+						}
+					}
+				}
+			};
 		}
 
 		private void setVisibility(bool value, params string[] keys)
