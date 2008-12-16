@@ -78,6 +78,9 @@ namespace NU.OJL.MPRTOS.TLV.Test
             Assert.IsFalse(target.CanUndo);
             target.Do(new GeneralCommand("CanUndoTest", () => { }, () => { }));
             Assert.IsTrue(target.CanUndo);
+
+            target.CanUndo = false;
+            Assert.IsFalse(target.CanUndo);
         }
 
         [TestMethod()]
@@ -89,6 +92,9 @@ namespace NU.OJL.MPRTOS.TLV.Test
             Assert.IsFalse(target.CanRedo);
             target.Undo();
             Assert.IsTrue(target.CanRedo);
+
+            target.CanRedo = false;
+            Assert.IsFalse(target.CanRedo);
         }
 
         [TestMethod()]

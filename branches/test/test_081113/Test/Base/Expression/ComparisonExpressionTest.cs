@@ -135,7 +135,7 @@ namespace Test
        /// 正しくキャッシュが行えるかのテスト
        /// </summary>
         [TestMethod]
-        public void ChacheTest() {
+        public void CacheTest() {
             // 型が違う場合は、同じ式でも違う式を返す(see ticket #8)
             Eval3<int>("100", "<", "2", false);
             Eval3<string>("100", "<", "2", true);

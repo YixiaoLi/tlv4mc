@@ -76,6 +76,9 @@ namespace Test
             };
             MacroCommand target = new MacroCommand(commands);
             Assert.AreEqual("A から C までの一連の動作", target.Text);
+            
+            target.Text = "hoge";
+            Assert.AreEqual("hoge", target.Text);
         }
 
         /// <summary>
@@ -119,6 +122,22 @@ namespace Test
             Assert.AreEqual(a, 2);
             Assert.AreEqual(b, 1);
             Assert.AreEqual(c, 0);
+        }
+
+
+        [TestMethod()]
+        public void CanUndoTest()
+        {
+            IEnumerable<ICommand> commands = new List<ICommand>() {
+              new GeneralCommand("A", () => { } , () => { }),
+              new GeneralCommand("B", () => { } , () => { }),
+              new GeneralCommand("C", () => { } , () => { })
+            };
+            MacroCommand target = new MacroCommand(commands);
+
+            Assert.IsTrue(target.CanUndo);
+            target.CanUndo = false;
+            Assert.IsFalse(target.CanUndo);
         }
     }
 }

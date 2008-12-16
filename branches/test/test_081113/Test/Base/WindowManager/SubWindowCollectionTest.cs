@@ -156,5 +156,27 @@ namespace NU.OJL.MPRTOS.TLV.Test
             Assert.IsTrue(target.Contains("test4"));
             Assert.IsTrue(target.Contains("test5"));
         }
+
+        [TestMethod()]
+        public void GetEnumeratorTest()
+        {
+            SubWindowCollection target = new SubWindowCollection(); // TODO: 適切な値に初期化してください
+            SubWindow[] sws = new SubWindow[] {
+              new SubWindow("test1", new System.Windows.Forms.Control(), DockState.DockBottom),
+              new SubWindow("test2", new System.Windows.Forms.Control(), DockState.DockBottom),
+              new SubWindow("test3", new System.Windows.Forms.Control(), DockState.DockBottom),
+              new SubWindow("test4", new System.Windows.Forms.Control(), DockState.DockBottom),
+              new SubWindow("test5", new System.Windows.Forms.Control(), DockState.DockBottom)};
+
+            foreach (var sw in sws) { target.Add(sw); }
+ 
+            int i = 0;  
+            foreach (SubWindow sw in target)
+            {
+                Assert.AreEqual(sws[i++],sw);
+            }
+            Assert.AreEqual(5, i); 
+            
+        } 
     }
 }

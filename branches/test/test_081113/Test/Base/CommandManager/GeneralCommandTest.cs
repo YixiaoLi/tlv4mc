@@ -136,12 +136,22 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void GeneralCommandConstructorTest()
         {
-            string str = "";
+            string str;
             string text = "UndoActionTest"; // TODO: 適切な値に初期化してください
             Action _do = () => { str = "done"; }; // TODO: 適切な値に初期化してください
             Action undo = () => { str = ""; }; // TODO: 適切な値に初期化してください
             GeneralCommand target = new GeneralCommand(text, _do, undo); // TODO: 適切な値に初期化してください
             Assert.AreEqual(target.Text, text);
         }
+
+        [TestMethod()]
+        public void CanUndoTest()
+        {
+            GeneralCommand target = new GeneralCommand("", () => { }, () => { });
+            Assert.IsTrue(target.CanUndo);
+            target.CanUndo = false;
+            Assert.IsFalse(target.CanUndo);
+        }
+
     }
 }
