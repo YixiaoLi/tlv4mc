@@ -402,7 +402,6 @@ namespace Test
         {
             Json target = new Json(42);
             Assert.AreEqual(42, target.Value);
-
         }
     }
 }
