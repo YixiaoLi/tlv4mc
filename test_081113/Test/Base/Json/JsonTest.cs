@@ -83,6 +83,7 @@ namespace Test
           Assert.AreEqual(target.Value, "{,,,}");
         }
 
+
         /// <summary>
         /// obj["foo"]によるアクセスのテスト
         ///</summary>
@@ -115,6 +116,9 @@ namespace Test
             Assert.AreEqual("foo", target[0].Value);
             Assert.AreEqual("bar", target[1].Value);
             Assert.AreEqual("baz", target[2].Value);
+
+            target[0] = new Json("xyzzy");
+            Assert.AreEqual("xyzzy", target[0].Value);
         }
 
         /// <summary>
