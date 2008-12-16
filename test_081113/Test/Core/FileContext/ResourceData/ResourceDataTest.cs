@@ -1,5 +1,6 @@
 ﻿using NU.OJL.MPRTOS.TLV.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NU.OJL.MPRTOS.TLV.Base;
 namespace NU.OJL.MPRTOS.TLV.Test
 {
     
@@ -68,12 +69,15 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void ToJsonTest()
         {
-            ResourceData target = new ResourceData(); // TODO: 適切な値に初期化してください
-            string expected = string.Empty; // TODO: 適切な値に初期化してください
+            ResourceData target = new ResourceData(); 
+            string expected = "{\r\n  \"TimeScale\": \"\",\r\n  \"TimeRadix\": 10,\r\n  \"ConvertRule\": \"\"\r\n}";
             string actual;
             actual = target.ToJson();
+            //System.Diagnostics.Debug.WriteLine(expected);
+            //System.Diagnostics.Debug.WriteLine(expected.Length);
+            //System.Diagnostics.Debug.WriteLine(actual.Length);
+            //System.Diagnostics.Debug.WriteLine(actual);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("このテストメソッドの正確性を確認します。");
         }
 
         /// <summary>
@@ -82,13 +86,17 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void ParseTest()
         {
-            ResourceData target = new ResourceData(); // TODO: 適切な値に初期化してください
-            string resourceData = string.Empty; // TODO: 適切な値に初期化してください
-            ResourceData expected = null; // TODO: 適切な値に初期化してください
+            ResourceData target = new ResourceData();
+            string resourceData = "{\r\n  \"TimeScale\": \"20\",\r\n  \"TimeRadix\": 10,\r\n  \"ConvertRule\": \"foo\"\r\n}";
+            ResourceData expected = target; 
             ResourceData actual;
             actual = target.Parse(resourceData);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("このテストメソッドの正確性を確認します。");
+            System.Diagnostics.Debug.WriteLine(actual.TimeScale);
+            System.Diagnostics.Debug.WriteLine(actual.TimeRadix);
+            System.Diagnostics.Debug.WriteLine(actual.ConvertRule);
+            Assert.AreEqual("20", actual.TimeScale);
+            Assert.AreEqual(10, actual.TimeRadix);
+            Assert.AreEqual("foo", actual.ConvertRule);
         }
     }
 }
