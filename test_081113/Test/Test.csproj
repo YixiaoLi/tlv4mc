@@ -50,6 +50,7 @@
     <Compile Include="Base\Json\JsonTest.cs" />
     <Compile Include="Base\Expression\ComparisonExpressionTest.cs" />
     <Compile Include="Base\CommandManager\MacroCommandTest.cs" />
+    <Compile Include="Core\JsonConverters\JsonConverterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\WindowManager\SubWindowCollectionTest.cs" />
     <Compile Include="Base\WindowManager\SubWindowTest.cs" />
@@ -69,6 +70,9 @@
       <Project>{C2A4F798-30E4-4F03-AA49-F060FFD09B48}</Project>
       <Name>Third</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Core\JsonConverters\yanagi.json" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
