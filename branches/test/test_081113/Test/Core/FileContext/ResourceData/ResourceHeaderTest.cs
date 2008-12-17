@@ -89,11 +89,20 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void ParseTest()
         {
-            ResourceHeader target = new ResourceHeader(); // TODO: 適切な値に初期化してください
-            string data = string.Empty; // TODO: 適切な値に初期化してください
-            ResourceHeader expected = null; // TODO: 適切な値に初期化してください
+            ResourceHeader target = new ResourceHeader();
+            //どういうJSONを書けばうまくパースしてくれるのか？
+            //string data = "[\r\n  {\r\n    \"Name\": \"footype\",\r\n    \"DisplayName\": \"\"\r\n  }\r\n]";
+            string data = string.Empty;
+            ResourceType type = new ResourceType();
+            type.Name = "footype";
+            type.DisplayName = "footype";
+            ResourceTypeList tlist = new ResourceTypeList();
+            tlist.Add("fookey", type);
+            ResourceHeader expected = new ResourceHeader("foo", tlist);
             ResourceHeader actual;
             actual = target.Parse(data);
+            System.Diagnostics.Debug.WriteLine("expected:\r\n" + expected);
+            System.Diagnostics.Debug.WriteLine("actual:\r\n" + actual);
             Assert.AreEqual(expected, actual);
         }
     }
