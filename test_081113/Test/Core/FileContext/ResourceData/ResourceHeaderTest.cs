@@ -91,8 +91,8 @@ namespace NU.OJL.MPRTOS.TLV.Test
         {
             ResourceHeader target = new ResourceHeader();
             //どういうJSONを書けばうまくパースしてくれるのか？
-            //string data = "[\r\n  {\r\n    \"Name\": \"footype\",\r\n    \"DisplayName\": \"\"\r\n  }\r\n]";
-            string data = string.Empty;
+            string data = "[\r\n  {\r\n    \"Name\": \"footype\",\r\n    \"DisplayName\": \"\"\r\n  }\r\n]";
+            //string data = string.Empty;
             ResourceType type = new ResourceType();
             type.Name = "footype";
             type.DisplayName = "footype";
