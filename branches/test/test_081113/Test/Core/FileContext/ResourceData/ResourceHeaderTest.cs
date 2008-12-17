@@ -1,5 +1,6 @@
 ﻿using NU.OJL.MPRTOS.TLV.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 namespace NU.OJL.MPRTOS.TLV.Test
 {
     
@@ -68,12 +69,18 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void ToJsonTest()
         {
-            ResourceHeader target = new ResourceHeader(); // TODO: 適切な値に初期化してください
-            string expected = string.Empty; // TODO: 適切な値に初期化してください
+            ResourceType type = new ResourceType();
+            type.Name = "footype";
+            ResourceTypeList tlist = new ResourceTypeList();
+            tlist.Add("fookey", type);
+            ResourceHeader target = new ResourceHeader("foo",tlist);
+            string expected = "[\r\n  {\r\n    \"Name\": \"footype\",\r\n    \"DisplayName\": \"footype\"\r\n  }\r\n]";
             string actual;
             actual = target.ToJson();
+            System.Diagnostics.Debug.WriteLine("expected:\r\n" + expected);
+            System.Diagnostics.Debug.WriteLine("actual:\r\n" + actual);
+            
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("このテストメソッドの正確性を確認します。");
         }
 
         /// <summary>
@@ -88,7 +95,6 @@ namespace NU.OJL.MPRTOS.TLV.Test
             ResourceHeader actual;
             actual = target.Parse(data);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("このテストメソッドの正確性を確認します。");
         }
     }
 }
