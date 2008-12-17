@@ -67,6 +67,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						_treeView.Nodes[vizRule.Target].Checked = ApplicationData.Setting.DefaultResourceVisible;
 						_treeView.Nodes[vizRule.Target].ImageKey = "resource";
 						_treeView.Nodes[vizRule.Target].SelectedImageKey = "resource";
+
+						if (!ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Target))
+						{
+							ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.SetValue(ApplicationData.Setting.DefaultResourceVisible, vizRule.Target);
+						}
 					}
 
 					tnc = _treeView.Nodes[vizRule.Target].Nodes;
@@ -83,6 +88,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				tnc[vizRule.Name].ImageKey = "visualize";
 				tnc[vizRule.Name].SelectedImageKey = "visualize";
 
+				if (!ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(id))
+				{
+					ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.SetValue(ApplicationData.Setting.DefaultResourceVisible, id);
+				}
+
 				foreach(Event e in vizRule.Events)
 				{
 					List<string> list = new List<string>(id);
@@ -92,6 +102,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					tnc[vizRule.Name].Nodes[e.DisplayName].Checked = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(i) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(i) : ApplicationData.Setting.DefaultResourceVisible;
 
 					setEventImage(tnc[vizRule.Name].Nodes[e.DisplayName], e);
+
+					if (!ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(i))
+					{
+						ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.SetValue(ApplicationData.Setting.DefaultResourceVisible, i);
+					}
 				}
 			}
 

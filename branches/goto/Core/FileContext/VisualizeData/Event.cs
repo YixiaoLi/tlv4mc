@@ -90,7 +90,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData
 		public string Behavior { get; set; }
 		public string Attribute { get; set; }
 		public string Value { get; set; }
-		public string[] Arguments { get; set; }
+		public string Arguments { get; set; }
 	}
 
 	public class ShapeArgPair: INamed

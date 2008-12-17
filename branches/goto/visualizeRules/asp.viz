@@ -14,7 +14,7 @@
 							"Attribute":"Task.state(state==RUNNING)"
 						},
 						"Shapes":{
-							"${state}==RUNNING":{"runningTaskChangeShapes":["COLOR{${Target}}", "${Target._name}"]}
+							"${state}==RUNNING":{"runningTaskChangeShapes":["COLOR{TARGET}", "NAME{TARGET}"]}
 						}
 					}
 				]
@@ -27,11 +27,11 @@
 						"DisplayName":"act_tsk開始～終了",
 						"From":{
 							"Behavior":"enterSVC",
-							"Arguments":["(?<enterSvcName>.+)","(?<enterArgs>.+)"]
+							"Arguments":"(?<enterSvcName>[^,\s]+),\s*(?<enterArgs>[^,\s]*)"
 						},
 						"To":{
 							"Behavior":"leaveSVC",
-							"Arguments":["(?<leaveSvcName>.+)","(?<leaveArgs>.+)"]
+							"Arguments":"(?<leaveSvcName>[^,\s]+),\s*(?<leaveArgs>[^,\s]*)"
 						},
 						"Shapes":{
 							"${enterSvcName}==${leaveSvcName} && ${enterSvcName}==act_tsk" :{"svcShapes":["ffff0000","66ff0000","act_tsk(${enterArgs})", "${leaveArgs}"]},
@@ -45,6 +45,21 @@
 				"Target":"Task",
 				"Events":[
 					{
+						"DisplayName":"状態",
+						"When":{
+							"Attribute":"state",
+							"Value":"(?<state>.+)"
+						},
+						"Shapes":{
+							"${state}==RUNNING"             :"runningShapes",
+							"${state}==RUNNABLE"            :"runnableShapes",
+							"${state}==WAITING"             :"waitingShapes",
+							"${state}==DORMANT"             :"dormantShapes",
+							"${state}==SUSPENDED"           :"suspendShapes",
+							"${state}==WAITING-SUSPENDED"   :"waitingSuspendedShapes"
+						}
+					},
+					{
 						"DisplayName":"起動",
 						"When":{
 							"Behavior":"activate"
@@ -57,24 +72,6 @@
 							"Behavior":"exit"
 						},
 						"Shapes":"exitShapes"
-					},
-					{
-						"DisplayName":"状態",
-						"From":{
-							"Attribute":"state",
-							"Value":"(?<state>.+)"
-						},
-						"To":{
-							"Attribute":"state"
-						},
-						"Shapes":{
-							"${state}==RUNNING"             :"runningShapes",
-							"${state}==RUNNABLE"            :"runnableShapes",
-							"${state}==WAITING"             :"waitingShapes",
-							"${state}==DORMANT"             :"dormantShapes",
-							"${state}==SUSPENDED"           :"suspendShapes",
-							"${state}==WAITING-SUSPENDED"   :"waitingSuspendedShapes"
-						}
 					}
 				]
 			},
@@ -84,24 +81,21 @@
 				"Events":[
 					{
 						"DisplayName":"プロセッサID",
-						"From":{
+						"When":{
 							"Attribute":"prcId",
 							"Value":"(?<prcId>.+)"
 						},
-						"To":{
-							"Attribute":"prcId"
-						},
 						"Shapes":{
-							"${prcId==0}":{"prcIdShapes":["ffff0000", "33ff0000"]},
-							"${prcId==1}":{"prcIdShapes":["ff00ff00", "3300ff00"]},
-							"${prcId==2}":{"prcIdShapes":["ff0000ff", "330000ff"]},
-							"${prcId==3}":{"prcIdShapes":["ffffff00", "33ffff00"]},
-							"${prcId==4}":{"prcIdShapes":["ff00ffff", "3300ffff"]},
-							"${prcId==5}":{"prcIdShapes":["ffff00ff", "33ff00ff"]},
-							"${prcId==6}":{"prcIdShapes":["ffff6600", "33ff6600"]},
-							"${prcId==7}":{"prcIdShapes":["ff66ff00", "3366ff00"]},
-							"${prcId==8}":{"prcIdShapes":["ff0066ff", "330066ff"]},
-							"${prcId==9}":{"prcIdShapes":["ffff0066", "33ff0066"]}
+							"${prcId}==0":{"prcIdShapes":["ffff0000", "33ff0000"]},
+							"${prcId}==1":{"prcIdShapes":["ff00ff00", "3300ff00"]},
+							"${prcId}==2":{"prcIdShapes":["ff0000ff", "330000ff"]},
+							"${prcId}==3":{"prcIdShapes":["ffffff00", "33ffff00"]},
+							"${prcId}==4":{"prcIdShapes":["ff00ffff", "3300ffff"]},
+							"${prcId}==5":{"prcIdShapes":["ffff00ff", "33ff00ff"]},
+							"${prcId}==6":{"prcIdShapes":["ffff6600", "33ff6600"]},
+							"${prcId}==7":{"prcIdShapes":["ff66ff00", "3366ff00"]},
+							"${prcId}==8":{"prcIdShapes":["ff0066ff", "330066ff"]},
+							"${prcId}==9":{"prcIdShapes":["ffff0066", "33ff0066"]}
 						}
 					}
 				]
@@ -113,7 +107,7 @@
 					"Type":"Rectangle",
 					"Location":"0,0",
 					"Size":"100%,100%",
-					"Pen":{"Color":"args[0]","Width":3,"Alpha":255},
+					"Pen":{"Color":"args[0]","Width":1,"Alpha":255},
 					"Fill":"args[0]",
 					"Alpha":200
 				},
@@ -130,28 +124,25 @@
 					"Type":"Rectangle",
 					"Location":"0,0",
 					"Size":"100%,100%",
-					"Pen":{"Color":"args[1]","Width":3},
+					"Pen":{"Color":"args[1]","Width":1},
 					"Fill":"args[0]"
 				}
 			],
 			"svcShapes":[
 				{
 					"Type":"Rectangle",
-					"Location":"0,0",
 					"Size":"20%,60%",
-					"Pen":{"Color":"args[1]","Width":3},
+					"Pen":{"Color":"args[1]","Width":1},
 					"Fill":"args[0]"
 				},
 				{
 					"Type":"Text",
-					"Location":"0,0",
 					"Size":"100%,100%",
 					"Font":{"Align":"MiddleLeft"},
 					"Value":"args[2]"
 				},
 				{
 					"Type":"Text",
-					"Location":"0,0",
 					"Size":"100%,100%",
 					"Font":{"Align":"MiddleRight"},
 					"Value":"args[3]"
@@ -160,9 +151,8 @@
 			"runningShapes":[
 				{
 					"Type":"Rectangle",
-					"Location":"0,0",
 					"Size":"100%,80%",
-					"Pen":{"Color":"ff00ff00","Width":3},
+					"Pen":{"Color":"ff00ff00","Width":1},
 					"Fill":"6600ff00"
 				}
 			],
@@ -170,49 +160,49 @@
 				{
 					"Type":"Line",
 					"Points":["l(0),80%","r(0),80%"],
-					"Pen":{"Color":"ffffaa00","Width":3}
+					"Pen":{"Color":"ffffaa00","Width":1}
 				}
 			],
 			"waitingShapes":[
 				{
 					"Type":"Line",
 					"Points":["l(0),40%","r(0),40%"],
-					"Pen":{"Color":"ffff0000","Width":3}
+					"Pen":{"Color":"ffff0000","Width":1}
 				}
 			],
 			"suspendShapes":[
 				{
 					"Type":"Line",
 					"Points":["l(0),20%","r(0),20%"],
-					"Pen":{"Color":"ff0000ff","Width":3}
+					"Pen":{"Color":"ff0000ff","Width":1}
 				}
 			],
 			"waitingSuspendedShapes":[
 				{
 					"Type":"Line",
 					"Points":["l(0),10%","r(0),10%"],
-					"Pen":{"Color":"ffff00ff","Width":3}
+					"Pen":{"Color":"ffff00ff","Width":1}
 				}
 			],
 			"dormantShapes":[
 				{
 					"Type":"Line",
 					"Points":["l(0),0","r(0),0"],
-					"Pen":{"Color":"ff999999","Width":3}
+					"Pen":{"Color":"ff999999","Width":1}
 				}
 			],
 			"activateShapes":[
 				{
 					"Type":"Arrow",
 					"Points":["0,0","0,80%"],
-					"Pen":{"Color":"ff000000","Width":3}
+					"Pen":{"Color":"ff000000","Width":1}
 				}
 			],
 			"exitShapes":[
 				{
 					"Type":"Arrow",
-					"Points":["0,80%", "0,0"],
-					"Pen":{"Color":"ff000000","Width":3}
+					"Points":["0,80%","0,0"],
+					"Pen":{"Color":"ff000000","Width":1}
 				}
 			]
 		}

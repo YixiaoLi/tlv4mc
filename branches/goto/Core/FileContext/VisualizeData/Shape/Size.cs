@@ -36,12 +36,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			if (Regex.IsMatch(w, @"^" + num + @"%$"))
 				widthSizeUnit = VisualizeAreaUnit.Percentage;
-			if (Regex.IsMatch(w, num + @"^" + num + @"(px)?$"))
+			else
 				widthSizeUnit = VisualizeAreaUnit.Pixel;
 
 			if (Regex.IsMatch(h, @"^" + num + @"%$"))
 				heightSizeUnit = VisualizeAreaUnit.Percentage;
-			if (Regex.IsMatch(h, num + @"^" + num + @"(px)?$"))
+			else
 				heightSizeUnit = VisualizeAreaUnit.Pixel;
 
 			w = w.Replace("%", "").Replace("px", "").Replace("(", "").Replace(")", "").Replace("l", "").Replace("r", "");

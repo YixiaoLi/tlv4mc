@@ -33,14 +33,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				shape.Font.Style = FontStyle.Regular;
 				shape.Font.Align = ContentAlignment.MiddleCenter;
 				shape.Type = ShapeType.Undefined;
-				shape.Align = ContentAlignment.BottomLeft;
 				shape.Arc = new Arc(0.0f, 90.0f);
 				shape.Area = new Area("0,0","100%,100%");
 				shape.Location = new Point("0,0");
 				shape.Size = new Size("100%,100%");
 				shape.Points = new PointList() { new Point("0,0"), new Point("100%,0"), new Point("100%,100%"), new Point("0,100%") };
 				shape.Fill = Color.White;
-				shape.Offset = new Point("0,0");
+				shape.Offset = new Size("0,0");
 				shape.Text = string.Empty;
 				shape.Alpha = 255;
 				return shape;
@@ -50,14 +49,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public ShapeType? Type { get; set; }
 		public string Text { get; set; }
 		public PointList Points { get; set; }
-		public Point Offset { get; set; }
+		public Size Offset { get; set; }
 		public Point Location { get; set; }
 		public Size Size { get;set; }
 		public Arc Arc { get; set; }
 		public Pen Pen { get; set; }
 		public Font Font { get; set; }
 		public Color? Fill { get; set; }
-		public ContentAlignment? Align { get; set; }
 		public Area Area { get; set; }
 		public int? Alpha { get; set; }
 

@@ -10,22 +10,25 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public static class GraphicsExtension
 	{
-		public static void DrawShape(this Graphics graphics, Shape shape, RectangleF rect, params Json[] args)
-		{
 
+		public static void DrawShape(this Graphics graphics, Shape shape, Json[] args, RectangleF rect)
+		{
 			shape.SetArgs(args);
 
 			throwException(shape);
 
 			Area a;
 			PointList c;
-			Point os;
-			ContentAlignment ca;
+			Size os;
 
 			if (shape.Area == null)
 			{
 				if (shape.Location != null && shape.Size != null)
 					a = new Area(shape.Location, shape.Size);
+				else if (shape.Location != null && shape.Size == null)
+					a = new Area(shape.Location, Shape.Default.Size);
+				else if (shape.Location == null && shape.Size != null)
+					a = new Area(Shape.Default.Location, shape.Size);
 				else
 					a = Shape.Default.Area;
 			}
@@ -44,12 +47,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			else
 				os = shape.Offset;
 
-			if (shape.Align == null)
-				ca = Shape.Default.Align.Value;
-			else
-				ca = shape.Align.Value;
-
-			RectangleF area = a.ToRectangleF(os, ca, rect);
+			RectangleF area = a.ToRectangleF(os, rect);
 			PointF[] points = c.ToPointF(os, rect);
 
 			switch (shape.Type)
@@ -58,10 +56,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					graphics.DrawLine(shape.Pen, points[0], points[1]);
 					break;
 				case ShapeType.Arrow:
+					SmoothingMode s = graphics.SmoothingMode;
+					graphics.SmoothingMode = SmoothingMode.AntiAlias;
 					System.Drawing.Pen pen = shape.Pen;
 					pen.EndCap = LineCap.Custom;
-					pen.CustomEndCap = new AdjustableArrowCap(pen.Width, pen.Width);
+					pen.CustomEndCap = new AdjustableArrowCap(pen.Width == 1 ? 2 : pen.Width, pen.Width == 1 ? 2 : pen.Width);
 					graphics.DrawLine(pen, points[0], points[1]);
+					graphics.SmoothingMode = s;
 					break;
 				case ShapeType.Rectangle:
 					if (shape.Fill.HasValue)

@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using NU.OJL.MPRTOS.TLV.Base;
+using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
@@ -19,6 +20,27 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			VisualizeRuleVisibility.CollectionChanged += CollectionChangedFactory("VisualizeRuleVisibility");
 		}
 
+		public bool Check(VisualizeRule rule, Event evnt, Resource target)
+		{
+			List<string> id = new List<string>();
+			if (target != null)
+			{
+				id.Add(target.Type);
+			}
+			if (rule != null)
+			{
+				id.Add(rule.Name);
+			}
+			if (evnt != null)
+			{
+				id.Add(evnt.DisplayName);
+			}
+
+			if (!VisualizeRuleVisibility.ContainsKey(id.ToArray()))
+				return false;
+
+			return VisualizeRuleVisibility.GetValue(id.ToArray());
+		}
 
 		NotifyCollectionChangedEventHandler CollectionChangedFactory(string propertyName)
 		{

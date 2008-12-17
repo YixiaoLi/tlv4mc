@@ -21,10 +21,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		private int _timeLineWidth = 0;
 		private int _timeRadix = 10;
 		private string _timeScale = string.Empty;
-		private Time _minTime = null;
-		private Time _maxTime = null;
-		private Time _fromTime = null;
-		private Time _toTime = null;
+		private Time _minTime = new Time("0", 10);
+		private Time _maxTime = new Time(long.MaxValue.ToString(), 10);
+		private Time _fromTime;
+		private Time _toTime;
 		private StatusManager statusManager = new StatusManager();
 		public int TimeLineX
 		{
@@ -126,22 +126,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					_fromTime = value;
 
-					if (_fromTime != null)
+					if (_fromTime != Time.NaN)
 					{
-
-						if (_toTime != null)
-						{
-							if (_fromTime > _toTime)
-								_fromTime = _toTime - 1;
-
-							if (_toTime == _fromTime)
-								_fromTime--;
-						}
-
-						if (_fromTime < _minTime)
+						if (_minTime > _fromTime)
 							_fromTime = _minTime;
-						if (_fromTime > _maxTime)
+						if (_maxTime < _fromTime)
 							_fromTime = _maxTime;
+
+						if (_fromTime >= _toTime)
+							throw new Exception("FromTimeはToTimeより小さくなければなりません。");
 
 						if (!viewingTimeRangeFromTextBox.Enabled)
 							viewingTimeRangeFromTextBox.Enabled = true;
@@ -149,18 +142,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						if (viewingTimeRangeFromTextBox.Text != _fromTime.ToString())
 							viewingTimeRangeFromTextBox.Text = _fromTime.ToString();
 
-						try
-						{
-							updateViewingTimeRange();
-						}
-						catch
-						{
-
-						}
-						if (ApplicationData.FileContext.Data != null)
-							ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.FromTime = _fromTime;
+						if (ApplicationData.FileContext.Data != null
+							&& ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.FromTime != _fromTime.ToString())
+							ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.FromTime = _fromTime.ToString();
 					}
-					else
+					else if (_fromTime == Time.NaN && _toTime == Time.NaN)
 					{
 						viewingTimeRangeFromTextBox.Text = string.Empty;
 						viewingTimeRangeFromTextBox.Enabled = false;
@@ -176,44 +162,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			{
 				if (_toTime != value)
 				{
-
 					_toTime = value;
 
-					if (_toTime != null)
+					if (_toTime != Time.NaN)
 					{
-
-						if (_fromTime != null)
-						{
-							if (_toTime < _fromTime)
-								_toTime = _fromTime + 1;
-
-							if (_toTime == _fromTime)
-								_toTime++;
-						}
-
-						if (_toTime > _maxTime)
-							_toTime = _maxTime;
-						if (_toTime < _minTime)
+						if (_minTime > _toTime)
 							_toTime = _minTime;
+						if (_maxTime < _toTime)
+							_toTime = _maxTime;
+
+						if (_fromTime >= _toTime)
+							throw new Exception("FromTimeはToTimeより小さくなければなりません。");
 
 						if (!viewingTimeRangeToTextBox.Enabled)
 							viewingTimeRangeToTextBox.Enabled = true;
 
 						if (viewingTimeRangeToTextBox.Text != _toTime.ToString())
 							viewingTimeRangeToTextBox.Text = _toTime.ToString();
-						
-						try
-						{
-							updateViewingTimeRange();
-						}
-						catch
-						{
 
-						}
-						if (ApplicationData.FileContext.Data != null)
-							ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.ToTime = _toTime;
+						if (ApplicationData.FileContext.Data != null
+							&& ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.ToTime != _toTime.ToString())
+							ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.ToTime = _toTime.ToString();
 					}
-					else
+					else if (_fromTime == Time.NaN && _toTime == Time.NaN)
 					{
 						viewingTimeRangeToTextBox.Text = string.Empty;
 						viewingTimeRangeToTextBox.Enabled = false;
@@ -221,6 +192,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 				}
 			}
+		}
+		public Time ViewingTimeSpan
+		{
+			get { return ToTime - FromTime; }
+		}
+		public Time ViewableTimeSpan
+		{
+			get { return MaxTime - MinTime; }
 		}
 
 		public TraceLogDisplayPanel()
@@ -234,17 +213,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			_timeRadix = data.ResourceData.TimeRadix;
 			TimeScale = data.ResourceData.TimeScale;
-			setTimeRange(data.TraceLogData.MinTime, data.TraceLogData.MaxTime);
+			MaxTime = data.TraceLogData.MaxTime;
+			MinTime = data.TraceLogData.MinTime;
 
 			foreach (VisualizeRule vizRule in data.VisualizeData.VisualizeRules.Where<VisualizeRule>(v => !v.IsBelongedTargetResourceType()))
 			{
-				treeGridView.Add(vizRule.Name, vizRule.DisplayName, "", new TimeLineVisualizer(ApplicationData.FileContext.Data));
-				treeGridView.Nodes[vizRule.Name].Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name) : ApplicationData.Setting.DefaultResourceVisible;
+				treeGridView.Add(vizRule.Name, vizRule.DisplayName, "", new TimeLineVisualizer(vizRule));
+				treeGridView.Nodes[vizRule.Name].Visible = data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name) ? data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name) : ApplicationData.Setting.DefaultResourceVisible;
 				treeGridView.Nodes[vizRule.Name].Image = imageList.Images["visualize"];
 				foreach(Event e in vizRule.Events)
 				{
-					treeGridView.Nodes[vizRule.Name].Add(e.DisplayName, e.DisplayName, "", new TimeLineVisualizer(ApplicationData.FileContext.Data));
-					treeGridView.Nodes[vizRule.Name].Nodes[e.DisplayName].Visible = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name, e.DisplayName) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultResourceVisible;
+					treeGridView.Nodes[vizRule.Name].Add(e.DisplayName, e.DisplayName, "", new TimeLineVisualizer(vizRule, e));
+					treeGridView.Nodes[vizRule.Name].Nodes[e.DisplayName].Visible = data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name, e.DisplayName) ? data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultResourceVisible;
 					setEventImage(treeGridView.Nodes[vizRule.Name].Nodes[e.DisplayName], e);
 				}
 			}
@@ -254,19 +234,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					if (!treeGridView.Nodes.ContainsKey(res.Type + ":" + res.Name))
 					{
-						treeGridView.Add(res.Type + ":" + res.Name, res.DisplayName, "", new TimeLineVisualizer(ApplicationData.FileContext.Data));
-						treeGridView.Nodes[res.Type + ":" + res.Name].Visible = ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Type + ":" + res.Name) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(res.Type + ":" + res.Name) : ApplicationData.Setting.DefaultResourceVisible;
+						treeGridView.Add(res.Type + ":" + res.Name, res.DisplayName, "", new TimeLineVisualizer(res));
+						treeGridView.Nodes[res.Type + ":" + res.Name].Visible = data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Type + ":" + res.Name) ? data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(res.Type + ":" + res.Name) : ApplicationData.Setting.DefaultResourceVisible;
 						treeGridView.Nodes[res.Type + ":" + res.Name].Image = imageList.Images["resource"];
 					}
 
-					treeGridView.Nodes[res.Type + ":" + res.Name].Add(res.Type + ":" + res.Name + ":" + vizRule.Name, vizRule.DisplayName, "", new TimeLineVisualizer(ApplicationData.FileContext.Data));
-					treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Visible && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name) : ApplicationData.Setting.DefaultResourceVisible;
+					treeGridView.Nodes[res.Type + ":" + res.Name].Add(res.Type + ":" + res.Name + ":" + vizRule.Name, vizRule.DisplayName, "", new TimeLineVisualizer(vizRule, res));
+					treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Visible && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name) ? data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name) : ApplicationData.Setting.DefaultResourceVisible;
 					treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Image = imageList.Images["visualize"];
 
 					foreach (Event e in vizRule.Events)
 					{
-						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Add(e.DisplayName, e.DisplayName, "", new TimeLineVisualizer(ApplicationData.FileContext.Data));
-						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Nodes[e.DisplayName].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name, e.DisplayName) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultResourceVisible;
+						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Add(e.DisplayName, e.DisplayName, "", new TimeLineVisualizer(e, res));
+						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Nodes[e.DisplayName].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible && data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name, e.DisplayName) ? data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultResourceVisible;
 						setEventImage(treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Nodes[e.DisplayName], e);
 					}
 				}
@@ -280,36 +260,51 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.BecameDirty += (o, p) =>
 				{
-					switch(p)
+					viewingTimeChangeAction(() =>
 					{
-						case "FromTime":
-						case "ToTime":
-							if (ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.FromTime != null
-								&& ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.ToTime != null)
-							{
-								FromTime =ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.FromTime;
-								ToTime = ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.ToTime;
-							}
-							break;
-						case "PixelPerScaleMark":
-							break;
-					}
-
-					timeLineRedraw();
+						switch (p)
+						{
+							case "FromTime":
+								if (data.SettingData.TraceLogDisplayPanelSetting.FromTime != null)
+								{
+									if (FromTime.ToString() != data.SettingData.TraceLogDisplayPanelSetting.FromTime)
+										FromTime = new Time(data.SettingData.TraceLogDisplayPanelSetting.FromTime, _timeRadix);
+								}
+								break;
+							case "ToTime":
+								if (data.SettingData.TraceLogDisplayPanelSetting.ToTime != null)
+								{
+									if (ToTime.ToString() != data.SettingData.TraceLogDisplayPanelSetting.ToTime)
+										ToTime = new Time(data.SettingData.TraceLogDisplayPanelSetting.ToTime, _timeRadix);
+								}
+								break;
+							case "PixelPerScaleMark":
+								break;
+						}
+					});
 				};
 
-			if (ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.FromTime != null
-				&& ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.ToTime != null)
+			if (data.SettingData.TraceLogDisplayPanelSetting.ToTime != null)
 			{
-				FromTime = ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.FromTime;
-				ToTime = ApplicationData.FileContext.Data.SettingData.TraceLogDisplayPanelSetting.ToTime;
+				ToTime = new Time(data.SettingData.TraceLogDisplayPanelSetting.ToTime, _timeRadix);
 			}
-			else
+			if (ToTime == Time.NaN)
 			{
-				FromTime = _minTime;
 				ToTime = _maxTime;
 			}
+			if (data.SettingData.TraceLogDisplayPanelSetting.FromTime != null)
+			{
+				FromTime = new Time(data.SettingData.TraceLogDisplayPanelSetting.FromTime, _timeRadix);
+			}
+			if (FromTime == Time.NaN)
+			{
+				FromTime = _minTime;
+			}
+
+			hScrollBarChangeRateChange();
+
 			hScrollBar.Value = (int)(((decimal)(FromTime.Value) / (decimal)(_maxTime.Value + 1 - _minTime.Value)) * (decimal)int.MaxValue);
+			
 			timeLineRedraw();
 		}
 
@@ -359,7 +354,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			{
 				bottomTimeLineScale.Location = new System.Drawing.Point(bottomTimeLineScale.Location.X, 1 + topTimeLineScale.Height + treeGridView.Height);
 				hScrollBar.Location = new System.Drawing.Point(hScrollBar.Location.X, 1 + topTimeLineScale.Height + treeGridView.Height + bottomTimeLineScale.Height);
-				timeLineRedraw();
+				timeLineScaleRedraw();
 			};
 			treeGridView.DataGridView.ColumnWidthChanged += (o, _e) =>
 			{
@@ -370,7 +365,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				}
 				TimeLineX = w + 2;
 				TimeLineWidth = treeGridView.DataGridView.Columns["timeLine"].Width - 1;
-				timeLineRedraw();
+				timeLineScaleRedraw();
 			};
 			treeGridView.DataGridView.ScrollBars = ScrollBars.Vertical;
 
@@ -379,6 +374,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				_e.Paint(_e.ClipBounds, _e.PaintParts & ~DataGridViewPaintParts.Focus);
 				_e.Handled = true;
 			};
+
+			treeGridView.DataGridView.RowPostPaint += new DataGridViewRowPostPaintEventHandler(dataGridViewRowPostPaint);
+
 			EventHandler onTimeLineEvent = (o, _e) =>
 			{
 				ApplicationFactory.StatusManager.ShowHint(GetType() + Name + "mouseWheelMove", "可視化表示領域移動", "Ctrl", "ホイール");
@@ -421,30 +419,38 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					lock (this)
 					{
-						string lastValue = FromTime.ToString();
-						try
+						viewingTimeChangeAction(() =>
 						{
-							FromTime = new Time(viewingTimeRangeFromTextBox.Text, _timeRadix);
-						}
-						catch
-						{
-							viewingTimeRangeFromTextBox.Text = lastValue;
-						}
+							string lastValue = FromTime.ToString();
+							try
+							{
+								FromTime = new Time(viewingTimeRangeFromTextBox.Text, _timeRadix);
+							}
+							catch
+							{
+								viewingTimeRangeFromTextBox.Text = lastValue;
+								FromTime = new Time(lastValue, _timeRadix);
+							}
+						});
 					}
 				};
 			EventHandler viewingTimeRangeToTextBoxHandler = (o, _e) =>
 				{
 					lock(this)
 					{
-						string lastValue = ToTime.ToString();
-						try
+						viewingTimeChangeAction(() =>
 						{
-							ToTime = new Time(viewingTimeRangeToTextBox.Text, _timeRadix);
-						}
-						catch
-						{
-							viewingTimeRangeToTextBox.Text = lastValue;
-						}
+							string lastValue = ToTime.ToString();
+							try
+							{
+								ToTime = new Time(viewingTimeRangeToTextBox.Text, _timeRadix);
+							}
+							catch
+							{
+								viewingTimeRangeToTextBox.Text = lastValue;
+								ToTime = new Time(lastValue, _timeRadix);
+							}
+						});
 					}
 				};
 
@@ -466,19 +472,42 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				};
 			hScrollBar.ValueChanged += (o, _e) =>
 				{
-					if (hScrollBar.Value == hScrollBar.Maximum - hScrollBar.LargeChange + 1)
+					Time span = ViewingTimeSpan;
+					viewingTimeChangeAction(() =>
 					{
-						long w = ToTime.Value - FromTime.Value;
-						ToTime = MaxTime;
-						FromTime = ToTime - w;
-					}
-					else
-					{
-						long w = ToTime.Value - FromTime.Value;
-						FromTime = new Time((Math.Ceiling((decimal)hScrollBar.Value / (decimal)int.MaxValue * (decimal)(_maxTime.Value + 1 - _minTime.Value))).ToString(), _timeRadix);
-						ToTime = FromTime + w;
-					}
+						if (hScrollBar.Value == hScrollBar.Maximum - hScrollBar.LargeChange + 1)
+						{
+							ToTime = MaxTime;
+							FromTime = ToTime - span;
+						}
+						else if (hScrollBar.Value == hScrollBar.Minimum)
+						{
+							FromTime = MinTime;
+							ToTime = FromTime + span;
+						}
+						else
+						{
+							Time d = ViewableTimeSpan * ((decimal)hScrollBar.Value / (decimal)int.MaxValue);
+
+							if (d > FromTime)
+							{
+								ToTime = d + span;
+								FromTime = ToTime - span;
+							}
+							else if (d != FromTime)
+							{
+								FromTime = d;
+								ToTime = FromTime + span;
+							}
+						}
+						});
+
 				};
+		}
+
+		protected void dataGridViewRowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+		{
+			//e.Graphics.DrawLine(new System.Drawing.Pen(Color.FromArgb(200,200,200)), _timeLineX - 1, e.RowBounds.Y + e.RowBounds.Height - 1, _timeLineX + _timeLineWidth - 2, e.RowBounds.Y + e.RowBounds.Height - 1);
 		}
 
 		protected override void OnSizeChanged(EventArgs e)
@@ -535,7 +564,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			allRowHeight += treeGridView.DataGridView.ColumnHeadersVisible ? treeGridView.ColumnHeadersHeight : 1;
 
-			int maxHeight = toolStripContainer.ContentPanel.Height - 2 - topTimeLineScale.Height - bottomTimeLineScale.Height - hScrollBar.Height;
+			int maxHeight = toolStripContainer.ContentPanel.Height - 2
+				- topTimeLineScale.Height
+				- bottomTimeLineScale.Height
+				- hScrollBar.Height;
 
 			if(allRowHeight == 1)
 			{
@@ -617,16 +649,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					}
 					else
 					{
+						if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(node.Name.Split(':'))
+							? !ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(node.Name.Split(':'))
+							: !ApplicationData.Setting.DefaultResourceVisible)
+							continue;
+
 						foreach (ITreeGirdViewNode n in node.Nodes.Values.Where(n => n.Name.Split(':').Last() == keys[1]))
 						{
-							if (kvp.Value && !node.Visible)
-								continue;
-
 							if (n.HasChildren && keys.Length == 3)
 							{
-								if (kvp.Value && !n.Visible)
-									continue;
-
 								foreach (ITreeGirdViewNode _n in n.Nodes.Values.Where(_n => _n.Name == keys[2]))
 								{
 									_n.Visible = kvp.Value;
@@ -640,7 +671,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 								{
 									foreach (ITreeGirdViewNode _n in n.Nodes.Values)
 									{
-										if (ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys[0], keys[1], _n.Name) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], keys[1], _n.Name) : ApplicationData.Setting.DefaultResourceVisible)
+										if (ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(keys[0], keys[1], _n.Name)
+											? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(keys[0], keys[1], _n.Name)
+											: ApplicationData.Setting.DefaultResourceVisible)
 											_n.Visible = kvp.Value;
 										else
 											_n.Visible = false;
@@ -652,6 +685,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				}
 			}
 			treeGridViewRowChanged(this, EventArgs.Empty);
+			timeLineRedraw();
 		}
 
 		protected void resourceExplorerSettingBecameDirty(object sender, string propertyName)
@@ -682,58 +716,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				}
 			}
 			treeGridViewRowChanged(this, EventArgs.Empty);
-		}
-
-		protected void setTimeRange(Time from, Time to)
-		{
-			if (from == null)
-				throw new Exception("時間の下限値指定がありません。\nfromがnullです。");
-			if (to == null)
-				throw new Exception("時間の上限値指定がありません。\ntoがnullです。");
-
-			MinTime = from;
-			MaxTime = to;
-		}
-
-		protected void updateViewingTimeRange()
-		{
-			if (_minTime == null)
-				throw new Exception("時間の下限値指定がありません。\n_minTimeがnullです。");
-			if (_maxTime == null)
-				throw new Exception("時間の上限値指定がありません。\n_maxTimeがnullです。");
-
-			if (FromTime == null)
-				throw new Exception("時間の下限値指定が不正です。\nfromがnullです。");
-			if (ToTime == null)
-				throw new Exception("時間の上限値指定が不正です。\ntoがnullです。");
-
-			if (_minTime > FromTime)
-				FromTime = _minTime;
-			if (_maxTime < FromTime)
-				FromTime = _maxTime;
-
-			if (_minTime > ToTime)
-				ToTime = _minTime;
-			if (_maxTime < ToTime)
-				ToTime = _maxTime;
-
-			if (FromTime > ToTime && FromTime + 1 < _maxTime)
-				ToTime = FromTime + 1;
-			else if (FromTime > ToTime && ToTime - 1 > _minTime)
-				ToTime = ToTime - 1;
-
-			hScrollBar.LargeChange = (int)(((decimal)(ToTime.Value - FromTime.Value) / (decimal)(_maxTime.Value + 1 - _minTime.Value)) * (decimal)int.MaxValue);
-			hScrollBar.SmallChange = hScrollBar.LargeChange / 10;
-
 			timeLineRedraw();
+		}
+
+		protected void hScrollBarChangeRateChange()
+		{
+			hScrollBar.LargeChange = (int)((((decimal)ToTime.Value - (decimal)FromTime.Value) / ((decimal)_maxTime.Value - (decimal)_minTime.Value)) * (decimal)int.MaxValue);
+			hScrollBar.SmallChange = (hScrollBar.LargeChange >= 20 ? hScrollBar.LargeChange : 20) / 20;
 		}
 
 		protected void clearTime()
 		{
-			FromTime = null;
-			ToTime = null;
-			MinTime = null;
-			MaxTime = null;
+			MinTime = new Time("0", 10);
+			MaxTime = new Time(long.MaxValue.ToString(), 10);
+			FromTime = Time.NaN;
+			ToTime = Time.NaN;
 		}
 
 		protected string formatTimeScale(string scale)
@@ -741,12 +738,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			return "[" + scale + "]";
 		}
 
+		protected void timeLineScaleRedraw()
+		{
+			topTimeLineScale.Refresh();
+			bottomTimeLineScale.Refresh();
+		}
+
 		protected void timeLineRedraw()
 		{
-			topTimeLineScale.Invalidate();
-			bottomTimeLineScale.Invalidate();
-			treeGridView.DataGridView.InvalidateColumn(treeGridView.DataGridView.Columns["timeLine"].Index);
-			treeGridView.DataGridView.InvalidateColumn(treeGridView.DataGridView.Columns["value"].Index);
+			if (ApplicationData.FileContext.Data != null)
+			{
+				treeGridView.DataGridView.Refresh();
+				timeLineScaleRedraw();
+			}
+		}
+
+		protected void viewingTimeChangeAction(Action action)
+		{
+			Time span = ViewingTimeSpan;
+
+			action();
+
+			if (span != ViewingTimeSpan)
+				hScrollBarChangeRateChange();
+
+			timeLineRedraw();
 		}
 	}
 }

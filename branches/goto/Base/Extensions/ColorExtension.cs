@@ -10,19 +10,32 @@ namespace NU.OJL.MPRTOS.TLV.Base
 	{
 		public static Color FromHsv(this Color color, int hue, int saturation, int value)
 		{
-			if (hue < 0 || hue > 360)
+			if (hue < 0)
 			{
-				throw new ArgumentOutOfRangeException("hue", "0～360の間でなければなりません。");
+				hue += -1;
 			}
 
-			if (saturation < 0 || saturation > 100)
+			if (hue > 360)
 			{
-				throw new ArgumentOutOfRangeException("saturation", "0～100の間でなければなりません。");
+				hue %= 360;
 			}
 
-			if (value < 0 || value > 100)
+			if (saturation < 0)
 			{
-				throw new ArgumentOutOfRangeException("value", "0～100の間でなければなりません。");
+				saturation = 0;
+			}
+			else if (saturation > 100)
+			{
+				saturation = 100;
+			}
+
+			if (value < 0)
+			{
+				value = 0;
+			}
+			else if(value > 100)
+			{
+				value = 100;
 			}
 
 			double h;

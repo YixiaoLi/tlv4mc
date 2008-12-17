@@ -26,22 +26,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return "[" + Point.ToString() + "," + Size.ToString() + "]";
 		}
 
-		public RectangleF ToRectangleF(Point offset, ContentAlignment align, RectangleF rect)
+		public RectangleF ToRectangleF(Size offset, RectangleF rect)
 		{
 			PointF point = Point.ToPointF(offset, rect);
 			SizeF size = Size.ToSizeF(rect);
-
-			if (align == ContentAlignment.BottomCenter || align == ContentAlignment.BottomLeft || align == ContentAlignment.BottomRight)
-				point.Y -= size.Height;
-
-			if (align == ContentAlignment.BottomRight || align == ContentAlignment.MiddleRight || align == ContentAlignment.TopRight)
-				point.X -= size.Width;
-
-			if (align == ContentAlignment.BottomCenter || align == ContentAlignment.MiddleCenter || align == ContentAlignment.TopCenter)
-				point.X -= size.Width / 2;
-
-			if (align == ContentAlignment.MiddleCenter || align == ContentAlignment.MiddleLeft || align == ContentAlignment.MiddleRight)
-				point.Y -= size.Height / 2;
+			point.Y -= size.Height;
 
 			return new RectangleF(point, size);
 		}

@@ -1,5 +1,6 @@
 ﻿{
 	"TimeScale"		:"ns",
+	"TimeRadix"     :10,
 	"ConvertRules"	:["asp"],
 	"VisualizeRules":["asp"],
 	"ResourceHeaders":["asp"],

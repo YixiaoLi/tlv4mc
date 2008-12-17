@@ -47,6 +47,7 @@
     <Compile Include="ApplicationData.cs" />
     <Compile Include="ApplicationFactory.cs" />
     <Compile Include="ApplicationSetting.cs" />
+    <Compile Include="Base\ConvertFunction.cs" />
     <Compile Include="Base\Extensions\ColorExtension.cs" />
     <Compile Include="Base\IHavingNullableProperty.cs" />
     <Compile Include="Base\INamedCollection.cs" />
@@ -56,19 +57,19 @@
     <Compile Include="Controls\ResourceExplorer.Designer.cs">
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLine.cs">
+    <Compile Include="Controls\TimeLineMacroViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLine.Designer.cs">
+    <Compile Include="Controls\TimeLine\TimeLine.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TimeLine\TimeLine.Designer.cs">
       <DependentUpon>TimeLine.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLineScale.Designer.cs">
-      <DependentUpon>TimeLineScale.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLineVisualizer.cs">
+    <Compile Include="Controls\TimeLine\TimeLineVisualizer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLineVisualizer.Designer.cs">
+    <Compile Include="Controls\TimeLine\TimeLineVisualizer.Designer.cs">
       <DependentUpon>TimeLineVisualizer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\VisualizeRuleExplorer.cs">
@@ -77,12 +78,12 @@
     <Compile Include="Controls\VisualizeRuleExplorer.Designer.cs">
       <DependentUpon>VisualizeRuleExplorer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\ITimeLine.cs" />
-    <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLineScale.cs">
+    <Compile Include="Controls\TimeLine\ITimeLine.cs" />
+    <Compile Include="Controls\TimeLine\TimeLineScale.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLineCell.cs" />
-    <Compile Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLineColumn.cs" />
+    <Compile Include="Controls\TraceLogDisplayPanel\TimeLineCell.cs" />
+    <Compile Include="Controls\TraceLogDisplayPanel\TimeLineColumn.cs" />
     <Compile Include="Controls\TraceLogDisplayPanel\TraceLogDisplayPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -95,6 +96,7 @@
     <Compile Include="FileContext\SettingData\ColorSetting.cs" />
     <Compile Include="FileContext\SettingData\TraceLogDisplayPanelSetting.cs" />
     <Compile Include="FileContext\SettingData\VisualizeRuleExplorerSetting.cs" />
+    <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogGenerator.cs" />
     <Compile Include="FileContext\VisualizeData\Event.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\Font.cs" />
@@ -111,7 +113,7 @@
     <Compile Include="FileContext\ResourceData\Behavior\Argument\ArgumentType\ArgumentType.cs" />
     <Compile Include="FileContext\ResourceData\Behavior\Argument\ArgumentType\ArgumentTypeList.cs" />
     <Compile Include="FileContext\ResourceData\Resource.cs" />
-    <Compile Include="FileContext\TraceLogData\LogDataBase\BehaviorCallLogData.cs" />
+    <Compile Include="FileContext\TraceLogData\LogDataBase\BehaviorHappenLogData.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogData.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataBase.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogType.cs" />
@@ -237,15 +239,11 @@
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLine.resx">
+    <EmbeddedResource Include="Controls\TimeLine\TimeLine.resx">
       <DependentUpon>TimeLine.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLineScale.resx">
-      <DependentUpon>TimeLineScale.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TraceLogDisplayPanel\TimeLine\TimeLineVisualizer.resx">
+    <EmbeddedResource Include="Controls\TimeLine\TimeLineVisualizer.resx">
       <DependentUpon>TimeLineVisualizer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

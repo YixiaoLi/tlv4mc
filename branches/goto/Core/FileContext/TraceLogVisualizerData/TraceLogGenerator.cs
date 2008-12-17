@@ -10,7 +10,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class TraceLogGenerator
 	{
-		private readonly string[] _convertFunction = new string[] { "COUNT", "EXIST", "ATTR", "NAME", "DISPLAYNAME" };
 		private string _traceLogFilePath;
 		private ResourceData _resourceData;
 		public Action<int, string> _constructProgressReport = null;
@@ -95,14 +94,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				// valueがstringのときログを置換して追加
 				string s = Regex.Replace(log, pattern, value);
-				s = applyConvertFunc(traceLogData, s);
-
+				// 関数を適用
+				s = ConvertFunction.ApplyConvertFunc(traceLogData, s);
+				// ログを追加
 				traceLogData.Add(new TraceLog(s));
 			}
 		}
 
 		/// <summary>
-		/// 読み込んだログがパターンにマッチした場合に変換してログを追加する。変換値
+		/// 読み込んだログがパターンにマッチした場合に変換してログを追加する
 		/// </summary>
 		/// <param name="log">読み込むログ</param>
 		/// <param name="pattern">パターン</param>
@@ -117,7 +117,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		}
 
 		/// <summary>
-		/// 読み込んだログがパターンにマッチした場合に変換してログを追加する。変換値
+		/// 読み込んだログがパターンにマッチした場合に変換してログを追加する
 		/// </summary>
 		/// <param name="log">読み込むログ</param>
 		/// <param name="condition">パターン</param>
@@ -129,8 +129,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				string condition = Regex.Replace(log, pattern, kvp.Key);
 
-				condition = applyConvertFunc(traceLogData, condition);
+				// 条件に関数を適用
+				condition = ConvertFunction.ApplyConvertFunc(traceLogData, condition);
 
+				// 条件中の属性を値に変換
 				foreach (Match m in Regex.Matches(condition, @"\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*\.\s*[^=!<>\(]+\s*"))
 				{
 					string val;
@@ -145,8 +147,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
 				}
 
+				// 条件式を評価
 				bool result;
-
 				try
 				{
 					result = ConditionExpression.Result(condition);
@@ -156,6 +158,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					throw new Exception("ログ条件式が異常です。\n" + "\"" + kvp.Key + "\"\n" + e.Message);
 				}
 
+				// 条件式が真ならトレースログを追加
 				if (result)
 				{
 					addTraceLog(log, pattern, kvp.Value, traceLogData);
@@ -163,79 +166,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 		}
 
-		private string applyConvertFunc(TraceLogData traceLogData, string condition)
-		{
-			foreach (string func in _convertFunction)
-			{
-				foreach (Match m in Regex.Matches(condition, func + @"{(?<condition>\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*(\.\s*[^=!<>\(]+)?\s*)}"))
-				{
-					string val = calcConvertFunc(func, m.Groups["condition"].Value, traceLogData);
-					condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
-				}
-			}
-			return condition;
-		}
 
-		private string calcConvertFunc(string func, string condition, TraceLogData traceLogData)
-		{
-			string result;
-			switch (func)
-			{
-				case "COUNT":
-					try
-					{
-						result = traceLogData.GetObject(condition).Count().ToString();
-					}
-					catch (Exception e)
-					{
-						throw new Exception("リソース条件式が異常です。\n" + "\"" + condition + "\"\n" + e.Message);
-					}
-					break;
-				case "EXIST":
-					try
-					{
-						result = traceLogData.GetObject(condition).Count() != 0 ? "True" : "False";
-					}
-					catch (Exception e)
-					{
-						throw new Exception("リソース条件式が異常です。\n" + "\"" + condition + "\"\n" + e.Message);
-					}
-					break;
-				case "ATTR":
-					try
-					{
-						result = traceLogData.GetAttributeValue(condition).ToString();
-					}
-					catch (Exception e)
-					{
-						throw new Exception("リソース条件式が異常です。\n" + "\"" + "ATTR{" + condition + "}" + "\"\n" + e.Message);
-					}
-					break;
-				case "NAME":
-					try
-					{
-						result = traceLogData.GetAttributeValue(condition + "._name").ToString();
-					}
-					catch (Exception e)
-					{
-						throw new Exception("リソース条件式が異常です。\n" + "\"" + "NAME{" + condition + "}" + "\"\n" + e.Message);
-					}
-					break;
-				case "DISPLAYNAME":
-					try
-					{
-						result = traceLogData.GetAttributeValue(condition + "._displayName").ToString();
-					}
-					catch (Exception e)
-					{
-						throw new Exception("リソース条件式が異常です。\n" + "\"" + "NAME{" + condition + "}" + "\"\n" + e.Message);
-					}
-					break;
-				default:
-					throw new Exception(func + "：未知の関数です。");
-			}
-			return result;
-		}
 
 	}
 }

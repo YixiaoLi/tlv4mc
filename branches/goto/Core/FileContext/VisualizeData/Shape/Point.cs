@@ -34,37 +34,41 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			string num = @"-?([1-9][0-9]*)?[0-9](\.[0-9]*)?";
 
-			if (!Regex.IsMatch(x, @"^(([lr]\(" + num + @"\))|(" + num + @"))(%|px)?$"))
+			if (!Regex.IsMatch(x, @"^(([lcr]\(" + num + @"(%|px)?\))|(" + num + @"(%|px)?))$"))
 				throw new Exception("座標指定が異常です。\n" + coordinate);
-			if (!Regex.IsMatch(y, @"^(([tb]\(" + num + @"\))|(" + num + @"))(%|px)?$"))
+			if (!Regex.IsMatch(y, @"^(([tmb]\(" + num + @"(%|px)?\))|(" + num + @"(%|px)?))$"))
 				throw new Exception("座標指定が異常です。\n" + coordinate);
 
-			if (Regex.IsMatch(x, @"^(([lr]\(" + num + @"\))|(" + num + @"))%$"))
+			if (Regex.IsMatch(x, @"^(([lcr]\(" + num + @"%\))|(" + num + @"%))$"))
 				xVisualizeAreaUnit = VisualizeAreaUnit.Percentage;
-			if (Regex.IsMatch(x, @"^(([lr]\(" + num + @"\))|(" + num + @"))(px)?$"))
+			else if (Regex.IsMatch(x, @"^(([lcr]\(" + num + @"(px)?\))|(" + num + @"(px)?))$"))
 				xVisualizeAreaUnit = VisualizeAreaUnit.Pixel;
 
-			if (Regex.IsMatch(y, @"^(([lr]\(" + num + @"\))|(" + num + @"))%$"))
+			if (Regex.IsMatch(y, @"^(([tmb]\(" + num + @"%\))|(" + num + @"%))$"))
 				yVisualizeAreaUnit = VisualizeAreaUnit.Percentage;
-			if (Regex.IsMatch(y, @"^(([lr]\(" + num + @"\))|(" + num + @"))(px)?$"))
+			else if (Regex.IsMatch(y, @"^(([tmb]\(" + num + @"(px)?\))|(" + num + @"(px)?))$"))
 				yVisualizeAreaUnit = VisualizeAreaUnit.Pixel;
 
-			if (Regex.IsMatch(x, @"^(l\(" + num + @"\))(%|px)?$"))
+			if (Regex.IsMatch(x, @"^(l\(" + num + @"(%|px)?\))$"))
 				xAxisReference = XAxisReference.Left;
-			if (Regex.IsMatch(x, @"^(" + num + @")(%|px)?$"))
-				xAxisReference = XAxisReference.Zero;
-			if (Regex.IsMatch(x, @"^r\(" + num + @"\)(%|px)?$"))
+			else if (Regex.IsMatch(x, @"^r\(" + num + @"(%|px)?\)$"))
 				xAxisReference = XAxisReference.Right;
+			else if (Regex.IsMatch(x, @"^c\(" + num + @"(%|px)?\)$"))
+				xAxisReference = XAxisReference.Center;
+			else if (Regex.IsMatch(x, @"^(" + num + @"(%|px)?)$"))
+				xAxisReference = XAxisReference.Zero;
 
-			if (Regex.IsMatch(y, @"^(b\(" + num + @"\))(%|px)?$"))
+			if (Regex.IsMatch(y, @"^(b\(" + num + @"(%|px)?\))$"))
 				yAxisReference = YAxisReference.Bottom;
-			if (Regex.IsMatch(y, @"^(" + num + @")(%|px)?$"))
-				yAxisReference = YAxisReference.Zero;
-			if (Regex.IsMatch(y, @"^t\(" + num + @"\)(%|px)?$"))
+			else if (Regex.IsMatch(y, @"^t\(" + num + @"(%|px)?\)$"))
 				yAxisReference = YAxisReference.Top;
+			else if (Regex.IsMatch(y, @"^m\(" + num + @"(%|px)?\)$"))
+				yAxisReference = YAxisReference.Middle;
+			else if (Regex.IsMatch(y, @"^(" + num + @"(%|px)?)$"))
+				yAxisReference = YAxisReference.Zero;
 
-			x = x.Replace("%", "").Replace("px", "").Replace("(", "").Replace(")", "").Replace("l", "").Replace("r", "");
-			y = y.Replace("%", "").Replace("px", "").Replace("(", "").Replace(")", "").Replace("t", "").Replace("b", "");
+			x = x.Replace("%", "").Replace("px", "").Replace("(", "").Replace(")", "").Replace("l", "").Replace("r", "").Replace("c", "");
+			y = y.Replace("%", "").Replace("px", "").Replace("(", "").Replace(")", "").Replace("t", "").Replace("b", "").Replace("m", "");
 
 			_x = float.Parse(x);
 			_y = float.Parse(y);
@@ -77,10 +81,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public PointF ToPointF(RectangleF rect)
 		{
-			return ToPointF(new Point("0,0"), rect);
+			return ToPointF(new Size("0,0"), rect);
 		}
 
-		public PointF ToPointF(Point offset, RectangleF rect)
+		public PointF ToPointF(Size offset, RectangleF rect)
 		{
 			PointF point = new PointF();
 
@@ -102,10 +106,21 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					switch (xVisualizeAreaUnit)
 					{
 						case VisualizeAreaUnit.Percentage:
-							point.X = rect.Right - rect.Width * _x / 100.0f;
+							point.X = rect.Right + rect.Width * _x / 100.0f;
 							break;
 						case VisualizeAreaUnit.Pixel:
-							point.X = rect.Right - _x;
+							point.X = rect.Right + _x;
+							break;
+					}
+					break;
+				case XAxisReference.Center:
+					switch (xVisualizeAreaUnit)
+					{
+						case VisualizeAreaUnit.Percentage:
+							point.X = (rect.Left + (rect.Width / 2f)) + rect.Width * _x / 100.0f;
+							break;
+						case VisualizeAreaUnit.Pixel:
+							point.X = (rect.Left + (rect.Width / 2f)) + _x;
 							break;
 					}
 					break;
@@ -128,10 +143,21 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					switch (yVisualizeAreaUnit)
 					{
 						case VisualizeAreaUnit.Percentage:
-							point.Y = rect.Top + rect.Height * _y / 100.0f;
+							point.Y = rect.Top - rect.Height * _y / 100.0f;
 							break;
 						case VisualizeAreaUnit.Pixel:
-							point.Y = rect.Top + _y;
+							point.Y = rect.Top - _y;
+							break;
+					}
+					break;
+				case YAxisReference.Middle:
+					switch (yVisualizeAreaUnit)
+					{
+						case VisualizeAreaUnit.Percentage:
+							point.Y = (rect.Bottom - (rect.Height / 2f)) - rect.Height * _y / 100.0f;
+							break;
+						case VisualizeAreaUnit.Pixel:
+							point.Y = (rect.Bottom - (rect.Height / 2f)) - _y;
 							break;
 					}
 					break;
@@ -139,12 +165,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			if (offset.ToString() != "0,0")
 			{
-				PointF off = offset.ToPointF(rect);
+				SizeF off = offset.ToSizeF(rect);
 
-				if (xAxisReference == XAxisReference.Zero)
-					point.X += off.X;
-				if (yAxisReference == YAxisReference.Zero)
-					point.Y -= rect.Height - off.Y;
+				point.X += off.Width;
+				point.Y -= off.Height;
 			}
 			
 			return point;
@@ -154,6 +178,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public enum XAxisReference
 	{
 		Left,
+		Center,
 		Right,
 		Zero
 	}
@@ -161,6 +186,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public enum YAxisReference
 	{
 		Top,
+		Middle,
 		Bottom,
 		Zero
 	}

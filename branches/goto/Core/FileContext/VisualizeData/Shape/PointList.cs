@@ -10,7 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class PointList: Collection<Point>
 	{
-		public PointF[] ToPointF(Point offset, RectangleF rect)
+		public PointF[] ToPointF(Size offset, RectangleF rect)
 		{
 			List<PointF> points = new List<PointF>();
 
@@ -23,7 +23,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		}
 		public PointF[] ToPointF(RectangleF rect)
 		{
-			return ToPointF(new Point("0,0"), rect);
+			return ToPointF(new Size("0,0"), rect);
 		}
 	}
 }

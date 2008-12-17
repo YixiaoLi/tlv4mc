@@ -41,13 +41,13 @@
 			this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
 			this.viewingTimeRangeToTextBox = new System.Windows.Forms.ToolStripTextBox();
 			this.viewingTimeRangeToScaleLabel = new System.Windows.Forms.ToolStripLabel();
+			this.topTimeLineScale = new NU.OJL.MPRTOS.TLV.Core.Controls.TimeLineScale();
+			this.bottomTimeLineScale = new NU.OJL.MPRTOS.TLV.Core.Controls.TimeLineScale();
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer.SuspendLayout();
 			this.viewingTimeRangeToolStrip.SuspendLayout();
-			this.topTimeLineScale = new TimeLineScale(ScaleMarkDirection.Bottom);
-			this.bottomTimeLineScale = new TimeLineScale(ScaleMarkDirection.Top);
 			this.SuspendLayout();
 			// 
 			// imageList
@@ -74,17 +74,17 @@
 			// 
 			// toolStripContainer.ContentPanel
 			// 
-			this.toolStripContainer.ContentPanel.Controls.Add(this.hScrollBar);
-			this.toolStripContainer.ContentPanel.Controls.Add(this.treeGridView);
 			this.toolStripContainer.ContentPanel.Controls.Add(this.bottomTimeLineScale);
 			this.toolStripContainer.ContentPanel.Controls.Add(this.topTimeLineScale);
+			this.toolStripContainer.ContentPanel.Controls.Add(this.hScrollBar);
+			this.toolStripContainer.ContentPanel.Controls.Add(this.treeGridView);
 			this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(406, 351);
 			this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer.Name = "toolStripContainer";
 			this.toolStripContainer.Size = new System.Drawing.Size(406, 398);
 			this.toolStripContainer.TabIndex = 4;
-			this.toolStripContainer.Text = "toolStripContainer1";
+			this.toolStripContainer.Text = "toolStripContainer";
 			// 
 			// toolStripContainer.TopToolStripPanel
 			// 
@@ -107,32 +107,6 @@
 			this.treeGridView.Name = "treeGridView";
 			this.treeGridView.Size = new System.Drawing.Size(404, 23);
 			this.treeGridView.TabIndex = 0;
-			// 
-			// bottomTimeLineScale
-			// 
-			this.bottomTimeLineScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.bottomTimeLineScale.BackColor = System.Drawing.Color.Black;
-			this.bottomTimeLineScale.Font = new System.Drawing.Font("Courier New", 8F);
-			this.bottomTimeLineScale.FromTime = null;
-			this.bottomTimeLineScale.Location = new System.Drawing.Point(1, 55);
-			this.bottomTimeLineScale.Name = "bottomTimeLineScale";
-			this.bottomTimeLineScale.Size = new System.Drawing.Size(404, 30);
-			this.bottomTimeLineScale.TabIndex = 2;
-			this.bottomTimeLineScale.ToTime = null;
-			// 
-			// topTimeLineScale
-			// 
-			this.topTimeLineScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.topTimeLineScale.BackColor = System.Drawing.Color.Black;
-			this.topTimeLineScale.Font = new System.Drawing.Font("Courier New", 8F);
-			this.topTimeLineScale.FromTime = null;
-			this.topTimeLineScale.Location = new System.Drawing.Point(1, 1);
-			this.topTimeLineScale.Name = "topTimeLineScale";
-			this.topTimeLineScale.Size = new System.Drawing.Size(404, 30);
-			this.topTimeLineScale.TabIndex = 1;
-			this.topTimeLineScale.ToTime = null;
 			// 
 			// viewingTimeRangeToolStrip
 			// 
@@ -185,6 +159,28 @@
 			this.viewingTimeRangeToScaleLabel.Name = "viewingTimeRangeToScaleLabel";
 			this.viewingTimeRangeToScaleLabel.Size = new System.Drawing.Size(0, 22);
 			// 
+			// topTimeLineScale
+			// 
+			this.topTimeLineScale.BackColor = System.Drawing.Color.Black;
+			this.topTimeLineScale.DynamicTimeRangeChange = true;
+			this.topTimeLineScale.Font = new System.Drawing.Font("Courier New", 8F);
+			this.topTimeLineScale.Location = new System.Drawing.Point(1, 1);
+			this.topTimeLineScale.Name = "topTimeLineScale";
+			this.topTimeLineScale.ScaleMarkDirection = NU.OJL.MPRTOS.TLV.Core.Controls.ScaleMarkDirection.Bottom;
+			this.topTimeLineScale.Size = new System.Drawing.Size(404, 30);
+			this.topTimeLineScale.TabIndex = 4;
+			// 
+			// bottomTimeLineScale
+			// 
+			this.bottomTimeLineScale.BackColor = System.Drawing.Color.Black;
+			this.bottomTimeLineScale.DynamicTimeRangeChange = true;
+			this.bottomTimeLineScale.Font = new System.Drawing.Font("Courier New", 8F);
+			this.bottomTimeLineScale.Location = new System.Drawing.Point(1, 54);
+			this.bottomTimeLineScale.Name = "bottomTimeLineScale";
+			this.bottomTimeLineScale.ScaleMarkDirection = NU.OJL.MPRTOS.TLV.Core.Controls.ScaleMarkDirection.Top;
+			this.bottomTimeLineScale.Size = new System.Drawing.Size(404, 30);
+			this.bottomTimeLineScale.TabIndex = 5;
+			// 
 			// TraceLogDisplayPanel
 			// 
 			this.Controls.Add(this.toolStripContainer);
@@ -208,8 +204,6 @@
 
 		private NU.OJL.MPRTOS.TLV.Third.TreeGridView treeGridView;
 		private System.Windows.Forms.ImageList imageList;
-		private TimeLineScale topTimeLineScale;
-		private TimeLineScale bottomTimeLineScale;
 		private System.Windows.Forms.HScrollBar hScrollBar;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer;
 		private System.Windows.Forms.StatusStrip statusStrip;
@@ -220,6 +214,8 @@
 		private System.Windows.Forms.ToolStripLabel toolStripLabel4;
 		private System.Windows.Forms.ToolStripTextBox viewingTimeRangeToTextBox;
 		private System.Windows.Forms.ToolStripLabel viewingTimeRangeToScaleLabel;
+		private TimeLineScale bottomTimeLineScale;
+		private TimeLineScale topTimeLineScale;
 
 
 	}

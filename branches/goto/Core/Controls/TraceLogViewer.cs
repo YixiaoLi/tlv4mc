@@ -427,11 +427,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						image.Tag = "attribute";
 						return new TraceLog(image, ld.Time, _resourceData.ResourceHeaders[ld.Object.Type].Name, ld.Object.DisplayName, _resourceData.ResourceHeaders[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute].Name + " = " + ((AttributeChangeLogData)ld).Value.ToString());
 					}
-					else if (ld.Type == LogType.BehaviorCall)
+					else if (ld.Type == LogType.BehaviorHappen)
 					{
 						Image image = Properties.Resources.behavior;
 						image.Tag = "behavior";
-						return new TraceLog(image, ld.Time, _resourceData.ResourceHeaders[ld.Object.Type].Name, ld.Object.DisplayName, _resourceData.ResourceHeaders[ld.Object.Type].Behaviors[((BehaviorCallLogData)ld).Behavior].Name + "(" + ((BehaviorCallLogData)ld).Arguments.ToString() + ")");
+						return new TraceLog(image, ld.Time, _resourceData.ResourceHeaders[ld.Object.Type].Name, ld.Object.DisplayName, _resourceData.ResourceHeaders[ld.Object.Type].Behaviors[((BehaviorHappenLogData)ld).Behavior].Name + "(" + ((BehaviorHappenLogData)ld).Arguments.ToString() + ")");
 					}
 					else
 					{

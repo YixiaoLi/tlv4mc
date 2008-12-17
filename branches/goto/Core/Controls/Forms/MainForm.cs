@@ -99,6 +99,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region サブウィンドウ管理初期化
             SubWindow[] sws = new[]
             {
+                new SubWindow("macroViewer", new TimeLineMacroViewer(){ Text = "マクロビューア" }, DockState.DockBottom) { Text = "マクロビューア" },
                 new SubWindow("traceLogViewer", new TraceLogViewer(){ Text = "トレースログビューア" }, DockState.DockRight) { Text = "トレースログビューア" },
                 new SubWindow("resourceExplorer", new ResourceExplorer(){ Text = "リソースエクスプローラ" }, DockState.DockLeft) { Text = "リソースエクスプローラ" },
                 new SubWindow("visualizeRuleExplorer", new VisualizeRuleExplorer(){ Text = "可視化ルールエクスプローラ" }, DockState.DockLeft) { Text = "可視化ルールエクスプローラ" },
@@ -208,59 +209,60 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             #endregion
 
+			//_windowManager.MainPanel = new Control();
 			//_windowManager.MainPanel.Resize += (o, e) => _windowManager.MainPanel.Invalidate();
 			//_windowManager.MainPanel.Paint += (o, e) =>
 			//    {
-			//        RotateColorFactory colorFactory = new RotateColorFactory();
+			////        RotateColorFactory colorFactory = new RotateColorFactory();
 
-			//        int a = 50;
+			////        int a = 50;
 
-			//        float w = _windowManager.MainPanel.ClientSize.Width / a / 2;
-			//        float h = _windowManager.MainPanel.ClientSize.Height / a;
+			////        float w = _windowManager.MainPanel.ClientSize.Width / a / 2;
+			////        float h = _windowManager.MainPanel.ClientSize.Height / a;
 
-			//        for (int j = 0; j < a; j++)
-			//        {
-			//            for (int i = 0; i < a; i++ )
-			//            {
-			//                Color c = colorFactory.RamdomColor();
-			//                float x = w * i;
-			//                float y = h * j;
-			//                e.Graphics.FillRectangle(new SolidBrush(c), x, y, w, h);
-			//            }
-			//        }
+			////        for (int j = 0; j < a; j++)
+			////        {
+			////            for (int i = 0; i < a; i++ )
+			////            {
+			////                Color c = colorFactory.RamdomColor();
+			////                float x = w * i;
+			////                float y = h * j;
+			////                e.Graphics.FillRectangle(new SolidBrush(c), x, y, w, h);
+			////            }
+			////        }
 
-			//        colorFactory.Saturation = 100;
-			//        colorFactory.Value = 100;
+			////        colorFactory.Saturation = 100;
+			////        colorFactory.Value = 100;
 
-			//        for (int j = 0; j < a; j++)
-			//        {
-			//            for (int i = 0; i < a; i++)
-			//            {
-			//                Color c = colorFactory.RotateColor();
-			//                float x = w * i + (_windowManager.MainPanel.ClientSize.Width / 2);
-			//                float y = h * j;
-			//                e.Graphics.FillRectangle(new SolidBrush(c), x, y, w, h);
-			//            }
-			//        }
+			////        for (int j = 0; j < a; j++)
+			////        {
+			////            for (int i = 0; i < a; i++)
+			////            {
+			////                Color c = colorFactory.RotateColor();
+			////                float x = w * i + (_windowManager.MainPanel.ClientSize.Width / 2);
+			////                float y = h * j;
+			////                e.Graphics.FillRectangle(new SolidBrush(c), x, y, w, h);
+			////            }
+			////        }
 
-			//        //if (ApplicationData.FileContext.IsOpened)
-			//        //{
-			//        //    float i = 0.0f;
-			//        //    foreach (Shapes ss in ApplicationData.FileContext.Data.VisualizeData.Shapes)
-			//        //    {
-			//        //        float w = (float)_windowManager.MainPanel.ClientSize.Width / (float)ApplicationData.FileContext.Data.VisualizeData.Shapes.Count;
+			////    if (ApplicationData.FileContext.IsOpened)
+			////    {
+			////        float i = 0.0f;
+			////        foreach (Shapes ss in ApplicationData.FileContext.Data.VisualizeData.Shapes)
+			////        {
+			////            float w = (float)_windowManager.MainPanel.ClientSize.Width / (float)ApplicationData.FileContext.Data.VisualizeData.Shapes.Count;
 
-			//        //        e.Graphics.FillRectangle(new SolidBrush(Color.White), new RectangleF(w * i, 0.0f, w, w));
-			//        //        e.Graphics.DrawRectangle(new System.Drawing.Pen(Color.Black), new Rectangle((int)(w * i), 0, (int)w, (int)w));
+			////            e.Graphics.FillRectangle(new SolidBrush(Color.White), new RectangleF(w * i, 0.0f, w, w));
+			////            e.Graphics.DrawRectangle(new System.Drawing.Pen(Color.Black), new Rectangle((int)(w * i), 0, (int)w, (int)w));
 
-			//        //        foreach (Shape s in ss)
-			//        //        {
-			//        //            e.Graphics.DrawShape(s, new RectangleF(w * i, 0.0f, w, w));
-			//        //        }
-			//        //        i++;
-			//        //    }
-			//        //}
-			//    };
+			////            foreach (Shape s in ss)
+			////            {
+			////                e.Graphics.DrawShape(s, new RectangleF(w * i, 0.0f, w, w));
+			////            }
+			////            i++;
+			////        }
+			////    }
+			////};
         }
 
         protected override void OnClosing(CancelEventArgs e)

@@ -8,7 +8,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public enum LogType
 	{
 		AttributeChange,
-		BehaviorCall
+		BehaviorHappen
 	}
 
 	public static class LogTypeExtension
@@ -19,7 +19,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				case LogType.AttributeChange:
 					return "メンバ値変更";
-				case LogType.BehaviorCall:
+				case LogType.BehaviorHappen:
 					return "メソッド呼出し";
 				default:
 					return "その他";

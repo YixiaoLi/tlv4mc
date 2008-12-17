@@ -67,24 +67,31 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			// 下にあるノードの方がネストが深い場合
 			if (Level < bottomLevel)
 			{
+				Color bc = new Color().FromHsv((int)(DataGridView.GridColor.GetHue()), (int)(DataGridView.GridColor.GetSaturation() * 100f * (1f - (0.15f * bottomLevel))), (int)(DataGridView.GridColor.GetBrightness() * 100f * (1f + (0.15f * bottomLevel))));
 				graphics.DrawLine(new Pen(DataGridView.DefaultCellStyle.BackColor), rowBounds.X + 1, rowBounds.Y + rowBounds.Height - 1, rowBounds.X + (16 * Level) - 2, rowBounds.Y + rowBounds.Height - 1);
+				graphics.DrawLine(new Pen(bc), rowBounds.X + (16 * (Level)) - 1, rowBounds.Y + rowBounds.Height - 1, rowBounds.X + rowBounds.Width - 1, rowBounds.Y + rowBounds.Height - 1);
 			}
 			// トップレベルでなく、下にあるノードとネストの深さが同じである場合
 			else if (Level == bottomLevel && Level > 1)
 			{
+				Color bc = new Color().FromHsv((int)(DataGridView.GridColor.GetHue()), (int)(DataGridView.GridColor.GetSaturation() * 100f * (1f - (0.15f * Level))), (int)(DataGridView.GridColor.GetBrightness() * 100f * (1f + (0.15f * Level))));
 				graphics.DrawLine(new Pen(DataGridView.DefaultCellStyle.BackColor), rowBounds.X + 1, rowBounds.Y + rowBounds.Height - 1, rowBounds.X + (16 * (Level - 1)) - 2, rowBounds.Y + rowBounds.Height - 1);
+				graphics.DrawLine(new Pen(bc), rowBounds.X + (16 * (Level - 1)) - 1, rowBounds.Y + rowBounds.Height - 1, rowBounds.X + rowBounds.Width - 1, rowBounds.Y + rowBounds.Height - 1);
 			}
 			// トップレベルでなく、下にあるノードの方がネストが浅い場合
 			else if (Level > bottomLevel && bottomLevel > 1)
 			{
+				Color bc = new Color().FromHsv((int)(DataGridView.GridColor.GetHue()), (int)(DataGridView.GridColor.GetSaturation() * 100f * (1f - (0.15f * bottomLevel))), (int)(DataGridView.GridColor.GetBrightness() * 100f * (1f + (0.15f * bottomLevel))));
 				graphics.DrawLine(new Pen(DataGridView.DefaultCellStyle.BackColor), rowBounds.X + 1, rowBounds.Y + rowBounds.Height - 1, rowBounds.X + (16 * (bottomLevel - 1)) - 2, rowBounds.Y + rowBounds.Height - 1);
+				graphics.DrawLine(new Pen(bc), rowBounds.X + (16 * (bottomLevel - 1)) - 1, rowBounds.Y + rowBounds.Height - 1, rowBounds.X + rowBounds.Width - 1, rowBounds.Y + rowBounds.Height - 1);
 			}
 
 			if (Level > 1)
 			{
 				for (int j = 1; j <= Level; j++)
 				{
-					graphics.DrawLine(new Pen(DataGridView.GridColor), rowBounds.X + (16 * (j - 1)) - 1, rowBounds.Y -1, rowBounds.X + (16 * (j - 1)) - 1, rowBounds.Y + rowBounds.Height);
+					Color bc = new Color().FromHsv((int)(DataGridView.GridColor.GetHue()), (int)(DataGridView.GridColor.GetSaturation() * 100f * (1f - (0.15f * j))), (int)(DataGridView.GridColor.GetBrightness() * 100f * (1f + (0.15f * j))));
+					graphics.DrawLine(new Pen(bc), rowBounds.X + (16 * (j - 1)) - 1, rowBounds.Y - 1, rowBounds.X + (16 * (j - 1)) - 1, rowBounds.Y + rowBounds.Height - 1 - ((Level > bottomLevel) ? 1 : 0));
 				}
 			}
 		}

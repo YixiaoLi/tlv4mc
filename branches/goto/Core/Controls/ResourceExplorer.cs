@@ -197,6 +197,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					treeView.Nodes[name + ":" + group.Name].Nodes[res.Type + ":" + res.Name].SelectedImageKey = "resource";
 
 					treeView.Nodes[name + ":" + group.Name].Nodes[res.Type + ":" + res.Name].Checked = ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Type, res.Name) ? ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(res.Type, res.Name) : ApplicationData.Setting.DefaultResourceVisible;
+
+					if (!ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Type, res.Name))
+					{
+						ApplicationData.FileContext.Data.SettingData.ResourceExplorerSetting.ResourceVisibility.SetValue(ApplicationData.Setting.DefaultResourceVisible, res.Type, res.Name);
+					}
 				}
 			}
 			tabControl.TabPages[name].Controls.Add(treeView);

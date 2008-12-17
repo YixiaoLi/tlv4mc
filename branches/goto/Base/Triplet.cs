@@ -11,6 +11,8 @@ namespace NU.OJL.MPRTOS.TLV.Base
 		public C Data2 { get; set; }
 		public R Data3 { get; set; }
 
+		public Triplet() { }
+
 		public Triplet(L l, C c, R r)
 		{
 			Data1 = l;

@@ -35,8 +35,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			TraceLogs = new TraceLogList();
 			_resourceData = resourceData;
-			MinTime = new Time(long.MaxValue.ToString(), _resourceData.TimeRadix);
-			MaxTime = new Time("0", _resourceData.TimeRadix);
+			MinTime = new Time(Time.MaxTime.ToString(), _resourceData.TimeRadix);
+			MaxTime = new Time(Time.MinTime.ToString(), _resourceData.TimeRadix);
 		}
 
 		public void Add(TraceLog log)
@@ -64,7 +64,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				foreach (Resource res in GetObject(log))
 				{
-					BehaviorCallLogData logData = new BehaviorCallLogData(time, res, log.Behavior, getArguments(res.Type, log.Behavior, log.Arguments));
+					BehaviorHappenLogData logData = new BehaviorHappenLogData(time, res, log.Behavior, getArguments(res.Type, log.Behavior, log.Arguments));
 					_data.Add(logData);
 				}
 			}
