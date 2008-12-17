@@ -77,9 +77,9 @@ namespace Test
         private Arc Read(string s)
         {
             ArcConverter target = new ArcConverter();
-            System.IO.StringReader sr = new System.IO.StringReader(s);
             IJsonReader reader = new NU.OJL.MPRTOS.TLV.Third.JsonReader(
-               new Newtonsoft.Json.JsonTextReader(sr));
+               new Newtonsoft.Json.JsonTextReader(new System.IO.StringReader(s)));
+            reader.Read();
             return (Arc)target.ReadJson(reader);
         } 
 
@@ -89,9 +89,9 @@ namespace Test
         [TestMethod()]
         public void ReadJsonTest()
         {
-            Assert.AreEqual(new Arc(0, 1).ToString(), Read("[0,1]").ToString());
-            Assert.AreEqual(new Arc(0, 1).ToString(), Read("[0, 1]").ToString());
-            Assert.AreEqual(new Arc(0, -1).ToString(), Read("[0, -1]").ToString());
+            Assert.AreEqual(new Arc(0, 1).ToString(), Read("[\"0\",\"1\"]").ToString());
+            Assert.AreEqual(new Arc(0, 1).ToString(), Read("[\"0\",  \"1\"]").ToString());
+            Assert.AreEqual(new Arc(0, -1).ToString(), Read("[\"0\", \"-1\"]").ToString());
         }
 
         private string Write(Arc arc) {
@@ -111,6 +111,7 @@ namespace Test
         public void WriteJsonTest()
         {
             Assert.AreEqual("[\"0\",\"0\"]", Write(new Arc(0, 0)));
+            Assert.AreEqual("[\"0\",\"0\"]", Write(new Arc(0, 1)));
             Assert.AreEqual("[\"0.1\",\"4.2\"]", Write(new Arc(0.1f, 4.2f)));
             Assert.AreEqual("[\"0.1\",\"-4.2\"]", Write(new Arc(0.1f, -4.2f)));
         }
