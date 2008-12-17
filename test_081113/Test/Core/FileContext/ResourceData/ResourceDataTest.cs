@@ -91,9 +91,9 @@ namespace NU.OJL.MPRTOS.TLV.Test
             ResourceData expected = target; 
             ResourceData actual;
             actual = target.Parse(resourceData);
-            System.Diagnostics.Debug.WriteLine(actual.TimeScale);
-            System.Diagnostics.Debug.WriteLine(actual.TimeRadix);
-            System.Diagnostics.Debug.WriteLine(actual.ConvertRule);
+            //System.Diagnostics.Debug.WriteLine(actual.TimeScale);
+            //System.Diagnostics.Debug.WriteLine(actual.TimeRadix);
+            //System.Diagnostics.Debug.WriteLine(actual.ConvertRule);
             Assert.AreEqual("20", actual.TimeScale);
             Assert.AreEqual(10, actual.TimeRadix);
             Assert.AreEqual("foo", actual.ConvertRule);
