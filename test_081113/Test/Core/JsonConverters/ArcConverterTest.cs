@@ -90,8 +90,8 @@ namespace Test
         public void ReadJsonTest()
         {
             Assert.AreEqual(new Arc(0, 1).ToString(), Read("[0,1]").ToString());
-            Assert.AreEqual(new Arc(0, 1).ToString(), Read("[0, 0]").ToString());
-            Assert.AreEqual(new Arc(0, 0).ToString(), Read("[0, 0]").ToString());
+            Assert.AreEqual(new Arc(0, 1).ToString(), Read("[0, 1]").ToString());
+            Assert.AreEqual(new Arc(0, -1).ToString(), Read("[0, -1]").ToString());
         }
 
         private string Write(Arc arc) {
