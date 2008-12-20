@@ -72,7 +72,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		protected IEnumerable<LogData> getEnumerator(Time from, Time to)
 		{
-			if (from != Time.NaN && to != Time.NaN)
+			if (!from.IsEmpty && !to.IsEmpty)
 			{
 				return _list.Where(l => l.Time >= from && l.Time <= to);
 			}
@@ -141,7 +141,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		protected LogDataEnumeable filter(Time from, Time to)
 		{
-			if (from != Time.NaN && to != Time.NaN)
+			if (!from.IsEmpty && !to.IsEmpty)
 			{
 				_list = _list.FindAll(l => l.Time >= from && l.Time <= to);
 			}

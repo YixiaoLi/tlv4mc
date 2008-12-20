@@ -10,73 +10,93 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public struct Time : IComparable<Time>, IComparable, IComparer<Time>, IComparer, IEquatable<Time>
 	{
-		private string _valueByString;
 		public int Radix { get; set; }
-		public long Value { get; set; }
+		public decimal Value { get; set; }
 
-		public static Time MaxTime = new Time(long.MaxValue.ToString(), 10);
-		public static Time MinTime = new Time("0", 10);
-		public static Time NaN = new Time(null, 0);
+		public static Time MaxTime(int radix) { return new Time(decimal.MaxValue.ToString(), radix);}
+		public static Time MinTime(int radix) { return new Time(decimal.MinValue.ToString(), radix); }
+		public static Time Empty = new Time(null, 0);
 
 		public Time(string value, int radix)
 			:this()
 		{
-			_valueByString = value;
-			Radix = radix;
-			if (value != null)
-				Value = _valueByString.ToLong(radix);
+			if (value != null && value != string.Empty && radix != 0)
+			{
+				try
+				{
+					Value = value.ToDecimal(radix);
+					Radix = radix;
+				}
+				catch
+				{
+					this = Empty;
+				}
+			}
 			else
-				Value = 0;
+			{
+				Value = 0m;
+				Radix = 0;
+			}
+		}
+
+		public bool IsEmpty
+		{
+			get { return Radix == 0; }
 		}
 
 		public static Time operator +(decimal l, Time r)
 		{
-			return new Time(Convert.ToString((long)(l + (decimal)r.Value), r.Radix), r.Radix);
+			return new Time((l + (decimal)r.Value).ToString(r.Radix), r.Radix);
 		}
 		public static Time operator -(decimal l, Time r)
 		{
-			return new Time(Convert.ToString((long)(l - (decimal)r.Value), r.Radix), r.Radix);
+			return new Time((l - (decimal)r.Value).ToString(r.Radix), r.Radix);
 		}
 		public static Time operator +(Time l, decimal r)
 		{
-			return new Time(Convert.ToString((long)((decimal)l.Value + r), l.Radix), l.Radix);
+			return new Time(((decimal)l.Value + r).ToString(l.Radix), l.Radix);
 		}
 		public static Time operator -(Time l, decimal r)
 		{
-			return new Time(Convert.ToString((long)((decimal)l.Value - r), l.Radix), l.Radix);
+			return new Time(((decimal)l.Value - r).ToString(l.Radix), l.Radix);
 		}
 		public static Time operator *(decimal l, Time r)
 		{
-			return new Time(Convert.ToString((long)(l * (decimal)r.Value), r.Radix), r.Radix);
+			return new Time((l * (decimal)r.Value).ToString(r.Radix), r.Radix);
 		}
 		public static Time operator /(decimal l, Time r)
 		{
-			return new Time(Convert.ToString((long)(l / (decimal)r.Value), r.Radix), r.Radix);
+			return new Time((l / (decimal)r.Value).ToString(r.Radix), r.Radix);
 		}
 		public static Time operator *(Time l, decimal r)
 		{
-			return new Time(Convert.ToString((long)((decimal)l.Value * r), l.Radix), l.Radix);
+			return new Time(((decimal)l.Value * r).ToString(l.Radix), l.Radix);
 		}
 		public static Time operator /(Time l, decimal r)
 		{
-			return new Time(Convert.ToString((long)((decimal)l.Value / r), l.Radix), l.Radix);
+			return new Time(((decimal)l.Value / r).ToString(l.Radix), l.Radix);
 		}
 
 		public static Time operator +(Time l, Time r)
 		{
-			return new Time(Convert.ToString(l.Value + r.Value, l.Radix), l.Radix);
+			return new Time((l.Value + r.Value).ToString(l.Radix), l.Radix);
 		}
 		public static Time operator -(Time l, Time r)
 		{
-			return new Time(Convert.ToString(l.Value - r.Value, l.Radix), l.Radix);
+			return new Time((l.Value - r.Value).ToString(l.Radix), l.Radix);
 		}
 		public static Time operator *(Time l, Time r)
 		{
-			return new Time(Convert.ToString((long)((decimal)l.Value * (decimal)r.Value), l.Radix), l.Radix);
+			return new Time((l.Value * r.Value).ToString(l.Radix), l.Radix);
 		}
 		public static Time operator /(Time l, Time r)
 		{
-			return new Time(Convert.ToString((long)((decimal)l.Value / (decimal)r.Value), l.Radix), l.Radix);
+			return new Time((l.Value / r.Value).ToString(l.Radix), l.Radix);
+		}
+
+		public Time Truncate()
+		{
+			return new Time(((decimal)Math.Truncate(Value)).ToString(), Radix);
 		}
 
 		public static bool operator >(Time l, Time r)
@@ -109,11 +129,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public static Time operator ++(Time t)
 		{
-			return new Time(Convert.ToString(t.Value + 1, t.Radix), t.Radix);
+			return new Time((t.Value + 1m).ToString(t.Radix), t.Radix);
 		}
 		public static Time operator --(Time t)
 		{
-			return new Time(Convert.ToString(t.Value - 1, t.Radix), t.Radix);
+			return new Time((t.Value - 1m).ToString(t.Radix), t.Radix);
 		}
 
 		public override bool Equals(object obj)
@@ -128,15 +148,19 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public override string ToString()
 		{
-			return _valueByString;
+			return Value.ToString(Radix);
 		}
 
 		public float ToX(Time from, Time to, int width)
 		{
-			float result = (float)(((decimal)(Value - from.Value) / (decimal)(to.Value - from.Value)) * (decimal)width);
-			result = result < 0 ? -10f : (result > width ? width + 10f : result);
+			float result = (float)(((decimal)(Value - from.Value) / (to.Value - from.Value)) * (decimal)width);
+			result = result < 0 ? -100f : (result > width ? width + 100f : result);
 
 			return result;
+		}
+		public static Time FromX(Time from, Time to, int width, int x)
+		{
+			return new Time(((to.Value - from.Value) * ((decimal)x / (decimal)width)).ToString(to.Radix), to.Radix);
 		}
 
 		public int Compare(object x, object y)

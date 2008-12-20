@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
-	partial class TimeLineVisualizer : TimeLine
+	partial class TimeLineVisualizer : TimeLineControl
 	{
 		private	VisualizeRule _rule;
 		private Event _evnt;
@@ -44,8 +44,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			_evnt = evnt;
 			_target = target;
 
-			SetData(ApplicationData.FileContext.Data);
-
 			InitializeComponent();
 		}
 
@@ -60,6 +58,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		public override void Draw(PaintEventArgs e)
 		{
 			base.Draw(e);
+
+			if (TimeLine == null)
+				return;
 
 			if (_logData == null)
 				return;
@@ -100,7 +101,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		protected void drawEvent(PaintEventArgs e, Event evnt, Resource target)
 		{
-			if (_from.Value == _to.Value)
+			if (TimeLine.ViewingSpan.Value == 0)
 				return;
 
 			if ((evnt.Type & EventTypes.Between) == EventTypes.Between)
@@ -139,13 +140,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		protected void drawWhenEvent(PaintEventArgs e, Event evnt, Resource target, IEnumerable<LogData> list)
 		{
 			LogDataEnumeable data = new LogDataEnumeable(list);
-			data.Filter(_from, _to, true, true);
+			data.Filter(TimeLine.FromTime, TimeLine.ToTime, true, true);
 
 			foreach (LogData[] l in data.GetPrevPostSetEnumerator())
 			{
-				float sx = l[1].Time.ToX(_from, _to, e.ClipRectangle.Width);
+				float sx = l[1].Time.ToX(TimeLine.FromTime, TimeLine.ToTime, e.ClipRectangle.Width);
 
-				float w = ((l[2] == null) ? _data.TraceLogData.MaxTime.ToX(_from, _to, e.ClipRectangle.Width) : l[2].Time.ToX(_from, _to, e.ClipRectangle.Width)) - l[1].Time.ToX(_from, _to, e.ClipRectangle.Width);
+				float w = ((l[2] == null) ? _data.TraceLogData.MaxTime.ToX(TimeLine.FromTime, TimeLine.ToTime, e.ClipRectangle.Width) : l[2].Time.ToX(TimeLine.FromTime, TimeLine.ToTime, e.ClipRectangle.Width)) - l[1].Time.ToX(TimeLine.FromTime, TimeLine.ToTime, e.ClipRectangle.Width);
 
 				if (w == 0f)
 					continue;

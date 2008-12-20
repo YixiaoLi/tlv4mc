@@ -156,6 +156,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             }
         }
         
+        internal static System.Drawing.Icon hand {
+            get {
+                object obj = ResourceManager.GetObject("hand", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon handHold {
+            get {
+                object obj = ResourceManager.GetObject("handHold", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap resource {
             get {
                 object obj = ResourceManager.GetObject("resource", resourceCulture);
@@ -226,6 +240,34 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             get {
                 object obj = ResourceManager.GetObject("warning", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon zoomer {
+            get {
+                object obj = ResourceManager.GetObject("zoomer", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon zoomerIn {
+            get {
+                object obj = ResourceManager.GetObject("zoomerIn", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon zoomerOut {
+            get {
+                object obj = ResourceManager.GetObject("zoomerOut", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon zoomSelect {
+            get {
+                object obj = ResourceManager.GetObject("zoomSelect", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

@@ -35,8 +35,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			TraceLogs = new TraceLogList();
 			_resourceData = resourceData;
-			MinTime = new Time(Time.MaxTime.ToString(), _resourceData.TimeRadix);
-			MaxTime = new Time(Time.MinTime.ToString(), _resourceData.TimeRadix);
+			MinTime = Time.MaxTime(_resourceData.TimeRadix);
+			MaxTime = Time.MinTime(_resourceData.TimeRadix);
 		}
 
 		public void Add(TraceLog log)

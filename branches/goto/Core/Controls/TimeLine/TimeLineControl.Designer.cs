@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
-	partial class TimeLine
+	partial class TimeLineControl
 	{
 
 		private void InitializeComponent()

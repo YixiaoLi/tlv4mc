@@ -14,14 +14,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			get
 			{
-				return typeof(ITimeLine);
+				return typeof(ITimeLineControl);
 			}
 		}
 		public override Type FormattedValueType
 		{
 			get
 			{
-				return typeof(ITimeLine);
+				return typeof(ITimeLineControl);
 			}
 		}
 
@@ -32,7 +32,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			Region r = graphics.Clip;
 			graphics.Clip = new Region(cellBounds);
-			((ITimeLine)value).Draw(new PaintEventArgs(graphics, new Rectangle(cellBounds.X, cellBounds.Y, cellBounds.Width - 2, cellBounds.Height - 2)));
+			((ITimeLineControl)value).Draw(new PaintEventArgs(graphics, new Rectangle(cellBounds.X, cellBounds.Y, cellBounds.Width - 2, cellBounds.Height - 2)));
 			graphics.Clip = r;
 		}
 	}

@@ -51,6 +51,8 @@
     <Compile Include="Base\Extensions\ColorExtension.cs" />
     <Compile Include="Base\IHavingNullableProperty.cs" />
     <Compile Include="Base\INamedCollection.cs" />
+    <Compile Include="Base\TimeLine.cs" />
+    <Compile Include="Controls\ITraceLogVisualizerControl.cs" />
     <Compile Include="Controls\ResourceExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -60,11 +62,11 @@
     <Compile Include="Controls\TimeLineMacroViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\TimeLine\TimeLine.cs">
+    <Compile Include="Controls\TimeLine\TimeLineControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\TimeLine\TimeLine.Designer.cs">
-      <DependentUpon>TimeLine.cs</DependentUpon>
+    <Compile Include="Controls\TimeLine\TimeLineControl.Designer.cs">
+      <DependentUpon>TimeLineControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TimeLine\TimeLineVisualizer.cs">
       <SubType>UserControl</SubType>
@@ -78,7 +80,7 @@
     <Compile Include="Controls\VisualizeRuleExplorer.Designer.cs">
       <DependentUpon>VisualizeRuleExplorer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TimeLine\ITimeLine.cs" />
+    <Compile Include="Controls\TimeLine\ITimeLineControl.cs" />
     <Compile Include="Controls\TimeLine\TimeLineScale.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -118,7 +120,7 @@
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataBase.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogType.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\AttributeChangeLogData.cs" />
-    <Compile Include="FileContext\TraceLogData\LogDataBase\Time.cs" />
+    <Compile Include="Base\Time.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLog.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogList.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\ShapeType.cs" />
@@ -239,8 +241,8 @@
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TimeLine\TimeLine.resx">
-      <DependentUpon>TimeLine.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\TimeLine\TimeLineControl.resx">
+      <DependentUpon>TimeLineControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TimeLine\TimeLineVisualizer.resx">
@@ -306,5 +308,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bhr2bhr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hand.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\handHold.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoomer.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoomerIn.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoomerOut.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoomSelect.ico" />
   </ItemGroup>
 </Project>

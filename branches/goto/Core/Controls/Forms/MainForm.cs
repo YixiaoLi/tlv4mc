@@ -97,15 +97,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #endregion
 
             #region サブウィンドウ管理初期化
-            SubWindow[] sws = new[]
+            _windowManager.Parent = this.toolStripContainer.ContentPanel;
+			_windowManager.MainPanel = new TraceLogDisplayPanel();
+			SubWindow[] sws = new[]
             {
                 new SubWindow("macroViewer", new TimeLineMacroViewer(){ Text = "マクロビューア" }, DockState.DockBottom) { Text = "マクロビューア" },
                 new SubWindow("traceLogViewer", new TraceLogViewer(){ Text = "トレースログビューア" }, DockState.DockRight) { Text = "トレースログビューア" },
                 new SubWindow("resourceExplorer", new ResourceExplorer(){ Text = "リソースエクスプローラ" }, DockState.DockLeft) { Text = "リソースエクスプローラ" },
                 new SubWindow("visualizeRuleExplorer", new VisualizeRuleExplorer(){ Text = "可視化ルールエクスプローラ" }, DockState.DockLeft) { Text = "可視化ルールエクスプローラ" },
             };
-            _windowManager.Parent = this.toolStripContainer.ContentPanel;
-			_windowManager.MainPanel = new TraceLogDisplayPanel();
 			_windowManager.AddSubWindow(sws);
 			_windowManager.Load();
 			_windowManager.Show();

@@ -181,4 +181,22 @@
   <data name="DefaultTemporaryDirectoryName" xml:space="preserve">
     <value>TraceLogVisualizer</value>
   </data>
+  <data name="hand" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hand.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="handHold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\handHold.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="zoomer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zoomer.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="zoomerIn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zoomerIn.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="zoomerOut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zoomerOut.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="zoomSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zoomSelect.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

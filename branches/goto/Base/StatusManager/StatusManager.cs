@@ -109,15 +109,24 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 				for (int i = 0; i < text.Length; i++)
 				{
-					ToolStripStatusLabel keyLabel = new ToolStripStatusLabel(text[i]);
+					string str = text[i];
+					string sp = "+";
+
+					if (str[0] == ',')
+					{
+						str = str.Remove(0, 1);
+						sp = "or";
+					}
+
+					ToolStripStatusLabel keyLabel = new ToolStripStatusLabel(str);
 					keyLabel.BorderSides = ToolStripStatusLabelBorderSides.All;
 					keyLabel.BorderStyle = HistBorder;
 					keyLabel.Visible = true;
 
-					modifyKeyLabels.Add(keyLabel);
+					if (i != 0)
+						modifyKeyLabels.Add(new ToolStripStatusLabel(sp) { BorderSides = ToolStripStatusLabelBorderSides.None });
 
-					if (i != text.Length - 1)
-						modifyKeyLabels.Add(new ToolStripStatusLabel("+") { BorderSides = ToolStripStatusLabelBorderSides.None });
+					modifyKeyLabels.Add(keyLabel);
 				}
 
 				modifyKeyLabels.Add(new ToolStripStatusLabel(":") { BorderSides = ToolStripStatusLabelBorderSides.None });
