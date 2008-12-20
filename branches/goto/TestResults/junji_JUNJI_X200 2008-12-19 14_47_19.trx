@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="0118cd00-9bd7-4e59-a067-659f67598bd9" name="junji@JUNJI_X200 2008-12-19 14:47:19" runUser="JUNJI_X200\junji" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestRunConfiguration name="既定の実行構成" id="674df0aa-5c38-4e87-91c0-8f0ef0f8768d">
+    <Deployment runDeploymentRoot="C:\junji\doc\school\ojl\tlv\src\TestResults\junji_JUNJI_X200 2008-12-19 14_47_19">
+      <DeploymentItem filename="C:\junji\doc\school\ojl\tlv\src\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Core.dll" />
+      <DeploymentItem filename="C:\junji\doc\school\ojl\tlv\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Third.dll" />
+      <DeploymentItem filename="C:\junji\doc\school\ojl\tlv\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll" />
+    </Deployment>
+    <Hosts skipUnhostableTests="false" />
+    <TestTypeSpecific />
+  </TestRunConfiguration>
+  <ResultSummary outcome="Error">
+    <Counters total="1" executed="1" error="0" failed="0" timeout="0" aborted="1" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="JUNJI_X200" outcome="Error" timestamp="2008-12-19T14:47:49.0781250+09:00">
+        <Text>テストのホスト プロセスは予期せずに終了しました。</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <Times creation="2008-12-19T14:47:19.8750000+09:00" queuing="2008-12-19T14:47:21.5937500+09:00" start="2008-12-19T14:47:21.8281250+09:00" finish="2008-12-19T14:47:49.0781250+09:00" />
+  <TestDefinitions>
+    <UnitTest name="ToStringTest" storage="c:\junji\doc\school\ojl\tlv\src\test\bin\debug\test.dll" id="8953f5e7-8b98-238c-a76e-e00cfa56be20">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="693fb256-54a2-4daf-8fb3-703eee243347" />
+      <TestMethod codeBase="C:\junji\doc\school\ojl\tlv\src\Test\bin\Debug\Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Test.DecimalExtensionTest, Test" name="ToStringTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="一覧に存在しない結果" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="読み込まれたすべての結果" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="8953f5e7-8b98-238c-a76e-e00cfa56be20" executionId="f27c1d3e-13ae-4725-b1fb-95bbb47a96f6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="f27c1d3e-13ae-4725-b1fb-95bbb47a96f6" testId="8953f5e7-8b98-238c-a76e-e00cfa56be20" testName="ToStringTest" computerName="JUNJI_X200" duration="00:00:27.1093750" startTime="2008-12-19T14:47:21.9687500+09:00" endTime="2008-12-19T14:47:49.0781250+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Aborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+  </Results>
+</TestRun>

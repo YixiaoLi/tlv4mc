@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="f42614f8-5f33-450c-9693-57c3dc209ce7" name="junji@JUNJI_X200 2008-12-19 14:36:40" runUser="JUNJI_X200\junji" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestRunConfiguration name="既定の実行構成" id="ee666bd1-edbb-4838-b182-2345aa138c78">
+    <Deployment runDeploymentRoot="C:\junji\doc\school\ojl\tlv\src\TestResults\junji_JUNJI_X200 2008-12-19 14_36_40">
+      <DeploymentItem filename="C:\junji\doc\school\ojl\tlv\src\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Core.dll" />
+      <DeploymentItem filename="C:\junji\doc\school\ojl\tlv\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Third.dll" />
+      <DeploymentItem filename="C:\junji\doc\school\ojl\tlv\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll" />
+    </Deployment>
+    <Hosts skipUnhostableTests="false" />
+    <TestTypeSpecific />
+  </TestRunConfiguration>
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <Times creation="2008-12-19T14:36:40.2656250+09:00" queuing="2008-12-19T14:36:41.0000000+09:00" start="2008-12-19T14:36:41.2343750+09:00" finish="2008-12-19T14:36:41.7343750+09:00" />
+  <TestDefinitions>
+    <UnitTest name="ToStringTest" storage="c:\junji\doc\school\ojl\tlv\src\test\bin\debug\test.dll" id="8953f5e7-8b98-238c-a76e-e00cfa56be20">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="18cdc10a-b9a1-49bf-922e-d247c59697b2" />
+      <TestMethod codeBase="C:\junji\doc\school\ojl\tlv\src\Test\bin\Debug\Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Test.DecimalExtensionTest, Test" name="ToStringTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="一覧に存在しない結果" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="読み込まれたすべての結果" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="8953f5e7-8b98-238c-a76e-e00cfa56be20" executionId="18cdc10a-b9a1-49bf-922e-d247c59697b2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="18cdc10a-b9a1-49bf-922e-d247c59697b2" testId="8953f5e7-8b98-238c-a76e-e00cfa56be20" testName="ToStringTest" computerName="JUNJI_X200" duration="00:00:00.1065912" startTime="2008-12-19T14:36:41.3281250+09:00" endTime="2008-12-19T14:36:41.7031250+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.AreEqual に失敗しました。&lt;1.10-90810-729065610-5904905314410-47829690430467210-3874204890&gt; が必要ですが、&lt;1&gt; が指定されました。</Message>
+          <StackTrace>   場所 Test.DecimalExtensionTest.test(String s, Decimal v, Int32 r) 場所 C:\junji\doc\school\ojl\tlv\src\Test\DecimalExtensionTest.cs:行 68
+   場所 Test.DecimalExtensionTest.ToStringTest() 場所 C:\junji\doc\school\ojl\tlv\src\Test\DecimalExtensionTest.cs:行 77
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>
