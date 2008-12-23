@@ -27,7 +27,10 @@ namespace NU.OJL.MPRTOS.TLV.Third
 
 		public void WriteValue(object obj)
 		{
-			_writer.WriteValue(obj);
+			if (obj == null)
+				_writer.WriteNull();
+			else
+				_writer.WriteValue(obj);
 		}
 
 		public void WriteProperty(string name)

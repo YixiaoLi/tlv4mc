@@ -93,8 +93,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			if (_data == null)
 				return;
 
-			_fx = TimeLine.FromTime.ToX(TimeLine.MinTime, TimeLine.MaxTime, Width - 2);
-			_tx = TimeLine.ToTime.ToX(TimeLine.MinTime, TimeLine.MaxTime, Width - 2);
+			_fx = TimeLine.FromTime.ToX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width);
+			_tx = TimeLine.ToTime.ToX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width);
+
+			_scale.Size = new System.Drawing.Size(Width - 2, _scale.Height);
 		}
 
 		public override void ClearData()
@@ -124,7 +126,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					if (_data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(r.Name))
 						return _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(r.Name);
 					else
-						return ApplicationData.Setting.DefaultResourceVisible;
+						return ApplicationData.Setting.DefaultVisualizeRuleVisible;
 				}
 			});
 
@@ -184,18 +186,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			_rowHeight = (Height - _scale.Height) / _num;
 
-			e.Graphics.FillRectangle(new SolidBrush(_scale.BackColor), new Rectangle(e.ClipRectangle.X + 1, e.ClipRectangle.Y, Width - 4, _scale.Height));
-			_scale.Draw(new PaintEventArgs(e.Graphics, new Rectangle(e.ClipRectangle.X + 1, e.ClipRectangle.Y, e.ClipRectangle.Width - 4, _scale.Height)));
+			e.Graphics.FillRectangle(new SolidBrush(_scale.BackColor), new Rectangle(e.ClipRectangle.X + 1, e.ClipRectangle.Y, _scale.Width, _scale.Height));
+			_scale.Draw(new PaintEventArgs(e.Graphics, new Rectangle(e.ClipRectangle.X + 1, e.ClipRectangle.Y, _scale.Width, _scale.Height)));
 
 			int i = 0;
 			foreach(TimeLineVisualizer tl in _list)
 			{
-				e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(e.ClipRectangle.X, i * _rowHeight + _scale.Height, Width - 2, _rowHeight));
-				tl.Draw(new PaintEventArgs(e.Graphics, new Rectangle(e.ClipRectangle.X + 1, i * _rowHeight + 1 + _scale.Height, Width - 4, _rowHeight - 2)));
+				e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(e.ClipRectangle.X, i * _rowHeight + _scale.Height, Width - 1, _rowHeight));
+				tl.Draw(new PaintEventArgs(e.Graphics, new Rectangle(e.ClipRectangle.X + 1, i * _rowHeight + 1 + _scale.Height, _scale.Width, _rowHeight - 2)));
 				i++;
 			}
 
-			RectangleF rect = new RectangleF(_fx + 1, e.ClipRectangle.Y + 1, _tx - _fx, e.ClipRectangle.Height - 2);
+			RectangleF rect = new RectangleF(_fx + 1, e.ClipRectangle.Y + 1, _tx - _fx - 1 < 0 ? 1 : _tx - _fx - 1, e.ClipRectangle.Height - 2);
 
 			e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(50, Color.Purple)), rect);
 			e.Graphics.DrawRectangle(new Pen() { Color = Color.FromArgb(100, Color.Purple), Width=1.0f }, rect.X, rect.Y, rect.Width, rect.Height);
@@ -214,7 +216,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				if(_cursorMode == CursorMode.Move)
 					Cursor = HandHoldCursor;
 
-				_lastX = e.X - 1;
+				_lastX = e.X - _scale.Location.X;
 				_mouseDownFX = (int)_fx;
 			}
 		}
@@ -240,7 +242,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			if (_data == null)
 				return;
 
-			int x = e.X - 2;
+			int x = e.X - _scale.Location.X;
 
 			if (e.Button == MouseButtons.Left)
 			{
@@ -249,27 +251,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 				if (_cursorMode == CursorMode.ResizeL)
 				{
-					if (x < _tx)
+					try
 					{
-						//_fx = x;
-						TimeLine.SetTime(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, Width - 4, (int)x).Truncate(), TimeLine.ToTime);
+						TimeLine.SetTime(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width, (int)x).Truncate(), TimeLine.ToTime);
 						Refresh();
 					}
+					catch { }
 				}
 				else
 				if (_cursorMode == CursorMode.ResizeR)
 				{
-					if (x > _fx)
+					try
 					{
-						//_tx = x;
-						TimeLine.SetTime(TimeLine.FromTime, Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, Width - 4, (int)x).Truncate());
+						TimeLine.SetTime(TimeLine.FromTime, Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width, (int)x).Truncate());
 						Refresh();
 					}
+					catch { }
 				}
 				else if (_cursorMode == CursorMode.Move)
 				{
 					int _x = _mouseDownFX + x - _lastX;
-					TimeLine.MoveBySettingFromTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, Width - 4, _x).Value).ToString(), _data.ResourceData.TimeRadix));
+					TimeLine.MoveBySettingFromTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width, _x).Value).ToString(), _data.ResourceData.TimeRadix));
 				}
 				else if (_cursorMode == CursorMode.Normal)
 				{
@@ -327,13 +329,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			if (e.Delta < 0)
 			{
-				_tx = _tx + d <= Width - 2 ? _tx + d : Width - 2;
-				TimeLine.MoveBySettingToTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, Width - 1, (int)_tx).Value).ToString(), _data.ResourceData.TimeRadix));
+				_tx = _tx + d <= _scale.Location.X + _scale.Width ? _tx + d : _scale.Location.X + _scale.Width;
+				TimeLine.MoveBySettingToTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width, (int)_tx).Value).ToString(), _data.ResourceData.TimeRadix));
 			}
 			else if (e.Delta > 0)
 			{
-				_fx = _fx - d >= 1 ? _fx - d : 1;
-				TimeLine.MoveBySettingFromTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, Width - 1, (int)_fx).Value).ToString(), _data.ResourceData.TimeRadix));
+				_fx = _fx - d <= _scale.Location.X ? _scale.Location.X : _fx - d;
+				TimeLine.MoveBySettingFromTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width, (int)_fx).Value).ToString(), _data.ResourceData.TimeRadix));
 			}
 		}
 
@@ -358,13 +360,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			{
 				case Keys.Right:
 				case Keys.Down:
-					_tx = _tx + d <= Width - 4 ? _tx + d : Width - 4;
-					TimeLine.MoveBySettingToTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, Width - 4, (int)_tx).Value).ToString(), _data.ResourceData.TimeRadix));
+					_tx = _tx + d <= _scale.Location.X + _scale.Width ? _tx + d : _scale.Location.X + _scale.Width;
+					TimeLine.MoveBySettingToTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width, (int)_tx).Value).ToString(), _data.ResourceData.TimeRadix));
 					break;
 				case Keys.Up:
 				case Keys.Left:
-					_fx = _fx - d >= 2 ? _fx - d: 2;
-					TimeLine.MoveBySettingFromTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, Width - 4, (int)_fx).Value).ToString(), _data.ResourceData.TimeRadix));
+					_fx = _fx - d <= _scale.Location.X ? _scale.Location.X : _fx - d;
+					TimeLine.MoveBySettingFromTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width, (int)_fx).Value).ToString(), _data.ResourceData.TimeRadix));
 					break;
 			}
 		}
@@ -372,10 +374,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		private void timeLineViewingAreaChanged(object sender, GeneralChangedEventArgs<TimeLine> e)
 		{
 			if (e.Old.FromTime != e.New.FromTime)
-				_fx = TimeLine.FromTime.ToX(TimeLine.MinTime, TimeLine.MaxTime, Width - 4);
+				_fx = TimeLine.FromTime.ToX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width);
 
 			if (e.Old.ToTime != e.New.ToTime)
-				_tx = TimeLine.ToTime.ToX(TimeLine.MinTime, TimeLine.MaxTime, Width - 4);
+				_tx = TimeLine.ToTime.ToX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width);
 
 			Refresh();
 		}

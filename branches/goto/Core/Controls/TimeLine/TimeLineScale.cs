@@ -17,19 +17,34 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	public class TimeLineScale : TimeLineControl
 	{
 		public ScaleMarkDirection ScaleMarkDirection { get; set; }
+
 		private int _padding = 10;
 		private float _scaleHeight = 2f;
 		private float _pPs;
-		private StringFormat _sf;
+		private Time _tPp;
+		private Time _tPs;
+		private bool _dflag;
+		private int _carry;
+		private int _startI;
+		private Time _startT;
+		private Time _endT;
+		private StringFormat _stringFormat;
 
 		public TimeLineScale()
 			:base()
 		{
+			Height = 20;
 			BackColor = System.Drawing.Color.Black;
 			Font = new System.Drawing.Font(FontFamily.GenericMonospace, 8);
 
-			_sf = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-			Height = 20;
+			SizeChanged += (o, _e) => { memberUpdate(); };
+
+			_stringFormat = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+		}
+
+		protected override void OnLoad(EventArgs e)
+		{
+			base.OnLoad(e);
 		}
 
 		public override void SetData(TraceLogVisualizerData data)
@@ -39,8 +54,43 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			_data.SettingData.TraceLogDisplayPanelSetting.BecameDirty += (o,p)=>
 				{
 					if (p == "PixelPerScaleMark")
+					{
 						_pPs = _data.SettingData.TraceLogDisplayPanelSetting.PixelPerScaleMark;
+						memberUpdate();
+					}
 				};
+		}
+
+		public override TimeLine TimeLine
+		{
+			get
+			{
+				return base.TimeLine;
+			}
+			set
+			{
+				base.TimeLine = value;
+				if (base.TimeLine != null)
+				{
+					TimeLine.ViewingAreaChanged += (o, e) => { memberUpdate(); };
+					memberUpdate();
+				}
+			}
+		}
+
+		private void memberUpdate()
+		{
+			if (TimeLine != null && Width > 0)
+			{
+				_tPp = TimeLine.ViewingSpan / (decimal)Width;
+				_tPp = _tPp.Value > 1m ? _tPp.Round(0) : new Time(((decimal)Math.Pow(10, Math.Floor(Math.Log10((double)_tPp.Value)))).ToString(_timeRadix), _timeRadix);
+				_tPs = _tPp.Value > 1m ? _tPp * (decimal)_pPs : TimeLine.ViewingSpan / ((decimal)Width / (decimal)_pPs);
+				_dflag = _tPs.Value % 1.0m != 0;
+				_carry = (int)Math.Ceiling(Math.Log10((double)(_tPs.Value)) * -1);
+				_startI = (int)((TimeLine.FromTime - TimeLine.MinTime) / _tPs).Truncate().Value;
+				_startT = _startI > 0 ? TimeLine.MinTime + (_startI - _padding) * _tPs : TimeLine.FromTime;
+				_endT = TimeLine.ToTime + (_padding * _tPs);
+			}
 		}
 
 		public override void Draw(PaintEventArgs e)
@@ -51,34 +101,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				|| TimeLine.ViewableSpan.Value == 0
 				|| TimeLine.ViewingSpan.Value == 0
 				|| _pPs == 0
-				|| e.ClipRectangle.Width == 0)
+				|| _tPp.IsEmpty
+				|| _tPs.IsEmpty
+				|| Width == 0)
 				return;
 
-			decimal tPp = (decimal)(TimeLine.ViewingSpan.Value) / (decimal)e.ClipRectangle.Width;
-			decimal tPs = tPp * (decimal)_pPs;
-
-			if (tPp == 0 || tPs == 0)
-				return;
-
-			int i = (int)(Math.Truncate((decimal)(TimeLine.FromTime.Value - TimeLine.MinTime.Value) / tPs));
-
+			int i = _startI;
 			float lastLabelX = float.MinValue;
 
-			decimal t = i > 0 ? TimeLine.MinTime.Value + (i - _padding) * tPs : TimeLine.FromTime.Value;
-
-			bool dflag = tPs * 10m <= 1;
-			int carry = (int)Math.Ceiling(Math.Log10((double)(tPs * 10m)) * -1);
-
-			for (; t < TimeLine.ToTime.Value + (_padding * tPs); t += tPs, i++)
+			for (Time t = _startT;
+				t < _endT;
+				t += _tPs, i++ )
 			{
-				float h = i % 10 == 0 ? _scaleHeight * 3f : i % 5 == 0 ? _scaleHeight * 2f : _scaleHeight;
-				//float x = ((float)((float)t - (float)(TimeLine.FromTime.Value)) / (float)(TimeLine.ToTime.Value - TimeLine.FromTime.Value)) * (float)e.ClipRectangle.Width;
-				float x = new Time(t.ToString(_timeRadix), _timeRadix).ToX(TimeLine.FromTime, TimeLine.ToTime, e.ClipRectangle.Width);
 
+				float x = t.ToX(TimeLine.FromTime, TimeLine.ToTime, Width) + e.ClipRectangle.X;
+
+				float h = i % 10 == 0 ? _scaleHeight * 3f : i % 5 == 0 ? _scaleHeight * 2f : _scaleHeight;
 				System.Drawing.PointF fp;
 				System.Drawing.PointF tp;
 				switch (ScaleMarkDirection)
 				{
+					default:
 					case ScaleMarkDirection.Bottom:
 						fp = new System.Drawing.PointF(x, Height - h);
 						tp = new System.Drawing.PointF(x, Height);
@@ -87,46 +130,34 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						fp = new System.Drawing.PointF(x, 0);
 						tp = new System.Drawing.PointF(x, h - 1);
 						break;
-					default:
-						return;
 				}
 
 				e.Graphics.DrawLine(Pens.White, fp, tp);
 
 				if (i % 10 == 0)
 				{
-					decimal _it;
-					if (dflag)
+					string tmStr = (_dflag ? t.Round(_carry) : t.Truncate()).ToString();
+
+					SizeF tmStrSz = e.Graphics.MeasureString(tmStr + "_", Font);
+
+					if (x - (tmStrSz.Width / 2f) > lastLabelX)
 					{
-						_it = Math.Round(t, carry, MidpointRounding.ToEven);
-					}
-					else
-					{
-						_it = Math.Truncate(t);
-					}
+						float tx = x - (tmStrSz.Width / 2f);
+						lastLabelX = tx + tmStrSz.Width;
 
-
-					string tm = _it.ToString(_timeRadix);
-
-					SizeF tsz = e.Graphics.MeasureString(tm + "_", Font);
-
-					if (x - (tsz.Width / 2f) > lastLabelX)
-					{
-						RectangleF rect;
-						float tx = x - (tsz.Width / 2f);
-
+						float y;
 						switch (ScaleMarkDirection)
 						{
 							default:
 							case ScaleMarkDirection.Bottom:
-								rect = new RectangleF(tx, Height - h - tsz.Height, tsz.Width, tsz.Height);
+								y = Height - h - tmStrSz.Height;
 								break;
 							case ScaleMarkDirection.Top:
-								rect = new RectangleF(tx, h - 1, tsz.Width, tsz.Height);
+								y = h - 1;
 								break;
 						}
-						e.Graphics.DrawString(tm, Font, new SolidBrush(Color.White), rect, _sf);
-						lastLabelX = tx + tsz.Width;
+
+						e.Graphics.DrawString(tmStr, Font, new SolidBrush(Color.White), new RectangleF(tx, y, tmStrSz.Width, tmStrSz.Height), _stringFormat);
 					}
 				}
 			}

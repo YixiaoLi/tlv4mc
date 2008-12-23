@@ -26,6 +26,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		[UserScopedSetting]
 		public bool DefaultResourceVisible { get { return (bool)this["DefaultResourceVisible"]; } set { this["DefaultResourceVisible"] = value; } }
 
+		[UserScopedSetting]
+		public bool DefaultVisualizeRuleVisible { get { return (bool)this["DefaultVisualizeRuleVisible"]; } set { this["DefaultVisualizeRuleVisible"] = value; } }
+
 		public ApplicationSetting()
 		{
 			if (ResourceHeadersDirectoryPath == null)
@@ -40,8 +43,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			if (TemporaryDirectoryPath == null)
 				TemporaryDirectoryPath = Path.Combine(Path.GetTempPath(), NU.OJL.MPRTOS.TLV.Core.Properties.Resources.DefaultTemporaryDirectoryName);
 
-			if (this["DefaultResourceVisible"] == null)
+			if (DefaultResourceVisible == null)
 				DefaultResourceVisible = true;
+
+			if (DefaultVisualizeRuleVisible == null)
+				DefaultVisualizeRuleVisible = true;
 		}
 	}
 }

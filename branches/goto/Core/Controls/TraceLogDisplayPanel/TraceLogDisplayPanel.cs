@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Base.Controls;
 using NU.OJL.MPRTOS.TLV.Third;
-using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
 using System.Collections;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
@@ -128,15 +127,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				TimeLineVisualizer tlv = new TimeLineVisualizer(vizRule);
 				_list.Add(tlv);
 				treeGridView.Add(vizRule.Name, vizRule.DisplayName, "", tlv);
-				treeGridView.Nodes[vizRule.Name].Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name) : ApplicationData.Setting.DefaultResourceVisible;
+				treeGridView.Nodes[vizRule.Name].Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
 				treeGridView.Nodes[vizRule.Name].Image = imageList.Images["visualize"];
 				foreach (Event e in vizRule.Events)
 				{
 					TimeLineVisualizer _tlv = new TimeLineVisualizer(vizRule, e);
 					_list.Add(_tlv);
 					treeGridView.Nodes[vizRule.Name].Add(e.DisplayName, e.DisplayName, "", _tlv);
-					treeGridView.Nodes[vizRule.Name].Nodes[e.DisplayName].Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name, e.DisplayName) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultResourceVisible;
-					setEventImage(treeGridView.Nodes[vizRule.Name].Nodes[e.DisplayName], e);
+					treeGridView.Nodes[vizRule.Name].Nodes[e.DisplayName].Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name, e.DisplayName) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
+					treeGridView.Nodes[vizRule.Name].Nodes[e.DisplayName].Image = imageList.Images[e.getImageKey()];
 				}
 			}
 			foreach (VisualizeRule vizRule in _data.VisualizeData.VisualizeRules.Where<VisualizeRule>(v => v.IsBelongedTargetResourceType()))
@@ -155,7 +154,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					TimeLineVisualizer tlv = new TimeLineVisualizer(vizRule, res);
 					_list.Add(tlv);
 					treeGridView.Nodes[res.Type + ":" + res.Name].Add(res.Type + ":" + res.Name + ":" + vizRule.Name, vizRule.DisplayName, "", tlv);
-					treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Visible && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name) : ApplicationData.Setting.DefaultResourceVisible;
+					treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Visible && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
 					treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Image = imageList.Images["visualize"];
 
 					foreach (Event e in vizRule.Events)
@@ -163,8 +162,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						TimeLineVisualizer _tlv = new TimeLineVisualizer(e, res);
 						_list.Add(_tlv);
 						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Add(e.DisplayName, e.DisplayName, "", _tlv);
-						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Nodes[e.DisplayName].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible && _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name, e.DisplayName) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultResourceVisible;
-						setEventImage(treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Nodes[e.DisplayName], e);
+						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Nodes[e.DisplayName].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible && _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name, e.DisplayName) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
+						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Nodes[e.DisplayName].Image = imageList.Images[e.getImageKey()];;
 					}
 				}
 			}
@@ -373,48 +372,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			#endregion
 		}
 
-		protected void setEventImage(ITreeGirdViewNode tn, Event e)
-		{
-			if ((e.Type & EventTypes.FromAttributeChange) == EventTypes.FromAttributeChange
-				&& (e.Type & EventTypes.ToAttributeChange) == EventTypes.ToAttributeChange)
-			{
-				tn.Image = imageList.Images["atr2atr"];
-			}
-
-			if ((e.Type & EventTypes.FromBehaviorHappen) == EventTypes.FromBehaviorHappen
-				&& (e.Type & EventTypes.ToBehaviorHappen) == EventTypes.ToBehaviorHappen)
-			{
-				tn.Image = imageList.Images["bhr2bhr"];
-			}
-
-			if ((e.Type & EventTypes.FromAttributeChange) == EventTypes.FromAttributeChange
-				&& (e.Type & EventTypes.ToBehaviorHappen) == EventTypes.ToBehaviorHappen)
-			{
-				tn.Image = imageList.Images["atr2bhr"];
-			}
-
-			if ((e.Type & EventTypes.FromBehaviorHappen) == EventTypes.FromBehaviorHappen
-				&& (e.Type & EventTypes.ToAttributeChange) == EventTypes.ToAttributeChange)
-			{
-				tn.Image = imageList.Images["bhr2atr"];
-			}
-
-			if ((e.Type & EventTypes.WhenAttributeChange) == EventTypes.WhenAttributeChange)
-			{
-				tn.Image = imageList.Images["attribute"];
-			}
-
-			if ((e.Type & EventTypes.WhenBehaviorHappen) == EventTypes.WhenBehaviorHappen)
-			{
-				tn.Image = imageList.Images["behavior"];
-			}
-
-			if ((e.Type & EventTypes.Error) == EventTypes.Error)
-			{
-				tn.Image = imageList.Images["warning"];
-			}
-		}
-
 		protected void treeGridViewRowChanged(object sender, EventArgs e)
 		{
 			int allRowHeight = treeGridView.VisibleRowsCount * treeGridView.RowHeight;
@@ -515,7 +472,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 									{
 										if (_data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(keys[0], keys[1], _n.Name)
 											? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(keys[0], keys[1], _n.Name)
-											: ApplicationData.Setting.DefaultResourceVisible)
+											: ApplicationData.Setting.DefaultVisualizeRuleVisible)
 											_n.Visible = kvp.Value;
 										else
 											_n.Visible = false;
@@ -543,14 +500,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						string[] res = node.Name.Split(':');
 
 						if (kvp.Value)
-							node.Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2]) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2]) : ApplicationData.Setting.DefaultResourceVisible;
+							node.Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2]) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2]) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
 						else
 							node.Visible = false;
 
 						foreach (ITreeGirdViewNode n in node.Nodes.Values)
 						{
 							if (kvp.Value)
-								n.Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2], n.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2], n.Name) : ApplicationData.Setting.DefaultResourceVisible;
+								n.Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2], n.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2], n.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
 							else
 								n.Visible = false;
 						}

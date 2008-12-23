@@ -14,6 +14,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		private static readonly CommandManager _commandManager = new CommandManager();
 		private static readonly IZip _zip = new SharpZipLibZip();
 		private static readonly IJsonSerializer _json = new NewtonsoftJson();
+		private static readonly RotateColorFactory _colorFactory = new RotateColorFactory();
         public static WindowManager WindowManager
         {
             get { return new WeifenLuoWindowManager(); }
@@ -48,6 +49,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			get { return _statusManager; }
 		}
 
+		public static RotateColorFactory ColorFactory
+		{
+			get { return _colorFactory; }
+		}
+
 		static ApplicationFactory()
 		{
 			JsonSerializer.AddConverter(new TraceLogConverter());
@@ -61,9 +67,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			JsonSerializer.AddConverter(new FontFamilyConverter());
 			JsonSerializer.AddConverter(new ArgumentTypeConverter());
 			JsonSerializer.AddConverter(new ShapesConverter());
-			JsonSerializer.AddConverter(new ShapeArgPairConverter());
-			JsonSerializer.AddConverter(new ShapesListConverter());
+			JsonSerializer.AddConverter(new FiguresConverter());
 			JsonSerializer.AddConverter(new ShapeConverter());
+			JsonSerializer.AddConverter(new TimeConverter());
 
 			JsonSerializer.AddConverter(new ClassHavingNullablePropertyConverter());
 			JsonSerializer.AddConverter(new INamedConverter());

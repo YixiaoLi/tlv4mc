@@ -163,6 +163,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public override string ToString()
 		{
+			if (Value == null)
+				return "null";
+
 			return Value.ToString();
 		}
 	}

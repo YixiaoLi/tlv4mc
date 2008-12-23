@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NU.OJL.MPRTOS.TLV.Base;
+using System.Drawing;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
@@ -23,5 +24,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public string DisplayName { get; set; }
 		public string Type { get; set; }
 		public AttributeList Attributes { get; set; }
+		public Color? Color { get; set; }
+		public bool? Visible { get; set; }
+
+		public Resource()
+		{
+			Color = ApplicationFactory.ColorFactory.RamdomColor();
+			Visible = ApplicationData.Setting.DefaultResourceVisible;
+		}
 	}
 }

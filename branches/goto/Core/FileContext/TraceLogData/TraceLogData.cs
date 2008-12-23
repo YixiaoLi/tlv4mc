@@ -15,12 +15,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public class TraceLogData : IJsonable<TraceLogData>
 	{
 		private ResourceData _resourceData;
-		private LogDataBase _data = new LogDataBase();
 		
 		public Time MinTime { get; private set; }
 		public Time MaxTime { get; private set; }
 		public TraceLogList TraceLogs { get; private set; }
-		public LogDataBase LogDataBase { get { return _data; } }
+		public LogDataBase LogDataBase { get; private set; }
 
 		public TraceLogData(TraceLogList traceLogs, ResourceData resourceData)
 			: this(resourceData)
@@ -34,6 +33,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			:base()
 		{
 			TraceLogs = new TraceLogList();
+			LogDataBase = new LogDataBase();
 			_resourceData = resourceData;
 			MinTime = Time.MaxTime(_resourceData.TimeRadix);
 			MaxTime = Time.MinTime(_resourceData.TimeRadix);
@@ -41,7 +41,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public void Add(TraceLog log)
 		{
-			log = objectFinalize(log);
+			//log = objectFinalize(log);
 			TraceLogs.Add(log);
 
 			if (!log.HasTime)
@@ -52,78 +52,32 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			MinTime = MinTime > time ? time : MinTime;
 			MaxTime = MaxTime < time ? time : MaxTime;
 
-			if (log.IsAttributeChangeLog)
+			switch(log.Type)
 			{
-				foreach (Resource res in GetObject(log))
-				{
-					AttributeChangeLogData logData = new AttributeChangeLogData(time, res, log.Attribute, getValue(log.Value, res.Type, log.Attribute));
-					_data.Add(logData);
-				}
-			}
-			else if(log.IsBehaviorCallLog)
-			{
-				foreach (Resource res in GetObject(log))
-				{
-					BehaviorHappenLogData logData = new BehaviorHappenLogData(time, res, log.Behavior, getArguments(res.Type, log.Behavior, log.Arguments));
-					_data.Add(logData);
-				}
+				case TraceLogType.AttributeChange:
+					foreach (Resource res in GetObject(log))
+					{
+						AttributeChangeLogData logData = new AttributeChangeLogData(time, res, log.Attribute, log.GetValue(_resourceData));
+						LogDataBase.Add(logData);
+					}
+					break;
+				case TraceLogType.BehaviorHappen:
+					foreach (Resource res in GetObject(log))
+					{
+						BehaviorHappenLogData logData = new BehaviorHappenLogData(time, res, log.Behavior, log.GetArguments(_resourceData));
+						LogDataBase.Add(logData);
+					}
+					break;
 			}
 
 		}
 
-		private TraceLog objectFinalize(TraceLog log)
-		{
-			Resource res = GetObject(log).First();
-			log.Object = res.Name;
-			return log;
-		}
-
-		private Json getValue(string value, string type, string attr)
-		{
-			switch (_resourceData.ResourceHeaders[type].Attributes[attr].VariableType)
-			{
-				case JsonValueType.String:
-					return new Json(value);
-				case JsonValueType.Decimal:
-					return new Json(Convert.ToDecimal(value));
-				case JsonValueType.Boolean:
-					return new Json(Convert.ToBoolean(value));
-				default:
-					return new Json("null");
-			}
-		}
-
-		private ArgumentList getArguments(string type, string behavior, string arguments)
-		{
-			if (arguments == string.Empty)
-				return new ArgumentList();
-
-			string[] args = arguments.Split(',');
-			ArgumentList argList = new ArgumentList();
-
-			int i = 0;
-			foreach (ArgumentType argType in _resourceData.ResourceHeaders[type].Behaviors[behavior].Arguments)
-			{
-				switch (argType.Type)
-				{
-					case JsonValueType.String:
-						argList.Add(new Json(args[i]));
-						break;
-					case JsonValueType.Decimal:
-						argList.Add(new Json(Convert.ToDecimal(args[i])));
-						break;
-					case JsonValueType.Boolean:
-						argList.Add(new Json(Convert.ToBoolean(args[i])));
-						break;
-					default:
-						argList.Add(new Json("null"));
-						break;
-				}
-				i++;
-			}
-
-			return argList;
-		}
+		//private TraceLog objectFinalize(TraceLog log)
+		//{
+		//    Resource res = GetObject(log).First();
+		//    log.Object = res.Name;
+		//    return log;
+		//}
 
 		public Json GetAttributeValue(string condition)
 		{
@@ -168,12 +122,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				{
 					try
 					{
-						result = ((AttributeChangeLogData)(_data.Where<LogData>((d) =>
+						result = ((AttributeChangeLogData)(LogDataBase.Where<LogData>((d) =>
 						{
 							return d.Object.Name == res.Name
-								&& d.Type == LogType.AttributeChange
-								&& ((AttributeChangeLogData)d).Attribute == condition.Attribute;
-						}).Last<LogData>(d => d.Time <= time))).Value;
+								&& d.Type == TraceLogType.AttributeChange
+								&& ((AttributeChangeLogData)d).Attribute.Name == condition.Attribute;
+						}).Last<LogData>(d => d.Time <= time))).Attribute.Value;
 					}
 					catch
 					{
@@ -241,11 +195,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						{
 							try
 							{
-								logData = _data.Last<LogData>((d) =>
+								logData = LogDataBase.Last<LogData>((d) =>
 								{
 									return d.Object.Name == res.Name
-										&& d.Type == LogType.AttributeChange
-										&& ((AttributeChangeLogData)d).Attribute == kvp.Key
+										&& d.Type == TraceLogType.AttributeChange
+										&& ((AttributeChangeLogData)d).Attribute.Name == kvp.Key
 										&& d.Time <= time;
 								});
 							}
@@ -255,7 +209,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 							}
 
 							if (logData != null)
-								value = ((AttributeChangeLogData)logData).Value.ToString();
+								value = ((AttributeChangeLogData)logData).Attribute.Value.ToString();
 							else if (_resourceData.ResourceHeaders[type].Attributes[kvp.Key].Default != null)
 								value = _resourceData.ResourceHeaders[type].Attributes[kvp.Key].Default;
 							else

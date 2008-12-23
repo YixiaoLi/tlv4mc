@@ -31,8 +31,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, cellStyle, advancedBorderStyle, paintParts);
 
 			Region r = graphics.Clip;
-			graphics.Clip = new Region(cellBounds);
-			((ITimeLineControl)value).Draw(new PaintEventArgs(graphics, new Rectangle(cellBounds.X, cellBounds.Y, cellBounds.Width - 2, cellBounds.Height - 2)));
+			graphics.Clip = new Region(new Rectangle(cellBounds.X, cellBounds.Y, cellBounds.Width - 1, cellBounds.Height - 2));
+			((ITimeLineControl)value).Draw(new PaintEventArgs(graphics, new Rectangle(cellBounds.X, cellBounds.Y, cellBounds.Width - 1, cellBounds.Height - 2)));
 			graphics.Clip = r;
 		}
 	}

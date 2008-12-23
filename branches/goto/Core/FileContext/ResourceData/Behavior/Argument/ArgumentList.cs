@@ -14,7 +14,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			for (int i = 0; i < Count; i++ )
 			{
-				sb.Append(this[i].Value.ToString());
+				if(this[i] != null)
+					sb.Append(this[i].Value.ToString());
+				
 				if(i != Count-1)
 					sb.Append(", ");
 			}

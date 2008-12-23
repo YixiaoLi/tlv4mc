@@ -7,15 +7,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class BehaviorHappenLogData : LogData
 	{
-		public override LogType Type { get { return LogType.BehaviorHappen; } }
-		public string Behavior { get; private set; }
-		public ArgumentList Arguments { get; private set; }
+		public override TraceLogType Type { get { return TraceLogType.BehaviorHappen; } }
+		public Behavior Behavior { get; private set; }
 
 		public BehaviorHappenLogData(Time time, Resource obj, string behavior, ArgumentList args)
 			:base(time, obj)
 		{
-			Behavior = behavior;
-			Arguments = args;
+			Behavior = new Behavior(behavior, args);
 		}
 	}
 }

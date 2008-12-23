@@ -14,61 +14,36 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	/// </summary>
 	public class StandartFormatConverter
 	{
-		private ResourceData _resourceData;
-		private VisualizeData _visualizeData;
-		private TraceLogData _traceLogData;
-		private SettingData _settingData;
 		public Action<int, string> _constructProgressReport = null;
 		private int _progressFrom = 0;
 		private int _progressTo = 0;
 
-		public ResourceData ResourceData
-		{
-			get
-			{
-				return _resourceData;
-			}
-		}
-		public TraceLogData TraceLogData
-		{
-			get
-			{
-				return _traceLogData;
-			}
-		}
-		public VisualizeData VisualizeData
-		{
-			get { return _visualizeData; }
-		}
-		public SettingData SettingData
-		{
-			get { return _settingData; }
-		}
+		public ResourceData ResourceData { get; private set; }
+		public TraceLogData TraceLogData { get; private set; }
+		public VisualizeData VisualizeData { get; private set; }
+		public SettingData SettingData { get; private set; }
 
-		/// <summary>
-		/// <c>CommonFormatConverter</c>のコンストラクタ
-		/// </summary>
 		public StandartFormatConverter(string resourceFilePath, string traceLogFilePath, string[] visualizeRuleFilePaths, Action<int, string> ConstructProgressReport)
 		{
 			_constructProgressReport = ConstructProgressReport;
 
 			progressUpdate(10);
-			generateData(() => { _resourceData = getResourceData(resourceFilePath); },
+			generateData(() => { ResourceData = getResourceData(resourceFilePath); },
 				"リソースデータを生成中",
 				"リソースデータの生成に失敗しました。\nリソースファイルの記述に誤りがある可能性があります。");
 
 			progressUpdate(20);
-			generateData(() => { _settingData = getSettingData(); },
+			generateData(() => { SettingData = getSettingData(); },
 				"設定データを生成中",
 				"設定データの生成に失敗しました。");
 
 			progressUpdate(30);
-			generateData(() => { _visualizeData = getVisualizeData(visualizeRuleFilePaths); },
+			generateData(() => { VisualizeData = getVisualizeData(visualizeRuleFilePaths); },
 				"可視化データを生成中",
 				"可視化データの生成に失敗しました。\n可視化ルールファイルの記述に誤りがある可能性があります。");
 
 			progressUpdate(99);
-			generateData(() => { _traceLogData = getTraceLogData(traceLogFilePath); },
+			generateData(() => { TraceLogData = getTraceLogData(traceLogFilePath); },
 				"トレースログデータを生成中",
 				"トレースログデータの生成に失敗しました。\nトレースログ変換ルールファイルの記述に誤りがある可能性があります。");
 
@@ -95,7 +70,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				throw new Exception(exceptionMessage + "\n" + _e.Message);
 			}
 		}
-
 		private ResourceData getResourceData(string resourceFilePath)
 		{
 			ResourceData resData = ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(resourceFilePath));
@@ -140,7 +114,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		}
 		private TraceLogData getTraceLogData(string traceLogFilePath)
 		{
-			return new TraceLogGenerator(traceLogFilePath, _resourceData, _constructProgressReport, _progressFrom, _progressTo).Generate();
+			return new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate();
 		}
 		private SettingData getSettingData()
 		{

@@ -69,6 +69,7 @@
     <Compile Include="Extensions\ColorExtension.cs" />
     <Compile Include="Extensions\ControlExtension.cs" />
     <Compile Include="Extensions\DecimalExtension.cs" />
+    <Compile Include="Extensions\StringArrayExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
     <Compile Include="FileContext\FileContext.cs" />

@@ -7,7 +7,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
 	public enum JsonValueType
 	{
-		Decimal,
+		Number,
 		String,
 		Boolean,
 		Object,

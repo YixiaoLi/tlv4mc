@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NU.OJL.MPRTOS.TLV.Base;
+using System.Drawing;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
@@ -44,7 +45,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						case JsonValueType.String:
 							Default = new Json(string.Empty);
 							break;
-						case JsonValueType.Decimal:
+						case JsonValueType.Number:
 							Default = new Json(0);
 							break;
 						case JsonValueType.Boolean:
@@ -69,6 +70,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// デフォルト値
 		/// </summary>
 		public Json Default { get; set; }
+		/// <summary>
+		/// 色
+		/// </summary>
+		public Color? Color { get; set; }
 
         /// <summary>
         /// <c>Attribute</c>のインスタンスを生成する
@@ -76,7 +81,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public AttributeType()
         {
             AllocationType = AllocationType.Static;
-            CanGrouping = false;
+			CanGrouping = false;
+			Color = ApplicationFactory.ColorFactory.RamdomColor();
 			Default = new Json("");
         }
 

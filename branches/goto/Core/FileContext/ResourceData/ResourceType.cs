@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using NU.OJL.MPRTOS.TLV.Base;
+using System.Drawing;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
@@ -34,7 +35,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// <summary>
 		/// 振る舞いリスト
 		/// </summary>
-		public GeneralNamedCollection<Behavior> Behaviors { get; set; }
+		public GeneralNamedCollection<BehaviorType> Behaviors { get; set; }
+		/// <summary>
+		/// 色
+		/// </summary>
+		public Color? Color { get; set; }
 
         /// <summary>
         /// <c>Resource</c>のインスタンスを生成する
@@ -42,6 +47,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public ResourceType()
         {
 			DisplayName = string.Empty;
+			Color = ApplicationFactory.ColorFactory.RamdomColor();
         }
 
 		public string ToJson()

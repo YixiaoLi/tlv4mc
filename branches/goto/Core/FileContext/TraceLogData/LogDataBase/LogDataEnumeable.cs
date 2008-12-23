@@ -41,9 +41,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			where T : LogData
 		{
 			if (typeof(T) == typeof(BehaviorHappenLogData))
-				return _list.Where(l => l is T && ((BehaviorHappenLogData)l).Behavior == value);
+				return _list.Where(l => l is T && ((BehaviorHappenLogData)l).Behavior.Name == value);
 			else if (typeof(T) == typeof(AttributeChangeLogData))
-				return _list.Where(l => l is T && ((AttributeChangeLogData)l).Attribute == value);
+				return _list.Where(l => l is T && ((AttributeChangeLogData)l).Attribute.Name == value);
 			return _list.AsEnumerable();
 		}
 
@@ -114,9 +114,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			where T:LogData
 		{
 			if(typeof(T) == typeof(BehaviorHappenLogData))
-				_list = _list.FindAll(l => l is T && ((BehaviorHappenLogData)l).Behavior == value);
+				_list = _list.FindAll(l => l is T && ((BehaviorHappenLogData)l).Behavior.Name == value);
 			else if (typeof(T) == typeof(AttributeChangeLogData))
-				_list = _list.FindAll(l => l is T && ((AttributeChangeLogData)l).Attribute == value);
+				_list = _list.FindAll(l => l is T && ((AttributeChangeLogData)l).Attribute.Name == value);
 			return this;
 		}
 

@@ -95,7 +95,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				// valueがstringのときログを置換して追加
 				string s = Regex.Replace(log, pattern, value);
 				// 関数を適用
-				s = ConvertFunction.ApplyConvertFunc(traceLogData, s);
+				s = TLVFunction.Apply(s, _resourceData, traceLogData);
 				// ログを追加
 				traceLogData.Add(new TraceLog(s));
 			}
@@ -130,7 +130,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				string condition = Regex.Replace(log, pattern, kvp.Key);
 
 				// 条件に関数を適用
-				condition = ConvertFunction.ApplyConvertFunc(traceLogData, condition);
+				condition = TLVFunction.Apply(condition, _resourceData, traceLogData);
 
 				// 条件中の属性を値に変換
 				foreach (Match m in Regex.Matches(condition, @"\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*\.\s*[^=!<>\(]+\s*"))

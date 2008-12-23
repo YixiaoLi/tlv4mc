@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Core;
-using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
 using System.Collections;
 using NU.OJL.MPRTOS.TLV.Base;
 
@@ -70,7 +69,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 						if (!ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Target))
 						{
-							ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.SetValue(ApplicationData.Setting.DefaultResourceVisible, vizRule.Target);
+							ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.SetValue(ApplicationData.Setting.DefaultVisualizeRuleVisible, vizRule.Target);
 						}
 					}
 
@@ -84,7 +83,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				}
 
 				tnc.Add(vizRule.Name, vizRule.DisplayName);
-				tnc[vizRule.Name].Checked = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(id) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(id) : ApplicationData.Setting.DefaultResourceVisible;
+				tnc[vizRule.Name].Checked = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(id) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(id) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
 				tnc[vizRule.Name].ImageKey = "visualize";
 				tnc[vizRule.Name].SelectedImageKey = "visualize";
 
@@ -99,13 +98,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					list.Add(e.DisplayName);
 					string[] i = list.ToArray();
 					tnc[vizRule.Name].Nodes.Add(e.DisplayName, e.DisplayName);
-					tnc[vizRule.Name].Nodes[e.DisplayName].Checked = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(i) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(i) : ApplicationData.Setting.DefaultResourceVisible;
+					tnc[vizRule.Name].Nodes[e.DisplayName].Checked = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(i) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(i) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
 
-					setEventImage(tnc[vizRule.Name].Nodes[e.DisplayName], e);
+					tnc[vizRule.Name].Nodes[e.DisplayName].ImageKey = e.getImageKey();
+					tnc[vizRule.Name].Nodes[e.DisplayName].SelectedImageKey = e.getImageKey();
 
 					if (!ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(i))
 					{
-						ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.SetValue(ApplicationData.Setting.DefaultResourceVisible, i);
+						ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.SetValue(ApplicationData.Setting.DefaultVisualizeRuleVisible, i);
 					}
 				}
 			}
@@ -195,54 +195,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		}
 
-		private void setEventImage(TreeNode tn, Event e)
-		{
-			if ((e.Type & EventTypes.FromAttributeChange) == EventTypes.FromAttributeChange
-				&& (e.Type & EventTypes.ToAttributeChange) == EventTypes.ToAttributeChange)
-			{
-				tn.ImageKey = "atr2atr";
-				tn.SelectedImageKey = "atr2atr";
-			}
-
-			if ((e.Type & EventTypes.FromBehaviorHappen) == EventTypes.FromBehaviorHappen
-				&& (e.Type & EventTypes.ToBehaviorHappen) == EventTypes.ToBehaviorHappen)
-			{
-				tn.ImageKey = "bhr2bhr";
-				tn.SelectedImageKey = "bhr2bhr";
-			}
-
-			if ((e.Type & EventTypes.FromAttributeChange) == EventTypes.FromAttributeChange
-				&& (e.Type & EventTypes.ToBehaviorHappen) == EventTypes.ToBehaviorHappen)
-			{
-				tn.ImageKey = "atr2bhr";
-				tn.SelectedImageKey = "atr2bhr";
-			}
-
-			if ((e.Type & EventTypes.FromBehaviorHappen) == EventTypes.FromBehaviorHappen
-				&& (e.Type & EventTypes.ToAttributeChange) == EventTypes.ToAttributeChange)
-			{
-				tn.ImageKey = "bhr2atr";
-				tn.SelectedImageKey = "bhr2atr";
-			}
-
-			if ((e.Type & EventTypes.WhenAttributeChange) == EventTypes.WhenAttributeChange)
-			{
-				tn.ImageKey = "attribute";
-				tn.SelectedImageKey = "attribute";
-			}
-
-			if ((e.Type & EventTypes.WhenBehaviorHappen) == EventTypes.WhenBehaviorHappen)
-			{
-				tn.ImageKey = "behavior";
-				tn.SelectedImageKey = "behavior";
-			}
-
-			if ((e.Type & EventTypes.Error) == EventTypes.Error)
-			{
-				tn.ImageKey = "warning";
-				tn.SelectedImageKey = "warning";
-			}
-		}
 
 		public void ClearData()
 		{

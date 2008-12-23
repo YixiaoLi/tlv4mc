@@ -7,7 +7,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public abstract class LogData
 	{
-		public abstract LogType Type { get; }
+		public abstract TraceLogType Type { get; }
 		public Time Time { get; private set; }
 		public Resource Object { get; private set; }
 

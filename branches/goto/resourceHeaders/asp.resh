@@ -5,13 +5,13 @@
 			"DisplayName" :"タスク",
 			"Attributes" :{
 				"prcId":{
-					"VariableType"	:"Decimal",
+					"VariableType"	:"Number",
 					"DisplayName"	:"プロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
 				},
 				"id":{
-					"VariableType"	:"Decimal",
+					"VariableType"	:"Number",
 					"DisplayName"	:"ID",
 					"AllocationType":"Static",
 					"CanGrouping"	:false
@@ -23,7 +23,7 @@
 					"CanGrouping"	:false
 				},
 				"pri":{
-					"VariableType"	:"Decimal",
+					"VariableType"	:"Number",
 					"DisplayName"	:"優先度",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
@@ -41,7 +41,7 @@
 					"CanGrouping"	:false
 				},
 				"stksz":{
-					"VariableType"	:"Decimal",
+					"VariableType"	:"Number",
 					"DisplayName"	:"スタックサイズ",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:false
@@ -101,7 +101,23 @@
 						"name":"String",
 						"args":"String"
 					}
-				}
+				},
+				"act_tsk":{
+					"Arguments"		:{
+						"tskid":"Number"
+					}
+                },
+				"dly_tsk":{
+					"Arguments"		:{
+						"dlytim":"Number"
+					}
+                },
+				"slp_tsk":{},
+				"wup_tsk":{
+					"Arguments"		:{
+						"tskid":"Number"
+					}
+                }
 			}
 		}
 	}

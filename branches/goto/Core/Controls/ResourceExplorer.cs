@@ -102,7 +102,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						{
 							switch(attr.VariableType)
 							{
-								case NU.OJL.MPRTOS.TLV.Base.JsonValueType.Decimal:
+								case NU.OJL.MPRTOS.TLV.Base.JsonValueType.Number:
 									return Convert.ToDecimal(n1.Name).CompareTo(Convert.ToDecimal(n2.Name));
 								default:
 									return n1.Name.CompareTo(n1.Name);

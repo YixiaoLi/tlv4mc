@@ -13,13 +13,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
 	public partial class TraceLogViewer : UserControl
 	{
-		private Dictionary<string, Color> _eventColorCache = new Dictionary<string, Color>();
-		private Dictionary<string, Color> _resColorCache = new Dictionary<string, Color>();
-		private Dictionary<string, Color> _resTypeColorCache = new Dictionary<string, Color>();
-		private Dictionary<string, KeyValuePair<string[], Color>> _valTypeColorCache = new Dictionary<string, KeyValuePair<string[], Color>>();
 		private const int _alpha = 40;
 
-		private SortableBindingList<TraceLog> _dataSource = new SortableBindingList<TraceLog>();
+		private SortableBindingList<TraceLogViewerRowData> _dataSource = new SortableBindingList<TraceLogViewerRowData>();
 
 		private TraceLogData _traceLogData;
 		private ResourceData _resourceData;
@@ -41,6 +37,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				dataGridView.Columns["time"].HeaderText = "時間[" + _resourceData.TimeScale + "]";
 
 				setDataGridViewDataSource();
+
+				setCellColor();
 			}
 			else
 			{
@@ -53,11 +51,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			_traceLogData = null;
 			_resourceData = null;
-			_dataSource = new SortableBindingList<TraceLog>();
-			_eventColorCache = new Dictionary<string, Color>();
-			_resColorCache = new Dictionary<string, Color>();
-			_resTypeColorCache = new Dictionary<string, Color>();
-			_valTypeColorCache = new Dictionary<string, KeyValuePair<string[], Color>>();
+			_dataSource = new SortableBindingList<TraceLogViewerRowData>();
 			dataGridView.DataSource = null;
 		}
 
@@ -68,15 +62,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			addColumn("eventType", "", "アイコン", "EventType", typeof(DataGridViewImageColumn));
 			addColumn("time", "時間", "Time", typeof(DataGridViewTextBoxColumn));
 			addColumn("resourceType", "リソースタイプ", "ResourceType", typeof(DataGridViewTextBoxColumn), false);
-			addColumn("resource", "リソース", "Resource", typeof(DataGridViewTextBoxColumn));
+			addColumn("resource", "リソース", "ResourceDisplayName", typeof(DataGridViewTextBoxColumn));
 			addColumn("event", "イベント", "Event", typeof(DataGridViewTextBoxColumn));
 
 			dataGridView.Columns["eventType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 			dataGridView.Columns["eventType"].Width = 22;
 			dataGridView.ApplyNativeScroll();
 			dataGridView.AutoGenerateColumns = false;
-			dataGridView.CellPainting += new DataGridViewCellPaintingEventHandler(dataGridViewCellPainting);
-			dataGridView.MouseWheel += new MouseEventHandler(dataGridViewMouseWheel);
+			dataGridView.RowPrePaint += dataGridViewRowPrePaint;
+			dataGridView.CellPainting += dataGridViewCellPainting;
+			dataGridView.MouseWheel += dataGridViewMouseWheel;
 			dataGridView.MouseEnter += (o, _e) =>
 				{
 					if (dataGridView.DataSource != null)
@@ -181,8 +176,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			//並び替えを行う
 			ApplicationFactory.CommandManager.Do(new GeneralCommand(Text + " 並び替え",
-				() => { dataGridView.Sort(sortColumn, sortDirection); },
-				() => { dataGridView.Sort(sortColumn, sortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending); }));
+				() =>
+				{
+					dataGridView.Sort(sortColumn, sortDirection); 			//セルの色設定を変更する
+				},
+				() =>
+				{
+					dataGridView.Sort(sortColumn, sortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending);			//セルの色設定を変更する
+				}));
+
 		}
 
 		private void dataGridViewMouseWheel(object sender, MouseEventArgs e)
@@ -204,179 +206,52 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		}
 
-		private void dataGridViewCellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+		private void setCellColor()
 		{
-			bool isResourceColumn = e.ColumnIndex == dataGridView.Columns["Resource"].Index;
-			bool isResourceTypeColumn = e.ColumnIndex == dataGridView.Columns["ResourceType"].Index;
-			bool isEventColumn = e.ColumnIndex == dataGridView.Columns["Event"].Index;
-
-			DataGridViewPaintParts dgvpp = e.PaintParts;
-
-			e.PaintBackground(e.ClipBounds, true);
-
-			if (e.RowIndex >= 0
-				&& (isResourceColumn || isResourceTypeColumn || isEventColumn)
-				&& (dgvpp & DataGridViewPaintParts.Background) == DataGridViewPaintParts.Background)
+			foreach (DataGridViewRow row in dataGridView.Rows)
 			{
-				string value = (string)e.Value;
-				KeyValuePair<string[], Color>?  valTextColor = null;
-				Color color = Color.White;
-				RotateColorFactory colorFactory = new RotateColorFactory();
-				string attr = null;
-				string val = null;
-				string attr_val = null;
+				LogData ld = ((SortableBindingList<TraceLogViewerRowData>)dataGridView.DataSource)[row.Index].LogData;
 
-				if (isResourceColumn)
+				foreach(DataGridViewCell cell in row.Cells)
 				{
-					if (_resColorCache.ContainsKey(value))
+					if (cell.OwningColumn.Name == "resourceType")
 					{
-						color = _resColorCache[value];
+						cell.Style.BackColor = Color.FromArgb(150, _resourceData.ResourceHeaders[ld.Object.Type].Color.Value);
 					}
-					else
+					if (cell.OwningColumn.Name == "resource")
 					{
-						if (ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceColors.ContainsKey(value))
-						{
-							color = ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceColors[value];
-						}
-						else
-						{
-							color = Color.FromArgb(_alpha, colorFactory.RotateColor());
-							ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceColors.Add(value, color);
-						}
-						_resColorCache.Add(value, color);
+						cell.Style.BackColor = Color.FromArgb(150, ld.Object.Color.Value);
 					}
-				}
-				else if (isResourceTypeColumn)
-				{
-					if (_resTypeColorCache.ContainsKey(value))
+					if (cell.OwningColumn.Name == "event")
 					{
-						color = _resTypeColorCache[value];
-					}
-					else
-					{
-						if (ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceTypeColors.ContainsKey(value))
+						if (ld.Type == TraceLogType.AttributeChange)
 						{
-							color = ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceTypeColors[value];
+							cell.Style.BackColor = Color.FromArgb(150, _resourceData.ResourceHeaders[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute.Name].Color.Value);
 						}
-						else
+						else if (ld.Type == TraceLogType.BehaviorHappen)
 						{
-							color = Color.FromArgb(_alpha, colorFactory.RotateColor());
-							ApplicationData.FileContext.Data.SettingData.ColorSetting.ResourceTypeColors.Add(value, color);
-						}
-						_resTypeColorCache.Add(value, color);
-					}
-				}
-				else if (isEventColumn)
-				{
-					if (_eventColorCache.ContainsKey(value) && _valTypeColorCache.ContainsKey(value))
-					{
-						color = _eventColorCache[value];
-						valTextColor = _valTypeColorCache[value];
-					}
-					else
-					{
-						Match m = Regex.Match(value, @"((\s*(?<attr>[^=\s]+)(?<attr_val>\s*=\s*)(?<val>[^\s]+))|(\s*(?<bhvr>[^\(\s]+)\((?<args>[^\)]*)\)))");
-
-						if (m.Groups["attr"].Success)
-						{
-							Color txtColor = Color.Empty;
-							attr = m.Groups["attr"].Value;
-							attr_val = m.Groups["attr_val"].Value;
-							val = m.Groups["val"].Value;
-
-							if (_eventColorCache.ContainsKey(value))
-							{
-								color = _eventColorCache[value];
-							}
-							else
-							{
-								if (ApplicationData.FileContext.Data.SettingData.ColorSetting.AttributeColors.ContainsKey(attr))
-								{
-									color = ApplicationData.FileContext.Data.SettingData.ColorSetting.AttributeColors[attr];
-								}
-								else
-								{
-									color = Color.FromArgb(_alpha, colorFactory.RotateColor());
-									ApplicationData.FileContext.Data.SettingData.ColorSetting.AttributeColors.Add(attr, color);
-								}
-								_eventColorCache.Add(value, color);
-							}
-
-							if (_valTypeColorCache.ContainsKey(value))
-							{
-								valTextColor = _valTypeColorCache[value];
-							}
-							else
-							{
-								if (ApplicationData.FileContext.Data.SettingData.ColorSetting.ValueColors.ContainsKey(attr + val))
-								{
-									txtColor = ApplicationData.FileContext.Data.SettingData.ColorSetting.ValueColors[attr + val];
-								}
-								else
-								{
-									txtColor = colorFactory.RotateColor();
-									ApplicationData.FileContext.Data.SettingData.ColorSetting.ValueColors.Add(attr + val, txtColor);
-								}
-
-								valTextColor = new KeyValuePair<string[], Color>(new[] { attr, attr_val, val }, txtColor);
-
-								_valTypeColorCache.Add(value, valTextColor.Value);
-							}
-						}
-						if (m.Groups["bhvr"].Success)
-						{
-							string bhvr = m.Groups["bhvr"].Value;
-							if (ApplicationData.FileContext.Data.SettingData.ColorSetting.BehaviorColors.ContainsKey(bhvr))
-							{
-								color = ApplicationData.FileContext.Data.SettingData.ColorSetting.BehaviorColors[bhvr];
-							}
-							else
-							{
-								color = Color.FromArgb(_alpha, colorFactory.RotateColor());
-								ApplicationData.FileContext.Data.SettingData.ColorSetting.BehaviorColors.Add(bhvr, color);
-							}
+							cell.Style.BackColor = Color.FromArgb(150, _resourceData.ResourceHeaders[ld.Object.Type].Behaviors[((BehaviorHappenLogData)ld).Behavior.Name].Color.Value);
 						}
 					}
-				}
-
-				e.Graphics.FillRectangle(new SolidBrush(color), e.CellBounds);
-
-				if (valTextColor.HasValue)
-				{
-					Color foreColor = Color.Empty;
-					Color valForeColor = Color.Empty;
-					if (!dataGridView.Rows[e.RowIndex].Selected)
-					{
-						foreColor = e.CellStyle.ForeColor;
-						valForeColor = valTextColor.Value.Value;
-					}
-					else
-					{
-						foreColor = e.CellStyle.SelectionForeColor;
-						valForeColor = valTextColor.Value.Value.ComplementaryColor();
-					}
-
-					dgvpp &= ~DataGridViewPaintParts.ContentForeground;
-
-					int strheight = TextRenderer.MeasureText(e.Graphics, valTextColor.Value.Key[0], e.CellStyle.Font).Height;
-					int topPadding = (e.CellBounds.Height - strheight) / 2;
-					int attrWidth = TextRenderer.MeasureText(e.Graphics, valTextColor.Value.Key[0], e.CellStyle.Font).Width;
-					int attr_valWidth = TextRenderer.MeasureText(e.Graphics, valTextColor.Value.Key[1], e.CellStyle.Font).Width;
-
-					Rectangle attrRect = new Rectangle(e.CellBounds.X, e.CellBounds.Y + topPadding, e.CellBounds.Width, strheight);
-					Rectangle attr_valRect = new Rectangle(e.CellBounds.X + attrWidth, e.CellBounds.Y + topPadding, e.CellBounds.Width - attrWidth, strheight);
-					Rectangle valRect = new Rectangle(e.CellBounds.X + attrWidth + attr_valWidth, e.CellBounds.Y + topPadding, e.CellBounds.Width - attrWidth - attr_valWidth, strheight);
-					TextFormatFlags tf = TextFormatFlags.EndEllipsis | TextFormatFlags.VerticalCenter;
-
-					TextRenderer.DrawText(e.Graphics, valTextColor.Value.Key[0], e.CellStyle.Font, attrRect, foreColor, tf);
-					TextRenderer.DrawText(e.Graphics, valTextColor.Value.Key[1], e.CellStyle.Font, attr_valRect, foreColor, tf);
-					TextRenderer.DrawText(e.Graphics, valTextColor.Value.Key[2], e.CellStyle.Font, valRect, valForeColor, tf);
 				}
 			}
+		}
 
-			e.Paint(e.ClipBounds, dgvpp & ~DataGridViewPaintParts.Background & ~DataGridViewPaintParts.Focus);
+		private void dataGridViewRowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+		{
+			e.Graphics.FillRectangle(new SolidBrush(dataGridView.DefaultCellStyle.BackColor), e.RowBounds);
 
-			e.Handled = true;
+			e.PaintCellsBackground(e.RowBounds, false);
+
+			e.PaintParts &= ~DataGridViewPaintParts.Background & ~DataGridViewPaintParts.Focus;
+		}
+
+		private void dataGridViewCellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+		{
+			e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(30, e.CellStyle.BackColor)), e.CellBounds);
+
+			if ((e.State & DataGridViewElementStates.Selected) != DataGridViewElementStates.None)
+				e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(150, dataGridView.DefaultCellStyle.SelectionBackColor)), e.CellBounds);
 		}
 
 		private void addColumn(string name, string displayName, string propertyName, Type columnType, bool visibility)
@@ -419,27 +294,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			if (_traceLogData != null)
 			{
-				_dataSource = new SortableBindingList<TraceLog>(_traceLogData.LogDataBase.Select(ld =>
-				{
-					if (ld.Type == LogType.AttributeChange)
-					{
-						Image image = Properties.Resources.attribute;
-						image.Tag = "attribute";
-						return new TraceLog(image, ld.Time, _resourceData.ResourceHeaders[ld.Object.Type].Name, ld.Object.DisplayName, _resourceData.ResourceHeaders[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute].Name + " = " + ((AttributeChangeLogData)ld).Value.ToString());
-					}
-					else if (ld.Type == LogType.BehaviorHappen)
-					{
-						Image image = Properties.Resources.behavior;
-						image.Tag = "behavior";
-						return new TraceLog(image, ld.Time, _resourceData.ResourceHeaders[ld.Object.Type].Name, ld.Object.DisplayName, _resourceData.ResourceHeaders[ld.Object.Type].Behaviors[((BehaviorHappenLogData)ld).Behavior].Name + "(" + ((BehaviorHappenLogData)ld).Arguments.ToString() + ")");
-					}
-					else
-					{
-						Image image = Properties.Resources.warning;
-						image.Tag = "undefined";
-						return new TraceLog(image, ld.Time, ld.Object.Type, ld.Object.DisplayName, "undefined");
-					}
-				}).ToList());
+				_dataSource = new SortableBindingList<TraceLogViewerRowData>(_traceLogData.LogDataBase.Select(ld => new TraceLogViewerRowData(ld)).ToList());
+
 				_dataSource.BasePropertyName = "Id";
 				_dataSource.Comparisoins.Add("EventType", (t1, t2) =>
 					{
@@ -461,6 +317,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					{
 						this.Invoke(new MethodInvoker(() =>
 						{
+							setCellColor();
 							dataGridView.Refresh();
 							ApplicationFactory.StatusManager.HideProcessing(this.GetType().ToString() + ":sorting");
 						}));
@@ -471,23 +328,43 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 	}
 
-	class TraceLog
+	class TraceLogViewerRowData
 	{
 		public long Id { get; private set; }
 		public Image EventType { get; set; }
 		public Time Time { get; set; }
 		public string ResourceType { get; set; }
-		public string Resource { get; set; }
+		public string ResourceDisplayName { get; set; }
 		public string Event { get; set; }
+		public LogData LogData { get; private set; }
 
-		public TraceLog(Image eventType, Time time, string resType, string res, string evnt)
+		public TraceLogViewerRowData(LogData ld)
 		{
 			Id = _id++;
-			EventType = eventType;
-			Time = time;
-			ResourceType = resType;
-			Resource = res;
-			Event = evnt;
+			LogData = ld;
+
+			Time = ld.Time;
+			ResourceType = ld.Object.Type;
+			ResourceDisplayName = ld.Object.DisplayName;
+
+			switch (ld.Type)
+			{
+				case TraceLogType.AttributeChange:
+					EventType = Properties.Resources.attribute;
+					EventType.Tag = "attribute";
+					Event = ((AttributeChangeLogData)ld).Attribute.Name + " = " + ((AttributeChangeLogData)ld).Attribute.Value.ToString();
+					break;
+				case TraceLogType.BehaviorHappen:
+					EventType = Properties.Resources.behavior;
+					EventType.Tag = "behavior";
+					Event = ((BehaviorHappenLogData)ld).Behavior.Name + "(" + ((BehaviorHappenLogData)ld).Behavior.Arguments.ToString() + ")";
+					break;
+				default:
+					EventType = Properties.Resources.warning;
+					EventType.Tag = "undefined";
+					Event = string.Empty;
+					break;
+			}
 		}
 
 		static long _id = 0;

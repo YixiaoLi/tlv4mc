@@ -13,17 +13,18 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class TraceLog
 	{
-		private string _time = null;
-		private string _object = null;
-		private string _objectName = null;
-		private string _objectType = null;
-		private string _behavior = null;
-		private string _attribute = null;
-		private string _value = null;
-		private string _arguments = null;
-		private bool _hasTime = false;
-		private bool _isAttributeChageLog = false;
-		private bool _isBehaviorLog = false;
+		public string Time { get; private set; }
+		public string Object { get; private set; }
+		public string ObjectName { get; private set; }
+		public string ObjectType { get; private set; }
+		public string Behavior { get; private set; }
+		public string Attribute { get; private set; }
+		public string Value { get; private set; }
+		public string Arguments { get; private set; }
+		public bool HasTime { get; private set; }
+		public bool HasObjectName { get; private set; }
+		public bool HasObjectType { get; private set; }
+		public TraceLogType Type { get; private set; }
 
 		private string _log;
 
@@ -31,43 +32,50 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			Match m;
 
-			_log = log.Replace(" ", "").Replace("\t", "");
+			_log = Regex.Replace(log, @"\s","");
 
-			m = Regex.Match(_log, @"\s*\[\s*(?<time>[0-9a-fA-F]+)\s*\]\s*");
+			m = Regex.Match(_log, @"\[(?<time>[0-9a-zA-Z]+)\]");
 			if (m.Success)
-				_time = m.Groups["time"].Value.Replace(" ", "").Replace("\t", "");
+				Time = m.Groups["time"].Value;
+			HasTime = m.Success;
 
-			m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<object>[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?)\s*(\.\s*[^\s]+)?\s*$");
+			m = Regex.Match(_log, @"^(\[[^\]]+\])?(?<object>[^\[\]\(\)\.]+(\([^\)]+\))?)(\.[^\s]+)?$");
 			if (m.Success)
-				_object = m.Groups["object"].Value.Replace(" ", "").Replace("\t", "");
+				Object = m.Groups["object"].Value;
 
-			m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<objectName>[^\[\]\(\)\.\s]+)\s*(\.\s*[^\s]+)?\s*$");
+			m = Regex.Match(_log, @"^(\[[^\]]+\])?(?<objectName>[^\[\]\(\)\.]+)(\.[^\s]+)?$");
 			if (m.Success)
-				_objectName = m.Groups["objectName"].Value.Replace(" ", "").Replace("\t", "");
+				ObjectName = m.Groups["objectName"].Value;
+			HasObjectName = m.Success;
 
-			m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*(?<objectType>[^\[\]\(\)\.\s]+)\s*(\s*\([^\)]+\))?\s*(\.\s*[^\s]+)?\s*$");
+			m = Regex.Match(_log, @"^(\[[^\]]+\])?(?<objectType>[^\[\]\(\)\.]+)\([^\)]+\)(\.[^\s]+)?$");
 			if (m.Success)
-				_objectType = m.Groups["objectType"].Value.Replace(" ", "").Replace("\t", "");
+				ObjectType = m.Groups["objectType"].Value;
+			HasObjectType = m.Success;
 
-			m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?\s*\.\s*(?<behavior>[^\(\s]+)\s*\([^\)]*\)\s*$");
+			m = Regex.Match(_log, @"^(\[[^\]]+\])?[^\[\]\(\)\.]+(\([^\)]+\))?\.(?<behavior>[^\(\s]+)\([^\)]*\)$");
 			if (m.Success)
-				_behavior =  m.Groups["behavior"].Value.Replace(" ", "").Replace("\t", "");
+				Behavior = m.Groups["behavior"].Value;
 
-			m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?\s*\.\s*(?<attribute>[^=!<>\(\s]+).*$");
+			m = Regex.Match(_log, @"^(\[[^\]]+\])?[^\[\]\(\)\.]+(\([^\)]+\))?\.(?<attribute>[^=!<>\(\)]+)([=!<>].*)?$");
 			if (m.Success)
-				_attribute = m.Groups["attribute"].Value.Replace(" ", "").Replace("\t", "");
+				Attribute = m.Groups["attribute"].Value;
 
-			m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?\s*\.\s*[^=\s]+\s*=\s*(?<value>[^\s$]+)$");
+			m = Regex.Match(_log, @"^(\[[^\]]+\])?[^\[\]\(\)\.]+(\([^\)]+\))?\.[^=!<>\(\s]+(>=|>|<|<=|==|!=|=)(?<value>[^\s$]+)$");
 			if (m.Success)
-				_value = m.Groups["value"].Value.Replace(" ", "").Replace("\t", "");
+				Value = m.Groups["value"].Value;
 
-			m = Regex.Match(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\))?\s*\.\s*[^=!<>\(\s]+\s*\((?<args>[^\)]*)\)\s*$");
+			m = Regex.Match(_log, @"^(\[[^\]]+\])?[^\[\]\(\)\.]+(\([^\)]+\))?\.[^=!<>\(\s]+\((?<args>[^\)]*)\)$");
 			if (m.Success)
-				_arguments = m.Groups["args"].Value.Replace(" ", "").Replace("\t", "");
+				Arguments = m.Groups["args"].Value;
 
-			_hasTime = Regex.IsMatch(_log, @"\s*\[\s*[0-9a-fA-F]+\s*\]\s*");
-			_isAttributeChageLog = Regex.IsMatch(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\([^\)]+\))?\s*\.\s*[^\(\)=\s]+\s*=\s*[^\s$]+$");
-			_isBehaviorLog = Regex.IsMatch(_log, @"^\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\([^\)]+\))?\s*\.\s*[^=\s]+\s*\([^\)]*\)\s*$");
+			if (Behavior != null && Attribute != null)
+				throw new Exception("不正なトレースログです。");
+			else if (Behavior == null && Attribute != null)
+				Type = TraceLogType.AttributeChange;
+			else if (Behavior != null && Attribute == null)
+				Type = TraceLogType.BehaviorHappen;
+
 
 		}
 		public static implicit operator string(TraceLog stdlog)
@@ -80,116 +88,63 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return _log;
 		}
 
-		public string Time
+		public Json GetValue(ResourceData resourceData)
 		{
-			get
+			if (!HasObjectType || HasObjectName)
+				ObjectType = resourceData.Resources[ObjectName].Type;
+
+			switch (resourceData.ResourceHeaders[ObjectType].Attributes[Attribute].VariableType)
 			{
-				if (_time != null)
-					return _time;
+				case JsonValueType.String:
+					return new Json(Value);
+				case JsonValueType.Number:
+					return new Json(Convert.ToDecimal(Value));
+				case JsonValueType.Boolean:
+					return new Json(Convert.ToBoolean(Value));
+				default:
+					return null;
+			}
+		}
+
+		public ArgumentList GetArguments(ResourceData resourceData)
+		{
+			if (!HasObjectType || HasObjectName)
+				ObjectType = resourceData.Resources[ObjectName].Type;
+
+			if (Arguments == string.Empty)
+				return new ArgumentList();
+
+			string[] args = Arguments.Split(',');
+			ArgumentList argList = new ArgumentList();
+
+			int i = 0;
+			foreach (ArgumentType argType in resourceData.ResourceHeaders[ObjectType].Behaviors[Behavior].Arguments)
+			{
+				if (args[i] == string.Empty)
+					argList.Add(null);
 				else
-					throw new Exception("時間指定のフォーマットが異常です。\n" + "\"" + _log + "\"");
+					switch (argType.Type)
+					{
+						case JsonValueType.String:
+							argList.Add(new Json(args[i]));
+							break;
+						case JsonValueType.Number:
+							argList.Add(new Json(Convert.ToDecimal(args[i])));
+							break;
+						case JsonValueType.Boolean:
+							argList.Add(new Json(Convert.ToBoolean(args[i])));
+							break;
+						default:
+							argList.Add(null);
+							break;
+					}
+
+				i++;
+				if (args.Length <= i)
+					break;
 			}
-			set
-			{
-				_time = value;
-			}
-		}
-		public string Object
-		{
-			get
-			{
-				if (_object != null)
-					return _object;
-				else
-					throw new Exception("オブジェクト指定のフォーマットが異常です。\n" + "\"" + _log + "\"");
-			}
-			set
-			{
-				_object = value;
-			}
-		}
-		public string ObjectName
-		{
-			get
-			{
-				return _objectName;
-			}
-			set
-			{
-				_objectName = value;
-			}
-		}
-		public string ObjectType
-		{
-			get
-			{
-				return _objectType;
-			}
-			set
-			{
-				_objectType = value;
-			}
-		}
-		public string Behavior
-		{
-			get
-			{
-				if (_behavior != null)
-					return _behavior;
-				else
-					throw new Exception("振舞い指定のフォーマットが異常です。\n" + "\"" + _log + "\"");
-			}
-		}
-		public string Attribute
-		{
-			get
-			{
-				if (_attribute != null)
-					return _attribute;
-				else
-					throw new Exception("属性指定のフォーマットが異常です。\n" + "\"" + _log + "\"");
-			}
-		}
-		public string Value
-		{
-			get
-			{
-				if (_value != null)
-					return _value;
-				else
-					throw new Exception("属性代入式のフォーマットが異常です。\n" + "\"" + _log + "\"");
-			}
-		}
-		public string Arguments
-		{
-			get
-			{
-				if (_arguments != null)
-					return _arguments;
-				else
-					throw new Exception("振舞いの引数指定フォーマットが異常です。\n" + "\"" + _log + "\"");
-			}
-		}
-		public bool HasTime
-		{
-			get
-			{
-				return _hasTime;
-			}
-		}
-		public bool IsAttributeChangeLog
-		{
-			get
-			{
-				return _isAttributeChageLog;
-			}
-		}
-		public bool IsBehaviorCallLog
-		{
-			get
-			{
-				return _isBehaviorLog;
-			}
+
+			return argList;
 		}
 	}
 }

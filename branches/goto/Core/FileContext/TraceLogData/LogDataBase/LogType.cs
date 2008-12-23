@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public enum LogType
+	public enum TraceLogType
 	{
 		AttributeChange,
 		BehaviorHappen
@@ -13,13 +13,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 	public static class LogTypeExtension
 	{
-		public static string ToDisplayText(this LogType logType)
+		public static string ToDisplayText(this TraceLogType logType)
 		{
 			switch (logType)
 			{
-				case LogType.AttributeChange:
+				case TraceLogType.AttributeChange:
 					return "メンバ値変更";
-				case LogType.BehaviorHappen:
+				case TraceLogType.BehaviorHappen:
 					return "メソッド呼出し";
 				default:
 					return "その他";

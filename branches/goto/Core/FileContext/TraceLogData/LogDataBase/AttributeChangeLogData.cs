@@ -8,15 +8,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class AttributeChangeLogData : LogData
 	{
-		public override LogType Type { get { return LogType.AttributeChange; } }
-		public string Attribute { get; private set; }
-		public Json Value { get; private set; }
+		public override TraceLogType Type { get { return TraceLogType.AttributeChange; } }
+		public Attribute Attribute { get; private set; }
 
 		public AttributeChangeLogData(Time time, Resource obj, string attr, Json val)
 			:base(time, obj)
 		{
-			Attribute = attr;
-			Value = val;
+			Attribute = new Attribute(attr, val);
 		}
 	}
 }

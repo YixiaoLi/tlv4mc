@@ -94,11 +94,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return new Time((l.Value / r.Value).ToString(l.Radix), l.Radix);
 		}
 
-		public Time Truncate()
-		{
-			return new Time(((decimal)Math.Truncate(Value)).ToString(), Radix);
-		}
-
 		public static bool operator >(Time l, Time r)
 		{
 			return l.CompareTo(r) == 1;
@@ -197,6 +192,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public bool Equals(Time other)
 		{
 			return this == other;
+		}
+
+		public Time Truncate()
+		{
+			return new Time(((decimal)Math.Truncate(Value)).ToString(Radix), Radix);
+		}
+
+		public Time Round(int carry)
+		{
+			return new Time(Math.Round(Value, carry, MidpointRounding.ToEven).ToString(Radix), Radix);
 		}
 	}
 }
