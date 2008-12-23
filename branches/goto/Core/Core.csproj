@@ -95,6 +95,7 @@
     <Compile Include="FileContext\ResourceData\Attribute\Attribute.cs" />
     <Compile Include="FileContext\ResourceData\Behavior\Behavior.cs" />
     <Compile Include="FileContext\SettingData\ISetting.cs" />
+    <Compile Include="FileContext\SettingData\ResourceExplorerSetting.cs" />
     <Compile Include="FileContext\SettingData\SettingData.cs" />
     <Compile Include="FileContext\SettingData\TraceLogDisplayPanelSetting.cs" />
     <Compile Include="FileContext\SettingData\VisualizeRuleExplorerSetting.cs" />
