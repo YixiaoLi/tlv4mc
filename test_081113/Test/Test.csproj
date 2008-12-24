@@ -71,6 +71,7 @@
     <Compile Include="Base\CommandManager\MacroCommandTest.cs" />
     <Compile Include="Core\JsonConverters\ArcConverterTest.cs" />
     <Compile Include="Core\JsonConverters\JsonConverterTest.cs" />
+    <Compile Include="Third\NewtonJson\EnumConverterTest.cs" />
     <Compile Include="Third\NewtonJson\NewtonsoftJsonTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\WindowManager\SubWindowCollectionTest.cs" />
