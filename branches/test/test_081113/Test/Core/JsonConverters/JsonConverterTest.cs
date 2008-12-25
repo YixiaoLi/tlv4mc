@@ -95,15 +95,15 @@ namespace Test.Core.JsonConverters
         ///WriteJson のテスト
         ///</summary>
         [TestMethod()]
-          public void WriteLiteralJsonTest()
-            {
+        public void WriteLiteralJsonTest()
+        {
             Assert.AreEqual("42", Write(new Json(42)));
             Assert.AreEqual("-42", Write(new Json(-42)));
             Assert.AreEqual("\"So Long, and Thanks for All the Fish\"",
                             Write(new Json("So Long, and Thanks for All the Fish")));
-              Assert.AreEqual("\"c\"", Write(new Json('c')));
-              Assert.AreEqual("42.1", Write(new Json(42.1)));
-            }
+            Assert.AreEqual("\"c\"", Write(new Json('c')));
+            Assert.AreEqual("42.1", Write(new Json(42.1)));
+        }
 
 
         [TestMethod()]
@@ -161,57 +161,86 @@ namespace Test.Core.JsonConverters
         [TestMethod()]
         public void ReadIntJsonTest()
         {
-          Assert.AreEqual(42L,Read("42").Value);
-          Assert.AreEqual(-42L,Read("-42").Value);
-          Assert.AreEqual(-42.0,Read("-42.0").Value);
+            Assert.AreEqual(42L, Read("42").Value);
+            Assert.AreEqual(-42L, Read("-42").Value);
+            Assert.AreEqual(-42.0, Read("-42.0").Value);
         }
 
-      [TestMethod()]
+        [TestMethod()]
         public void ReadStringJsonTest()
         {
-          Assert.AreEqual("1",Read("\"1\"").Value);
-          Assert.AreEqual("foo bar",Read("\"foo bar\"").Value);
-          Assert.AreEqual("\"bar\"",Read("\"\\\"bar\\\"\"").Value);
+            Assert.AreEqual("1", Read("\"1\"").Value);
+            Assert.AreEqual("foo bar", Read("\"foo bar\"").Value);
+            Assert.AreEqual("\"bar\"", Read("\"\\\"bar\\\"\"").Value);
         }
 
-      [TestMethod()]
-      public void ReadArrayJsonTest()
-      {
-        Json simple = Read("[1,2,3]");
-        Assert.AreEqual(3,simple.Count);
-        Assert.AreEqual(1L,simple[0].Value);
-        Assert.AreEqual(2L,simple[1].Value);
-        Assert.AreEqual(3L,simple[2].Value);
+        [TestMethod()]
+        public void ReadArrayJsonTest()
+        {
+            Json simple = Read("[1,2,3]");
+            Assert.AreEqual(3, simple.Count);
+            Assert.AreEqual(1L, simple[0].Value);
+            Assert.AreEqual(2L, simple[1].Value);
+            Assert.AreEqual(3L, simple[2].Value);
 
-        Json nest = Read("[[1,2,3],2,3]");
-        Json first = (Json)nest[0];
-        Assert.AreEqual(3,nest.Count);
-        
-        Assert.AreEqual(3,first.Count);
-        Assert.AreEqual(1L,first[0].Value);
-        Assert.AreEqual(2L,first[1].Value);
-        Assert.AreEqual(3L,first[2].Value);
-        
-        Assert.AreEqual(2L,nest[1].Value);
-        Assert.AreEqual(3L,nest[2].Value);
-      }
+            Json nest = Read("[[1,2,3],2,3]");
+            Json first = (Json)nest[0];
+            Assert.AreEqual(3, nest.Count);
 
-      [TestMethod()]
-      public void ReadDictJsonTest()
-      {
-        Json simple = Read("{foo:1, bar:2, baz:3}");
-        Assert.AreEqual(1L,simple["foo"].Value);
-        Assert.AreEqual(2L,simple["bar"].Value);
-        Assert.AreEqual(3L,simple["baz"].Value);
-        
-        Assert.AreEqual(1L,Read("{\"foo\":1}")["foo"].Value);
-        Assert.AreEqual(":D",Read("{\"foo\":\":D\"}")["foo"].Value);
+            Assert.AreEqual(3, first.Count);
+            Assert.AreEqual(1L, first[0].Value);
+            Assert.AreEqual(2L, first[1].Value);
+            Assert.AreEqual(3L, first[2].Value);
 
-        Json nest = Read("{foo:{hoge:1, fuga:2}, bar:2, baz:3}");
-        Assert.AreEqual(1L,nest["foo"]["hoge"].Value);
-        Assert.AreEqual(2L,nest["foo"]["fuga"].Value);
-        Assert.AreEqual(2L,nest["bar"].Value);
-        Assert.AreEqual(3L,nest["baz"].Value);
-      }
+            Assert.AreEqual(2L, nest[1].Value);
+            Assert.AreEqual(3L, nest[2].Value);
+        }
+
+        [TestMethod()]
+        public void ReadDictJsonTest()
+        {
+            Json simple = Read("{foo:1, bar:2, baz:3}");
+            Assert.AreEqual(1L, simple["foo"].Value);
+            Assert.AreEqual(2L, simple["bar"].Value);
+            Assert.AreEqual(3L, simple["baz"].Value);
+
+            Assert.AreEqual(1L, Read("{\"foo\":1}")["foo"].Value);
+            Assert.AreEqual(":D", Read("{\"foo\":\":D\"}")["foo"].Value);
+
+            Json nest = Read("{foo:{hoge:1, fuga:2}, bar:2, baz:3}");
+            Assert.AreEqual(1L, nest["foo"]["hoge"].Value);
+            Assert.AreEqual(2L, nest["foo"]["fuga"].Value);
+            Assert.AreEqual(2L, nest["bar"].Value);
+            Assert.AreEqual(3L, nest["baz"].Value);
+        }
+
+
+        private void InvalidInput(string s) {
+            try
+            {
+                IJsonReader reader = new NU.OJL.MPRTOS.TLV.Third.JsonReader(new Newtonsoft.Json.JsonTextReader(
+                  new System.IO.StringReader(s)));
+                JsonConverter target = new JsonConverter();
+                target.ReadJson(reader);
+            }
+            catch
+            {
+                return;
+            }
+            Assert.Fail("not failed: " + s);
+
+        }
+        [TestMethod()]
+        public void ReadJsonFail()
+        {
+            InvalidInput("[[42]");
+            InvalidInput("]");
+            InvalidInput("[");
+            InvalidInput("{");
+            InvalidInput("{{");
+
+            InvalidInput("[[]");
+            InvalidInput("{{}"); 
+        }
     }
 }
