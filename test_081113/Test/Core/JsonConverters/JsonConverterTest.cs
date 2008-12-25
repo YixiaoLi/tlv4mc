@@ -194,6 +194,12 @@ namespace Test.Core.JsonConverters
 
             Assert.AreEqual(2L, nest[1].Value);
             Assert.AreEqual(3L, nest[2].Value);
+
+            Json comma = Read("[1,2,3,]");
+            Assert.AreEqual(3, comma.Count);
+            Assert.AreEqual(1L, comma[0].Value);
+            Assert.AreEqual(2L, comma[1].Value);
+            Assert.AreEqual(3L, comma[2].Value);
         }
 
         [TestMethod()]
@@ -233,6 +239,7 @@ namespace Test.Core.JsonConverters
         [TestMethod()]
         public void ReadJsonFail()
         {
+            Json comma = Read("[1,2,3,,,]");
             InvalidInput("[[42]");
             InvalidInput("]");
             InvalidInput("[");
