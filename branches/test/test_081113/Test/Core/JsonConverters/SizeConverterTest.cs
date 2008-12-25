@@ -111,10 +111,31 @@ namespace Test
         ///ReadJson のテスト
         ///</summary>
         [TestMethod()]
-        public void ReadJsonTest()
+        public void ReadJsonTest1()
         {
             Assert.AreEqual(new Size("1", "2").ToString() , Read("\"1,2\"").ToString());
             Assert.AreEqual(new Size("-20", "foo").ToString(), Read("\"-20,foo\"").ToString());
+        }
+
+        [TestMethod()]
+        public void ReadJsonTest2()
+        {
+            CoordinateConverter target = new CoordinateConverter();
+            Assert.AreEqual(new Coordinate("1", "foo,bar").ToString(), Read("\"1,foo,bar\"").ToString());
+        }
+
+        [TestMethod()]
+        public void ReadJsonTest3()
+        {
+            CoordinateConverter target = new CoordinateConverter();
+            Assert.AreEqual(new Coordinate("1,baz", "foo").ToString(), Read("\"1,baz,foo\"").ToString());
+        }
+
+        [TestMethod()]
+        public void ReadJsonTest4()
+        {
+            CoordinateConverter target = new CoordinateConverter();
+            Assert.AreEqual(new Coordinate("123").ToString(), Read("\"123\"").ToString());
         }
     }
 }
