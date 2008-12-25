@@ -9,8 +9,8 @@ using System.Reflection;
 
 namespace Test.Core.JsonConverters
 {
-    
-    
+
+
     /// <summary>
     ///JsonConverterTest のテスト クラスです。すべての
     ///JsonConverterTest 単体テストをここに含めます
@@ -76,65 +76,142 @@ namespace Test.Core.JsonConverters
         public void TypeTest()
         {
             JsonConverter target = new JsonConverter(); // TODO: 適切な値に初期化してください
-            Type actual;
-            actual = target.Type;
-            Assert.Inconclusive("このテストメソッドの正確性を確認します。");
+            Assert.AreEqual(typeof(Json), target.Type);
+        }
+
+
+        private string Write(object obj)
+        {
+            JsonConverter target = new JsonConverter();
+
+            // 似た名前のクラスが多いので、明示的に名前空間を指定している。
+            System.IO.StringWriter sw = new System.IO.StringWriter();
+            IJsonWriter writer = new NU.OJL.MPRTOS.TLV.Third.JsonWriter(new Newtonsoft.Json.JsonTextWriter(sw));
+            target.WriteJson(writer, obj);
+            return sw.ToString();
         }
 
         /// <summary>
         ///WriteJson のテスト
         ///</summary>
         [TestMethod()]
-        public void WriteJsonTest()
+          public void WriteLiteralJsonTest()
+            {
+            Assert.AreEqual("42", Write(new Json(42)));
+            Assert.AreEqual("-42", Write(new Json(-42)));
+            Assert.AreEqual("\"So Long, and Thanks for All the Fish\"",
+                            Write(new Json("So Long, and Thanks for All the Fish")));
+              Assert.AreEqual("\"c\"", Write(new Json('c')));
+              Assert.AreEqual("42.1", Write(new Json(42.1)));
+            }
+
+
+        [TestMethod()]
+        public void WriteArrayJsonTest()
         {
-            JsonConverter target = new JsonConverter(); // TODO: 適切な値に初期化してください
-            IJsonWriter writer = null; // TODO: 適切な値に初期化してください
-            object obj = null; // TODO: 適切な値に初期化してください
-            target.WriteJson(writer, obj);
-            Assert.Inconclusive("値を返さないメソッドは確認できません。");
+            List<Json> simple = new List<Json>{
+            new Json(1),
+            new Json(2),
+            new Json(3)
+          };
+
+            Assert.AreEqual("[1,2,3]", Write(new Json(simple)));
+
+            List<Json> nest = new List<Json>{
+            new Json(simple),
+            new Json(2),
+            new Json(3)
+          };
+            Assert.AreEqual("[[1,2,3],2,3]", Write(new Json(nest)));
+        }
+
+
+        [TestMethod()]
+        public void WriteDictionaryJsonTest()
+        {
+            Dictionary<string, Json> simple = new Dictionary<string, Json>()
+            {
+              {"foo", new Json(1)},
+              {"bar", new Json(2)},
+              {"baz", new Json(3)},
+            };
+            Assert.AreEqual("{\"foo\":1,\"bar\":2,\"baz\":3}", Write(new Json(simple)));
+
+            Dictionary<string, Json> nest = new Dictionary<string, Json>()
+            {
+              {"foo", new Json(simple) },
+              {"bar", new Json(2)},
+              {"baz", new Json(3)},
+            };
+            Assert.AreEqual("{\"foo\":{\"foo\":1,\"bar\":2,\"baz\":3},\"bar\":2,\"baz\":3}", Write(new Json(nest)));
+        }
+
+        private Json Read(string s)
+        {
+            JsonConverter target = new JsonConverter();
+            IJsonReader reader = new NU.OJL.MPRTOS.TLV.Third.JsonReader(
+              new Newtonsoft.Json.JsonTextReader(new System.IO.StringReader(s)));
+            reader.Read();
+            return (Json)target.ReadJson(reader);
         }
 
         /// <summary>
         ///ReadJson のテスト
         ///</summary>
         [TestMethod()]
-        public void ReadJsonTest()
+        public void ReadIntJsonTest()
         {
-            JsonConverter target = new JsonConverter();
-            
-            //プロジェクトルートからの相対パスで書きたいけど書き方がわからない
-            string jsonFilename = "D:\\mydoc\\OJL\\tlv\\branches\\test\\test_081113\\Test\\Core\\JsonConverters\\yanagi.json";
-            StreamReader strReader = new System.IO.StreamReader(jsonFilename);
-            IJsonReader reader = new NU.OJL.MPRTOS.TLV.Third.JsonReader(
-                new Newtonsoft.Json.JsonTextReader(strReader) );
-            
-            Json expected = new Json();
-            //expected.Value
-            Json actual;
-            actual = (Json)target.ReadJson(reader);
-
-            System.Diagnostics.Debug.WriteLine(actual.GetType());
-            System.Diagnostics.Debug.WriteLine(actual.Value.GetType());
-            System.Diagnostics.Debug.WriteLine(actual.Value is List<Json>);
-            System.Diagnostics.Debug.WriteLine(actual.Value is Dictionary<string, Json>);
-            System.Console.WriteLine(actual.ToString());
-
-            
-            
-
-
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("このテストメソッドの正確性を確認します。");
+          Assert.AreEqual(42L,Read("42").Value);
+          Assert.AreEqual(-42L,Read("-42").Value);
+          Assert.AreEqual(-42.0,Read("-42.0").Value);
         }
 
-        /// <summary>
-        ///JsonConverter コンストラクタ のテスト
-        ///</summary>
-        [TestMethod()]
-        public void JsonConverterConstructorTest()
+      [TestMethod()]
+        public void ReadStringJsonTest()
         {
-            JsonConverter target = new JsonConverter();
-            Assert.Inconclusive("TODO: ターゲットを確認するためのコードを実装してください");
+          Assert.AreEqual("1",Read("\"1\"").Value);
+          Assert.AreEqual("foo bar",Read("\"foo bar\"").Value);
+          Assert.AreEqual("\"bar\"",Read("\"\\\"bar\\\"\"").Value);
         }
+
+      [TestMethod()]
+      public void ReadArrayJsonTest()
+      {
+        Json simple = Read("[1,2,3]");
+        Assert.AreEqual(3,simple.Count);
+        Assert.AreEqual(1L,simple[0].Value);
+        Assert.AreEqual(2L,simple[1].Value);
+        Assert.AreEqual(3L,simple[2].Value);
+
+        Json nest = Read("[[1,2,3],2,3]");
+        Json first = (Json)nest[0];
+        Assert.AreEqual(3,nest.Count);
+        
+        Assert.AreEqual(3,first.Count);
+        Assert.AreEqual(1L,first[0].Value);
+        Assert.AreEqual(2L,first[1].Value);
+        Assert.AreEqual(3L,first[2].Value);
+        
+        Assert.AreEqual(2L,nest[1].Value);
+        Assert.AreEqual(3L,nest[2].Value);
+      }
+
+      [TestMethod()]
+      public void ReadDictJsonTest()
+      {
+        Json simple = Read("{foo:1, bar:2, baz:3}");
+        Assert.AreEqual(1L,simple["foo"].Value);
+        Assert.AreEqual(2L,simple["bar"].Value);
+        Assert.AreEqual(3L,simple["baz"].Value);
+        
+        Assert.AreEqual(1L,Read("{\"foo\":1}")["foo"].Value);
+        Assert.AreEqual(":D",Read("{\"foo\":\":D\"}")["foo"].Value);
+
+        Json nest = Read("{foo:{hoge:1, fuga:2}, bar:2, baz:3}");
+        Assert.AreEqual(1L,nest["foo"]["hoge"].Value);
+        Assert.AreEqual(2L,nest["foo"]["fuga"].Value);
+        Assert.AreEqual(2L,nest["bar"].Value);
+        Assert.AreEqual(3L,nest["baz"].Value);
+      }
     }
 }
