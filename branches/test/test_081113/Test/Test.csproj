@@ -60,6 +60,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\JsonConverters\CoordinateConverterTest.cs" />
+    <Compile Include="Core\JsonConverters\AreaConverterTest.cs" />
     <Compile Include="Core\FileContext\ResourceData\Argument\ArgumentListTest.cs" />
     <Compile Include="Base\CommandManager\CommandManagerTest.cs" />
     <Compile Include="Base\CommandManager\GeneralCommandTest.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Base\CommandManager\MacroCommandTest.cs" />
     <Compile Include="Core\JsonConverters\ArcConverterTest.cs" />
     <Compile Include="Core\JsonConverters\JsonConverterTest.cs" />
+    <Compile Include="Core\JsonConverters\SizeConverterTest.cs" />
     <Compile Include="Third\NewtonJson\EnumConverterTest.cs" />
     <Compile Include="Third\NewtonJson\NewtonsoftJsonTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
