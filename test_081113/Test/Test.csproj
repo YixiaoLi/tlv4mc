@@ -72,6 +72,8 @@
     <Compile Include="Base\Expression\ComparisonExpressionTest.cs" />
     <Compile Include="Base\CommandManager\MacroCommandTest.cs" />
     <Compile Include="Core\JsonConverters\ArcConverterTest.cs" />
+    <Compile Include="Core\JsonConverters\GeneralNamedCollectionConverterTest.cs" />
+    <Compile Include="Core\JsonConverters\INamedConverterTest.cs" />
     <Compile Include="Core\JsonConverters\JsonConverterTest.cs" />
     <Compile Include="Core\JsonConverters\SizeConverterTest.cs" />
     <Compile Include="Third\NewtonJson\EnumConverterTest.cs" />
