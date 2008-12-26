@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class Figure
+	public class Figure : ICloneable
 	{
 		public string Condition { get; set; }
 		public Figures Figures { get; set; }
@@ -18,5 +18,24 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 
 		}
+
+		public object Clone()
+		{
+			Figure fg = new Figure();
+			fg.Condition = this.Condition;
+			fg.Shape = this.Shape;
+			fg.Figures = this.Figures;
+			if (this.Figures != null)
+			{
+				foreach(Figure f in this.Figures)
+				{
+					fg.Figures.Add((Figure)f.Clone());
+				}
+			}
+			fg.Args = this.Args;
+
+			return fg;
+		}
+
 	}
 }

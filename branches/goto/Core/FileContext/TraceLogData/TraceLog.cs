@@ -11,7 +11,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class TraceLog
+	public class TraceLog : ICloneable
 	{
 		public string Time { get; private set; }
 		public string Object { get; private set; }
@@ -78,9 +78,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 
 		}
+
 		public static implicit operator string(TraceLog stdlog)
 		{
 			return stdlog.ToString();
+		}
+		public static implicit operator TraceLog(string str)
+		{
+			return new TraceLog(str);
 		}
 
 		public override string ToString()
@@ -145,6 +150,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 
 			return argList;
+		}
+
+		public object Clone()
+		{
+			TraceLog log = new TraceLog(_log);
+			return log;
 		}
 	}
 }

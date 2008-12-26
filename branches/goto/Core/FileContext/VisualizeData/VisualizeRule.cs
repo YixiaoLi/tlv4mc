@@ -22,7 +22,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		}
 		public string DisplayName { get; set; }
 		public string Target { get; set; }
-		public Event[] Events { get; set; }
+		public GeneralNamedCollection<Event> Events { get; set; }
 
 		public bool IsBelongedTargetResourceType()
 		{

@@ -106,7 +106,6 @@
     <Compile Include="FileContext\VisualizeData\Figure.cs" />
     <Compile Include="FileContext\VisualizeData\Figures.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\Font.cs" />
-    <Compile Include="FileContext\VisualizeData\Shape\GraphicsExtension.cs" />
     <Compile Include="Base\GeneralNamedCollection.cs" />
     <Compile Include="Base\INamed.cs" />
     <Compile Include="Controls\TraceLogViewer.cs">
@@ -191,6 +190,7 @@
     <Compile Include="JsonConverters\CoordinateConverter.cs" />
     <Compile Include="JsonConverters\ResourceHeaderConverter.cs" />
     <Compile Include="JsonConverters\TimeConverter.cs" />
+    <Compile Include="JsonConverters\TimeLineConverter.cs" />
     <Compile Include="JsonConverters\TraceLogConverter.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

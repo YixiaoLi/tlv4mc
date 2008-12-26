@@ -11,10 +11,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
 	partial class TimeLineVisualizer : TimeLineControl
 	{
-		private	VisualizeRule _rule;
+		private VisualizeRule _rule;
 		private Event _evnt;
+		private List<Event> _evnts = new List<Event>();
+		private List<DrawShape> _drawShapes = new List<DrawShape>();
 		private Resource _target;
 		private LogDataEnumeable _logData;
+
+		public VisualizeRule Rule { get { return _rule; } }
+		public Event Event { get { return _evnt; } }
+		public Resource Target { get { return _target; } }
 
 		public TimeLineVisualizer(VisualizeRule rule)
 			: this(rule, null, null) { }
@@ -52,136 +58,355 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			_logData = new LogDataEnumeable(_data.TraceLogData.LogDataBase);
 			_logData.Filter(_target);
+
+			if (_rule != null && _evnt == null)
+			{
+				addEvents(_rule);
+			}
+			else if (_rule == null && _evnt != null)
+			{
+				_evnts.Add(_evnt);
+			}
+			else if (_rule == null && _evnt == null && _target != null)
+			{
+				foreach (VisualizeRule r in _data.VisualizeData.VisualizeRules.Where<VisualizeRule>(r => r.Target == _target.Type))
+				{
+				    addEvents(r);
+				}
+			}
+
+			foreach(Event evnt in _evnts)
+			{
+				addDrawShapeFromEvent(evnt);
+			}
+		}
+
+		private void addEvents(VisualizeRule rule)
+		{
+			foreach (Event evnt in rule.Events)
+			{
+				_evnts.Add(evnt);
+			}
+		}
+
+		private void addDrawShapeFromEvent(Event evnt)
+		{
+			if(evnt.When != null && evnt.From == null && evnt.To == null)
+				addDrawShapeFromWhenEvent(evnt);
+			else if(evnt.When == null && evnt.From != null && evnt.To != null)
+				addDrawShapeFromBetweenEvent(evnt);
+		}
+
+		private void addDrawShapeFromBetweenEvent(Event evnt)
+		{
+			Stack<LogData> fromLogStack = new Stack<LogData>();
+			Stack<TraceLog> toLogStack = new Stack<TraceLog>();
+			Stack<IEnumerable<Resource>> toResStack = new Stack<IEnumerable<Resource>>();
+
+			LogDataEnumeable fromLogData;
+			LogDataEnumeable toLogData;
+
+			TraceLog fromLog = applyTARGET("TARGET", evnt.From, _target);
+			TraceLog toLog = applyTARGET("TARGET", evnt.To, _target);
+
+			if (fromLog.Attribute != null && fromLog.Behavior == null)
+				fromLogData = new LogDataEnumeable(_logData.GetEnumerator<AttributeChangeLogData>(fromLog.Attribute, fromLog.Value));
+			else if (fromLog.Attribute == null && fromLog.Behavior != null)
+				fromLogData = new LogDataEnumeable(_logData.GetEnumerator<BehaviorHappenLogData>(fromLog.Behavior, fromLog.Arguments != null ? fromLog.Arguments.Split(',') : null));
+			else
+				fromLogData = new LogDataEnumeable(_logData);
+
+			if (toLog.Attribute != null && toLog.Behavior == null)
+				toLogData = new LogDataEnumeable(_logData.GetEnumerator<AttributeChangeLogData>(toLog.Attribute));
+			else if (toLog.Attribute == null && toLog.Behavior != null)
+				toLogData = new LogDataEnumeable(_logData.GetEnumerator<BehaviorHappenLogData>(toLog.Behavior));
+			else
+				toLogData = new LogDataEnumeable(_logData);
+
+			LogDataEnumeable logData = fromLogData + toLogData;
+
+			IEnumerable<Resource> fromRes = _data.TraceLogData.GetObject(fromLog.ObjectName != null ? fromLog.ObjectName : fromLog.ObjectType);
+
+			TraceLog tmpToLog = null;
+			IEnumerable<Resource> toRes = null;
+
+			foreach (LogData log in logData)
+			{
+				if (tmpToLog != null && toRes != null && log.CheckAttributeOrBehavior(tmpToLog) && toRes.Contains(log.Object))
+				{
+					LogData fl = fromLogStack.Pop();
+					if (toLogStack.Count != 0 && toResStack.Count != 0)
+					{
+						tmpToLog = toLogStack.Pop();
+						toRes = toResStack.Pop();
+					}
+					else
+					{
+						tmpToLog = null;
+						toRes = null;
+					}
+
+					addDrawShape(evnt.Figures, fl, log, evnt);
+				}
+				if (log.CheckAttributeOrBehavior(fromLog) && fromRes.Contains(log.Object))
+				{
+					fromLogStack.Push(log);
+
+					if (tmpToLog != null)
+						toLogStack.Push(tmpToLog);
+
+					tmpToLog = applyTARGET("FROM_TARGET", toLog, log.Object);
+					if(log is AttributeChangeLogData)
+						tmpToLog = applyVAL("FROM_VAL", tmpToLog, ((AttributeChangeLogData)log).Attribute.Value.ToString());
+					if (log is BehaviorHappenLogData)
+						tmpToLog = applyARG("FROM_ARG", tmpToLog, ((BehaviorHappenLogData)log).Behavior.Arguments.ToString().Split(','));
+
+					toRes = _data.TraceLogData.GetObject(tmpToLog.ObjectName != null ? tmpToLog.ObjectName : tmpToLog.ObjectType);
+				}
+			}
+
+		}
+
+		private void addDrawShapeFromWhenEvent(Event evnt)
+		{
+			LogDataEnumeable logData;
+			TraceLog log = applyTARGET("TARGET", evnt.When, _target);
+
+			if (log.Attribute != null && log.Behavior == null)
+				logData = new LogDataEnumeable(_logData.GetEnumerator<AttributeChangeLogData>(log.Attribute, log.Value));
+			else if (log.Attribute == null && log.Behavior != null)
+				logData = new LogDataEnumeable(_logData.GetEnumerator<BehaviorHappenLogData>(log.Behavior, log.Arguments != null ? log.Arguments.Split(',') : null));
+			else
+				logData = new LogDataEnumeable(_logData);
+
+			IEnumerable<Resource> res = _data.TraceLogData.GetObject(log.Object);
+
+			foreach(LogData[] logs in logData.GetPrevPostSetEnumerator())
+			{
+				if (res.Contains(logs[1].Object))
+				{
+					addDrawShape(evnt.Figures, logs[1], logs[2], evnt);
+				}
+			}
+		}
+
+		private void addDrawShape(Figures figures, LogData from, LogData to, Event evnt)
+		{
+
+			Time fromTime = from == null ? _data.TraceLogData.MinTime : from.Time;
+			Time toTime = to == null ? _data.TraceLogData.MaxTime : to.Time;
+
+			foreach (Figure fg in figures)
+			{
+				string condition = fg.Condition;
+
+				condition = applyTemplate(from, to, condition);
+				condition = TLVFunction.Apply(condition, _data.ResourceData, _data.TraceLogData);
+
+				string[] spArgs = null;
+
+				if (fg.Args != null)
+				{
+					spArgs = new string[fg.Args.Length];
+
+					for (int i = 0; i < fg.Args.Length; i++)
+					{
+						spArgs[i] = applyTemplate(from, to, fg.Args[i]);
+						spArgs[i] = TLVFunction.Apply(spArgs[i], _data.ResourceData, _data.TraceLogData);
+					}
+				}
+				
+				if (checkCondition(condition))
+				{
+					if (fg.IsFigures)
+					{
+						addDrawShape(fg.Figures, from, to, evnt);
+					}
+					else if (fg.IsShape)
+					{
+						foreach(Shape sp in _data.VisualizeData.Shapes[fg.Shape])
+						{
+							Shape s = (Shape)sp.Clone();
+
+							if (spArgs != null && spArgs.Count() != 0)
+								s.SetArgs(spArgs);
+
+							DrawShape ds = new DrawShape(fromTime, toTime, s, evnt);
+
+							_drawShapes.Add(ds);
+						}
+					}
+				}
+			}
+		}
+
+		private string applyTemplate(LogData from, LogData to, string condition)
+		{
+			if (condition != null)
+			{
+				if (condition.Contains("TARGET"))
+				{
+					condition = applyTARGET("TARGET", condition, _target);
+					if (from != null && condition.Contains("FROM"))
+					{
+						condition = applyTARGET("FROM_TARGET", condition, from.Object);
+					}
+					if (to != null && condition.Contains("TO"))
+					{
+						condition = applyTARGET("TO_TARGET", condition, to.Object);
+					}
+				}
+
+				if (from != null)
+				{
+
+					if (from is AttributeChangeLogData && condition.Contains("VAL"))
+					{
+						condition = applyVAL("FROM_VAL", condition, ((AttributeChangeLogData)from).Attribute.Value.ToString());
+						condition = applyVAL("VAL", condition, ((AttributeChangeLogData)from).Attribute.Value.ToString());
+					}
+
+					if (from is BehaviorHappenLogData && condition.Contains("ARG"))
+					{
+						condition = applyARG("FROM_ARG", condition, ((BehaviorHappenLogData)from).Behavior.Arguments.ToString().Split(','));
+						condition = applyARG("ARG", condition, ((BehaviorHappenLogData)from).Behavior.Arguments.ToString().Split(','));
+					}
+				}
+				if (to != null)
+				{
+
+					if (to is AttributeChangeLogData && condition.Contains("VAL"))
+					{
+						condition = applyVAL("TO_VAL", condition, ((AttributeChangeLogData)to).Attribute.Value.ToString());
+						condition = applyVAL("VAL", condition, ((AttributeChangeLogData)to).Attribute.Value.ToString());
+					}
+
+					if (to is BehaviorHappenLogData && condition.Contains("ARG"))
+					{
+						condition = applyARG("TO_ARG", condition, ((BehaviorHappenLogData)to).Behavior.Arguments.ToString().Split(','));
+						condition = applyARG("ARG", condition, ((BehaviorHappenLogData)to).Behavior.Arguments.ToString().Split(','));
+					}
+				}
+			}
+			return condition;
 		}
 
 		public override void Draw(PaintEventArgs e)
 		{
-			base.Draw(e);
+			PaintEventArgs ea = e;
 
-			//if (TimeLine == null)
-			//    return;
+			base.Draw(ea);
 
-			//if (_logData == null)
-			//    return;
+			if (TimeLine == null)
+				return;
 
-			//if(_rule != null && _evnt == null && _target == null)
-			//{
-			//    drawRule(e, _rule, null);
-			//}
-			//else if(_rule == null && _evnt != null && _target == null)
-			//{
-			//    drawEvent(e, _evnt, null);
-			//}
-			//else if(_rule == null && _evnt == null && _target != null)
-			//{
-			//    foreach (VisualizeRule rule in _data.VisualizeData.VisualizeRules.Where<VisualizeRule>(r => r.Target == _target.Type))
-			//    {
-			//        drawRule(e, rule, _target);
-			//    }
-			//}
-			//else if(_rule != null && _evnt == null && _target != null)
-			//{
-			//    drawRule(e, _rule, _target);
-			//}
-			//else if (_rule == null && _evnt != null && _target != null)
-			//{
-			//    drawEvent(e, _evnt, _target);
-			//}
+			if (_drawShapes == null)
+				return;
 
+			if (ea.ClipRectangle.Width == 0)
+				return;
+
+			foreach (DrawShape ds in _drawShapes.Where<DrawShape>(ds =>
+				_data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(ds.Event.GetVisualizeRuleName(), ds.Event.Name)
+				&& _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(ds.Event.GetVisualizeRuleName(), ds.Event.Name)
+				&& ds.To > TimeLine.FromTime && ds.From < TimeLine.ToTime))
+			{
+				float x1 = ds.From.ToX(TimeLine.FromTime, TimeLine.ToTime, ea.ClipRectangle.Width);
+				float w = ds.To.ToX(TimeLine.FromTime, TimeLine.ToTime, ea.ClipRectangle.Width) - x1;
+
+				if (w <= 0)
+					w = 1;
+
+				ds.Shape.Draw(ea.Graphics, new RectangleF(ea.ClipRectangle.X + x1, ea.ClipRectangle.Y, w, ea.ClipRectangle.Height));
+			}
 		}
 
-		//protected void drawRule(PaintEventArgs e, VisualizeRule rule, Resource target)
-		//{
-		//    foreach (Event evnt in rule.Events.Where(_e => _data.SettingData.VisualizeRuleExplorerSetting.Check(rule, _e, target)))
-		//    {
-		//        drawEvent(e, evnt, target);
-		//    }
-		//}
+		protected string applyTARGET(string type, string log, Resource resource)
+		{
+			if (resource == null)
+				return log;
 
-		//protected void drawEvent(PaintEventArgs e, Event evnt, Resource target)
-		//{
-		//    if (TimeLine.ViewingSpan.Value == 0)
-		//        return;
+			if (!new string[] { "TARGET", "FROM_TARGET", "TO_TARGET" }.Contains(type))
+				throw new ArgumentException("targetはTARGET, FROM_TARGET, TO_TARGETのいずれかでなければなりません。");
 
-		//    if ((evnt.Type & EventTypes.Between) == EventTypes.Between)
-		//    {
-		//        if ((evnt.Type & EventTypes.FromAttributeChange) == EventTypes.FromAttributeChange)
-		//        {
+			string logstr = log;
+			logstr = Regex.Replace(logstr, @"\${" + type + "}", resource.Name);
+			return logstr;
+		}
 
-		//        }
-		//        else if ((evnt.Type & EventTypes.FromBehaviorHappen) == EventTypes.FromBehaviorHappen)
-		//        {
+		protected TraceLog applyTARGET(string type, TraceLog log, Resource resource)
+		{
+			return new TraceLog(applyTARGET(type, log.ToString(), resource));
+		}
 
-		//        }
+		protected string applyVAL(string type, string log, string value)
+		{
+			if (value == null)
+				throw new ArgumentException("valueがnullです。");
 
-		//        if ((evnt.Type & EventTypes.ToAttributeChange) == EventTypes.ToAttributeChange)
-		//        {
+			if (!new string[] { "VAL", "FROM_VAL", "TO_VAL" }.Contains(type))
+				throw new ArgumentException("typeはVAL, FROM_VAL, TO_VALのいずれかでなければなりません。");
 
-		//        }
-		//        else if ((evnt.Type & EventTypes.ToBehaviorHappen) == EventTypes.ToBehaviorHappen)
-		//        {
+			string logstr = log;
+			logstr = Regex.Replace(logstr, @"\${" + type + "}", value);
+			return logstr;
+		}
 
-		//        }
-		//    }
-		//    else if ((evnt.Type & EventTypes.When) == EventTypes.When)
-		//    {
-		//        if ((evnt.Type & EventTypes.WhenAttributeChange) == EventTypes.WhenAttributeChange)
-		//        {
-		//            drawWhenEvent(e, evnt, target, _logData.GetEnumerator<AttributeChangeLogData>(evnt.When.Attribute));
-		//        }
-		//        else if ((evnt.Type & EventTypes.WhenBehaviorHappen) == EventTypes.WhenBehaviorHappen)
-		//        {
-		//            drawWhenEvent(e, evnt, target, _logData.GetEnumerator<BehaviorHappenLogData>(evnt.When.Behavior));
-		//        }
-		//    }
-		//}
+		protected TraceLog applyVAL(string type, TraceLog log, string value)
+		{
+			return new TraceLog(applyVAL(type, log.ToString(), value));
+		}
 
-		//protected void drawWhenEvent(PaintEventArgs e, Event evnt, Resource target, IEnumerable<LogData> list)
-		//{
-		//    LogDataEnumeable data = new LogDataEnumeable(list);
-		//    data.Filter(TimeLine.FromTime, TimeLine.ToTime, true, true);
+		protected string applyARG(string type, string log, string[] args)
+		{
+			if (!new string[] { "ARG", "FROM_ARG", "TO_ARG" }.Contains(type))
+				throw new ArgumentException("typeはARG, FROM_ARG, TO_ARGのいずれかでなければなりません。");
 
-		//    foreach (LogData[] l in data.GetPrevPostSetEnumerator())
-		//    {
-		//        float sx = l[1].Time.ToX(TimeLine.FromTime, TimeLine.ToTime, e.ClipRectangle.Width);
+			string logstr = log;
+			foreach (Match m in Regex.Matches(logstr, @"\${" + type + @"(?<id>\d+)}"))
+			{
+				int id = int.Parse(m.Groups["id"].Value);
+				string arg = m.Value;
+				string value = string.Empty;
 
-		//        float w = ((l[2] == null) ? _data.TraceLogData.MaxTime.ToX(TimeLine.FromTime, TimeLine.ToTime, e.ClipRectangle.Width) : l[2].Time.ToX(TimeLine.FromTime, TimeLine.ToTime, e.ClipRectangle.Width)) - l[1].Time.ToX(TimeLine.FromTime, TimeLine.ToTime, e.ClipRectangle.Width);
+				if (args != null && args.Length > id)
+					value = args[id];
 
-		//        if (w == 0f)
-		//            continue;
+				logstr = Regex.Replace(logstr, @"\${" + type + id.ToString() + @"}", value);
+			}
+			return logstr;
+		}
 
-		//        foreach (KeyValuePair<string, GeneralNamedCollection<ShapeArgPair>> kvp in evnt.Figures)
-		//        {
-		//            drawShape(kvp.Key, l[1], evnt, target, kvp.Value, e.Graphics, new RectangleF(e.ClipRectangle.X + sx, e.ClipRectangle.Y, w, e.ClipRectangle.Height));
-		//        }
-		//    }
-		//}
+		protected TraceLog applyARG(string type, TraceLog log, string[] args)
+		{
+			return new TraceLog(applyARG(type, log.ToString(), args));
+		}
 
-		//protected void drawShape(string condition, LogData log, Event evnt, Resource target, GeneralNamedCollection<ShapeArgPair> shapes, Graphics g, RectangleF rect)
-		//{
-		//    if (ConditionExpression.Result(applyValue(condition, log, evnt, target)))
-		//    {
-		//        foreach (ShapeArgPair sap in shapes)
-		//        {
-		//            foreach (Shape s in _data.VisualizeData.Shapes[sap.Name])
-		//            {
-		//                g.DrawShape(s, sap.Args, rect);
-		//            }
-		//        }
-		//    }
-		//}
+		protected bool checkCondition(string condition)
+		{
+			if (condition == null)
+				return true;
 
-		//protected string applyValue(string condition, LogData log, Event evnt, Resource target)
-		//{
-		//    if (log is AttributeChangeLogData && evnt.When.Value != null)
-		//    {
-		//        return Regex.Replace(((AttributeChangeLogData)log).Attribute.Value.ToString(), evnt.When.Value, condition);
-		//    }
-		//    else if (log is BehaviorHappenLogData && evnt.When.Arguments != null)
-		//    {
-		//        return Regex.Replace(((BehaviorHappenLogData)log).Behavior.Arguments.ToString(), evnt.When.Arguments, condition);
-		//    }
-		//    return condition;
-		//}
+			return ConditionExpression.Result(condition);
+		}
+
+		class DrawShape
+		{
+			public Time From { get; set; }
+			public Time To { get; set; }
+			public Shape Shape { get; set; }
+			public Event Event { get; set; }
+
+			public DrawShape(Time from, Time to, Shape shape, Event evnt)
+			{
+				From = from;
+				To = to;
+				Shape = shape;
+				Event = evnt;
+				Shape.SetDefaultValue();
+
+				Shape.ChackValidate();
+			}
+		}
 	}
 }

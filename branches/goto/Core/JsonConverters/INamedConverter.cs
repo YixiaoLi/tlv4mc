@@ -43,7 +43,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					{
 						foreach (PropertyInfo pi in obj.GetType().GetProperties())
 						{
-							if (pi.Name != "Name")
+							if (pi.Name != "Name" && pi.GetValue(obj, null) != null)
 							{
 								w.WriteProperty(pi.Name);
 								w.WriteValue(pi.GetValue(obj, null), ApplicationFactory.JsonSerializer);

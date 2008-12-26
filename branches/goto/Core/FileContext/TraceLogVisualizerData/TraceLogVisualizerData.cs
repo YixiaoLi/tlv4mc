@@ -74,7 +74,20 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			TraceLogData = traceLogData;
 			VisualizeData = visualizeData;
 			SettingData = settingData;
+
+			setVisualizeRuleToEvent();
         }
+
+		private void setVisualizeRuleToEvent()
+		{
+			foreach (VisualizeRule rule in VisualizeData.VisualizeRules)
+			{
+				foreach (Event evnt in rule.Events)
+				{
+					evnt.SetVisualizeRuleName(rule.Name);
+				}
+			}
+		}
 
         /// <summary>
         /// パスを指定してシリアライズ
@@ -134,6 +147,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			TraceLogData = new TraceLogData(log, res);
 			VisualizeData = viz;
 			SettingData = setting;
+			
+			setVisualizeRuleToEvent();
 
 			Directory.Delete(targetTmpDirPath, true);
         }

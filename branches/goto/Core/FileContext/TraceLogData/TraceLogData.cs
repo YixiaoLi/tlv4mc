@@ -28,6 +28,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				Add(log);
 			}
+
+			LogDataBase.SetIds();
 		}
 		public TraceLogData(ResourceData resourceData)
 			:base()
@@ -157,6 +159,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			if (!m.Groups["condition"].Success)
 			{
+				if (_resourceData.ResourceHeaders.ResourceTypes.Any(r => r.Name == type))
+				{
+					foreach(Resource res in _resourceData.Resources.Where<Resource>(r=>r.Type == type))
+					{
+						yield return res;
+					}
+				}
+
 				if (!_resourceData.Resources.ContainsKey(type))
 					throw new Exception("オブジェクト指定のフォーマットが異常です。\n" + "\"" + type + "\"という名前のリソースはありません。");
 
@@ -193,20 +203,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						}
 						else
 						{
-							try
+							logData = LogDataBase.LastOrDefault<LogData>((d) =>
 							{
-								logData = LogDataBase.Last<LogData>((d) =>
-								{
-									return d.Object.Name == res.Name
-										&& d.Type == TraceLogType.AttributeChange
-										&& ((AttributeChangeLogData)d).Attribute.Name == kvp.Key
-										&& d.Time <= time;
-								});
-							}
-							catch
-							{
-								logData = null;
-							}
+								return d.Object.Name == res.Name
+									&& d.Type == TraceLogType.AttributeChange
+									&& ((AttributeChangeLogData)d).Attribute.Name == kvp.Key
+									&& d.Time <= time;
+							});
 
 							if (logData != null)
 								value = ((AttributeChangeLogData)logData).Attribute.Value.ToString();

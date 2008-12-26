@@ -196,13 +196,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			s = Regex.Replace(s, @"\s", "");
 
-			Match m = Regex.Match(s, @"(?<name>[^\(]+)(\((?<args>[^\)]*)\))?");
+			Match m = Regex.Match(s, @"(?<name>[^\(]+)(\((?<args>.*)\)$)?");
 
 			result.Shape = m.Groups["name"].Value;
-	
-			if (m.Groups["args"].Value != string.Empty)
-				result.Args= m.Groups["args"].Value.Split(',');
+			string args = m.Groups["args"].Value;
 
+			if (args != string.Empty)
+			{
+				result.Args = args.Split(',');
+			}
 			return result;
 		}
 

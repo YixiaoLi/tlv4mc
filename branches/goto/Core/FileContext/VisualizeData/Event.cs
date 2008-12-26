@@ -7,13 +7,35 @@ using NU.OJL.MPRTOS.TLV.Core;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class Event
+	public class Event : INamed
 	{
+		private string _ruleName = string.Empty;
+		private string _name = string.Empty;
+		public string Name
+		{
+			get { return _name; }
+			set
+			{
+				_name = value;
+				if (DisplayName == null)
+					DisplayName = value;
+			}
+		}
 		public string DisplayName { get; set; }
 		public TraceLog From { get; set; }
 		public TraceLog To { get; set; }
 		public TraceLog When { get; set; }
 		public Figures Figures { get; set; }
+
+		public void SetVisualizeRuleName(string name)
+		{
+			_ruleName = name;
+		}
+
+		public string GetVisualizeRuleName()
+		{
+			return _ruleName;
+		}
 
 		public string getImageKey()
 		{

@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
+using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
@@ -26,6 +27,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
+
+			this.ApplyNativeScroll();
 
 			ApplicationData.FileContext.DataChanged += (o, _e) =>
 			{

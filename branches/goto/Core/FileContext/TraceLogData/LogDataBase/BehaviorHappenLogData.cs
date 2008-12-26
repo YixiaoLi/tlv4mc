@@ -15,5 +15,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			Behavior = new Behavior(behavior, args);
 		}
+
+		public override string ToString()
+		{
+			return base.ToString() + "." + Behavior.Name + "(" + (Behavior.Arguments != null && Behavior.Arguments.Count != 0 ? Behavior.Arguments.ToString() : string.Empty) + ")";
+		}
 	}
 }

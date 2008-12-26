@@ -76,6 +76,7 @@ C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\ResolveAssemblyReference.cache
 C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.OpenResourceFileAndTraceLogFileOpenForm.resources
 C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.MainForm.resources
 C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.ResourceExplorer.resources
+C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.TimeLineControl.resources
 C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.TimeLineVisualizer.resources
 C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.VisualizeRuleExplorer.resources
 C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.TraceLogDisplayPanel.resources
@@ -84,4 +85,3 @@ C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Properties
 C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\Core.csproj.GenerateResource.Cache
 C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.dll
 C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.pdb
-C:\junji\doc\school\ojl\tlv\src\Core\obj\Debug\NU.OJL.MPRTOS.TLV.Core.Controls.TimeLineControl.resources

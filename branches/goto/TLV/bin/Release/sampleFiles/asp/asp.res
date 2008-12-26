@@ -9,6 +9,7 @@
 		"LOGTASK":{
 			"DisplayName":"ログタスク",
 			"Type"	:"Task",
+			"Color" :"ff0000",
 			"Attributes":
 			{
 				"prcId"	:1,
@@ -23,6 +24,7 @@
 		},
 		"TASK1":{
 			"Type"	:"Task",
+			"Color" :"00ff00",
 			"Attributes":
 			{
 				"prcId"	:1,
@@ -37,6 +39,7 @@
 		},
 		"TASK2":{
 			"Type"	:"Task",
+			"Color" :"ff00ff",
 			"Attributes":
 			{
 				"prcId"	:2,
@@ -51,6 +54,7 @@
 		},
 		"TASK3":{
 			"Type"	:"Task",
+			"Color" :"00ffff",
 			"Attributes":
 			{
 				"prcId"	:2,
@@ -65,6 +69,7 @@
 		},
 		"MAIN_TASK":{
 			"Type"	:"Task",
+			"Color" :"0000ff",
 			"Attributes":
 			{
 				"prcId"	:1,

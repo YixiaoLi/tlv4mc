@@ -8,7 +8,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public enum TraceLogType
 	{
 		AttributeChange,
-		BehaviorHappen
+		BehaviorHappen,
+		None
 	}
 
 	public static class LogTypeExtension

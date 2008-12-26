@@ -43,10 +43,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			if (TemporaryDirectoryPath == null)
 				TemporaryDirectoryPath = Path.Combine(Path.GetTempPath(), NU.OJL.MPRTOS.TLV.Core.Properties.Resources.DefaultTemporaryDirectoryName);
 
-			if (DefaultResourceVisible == null)
+			if (this["DefaultResourceVisible"] == null)
 				DefaultResourceVisible = true;
 
-			if (DefaultVisualizeRuleVisible == null)
+			if (this["DefaultVisualizeRuleVisible"] == null)
 				DefaultVisualizeRuleVisible = true;
 		}
 	}

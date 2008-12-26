@@ -29,7 +29,13 @@
 			},
 			"[${time}]$RES_NAME{Task(id==${id})}.state=${state}"
 		],
-		"\[(?<time>\d+)\] enter to (?<name>\w+) ?(?<args>.*)\."	:"[${time}]$RES_NAME{Task(state==RUNNING)}.enterSVC(${name}, ${args})",
-		"\[(?<time>\d+)\] leave to (?<name>\w+) ?(?<args>.*)\."	:"[${time}]$RES_NAME{Task(state==RUNNING)}.leaveSVC(${name}, ${args})"
+		"\[(?<time>\d+)\] enter to (?<name>\w+) ?(?<args>.*)\."	:
+		{
+            "$EXIST{Task(state==RUNNING)}"	:"[${time}]$RES_NAME{Task(state==RUNNING)}.enterSVC(${name}, ${args})"
+        },
+		"\[(?<time>\d+)\] leave to (?<name>\w+) ?(?<args>.*)\."	:
+		{
+            "$EXIST{Task(state==RUNNING)}"	:"[${time}]$RES_NAME{Task(state==RUNNING)}.leaveSVC(${name}, ${args})"
+        }
 	}
 }

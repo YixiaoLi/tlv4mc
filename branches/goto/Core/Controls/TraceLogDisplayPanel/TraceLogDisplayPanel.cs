@@ -79,7 +79,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			base.SetData(data);
 
-			_data.SettingData.TraceLogDisplayPanelSetting.TimeLine = new TimeLine(_data.TraceLogData.MinTime, _data.TraceLogData.MaxTime);
+			if (_data.SettingData.TraceLogDisplayPanelSetting.TimeLine == null)
+				_data.SettingData.TraceLogDisplayPanelSetting.TimeLine = new TimeLine(_data.TraceLogData.MinTime, _data.TraceLogData.MaxTime);
+			
 			TimeLine = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine;
 
 			topTimeLineScale.TimeLine = TimeLine;
@@ -122,6 +124,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		private void setNodes()
 		{
+			// 可視化ルール行の追加
+			// ノード名「ルール.Name」-「イベント.Name」
 			foreach (VisualizeRule vizRule in _data.VisualizeData.VisualizeRules.Where<VisualizeRule>(v => !v.IsBelongedTargetResourceType()))
 			{
 				TimeLineVisualizer tlv = new TimeLineVisualizer(vizRule);
@@ -129,41 +133,46 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				treeGridView.Add(vizRule.Name, vizRule.DisplayName, "", tlv);
 				treeGridView.Nodes[vizRule.Name].Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
 				treeGridView.Nodes[vizRule.Name].Image = imageList.Images["visualize"];
+				
+				// 可視化ルール内のイベント行の追加
 				foreach (Event e in vizRule.Events)
 				{
 					TimeLineVisualizer _tlv = new TimeLineVisualizer(vizRule, e);
 					_list.Add(_tlv);
-					treeGridView.Nodes[vizRule.Name].Add(e.DisplayName, e.DisplayName, "", _tlv);
-					treeGridView.Nodes[vizRule.Name].Nodes[e.DisplayName].Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name, e.DisplayName) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
-					treeGridView.Nodes[vizRule.Name].Nodes[e.DisplayName].Image = imageList.Images[e.getImageKey()];
+					treeGridView.Nodes[vizRule.Name].Add(e.Name, e.DisplayName, "", _tlv);
+					treeGridView.Nodes[vizRule.Name].Nodes[e.Name].Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name, e.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name, e.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
+					treeGridView.Nodes[vizRule.Name].Nodes[e.Name].Image = imageList.Images[e.getImageKey()];
 				}
 			}
+
+			// リソースに属する可視化ルールの追加
+			// ノード名「リソース.Name」-「ルール.Name」-「イベント.Name」
 			foreach (VisualizeRule vizRule in _data.VisualizeData.VisualizeRules.Where<VisualizeRule>(v => v.IsBelongedTargetResourceType()))
 			{
 				foreach (Resource res in _data.ResourceData.Resources.Where<Resource>(r => r.Type == vizRule.Target))
 				{
-					if (!treeGridView.Nodes.ContainsKey(res.Type + ":" + res.Name))
+					if (!treeGridView.Nodes.ContainsKey(res.Name))
 					{
 						TimeLineVisualizer _tlv = new TimeLineVisualizer(res);
 						_list.Add(_tlv);
-						treeGridView.Add(res.Type + ":" + res.Name, res.DisplayName, "", _tlv);
-						treeGridView.Nodes[res.Type + ":" + res.Name].Visible = _data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Type + ":" + res.Name) ? _data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(res.Type + ":" + res.Name) : ApplicationData.Setting.DefaultResourceVisible;
-						treeGridView.Nodes[res.Type + ":" + res.Name].Image = imageList.Images["resource"];
+						treeGridView.Add(res.Name, res.DisplayName, "", _tlv);
+						treeGridView.Nodes[res.Name].Visible = _data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Name) ? _data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(res.Name) : ApplicationData.Setting.DefaultResourceVisible;
+						treeGridView.Nodes[res.Name].Image = imageList.Images["resource"];
 					}
 
 					TimeLineVisualizer tlv = new TimeLineVisualizer(vizRule, res);
 					_list.Add(tlv);
-					treeGridView.Nodes[res.Type + ":" + res.Name].Add(res.Type + ":" + res.Name + ":" + vizRule.Name, vizRule.DisplayName, "", tlv);
-					treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Visible && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
-					treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Image = imageList.Images["visualize"];
+					treeGridView.Nodes[res.Name].Add(vizRule.Name, vizRule.DisplayName, "", tlv);
+					treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Visible = treeGridView.Nodes[res.Name].Visible && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
+					treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Image = imageList.Images["visualize"];
 
 					foreach (Event e in vizRule.Events)
 					{
 						TimeLineVisualizer _tlv = new TimeLineVisualizer(e, res);
 						_list.Add(_tlv);
-						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Add(e.DisplayName, e.DisplayName, "", _tlv);
-						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Nodes[e.DisplayName].Visible = treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Visible && _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res.Type, vizRule.Name, e.DisplayName) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res.Type, vizRule.Name, e.DisplayName) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
-						treeGridView.Nodes[res.Type + ":" + res.Name].Nodes[res.Type + ":" + res.Name + ":" + vizRule.Name].Nodes[e.DisplayName].Image = imageList.Images[e.getImageKey()];;
+						treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Add(e.Name, e.DisplayName, "", _tlv);
+						treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Nodes[e.Name].Visible = treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Visible && _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name, e.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name, e.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
+						treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Nodes[e.Name].Image = imageList.Images[e.getImageKey()]; ;
 					}
 				}
 			}
@@ -418,67 +427,41 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			{
 				string[] keys = kvp.Key.Split(':');
 
-				foreach (ITreeGirdViewNode node in treeGridView.Nodes.Values.Where(n => n.Name.Split(':')[0] == keys[0]))
-				{
+				// 考えられるkeys
+				// ルール
+				// ルール:イベント
 
-					if (keys.Length == 1)
+				string target = _data.VisualizeData.VisualizeRules[keys[0]].Target;
+
+				Action<ITreeGirdViewNode> nodeVisibleSet = (node) =>
 					{
-						if (node.Name.Split(':').Length > 1)
-						{
-							if (_data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys[0], node.Name.Split(':')[1]) ? _data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], node.Name.Split(':')[1]) : ApplicationData.Setting.DefaultResourceVisible)
-								node.Visible = kvp.Value;
-							else
-								node.Visible = false;
-						}
-						else if (node.Name.Split(':').Length == 1)
+						if (keys.Length == 1)
 						{
 							node.Visible = kvp.Value;
 
-							if (node.HasChildren)
-							{
-								foreach (ITreeGirdViewNode n in node.Nodes.Values)
-								{
-									if (_data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(keys[0], n.Name) ? _data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(keys[0], n.Name) : ApplicationData.Setting.DefaultResourceVisible)
-										n.Visible = kvp.Value;
-									else
-										n.Visible = false;
-								}
-							}
-						}
-					}
-					else
-					{
-						if (_data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(node.Name.Split(':'))
-							? !_data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(node.Name.Split(':'))
-							: !ApplicationData.Setting.DefaultResourceVisible)
-							continue;
-
-						foreach (ITreeGirdViewNode n in node.Nodes.Values.Where(n => n.Name.Split(':').Last() == keys[1]))
-						{
-							if (n.HasChildren && keys.Length == 3)
-							{
-								foreach (ITreeGirdViewNode _n in n.Nodes.Values.Where(_n => _n.Name == keys[2]))
-								{
-									_n.Visible = kvp.Value;
-								}
-							}
-							else
+							foreach (ITreeGirdViewNode n in node.Nodes.Values)
 							{
 								n.Visible = kvp.Value;
-
-								if (n.HasChildren)
-								{
-									foreach (ITreeGirdViewNode _n in n.Nodes.Values)
-									{
-										if (_data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(keys[0], keys[1], _n.Name)
-											? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(keys[0], keys[1], _n.Name)
-											: ApplicationData.Setting.DefaultVisualizeRuleVisible)
-											_n.Visible = kvp.Value;
-										else
-											_n.Visible = false;
-									}
-								}
 							}
+						}
+						else if (keys.Length == 2)
+						{
+							node.Nodes[keys[1]].Visible = kvp.Value;
+						}
+					};
+
+				if (target == null)
+				{
+					ITreeGirdViewNode node = treeGridView.Nodes.Values.Single(n => n.Name == keys[0]);
+					nodeVisibleSet(node);
+				}
+				else
+				{
+					foreach(ITreeGirdViewNode node in treeGridView.Nodes.Values.Where(n =>_data.ResourceData.Resources.ContainsKey(n.Name) && _data.ResourceData.Resources[n.Name].Type == target))
+					{
+						foreach(ITreeGirdViewNode n in node.Nodes.Values.Where(n=>n.Name == keys[0]))
+						{
+							nodeVisibleSet(n);
 						}
 					}
 				}
@@ -497,17 +480,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 					foreach (ITreeGirdViewNode node in treeGridView.Nodes[kvp.Key].Nodes.Values)
 					{
-						string[] res = node.Name.Split(':');
+						string[] res = new string[] { node.Name };
 
 						if (kvp.Value)
-							node.Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2]) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2]) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
+							node.Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
 						else
 							node.Visible = false;
 
 						foreach (ITreeGirdViewNode n in node.Nodes.Values)
 						{
+							string[] r = new string[] { node.Name, n.Name};
+
 							if (kvp.Value)
-								n.Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(res[0], res[2], n.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(res[0], res[2], n.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
+								n.Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(r) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(r) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
 							else
 								n.Visible = false;
 						}
@@ -533,7 +518,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			if (hScrollBar.Value != v)
 			{
 				_hScrollUpdateFlag = false;
-				hScrollBar.Value = (int)v;
+				try
+				{
+					hScrollBar.Value = (int)v;
+				}
+				catch { }
 				_hScrollUpdateFlag = true;
 			}
 		}

@@ -3,66 +3,70 @@
 		"VisualizeRules":{
 			"runningTaskChange":{
 				"DisplayName":"実行タスク変化",
-				"Events":[
-					{
+				"Events":{
+					"runningTaskChangeEvent":{
 						"DisplayName":"実行タスク",
-						"From":"Task.state=RUNNING",
+						"From":"Task(state!=RUNNING).state=RUNNING",
 						"To":"${FROM_TARGET}.state",
 						"Figures":"runningTaskChangeShapes($RES_COLOR{${FROM_TARGET}},$RES_NAME{${FROM_TARGET}})"
 					}
-				]
+				}
 			},
 			"callSvc":{
 				"DisplayName":"システムコール",
 				"Target":"Task",
-				"Events":[
-					{
+				"Events":{
+					"callSvcEvent":{
 						"DisplayName":"システムコール",
 						"From":"${TARGET}.enterSVC()",
 						"To":"${TARGET}.leaveSVC(${FROM_ARG0})",
-						"Figures":{
-                                "${FROM_ARG0}==act_tsk":"svcShapes(ff0000, act_tsk\(${FROM_ARG1}}\),$[TO_ARG1})"
-						}
+						"Figures":[
+						    {"${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk":"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"},
+						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk":"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
+						]
 					}
-				]
+		        }
 			},
 			"taskStateChange":{
 				"DisplayName":"状態遷移",
 				"Target":"Task",
-				"Events":[
-					{
+				"Events":{
+					"stateChangeEvent":{
 						"DisplayName":"状態",
 						"From":"${TARGET}.state",
 						"To":"${TARGET}.state",
 						"Figures":{
-						    "${FROM_VAL}==DORMANT"             :"dormantShapes",
-						    "${FROM_VAL}==WAITING-SUSPENDED"   :"waitingSuspendedShapes",
-						    "${FROM_VAL}==SUSPENDED"           :"suspendShapes",
-						    "${FROM_VAL}==RUNNABLE"            :"runnableShapes",
 						    "${FROM_VAL}==RUNNING"             :"runningShapes",
+						    "${FROM_VAL}==RUNNABLE"            :[
+						        "runnableShapes",
+						        {"${TO_VAL}==WAITING"  :"runnableToWaitingShapes"}
+						    ],
 						    "${FROM_VAL}==WAITING"             :[
 						        "waitingShapes",
-						        {"${TO_VAL}==RUNNABLE" :"waitingToRunnableShapes"}
-						    ]
+						        {"${TO_VAL}==RUNNABLE"  :"waitingToRunnableShapes"}
+						    ],
+						    "${FROM_VAL}==SUSPENDED"           :"suspendShapes",
+						    "${FROM_VAL}==WAITING-SUSPENDED"   :"waitingSuspendedShapes",
+						    "${FROM_VAL}==DORMANT"             :"dormantShapes"
 						}
 					},
-					{
+					"activateHappenEvent":{
 						"DisplayName":"起動",
 						"When":"${TARGET}.activate()",
 						"Figures":"activateShapes"
 					},
-					{
+					"exitHappenEvent":{
 						"DisplayName":"終了",
 						"When":"${TARGET}.exit()",
 						"Figures":"exitShapes"
 					}
-				]
+				}
 			},
 			"taskPrcIdChange":{
 				"DisplayName":"所属プロセッサ",
 				"Target":"Task",
-				"Events":[
-					{
+				"Events":{
+					"prcIdChangeEvent":{
 						"DisplayName":"プロセッサID",
 						"When":"${TARGET}.prcId",
 						"Figures":[
@@ -76,7 +80,7 @@
     						}
 						]
 					}
-				]
+				}
 			}
 		},
 		"Shapes":{
@@ -87,14 +91,14 @@
 					"Size":"100%,100%",
 					"Pen":{"Color":"${ARG0}","Width":1,"Alpha":255},
 					"Fill":"${ARG0}",
-					"Alpha":200
+					"Alpha":100
 				},
 				{
 					"Type":"Text",
-					"Location":"0,0",
-					"Size":"100%,100%",
-					"Font":{"Align":"MiddleLeft"},
-					"Value":"${ARG1}"
+					"Location":"1%,-1%",
+					"Size":"98%,98%",
+					"Font":{"Align":"TopLeft","Size":7},
+					"Text":"${ARG1}"
 				}
 			],
 			"prcIdShapes":[
@@ -105,27 +109,6 @@
 					"Pen":{"Color":"${ARG0}","Width":1,"Alpha":255},
 					"Fill":"${ARG0}",
 					"Alpha":200
-				}
-			],
-			"svcShapes":[
-				{
-					"Type":"Rectangle",
-					"Size":"20%,60%",
-					"Pen":{"Color":"${ARG0}","Width":1,"Alpha":255},
-					"Fill":"${ARG0}",
-					"Alpha":200
-				},
-				{
-					"Type":"Text",
-					"Size":"100%,100%",
-					"Font":{"Align":"MiddleLeft"},
-					"Value":"${ARG1}"
-				},
-				{
-					"Type":"Text",
-					"Size":"100%,100%",
-					"Font":{"Align":"MiddleRight"},
-					"Value":"return ${ARG2}"
 				}
 			],
 			"runningShapes":[
@@ -147,6 +130,13 @@
 				{
 					"Type":"Line",
 					"Points":["r(0),40%","r(0),80%"],
+					"Pen":{"Color":"ffffaa00","Width":1}
+				}
+			],
+			"runnableToWaitingShapes":[
+				{
+					"Type":"Line",
+					"Points":["l(0),80%","l(0),40%"],
 					"Pen":{"Color":"ffffaa00","Width":1}
 				}
 			],
@@ -190,6 +180,29 @@
 					"Type":"Arrow",
 					"Points":["0,80%","0,0"],
 					"Pen":{"Color":"ff000000","Width":1}
+				}
+			],
+			"svcShapes":[
+				{
+					"Type":"Rectangle",
+					"Size":"100%,40%",
+					"Pen":{"Color":"${ARG0}","Width":1, "Alpha":255, "DashStyle":"Dash"},
+					"Fill":"${ARG0}",
+					"Alpha":100
+				},
+				{
+					"Type":"Text",
+					"Location":"1%,0",
+					"Size":"98%,100%",
+					"Font":{"Align":"BottomLeft", "Size":7},
+					"Text":"${ARG1}"
+				},
+				{
+					"Type":"Text",
+					"Location":"1%,0",
+					"Size":"98%,100%",
+					"Font":{"Align":"BottomRight", "Size":7},
+					"Text":"return ${ARG2}"
 				}
 			]
 		}

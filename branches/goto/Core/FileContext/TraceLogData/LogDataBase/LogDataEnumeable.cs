@@ -14,7 +14,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public LogDataEnumeable(IEnumerable<LogData> list)
 		{
-			_list = list.OrderBy<LogData, Time>(l => l.Time).ToList();
+			_list = list.OrderBy<LogData, long>(l => l.Id).ToList();
 		}
 
 		public IEnumerator<LogData> GetEnumerator()
@@ -34,6 +34,19 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				return _list.Where(l => l.Object == target);
 			}
+			return _list.AsEnumerable();
+		}
+
+		public IEnumerable<LogData> GetEnumerator<T>(string value, params string[] args)
+			where T : LogData
+		{
+			if (args == null)
+				return GetEnumerator<T>(value);
+
+			if (typeof(T) == typeof(BehaviorHappenLogData))
+				return _list.Where(l => l is T && ((BehaviorHappenLogData)l).Behavior.Name == value && ((BehaviorHappenLogData)l).Behavior.Arguments.checkArgs(args));
+			else if (typeof(T) == typeof(AttributeChangeLogData))
+				return _list.Where(l => l is T && ((AttributeChangeLogData)l).Attribute.Name == value && ((AttributeChangeLogData)l).Attribute.Value == args[0]);
 			return _list.AsEnumerable();
 		}
 
@@ -79,7 +92,24 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return _list.AsEnumerable();
 		}
 
+		public static LogDataEnumeable operator+(LogDataEnumeable left, LogDataEnumeable right)
+		{
+			return new LogDataEnumeable(left.Union(right).Distinct(new LogDataIdEqualityComparer()).OrderBy(d=>d.Id));
+		}
 
+		class LogDataIdEqualityComparer : IEqualityComparer<LogData>
+		{
+			public bool Equals(LogData x, LogData y)
+			{
+				return x.Id == y.Id;
+			}
+
+			public int GetHashCode(LogData obj)
+			{
+				return obj.Id.GetHashCode();
+			}
+
+		}
 
 		public IEnumerable<LogData[]> GetPrevPostSetEnumerator()
 		{

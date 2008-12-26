@@ -70,6 +70,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				i++;
 			}
 
+			t.LogDataBase.SetIds();
+
 			return t;
 		}
 

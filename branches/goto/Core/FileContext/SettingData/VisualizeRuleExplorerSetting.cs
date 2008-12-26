@@ -18,14 +18,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			VisualizeRuleVisibility = new ObservableMultiKeyDictionary<bool>();
 			VisualizeRuleVisibility.CollectionChanged += CollectionChangedFactory("VisualizeRuleVisibility");
 		}
-
-		public bool Check(VisualizeRule rule, Event evnt, Resource target)
+		public bool Check(VisualizeRule rule, Event evnt)
 		{
 			List<string> id = new List<string>();
-			if (target != null)
-			{
-				id.Add(target.Type);
-			}
+
 			if (rule != null)
 			{
 				id.Add(rule.Name);
@@ -34,10 +30,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				id.Add(evnt.DisplayName);
 			}
-
+			
 			if (!VisualizeRuleVisibility.ContainsKey(id.ToArray()))
 				return false;
-
+			
 			return VisualizeRuleVisibility.GetValue(id.ToArray());
 		}
 

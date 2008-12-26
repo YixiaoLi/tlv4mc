@@ -50,6 +50,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public static string Apply(string value, ResourceData resData, TraceLogData logData)
 		{
+			if (value == null)
+				return value;
+
 			value = value.Replace("\\{", "___START_BIG_BRACKET___");
 			value = value.Replace("\\}", "___END_BIG_BRACKET___");
 			foreach (Match m in Regex.Matches(value, @"\$(?<func>[^{]+){(?<args>[^}]+)}"))

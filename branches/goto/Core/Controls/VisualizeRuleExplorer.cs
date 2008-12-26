@@ -14,6 +14,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
 	public partial class VisualizeRuleExplorer : UserControl
 	{
+		private List<TreeNode> _validTN = new List<TreeNode>();
+
 		public VisualizeRuleExplorer()
 		{
 			InitializeComponent();
@@ -56,7 +58,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			foreach (VisualizeRule vizRule in data.VisualizeData.VisualizeRules)
 			{
 				TreeNodeCollection tnc;
-				string[] id;
 
 				if (vizRule.IsBelongedTargetResourceType())
 				{
@@ -66,42 +67,40 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						_treeView.Nodes[vizRule.Target].Checked = ApplicationData.Setting.DefaultResourceVisible;
 						_treeView.Nodes[vizRule.Target].ImageKey = "resource";
 						_treeView.Nodes[vizRule.Target].SelectedImageKey = "resource";
-
-						if (!ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Target))
-						{
-							ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.SetValue(ApplicationData.Setting.DefaultVisualizeRuleVisible, vizRule.Target);
-						}
+						_treeView.Nodes[vizRule.Target].Tag = null;
 					}
 
 					tnc = _treeView.Nodes[vizRule.Target].Nodes;
-					id = new string[] { vizRule.Target, vizRule.Name };
 				}
 				else
 				{
 					tnc = _treeView.Nodes;
-					id = new string[] { vizRule.Name };
 				}
 
 				tnc.Add(vizRule.Name, vizRule.DisplayName);
-				tnc[vizRule.Name].Checked = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(id) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(id) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
+				tnc[vizRule.Name].Checked = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
 				tnc[vizRule.Name].ImageKey = "visualize";
 				tnc[vizRule.Name].SelectedImageKey = "visualize";
+				tnc[vizRule.Name].Tag = "visualizeRule";
 
-				if (!ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(id))
+				_validTN.Add(tnc[vizRule.Name]);
+
+				if (!ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name))
 				{
-					ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.SetValue(ApplicationData.Setting.DefaultResourceVisible, id);
+					ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.SetValue(ApplicationData.Setting.DefaultResourceVisible, vizRule.Name);
 				}
 
 				foreach(Event e in vizRule.Events)
 				{
-					List<string> list = new List<string>(id);
-					list.Add(e.DisplayName);
-					string[] i = list.ToArray();
-					tnc[vizRule.Name].Nodes.Add(e.DisplayName, e.DisplayName);
-					tnc[vizRule.Name].Nodes[e.DisplayName].Checked = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(i) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(i) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
+					string[] i = new string[]{ vizRule.Name, e.Name};
+					tnc[vizRule.Name].Nodes.Add(e.Name, e.DisplayName);
+					tnc[vizRule.Name].Nodes[e.Name].Checked = ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(i) ? ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(i) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
 
-					tnc[vizRule.Name].Nodes[e.DisplayName].ImageKey = e.getImageKey();
-					tnc[vizRule.Name].Nodes[e.DisplayName].SelectedImageKey = e.getImageKey();
+					tnc[vizRule.Name].Nodes[e.Name].ImageKey = e.getImageKey();
+					tnc[vizRule.Name].Nodes[e.Name].SelectedImageKey = e.getImageKey();
+					tnc[vizRule.Name].Nodes[e.Name].Tag = "event";
+
+					_validTN.Add(tnc[vizRule.Name].Nodes[e.Name]);
 
 					if (!ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(i))
 					{
@@ -125,17 +124,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			_treeView.AfterCheck += (o, e) =>
 			{
-				if (e.Node.Level == 0)
+
+				if ((string)e.Node.Tag == "visualizeRule")
 				{
-					setVisibility(e.Node.Checked, new string[]{e.Node.Name});
+					setVisibility(e.Node.Checked, new string[] { e.Node.Name });
 				}
-				else if (e.Node.Level == 1)
+				else if ((string)e.Node.Tag == "event")
 				{
 					setVisibility(e.Node.Checked, new string[] { e.Node.Parent.Name, e.Node.Name });
-				}
-				else if (e.Node.Level == 2)
-				{
-					setVisibility(e.Node.Checked, new string[] { e.Node.Parent.Parent.Name, e.Node.Parent.Name, e.Node.Name });
 				}
 
 			};
@@ -149,33 +145,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					string[] k = kvp.Key.Split(':');
 
-					foreach (TreeNode tn in _treeView.Nodes.Find(k[0], false))
+					if (k.Length == 1)
 					{
-						if (k.Length > 1 && tn.Nodes != null && tn.Nodes.Count != 0)
-						{
-							foreach (TreeNode _tn in tn.Nodes.Find(k[1], false))
-							{
-								if (k.Length == 2)
-								{
-									if (_tn.Checked != kvp.Value)
-										_tn.Checked = kvp.Value;
-								}
-								else if (k.Length == 3 && _tn.Nodes != null && _tn.Nodes.Count != 0)
-								{
-									foreach (TreeNode __tn in _tn.Nodes.Find(k[2], false))
-									{
-										if (__tn.Checked != kvp.Value)
-											__tn.Checked = kvp.Value;
-									}
-								}
-							}
-						}
-						else
+						foreach (TreeNode tn in _validTN.Where(t=> (string)t.Tag == "visualizeRule" && t.Name == k[0]))
 						{
 							if (tn.Checked != kvp.Value)
 								tn.Checked = kvp.Value;
 						}
 					}
+					else if (k.Length == 2)
+					{
+						foreach (TreeNode tn in _validTN.Where(t => (string)t.Tag == "event" && t.Name == k[1] && t.Parent.Name == k[0]))
+						{
+							if (tn.Checked != kvp.Value)
+								tn.Checked = kvp.Value;
+						}
+					}
+
 				}
 			};
 		}

@@ -24,6 +24,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			{
 				NativeScrollBarApplier.Apply(control, scrollBars.ToArray());
 			}
+			else
+			{
+				NativeScrollBarApplier.Apply(control, null);
+			}
 		}
 	}
 }

@@ -31,8 +31,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, cellStyle, advancedBorderStyle, paintParts);
 
 			Region r = graphics.Clip;
-			graphics.Clip = new Region(new Rectangle(cellBounds.X, cellBounds.Y, cellBounds.Width - 1, cellBounds.Height - 2));
-			((ITimeLineControl)value).Draw(new PaintEventArgs(graphics, new Rectangle(cellBounds.X, cellBounds.Y, cellBounds.Width - 1, cellBounds.Height - 2)));
+			graphics.Clip = new Region(new Rectangle(cellBounds.X, DataGridView.Location.Y, cellBounds.Width - 1, DataGridView.Height));
+			((ITimeLineControl)value).Draw(new PaintEventArgs(graphics, new Rectangle(cellBounds.X, cellBounds.Y+1, cellBounds.Width - 1, cellBounds.Height - 3)));
 			graphics.Clip = r;
 		}
 	}

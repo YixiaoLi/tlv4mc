@@ -36,7 +36,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		public TimeLineMacroViewer()
 		{
 			BackColor = Color.White;
-
 			_scale.ScaleMarkDirection = ScaleMarkDirection.Bottom;
 		}
 
@@ -93,10 +92,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			if (_data == null)
 				return;
 
-			_fx = TimeLine.FromTime.ToX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width);
-			_tx = TimeLine.ToTime.ToX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width);
+			int w = Width - 2;
 
-			_scale.Size = new System.Drawing.Size(Width - 2, _scale.Height);
+			_fx = TimeLine.FromTime.ToX(TimeLine.MinTime, TimeLine.MaxTime, w);
+			_tx = TimeLine.ToTime.ToX(TimeLine.MinTime, TimeLine.MaxTime, w);
+
+			_scale.Size = new System.Drawing.Size(w, _scale.Height);
 		}
 
 		public override void ClearData()
@@ -110,34 +111,34 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			List<string> targets = new List<string>();
 
-			IEnumerable<VisualizeRule> rules = _data.VisualizeData.VisualizeRules.Where<VisualizeRule>(r =>
+			IEnumerable<VisualizeRule> rules = _data.VisualizeData.VisualizeRules.Where<VisualizeRule>(rule =>
 			{
-				if (r.Target != null)
+				if (rule.Target != null)
 				{
-					if (targets.Contains(r.Target))
+					if (targets.Contains(rule.Target))
 						return false;
 
-					targets.Add(r.Target);
+					targets.Add(rule.Target);
 
 					return false;
 				}
 				else
 				{
-					if (_data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(r.Name))
-						return _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(r.Name);
+					if (_data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(rule.Name))
+						return _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(rule.Name);
 					else
 						return ApplicationData.Setting.DefaultVisualizeRuleVisible;
 				}
 			});
 
-			IEnumerable<Resource> ress = _data.ResourceData.Resources.Where<Resource>(r => targets.Contains(r.Type) && 
-				_data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(r.Type, r.Name)
-				? _data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(r.Type, r.Name)
+			IEnumerable<Resource> ress = _data.ResourceData.Resources.Where<Resource>(res => targets.Contains(res.Type) && 
+				_data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Name)
+				? _data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(res.Name)
 				: ApplicationData.Setting.DefaultResourceVisible);
 
 			_num = rules.Count() + ress.Count();
 
-			_rowHeight = (Height - _scale.Height) / _num;
+			_rowHeight = _num != 0 ? (Height - _scale.Height) / _num : 0;
 
 			foreach (VisualizeRule rule in rules)
 			{
@@ -171,8 +172,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		protected void ruleBecameDirty(object sender, string propertyName)
 		{
-			resetData();
-			makeList();
+			//resetData();
+			//makeList();
 			updateViewingArea();
 			Refresh();
 		}
@@ -184,20 +185,42 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			if (_data == null || _list.Count() == 0)
 				return;
 
-			_rowHeight = (Height - _scale.Height) / _num;
-
 			e.Graphics.FillRectangle(new SolidBrush(_scale.BackColor), new Rectangle(e.ClipRectangle.X + 1, e.ClipRectangle.Y, _scale.Width, _scale.Height));
 			_scale.Draw(new PaintEventArgs(e.Graphics, new Rectangle(e.ClipRectangle.X + 1, e.ClipRectangle.Y, _scale.Width, _scale.Height)));
 
+			IEnumerable<TimeLineVisualizer> tlvs = _list.Where<TimeLineVisualizer>(tlv=>
+				{
+
+					if (tlv.Rule != null && tlv.Event == null && tlv.Target == null)
+					{
+						return _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(tlv.Rule.Name)
+						&& _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(tlv.Rule.Name);
+					}
+					else if (tlv.Rule == null && tlv.Event == null && tlv.Target != null)
+					{
+						return _data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(tlv.Target.Name)
+						&& _data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(tlv.Target.Name);
+					}
+					else
+					{
+						return false;
+					}
+				});
+
+			if (tlvs.Count() == 0)
+				return;
+
+			_rowHeight = (Height - _scale.Height) / tlvs.Count();
+
 			int i = 0;
-			foreach(TimeLineVisualizer tl in _list)
+			foreach (TimeLineVisualizer tl in tlvs)
 			{
 				e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(e.ClipRectangle.X, i * _rowHeight + _scale.Height, Width - 1, _rowHeight));
-				tl.Draw(new PaintEventArgs(e.Graphics, new Rectangle(e.ClipRectangle.X + 1, i * _rowHeight + 1 + _scale.Height, _scale.Width, _rowHeight - 2)));
+				tl.Draw(new PaintEventArgs(e.Graphics, new Rectangle(e.ClipRectangle.X + 1, i * _rowHeight + 1 + _scale.Height, _scale.Width - 1, _rowHeight - 2)));
 				i++;
 			}
 
-			RectangleF rect = new RectangleF(_fx + 1, e.ClipRectangle.Y + 1, _tx - _fx - 1 < 0 ? 1 : _tx - _fx - 1, e.ClipRectangle.Height - 2);
+			RectangleF rect = new RectangleF(_fx, e.ClipRectangle.Y + 1, _tx - _fx - 1 < 0 ? 1 : _tx - _fx, e.ClipRectangle.Height - 2);
 
 			e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(50, Color.Purple)), rect);
 			e.Graphics.DrawRectangle(new Pen() { Color = Color.FromArgb(100, Color.Purple), Width=1.0f }, rect.X, rect.Y, rect.Width, rect.Height);
@@ -352,8 +375,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			if (_data == null)
 				return;
 
-			base.OnPreviewKeyDown(e);
-
 			int d = (Control.ModifierKeys & Keys.Shift) == Keys.Shift ? 10 * _delta : _delta;
 
 			switch (e.KeyCode)
@@ -369,6 +390,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					TimeLine.MoveBySettingFromTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width, (int)_fx).Value).ToString(), _data.ResourceData.TimeRadix));
 					break;
 			}
+
+			base.OnPreviewKeyDown(e);
 		}
 
 		private void timeLineViewingAreaChanged(object sender, GeneralChangedEventArgs<TimeLine> e)

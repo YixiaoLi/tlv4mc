@@ -16,5 +16,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			Attribute = new Attribute(attr, val);
 		}
+
+		public override string ToString()
+		{
+			return base.ToString() + "." + Attribute.Name + (Attribute.Value != null ? " = " + Attribute.Value.ToString() : string.Empty);
+		}
 	}
 }

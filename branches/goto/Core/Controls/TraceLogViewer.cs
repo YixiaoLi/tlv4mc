@@ -65,7 +65,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			addColumn("resource", "リソース", "ResourceDisplayName", typeof(DataGridViewTextBoxColumn));
 			addColumn("event", "イベント", "Event", typeof(DataGridViewTextBoxColumn));
 
-			dataGridView.Columns["eventType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+			dataGridView.Columns["eventType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 			dataGridView.Columns["eventType"].Width = 22;
 			dataGridView.ApplyNativeScroll();
 			dataGridView.AutoGenerateColumns = false;
@@ -200,6 +200,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					dataGridView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font(dataGridView.ColumnHeadersDefaultCellStyle.Font.FontFamily, dataGridView.ColumnHeadersDefaultCellStyle.Font.Size + v);
 				}
+
+				int h = TextRenderer.MeasureText("A", dataGridView.DefaultCellStyle.Font).Height + 4;
+
+				foreach (DataGridViewRow row in dataGridView.Rows)
+				{
+					row.Height = h;
+				}
+
+				dataGridView.RowTemplate.Height = h;
 
 				if (e.GetType() == typeof(ExMouseEventArgs))
 					((ExMouseEventArgs)e).Handled = true;

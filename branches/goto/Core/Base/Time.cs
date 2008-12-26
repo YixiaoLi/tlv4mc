@@ -148,10 +148,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public float ToX(Time from, Time to, int width)
 		{
-			float result = (float)(((decimal)(Value - from.Value) / (to.Value - from.Value)) * (decimal)width);
-			result = result < 0 ? -100f : (result > width ? width + 100f : result);
-
-			return result;
+			return (float)(((decimal)(Value - from.Value) / (to.Value - from.Value)) * (decimal)width);
 		}
 		public static Time FromX(Time from, Time to, int width, int x)
 		{
