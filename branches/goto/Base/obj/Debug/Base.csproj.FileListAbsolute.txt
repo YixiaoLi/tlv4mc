@@ -40,3 +40,15 @@ C:\junji\doc\school\ojl\tlv\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.StatusMana
 C:\junji\doc\school\ojl\tlv\src\Base\obj\Debug\Base.csproj.GenerateResource.Cache
 C:\junji\doc\school\ojl\tlv\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
 C:\junji\doc\school\ojl\tlv\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.BackGroundWorkForm.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.MiniTrackBarForm.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.MiniTrackBar.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.TextNumericUpDownTrackBarControl.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Properties.Resources.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.StatusManager.StatusManagerResource.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\Base.csproj.GenerateResource.Cache
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb

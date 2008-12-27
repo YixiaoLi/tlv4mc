@@ -18,3 +18,10 @@ C:\junji\doc\school\ojl\tlv\src\Base\obj\Release\NU.OJL.MPRTOS.TLV.Base.Controls
 C:\junji\doc\school\ojl\tlv\src\Base\obj\Release\NU.OJL.MPRTOS.TLV.Base.StatusManager.StatusManagerResource.resources
 C:\junji\doc\school\ojl\tlv\src\Base\obj\Release\Base.csproj.GenerateResource.Cache
 C:\junji\doc\school\ojl\tlv\src\Base\obj\Release\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\bin\Release\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Release\ResolveAssemblyReference.cache
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Release\NU.OJL.MPRTOS.TLV.Base.Controls.BackGroundWorkForm.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Release\NU.OJL.MPRTOS.TLV.Base.Properties.Resources.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Release\NU.OJL.MPRTOS.TLV.Base.StatusManager.StatusManagerResource.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Release\Base.csproj.GenerateResource.Cache
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Release\NU.OJL.MPRTOS.TLV.Base.dll
