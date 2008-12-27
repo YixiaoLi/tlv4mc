@@ -12,7 +12,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	{
 		private float _x;
 		private float _y;
-		private string _coordinate;
+		private string _point;
 		private VisualizeAreaUnit xVisualizeAreaUnit;
 		private VisualizeAreaUnit yVisualizeAreaUnit;
 		private XAxisReference xAxisReference;
@@ -25,9 +25,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public Point(string coordinate)
 		{
-			_coordinate = coordinate;
-			_coordinate = _coordinate.Replace(" ", "").Replace("\t", "");
-			string[] c = _coordinate.Split(',');
+			_point = coordinate;
+			_point = _point.Replace(" ", "").Replace("\t", "");
+			string[] c = _point.Split(',');
 
 			string x = c[0];
 			string y = c[1];
@@ -76,7 +76,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public override string ToString()
 		{
-			return _coordinate;
+			return _point;
 		}
 
 		public PointF ToPointF(RectangleF rect)

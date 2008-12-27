@@ -28,6 +28,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public RectangleF ToRectangleF(Size offset, RectangleF rect)
 		{
+			if (Point == null || Size == null)
+				return RectangleF.Empty;
+
 			PointF point = Point.ToPointF(offset, rect);
 			SizeF size = Size.ToSizeF(rect);
 			point.Y -= size.Height;

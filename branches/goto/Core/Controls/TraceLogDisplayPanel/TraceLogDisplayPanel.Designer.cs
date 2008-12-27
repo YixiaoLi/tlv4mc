@@ -40,10 +40,10 @@
 			this.treeGridView = new NU.OJL.MPRTOS.TLV.Third.TreeGridView();
 			this.viewingTimeRangeToolStrip = new System.Windows.Forms.ToolStrip();
 			this.viewingTimeRangeLabel = new System.Windows.Forms.ToolStripLabel();
-			this.viewingTimeRangeFromTextBox = new System.Windows.Forms.ToolStripTextBox();
+			this.viewingTimeRangeFromTextBox = new NU.OJL.MPRTOS.TLV.Base.Controls.ToolStripTextNumericUpDown();
 			this.viewingTimeRangeFromScaleLabel = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
-			this.viewingTimeRangeToTextBox = new System.Windows.Forms.ToolStripTextBox();
+			this.viewingTimeRangeToTextBox = new NU.OJL.MPRTOS.TLV.Base.Controls.ToolStripTextNumericUpDown();
 			this.viewingTimeRangeToScaleLabel = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -163,7 +163,7 @@
             this.viewingTimeRangeToScaleLabel});
 			this.viewingTimeRangeToolStrip.Location = new System.Drawing.Point(3, 0);
 			this.viewingTimeRangeToolStrip.Name = "viewingTimeRangeToolStrip";
-			this.viewingTimeRangeToolStrip.Size = new System.Drawing.Size(183, 25);
+			this.viewingTimeRangeToolStrip.Size = new System.Drawing.Size(179, 25);
 			this.viewingTimeRangeToolStrip.TabIndex = 1;
 			// 
 			// viewingTimeRangeLabel
@@ -177,7 +177,8 @@
 			this.viewingTimeRangeFromTextBox.AutoSize = false;
 			this.viewingTimeRangeFromTextBox.Enabled = false;
 			this.viewingTimeRangeFromTextBox.Name = "viewingTimeRangeFromTextBox";
-			this.viewingTimeRangeFromTextBox.Size = new System.Drawing.Size(50, 25);
+			this.viewingTimeRangeFromTextBox.Radix = 10;
+			this.viewingTimeRangeFromTextBox.Size = new System.Drawing.Size(50, 16);
 			// 
 			// viewingTimeRangeFromScaleLabel
 			// 
@@ -195,7 +196,8 @@
 			this.viewingTimeRangeToTextBox.AutoSize = false;
 			this.viewingTimeRangeToTextBox.Enabled = false;
 			this.viewingTimeRangeToTextBox.Name = "viewingTimeRangeToTextBox";
-			this.viewingTimeRangeToTextBox.Size = new System.Drawing.Size(50, 25);
+			this.viewingTimeRangeToTextBox.Radix = 10;
+			this.viewingTimeRangeToTextBox.Size = new System.Drawing.Size(50, 16);
 			// 
 			// viewingTimeRangeToScaleLabel
 			// 
@@ -229,10 +231,10 @@
 		private System.Windows.Forms.ToolStripContainer toolStripContainer;
 		private System.Windows.Forms.ToolStrip viewingTimeRangeToolStrip;
 		private System.Windows.Forms.ToolStripLabel viewingTimeRangeLabel;
-		private System.Windows.Forms.ToolStripTextBox viewingTimeRangeFromTextBox;
+		private NU.OJL.MPRTOS.TLV.Base.Controls.ToolStripTextNumericUpDown viewingTimeRangeFromTextBox;
 		private System.Windows.Forms.ToolStripLabel viewingTimeRangeFromScaleLabel;
 		private System.Windows.Forms.ToolStripLabel toolStripLabel4;
-		private System.Windows.Forms.ToolStripTextBox viewingTimeRangeToTextBox;
+		private NU.OJL.MPRTOS.TLV.Base.Controls.ToolStripTextNumericUpDown viewingTimeRangeToTextBox;
 		private System.Windows.Forms.ToolStripLabel viewingTimeRangeToScaleLabel;
 		private TimeLineScale bottomTimeLineScale;
 		private TimeLineScale topTimeLineScale;

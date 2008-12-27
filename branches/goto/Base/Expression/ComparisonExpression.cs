@@ -9,35 +9,49 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
 	public static class ComparisonExpression
 	{
-		private static Dictionary<string, bool> cache = new Dictionary<string, bool>();
+		private static Dictionary<string, bool> _cache = new Dictionary<string, bool>();
 
 		public static bool Result<T>(string left, string ope, string right) where T : IComparable, IConvertible
 		{
-			if (cache.ContainsKey(typeof(T).ToString() + left + ope + right))
-				return cache[typeof(T).ToString() + left + ope + right];
+			bool result;
 
-			bool result = compare<T>(left, ope, right);
+			string k = typeof(T).ToString() + left + ope + right;
 
-			cache.Add(typeof(T).ToString() + left + ope + right, result);
+			if (_cache.ContainsKey(k))
+				return _cache[k];
+
+			result = compare<T>(left, ope, right);
+
+			lock (_cache)
+			{
+				if (!_cache.ContainsKey(k))
+					_cache.Add(k, result);
+			}
 
 			return result;
 		}
 
 		public static bool Result<T>(string condition) where T : IComparable, IConvertible
 		{
+			bool result;
+
 			condition = Regex.Replace(condition, @"\s", "");
 
-			if (cache.ContainsKey(typeof(T).ToString() + condition))
-				return cache[typeof(T).ToString() + condition];
+			string k = typeof(T).ToString() + condition;
+
+			if (_cache.ContainsKey(k))
+				return _cache[k];
 
 			Match m = Regex.Match(condition, @"(?<left>[^=!<>&\|]+)(?<ope>(==|!=|<=|>=|>|<))(?<right>[^=!<>&\|]+)");
 			string left = m.Groups["left"].Value;
 			string ope = m.Groups["ope"].Value;
 			string right = m.Groups["right"].Value;
-			bool result = compare<T>(left, ope, right);
-
-			cache.Add(typeof(T).ToString() + condition, result);
-
+			result = compare<T>(left, ope, right);
+			lock (_cache)
+			{
+				if(!_cache.ContainsKey(k))
+					_cache.Add(k, result);
+			}
 			return result;
 		}
 

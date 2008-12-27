@@ -44,6 +44,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualizeRules", "visualizeRules", "{5E36682B-2A49-4630-8E27-7ADBF39D3A20}"
 	ProjectSection(SolutionItems) = preProject
 		visualizeRules\asp.viz = visualizeRules\asp.viz
+		visualizeRules\shapes.viz = visualizeRules\shapes.viz
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{94C75166-FFDC-44D8-9030-0F6EF109BD8E}"

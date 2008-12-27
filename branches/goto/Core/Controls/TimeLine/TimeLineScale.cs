@@ -93,9 +93,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		}
 
-		public override void Draw(PaintEventArgs e)
+		public override void Draw(Graphics g, Rectangle rect)
 		{
-			base.Draw(e);
+			base.Draw(g, rect);
 
 			if (TimeLine == null
 				|| TimeLine.ViewableSpan.Value == 0
@@ -114,7 +114,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				t += _tPs, i++ )
 			{
 
-				float x = t.ToX(TimeLine.FromTime, TimeLine.ToTime, Width) + e.ClipRectangle.X;
+				float x = t.ToX(TimeLine.FromTime, TimeLine.ToTime, Width) + rect.X;
 
 				float h = i % 10 == 0 ? _scaleHeight * 3f : i % 5 == 0 ? _scaleHeight * 2f : _scaleHeight;
 				System.Drawing.PointF fp;
@@ -132,13 +132,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						break;
 				}
 
-				e.Graphics.DrawLine(Pens.White, fp, tp);
+				g.DrawLine(Pens.White, fp, tp);
 
 				if (i % 10 == 0)
 				{
 					string tmStr = (_dflag ? t.Round(_carry) : t.Truncate()).ToString();
 
-					SizeF tmStrSz = e.Graphics.MeasureString(tmStr + "_", Font);
+					SizeF tmStrSz = g.MeasureString(tmStr + "_", Font);
 
 					if (x - (tmStrSz.Width / 2f) > lastLabelX)
 					{
@@ -157,7 +157,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 								break;
 						}
 
-						e.Graphics.DrawString(tmStr, Font, new SolidBrush(Color.White), new RectangleF(tx, y, tmStrSz.Width, tmStrSz.Height), _stringFormat);
+						g.DrawString(tmStr, Font, new SolidBrush(Color.White), new RectangleF(tx, y, tmStrSz.Width, tmStrSz.Height), _stringFormat);
 					}
 				}
 			}

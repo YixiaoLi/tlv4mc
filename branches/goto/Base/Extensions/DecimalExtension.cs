@@ -5,11 +5,17 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Base
 {
-
 	public static class DecimalExtension
 	{
+		private static Dictionary<string, string> _cache = new Dictionary<string, string>();
+
 		public static string ToString(this decimal value, int radix)
 		{
+			string k = value.ToString() + "," + radix.ToString();
+
+			if (_cache.ContainsKey(k))
+				return _cache[k];
+
 			if (radix <= 1 || radix > 36)
 				throw new ArgumentException("radixは2以上36以下でなければなりません。");
 
@@ -56,6 +62,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 			if (minus)
 				result.Insert(0, "-");
+
+			lock (_cache)
+			{
+				if (!_cache.ContainsKey(k))
+					_cache.Add(k, result.ToString());
+			}
 
 			return result.ToString();
 		}

@@ -44,6 +44,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 if(_resourceFilePath != value)
                 {
                     _resourceFilePath = value;
+
+					if (resourceFilePathTextBox.Text != _resourceFilePath)
+						resourceFilePathTextBox.Text = _resourceFilePath;
+
                     if (_resourceFilePath == "")
                     {
                         InputFlag &= ~InputFlags.RESOURCE_FILE_PATH;
@@ -73,6 +77,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 if (_traceLogFilePath != value)
                 {
                     _traceLogFilePath = value;
+
+					if (traceLogFilePathTextBox.Text != _traceLogFilePath)
+						traceLogFilePathTextBox.Text = _traceLogFilePath;
+
 					if (_traceLogFilePath == "")
                     {
                         InputFlag &= ~InputFlags.TRACELOG_FILE_PATH;
@@ -197,7 +205,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             InitializeComponent();
             ResourceFileExt = Properties.Resources.ResourceFileExtension;
             TraceLogFileExt = Properties.Resources.TraceLogFileExtension;
-            SaveFileExt = Properties.Resources.CommonFormatTraceLogFileExtension;
+            SaveFileExt = Properties.Resources.StandardFormatTraceLogFileExtension;
         }
 
         protected override void OnLoad(EventArgs evntArgs)

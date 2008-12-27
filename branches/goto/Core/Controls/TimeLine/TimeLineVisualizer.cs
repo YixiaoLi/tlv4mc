@@ -6,18 +6,23 @@ using System.Drawing;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Base;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
 	partial class TimeLineVisualizer : TimeLineControl
 	{
+
+		private Dictionary<string, string> _cache = new Dictionary<string, string>();
 		private VisualizeRule _rule;
 		private Event _evnt;
 		private List<Event> _evnts = new List<Event>();
 		private List<DrawShape> _drawShapes = new List<DrawShape>();
 		private Resource _target;
 		private LogDataEnumeable _logData;
+		private bool _dataSet = false;
 
+		public Thread SetDataThread { get; private set; }
 		public VisualizeRule Rule { get { return _rule; } }
 		public Event Event { get { return _evnt; } }
 		public Resource Target { get { return _target; } }
@@ -49,36 +54,48 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			_evnt = evnt;
 			_target = target;
 
+			SetDataThread = new Thread(new ThreadStart(() =>
+			{
+				_dataSet = false;
+				_logData = new LogDataEnumeable(_data.TraceLogData.LogDataBase);
+				_logData.Filter(_target);
+
+				if (_rule != null && _evnt == null)
+				{
+					addEvents(_rule);
+				}
+				else if (_rule == null && _evnt != null)
+				{
+					_evnts.Add(_evnt);
+				}
+				else if (_rule == null && _evnt == null && _target != null)
+				{
+					foreach (VisualizeRule r in _data.VisualizeData.VisualizeRules.Where<VisualizeRule>(r => r.Target == _target.Type))
+					{
+						addEvents(r);
+					}
+				}
+
+				foreach (Event e in _evnts)
+				{
+					addDrawShapeByEvent(e);
+				}
+				_dataSet = true;
+			}));
+
 			InitializeComponent();
 		}
 
 		public override void SetData(TraceLogVisualizerData data)
 		{
 			base.SetData(data);
+			SetDataThread.Start();
+		}
 
-			_logData = new LogDataEnumeable(_data.TraceLogData.LogDataBase);
-			_logData.Filter(_target);
-
-			if (_rule != null && _evnt == null)
-			{
-				addEvents(_rule);
-			}
-			else if (_rule == null && _evnt != null)
-			{
-				_evnts.Add(_evnt);
-			}
-			else if (_rule == null && _evnt == null && _target != null)
-			{
-				foreach (VisualizeRule r in _data.VisualizeData.VisualizeRules.Where<VisualizeRule>(r => r.Target == _target.Type))
-				{
-				    addEvents(r);
-				}
-			}
-
-			foreach(Event evnt in _evnts)
-			{
-				addDrawShapeFromEvent(evnt);
-			}
+		public override void ClearData()
+		{
+			base.ClearData();
+			_dataSet = false;
 		}
 
 		private void addEvents(VisualizeRule rule)
@@ -89,7 +106,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		}
 
-		private void addDrawShapeFromEvent(Event evnt)
+		private void addDrawShapeByEvent(Event evnt)
 		{
 			if(evnt.When != null && evnt.From == null && evnt.To == null)
 				addDrawShapeFromWhenEvent(evnt);
@@ -201,8 +218,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				string condition = fg.Condition;
 
 				condition = applyTemplate(from, to, condition);
-				condition = TLVFunction.Apply(condition, _data.ResourceData, _data.TraceLogData);
+				if (condition != null)
+				{
+					if (!_cache.ContainsKey(condition))
+						_cache[condition] = TLVFunction.Apply(condition, _data.ResourceData, _data.TraceLogData);
 
+					condition = _cache[condition];
+				}
 				string[] spArgs = null;
 
 				if (fg.Args != null)
@@ -212,7 +234,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					for (int i = 0; i < fg.Args.Length; i++)
 					{
 						spArgs[i] = applyTemplate(from, to, fg.Args[i]);
-						spArgs[i] = TLVFunction.Apply(spArgs[i], _data.ResourceData, _data.TraceLogData);
+
+						if (spArgs[i] != null)
+						{
+							if (!_cache.ContainsKey(spArgs[i]))
+								_cache[spArgs[i]] = TLVFunction.Apply(spArgs[i], _data.ResourceData, _data.TraceLogData);
+
+							spArgs[i] = _cache[spArgs[i]];
+						}
 					}
 				}
 				
@@ -231,9 +260,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 							if (spArgs != null && spArgs.Count() != 0)
 								s.SetArgs(spArgs);
 
-							DrawShape ds = new DrawShape(fromTime, toTime, s, evnt);
+							s.SetDefaultValue();
+							s.ChackValidate();
 
-							_drawShapes.Add(ds);
+							_drawShapes.Add(new DrawShape(fromTime, toTime, s, evnt));
+
 						}
 					}
 				}
@@ -291,11 +322,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			return condition;
 		}
 
-		public override void Draw(PaintEventArgs e)
+		public override void Draw(Graphics g, Rectangle rect)
 		{
-			PaintEventArgs ea = e;
-
-			base.Draw(ea);
+			base.Draw(g, rect);
 
 			if (TimeLine == null)
 				return;
@@ -303,21 +332,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			if (_drawShapes == null)
 				return;
 
-			if (ea.ClipRectangle.Width == 0)
+			if (rect.Width == 0)
 				return;
+
+			if (!_dataSet)
+				return;
+
+
 
 			foreach (DrawShape ds in _drawShapes.Where<DrawShape>(ds =>
 				_data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(ds.Event.GetVisualizeRuleName(), ds.Event.Name)
 				&& _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(ds.Event.GetVisualizeRuleName(), ds.Event.Name)
 				&& ds.To > TimeLine.FromTime && ds.From < TimeLine.ToTime))
 			{
-				float x1 = ds.From.ToX(TimeLine.FromTime, TimeLine.ToTime, ea.ClipRectangle.Width);
-				float w = ds.To.ToX(TimeLine.FromTime, TimeLine.ToTime, ea.ClipRectangle.Width) - x1;
+				float x1 = ds.From.ToX(TimeLine.FromTime, TimeLine.ToTime, rect.Width);
+				float w = ds.To.ToX(TimeLine.FromTime, TimeLine.ToTime, rect.Width) - x1;
 
 				if (w <= 0)
 					w = 1;
 
-				ds.Shape.Draw(ea.Graphics, new RectangleF(ea.ClipRectangle.X + x1, ea.ClipRectangle.Y, w, ea.ClipRectangle.Height));
+				if (rect.X + x1 + w < 0)
+					return;
+
+				ds.Shape.Draw(g, new RectangleF(rect.X + x1, rect.Y, w, rect.Height));
 			}
 		}
 
@@ -403,9 +440,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				To = to;
 				Shape = shape;
 				Event = evnt;
-				Shape.SetDefaultValue();
-
-				Shape.ChackValidate();
 			}
 		}
 	}

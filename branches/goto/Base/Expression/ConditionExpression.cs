@@ -8,16 +8,17 @@ namespace NU.OJL.MPRTOS.TLV.Base
 {
 	public static class ConditionExpression
 	{
-		private static Dictionary<string, bool> cache = new Dictionary<string, bool>();
+		private static Dictionary<string, bool> _cache = new Dictionary<string, bool>();
 
 		public static bool Result(string expression)
 		{
 			expression = Regex.Replace(expression, @"\s", "");
 			bool result;
+
 			try
 			{
-				if (cache.ContainsKey(expression))
-					return cache[expression];
+				if (_cache.ContainsKey(expression))
+					return _cache[expression];
 
 				Match m;
 				string e = expression;
@@ -29,10 +30,17 @@ namespace NU.OJL.MPRTOS.TLV.Base
 						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), ComparisonExpression.Result<string>(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
 				} while (m.Success);
 
-				if (cache.ContainsKey(e))
+				if (_cache.ContainsKey(e))
 				{
-					cache.Add(expression, cache[e]);
-					return cache[e];
+					if (!_cache.ContainsKey(expression))
+					{
+						lock (_cache)
+						{
+							if (!_cache.ContainsKey(expression))
+								_cache.Add(expression, _cache[e]);
+						}
+					}
+					return _cache[e];
 				}
 
 				do
@@ -42,10 +50,17 @@ namespace NU.OJL.MPRTOS.TLV.Base
 						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
 				} while (m.Success);
 
-				if (cache.ContainsKey(e))
+				if (_cache.ContainsKey(e))
 				{
-					cache.Add(expression, cache[e]);
-					return cache[e];
+					if (!_cache.ContainsKey(expression))
+					{
+						lock (_cache)
+						{
+							if (!_cache.ContainsKey(expression))
+								_cache.Add(expression, _cache[e]);
+						}
+					}
+					return _cache[e];
 				}
 
 				do
@@ -55,10 +70,17 @@ namespace NU.OJL.MPRTOS.TLV.Base
 						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), ComparisonExpression.Result<string>(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
 				} while (m.Success);
 
-				if (cache.ContainsKey(e))
+				if (_cache.ContainsKey(e))
 				{
-					cache.Add(expression, cache[e]);
-					return cache[e];
+					if (!_cache.ContainsKey(expression))
+					{
+						lock (_cache)
+						{
+							if (!_cache.ContainsKey(expression))
+								_cache.Add(expression, _cache[e]);
+						}
+					}
+					return _cache[e];
 				}
 
 				do
@@ -68,10 +90,17 @@ namespace NU.OJL.MPRTOS.TLV.Base
 						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
 				} while (m.Success);
 
-				if (cache.ContainsKey(e))
+				if (_cache.ContainsKey(e))
 				{
-					cache.Add(expression, cache[e]);
-					return cache[e];
+					if (!_cache.ContainsKey(expression))
+					{
+						lock (_cache)
+						{
+							if (!_cache.ContainsKey(expression))
+								_cache.Add(expression, _cache[e]);
+						}
+					}
+					return _cache[e];
 				}
 
 				do
@@ -83,13 +112,20 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 				result = parse(e);
 
-				cache.Add(expression, result);
+				if (!_cache.ContainsKey(expression))
+				{
+					lock (_cache)
+					{
+						if (!_cache.ContainsKey(expression))
+							_cache.Add(expression, result);
+					}
+				}
 			}
 			catch
 			{
 				throw new Exception("条件式の記述が異常です。\n" + "\"" + expression + "\"");
 			}
-
+			
 			return result;
 		}
 

@@ -103,15 +103,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         }
         
         /// <summary>
-        ///   tlv に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string CommonFormatTraceLogFileExtension {
-            get {
-                return ResourceManager.GetString("CommonFormatTraceLogFileExtension", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   cnv に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ConvertRuleFileExtension {
@@ -208,6 +199,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         internal static string SettingFileExtension {
             get {
                 return ResourceManager.GetString("SettingFileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   tlv に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string StandardFormatTraceLogFileExtension {
+            get {
+                return ResourceManager.GetString("StandardFormatTraceLogFileExtension", resourceCulture);
             }
         }
         

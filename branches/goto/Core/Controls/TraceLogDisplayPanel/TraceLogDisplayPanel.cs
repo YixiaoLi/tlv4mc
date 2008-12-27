@@ -79,6 +79,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			base.SetData(data);
 
+			viewingTimeRangeFromTextBox.Radix = _data.ResourceData.TimeRadix;
+			viewingTimeRangeToTextBox.Radix = _data.ResourceData.TimeRadix;
+
 			if (_data.SettingData.TraceLogDisplayPanelSetting.TimeLine == null)
 				_data.SettingData.TraceLogDisplayPanelSetting.TimeLine = new TimeLine(_data.TraceLogData.MinTime, _data.TraceLogData.MaxTime);
 			
@@ -86,6 +89,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			topTimeLineScale.TimeLine = TimeLine;
 			bottomTimeLineScale.TimeLine = TimeLine;
+
+			viewingTimeRangeFromTextBox.Minimum = TimeLine.MinTime.Value;
+			viewingTimeRangeFromTextBox.Maximum = TimeLine.ToTime.Value - 1;
+			viewingTimeRangeToTextBox.Minimum = TimeLine.FromTime.Value + 1;
+			viewingTimeRangeToTextBox.Maximum = TimeLine.MaxTime.Value;
 
 			_data.SettingData.ResourceExplorerSetting.BecameDirty += resourceExplorerSettingBecameDirty;
 			_data.SettingData.VisualizeRuleExplorerSetting.BecameDirty += visualizeRuleExplorerSettingBecameDirty;
@@ -267,13 +275,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			#endregion
 
 			#region viewingTimeRangeTextBox初期化
-			EventHandler viewingTimeRangeFromTextBoxHandler = (o, _e) =>
+
+			viewingTimeRangeFromTextBox.TextChanged += (o, _e) =>
 				{
+					viewingTimeRangeFromTextBox.TextBoxWidth = TextRenderer.MeasureText(viewingTimeRangeFromTextBox.Text, viewingTimeRangeFromTextBox.Font).Width;
+					if (viewingTimeRangeFromTextBox.Width == 0)
+						viewingTimeRangeFromTextBox.Width = 50;
+				};
+
+			viewingTimeRangeToTextBox.TextChanged += (o, _e) =>
+				{
+					viewingTimeRangeToTextBox.TextBoxWidth = TextRenderer.MeasureText(viewingTimeRangeToTextBox.Text, viewingTimeRangeToTextBox.Font).Width;
+					if (viewingTimeRangeToTextBox.Width == 0)
+						viewingTimeRangeToTextBox.Width = 50;
+				};
+
+			viewingTimeRangeFromTextBox.Validated += (o, _e) =>
+				{
+					if (TimeLine == null)
+						return;
+
 					Time lastValue = TimeLine.FromTime;
 					try
 					{
 						Time t = new Time(viewingTimeRangeFromTextBox.Text, _timeRadix);
-						if (t.IsEmpty) throw new Exception();
+						if (t.IsEmpty || t < TimeLine.MinTime || t > TimeLine.ToTime) throw new Exception();
 						TimeLine.SetTime(t, Time.Empty);
 					}
 					catch
@@ -282,13 +308,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						TimeLine.SetTime(lastValue, Time.Empty);
 					}
 				};
-			EventHandler viewingTimeRangeToTextBoxHandler = (o, _e) =>
+			viewingTimeRangeToTextBox.Validated += (o, _e) =>
 				{
+					if (TimeLine == null)
+						return;
+
 					Time lastValue = TimeLine.ToTime;
 					try
 					{
 						Time t = new Time(viewingTimeRangeToTextBox.Text, _timeRadix);
-						if (t.IsEmpty) throw new Exception();
+						if (t.IsEmpty || t > TimeLine.MaxTime || t < TimeLine.FromTime) throw new Exception();
 						TimeLine.SetTime(Time.Empty, t);
 					}
 					catch
@@ -296,23 +325,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						viewingTimeRangeToTextBox.Text = lastValue.ToString();
 						TimeLine.SetTime(Time.Empty, lastValue);
 					}
-				};
-
-			viewingTimeRangeFromTextBox.KeyUp += (o, _e) => { if (_e.KeyData == Keys.Enter) { viewingTimeRangeFromTextBoxHandler(this, EventArgs.Empty); _e.Handled = true; } };
-			viewingTimeRangeToTextBox.KeyUp += (o, _e) => { if (_e.KeyData == Keys.Enter) { viewingTimeRangeToTextBoxHandler(this, EventArgs.Empty); _e.Handled = true; } };
-			viewingTimeRangeFromTextBox.Validated += viewingTimeRangeFromTextBoxHandler;
-			viewingTimeRangeToTextBox.Validated += viewingTimeRangeToTextBoxHandler;
-			viewingTimeRangeFromTextBox.TextChanged += (o, _e) =>
-				{
-					viewingTimeRangeFromTextBox.Width = TextRenderer.MeasureText(viewingTimeRangeFromTextBox.Text, viewingTimeRangeFromTextBox.Font).Width;
-					if (viewingTimeRangeFromTextBox.Width == 0)
-						viewingTimeRangeFromTextBox.Width = 50;
-				};
-			viewingTimeRangeToTextBox.TextChanged += (o, _e) =>
-				{
-					viewingTimeRangeToTextBox.Width = TextRenderer.MeasureText(viewingTimeRangeToTextBox.Text, viewingTimeRangeToTextBox.Font).Width;
-					if (viewingTimeRangeToTextBox.Width == 0)
-						viewingTimeRangeToTextBox.Width = 50;
 				};
 			#endregion
 
@@ -549,11 +561,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		protected void timeLineViewingAreaChanged(object sender, GeneralChangedEventArgs<TimeLine> e)
 		{
-			if (e.Old.FromTime != e.New.ToTime)
+			if (e.Old.FromTime != e.New.FromTime)
+			{
+				viewingTimeRangeToTextBox.Minimum = e.New.FromTime.Value + 1;
 				viewingTimeRangeFromTextBox.Text = e.New.FromTime.ToString();
+			}
 
 			if (e.Old.ToTime != e.New.ToTime)
+			{
+				viewingTimeRangeFromTextBox.Maximum = e.New.ToTime.Value - 1;
 				viewingTimeRangeToTextBox.Text = e.New.ToTime.ToString();
+			}
 
 			if (e.Old.ViewingSpan != e.New.ViewingSpan)
 				hScrollBarChangeRateUpdate();

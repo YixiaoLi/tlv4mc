@@ -45,6 +45,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public static implicit operator System.Drawing.Pen(Pen pen)
 		{
+			if (pen == null)
+				return null;
+
 			if (pen._pen != null)
 				return pen._pen;
 

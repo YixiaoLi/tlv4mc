@@ -286,9 +286,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             base.OnDragEnter(drgevent);
 
-            string s = ((string[])(drgevent.Data.GetData(DataFormats.FileDrop)))[0];
+            string[] s = ((string[])(drgevent.Data.GetData(DataFormats.FileDrop)));
 
-            if(Path.GetExtension(s) == "." + Properties.Resources.CommonFormatTraceLogFileExtension 
+            if((
+				(s.Length == 1
+				&& (Path.GetExtension(s[0]).Contains(Properties.Resources.StandardFormatTraceLogFileExtension)
+				|| Path.GetExtension(s[0]).Contains(Properties.Resources.TraceLogFileExtension)
+				|| Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension)))
+			||	(s.Length == 2
+				&& ((Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension) && Path.GetExtension(s[1]).Contains(Properties.Resources.TraceLogFileExtension))
+				|| (Path.GetExtension(s[1]).Contains(Properties.Resources.ResourceFileExtension) && Path.GetExtension(s[0]).Contains(Properties.Resources.TraceLogFileExtension)))
+			))
                 && drgevent.Data.GetDataPresent(DataFormats.FileDrop))
                 drgevent.Effect = DragDropEffects.All;
             else
@@ -300,9 +308,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             base.OnDragDrop(drgevent);
             if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                string s = ((string[])(drgevent.Data.GetData(DataFormats.FileDrop)))[0];
+                string[] s = ((string[])(drgevent.Data.GetData(DataFormats.FileDrop)));
 
-                _commandManager.Do(new OpenCommand(s));
+				if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.StandardFormatTraceLogFileExtension))
+				{
+					_commandManager.Do(new OpenCommand(s[0]));
+				}
+				else if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.TraceLogFileExtension))
+				{
+					_commandManager.Do(new NewCommand(null, s[0]));
+				}
+				else if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension))
+				{
+					_commandManager.Do(new NewCommand(s[0], null));
+				}
+				else if (s.Length == 2)
+				{
+					string resFilePath = Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension) ? s[0] : s[1];
+					string logFilePath = Path.GetExtension(s[1]).Contains(Properties.Resources.TraceLogFileExtension) ? s[1] : s[0];
+
+					_commandManager.Do(new NewCommand(resFilePath, logFilePath));
+				}
             }
         }
 

@@ -11,7 +11,22 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		private TimeLine _timeLine;
 
 		public int PixelPerScaleMark { get { return _pixelPerScaleMark; } set { if (_pixelPerScaleMark != value) { _pixelPerScaleMark = value; onBecameDirty("PixelPerScaleMark"); } } }
-		public TimeLine TimeLine { get { return _timeLine; } set { if (_timeLine != value) { _timeLine = value; onBecameDirty("TimeLine"); } } }
+		public TimeLine TimeLine
+		{
+			get { return _timeLine; }
+			set
+			{
+				if (_timeLine != value)
+				{
+					_timeLine = value;
+					onBecameDirty("TimeLine");
+					_timeLine.ViewingAreaChanged += (o, e) =>
+					{
+						onBecameDirty("TimeLine");
+					};
+				}
+			}
+		}
 
 		public event SettingChangeEventHandler BecameDirty;
 
@@ -20,5 +35,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			if (BecameDirty != null)
 				BecameDirty(this, propertyName);
 		}
+
 	}
 }

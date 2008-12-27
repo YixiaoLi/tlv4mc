@@ -50,6 +50,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		protected void fileContextDataChanged(object sender, GeneralEventArgs<TraceLogVisualizerData> e)
 		{
+
 			Invoke((MethodInvoker)(() =>
 			{
 				if (ApplicationData.FileContext.Data == null)

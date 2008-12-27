@@ -55,7 +55,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			_timeRadix = _data.ResourceData.TimeRadix;
 		}
 
-		public virtual void Draw(PaintEventArgs e)
+		public virtual void Draw(Graphics g, Rectangle rect)
 		{
 
 		}
@@ -69,7 +69,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
-			Draw(e);
+			Draw(e.Graphics, e.ClipRectangle);
 		}
 	}
 }

@@ -15,6 +15,12 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
         private string _text = "";
         private bool _canCancel = true;
 
+		public string ProgressBarText
+		{
+			get { return percentageLabel.Text; }
+			set { percentageLabel.Text = value; }
+		}
+
         public event DoWorkEventHandler DoWork
         {
             add { _backgroundWorker.DoWork += value;  }
@@ -52,6 +58,9 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
         public BackGroundWorkForm()
         {
             InitializeComponent();
+			progressBar.Minimum = 0;
+			progressBar.Maximum = 100;
+			progressBar.MarqueeAnimationSpeed = 10;
             _backgroundWorker = new BackgroundWorker();
 			_backgroundWorker.WorkerReportsProgress = true;
 			_backgroundWorker.WorkerSupportsCancellation = true;
@@ -63,15 +72,38 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
             cancelButton.Click += (o, e) =>
                 {
                     _backgroundWorker.CancelAsync();
-                };
+				};
+			_backgroundWorker.RunWorkerCompleted += (o, e) =>
+			{
+				DialogResult = DialogResult.OK;
+				Close();
+				Dispose();
+			};
         }
+
+		public ProgressBarStyle Style
+		{
+			get{return progressBar.Style; }
+			set
+			{
+				if (value == ProgressBarStyle.Marquee)
+				{
+					progressBar.Visible = false;
+				}
+				else
+				{
+					progressBar.Visible = true;
+					progressBar.Style = value;
+				}
+			}
+		}
 
         public void ReportProgress(int percentage)
         {
             _backgroundWorker.ReportProgress(percentage);
             Invoke((MethodInvoker)(() =>
             {
-                progressBar1.Value = percentage;
+                progressBar.Value = percentage;
             }));
         }
 
@@ -84,12 +116,6 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
         protected override void OnShown(EventArgs _e)
         {
             _backgroundWorker.RunWorkerAsync();
-            _backgroundWorker.RunWorkerCompleted += (o, e) =>
-            {
-                DialogResult = DialogResult.OK; 
-                Close();
-                Dispose();
-            };
         }
     }
 }

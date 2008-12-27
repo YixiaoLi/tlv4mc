@@ -37,8 +37,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				dataGridView.Columns["time"].HeaderText = "時間[" + _resourceData.TimeScale + "]";
 
 				setDataGridViewDataSource();
-
-				setCellColor();
 			}
 			else
 			{
@@ -65,7 +63,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			addColumn("resource", "リソース", "ResourceDisplayName", typeof(DataGridViewTextBoxColumn));
 			addColumn("event", "イベント", "Event", typeof(DataGridViewTextBoxColumn));
 
-			dataGridView.Columns["eventType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+			dataGridView.Columns["eventType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 			dataGridView.Columns["eventType"].Width = 22;
 			dataGridView.ApplyNativeScroll();
 			dataGridView.AutoGenerateColumns = false;
@@ -215,37 +213,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		}
 
-		private void setCellColor()
-		{
-			foreach (DataGridViewRow row in dataGridView.Rows)
-			{
-				LogData ld = ((SortableBindingList<TraceLogViewerRowData>)dataGridView.DataSource)[row.Index].LogData;
-
-				foreach(DataGridViewCell cell in row.Cells)
-				{
-					if (cell.OwningColumn.Name == "resourceType")
-					{
-						cell.Style.BackColor = Color.FromArgb(150, _resourceData.ResourceHeaders[ld.Object.Type].Color.Value);
-					}
-					if (cell.OwningColumn.Name == "resource")
-					{
-						cell.Style.BackColor = Color.FromArgb(150, ld.Object.Color.Value);
-					}
-					if (cell.OwningColumn.Name == "event")
-					{
-						if (ld.Type == TraceLogType.AttributeChange)
-						{
-							cell.Style.BackColor = Color.FromArgb(150, _resourceData.ResourceHeaders[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute.Name].Color.Value);
-						}
-						else if (ld.Type == TraceLogType.BehaviorHappen)
-						{
-							cell.Style.BackColor = Color.FromArgb(150, _resourceData.ResourceHeaders[ld.Object.Type].Behaviors[((BehaviorHappenLogData)ld).Behavior.Name].Color.Value);
-						}
-					}
-				}
-			}
-		}
-
 		private void dataGridViewRowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
 		{
 			e.Graphics.FillRectangle(new SolidBrush(dataGridView.DefaultCellStyle.BackColor), e.RowBounds);
@@ -257,7 +224,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		private void dataGridViewCellPainting(object sender, DataGridViewCellPaintingEventArgs e)
 		{
-			e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(30, e.CellStyle.BackColor)), e.CellBounds);
+			if (dataGridView.DataSource == null || e.RowIndex == -1)
+				return;
+
+			LogData ld = ((SortableBindingList<TraceLogViewerRowData>)dataGridView.DataSource)[e.RowIndex].LogData;
+			Color color = dataGridView.DefaultCellStyle.BackColor;
+			if (dataGridView.Columns[e.ColumnIndex].Name == "resourceType")
+			{
+				color = Color.FromArgb(150, _resourceData.ResourceHeaders[ld.Object.Type].Color.Value);
+			}
+			if (dataGridView.Columns[e.ColumnIndex].Name == "resource")
+			{
+				color = Color.FromArgb(150, ld.Object.Color.Value);
+			}
+			if (dataGridView.Columns[e.ColumnIndex].Name == "event")
+			{
+				if (ld.Type == TraceLogType.AttributeChange)
+				{
+					color = Color.FromArgb(150, _resourceData.ResourceHeaders[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute.Name].Color.Value);
+				}
+				else if (ld.Type == TraceLogType.BehaviorHappen)
+				{
+					color = Color.FromArgb(150, _resourceData.ResourceHeaders[ld.Object.Type].Behaviors[((BehaviorHappenLogData)ld).Behavior.Name].Color.Value);
+				}
+			}
+			e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(30, color)), e.CellBounds);
 
 			if ((e.State & DataGridViewElementStates.Selected) != DataGridViewElementStates.None)
 				e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(150, dataGridView.DefaultCellStyle.SelectionBackColor)), e.CellBounds);
@@ -326,8 +317,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					{
 						this.Invoke(new MethodInvoker(() =>
 						{
-							setCellColor();
-							dataGridView.Refresh();
 							ApplicationFactory.StatusManager.HideProcessing(this.GetType().ToString() + ":sorting");
 						}));
 					};

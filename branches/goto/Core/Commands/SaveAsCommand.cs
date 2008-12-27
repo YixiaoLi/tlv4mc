@@ -22,7 +22,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
             if (ApplicationData.FileContext.IsOpened)
             {
                 var sfd = new SaveFileDialog();
-                sfd.DefaultExt = Properties.Resources.CommonFormatTraceLogFileExtension;
+                sfd.DefaultExt = Properties.Resources.StandardFormatTraceLogFileExtension;
                 sfd.Filter = "Common Format TraceLog File (*." + sfd.DefaultExt + ")|*." + sfd.DefaultExt;
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {

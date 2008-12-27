@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Base;
+using System.Threading;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
@@ -70,26 +71,34 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			base.SetData(data);
 
-			TimeLine = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine;
+			Thread th = new Thread(new ThreadStart(() =>
+			{
+				TimeLine = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine;
 
-			TimeLine.ViewingAreaChanged += timeLineViewingAreaChanged;
+				TimeLine.ViewingAreaChanged += timeLineViewingAreaChanged;
 
-			makeList();
+				makeList();
 
-			_scale.SetData(_data);
-			_scale.TimeLine = new TimeLine(_data.TraceLogData.MinTime, _data.TraceLogData.MaxTime);
+				_scale.SetData(_data);
+				_scale.TimeLine = new TimeLine(_data.TraceLogData.MinTime, _data.TraceLogData.MaxTime);
 
-			_data.SettingData.ResourceExplorerSetting.BecameDirty += ruleBecameDirty;
-			_data.SettingData.VisualizeRuleExplorerSetting.BecameDirty += ruleBecameDirty;
+				_data.SettingData.ResourceExplorerSetting.BecameDirty += ruleBecameDirty;
+				_data.SettingData.VisualizeRuleExplorerSetting.BecameDirty += ruleBecameDirty;
 
-			updateViewingArea();
+				updateViewingArea();
 
-			Refresh();
+				Invoke(new MethodInvoker(() =>
+				{
+					Refresh();
+				}));
+			}));
+
+			th.Start();
 		}
 
 		private void updateViewingArea()
 		{
-			if (_data == null)
+			if (_data == null || TimeLine == null)
 				return;
 
 			int w = Width - 2;
@@ -111,43 +120,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			List<string> targets = new List<string>();
 
-			IEnumerable<VisualizeRule> rules = _data.VisualizeData.VisualizeRules.Where<VisualizeRule>(rule =>
-			{
-				if (rule.Target != null)
-				{
-					if (targets.Contains(rule.Target))
-						return false;
-
-					targets.Add(rule.Target);
-
-					return false;
-				}
-				else
-				{
-					if (_data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(rule.Name))
-						return _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(rule.Name);
-					else
-						return ApplicationData.Setting.DefaultVisualizeRuleVisible;
-				}
-			});
-
-			IEnumerable<Resource> ress = _data.ResourceData.Resources.Where<Resource>(res => targets.Contains(res.Type) && 
-				_data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Name)
-				? _data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(res.Name)
-				: ApplicationData.Setting.DefaultResourceVisible);
-
-			_num = rules.Count() + ress.Count();
+			_num = _data.VisualizeData.VisualizeRules.Count + _data.ResourceData.Resources.Count;
 
 			_rowHeight = _num != 0 ? (Height - _scale.Height) / _num : 0;
 
-			foreach (VisualizeRule rule in rules)
+			foreach (VisualizeRule rule in _data.VisualizeData.VisualizeRules)
 			{
 				if (rule.Target == null)
 				{
 					_list.Add(new TimeLineVisualizer(rule));
 				}
 			}
-			foreach (Resource res in ress)
+			foreach (Resource res in _data.ResourceData.Resources)
 			{
 				_list.Add(new TimeLineVisualizer(res));
 			}
@@ -155,6 +139,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			{
 				tv.SetData(_data);
 				tv.TimeLine = new TimeLine(_data.TraceLogData.MinTime, _data.TraceLogData.MaxTime);
+			}
+			foreach (TimeLineVisualizer tv in _list)
+			{
+				tv.SetDataThread.Join();
 			}
 		}
 
@@ -178,15 +166,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			Refresh();
 		}
 
-		public override void Draw(PaintEventArgs e)
+		public override void Draw(Graphics g, Rectangle rect)
 		{
-			base.Draw(e);
+			base.Draw(g, rect);
 
 			if (_data == null || _list.Count() == 0)
 				return;
 
-			e.Graphics.FillRectangle(new SolidBrush(_scale.BackColor), new Rectangle(e.ClipRectangle.X + 1, e.ClipRectangle.Y, _scale.Width, _scale.Height));
-			_scale.Draw(new PaintEventArgs(e.Graphics, new Rectangle(e.ClipRectangle.X + 1, e.ClipRectangle.Y, _scale.Width, _scale.Height)));
+			g.FillRectangle(new SolidBrush(_scale.BackColor), new Rectangle(rect.X + 1, rect.Y, _scale.Width, _scale.Height));
+			_scale.Draw(g, new Rectangle(rect.X + 1, rect.Y, _scale.Width, _scale.Height));
 
 			IEnumerable<TimeLineVisualizer> tlvs = _list.Where<TimeLineVisualizer>(tlv=>
 				{
@@ -215,15 +203,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			int i = 0;
 			foreach (TimeLineVisualizer tl in tlvs)
 			{
-				e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(e.ClipRectangle.X, i * _rowHeight + _scale.Height, Width - 1, _rowHeight));
-				tl.Draw(new PaintEventArgs(e.Graphics, new Rectangle(e.ClipRectangle.X + 1, i * _rowHeight + 1 + _scale.Height, _scale.Width - 1, _rowHeight - 2)));
+				g.FillRectangle(Brushes.White, new Rectangle(rect.X, i * _rowHeight + _scale.Height, Width - 1, _rowHeight));
+				g.DrawRectangle(Pens.LightGray, new Rectangle(rect.X, i * _rowHeight + _scale.Height, Width - 1, _rowHeight));
+				tl.Draw(g, new Rectangle(rect.X + 1, i * _rowHeight + 1 + _scale.Height, _scale.Width - 1, _rowHeight - 2));
 				i++;
 			}
 
-			RectangleF rect = new RectangleF(_fx, e.ClipRectangle.Y + 1, _tx - _fx - 1 < 0 ? 1 : _tx - _fx, e.ClipRectangle.Height - 2);
+			RectangleF r = new RectangleF(_fx, rect.Y + 1, _tx - _fx - 1 < 0 ? 1 : _tx - _fx, rect.Height - 2);
 
-			e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(50, Color.Purple)), rect);
-			e.Graphics.DrawRectangle(new Pen() { Color = Color.FromArgb(100, Color.Purple), Width=1.0f }, rect.X, rect.Y, rect.Width, rect.Height);
+			g.FillRectangle(new SolidBrush(Color.FromArgb(50, Color.Purple)), r);
+			g.DrawRectangle(new Pen() { Color = Color.FromArgb(100, Color.Purple), Width=1.0f }, r.X, r.Y, r.Width, r.Height);
 
 		}
 

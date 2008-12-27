@@ -10,7 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
 	public interface ITimeLineControl : ITraceLogVisualizerControl
 	{
-		void Draw(PaintEventArgs e);
+		void Draw(Graphics g, Rectangle rect);
 		TimeLine TimeLine { get; }
 	}
 }

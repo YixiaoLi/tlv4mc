@@ -28,19 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.progressBar1 = new System.Windows.Forms.ProgressBar();
+			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.cancelButton = new System.Windows.Forms.Button();
 			this.percentageLabel = new System.Windows.Forms.Label();
 			this.messageLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
-			// progressBar1
+			// progressBar
 			// 
-			this.progressBar1.Location = new System.Drawing.Point(12, 32);
-			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(296, 23);
-			this.progressBar1.Step = 1;
-			this.progressBar1.TabIndex = 0;
+			this.progressBar.Location = new System.Drawing.Point(12, 32);
+			this.progressBar.Name = "progressBar";
+			this.progressBar.Size = new System.Drawing.Size(296, 23);
+			this.progressBar.Step = 1;
+			this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+			this.progressBar.TabIndex = 0;
 			// 
 			// cancelButton
 			// 
@@ -79,7 +80,7 @@
 			this.Controls.Add(this.messageLabel);
 			this.Controls.Add(this.percentageLabel);
 			this.Controls.Add(this.cancelButton);
-			this.Controls.Add(this.progressBar1);
+			this.Controls.Add(this.progressBar);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MaximumSize = new System.Drawing.Size(367, 140);
@@ -96,7 +97,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Label percentageLabel;
 		private System.Windows.Forms.Label messageLabel;

@@ -55,10 +55,34 @@
     <Compile Include="Controls\Forms\BackGroundWorkForm.Designer.cs">
       <DependentUpon>BackGroundWorkForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Forms\MiniTrackBarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Forms\MiniTrackBarForm.Designer.cs">
+      <DependentUpon>MiniTrackBarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MiniTrackBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MiniTrackBar.Designer.cs">
+      <DependentUpon>MiniTrackBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NativeScrollBar\NativeScrollBarHelper.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\NativeScrollBar\NativeScrollBarApplier.cs">
+    </Compile>
+    <Compile Include="Controls\TextNumericUpDownControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TextNumericUpDownTrackBarControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TextNumericUpDownTrackBarControl.Designer.cs">
+      <DependentUpon>TextNumericUpDownTrackBarControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ToolStripControls\ToolStripTextNumericUpDown.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\TreeGridView\ITreeGirdViewNode.cs" />
     <Compile Include="Controls\TreeGridView\ITreeGridViewColumn.cs" />
@@ -95,6 +119,11 @@
     <Compile Include="ObservableDictionary.cs" />
     <Compile Include="ObservableMultiKeyDictionary.cs" />
     <Compile Include="Pair.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="RotateColorFactory.cs" />
     <Compile Include="SortableBindingList.cs" />
     <Compile Include="StatusManager\StatusManager.cs" />
@@ -127,6 +156,23 @@
   <ItemGroup>
     <EmbeddedResource Include="Controls\Forms\BackGroundWorkForm.resx">
       <DependentUpon>BackGroundWorkForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Forms\MiniTrackBarForm.resx">
+      <DependentUpon>MiniTrackBarForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MiniTrackBar.resx">
+      <DependentUpon>MiniTrackBar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TextNumericUpDownTrackBarControl.resx">
+      <DependentUpon>TextNumericUpDownTrackBarControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="StatusManager\StatusManagerResource.resx">

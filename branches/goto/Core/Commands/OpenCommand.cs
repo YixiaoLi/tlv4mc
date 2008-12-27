@@ -11,55 +11,55 @@ using System.ComponentModel;
 namespace NU.OJL.MPRTOS.TLV.Core.Commands
 {
     public class OpenCommand : AbstractFileChangeCommand
-    {
+	{
+
+		private OpenFileDialog _ofd = new OpenFileDialog();
+		private BackGroundWorkForm _bw = new BackGroundWorkForm() { Text = "共通形式トレースログファイルを展開中", CanCancel = false, Style = ProgressBarStyle.Marquee, StartPosition = FormStartPosition.CenterParent };
         private string _path = string.Empty;
 
-        public OpenCommand():this(string.Empty)
+		public OpenCommand()
+			: this(string.Empty)
         {
 
         }
 
-        public OpenCommand(string path)
+        public OpenCommand( string path)
         {
             _path = path;
-            Text = "共通形式トレースログファイルを開く";
+			Text = "共通形式トレースログファイルを開く";
+			_bw.DoWork += (o, e) =>
+			{
+				_bw.ReportProgress(0);
+				ApplicationData.FileContext.Close();
+				try
+				{
+					ApplicationData.FileContext.Open(_path);
+				}
+				catch (Exception _e)
+				{
+					MessageBox.Show("ファイルのオープンに失敗しました\n" + _e.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					ApplicationData.FileContext.Close();
+				}
+				_bw.ReportProgress(100);
+			};
         }
 
         protected override void action()
         {
-
-            BackGroundWorkForm bw = new BackGroundWorkForm() { Text = "共通形式トレースログファイルを展開中", CanCancel = false };
             
-            bw.DoWork += (o, e) =>
-				{
-					bw.ReportProgress(0);
-                    ApplicationData.FileContext.Close();
-                    try
-                    {
-                        ApplicationData.FileContext.Open(_path);
-                    }
-                    catch(Exception _e)
-                    {
-                        MessageBox.Show("ファイルのオープンに失敗しました\n" + _e.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        ApplicationData.FileContext.Close();
-                    }
-                    bw.ReportProgress(100);
-                };
-
             DialogResult dr = DialogResult.OK;
 
             if (_path == string.Empty)
             {
-                OpenFileDialog ofd = new OpenFileDialog();
-                ofd.DefaultExt = Properties.Resources.CommonFormatTraceLogFileExtension;
-                ofd.Filter = "Common Format TraceLog File (*." + ofd.DefaultExt + ")|*." + ofd.DefaultExt;
-                dr = ofd.ShowDialog();
-                _path = ofd.FileName;
+                _ofd.DefaultExt = Properties.Resources.StandardFormatTraceLogFileExtension;
+                _ofd.Filter = "Common Format TraceLog File (*." + _ofd.DefaultExt + ")|*." + _ofd.DefaultExt;
+                dr = _ofd.ShowDialog();
+                _path = _ofd.FileName;
             }
 
             if (dr == DialogResult.OK)
             {
-                bw.RunWorkerAsync();
+                _bw.RunWorkerAsync();
             }
         }
 

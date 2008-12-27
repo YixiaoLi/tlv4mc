@@ -12,6 +12,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class Shape : IHavingNullableProperty, ICloneable
 	{
+		private static Dictionary<string, Shape> _cache = new Dictionary<string, Shape>();
+
 		private SolidBrush _brush = null;
 
 		private Json _metaData;
@@ -93,7 +95,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					}
 					if (!kvp.Value.ToJsonString().Contains("ARG"))
 					{
-						object obj = ApplicationFactory.JsonSerializer.Deserialize(kvp.Value.ToJsonString(), pi.PropertyType);
+						object obj;
+						lock (ApplicationFactory.JsonSerializer)
+						{
+							obj = ApplicationFactory.JsonSerializer.Deserialize(kvp.Value.ToJsonString(), pi.PropertyType);
+						}
 						pi.SetValue(this, obj, null);
 					}
 					else
@@ -104,21 +110,59 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 		}
 
+		/// <summary>
+		/// Shapeに引数の値を代入する。
+		/// リフレクションを用いており低速なため、キャッシュを利用している
+		/// </summary>
+		/// <param name="args">引数</param>
 		public void SetArgs(params string[] args)
 		{
-			foreach(string str in _argPropList)
-			{
-				PropertyInfo pi = typeof(Shape).GetProperties().Single(p=>p.Name == str);
-				string value = _metaData[str].ToJsonString();
-				foreach(Match m in Regex.Matches(value, @"\${ARG(?<id>\d+)}"))
-				{
-					int i = int.Parse(m.Groups["id"].Value);
-					if (args != null && args.Length > i)
-						value = value.Replace(m.Value, args[i]);
-				}
-				pi.SetValue(this, ApplicationFactory.JsonSerializer.Deserialize(value, pi.PropertyType), null);
-			}
+			string k = args.ToCSVString() + _metaData.ToJsonString();
 
+			if (_cache.ContainsKey(k))
+			{
+				_metaData = _cache[k]._metaData;
+				_argPropList = _cache[k]._argPropList;
+				_brush = _cache[k]._brush;
+				_fill = _cache[k]._fill;
+				Type = _cache[k].Type;
+				Text = _cache[k].Text;
+				Points = _cache[k].Points;
+				Offset = _cache[k].Offset;
+				Location = _cache[k].Location;
+				Size = _cache[k].Size;
+				Arc = _cache[k].Arc;
+				Pen = _cache[k].Pen;
+				Font = _cache[k].Font;
+				Fill = _cache[k].Fill;
+				Area = _cache[k].Area;
+				Alpha = _cache[k].Alpha;
+				return;
+			}
+			else
+			{
+				foreach (string str in _argPropList)
+				{
+					PropertyInfo pi = typeof(Shape).GetProperties().Single(p => p.Name == str);
+					string value = _metaData[str].ToJsonString();
+					foreach (Match m in Regex.Matches(value, @"\${ARG(?<id>\d+)}"))
+					{
+						int i = int.Parse(m.Groups["id"].Value);
+						if (args != null && args.Length > i)
+							value = value.Replace(m.Value, args[i]);
+					}
+					lock (ApplicationFactory.JsonSerializer)
+					{
+						pi.SetValue(this, ApplicationFactory.JsonSerializer.Deserialize(value, pi.PropertyType), null);
+					}
+				}
+
+				lock (_cache)
+				{
+					if (!_cache.ContainsKey(k))
+						_cache.Add(k, this);
+				}
+			}
 		}
 
 		public Shape()
@@ -128,18 +172,23 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public void Draw(Graphics graphics, RectangleF rect)
 		{
 
-			RectangleF area;
-			PointF[] points;
+			RectangleF area = (Area != null) ? Area.ToRectangleF(Offset, rect) : RectangleF.Empty;
+			PointF[] points = (Points != null) ? Points.ToPointF(Offset, rect) : null;
+
+			area.Intersect(new RectangleF(
+				graphics.ClipBounds.X - graphics.ClipBounds.Width,
+				graphics.ClipBounds.Y - graphics.ClipBounds.Height,
+				graphics.ClipBounds.Width * 3,
+				graphics.ClipBounds.Height * 3
+				));
 
 			switch (Type)
 			{
 				case ShapeType.Line:
-					points = Points.ToPointF(Offset, rect);
 					graphics.DrawLine(Pen, points[0], points[1]);
 					break;
 
 				case ShapeType.Arrow:
-					points = Points.ToPointF(Offset, rect);
 					SmoothingMode s = graphics.SmoothingMode;
 					graphics.SmoothingMode = SmoothingMode.AntiAlias;
 					graphics.DrawLine(Pen, points[0], points[1]);
@@ -147,7 +196,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					break;
 
 				case ShapeType.Rectangle:
-					area = Area.ToRectangleF(Offset, rect);
 					if (Fill.HasValue)
 						graphics.FillRectangle(_brush, area);
 					if (Pen != null)
@@ -155,7 +203,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					break;
 
 				case ShapeType.Ellipse:
-					area = Area.ToRectangleF(Offset, rect);
 					if (Fill.HasValue)
 						graphics.FillEllipse(_brush, area);
 					if (Pen != null)
@@ -163,7 +210,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					break;
 
 				case ShapeType.Pie:
-					area = Area.ToRectangleF(Offset, rect);
 					if (Fill.HasValue)
 						graphics.FillPie(_brush, area.X, area.Y, area.Width, area.Height, Arc.Start, Arc.Sweep);
 					if (Pen != null)
@@ -171,7 +217,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					break;
 
 				case ShapeType.Polygon:
-					points = Points.ToPointF(Offset, rect);
 					if (Fill.HasValue)
 						graphics.FillPolygon(_brush, points);
 					if (Pen != null)
@@ -179,8 +224,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					break;
 
 				case ShapeType.Text:
-					area = Area.ToRectangleF(Offset, rect);
-					graphics.DrawString(Text, Font, _brush, area, Font.GetStringFormat());
+					RectangleF a = new RectangleF(area.X + 1, area.Y + 1, area.Width - 2, area.Height - 2);
+					SizeF size = graphics.MeasureString(Text, Font);
+
+					float h = size.Height - a.Height;
+
+					if (h > 0)
+					{
+						a = new RectangleF(a.X, a.Y - h, a.Width, a.Height + h);
+					}
+
+					graphics.DrawString(Text, Font, _brush, a, Font.GetStringFormat());
 					break;
 			}
 		}
@@ -303,8 +357,24 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public object Clone()
 		{
 			Shape sp = new Shape();
-			sp.MetaData = MetaData;
+
+			sp._metaData = _metaData;
 			sp._argPropList = _argPropList;
+			sp._brush = _brush;
+			sp._fill = _fill;
+
+			sp.Type = Type;
+			sp.Text = Text;
+			sp.Points = Points;
+			sp.Offset = Offset;
+			sp.Location = Location;
+			sp.Size = Size;
+			sp.Arc = Arc;
+			sp.Pen = Pen;
+			sp.Font = Font;
+			sp.Fill = Fill;
+			sp.Area = Area;
+			sp.Alpha = Alpha;
 
 			return sp;
 		}

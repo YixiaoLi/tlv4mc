@@ -101,14 +101,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				VisualizeData vizData = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(File.ReadAllText(visualizeRuleFilePath));
 
-				foreach (VisualizeRule vizRule in vizData.VisualizeRules)
-				{
-					visualizeData.VisualizeRules.Add(vizRule.Name, vizRule);
-				}
-				foreach (Shapes sp in vizData.Shapes)
-				{
-					visualizeData.Shapes.Add(sp.Name, sp);
-				}
+				if (vizData.VisualizeRules != null)
+					foreach (VisualizeRule vizRule in vizData.VisualizeRules)
+					{
+						visualizeData.VisualizeRules.Add(vizRule.Name, vizRule);
+					}
+				if (vizData.Shapes != null)
+					foreach (Shapes sp in vizData.Shapes)
+					{
+						visualizeData.Shapes.Add(sp.Name, sp);
+					}
 			}
 			return visualizeData;
 		}
