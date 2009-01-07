@@ -16,11 +16,11 @@ SVNADD	= svn add
 	$(DVIPDFM) $<
 	$(SVNADD) $@
 
-dvi: $(TARGET).dvi
+all: $(TARGET).pdf
 
 pdf: $(TARGET).pdf
 
-all: $(TARGET).pdf
+dvi: $(TARGET).dvi
 
 clean:
 	$(RM) *.dvi *.aux *.log *.pdf *.ps *.gz *~ *.core
