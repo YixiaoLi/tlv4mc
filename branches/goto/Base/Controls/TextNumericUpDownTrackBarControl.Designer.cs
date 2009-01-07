@@ -36,20 +36,19 @@
 			// 
 			// textBox
 			// 
-			this.textBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.textBox.ImeMode = System.Windows.Forms.ImeMode.Disable;
-			this.textBox.Location = new System.Drawing.Point(1, 1);
+			this.textBox.Location = new System.Drawing.Point(1, 9);
 			this.textBox.Name = "textBox";
-			this.textBox.Size = new System.Drawing.Size(42, 12);
+			this.textBox.Size = new System.Drawing.Size(38, 12);
 			this.textBox.TabIndex = 2;
 			this.textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// vScrollBar
 			// 
-			this.vScrollBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.vScrollBar.Location = new System.Drawing.Point(44, 0);
+			this.vScrollBar.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.vScrollBar.Location = new System.Drawing.Point(40, 8);
 			this.vScrollBar.Name = "vScrollBar";
 			this.vScrollBar.Size = new System.Drawing.Size(14, 14);
 			this.vScrollBar.TabIndex = 3;
@@ -57,12 +56,12 @@
 			// 
 			// trackBarButton
 			// 
-			this.trackBarButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.trackBarButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.trackBarButton.Appearance = System.Windows.Forms.Appearance.Button;
 			this.trackBarButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("trackBarButton.BackgroundImage")));
 			this.trackBarButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.trackBarButton.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.trackBarButton.Location = new System.Drawing.Point(58, 0);
+			this.trackBarButton.Location = new System.Drawing.Point(54, 8);
 			this.trackBarButton.Name = "trackBarButton";
 			this.trackBarButton.Size = new System.Drawing.Size(14, 14);
 			this.trackBarButton.TabIndex = 4;
@@ -78,7 +77,7 @@
 			this.Controls.Add(this.vScrollBar);
 			this.Controls.Add(this.textBox);
 			this.Name = "TextNumericUpDownTrackBarControl";
-			this.Size = new System.Drawing.Size(72, 14);
+			this.Size = new System.Drawing.Size(68, 30);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

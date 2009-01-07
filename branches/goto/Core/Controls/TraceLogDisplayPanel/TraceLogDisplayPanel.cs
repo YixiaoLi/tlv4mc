@@ -30,7 +30,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					_timeLineX = value;
 
-					infoPanel.Size = new System.Drawing.Size(_timeLineX - 1, topTimeLineScale.Size.Height);
 					topTimeLineScale.Location = new System.Drawing.Point(_timeLineX, topTimeLineScale.Location.Y);
 					bottomTimeLineScale.Location = new System.Drawing.Point(_timeLineX, bottomTimeLineScale.Location.Y);
 					hScrollBar.Location = new System.Drawing.Point(_timeLineX, hScrollBar.Location.Y);
@@ -52,6 +51,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				}
 			}
 		}
+		public int MaxHeight
+		{
+			get
+			{
+
+				return toolStripContainer.ContentPanel.Height - 2
+					- topTimeLineScale.Height
+					- bottomTimeLineScale.Height
+					- hScrollBar.Height;
+			}
+		}
 
 		public TraceLogDisplayPanel()
 		{
@@ -63,6 +73,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			hScrollBar.Minimum = 1;
 			hScrollBar.Maximum = int.MaxValue;
 			hScrollBar.Value = hScrollBar.Minimum;
+			viewingAreaToolStrip.Enabled = false;
 
 			imageList.Images.Add("visualize", Properties.Resources.visualize);
 			imageList.Images.Add("resource", Properties.Resources.resource);
@@ -89,6 +100,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			topTimeLineScale.TimeLine = TimeLine;
 			bottomTimeLineScale.TimeLine = TimeLine;
+			topTimeLineScale.TimePerScaleMarkChanged += timeLineScaleTimePerScaleMarkChanged;
 
 			viewingTimeRangeFromTextBox.Minimum = TimeLine.MinTime.Value;
 			viewingTimeRangeFromTextBox.Maximum = TimeLine.ToTime.Value - 1;
@@ -98,19 +110,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			_data.SettingData.ResourceExplorerSetting.BecameDirty += resourceExplorerSettingBecameDirty;
 			_data.SettingData.VisualizeRuleExplorerSetting.BecameDirty += visualizeRuleExplorerSettingBecameDirty;
 			_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.ViewingAreaChanged += timeLineViewingAreaChanged;
+			_data.SettingData.TraceLogDisplayPanelSetting.BecameDirty += traceLogDisplayPanelSettingBecameDirty;
 
 			_timeScale = _data.ResourceData.TimeScale;
+			timePerSclaeUnitLabel.Text = _timeScale + "/目盛り";
 
+			if(!_data.SettingData.TraceLogDisplayPanelSetting.TimePerScaleMark.IsEmpty)
+				timePerSclaeLabel.Text = _data.SettingData.TraceLogDisplayPanelSetting.TimePerScaleMark.ToString();
+			pixelPerScaleToolStripTextNumericUpDown.Value = _data.SettingData.TraceLogDisplayPanelSetting.PixelPerScaleMark;
+			rowHeightToolStripTextNumericUpDown.Value = _data.SettingData.TraceLogDisplayPanelSetting.RowHeight;
 			viewingTimeRangeFromTextBox.Text = TimeLine.FromTime.ToString();
 			viewingTimeRangeToTextBox.Text = TimeLine.ToTime.ToString();
-			viewingTimeRangeFromTextBox.Enabled = true;
-			viewingTimeRangeToTextBox.Enabled = true;
-			viewingTimeRangeFromScaleLabel.Text = formatTimeScale(_timeScale);
-			viewingTimeRangeToScaleLabel.Text = formatTimeScale(_timeScale);
+			viewingTimeRangeFromScaleLabel.Text = _timeScale;
+			viewingTimeRangeToScaleLabel.Text = _timeScale;
 			viewableSpanTextBox.Visible = true;
-			viewableSpanLabel.Visible = true;
-			viewableSpanTextBox.Text = TimeLine.MinTime.ToString() + " ～ " + TimeLine.MaxTime.ToString() + " " + formatTimeScale(_timeScale);
+			viewableSpanTextBox.Text = TimeLine.MinTime.ToString() + " ～ " + TimeLine.MaxTime.ToString() + " " + _timeScale;
 			viewableSpanTextBox.Width = TextRenderer.MeasureText(viewableSpanTextBox.Text, viewableSpanTextBox.Font).Width;
+			viewingAreaToolStrip.Enabled = true;
 
 			setNodes();
 
@@ -119,6 +135,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				tlv.SetData(_data);
 				tlv.TimeLine = TimeLine;
 			}
+
+			setRowHeight(treeGridView.Nodes.Values);
 
 			treeGridViewRowChanged(this, EventArgs.Empty);
 
@@ -190,18 +208,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			base.ClearData();
 
+			timePerSclaeLabel.Text = string.Empty;
+			pixelPerScaleToolStripTextNumericUpDown.Text = string.Empty;
 			viewingTimeRangeFromTextBox.Text = string.Empty;
 			viewingTimeRangeToTextBox.Text = string.Empty;
 			viewingTimeRangeFromScaleLabel.Text = string.Empty;
 			viewingTimeRangeToScaleLabel.Text = string.Empty;
-			viewingTimeRangeFromTextBox.Enabled = false;
-			viewingTimeRangeToTextBox.Enabled = false;
 			viewingTimeRangeFromScaleLabel.Text = string.Empty;
 			viewingTimeRangeToScaleLabel.Text = string.Empty;
 			viewableSpanTextBox.Text = string.Empty;
 			viewableSpanTextBox.Width = 30;
 			viewableSpanTextBox.Visible = false;
-			viewableSpanLabel.Visible = false;
+			viewingAreaToolStrip.Enabled = false;
 
 			_timeScale = string.Empty;
 			_hScrollUpdateFlag = false;
@@ -227,12 +245,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			treeGridView.RowHeightChanged += treeGridViewRowChanged;
 			treeGridView.RowCountChanged += treeGridViewRowChanged;
 			SizeChanged += treeGridViewRowChanged;
-			treeGridView.DataGridView.SizeChanged += (o, _e) =>
-			{
-				bottomTimeLineScale.Location = new System.Drawing.Point(bottomTimeLineScale.Location.X, 1 + topTimeLineScale.Height + treeGridView.Height);
-				hScrollBar.Location = new System.Drawing.Point(hScrollBar.Location.X, 1 + topTimeLineScale.Height + treeGridView.Height + bottomTimeLineScale.Height);
-				treeGridViewRowChanged(this, e);
-			};
+			SizeChanged += (o, _e) =>
+				{
+					rowHeightToolStripTextNumericUpDown.Maximum = MaxHeight - 1;
+				};
+
 			treeGridView.DataGridView.ColumnWidthChanged += (o, _e) =>
 			{
 				int w = 0;
@@ -278,14 +295,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			viewingTimeRangeFromTextBox.TextChanged += (o, _e) =>
 				{
-					viewingTimeRangeFromTextBox.TextBoxWidth = TextRenderer.MeasureText(viewingTimeRangeFromTextBox.Text, viewingTimeRangeFromTextBox.Font).Width;
 					if (viewingTimeRangeFromTextBox.Width == 0)
 						viewingTimeRangeFromTextBox.Width = 50;
 				};
 
 			viewingTimeRangeToTextBox.TextChanged += (o, _e) =>
 				{
-					viewingTimeRangeToTextBox.TextBoxWidth = TextRenderer.MeasureText(viewingTimeRangeToTextBox.Text, viewingTimeRangeToTextBox.Font).Width;
 					if (viewingTimeRangeToTextBox.Width == 0)
 						viewingTimeRangeToTextBox.Width = 50;
 				};
@@ -299,7 +314,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					try
 					{
 						Time t = new Time(viewingTimeRangeFromTextBox.Text, _timeRadix);
-						if (t.IsEmpty || t < TimeLine.MinTime || t > TimeLine.ToTime) throw new Exception();
+						if (t.IsEmpty || t < TimeLine.MinTime || t > TimeLine.ToTime)
+							throw new Exception();
 						TimeLine.SetTime(t, Time.Empty);
 					}
 					catch
@@ -317,7 +333,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					try
 					{
 						Time t = new Time(viewingTimeRangeToTextBox.Text, _timeRadix);
-						if (t.IsEmpty || t > TimeLine.MaxTime || t < TimeLine.FromTime) throw new Exception();
+						if (t.IsEmpty || t > TimeLine.MaxTime || t < TimeLine.FromTime)
+							throw new Exception();
 						TimeLine.SetTime(Time.Empty, t);
 					}
 					catch
@@ -326,6 +343,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						TimeLine.SetTime(Time.Empty, lastValue);
 					}
 				};
+			#endregion
+
+			#region pixelPerScaleToolStripTextNumericUpDown初期化
+
+			pixelPerScaleToolStripTextNumericUpDown.Validated += (o, _e) =>
+				{
+					_data.SettingData.TraceLogDisplayPanelSetting.PixelPerScaleMark = (int)pixelPerScaleToolStripTextNumericUpDown.Value;
+				};
+
+			#endregion
+
+			#region rowSizeToolStripTextNumericUpDown初期化
+
+			rowHeightToolStripTextNumericUpDown.Validated += (o, _e) =>
+			{
+				_data.SettingData.TraceLogDisplayPanelSetting.RowHeight = (int)rowHeightToolStripTextNumericUpDown.Value;
+			};
+
 			#endregion
 
 			#region hScrollBar初期化
@@ -395,14 +430,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		protected void treeGridViewRowChanged(object sender, EventArgs e)
 		{
-			int allRowHeight = treeGridView.VisibleRowsCount * treeGridView.RowHeight;
+			if (_data == null)
+				return;
+
+			int height = _data.SettingData.TraceLogDisplayPanelSetting.RowHeight;
+
+			int allRowHeight = treeGridView.VisibleRowsCount * height;
 
 			allRowHeight += treeGridView.DataGridView.ColumnHeadersVisible ? treeGridView.ColumnHeadersHeight : 1;
 
-			int maxHeight = toolStripContainer.ContentPanel.Height - 2
-				- topTimeLineScale.Height
-				- bottomTimeLineScale.Height
-				- hScrollBar.Height;
 
 			if(allRowHeight == 1)
 			{
@@ -423,14 +459,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					hScrollBar.Visible = true;
 			}
 
-			if ( allRowHeight > maxHeight)
+			if (allRowHeight > MaxHeight)
 			{
-				treeGridView.Height = (int)((double)allRowHeight - Math.Ceiling((double)(allRowHeight - maxHeight) / (double)treeGridView.RowHeight) * (double)treeGridView.RowHeight);
+				//treeGridView.Height = (int)((double)allRowHeight - Math.Ceiling((double)(allRowHeight - MaxHeight) / (double)height) * (double)height);
+				treeGridView.Height = MaxHeight;
 			}
 			else
 			{
 				treeGridView.Height = allRowHeight;
 			}
+
+			bottomTimeLineScale.Location = new System.Drawing.Point(bottomTimeLineScale.Location.X, 1 + topTimeLineScale.Height + treeGridView.Height);
+			hScrollBar.Location = new System.Drawing.Point(hScrollBar.Location.X, 1 + topTimeLineScale.Height + treeGridView.Height + bottomTimeLineScale.Height);
 		}
 
 		protected void visualizeRuleExplorerSettingBecameDirty(object sender, string propertyName)
@@ -539,11 +579,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		}
 
-		protected string formatTimeScale(string scale)
-		{
-			return "[" + scale + "]";
-		}
-
 		protected void timeLineScaleRedraw()
 		{
 			topTimeLineScale.Refresh();
@@ -563,13 +598,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			if (e.Old.FromTime != e.New.FromTime)
 			{
-				viewingTimeRangeToTextBox.Minimum = e.New.FromTime.Value + 1;
+				viewingTimeRangeToTextBox.Minimum = e.New.FromTime.Value + 0.0000000001m;
 				viewingTimeRangeFromTextBox.Text = e.New.FromTime.ToString();
 			}
 
 			if (e.Old.ToTime != e.New.ToTime)
 			{
-				viewingTimeRangeFromTextBox.Maximum = e.New.ToTime.Value - 1;
+				viewingTimeRangeFromTextBox.Maximum = e.New.ToTime.Value - 0.0000000001m;
 				viewingTimeRangeToTextBox.Text = e.New.ToTime.ToString();
 			}
 
@@ -580,6 +615,36 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				hScrollBarValueUpdate();
 
 			timeLineRedraw();
+		}
+
+		protected void timeLineScaleTimePerScaleMarkChanged(object sender, EventArgs e)
+		{
+			if (_data.SettingData.TraceLogDisplayPanelSetting.TimePerScaleMark != topTimeLineScale.TimePerScaleMark)
+				_data.SettingData.TraceLogDisplayPanelSetting.TimePerScaleMark = topTimeLineScale.TimePerScaleMark;
+
+			timePerSclaeLabel.Text = topTimeLineScale.TimePerScaleMark.ToString();
+
+		}
+
+		protected void traceLogDisplayPanelSettingBecameDirty(object sender, string propertyName)
+		{
+			switch(propertyName)
+			{
+				case "RowHeight":
+					setRowHeight(treeGridView.Nodes.Values);
+					treeGridViewRowChanged(this, EventArgs.Empty);
+					break;
+			}
+		}
+
+		protected void setRowHeight(IEnumerable<ITreeGirdViewNode> nodes)
+		{
+			foreach (ITreeGirdViewNode node in nodes)
+			{
+				((DataGridViewRow)node).Height = _data.SettingData.TraceLogDisplayPanelSetting.RowHeight;
+				if (node.HasChildren)
+					setRowHeight(node.Nodes.Values);
+			}
 		}
 	}
 }

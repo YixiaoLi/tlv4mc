@@ -83,7 +83,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 			{
 				int num = 0;
 
-				foreach(DataGridViewRow row in treeGridView.Rows)
+				foreach (DataGridViewRow row in treeGridView.Rows)
 				{
 					if (row.Visible)
 						num++;

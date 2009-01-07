@@ -16,12 +16,12 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
 		private int _radix = 10;
 		private decimal _tick = 1.0m;
 
-		private decimal Value
+		public decimal Value
 		{
 			get { return _value; }
 			set
 			{
-				if (_value != value)
+				if (_value != value && value <= Maximum && value >= Minimum)
 				{
 					_value = value;
 					Text = Value.ToString(Radix);
@@ -66,15 +66,21 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
 			{
 				if (textBox.Text != value && value != null && value != string.Empty)
 				{
-					textBox.Text = value;
-					Value = Text.ToDecimal(Radix);
+					Invoke(new MethodInvoker(() => {
+						textBox.Text = value;
+						Value = value.ToDecimal(Radix);
+					}));
 				}
 			}
 		}
 
+		private readonly int buttonWidths = 0;
+
 		public TextNumericUpDownTrackBarControl()
 		{
 			InitializeComponent();
+			buttonWidths = vScrollBar.Width + trackBarButton.Width;
+			MinimumSize = new Size(buttonWidths + 50, 14);
 			trackBar.Minimum = 0;
 			trackBar.Maximum = int.MaxValue;
 			trackBar.TickFrequency = (trackBar.Maximum - trackBar.Minimum) / 4;
@@ -90,10 +96,45 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
 			base.OnLoad(e);
 			vScrollBar.ValueChanged += vScrollBarValueChanged;
 			textBox.Validated += (o, _e) => { OnValidated(_e); };
-			textBox.TextChanged += (o, _e) => { OnTextChanged(_e); };
+			textBox.TextChanged += (o, _e) =>
+			{
+				if (AutoSize)
+				{
+					int w = TextRenderer.MeasureText(Text, Font).Width + buttonWidths;
+					Width = w < MinimumSize.Width ? MinimumSize.Width : w;
+				}
+				OnTextChanged(_e);
+			};
 			textBox.KeyPress += textBoxKeyPress;
 			textBox.KeyUp += textBoxKeyUp;
 			trackBar.ValueChanged += trackBarValueChanged;
+			trackBar.MiniTrackBar.TrackBar.KeyDown += (o, _e) =>
+			{
+				if ((_e.KeyCode & Keys.Enter) == Keys.Enter)
+					trackBarButton.CheckState = CheckState.Unchecked;
+			};
+
+			trackBar.MiniTrackBar.TrackBar.PreviewKeyDown += (o, _e) =>
+			{
+				decimal v = (trackBar.Maximum - trackBar.Minimum) / 100;
+
+				if ((_e.KeyData & Keys.Right) == Keys.Left)
+				{
+					if (Maximum - Minimum != 0)
+					{
+						decimal r = (Value - (Maximum - Minimum)/100 - Minimum) / (Maximum - Minimum) * (decimal)(trackBar.Maximum - trackBar.Minimum);
+						trackBar.Value = r > trackBar.Maximum ? trackBar.Maximum - 1 : r < trackBar.Minimum ? trackBar.Minimum : (int)r;
+					}
+				}
+				if ((_e.KeyData & Keys.Right) == Keys.Right)
+				{
+					if (Maximum - Minimum != 0)
+					{
+						decimal r = (Value + (Maximum - Minimum) / 100 - Minimum) / (Maximum - Minimum) * (decimal)(trackBar.Maximum - trackBar.Minimum);
+						trackBar.Value = r > trackBar.Maximum ? trackBar.Maximum - 1 : r < trackBar.Minimum ? trackBar.Minimum : (int)r;
+					}
+				}
+			};
 			trackBarButton.CheckStateChanged += trackBarButtonCheckStateChanged;
 		}
 
@@ -134,7 +175,18 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
 			base.OnKeyUp(e);
 
 			if ((e.KeyCode & Keys.Enter) == Keys.Enter)
+			{
+				try
+				{
+					decimal v = textBox.Text.ToDecimal(Radix);
+					Value = v;
+					textBox.Text = Value.ToString(Radix);
+				}
+				catch { }
+				Text = textBox.Text;
+
 				OnValidated(EventArgs.Empty);
+			}
 		}
 
 		private void vScrollBarValueChanged(object sender, EventArgs e)

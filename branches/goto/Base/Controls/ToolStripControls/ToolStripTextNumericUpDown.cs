@@ -8,11 +8,12 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
 {
 	public class ToolStripTextNumericUpDown : ToolStripControlHost
 	{
-		public int TextBoxWidth
+		public decimal Value
 		{
-			get { return Width - 28; }
-			set { Width = value + 28; }
+			get { return TextNumericUpDownTrackBarControl.Value; }
+			set { TextNumericUpDownTrackBarControl.Value = value; }
 		}
+
 		public decimal Maximum
 		{
 			get { return TextNumericUpDownTrackBarControl.Maximum; }
@@ -30,7 +31,7 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
 		public ToolStripTextNumericUpDown()
 			: base(new TextNumericUpDownTrackBarControl())
 		{
-
+			AutoSize = true;
 		}
 
 		public TextNumericUpDownTrackBarControl TextNumericUpDownTrackBarControl
@@ -39,6 +40,12 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
 			{
 				return (TextNumericUpDownTrackBarControl)Control;
 			}
+		}
+
+		public new bool AutoSize
+		{
+			get { return TextNumericUpDownTrackBarControl.AutoSize; }
+			set { TextNumericUpDownTrackBarControl.AutoSize = value; }
 		}
 
 		public int Radix

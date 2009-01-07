@@ -23,6 +23,8 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
 		public int TickFrequency { get { return miniTrackBar.TickFrequency; } set { if (TickFrequency != value) miniTrackBar.TickFrequency = value; } }
 		public TickStyle TickStyle { get { return miniTrackBar.TickStyle; } set { if (TickStyle != value) miniTrackBar.TickStyle = value; } }
 
+		public MiniTrackBar MiniTrackBar { get { return miniTrackBar; } }
+
 		public MiniTrackBarForm()
 		{
 			InitializeComponent();

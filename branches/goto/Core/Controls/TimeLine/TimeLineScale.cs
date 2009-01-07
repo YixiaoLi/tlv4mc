@@ -16,7 +16,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 	public class TimeLineScale : TimeLineControl
 	{
+		public event EventHandler TimePerScaleMarkChanged;
+
 		public ScaleMarkDirection ScaleMarkDirection { get; set; }
+
+		public Time TimePerScaleMark
+		{
+			get { return _tPs; }
+			set
+			{
+				_tPs = value;
+				_dflag = _tPs.Value % 1.0m != 0;
+				_carry = (int)Math.Ceiling(Math.Log10((double)(_tPs.Value)) * -1);
+				_carry = _carry < 0 ? 0 : _carry;
+				_startI = (int)((TimeLine.FromTime - TimeLine.MinTime) / _tPs).Truncate().Value;
+				_startT = _startI > 0 ? TimeLine.MinTime + (_startI - _padding) * _tPs : TimeLine.FromTime;
+				_endT = TimeLine.ToTime + (_padding * _tPs);
+
+				if (TimePerScaleMarkChanged != null)
+					TimePerScaleMarkChanged(this, EventArgs.Empty);
+			}
+		}
 
 		private int _padding = 10;
 		private float _scaleHeight = 2f;
@@ -57,6 +77,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					{
 						_pPs = _data.SettingData.TraceLogDisplayPanelSetting.PixelPerScaleMark;
 						memberUpdate();
+						Refresh();
+					}
+					else if (p == "TimePerScaleMark")
+					{
+						//setTpS(_data.SettingData.TraceLogDisplayPanelSetting.TimePerScaleMark);
+						//memberUpdate();
+						//Refresh();
 					}
 				};
 		}
@@ -84,12 +111,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			{
 				_tPp = TimeLine.ViewingSpan / (decimal)Width;
 				_tPp = _tPp.Value > 1m ? _tPp.Round(0) : new Time(((decimal)Math.Pow(10, Math.Floor(Math.Log10((double)_tPp.Value)))).ToString(_timeRadix), _timeRadix);
-				_tPs = _tPp.Value > 1m ? _tPp * (decimal)_pPs : TimeLine.ViewingSpan / ((decimal)Width / (decimal)_pPs);
-				_dflag = _tPs.Value % 1.0m != 0;
-				_carry = (int)Math.Ceiling(Math.Log10((double)(_tPs.Value)) * -1);
-				_startI = (int)((TimeLine.FromTime - TimeLine.MinTime) / _tPs).Truncate().Value;
-				_startT = _startI > 0 ? TimeLine.MinTime + (_startI - _padding) * _tPs : TimeLine.FromTime;
-				_endT = TimeLine.ToTime + (_padding * _tPs);
+				
+				TimePerScaleMark = _tPp.Value > 1m ? _tPp * (decimal)_pPs : TimeLine.ViewingSpan / ((decimal)Width / (decimal)_pPs);
 			}
 		}
 
@@ -108,6 +131,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			int i = _startI;
 			float lastLabelX = float.MinValue;
+
+			int bi = (int)((_pPs <= 50 ? 50 : 100) / _pPs);
 
 			for (Time t = _startT;
 				t < _endT;
@@ -134,11 +159,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 				g.DrawLine(Pens.White, fp, tp);
 
-				if (i % 10 == 0)
+				if (i % 5 == 0)
 				{
 					string tmStr = (_dflag ? t.Round(_carry) : t.Truncate()).ToString();
 
-					SizeF tmStrSz = g.MeasureString(tmStr + "_", Font);
+					SizeF tmStrSz = g.MeasureString(tmStr, Font);
 
 					if (x - (tmStrSz.Width / 2f) > lastLabelX)
 					{

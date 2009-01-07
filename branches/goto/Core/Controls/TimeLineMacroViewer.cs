@@ -38,6 +38,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			BackColor = Color.White;
 			_scale.ScaleMarkDirection = ScaleMarkDirection.Bottom;
+
+			SuspendLayout();
+
+			this.ApplyNativeScroll();
+
+			Controls.Add(_scale);
+			_scale.Location = new System.Drawing.Point(1,0);
+			_scale.Width = Width - 2;
+			_scale.Anchor = AnchorStyles.Left | AnchorStyles.Right| AnchorStyles.Top;
+
+			ResumeLayout();
 		}
 
 		protected override void OnLoad(EventArgs e)
@@ -52,7 +63,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					return;
 
 				ApplicationFactory.StatusManager.ShowHint(GetType() + Name + "mouseWheelMove", "可視化表示領域移動", "ホイール", ",矢印キー");
-				ApplicationFactory.StatusManager.ShowHint(GetType() + Name + "mouseWheelBigMove", "大きく可視化表示領域移動", "Shift", "ホイール", ",Shift", "矢印キー");
 			};
 			EventHandler hideStatus = (o, _e) =>
 			{
@@ -60,7 +70,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					return;
 
 				ApplicationFactory.StatusManager.HideHint(GetType() + Name + "mouseWheelMove");
-				ApplicationFactory.StatusManager.HideHint(GetType() + Name + "mouseWheelBigMove");
 			};
 
 			MouseEnter += showStatus;
@@ -173,8 +182,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			if (_data == null || _list.Count() == 0)
 				return;
 
-			g.FillRectangle(new SolidBrush(_scale.BackColor), new Rectangle(rect.X + 1, rect.Y, _scale.Width, _scale.Height));
-			_scale.Draw(g, new Rectangle(rect.X + 1, rect.Y, _scale.Width, _scale.Height));
+			//g.FillRectangle(new SolidBrush(_scale.BackColor), new Rectangle(rect.X + 1, rect.Y, _scale.Width, _scale.Height));
+			//_scale.Draw(g, new Rectangle(rect.X + 1, rect.Y, _scale.Width, _scale.Height));
 
 			IEnumerable<TimeLineVisualizer> tlvs = _list.Where<TimeLineVisualizer>(tlv=>
 				{
@@ -337,16 +346,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			base.OnMouseWheel(e);
 
-			int d = (Control.ModifierKeys & Keys.Shift) == Keys.Shift ? 10 * _delta : 3 * _delta;
-
 			if (e.Delta < 0)
 			{
-				_tx = _tx + d <= _scale.Location.X + _scale.Width ? _tx + d : _scale.Location.X + _scale.Width;
+				_tx = _tx + _delta <= _scale.Location.X + _scale.Width ? _tx + _delta : _scale.Location.X + _scale.Width;
 				TimeLine.MoveBySettingToTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width, (int)_tx).Value).ToString(), _data.ResourceData.TimeRadix));
 			}
 			else if (e.Delta > 0)
 			{
-				_fx = _fx - d <= _scale.Location.X ? _scale.Location.X : _fx - d;
+				_fx = _fx - _delta <= _scale.Location.X ? _scale.Location.X : _fx - _delta;
 				TimeLine.MoveBySettingFromTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width, (int)_fx).Value).ToString(), _data.ResourceData.TimeRadix));
 			}
 		}
@@ -359,28 +366,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			ApplicationFactory.StatusManager.HideHint(GetType() + Name + "viewingAreaSizeChange");
 		}
 
-		protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)
+		protected override bool ProcessDialogKey(Keys keyData)
 		{
 			if (_data == null)
-				return;
+				return base.ProcessDialogKey(keyData);
 
-			int d = (Control.ModifierKeys & Keys.Shift) == Keys.Shift ? 10 * _delta : _delta;
-
-			switch (e.KeyCode)
+			switch (keyData)
 			{
 				case Keys.Right:
 				case Keys.Down:
-					_tx = _tx + d <= _scale.Location.X + _scale.Width ? _tx + d : _scale.Location.X + _scale.Width;
+					_tx = _tx + _delta <= _scale.Location.X + _scale.Width ? _tx + _delta : _scale.Location.X + _scale.Width;
 					TimeLine.MoveBySettingToTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width, (int)_tx).Value).ToString(), _data.ResourceData.TimeRadix));
-					break;
+					return true;
 				case Keys.Up:
 				case Keys.Left:
-					_fx = _fx - d <= _scale.Location.X ? _scale.Location.X : _fx - d;
+					_fx = _fx - _delta <= _scale.Location.X ? _scale.Location.X : _fx - _delta;
 					TimeLine.MoveBySettingFromTime(TimeLine.MinTime + new Time(Math.Truncate(Time.FromX(TimeLine.MinTime, TimeLine.MaxTime, _scale.Width, (int)_fx).Value).ToString(), _data.ResourceData.TimeRadix));
-					break;
+					return true;
+				default:
+					return base.ProcessDialogKey(keyData);
 			}
-
-			base.OnPreviewKeyDown(e);
 		}
 
 		private void timeLineViewingAreaChanged(object sender, GeneralChangedEventArgs<TimeLine> e)
