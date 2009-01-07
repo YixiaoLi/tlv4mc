@@ -1,0 +1,118 @@
+\documentclass[a4paper,12pt]{jreport}
+%%%% Master's Thesis template, ver1.0j (2005/01/14), ktakagi@is.nagoya-u.ac.jp
+%%%% updated (2006/01/13), tomiyama@is.nagoya-u.ac.jp
+
+\textheight 9.0in
+\textwidth 6.0in
+\topmargin 0in
+\oddsidemargin .2in
+\evensidemargin .2in
+
+\title{
+{\LARGE\sffamily\gtfamily
+修\ \ 士\ \ 論\ \ 文\\
+}
+\vspace*{.6in}
+{\huge\sffamily\gtfamily
+題目\\
+}
+\vfill\vfill\vfill
+}
+\author{
+\LARGE\sffamily\gtfamily
+350702101\ \ \ \ 後藤 隼弐\\
+}
+\date{
+\vfill
+\Large\sffamily\gtfamily
+名古屋大学 大学院情報科学研究科\\[.2in]
+情報システム学専攻\\[.2in]
+2008年1月
+\vfill
+}
+
+\begin{document}
+
+\pagestyle{empty}
+
+%%%%%%%% 和文要旨
+\vspace*{-1in}
+\begin{center}
+\Large\sffamily\gtfamily 題目
+\end{center}
+\begin{flushright}
+\large\sffamily\gtfamily
+学籍番号\ \ \ \ 氏 名
+\end{flushright}
+\begin{center}
+\large\sffamily\gtfamily 要旨
+\end{center}
+
+要旨
+
+\clearpage
+
+%%%%%%%% 英文要旨
+\vspace*{-1in}
+\begin{center}
+\Large\sffamily
+Title
+\end{center}
+\begin{flushright}
+\large\sffamily\gtfamily
+StudentID\ \ \ \ Name
+\end{flushright}
+\begin{center}
+\large\sffamily Abstract
+\end{center}
+
+Abstract
+
+\clearpage
+
+%%%%%%%% 中表紙
+\maketitle
+\clearpage
+
+%%%%%%%% 目次
+\pagestyle{plain} \pagenumbering{roman}
+\setcounter{page}{1}
+\tableofcontents
+\clearpage
+
+%%%%%%%% 本文
+\pagestyle{plain} \pagenumbering{arabic}
+\setcounter{page}{1}
+
+\chapter{緒論}
+\section{テスト1}
+ここからは、「レポート作成のための TeX」から一歩先に進んで、TeX を活用した情報発信のかたちについて紹介し ていきたいと思います。こんにちでは、インターネットの普及によって個人が 気軽に情報を発信することが可能になりました。研究者が自分の研究成果を公 開したり、作家（風な方々も含む）がオリジナルの作品をアップロードするこ とも一般的になりました。しかしいっぽうで、Web 上での標準的な文書形式である HTML では表現力に限界がありま す。例えば、漢文であるとか多言語混在文書は表現しきれません。こ れまで、このようなテキストは画像として貼りこまれることがほとんどでした。 しかし画像の解像度やファイルサイズの問 題で、満足いくものができませんでした。日本語の表現形式として一 般的な縦書きも HTML で書くには相当の技量と苦労が必要になります。 また、仮に HTML で表現しきれたとしても、それを日本語、あるいは各国語フォ ントのない環境で閲覧した場合、表示されるのはた だの文字化けした怪文書です。Word などのアプリケーションで作成し たファイルについても、そのアプリケーションがなければ閲覧することはでき ませんし、Office については同じアプリケーションでもバージョンによって 開けたり開けなかったりする、という素敵 なことも起こります。
+
+\chapter{準備}
+
+\chapter{本論}
+
+\chapter{結論}
+
+\clearpage
+
+%%%%%%%% 背表紙
+\thispagestyle{empty}
+\oddsidemargin -4in
+\evensidemargin -4in
+\topmargin -.5in
+{
+\tate
+\Large\sffamily\gtfamily
+\begin{minipage}{9.5in}
+\begin{minipage}{6.0in}
+題目
+\end{minipage}
+\hfill\hfill\hfill\hfill
+学籍番号
+\hfill
+氏 名
+\end{minipage}
+}
+
+\end{document}
