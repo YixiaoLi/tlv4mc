@@ -7,13 +7,13 @@ SVNADD	= svn add
 .SUFFIXES:
 .SUFFIXES:	.tex .dvi .pdf
 
-.dvi.pdf:
-	$(DVIPDFM) $<
-	$(SVNADD) $@
-
 .tex.dvi:
 	$(LATEX) $<
 	$(LATEX) $<
+	$(SVNADD) $@
+
+.dvi.pdf:
+	$(DVIPDFM) $<
 	$(SVNADD) $@
 
 dvi: $(TARGET).dvi
