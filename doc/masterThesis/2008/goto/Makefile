@@ -18,12 +18,12 @@ SVNCOMMIT	= svn commit -m ''
 	$(DVIPDFM) $<
 	$(SVNADD) $@
 
-all: $(TARGET).pdf
-	$(SVNCOMMIT)
-
 pdf: $(TARGET).pdf
 
 dvi: $(TARGET).dvi
+
+all: $(TARGET).pdf
+	$(SVNCOMMIT)
 
 clean:
 	$(RM) *.dvi *.aux *.log *.pdf *.ps *.gz *~ *.core
