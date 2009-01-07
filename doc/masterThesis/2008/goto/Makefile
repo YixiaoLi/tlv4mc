@@ -19,6 +19,7 @@ SVNCOMMIT	= svn commit -m ''
 	$(SVNADD) $@
 
 all: $(TARGET).pdf
+	$(SVNCOMMIT)
 
 pdf: $(TARGET).pdf
 
