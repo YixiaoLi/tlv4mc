@@ -1,5 +1,5 @@
 TARGET	= goto-thesis-paper
-LATEX	= platex
+LATEX	= platex --kanji=utf8
 DVIPDFM	= dvipdfmx.exe
 RM		= rm -f
 SVNADD	= svn add
