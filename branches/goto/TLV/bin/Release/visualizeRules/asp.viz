@@ -81,7 +81,19 @@
 						]
 					}
 				}
-			}
+			},
+			"taskPriChange":{
+				"DisplayName":"優先度変化",
+				"Target":"Task",
+				"Events":{
+					"priChangeEvent":{
+						"DisplayName":"優先度",
+						"From":"${TARGET}.pri",
+						"To":"${TARGET}.pri",
+						"Figures":"blueRectangleWithText(${FROM_VAL})"
+					}
+				}
+            }
 		}
 	}
 }

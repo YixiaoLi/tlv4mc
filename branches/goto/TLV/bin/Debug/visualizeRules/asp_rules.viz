@@ -1,0 +1,67 @@
+﻿{
+	"asp":{
+		"VisualizeRules":{
+			"runningTaskChange":{
+				"DisplayName":"実行タスク変化",
+				"Events":{
+					"runningTaskChangeEvent":{
+						"DisplayName":"実行タスク",
+						"From":"Task(state!=RUNNING).state=RUNNING",
+						"To":"${FROM_TARGET}.state",
+						"Figures":"runningTaskChangeShapes($RES_COLOR{${FROM_TARGET}},$RES_NAME{${FROM_TARGET}})"
+					}
+				}
+			},
+			"callSvc":{
+				"DisplayName":"システムコール",
+				"Target":"Task",
+				"Events":{
+					"callSvcEvent":{
+						"DisplayName":"システムコール",
+						"From":"${TARGET}.enterSVC()",
+						"To":"${TARGET}.leaveSVC(${FROM_ARG0})",
+						"Figures":[
+						    {"${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk":"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"},
+						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk":"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
+						]
+					}
+		        }
+			},
+			"taskStateChange":{
+				"DisplayName":"状態遷移",
+				"Target":"Task",
+				"Events":{
+					"stateChangeEvent":{
+						"DisplayName":"状態",
+						"From":"${TARGET}.state",
+						"To":"${TARGET}.state",
+						"Figures":{
+						    "${FROM_VAL}==RUNNING"             :"runningShapes",
+						    "${FROM_VAL}==RUNNABLE"            :[
+						        "runnableShapes",
+						        {"${TO_VAL}==WAITING"  :"runnableToWaitingShapes"}
+						    ],
+						    "${FROM_VAL}==WAITING"             :[
+						        "waitingShapes",
+						        {"${TO_VAL}==RUNNABLE"  :"waitingToRunnableShapes"}
+						    ],
+						    "${FROM_VAL}==SUSPENDED"           :"suspendShapes",
+						    "${FROM_VAL}==WAITING-SUSPENDED"   :"waitingSuspendedShapes",
+						    "${FROM_VAL}==DORMANT"             :"dormantShapes"
+						}
+					},
+					"activateHappenEvent":{
+						"DisplayName":"起動",
+						"When":"${TARGET}.activate()",
+						"Figures":"activateShapes"
+					},
+					"exitHappenEvent":{
+						"DisplayName":"終了",
+						"When":"${TARGET}.exit()",
+						"Figures":"exitShapes"
+					}
+				}
+			}
+		}
+	}
+}

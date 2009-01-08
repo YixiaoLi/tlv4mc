@@ -1,0 +1,27 @@
+﻿{
+	"fmp":{
+		"VisualizeRules":{
+			"taskPrcIdChange":{
+				"DisplayName":"所属プロセッサ",
+				"Target":"Task",
+				"Events":{
+					"prcIdChangeEvent":{
+						"DisplayName":"プロセッサID",
+						"When":"${TARGET}.prcId",
+						"Figures":[
+    						{
+    							"${VAL}==0":"prcIdShapes(663366)",
+    							"${VAL}==1":"prcIdShapes(ff0000)",
+    							"${VAL}==2":"prcIdShapes(00ff00)",
+    							"${VAL}==3":"prcIdShapes(0000ff)",
+    							"${VAL}==4":"prcIdShapes(ffff00)",
+    							"${VAL}==5":"prcIdShapes(ff00ff)",
+    							"${VAL}==6":"prcIdShapes(00ffff)"
+    						}
+						]
+					}
+				}
+			}
+		}
+	}
+}

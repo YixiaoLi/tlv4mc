@@ -17,16 +17,6 @@
 					"Text":"${ARG1}"
 				}
 			],
-			"prcIdShapes":[
-				{
-					"Type":"Rectangle",
-					"Location":"0,0",
-					"Size":"100%,100%",
-					"Pen":{"Color":"${ARG0}","Width":1,"Alpha":255},
-					"Fill":"${ARG0}",
-					"Alpha":200
-				}
-			],
 			"runningShapes":[
 				{
 					"Type":"Rectangle",

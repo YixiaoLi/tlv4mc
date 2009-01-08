@@ -4,12 +4,6 @@
 		"Task":{
 			"DisplayName" :"タスク",
 			"Attributes" :{
-				"prcId":{
-					"VariableType"	:"Number",
-					"DisplayName"	:"プロセッサID",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:true
-				},
 				"id":{
 					"VariableType"	:"Number",
 					"DisplayName"	:"ID",

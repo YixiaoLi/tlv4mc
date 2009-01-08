@@ -118,6 +118,20 @@
 					"Font":{"Align":"BottomRight", "Size":7},
 					"Text":"return ${ARG2}"
 				}
+			],
+			"blueRectangleWithText":[
+				{
+					"Type":"Rectangle",
+					"Size":"100%,100%",
+					"Pen":{"Color":"ff0000ff","Width":1},
+					"Fill":"660000ff"
+				},
+				{
+					"Type":"Text",
+					"Size":"100%,100%",
+					"Font":{"Align":"MiddleLeft", "Size":7},
+					"Text":"${ARG0}"
+				}
 			]
 		}
 	}
