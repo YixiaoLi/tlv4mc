@@ -50,6 +50,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualizeRules", "visualize
 		visualizeRules\asp_shapes.viz = visualizeRules\asp_shapes.viz
 		visualizeRules\fmp_rules.viz = visualizeRules\fmp_rules.viz
 		visualizeRules\fmp_shapes.viz = visualizeRules\fmp_shapes.viz
+		visualizeRules\toppers_rules.viz = visualizeRules\toppers_rules.viz
+		visualizeRules\toppers_shapes.viz = visualizeRules\toppers_shapes.viz
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{94C75166-FFDC-44D8-9030-0F6EF109BD8E}"

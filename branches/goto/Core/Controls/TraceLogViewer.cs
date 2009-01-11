@@ -318,6 +318,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						this.Invoke(new MethodInvoker(() =>
 						{
 							ApplicationFactory.StatusManager.HideProcessing(this.GetType().ToString() + ":sorting");
+							Refresh();
 						}));
 					};
 				dataGridView.DataSource = _dataSource;

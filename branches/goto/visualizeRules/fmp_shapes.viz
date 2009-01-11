@@ -1,27 +1,30 @@
-﻿{
+{
 	"fmp":{
-		"VisualizeRules":{
-			"taskPrcIdChange":{
-				"DisplayName":"所属プロセッサ",
-				"Target":"Task",
-				"Events":{
-					"prcIdChangeEvent":{
-						"DisplayName":"プロセッサID",
-						"When":"${TARGET}.prcId",
-						"Figures":[
-    						{
-    							"${VAL}==0":"prcIdShapes(663366)",
-    							"${VAL}==1":"prcIdShapes(ff0000)",
-    							"${VAL}==2":"prcIdShapes(00ff00)",
-    							"${VAL}==3":"prcIdShapes(0000ff)",
-    							"${VAL}==4":"prcIdShapes(ffff00)",
-    							"${VAL}==5":"prcIdShapes(ff00ff)",
-    							"${VAL}==6":"prcIdShapes(00ffff)"
-    						}
-						]
-					}
+		"Shapes":{
+			"prcIdShapes":[
+				{
+					"Type":"Rectangle",
+					"Location":"0,0",
+					"Size":"100%,100%",
+					"Fill":"${ARG0}",
+					"Alpha":30
 				}
-			}
+			],
+			"runningTaskChangeShapes":[
+				{
+					"Type":"Rectangle",
+					"Area":["${ARG2},${ARG3}","${ARG4},${ARG5}"],
+					"Pen":{"Color":"${ARG0}","Width":1,"Alpha":200},
+					"Fill":"${ARG0}",
+					"Alpha":100
+				},
+				{
+					"Type":"Text",
+					"Area":["${ARG2},${ARG3}","${ARG4},${ARG5}"],
+					"Font":{"Align":"TopLeft","Size":7},
+					"Text":"${ARG1}"
+				}
+			]
 		}
 	}
 }

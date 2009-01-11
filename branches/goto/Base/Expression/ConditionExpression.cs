@@ -25,9 +25,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 				do
 				{
-					m = Regex.Match(e, @"(?<comparisonExpression>\((?<left>[^=!<>\(\)&\|]+)(?<ope>(==|!=|<=|>=|>|<))(?<right>[^=!<>\(\)&\|]+)\))");
+					m = Regex.Match(e, @"(?<ini>[=!<>\(\)&\|]+)?(?<comparisonExpression>\((?<left>[^=!<>\(\)&\|]+)(?<ope>(==|!=|<=|>=|>|<))(?<right>[^=!<>\(\)&\|]+)\))(?<fin>[=!<>\(\)&\|]+)?");
 					if (m.Success)
-						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), ComparisonExpression.Result<string>(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
+						e = Regex.Replace(e, Regex.Escape(m.Groups["ini"].Value + m.Groups["comparisonExpression"].Value + m.Groups["fin"].Value), m.Groups["ini"].Value + ComparisonExpression.Result<string>(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + m.Groups["fin"].Value);
 				} while (m.Success);
 
 				if (_cache.ContainsKey(e))
@@ -45,9 +45,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 				do
 				{
-					m = Regex.Match(e, @"(?<comparisonExpression>\((?<left>!?[^=!<>\(\)&\|]+)(?<ope>(&&|\|\|))(?<right>!?[^=!<>\(\)&\|]+)\))");
+					m = Regex.Match(e, @"(?<ini>[=!<>\(\)&\|]+)?(?<comparisonExpression>\((?<left>!?[^=!<>\(\)&\|]+)(?<ope>(&&|\|\|))(?<right>!?[^=!<>\(\)&\|]+)\))(?<fin>[=!<>\(\)&\|]+)?");
 					if (m.Success)
-						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
+						e = Regex.Replace(e, Regex.Escape(m.Groups["ini"].Value + m.Groups["comparisonExpression"].Value + m.Groups["fin"].Value), m.Groups["ini"].Value + calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + m.Groups["fin"].Value);
 				} while (m.Success);
 
 				if (_cache.ContainsKey(e))
@@ -65,9 +65,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 				do
 				{
-					m = Regex.Match(e, @"(?<comparisonExpression>(?<left>[^=!<>\(\)&\|]+)(?<ope>(==|!=|<=|>=|>|<))(?<right>[^=!<>\(\)&\|]+))");
+					m = Regex.Match(e, @"(?<ini>[=!<>\(\)&\|]+)?(?<comparisonExpression>(?<left>[^=!<>\(\)&\|]+)(?<ope>(==|!=|<=|>=|>|<))(?<right>[^=!<>\(\)&\|]+))(?<fin>[=!<>\(\)&\|]+)?");
 					if (m.Success)
-						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), ComparisonExpression.Result<string>(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
+						e = Regex.Replace(e, Regex.Escape(m.Groups["ini"].Value + m.Groups["comparisonExpression"].Value + m.Groups["fin"].Value), m.Groups["ini"].Value + ComparisonExpression.Result<string>(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + m.Groups["fin"].Value);
 				} while (m.Success);
 
 				if (_cache.ContainsKey(e))
@@ -85,9 +85,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 				do
 				{
-					m = Regex.Match(e, @"(?<comparisonExpression>(?<left>!?[^=!<>\(\)&\|]+)(?<ope>&&)(?<right>!?[^=!<>\(\)&\|]+))");
+					m = Regex.Match(e, @"(?<ini>[=!<>\(\)&\|]+)?(?<comparisonExpression>(?<left>!?[^=!<>\(\)&\|]+)(?<ope>&&)(?<right>!?[^=!<>\(\)&\|]+))(?<fin>[=!<>\(\)&\|]+)?");
 					if (m.Success)
-						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
+						e = Regex.Replace(e, Regex.Escape(m.Groups["ini"].Value + m.Groups["comparisonExpression"].Value + m.Groups["fin"].Value), m.Groups["ini"].Value + calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + m.Groups["fin"].Value);
 				} while (m.Success);
 
 				if (_cache.ContainsKey(e))
@@ -105,9 +105,9 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 				do
 				{
-					m = Regex.Match(e, @"(?<comparisonExpression>(?<left>!?[^=!<>\(\)&\|]+)(?<ope>\|\|)(?<right>!?[^=!<>\(\)&\|]+))");
+					m = Regex.Match(e, @"(?<ini>[=!<>\(\)&\|]+)?(?<comparisonExpression>(?<left>!?[^=!<>\(\)&\|]+)(?<ope>\|\|)(?<right>!?[^=!<>\(\)&\|]+))(?<fin>[=!<>\(\)&\|]+)?");
 					if (m.Success)
-						e = Regex.Replace(e, Regex.Escape(m.Groups["comparisonExpression"].Value), calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString());
+						e = Regex.Replace(e, Regex.Escape(m.Groups["ini"].Value + m.Groups["comparisonExpression"].Value + m.Groups["fin"].Value), m.Groups["ini"].Value + calc(m.Groups["left"].Value, m.Groups["ope"].Value, m.Groups["right"].Value).ToString() + m.Groups["fin"].Value);
 				} while (m.Success);
 
 				result = parse(e);

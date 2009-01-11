@@ -2,7 +2,7 @@
 	"TimeScale" :"us",
 	"TimeRadix" :10,
 	"ConvertRules"   :["asp","fmp"],
-	"VisualizeRules" :["asp","fmp"],
+	"VisualizeRules" :["toppers","fmp","fmp_core2"],
 	"ResourceHeaders":["fmp"],
 	"Resources":
 	{
@@ -15,7 +15,7 @@
 				"atr"   :"TA_NULL",
 				"pri"   :10,
 				"exinf" :1,
-				"task"  :"task,"
+				"task"  :"task",
 				"stksz" :4096,
 				"stk"   :"NULL",
 				"state" :"DORMANT"
@@ -30,7 +30,7 @@
 				"atr"   :"TA_NULL",
 				"pri"   :10,
 				"exinf" :2,
-				"task"  :"task,"
+				"task"  :"task",
 				"stksz" :4096,
 				"stk"   :"NULL",
 				"state" :"DORMANT"
@@ -45,7 +45,7 @@
 				"atr"   :"TA_NULL",
 				"pri"   :10,
 				"exinf" :3,
-				"task"  :"task,"
+				"task"  :"task",
 				"stksz" :4096,
 				"stk"   :"NULL",
 				"state" :"DORMANT"
@@ -60,10 +60,10 @@
 				"atr"   :"TA_ACT",
 				"pri"   :5,
 				"exinf" :0,
-				"task"  :"main_task,"
+				"task"  :"main_task",
 				"stksz" :4096,
 				"stk"   :"NULL",
-				"state" :"RUNABLE"
+				"state" :"RUNNABLE"
 			}
 		}
 	}

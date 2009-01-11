@@ -47,6 +47,9 @@
     <Compile Include="ApplicationData.cs" />
     <Compile Include="ApplicationFactory.cs" />
     <Compile Include="ApplicationSetting.cs" />
+    <Compile Include="Base\EventShape.cs" />
+    <Compile Include="Base\EventShapes.cs" />
+    <Compile Include="Base\TimeLineEvents.cs" />
     <Compile Include="Base\TLVFunction.cs" />
     <Compile Include="Base\Extensions\ColorExtension.cs" />
     <Compile Include="Base\IHavingNullableProperty.cs" />
@@ -216,6 +219,7 @@
     <Reference Include="System.ServiceModel.Web">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Threading, Version=1.0.3058.34407, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase">

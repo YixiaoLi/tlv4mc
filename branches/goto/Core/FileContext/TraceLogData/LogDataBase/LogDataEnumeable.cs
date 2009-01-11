@@ -14,7 +14,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public LogDataEnumeable(IEnumerable<LogData> list)
 		{
-			_list = list.OrderBy<LogData, long>(l => l.Id).ToList();
+			if (list == null)
+				_list = new List<LogData>();
+			else
+				_list = list.OrderBy<LogData, long>(l => l.Id).ToList();
 		}
 
 		public IEnumerator<LogData> GetEnumerator()
@@ -27,6 +30,22 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return _list.GetEnumerator();
 		}
 
+		public static LogDataEnumeable GetFirstAttributeSetLogData(Resource res)
+		{
+			List<LogData> first = new List<LogData>();
+
+			foreach (KeyValuePair<string, Json> attr in res.Attributes)
+			{
+				if (!attr.Value.IsEmpty)
+					first.Add(new AttributeChangeLogData(Time.MinTime(10), res, attr.Key, attr.Value));
+			}
+			for (int i = 0; i < first.Count; i++)
+			{
+				first[i].Id = (first.Count - i) * -1;
+			}
+
+			return new LogDataEnumeable(first);
+		}
 
 		public IEnumerable<LogData> GetEnumerator(Resource target)
 		{
@@ -40,7 +59,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public IEnumerable<LogData> GetEnumerator<T>(string value, params string[] args)
 			where T : LogData
 		{
-			if (args == null)
+			if (args == null || (args.Length == 1 && args[0] == null))
 				return GetEnumerator<T>(value);
 
 			if (typeof(T) == typeof(BehaviorHappenLogData))

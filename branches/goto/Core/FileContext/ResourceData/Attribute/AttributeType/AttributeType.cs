@@ -83,7 +83,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             AllocationType = AllocationType.Static;
 			CanGrouping = false;
 			Color = ApplicationFactory.ColorFactory.RamdomColor();
-			Default = new Json("");
+			Default = Json.Empty;
         }
 
 	}

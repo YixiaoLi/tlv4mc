@@ -134,21 +134,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				// 条件に関数を適用
 				condition = TLVFunction.Apply(condition, _resourceData, traceLogData);
 
-				// 条件中の属性を値に変換
-				foreach (Match m in Regex.Matches(condition, @"\s*(\[\s*[^\]]+\s*\])?\s*[^\[\]\(\)\.\s]+\s*(\s*\([^\)]+\)\s*)?\s*\.\s*[^=!<>\(]+\s*"))
-				{
-					string val;
-					try
-					{
-						val = traceLogData.GetAttributeValue(m.Value);
-					}
-					catch (Exception e)
-					{
-						throw new Exception("リソース条件式が異常です。\n" + "\"" + m.Value + "\"\n" + e.Message);
-					}
-					condition = Regex.Replace(condition, Regex.Escape(m.Value), val);
-				}
-
 				// 条件式を評価
 				bool result;
 				try

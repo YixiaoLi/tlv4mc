@@ -12,11 +12,20 @@ namespace NU.OJL.MPRTOS.TLV.Third
 {
 	public class TreeGridView : Control, ITreeGridView
 	{
+		class DoubleBufferdTreeGridView : AdvancedDataGridView.TreeGridView
+		{
+			public DoubleBufferdTreeGridView()
+				:base()
+			{
+				DoubleBuffered = true;
+			}
+		}
+
 		public event DataGridViewRowEventHandler RowHeightChanged = null;
 		public event CollectionChangeEventHandler RowCountChanged = null;
 		public DataGridView DataGridView { get { return treeGridView; } }
 
-		DoubleBufferedTreeGridView treeGridView = new DoubleBufferedTreeGridView();
+		DoubleBufferdTreeGridView treeGridView = new DoubleBufferdTreeGridView();
 
 		private Dictionary<string, ITreeGirdViewNode> _nodes = new Dictionary<string, ITreeGirdViewNode>();
 
@@ -34,7 +43,6 @@ namespace NU.OJL.MPRTOS.TLV.Third
 
 		public TreeGridView()
 		{
-			this.DoubleBuffered = true;
 			treeGridView.ApplyNativeScroll();
 			treeGridView.RowHeightChanged += (o,e) => RowHeightChanged(o,e);
 			treeGridView.Rows.CollectionChanged += (o, e) => RowCountChanged(o, e);

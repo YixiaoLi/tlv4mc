@@ -15,5 +15,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
 			Data1 = l;
 			Data2 = r;
 		}
+
+		public override string ToString()
+		{
+			return Data1.ToString() + ":" + Data2.ToString();
+		}
 	}
 }

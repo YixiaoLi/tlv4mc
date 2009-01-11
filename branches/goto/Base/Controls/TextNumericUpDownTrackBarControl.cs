@@ -66,10 +66,14 @@ namespace NU.OJL.MPRTOS.TLV.Base.Controls
 			{
 				if (textBox.Text != value && value != null && value != string.Empty)
 				{
-					Invoke(new MethodInvoker(() => {
-						textBox.Text = value;
-						Value = value.ToDecimal(Radix);
-					}));
+					if (IsHandleCreated)
+					{
+						Invoke(new MethodInvoker(() =>
+						{
+							textBox.Text = value;
+							Value = value.ToDecimal(Radix);
+						}));
+					}
 				}
 			}
 		}

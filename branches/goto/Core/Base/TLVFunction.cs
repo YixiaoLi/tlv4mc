@@ -31,22 +31,38 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				"RES_NAME", (args, resData, logData) =>
 				{
-					return logData.GetObject(args[0]).First().Name;
+					Resource[] i = logData.GetObject(args[0]).ToArray();
+					if(i.Length > 1)
+						throw new Exception("RES_NAME で 指定した条件のリソースは複数存在します。\n" + args[0]);
+					return i[0].Name;
 				}
 			},
 			{
 				"RES_DISPLAYNAME", (args, resData, logData) =>
 				{
-					return logData.GetObject(args[0]).First().DisplayName;
+					Resource[] i = logData.GetObject(args[0]).ToArray();
+					if(i.Length > 1)
+						throw new Exception("RES_NAME で 指定した条件のリソースは複数存在します。\n" + args[0]);
+
+					return i[0].DisplayName;
 				}
 			},
 			{
 				"RES_COLOR", (args, resData, logData) =>
 				{
-					return logData.GetObject(args[0]).First().Color.Value.ToHexString();
+					Resource[] i = logData.GetObject(args[0]).ToArray();
+					if(i.Length > 1)
+						throw new Exception("RES_NAME で 指定した条件のリソースは複数存在します。\n" + args[0]);
+
+					return i[0].Color.Value.ToHexString();
 				}
 			}
 		};
+
+		public static TraceLog Apply(TraceLog value, ResourceData resData, TraceLogData logData)
+		{
+			return new TraceLog(Apply(value.ToString(), resData, logData));
+		}
 
 		public static string Apply(string value, ResourceData resData, TraceLogData logData)
 		{

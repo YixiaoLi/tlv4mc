@@ -2,7 +2,7 @@
 	"TimeScale"		:"ns",
 	"TimeRadix"     :10,
 	"ConvertRules"	:["asp"],
-	"VisualizeRules":["asp"],
+	"VisualizeRules":["toppers", "asp"],
 	"ResourceHeaders":["asp"],
 	"Resources":
 	{

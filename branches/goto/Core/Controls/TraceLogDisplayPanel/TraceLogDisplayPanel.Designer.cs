@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TraceLogDisplayPanel));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.hScrollBar = new System.Windows.Forms.HScrollBar();
 			this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
@@ -52,6 +53,7 @@
 			this.pixelPerScaleToolStripTextNumericUpDown = new NU.OJL.MPRTOS.TLV.Base.Controls.ToolStripTextNumericUpDown();
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.autoResizeRowHeightToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
 			this.rowHeightToolStripTextNumericUpDown = new NU.OJL.MPRTOS.TLV.Base.Controls.ToolStripTextNumericUpDown();
 			this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
@@ -193,12 +195,13 @@
             this.pixelPerScaleToolStripTextNumericUpDown,
             this.toolStripLabel1,
             this.toolStripSeparator3,
+            this.autoResizeRowHeightToolStripButton,
             this.toolStripLabel3,
             this.rowHeightToolStripTextNumericUpDown,
             this.toolStripLabel5});
 			this.viewingAreaToolStrip.Location = new System.Drawing.Point(3, 0);
 			this.viewingAreaToolStrip.Name = "viewingAreaToolStrip";
-			this.viewingAreaToolStrip.Size = new System.Drawing.Size(513, 25);
+			this.viewingAreaToolStrip.Size = new System.Drawing.Size(576, 25);
 			this.viewingAreaToolStrip.TabIndex = 1;
 			// 
 			// viewingTimeRangeLabel
@@ -287,7 +290,7 @@
             0});
 			this.pixelPerScaleToolStripTextNumericUpDown.Name = "pixelPerScaleToolStripTextNumericUpDown";
 			this.pixelPerScaleToolStripTextNumericUpDown.Radix = 10;
-			this.pixelPerScaleToolStripTextNumericUpDown.Size = new System.Drawing.Size(58, 22);
+			this.pixelPerScaleToolStripTextNumericUpDown.Size = new System.Drawing.Size(78, 22);
 			this.pixelPerScaleToolStripTextNumericUpDown.Value = new decimal(new int[] {
             0,
             0,
@@ -304,6 +307,16 @@
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
 			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+			// 
+			// autoResizeRowHeightToolStripButton
+			// 
+			this.autoResizeRowHeightToolStripButton.CheckOnClick = true;
+			this.autoResizeRowHeightToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.autoResizeRowHeightToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("autoResizeRowHeightToolStripButton.Image")));
+			this.autoResizeRowHeightToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.autoResizeRowHeightToolStripButton.Name = "autoResizeRowHeightToolStripButton";
+			this.autoResizeRowHeightToolStripButton.Size = new System.Drawing.Size(23, 22);
+			this.autoResizeRowHeightToolStripButton.Text = "toolStripButton1";
 			// 
 			// toolStripLabel3
 			// 
@@ -388,6 +401,7 @@
 		private System.Windows.Forms.ToolStripLabel toolStripLabel3;
 		private NU.OJL.MPRTOS.TLV.Base.Controls.ToolStripTextNumericUpDown rowHeightToolStripTextNumericUpDown;
 		private System.Windows.Forms.ToolStripLabel toolStripLabel5;
+		private System.Windows.Forms.ToolStripButton autoResizeRowHeightToolStripButton;
 
 
 	}

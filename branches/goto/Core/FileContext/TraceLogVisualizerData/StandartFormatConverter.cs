@@ -97,21 +97,49 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			visualizeData.VisualizeRules = new GeneralNamedCollection<VisualizeRule>();
 			visualizeData.Shapes = new GeneralNamedCollection<Shapes>();
 
-			foreach (string visualizeRuleFilePath in visualizeRuleFilePaths)
-			{
-				VisualizeData vizData = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(File.ReadAllText(visualizeRuleFilePath));
+			string[] target = ResourceData.VisualizeRules.ToArray();
 
-				if (vizData.VisualizeRules != null)
-					foreach (VisualizeRule vizRule in vizData.VisualizeRules)
+			// ファイルが複数ある場合を想定している
+			foreach (string s in visualizeRuleFilePaths)
+			{
+				Json json = new Json().Parse(File.ReadAllText(s));
+				foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
+				{
+					if (target.Contains(j.Key))
 					{
-						visualizeData.VisualizeRules.Add(vizRule.Name, vizRule);
+						string d = ApplicationFactory.JsonSerializer.Serialize(j.Value);
+						VisualizeData vizData = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(d);
+
+						if (vizData.VisualizeRules != null)
+							foreach (VisualizeRule vizRule in vizData.VisualizeRules)
+							{
+								visualizeData.VisualizeRules.Add(vizRule.Name, vizRule);
+							}
+						if (vizData.Shapes != null)
+							foreach (Shapes sp in vizData.Shapes)
+							{
+								visualizeData.Shapes.Add(sp.Name, sp);
+							}
 					}
-				if (vizData.Shapes != null)
-					foreach (Shapes sp in vizData.Shapes)
-					{
-						visualizeData.Shapes.Add(sp.Name, sp);
-					}
+				}
 			}
+
+			//foreach (string visualizeRuleFilePath in visualizeRuleFilePaths)
+			//{
+			//    VisualizeData vizData = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(File.ReadAllText(visualizeRuleFilePath));
+
+			//    if (vizData.VisualizeRules != null)
+			//        foreach (VisualizeRule vizRule in vizData.VisualizeRules)
+			//        {
+			//            visualizeData.VisualizeRules.Add(vizRule.Name, vizRule);
+			//        }
+			//    if (vizData.Shapes != null)
+			//        foreach (Shapes sp in vizData.Shapes)
+			//        {
+			//            visualizeData.Shapes.Add(sp.Name, sp);
+			//        }
+			//}
+
 			return visualizeData;
 		}
 		private TraceLogData getTraceLogData(string traceLogFilePath)

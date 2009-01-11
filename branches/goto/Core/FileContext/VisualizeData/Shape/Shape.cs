@@ -313,9 +313,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			if (Type == ShapeType.Arrow)
 			{
 				System.Drawing.Pen p = Pen.GetPen();
-				p.EndCap = LineCap.Custom;
-				p.CustomEndCap = new AdjustableArrowCap(p.Width == 1 ? 2 : p.Width, p.Width == 1 ? 2 : p.Width);
-				Pen.SetPen(p);
+				lock(p)
+				{
+					p.EndCap = LineCap.Custom;
+					p.CustomEndCap = new AdjustableArrowCap(p.Width == 1 ? 2 : p.Width, p.Width == 1 ? 2 : p.Width);
+					Pen.SetPen(p);
+				}
 			}
 
 			if (Type == ShapeType.Text)
@@ -329,23 +332,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				if (!Font.Color.HasValue)
 					Font.Color = Default.Font.Color.Value;
 			}
-			
+
 			switch (Type)
 			{
-				case ShapeType.Rectangle:
-					_brush = new SolidBrush(Fill.Value);
-					break;
-
 				case ShapeType.Ellipse:
-					_brush = new SolidBrush(Fill.Value);
-					break;
-
 				case ShapeType.Pie:
-					_brush = new SolidBrush(Fill.Value);
-					break;
-
 				case ShapeType.Polygon:
-					_brush = new SolidBrush(Fill.Value);
+				case ShapeType.Rectangle:
+					Color c = Fill.Value;
+					if (Alpha.HasValue)
+						c = Color.FromArgb(Alpha.Value, c);
+					_brush = new SolidBrush(c);
 					break;
 
 				case ShapeType.Text:

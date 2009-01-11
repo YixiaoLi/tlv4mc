@@ -137,12 +137,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			{
 				if (rule.Target == null)
 				{
-					_list.Add(new TimeLineVisualizer(rule));
+					_list.Add(new TimeLineVisualizer(new TimeLineEvents(rule)));
 				}
 			}
 			foreach (Resource res in _data.ResourceData.Resources)
 			{
-				_list.Add(new TimeLineVisualizer(res));
+				_list.Add(new TimeLineVisualizer(new TimeLineEvents(res)));
 			}
 			foreach(TimeLineVisualizer tv in _list)
 			{
@@ -151,7 +151,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 			foreach (TimeLineVisualizer tv in _list)
 			{
-				tv.SetDataThread.Join();
+				tv.WaitSetData();
 			}
 		}
 

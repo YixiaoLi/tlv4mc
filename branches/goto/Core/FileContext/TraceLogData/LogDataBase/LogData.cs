@@ -53,9 +53,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			bool result = true;
 
-			if (log.Attribute != null && log.Behavior == null)
+			if (log.Attribute != null && log.Behavior == null && this is AttributeChangeLogData)
 				result &= log.Attribute == ((AttributeChangeLogData)this).Attribute.Name && (log.Value != null ? log.Value == ((AttributeChangeLogData)this).Attribute.Value.ToString() : true);
-			else if (log.Attribute == null && log.Behavior != null)
+			else if (log.Attribute == null && log.Behavior != null && this is BehaviorHappenLogData)
 				result &= log.Behavior == ((BehaviorHappenLogData)this).Behavior.Name && (log.Arguments != null ? ((BehaviorHappenLogData)this).Behavior.Arguments.checkArgs(log.Arguments.Split(',')) : true);
 			else
 				result &= false;

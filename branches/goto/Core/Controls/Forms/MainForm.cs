@@ -26,21 +26,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             Text = ApplicationData.Name + " " + ApplicationData.Version;
         }
 
+		private void invoke(MethodInvoker action)
+		{
+			if (IsHandleCreated)
+				Invoke(action);
+			else
+				action.Invoke();
+		}
+
         protected override void OnLoad(EventArgs evntArgs)
         {
             base.OnLoad(evntArgs);
 
             #region ApplicationDatasイベント設定
             ApplicationData.FileContext.PathChanged += (o, e) =>
-            {
-                Invoke((MethodInvoker)(() => 
+			{
+				invoke((MethodInvoker)(() => 
                 {
                     textReflesh();
                 }));
             };
             ApplicationData.FileContext.IsSavedChanged += (o, e) =>
             {
-                Invoke((MethodInvoker)(() => 
+				invoke((MethodInvoker)(() => 
                 {
                     textReflesh();
                     saveSToolStripMenuItem.Enabled = !ApplicationData.FileContext.IsSaved;
@@ -48,8 +56,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }));
             };
             ApplicationData.FileContext.IsOpenedChanged += (o, e) =>
-            {
-                Invoke((MethodInvoker)(() =>
+			{
+				invoke((MethodInvoker)(() =>
                 {
                     textReflesh();
                     closeToolStripMenuItem.Enabled = ApplicationData.FileContext.IsOpened;
@@ -57,8 +65,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }));
             };
             ApplicationData.FileContext.DataChanged += (o, e) =>
-            {
-                Invoke((MethodInvoker)(() =>
+			{
+				invoke((MethodInvoker)(() =>
                 {
 					if (ApplicationData.FileContext.Data == null)
 					{
@@ -70,7 +78,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             };
 			ApplicationData.FileContext.Saving += (o, e) =>
 			{
-				Invoke((MethodInvoker)(() => 
+				invoke((MethodInvoker)(() => 
 				{
 					Cursor.Current = Cursors.WaitCursor;
 					_statusManager.ShowProcessing(this.GetType().ToString() + ":saving", "保存中");
@@ -78,7 +86,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			};
 			ApplicationData.FileContext.Saved += (o, e) =>
 			{
-				Invoke((MethodInvoker)(() => 
+				invoke((MethodInvoker)(() => 
 				{
 					if (Cursor.Current == Cursors.WaitCursor)
 						Cursor.Current = Cursors.Default;

@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading;
+using System.Linq.Parallel;
 using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
@@ -124,12 +125,28 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				{
 					try
 					{
-						result = ((AttributeChangeLogData)(LogDataBase.Where<LogData>((d) =>
+
+						LogDataEnumeable f = new LogDataEnumeable(LogDataEnumeable.GetFirstAttributeSetLogData(res).AsParallel().Where<LogData>((d) =>
 						{
-							return d.Object.Name == res.Name
-								&& d.Type == TraceLogType.AttributeChange
+							return d.Type == TraceLogType.AttributeChange
 								&& ((AttributeChangeLogData)d).Attribute.Name == condition.Attribute;
-						}).Last<LogData>(d => d.Time <= time))).Attribute.Value;
+						}));
+
+						int i = 0;
+						foreach (LogData _l in LogDataBase)
+						{
+							_l.Id = i;
+							i++;
+						}
+
+						LogDataEnumeable l = new LogDataEnumeable(LogDataBase.AsParallel().Where<LogData>(d=>
+								d.Time <= time
+								&& d.Object.Name == res.Name
+								&& d.Type == TraceLogType.AttributeChange
+								&& ((AttributeChangeLogData)d).Attribute.Name == condition.Attribute
+							));
+
+						result = ((AttributeChangeLogData)((f + l).Last<LogData>())).Attribute.Value;
 					}
 					catch
 					{
@@ -150,46 +167,49 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public IEnumerable<Resource> GetObject(TraceLog log)
 		{
 			string obj = log.Object;
-			Match m = Regex.Match(obj, @"^\s*(?<type>[^\[\]\(\)\.\s]+)\s*(\((?<condition>[^\)]+)\))?\s*$");
+			Match m = Regex.Match(obj, @"^\s*(?<typeOrName>[^\[\]\(\)\.\s]+)\s*(\((?<condition>[^\)]+)\))?\s*$");
 
-			if (!m.Success || !m.Groups["type"].Success)
+			if (!m.Success || !m.Groups["typeOrName"].Success)
 				throw new Exception("オブジェクト指定のフォーマットが異常です。\n" + "\"" + obj + "\"");
-			
-			string type = m.Groups["type"].Value.Replace(" ", "").Replace("\t", "");
+
+			string typeOrName = m.Groups["typeOrName"].Value.Replace(" ", "").Replace("\t", "");
 
 			if (!m.Groups["condition"].Success)
 			{
-				if (_resourceData.ResourceHeaders.ResourceTypes.Any(r => r.Name == type))
+				if (_resourceData.Resources.ContainsKey(typeOrName))
 				{
-					foreach(Resource res in _resourceData.Resources.Where<Resource>(r=>r.Type == type))
+					yield return _resourceData.Resources[typeOrName];
+				}
+				else if (_resourceData.ResourceHeaders.ResourceTypes.Any(r => r.Name == typeOrName))
+				{
+					foreach (Resource res in _resourceData.Resources.Where<Resource>(r => r.Type == typeOrName))
 					{
 						yield return res;
 					}
 				}
-
-				if (!_resourceData.Resources.ContainsKey(type))
-					throw new Exception("オブジェクト指定のフォーマットが異常です。\n" + "\"" + type + "\"という名前のリソースはありません。");
-
-				yield return _resourceData.Resources[type];
+				else if (!_resourceData.Resources.ContainsKey(typeOrName))
+				{
+					throw new Exception("オブジェクト指定のフォーマットが異常です。\n" + "\"" + typeOrName + "\"という名前のリソースはありません。");
+				}
 			}
 			else
 			{
 				string condition = m.Groups["condition"].Value.Replace(" ", "").Replace("\t", "");
 
-				if (!_resourceData.ResourceHeaders.TypeNames.Contains<string>(type))
-					throw new Exception("\"" + type + "\"というリソースの型は定義されていません。");
+				if (!_resourceData.ResourceHeaders.TypeNames.Contains<string>(typeOrName))
+					throw new Exception("\"" + typeOrName + "\"というリソースの型は定義されていません。");
 
 				Dictionary<string, string> attrOpeDic = new Dictionary<string, string>();
 				Dictionary<string, string> replacedConditions = new Dictionary<string, string>();
 
-				foreach (Match _m in Regex.Matches(condition, @"(?<attr>[^=!<>\s]+)\s*(?<ope>(==|!=|<=|>=|<|>))"))
+				foreach (Match _m in Regex.Matches(condition, @"(?<attr>[^=!<>\s&\|]+)\s*(?<ope>(==|!=|<=|>=|<|>))"))
 				{
 					attrOpeDic.Add(_m.Groups["attr"].Value, _m.Groups["ope"].Value);
 				}
 
 				Time time = log.HasTime ? new Time(log.Time, _resourceData.TimeRadix) : MaxTime;
 
-				foreach (Resource res in _resourceData.Resources.Where<Resource>(r => r.Type == type))
+				foreach (Resource r in _resourceData.Resources.Where<Resource>(r => r.Type == typeOrName))
 				{
 					string cnd = condition;
 					foreach (KeyValuePair<string, string> kvp in attrOpeDic)
@@ -197,24 +217,41 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						LogData logData;
 						string value;
 
-						if (_resourceData.ResourceHeaders[type].Attributes[kvp.Key].AllocationType == AllocationType.Static)
+						if (_resourceData.ResourceHeaders[typeOrName].Attributes[kvp.Key].AllocationType == AllocationType.Static)
 						{
-							value = res.Attributes[kvp.Key];
+							value = r.Attributes[kvp.Key];
 						}
 						else
 						{
-							logData = LogDataBase.LastOrDefault<LogData>((d) =>
+
+							LogDataEnumeable f = new LogDataEnumeable(LogDataEnumeable.GetFirstAttributeSetLogData(r).AsParallel().Where<LogData>((d) =>
 							{
-								return d.Object.Name == res.Name
+								return d.Type == TraceLogType.AttributeChange
+									&& ((AttributeChangeLogData)d).Attribute.Name == kvp.Key;
+							}));
+
+							LogDataEnumeable l = new LogDataEnumeable(LogDataBase.AsParallel().Where<LogData>(d =>
+									d.Time <= time
+									&& d.Object.Name == r.Name
 									&& d.Type == TraceLogType.AttributeChange
 									&& ((AttributeChangeLogData)d).Attribute.Name == kvp.Key
-									&& d.Time <= time;
-							});
+								));
+
+							int i = 0;
+							foreach (LogData _l in LogDataBase)
+							{
+								_l.Id = i;
+								i++;
+							}
+
+							logData = (f + l).LastOrDefault<LogData>();
 
 							if (logData != null)
 								value = ((AttributeChangeLogData)logData).Attribute.Value.ToString();
-							else if (_resourceData.ResourceHeaders[type].Attributes[kvp.Key].Default != null)
-								value = _resourceData.ResourceHeaders[type].Attributes[kvp.Key].Default;
+							else if (!r.Attributes[kvp.Key].IsEmpty)
+								value = r.Attributes[kvp.Key];
+							else if (_resourceData.ResourceHeaders[typeOrName].Attributes[kvp.Key].Default != null)
+								value = _resourceData.ResourceHeaders[typeOrName].Attributes[kvp.Key].Default;
 							else
 								value = "null";
 						}
@@ -223,7 +260,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					}
 					if (ConditionExpression.Result(cnd))
 					{
-						yield return res;
+						yield return r;
 					}
 				}
 			}

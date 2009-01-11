@@ -67,7 +67,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			InitializeComponent();
 
-			DoubleBuffered = true;
 			ResizeRedraw = true;
 
 			hScrollBar.Minimum = 1;
@@ -117,6 +116,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			if(!_data.SettingData.TraceLogDisplayPanelSetting.TimePerScaleMark.IsEmpty)
 				timePerSclaeLabel.Text = _data.SettingData.TraceLogDisplayPanelSetting.TimePerScaleMark.ToString();
+			autoResizeRowHeightToolStripButton.Checked = _data.SettingData.TraceLogDisplayPanelSetting.AutoResizeRowHeight;
 			pixelPerScaleToolStripTextNumericUpDown.Value = _data.SettingData.TraceLogDisplayPanelSetting.PixelPerScaleMark;
 			rowHeightToolStripTextNumericUpDown.Value = _data.SettingData.TraceLogDisplayPanelSetting.RowHeight;
 			viewingTimeRangeFromTextBox.Text = TimeLine.FromTime.ToString();
@@ -136,7 +136,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				tlv.TimeLine = TimeLine;
 			}
 
-			setRowHeight(treeGridView.Nodes.Values);
+			foreach (TimeLineVisualizer tlv in _list)
+			{
+				tlv.WaitSetData();
+			}
+
+			setRowHeight(treeGridView.Nodes.Values, _data.SettingData.TraceLogDisplayPanelSetting.RowHeight);
+
+			if (autoResizeRowHeightToolStripButton.Checked)
+				autoResizeRowHeight();
 
 			treeGridViewRowChanged(this, EventArgs.Empty);
 
@@ -154,7 +162,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			// ノード名「ルール.Name」-「イベント.Name」
 			foreach (VisualizeRule vizRule in _data.VisualizeData.VisualizeRules.Where<VisualizeRule>(v => !v.IsBelongedTargetResourceType()))
 			{
-				TimeLineVisualizer tlv = new TimeLineVisualizer(vizRule);
+				TimeLineVisualizer tlv = new TimeLineVisualizer(new TimeLineEvents(vizRule));
 				_list.Add(tlv);
 				treeGridView.Add(vizRule.Name, vizRule.DisplayName, "", tlv);
 				treeGridView.Nodes[vizRule.Name].Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
@@ -163,7 +171,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				// 可視化ルール内のイベント行の追加
 				foreach (Event e in vizRule.Events)
 				{
-					TimeLineVisualizer _tlv = new TimeLineVisualizer(vizRule, e);
+					TimeLineVisualizer _tlv = new TimeLineVisualizer(new TimeLineEvents(vizRule, e));
 					_list.Add(_tlv);
 					treeGridView.Nodes[vizRule.Name].Add(e.Name, e.DisplayName, "", _tlv);
 					treeGridView.Nodes[vizRule.Name].Nodes[e.Name].Visible = _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name, e.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name, e.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
@@ -179,14 +187,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					if (!treeGridView.Nodes.ContainsKey(res.Name))
 					{
-						TimeLineVisualizer _tlv = new TimeLineVisualizer(res);
+						TimeLineVisualizer _tlv = new TimeLineVisualizer(new TimeLineEvents(res));
 						_list.Add(_tlv);
 						treeGridView.Add(res.Name, res.DisplayName, "", _tlv);
 						treeGridView.Nodes[res.Name].Visible = _data.SettingData.ResourceExplorerSetting.ResourceVisibility.ContainsKey(res.Name) ? _data.SettingData.ResourceExplorerSetting.ResourceVisibility.GetValue(res.Name) : ApplicationData.Setting.DefaultResourceVisible;
 						treeGridView.Nodes[res.Name].Image = imageList.Images["resource"];
 					}
 
-					TimeLineVisualizer tlv = new TimeLineVisualizer(vizRule, res);
+					TimeLineVisualizer tlv = new TimeLineVisualizer(new TimeLineEvents(vizRule, res));
 					_list.Add(tlv);
 					treeGridView.Nodes[res.Name].Add(vizRule.Name, vizRule.DisplayName, "", tlv);
 					treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Visible = treeGridView.Nodes[res.Name].Visible && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
@@ -194,7 +202,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 					foreach (Event e in vizRule.Events)
 					{
-						TimeLineVisualizer _tlv = new TimeLineVisualizer(e, res);
+						TimeLineVisualizer _tlv = new TimeLineVisualizer(new TimeLineEvents(e, res));
 						_list.Add(_tlv);
 						treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Add(e.Name, e.DisplayName, "", _tlv);
 						treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Nodes[e.Name].Visible = treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Visible && _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name, e.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name, e.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
@@ -248,6 +256,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			SizeChanged += (o, _e) =>
 				{
 					rowHeightToolStripTextNumericUpDown.Maximum = MaxHeight - 1;
+					autoResizeRowHeight();
 				};
 
 			treeGridView.DataGridView.ColumnWidthChanged += (o, _e) =>
@@ -356,10 +365,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			#region rowSizeToolStripTextNumericUpDown初期化
 
+			autoResizeRowHeightToolStripButton.CheckedChanged += (o, _e) =>
+				{
+					_data.SettingData.TraceLogDisplayPanelSetting.AutoResizeRowHeight = autoResizeRowHeightToolStripButton.Checked;
+				};
+
 			rowHeightToolStripTextNumericUpDown.Validated += (o, _e) =>
-			{
-				_data.SettingData.TraceLogDisplayPanelSetting.RowHeight = (int)rowHeightToolStripTextNumericUpDown.Value;
-			};
+				{
+					int h = (int)rowHeightToolStripTextNumericUpDown.Value;
+					if (_data.SettingData.TraceLogDisplayPanelSetting.RowHeight != h)
+					{
+						_data.SettingData.TraceLogDisplayPanelSetting.RowHeight = h;
+						if (autoResizeRowHeightToolStripButton.Checked)
+							autoResizeRowHeightToolStripButton.Checked = false;
+					}
+				};
 
 			#endregion
 
@@ -526,7 +546,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			foreach (KeyValuePair<string, bool> kvp in (IList)sender)
 			{
-				if (treeGridView.Nodes[kvp.Key].Visible != kvp.Value)
+				if (treeGridView.Nodes.ContainsKey(kvp.Key) && treeGridView.Nodes[kvp.Key].Visible != kvp.Value)
 				{
 					treeGridView.Nodes[kvp.Key].Visible = kvp.Value;
 
@@ -631,19 +651,38 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			switch(propertyName)
 			{
 				case "RowHeight":
-					setRowHeight(treeGridView.Nodes.Values);
+					setRowHeight(treeGridView.Nodes.Values, _data.SettingData.TraceLogDisplayPanelSetting.RowHeight);
+					rowHeightToolStripTextNumericUpDown.Text = _data.SettingData.TraceLogDisplayPanelSetting.RowHeight.ToString();
 					treeGridViewRowChanged(this, EventArgs.Empty);
+					break;
+				case "AutoResizeRowHeight":
+					autoResizeRowHeightToolStripButton.Checked = _data.SettingData.TraceLogDisplayPanelSetting.AutoResizeRowHeight;
+					autoResizeRowHeight();
 					break;
 			}
 		}
 
-		protected void setRowHeight(IEnumerable<ITreeGirdViewNode> nodes)
+		protected void setRowHeight(IEnumerable<ITreeGirdViewNode> nodes, int height)
 		{
 			foreach (ITreeGirdViewNode node in nodes)
 			{
-				((DataGridViewRow)node).Height = _data.SettingData.TraceLogDisplayPanelSetting.RowHeight;
+				((DataGridViewRow)node).Height = height;
 				if (node.HasChildren)
-					setRowHeight(node.Nodes.Values);
+					setRowHeight(node.Nodes.Values, height);
+			}
+		}
+
+		protected void autoResizeRowHeight()
+		{
+			if (treeGridView.VisibleRowsCount == 0)
+				return;
+
+			if (autoResizeRowHeightToolStripButton.Checked)
+			{
+				int height = MaxHeight / treeGridView.VisibleRowsCount;
+
+				_data.SettingData.TraceLogDisplayPanelSetting.RowHeight = height;
+				treeGridView.Height = height * treeGridView.VisibleRowsCount + (treeGridView.DataGridView.ColumnHeadersVisible ? treeGridView.ColumnHeadersHeight : 1);
 			}
 		}
 	}
