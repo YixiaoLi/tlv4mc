@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using NU.OJL.MPRTOS.TLV.Base;
 using System.Text;
 using System.ComponentModel;
+using System.Collections;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
@@ -17,24 +18,25 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		private SortableBindingList<TraceLogViewerRowData> _dataSource = new SortableBindingList<TraceLogViewerRowData>();
 
-		private TraceLogData _traceLogData;
-		private ResourceData _resourceData;
+		private TraceLogVisualizerData _data;
 
 		public TraceLogViewer()
 		{
 			InitializeComponent();
 		}
 
-		public void SetData(TraceLogData traceLogData, ResourceData resourceData)
+		public void SetData(TraceLogVisualizerData data)
 		{
 			ClearData();
 
-			_traceLogData = traceLogData;
-			_resourceData = resourceData;
+			_data = data;
 
-			if (_resourceData != null)
+			_data.SettingData.TraceLogViewerSetting.BecameDirty += traceLogViewerSettingBecameDirty;
+			_data.SettingData.ResourceExplorerSetting.BecameDirty += resourceExplorerSettingBecameDirty;
+
+			if (_data.ResourceData != null)
 			{
-				dataGridView.Columns["time"].HeaderText = "時間[" + _resourceData.TimeScale + "]";
+				dataGridView.Columns["time"].HeaderText = "時間[" + _data.ResourceData.TimeScale + "]";
 
 				setDataGridViewDataSource();
 			}
@@ -43,12 +45,65 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				dataGridView.Columns["time"].HeaderText = "時間";
 			}
 
+			if (!_data.SettingData.TraceLogViewerSetting.FirstDisplayedTime.IsEmpty)
+				setDisplayedRowIndexByTime(_data.SettingData.TraceLogViewerSetting.FirstDisplayedTime);
+			else
+				setDisplayedRowIndexByTime(_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.FromTime);
+
+			foreach (KeyValuePair<string, bool> kvp in (IList)_data.SettingData.ResourceExplorerSetting.ResourceVisibility)
+			{
+				setResourceVisibleChange(kvp.Key, kvp.Value);
+			}
+
+		}
+
+		private void resourceExplorerSettingBecameDirty(object sender, string propertyName)
+		{
+			foreach (KeyValuePair<string, bool> kvp in (IList)sender)
+			{
+				setResourceVisibleChange(kvp.Key, kvp.Value);
+			}
+		}
+
+		private void setResourceVisibleChange(string resName, bool value)
+		{
+			foreach (TraceLogViewerRowData d in _dataSource.Where(l=>l.ResourceDisplayName == _data.ResourceData.Resources[resName].DisplayName))
+			{
+				dataGridView.BindingContext[_dataSource].SuspendBinding();
+				dataGridView.Rows[_dataSource.IndexOf(d)].Visible = value;
+				dataGridView.BindingContext[_dataSource].ResumeBinding();
+			}
+		}
+
+		private void traceLogViewerSettingBecameDirty(object sender, string propertyName)
+		{
+			switch (propertyName)
+			{
+				case "FirstDisplayedTime":
+					setDisplayedRowIndexByTime(_data.SettingData.TraceLogViewerSetting.FirstDisplayedTime);
+					break;
+			}
+		}
+
+		private void setDisplayedRowIndexByTime(Time time)
+		{
+			int i = _dataSource.IndexOf(_dataSource.First(l => l.Time >= time));
+			while (!dataGridView.Rows[i].Visible)
+			{
+				i++;
+
+				if (dataGridView.Rows.Count <= i)
+					return;
+			}
+			dataGridView.ClearSelection();
+			dataGridView.Rows[i].Selected = true;
+			dataGridView.FirstDisplayedScrollingRowIndex = i;
+
 		}
 
 		public void ClearData()
 		{
-			_traceLogData = null;
-			_resourceData = null;
+			_data = null;
 			_dataSource = new SortableBindingList<TraceLogViewerRowData>();
 			dataGridView.DataSource = null;
 		}
@@ -116,8 +171,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 							ApplicationFactory.StatusManager.HideHint(this.GetType().ToString() + ":sortInfo");
 							ApplicationFactory.StatusManager.HideHint(this.GetType().ToString() + ":dragInfo");
 						}
+
+						if (dataGridView.HitTest(_e.X, _e.Y).RowIndex != -1)
+						{
+							Time time = _dataSource[dataGridView.HitTest(_e.X, _e.Y).RowIndex].Time;
+							ApplicationFactory.BlackBoard.CursorTime = time;
+						}
 					}
 				};
+			dataGridView.MouseDoubleClick += new MouseEventHandler(dataGridViewMouseDoubleClick);
 			dataGridView.ColumnHeaderMouseClick += (o, _e) =>
 				{
 					DataGridViewColumn clickedColumn = dataGridView.Columns[_e.ColumnIndex];
@@ -134,7 +196,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					}
 					else
 					{
-						SetData(ApplicationData.FileContext.Data.TraceLogData, ApplicationData.FileContext.Data.ResourceData);
+						SetData(ApplicationData.FileContext.Data);
 					}
 				}));
 			};
@@ -231,7 +293,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			Color color = dataGridView.DefaultCellStyle.BackColor;
 			if (dataGridView.Columns[e.ColumnIndex].Name == "resourceType")
 			{
-				color = Color.FromArgb(150, _resourceData.ResourceHeaders[ld.Object.Type].Color.Value);
+				color = Color.FromArgb(150, _data.ResourceData.ResourceHeaders[ld.Object.Type].Color.Value);
 			}
 			if (dataGridView.Columns[e.ColumnIndex].Name == "resource")
 			{
@@ -241,17 +303,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			{
 				if (ld.Type == TraceLogType.AttributeChange)
 				{
-					color = Color.FromArgb(150, _resourceData.ResourceHeaders[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute.Name].Color.Value);
+					color = Color.FromArgb(150, _data.ResourceData.ResourceHeaders[ld.Object.Type].Attributes[((AttributeChangeLogData)ld).Attribute.Name].Color.Value);
 				}
 				else if (ld.Type == TraceLogType.BehaviorHappen)
 				{
-					color = Color.FromArgb(150, _resourceData.ResourceHeaders[ld.Object.Type].Behaviors[((BehaviorHappenLogData)ld).Behavior.Name].Color.Value);
+					color = Color.FromArgb(150, _data.ResourceData.ResourceHeaders[ld.Object.Type].Behaviors[((BehaviorHappenLogData)ld).Behavior.Name].Color.Value);
 				}
 			}
 			e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(30, color)), e.CellBounds);
 
 			if ((e.State & DataGridViewElementStates.Selected) != DataGridViewElementStates.None)
 				e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(150, dataGridView.DefaultCellStyle.SelectionBackColor)), e.CellBounds);
+		}
+
+		private void dataGridViewMouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			Time time = _dataSource[dataGridView.HitTest(e.X, e.Y).RowIndex].Time;
+
+			Time span = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.ViewingSpan / 2;
+
+			_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.SetTime(time - span, time + span);
+			ApplicationFactory.BlackBoard.CursorTime = time;
 		}
 
 		private void addColumn(string name, string displayName, string propertyName, Type columnType, bool visibility)
@@ -292,9 +364,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		private void setDataGridViewDataSource()
 		{
-			if (_traceLogData != null)
+			if (_data.TraceLogData != null)
 			{
-				_dataSource = new SortableBindingList<TraceLogViewerRowData>(_traceLogData.LogDataBase.Select(ld => new TraceLogViewerRowData(ld)).ToList());
+				_dataSource = new SortableBindingList<TraceLogViewerRowData>(_data.TraceLogData.LogDataBase.Select(ld => new TraceLogViewerRowData(ld)).ToList());
 
 				_dataSource.BasePropertyName = "Id";
 				_dataSource.Comparisoins.Add("EventType", (t1, t2) =>

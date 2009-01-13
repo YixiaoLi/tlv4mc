@@ -32,7 +32,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						string name = (string)reader.Value;
 						ResourceType resType = ApplicationFactory.JsonSerializer.Deserialize<ResourceType>(reader);
 						resType.Name = name;
-						resTypes.Add(name, resType);
+						resTypes.Add(resType);
 					}
 					reader.Read();
 				}

@@ -276,16 +276,47 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				_e.Paint(_e.ClipBounds, _e.PaintParts & ~DataGridViewPaintParts.Focus);
 				_e.Handled = true;
 			};
+
+			treeGridView.DataGridView.Paint += (o, _e) =>
+			{
+				Rectangle rect = new Rectangle(_timeLineX - 1, _e.ClipRectangle.Y, _timeLineWidth, _e.ClipRectangle.Width);
+				if (_data != null)
+					DrawCursor(_e.Graphics, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, ApplicationFactory.BlackBoard.CursorTime);
+			};
+
+			treeGridView.DataGridView.MouseMove += (o, _e) =>
+			{
+				if (_e.X > _timeLineX && TimeLine != null)
+				{
+					ApplicationFactory.BlackBoard.CursorTime = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, _e.X - _timeLineX + 1);
+				}
+			};
+
+			treeGridView.DataGridView.MouseDoubleClick += (o, _e) =>
+			{
+				if (_e.X > _timeLineX)
+				{
+					Time time = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, _e.X - _timeLineX + 1);
+					Time span = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.ViewingSpan / 2;
+
+					_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.SetTime((time - span).Truncate(), (time + span).Truncate());
+					_data.SettingData.TraceLogViewerSetting.FirstDisplayedTime = time;
+				}
+			};
+
 			#endregion
 
 			#region StatusManager初期化
 			EventHandler onTimeLineEvent = (o, _e) =>
 			{
+				Focus();
 				ApplicationFactory.StatusManager.ShowHint(GetType() + Name + "mouseWheelMove", "可視化表示領域移動", "Ctrl", "ホイール", ",矢印キー");
+				ApplicationFactory.StatusManager.ShowHint(GetType() + Name + "mouseWheelScaleRatioChange", "拡大縮小", "Shift", "ホイール");
 			};
 			EventHandler offTimeLineEvent = (o, _e) =>
 			{
 				ApplicationFactory.StatusManager.HideHint(GetType() + Name + "mouseWheelMove");
+				ApplicationFactory.StatusManager.HideHint(GetType() + Name + "mouseWheelScaleRatioChange");
 			};
 
 			treeGridView.DataGridView.MouseEnter += onTimeLineEvent;
@@ -428,7 +459,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					hScrollBar.Value =
 						(_e.Delta < 0)
 						? (((hScrollBar.Value + hScrollBar.SmallChange) < hScrollBar.Maximum - hScrollBar.LargeChange + 1) ? hScrollBar.Value + hScrollBar.SmallChange : hScrollBar.Maximum - hScrollBar.LargeChange + 1)
-						: (((hScrollBar.Value - hScrollBar.SmallChange) > hScrollBar.Minimum) ? hScrollBar.Value - hScrollBar.SmallChange : hScrollBar.Minimum);
+						: (_e.Delta > 0)
+						? (((hScrollBar.Value - hScrollBar.SmallChange) > hScrollBar.Minimum) ? hScrollBar.Value - hScrollBar.SmallChange : hScrollBar.Minimum)
+						: hScrollBar.Value;
+
+					if (_e.GetType() == typeof(ExMouseEventArgs))
+						((ExMouseEventArgs)_e).Handled = true;
+				}
+				else if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
+				{
+					Time time = ApplicationFactory.BlackBoard.CursorTime;
+					Time left = time - TimeLine.FromTime;
+					Time right = TimeLine.ToTime - time;
+
+					decimal ratio = (_e.Delta < 0)
+						? 1.5m
+						: (_e.Delta > 0)
+						? 0.75m
+						: 1m;
+
+					_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.SetTime((time - left * ratio).Round(0), (time + right * ratio).Round(0));
 
 					if (_e.GetType() == typeof(ExMouseEventArgs))
 						((ExMouseEventArgs)_e).Handled = true;
@@ -684,6 +734,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				_data.SettingData.TraceLogDisplayPanelSetting.RowHeight = height;
 				treeGridView.Height = height * treeGridView.VisibleRowsCount + (treeGridView.DataGridView.ColumnHeadersVisible ? treeGridView.ColumnHeadersHeight : 1);
 			}
+		}
+
+		public override void DrawCursor(Graphics graphics, Color color, Time time)
+		{
+			drawCursor(graphics, new Rectangle(Location.X + _timeLineX, Location.Y, _timeLineWidth, Height), color, time);
 		}
 	}
 }

@@ -133,6 +133,7 @@ xcopy $(SolutionDir)convertRules $(TargetDir)convertRules /e /c /q /y /exclude:$
 xcopy $(SolutionDir)resourceHeaders $(TargetDir)resourceHeaders /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
 xcopy $(SolutionDir)visualizeRules $(TargetDir)visualizeRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
 xcopy $(SolutionDir)sampleFiles $(TargetDir)sampleFiles /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+copy $(SolutionDir)dll\*.dll $(TargetDir)
 
 if $(ConfigurationName) == Release move $(TargetPath) $(TargetDir)___$(TargetFileName)
 if $(ConfigurationName) == Release $(SolutionDir)bin\ILMerge.exe /wildcards /ndebug /out:$(TargetPath) $(TargetDir)___$(TargetFileName) *.dll

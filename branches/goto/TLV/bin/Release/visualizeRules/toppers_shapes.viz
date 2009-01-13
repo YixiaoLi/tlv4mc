@@ -79,6 +79,13 @@
 					"Pen":{"Color":"ff000000","Width":1}
 				}
 			],
+			"terminateShapes":[
+				{
+					"Type":"Arrow",
+					"Points":["0,80%","0,0"],
+					"Pen":{"Color":"ffff0000","Width":1}
+				}
+			],
 			"svcShapes":[
 				{
 					"Type":"Rectangle",

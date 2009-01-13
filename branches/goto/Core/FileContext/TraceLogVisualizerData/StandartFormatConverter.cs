@@ -113,12 +113,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						if (vizData.VisualizeRules != null)
 							foreach (VisualizeRule vizRule in vizData.VisualizeRules)
 							{
-								visualizeData.VisualizeRules.Add(vizRule.Name, vizRule);
+								visualizeData.VisualizeRules.Add(vizRule);
 							}
 						if (vizData.Shapes != null)
 							foreach (Shapes sp in vizData.Shapes)
 							{
-								visualizeData.Shapes.Add(sp.Name, sp);
+								visualizeData.Shapes.Add(sp);
 							}
 					}
 				}

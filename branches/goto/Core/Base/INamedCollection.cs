@@ -8,6 +8,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public interface INamedCollection
 	{
 		IEnumerable<INamed> GetINameEnumerator();
-		void Add(string name, INamed namedObject);
+		void Add(INamed namedObject);
 	}
 }

@@ -40,6 +40,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			Time span = ViewingSpan;
 
+			if (!from.IsEmpty && from < MinTime)
+				from = MinTime;
+
+			if (!to.IsEmpty && to > MaxTime)
+				to = MaxTime;
+
 			if (!from.IsEmpty && !to.IsEmpty && from >= to)
 				throw new ArgumentException("fromはtoより小さくなければなりません。");
 
@@ -48,12 +54,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			if (to.IsEmpty && !from.IsEmpty && from >= ToTime)
 				throw new ArgumentException("fromはToTimeより小さくなければなりません。");
-
-			if (!from.IsEmpty && from < MinTime)
-				from = MinTime;
-
-			if (!to.IsEmpty && to > MaxTime)
-				to = MaxTime;
 
 			if (from > ToTime)
 			{

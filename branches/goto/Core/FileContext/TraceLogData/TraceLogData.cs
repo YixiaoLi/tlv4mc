@@ -23,16 +23,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public LogDataBase LogDataBase { get; private set; }
 
 		public TraceLogData(TraceLogList traceLogs, ResourceData resourceData)
-			: this(resourceData)
-		{
-			foreach (TraceLog log in traceLogs)
-			{
-				Add(log);
-			}
-
-			LogDataBase.SetIds();
-		}
-		public TraceLogData(ResourceData resourceData)
 			:base()
 		{
 			TraceLogs = new TraceLogList();
@@ -40,6 +30,19 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			_resourceData = resourceData;
 			MinTime = Time.MaxTime(_resourceData.TimeRadix);
 			MaxTime = Time.MinTime(_resourceData.TimeRadix);
+			if (traceLogs != null)
+			{
+				foreach (TraceLog log in traceLogs)
+				{
+					Add(log);
+				}
+
+				LogDataBase.SetIds();
+			}
+		}
+		public TraceLogData(ResourceData resourceData)
+			: this(null, resourceData)
+		{
 		}
 
 		public void Add(TraceLog log)

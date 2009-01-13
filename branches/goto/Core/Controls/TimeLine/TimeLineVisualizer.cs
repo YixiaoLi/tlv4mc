@@ -66,6 +66,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				if (w <= 0)
 					w = 1;
 
+				if (rect.X + x1 + w < 0)
+					continue;
+
+				if (w + x1 > rect.Width)
+					w = rect.Width * 2 - x1;
+
 				ds.Shape.Draw(g, new RectangleF(rect.X + x1, rect.Y, w, rect.Height));
 			}
 		}

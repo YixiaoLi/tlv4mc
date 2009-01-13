@@ -175,11 +175,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			RectangleF area = (Area != null) ? Area.ToRectangleF(Offset, rect) : RectangleF.Empty;
 			PointF[] points = (Points != null) ? Points.ToPointF(Offset, rect) : null;
 
+			//Rectangle area = new Rectangle((int)areaF.X, (int)areaF.Y, (int)areaF.Width, (int)areaF.Height);
+
 			area.Intersect(new RectangleF(
-				graphics.ClipBounds.X - graphics.ClipBounds.Width,
-				graphics.ClipBounds.Y - graphics.ClipBounds.Height,
-				graphics.ClipBounds.Width * 3,
-				graphics.ClipBounds.Height * 3
+				(graphics.ClipBounds.X - graphics.ClipBounds.Width),
+				(graphics.ClipBounds.Y - graphics.ClipBounds.Height),
+				(graphics.ClipBounds.Width * 3),
+				(graphics.ClipBounds.Height * 3)
 				));
 
 			switch (Type)

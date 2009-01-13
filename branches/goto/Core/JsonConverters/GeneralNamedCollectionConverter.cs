@@ -55,7 +55,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 					INamed obj = (INamed)ApplicationFactory.JsonSerializer.Deserialize(reader, type.GetGenericArguments()[0]);
 					obj.Name = key;
-					gnc.Add(obj.Name, obj);
+					gnc.Add(obj);
 				}
 
 				reader.Read();

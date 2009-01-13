@@ -21,9 +21,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 		}
 
-		public void Add(string name, INamed namedObject)
+		public void Add(INamed namedObject)
 		{
-			base.Add(name, ((T)namedObject));
+			if (namedObject.Name == null)
+				throw new Exception("namedObject.Nameがnullです");
+			if (namedObject.Name == string.Empty)
+				throw new Exception("namedObject.NameがEmptyです");
+
+			base.Add(namedObject.Name, (T)namedObject);
 		}
+
 	}
 }

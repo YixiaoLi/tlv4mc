@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
@@ -12,6 +13,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		private TimeLine _timeLine;
 		private int _rowHeight = 60;
 		private bool _autoResizeRowHeight = true;
+		private Color _cursorColor = Color.Red;
 
 		public Time TimePerScaleMark { get { return _timePerScaleMark; } set { if (_timePerScaleMark != value) { _timePerScaleMark = value; onBecameDirty("TimePerScaleMark"); } } }
 		public int RowHeight { get { return _rowHeight; } set { if (_rowHeight != value) { _rowHeight = value; onBecameDirty("RowHeight"); } } }
@@ -33,6 +35,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 		}
 		public bool AutoResizeRowHeight { get { return _autoResizeRowHeight; } set { if (_autoResizeRowHeight != value) { _autoResizeRowHeight = value; onBecameDirty("AutoResizeRowHeight"); } } }
+		public Color CursorColor { get { return _cursorColor; } set { if (_cursorColor != value) { _cursorColor = value; onBecameDirty("CursorColor"); } } }
 
 		public event SettingChangeEventHandler BecameDirty;
 

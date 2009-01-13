@@ -12,6 +12,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public ResourceExplorerSetting ResourceExplorerSetting { get; set; }
 		public VisualizeRuleExplorerSetting VisualizeRuleExplorerSetting { get; set; }
 		public TraceLogDisplayPanelSetting TraceLogDisplayPanelSetting { get; set; }
+		public TraceLogViewerSetting TraceLogViewerSetting { get; set; }
+		public TimeLineMacroViewerSetting TimeLineMacroViewerSetting { get; set; }
 
 		public string ToJson()
 		{
@@ -28,10 +30,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			ResourceExplorerSetting = new ResourceExplorerSetting();
 			VisualizeRuleExplorerSetting = new VisualizeRuleExplorerSetting();
 			TraceLogDisplayPanelSetting = new TraceLogDisplayPanelSetting();
+			TraceLogViewerSetting = new TraceLogViewerSetting();
+			TimeLineMacroViewerSetting = new TimeLineMacroViewerSetting();
 
 			ResourceExplorerSetting.BecameDirty += BecameDirtyFactory("ResourceExplorerSetting");
 			VisualizeRuleExplorerSetting.BecameDirty += BecameDirtyFactory("VisualizeRuleExplorerSetting");
 			TraceLogDisplayPanelSetting.BecameDirty += BecameDirtyFactory("TraceLogDisplayPanelSetting");
+			TraceLogViewerSetting.BecameDirty += BecameDirtyFactory("TraceLogViewerSetting");
+			TimeLineMacroViewerSetting.BecameDirty += BecameDirtyFactory("TimeLineMacroViewerSetting");
 		}
 
 		SettingChangeEventHandler BecameDirtyFactory(string propertyName)

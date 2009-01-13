@@ -13,8 +13,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public int Radix { get; set; }
 		public decimal Value { get; set; }
 
-		public static Time MaxTime(int radix) { return new Time(decimal.MaxValue.ToString(), radix);}
-		public static Time MinTime(int radix) { return new Time(decimal.MinValue.ToString(), radix); }
+		public static Time MaxTime(int radix) { return new Time(decimal.MaxValue.ToString(radix), radix); }
+		public static Time MinTime(int radix) { return new Time(decimal.MinValue.ToString(radix), radix); }
 		public static Time Empty = new Time(null, 0);
 
 		public Time(string value, int radix)
@@ -151,11 +151,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			if (Value < from.Value)
 				return -1 * width;
 
-			return (float)(((decimal)(Value - from.Value) / (to.Value - from.Value)) * (decimal)width);
+			decimal f = (((decimal)(Value - from.Value) / (to.Value - from.Value)) * (decimal)width);
+
+			return (f > decimal.MaxValue) ? (float)decimal.MaxValue : (float)f;
 		}
 		public static Time FromX(Time from, Time to, int width, int x)
 		{
-			return new Time(((to.Value - from.Value) * ((decimal)x / (decimal)width)).ToString(to.Radix), to.Radix);
+			return from + new Time(((to.Value - from.Value) * ((decimal)x / (decimal)width)).ToString(to.Radix), to.Radix);
 		}
 
 		public int Compare(object x, object y)

@@ -10,6 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
     public static class ApplicationFactory
 	{
+		private static readonly ApplicationBlackBoard _blackBoard = new ApplicationBlackBoard();
 		private static readonly StatusManager _statusManager = new StatusManager();
 		private static readonly CommandManager _commandManager = new CommandManager();
 		private static readonly IZip _zip = new SharpZipLibZip();
@@ -42,7 +43,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public static CommandManager CommandManager
         {
             get { return _commandManager; }
-        }
+		}
+
+		/// <summary>
+		/// <c>ApplicationBlackBoard</c>のインスタンス。これはシングルトンなインスタンスである。
+		/// </summary>
+		public static ApplicationBlackBoard BlackBoard
+		{
+			get { return _blackBoard; }
+		}
 
 		public static StatusManager StatusManager
 		{

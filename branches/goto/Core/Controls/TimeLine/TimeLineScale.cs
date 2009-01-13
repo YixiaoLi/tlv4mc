@@ -18,6 +18,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	{
 		public event EventHandler TimePerScaleMarkChanged;
 
+		public bool DisplayCursorTime { get; set; }
 		public ScaleMarkDirection ScaleMarkDirection { get; set; }
 
 		public Time TimePerScaleMark
@@ -29,7 +30,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				_dflag = _tPs.Value % 1.0m != 0;
 				_carry = (int)Math.Ceiling(Math.Log10((double)(_tPs.Value)) * -1);
 				_carry = _carry < 0 ? 0 : _carry;
-				_startI = (int)((TimeLine.FromTime - TimeLine.MinTime) / _tPs).Truncate().Value;
+				_startI = ((TimeLine.FromTime - TimeLine.MinTime) / _tPs).Truncate().Value;
 				_startT = _startI > 0 ? TimeLine.MinTime + (_startI - _padding) * _tPs : TimeLine.FromTime;
 				_endT = TimeLine.ToTime + (_padding * _tPs);
 
@@ -45,7 +46,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		private Time _tPs;
 		private bool _dflag;
 		private int _carry;
-		private int _startI;
+		private decimal _startI;
 		private Time _startT;
 		private Time _endT;
 		private StringFormat _stringFormat;
@@ -60,6 +61,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			SizeChanged += (o, _e) => { memberUpdate(); };
 
 			_stringFormat = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+
+			DisplayCursorTime = true;
 		}
 
 		protected override void OnLoad(EventArgs e)
@@ -78,12 +81,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						_pPs = _data.SettingData.TraceLogDisplayPanelSetting.PixelPerScaleMark;
 						memberUpdate();
 						Refresh();
-					}
-					else if (p == "TimePerScaleMark")
-					{
-						//setTpS(_data.SettingData.TraceLogDisplayPanelSetting.TimePerScaleMark);
-						//memberUpdate();
-						//Refresh();
 					}
 				};
 		}
@@ -109,10 +106,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			if (TimeLine != null && Width > 0)
 			{
+				Time old = _tPp;
 				_tPp = TimeLine.ViewingSpan / (decimal)Width;
 				_tPp = _tPp.Value > 1m ? _tPp.Round(0) : new Time(((decimal)Math.Pow(10, Math.Floor(Math.Log10((double)_tPp.Value)))).ToString(_timeRadix), _timeRadix);
-				
-				TimePerScaleMark = _tPp.Value > 1m ? _tPp * (decimal)_pPs : TimeLine.ViewingSpan / ((decimal)Width / (decimal)_pPs);
+
+				if (_tPp.IsEmpty)
+				{
+					_tPp = old;
+				}
+				else
+				{
+					Time t = _tPp.Value > 1m ? _tPp * (decimal)_pPs : TimeLine.ViewingSpan / ((decimal)Width / (decimal)_pPs);
+					if (!t.IsEmpty)
+						TimePerScaleMark = t;
+				}
 			}
 		}
 
@@ -129,7 +136,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				|| Width == 0)
 				return;
 
-			int i = _startI;
+			decimal i = _startI;
 			float lastLabelX = float.MinValue;
 
 			int bi = (int)((_pPs <= 50 ? 50 : 100) / _pPs);
@@ -141,7 +148,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 				float x = t.ToX(TimeLine.FromTime, TimeLine.ToTime, Width) + rect.X;
 
-				float h = i % 10 == 0 ? _scaleHeight * 3f : i % 5 == 0 ? _scaleHeight * 2f : _scaleHeight;
+				int iw = _data.ResourceData.TimeRadix;
+
+				float h = i % iw == 0 ? _scaleHeight * 3f : i % (iw/2) == 0 ? _scaleHeight * 2f : _scaleHeight;
 				System.Drawing.PointF fp;
 				System.Drawing.PointF tp;
 				switch (ScaleMarkDirection)
@@ -159,11 +168,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 				g.DrawLine(Pens.White, fp, tp);
 
-				if (i % 5 == 0)
+				if (i % (iw/2) == 0)
 				{
 					string tmStr = (_dflag ? t.Round(_carry) : t.Truncate()).ToString();
 
 					SizeF tmStrSz = g.MeasureString(tmStr, Font);
+
+					if (x - (tmStrSz.Width / 2f) > Width)
+						return;
 
 					if (x - (tmStrSz.Width / 2f) > lastLabelX)
 					{
@@ -187,6 +199,77 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				}
 			}
 
+		}
+
+		public override void DrawCursor(Graphics graphics, Color color, Time time)
+		{
+			base.DrawCursor(graphics, color, time);
+
+			if (DisplayCursorTime)
+			{
+				drawCursorLabel(graphics, color, time);
+			}
+		}
+
+		private void drawCursorLabel(Graphics graphics, Color color, Time time)
+		{
+			if (time.IsEmpty || TimeLine == null)
+				return;
+
+			string tmStr = (_dflag ? time.Round(_carry) : time.Truncate()).ToString();
+			SizeF tmStrSz = graphics.MeasureString(tmStr, Font);
+
+			float x = time.ToX(TimeLine.FromTime, TimeLine.ToTime, Width);
+
+			if (x - (tmStrSz.Width / 2) > Width)
+				return;
+
+			float y;
+			float margin = 5;
+			switch (ScaleMarkDirection)
+			{
+				default:
+				case ScaleMarkDirection.Bottom:
+					y = 0;
+					break;
+				case ScaleMarkDirection.Top:
+					y = margin;
+					break;
+			}
+
+			PointF[] points;
+
+			if (ScaleMarkDirection == ScaleMarkDirection.Bottom)
+			{
+				points = new[] {
+					new PointF(x - tmStrSz.Width / 2,		y),
+					new PointF(x + tmStrSz.Width / 2,		y),
+					new PointF(x + tmStrSz.Width / 2,       y + tmStrSz.Height),
+					new PointF(x,							y + tmStrSz.Height + margin),
+					new PointF(x - tmStrSz.Width / 2,       y + tmStrSz.Height)
+				};
+			}
+			else
+			{
+				points = new[] {
+					new PointF(x + tmStrSz.Width / 2,		y),
+					new PointF(x + tmStrSz.Width / 2,		y + tmStrSz.Height),
+					new PointF(x - tmStrSz.Width / 2,       y + tmStrSz.Height),
+					new PointF(x - tmStrSz.Width / 2,		y),
+					new PointF(x,						    y - margin)
+				};
+			}
+
+			using (SolidBrush brush = new SolidBrush(Color.FromArgb(250, Color.White)))
+			{
+				graphics.FillPolygon(brush, points);
+			}
+			using (System.Drawing.Pen pen = new System.Drawing.Pen(color))
+			{
+				graphics.DrawPolygon(pen, points);
+			}
+
+			graphics.DrawString(tmStr, Font, Brushes.Black, x - (tmStrSz.Width / 2), y);
 		}
 	}
 }
