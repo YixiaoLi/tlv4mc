@@ -60,6 +60,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\FileContext\VisualizeData\Shape\AreaTest.cs" />
+    <Compile Include="Core\FileContext\VisualizeData\Shape\CoordinateTest.cs" />
     <Compile Include="Core\JsonConverters\CoordinateConverterTest.cs" />
     <Compile Include="Core\JsonConverters\AreaConverterTest.cs" />
     <Compile Include="Core\FileContext\ResourceData\Argument\ArgumentListTest.cs" />
@@ -76,6 +78,9 @@
     <Compile Include="Core\JsonConverters\INamedConverterTest.cs" />
     <Compile Include="Core\JsonConverters\JsonConverterTest.cs" />
     <Compile Include="Core\JsonConverters\SizeConverterTest.cs" />
+    <Compile Include="Core\FileContext\VisualizeData\Shape\SizeTest.cs" />
+    <Compile Include="Core\FileContext\VisualizeData\Shape\ShapeTest.cs" />
+    <Compile Include="Core\FileContext\VisualizeData\Shape\ShapesTest.cs" />
     <Compile Include="Third\NewtonJson\EnumConverterTest.cs" />
     <Compile Include="Third\NewtonJson\NewtonsoftJsonTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
