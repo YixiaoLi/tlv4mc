@@ -81,6 +81,7 @@
     <Compile Include="Core\FileContext\VisualizeData\Shape\SizeTest.cs" />
     <Compile Include="Core\FileContext\VisualizeData\Shape\ShapeTest.cs" />
     <Compile Include="Core\FileContext\VisualizeData\Shape\ShapesTest.cs" />
+    <Compile Include="Core\JsonConverters\ResourceHeaderConverterTest.cs" />
     <Compile Include="Third\NewtonJson\EnumConverterTest.cs" />
     <Compile Include="Third\NewtonJson\NewtonsoftJsonTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
