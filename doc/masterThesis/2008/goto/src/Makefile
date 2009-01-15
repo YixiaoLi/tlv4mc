@@ -1,14 +1,11 @@
+all:
+	bash.exe -c 'cd ..;make'
+
 pdf:
-    make pdf ..
+	bash.exe -c 'cd ..;make pdf'
 
-dvi: $(TARGET).dvi
-
-all: $(TARGET).pdf
-	$(SVNCOMMIT)
+dvi:
+	bash.exe -c 'cd ..;make dvi'
 
 clean:
-	$(RM) *.dvi *.aux *.log *.pdf *.ps *.gz *~ *.core
-	$(SVNDEL)
-
-commit:
-	$(SVNCOMMIT)
+	bash.exe -c 'cd ..;make clean'

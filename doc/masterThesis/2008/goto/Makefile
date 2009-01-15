@@ -1,4 +1,13 @@
 TARGET	= goto-thesis-paper
+SRC		= src/chapter1.tex \
+		  src/chapter2.tex \
+		  src/chapter3.tex \
+		  src/chapter4.tex \
+		  src/chapter5.tex \
+		  src/chapter6.tex \
+		  src/chapter7.tex \
+		  src/abstract_en.tex \
+		  src/abstract_jp.tex
 LATEX	= platex --kanji=utf8
 DVIPDFM	= dvipdfmx.exe
 RM		= rm -f
@@ -17,6 +26,8 @@ SVNCOMMIT	= svn commit -m ''
 .dvi.pdf:
 	$(DVIPDFM) $<
 	$(SVNADD) $@
+
+$(TARGET).dvi: $(TARGET).tex $(SRC)
 
 pdf: $(TARGET).pdf
 
