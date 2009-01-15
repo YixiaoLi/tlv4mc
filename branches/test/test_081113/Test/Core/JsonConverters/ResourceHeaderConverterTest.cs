@@ -103,30 +103,51 @@ namespace Test
         }
 
         [TestMethod()]
+        public void WriteJsonNullException() {
+            // AttributeType 
+            AttributeType attr1 = new AttributeType();
+            attr1.Name = "foo-attr";
+            attr1.DisplayName = "foo";
+            attr1.VariableType = JsonValueType.Decimal;
+            attr1.AllocationType = AllocationType.Dynamic;
+            attr1.CanGrouping = true;
+            attr1.Default = new Json(42);
+            attr1.VisualizeRule = "square";
+
+            AttributeTypeList attrs = new AttributeTypeList();
+            attrs.Add(attr1.Name, attr1);
+
+            // ResouceType 
+            ResourceType type1 = new ResourceType();
+            type1.Name = "foo-type";
+            type1.DisplayName = "foo";
+            type1.Attributes = attrs;
+            type1.Behaviors = new BehaviorList();
+
+            ResourceTypeList types = new ResourceTypeList();
+            types.Add(type1.Name, type1);
+
+            ResourceHeader header = new ResourceHeader("x", types);
+            header.Name = "hoge";
+            Write(header); 
+        }
+
+        [TestMethod()]
         public void WriteJsonComplexTest()
         {
             // AttributeType 
             AttributeType attr1 = new AttributeType();
             attr1.Name = "foo-attr";
             attr1.DisplayName = "foo";
-            attr1.VariableType = JsonValueType.String;
+            attr1.VariableType = JsonValueType.Decimal;
             attr1.AllocationType = AllocationType.Dynamic;
             attr1.CanGrouping = true;
             attr1.Default = new Json(42);
             attr1.VisualizeRule = "square";
  
-            AttributeType attr2 = new AttributeType();
-            attr1.Name = "bar-attr";
-            attr1.DisplayName = "bar";
-            attr1.VariableType = JsonValueType.Decimal;
-            attr1.AllocationType = AllocationType.Static;
-            attr1.CanGrouping = false;
-            attr1.Default = new Json(1.0);
-            attr1.VisualizeRule = "round";
-
             AttributeTypeList attrs = new AttributeTypeList();
             attrs.Add(attr1.Name,attr1);
-            attrs.Add(attr2.Name, attr2);
+
 
             // Argument
             ArgumentType arg1 = new ArgumentType();
@@ -163,22 +184,36 @@ namespace Test
  
             ResourceHeader header = new ResourceHeader("x", types);
             header.Name = "hoge";
-            Write(header);
+
+           Assert.AreEqual(header,Read(Write(header))); 
         }
 
         /// <summary>
         ///ReadJson のテスト
         ///</summary>
         [TestMethod()]
-        public void ReadJsonTest()
+        public void ReadJsonAttributeTest()
         {
-            ResourceHeaderConverter target = new ResourceHeaderConverter();
-            IJsonReader reader = null;
-            object expected = null;
-            object actual;
-            actual = target.ReadJson(reader);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("このテストメソッドの正確性を確認します。");
+            ResourceHeader header1 = Read(@"{""foo"":{""Attributes"":{},""Behaviors"":{}}}");
+            Assert.AreEqual(0, header1["foo"].Attributes.Count);
+            Assert.AreEqual(0, header1["foo"].Behaviors.Count);
+
+            ResourceHeader header_alloc = Read(@"{""foo"":{""Attributes"":{""bar"":{""AllocationType"":""Static""}},""Behaviors"":{}}}");
+            Assert.AreEqual(AllocationType.Static, header_alloc["foo"].Attributes["bar"].AllocationType);
+
+            ResourceHeader header_name = Read(@"{""foo"":{""Attributes"":{""bar"":{""DisplayName"":""baz""}},""Behaviors"":{}}}");
+            Assert.AreEqual("baz", header_name["foo"].Attributes["bar"].DisplayName);
+
+            ResourceHeader header_group = Read(@"{""foo"":{""Attributes"":{""bar"":{""CanGrouping"":true}},""Behaviors"":{}}}");
+            Assert.AreEqual(true, header_group["foo"].Attributes["bar"].CanGrouping);
+
+            ResourceHeader header_type = Read(@"{""foo"":{""Attributes"":{""bar"":{""VariableType"":""String""}},""Behaviors"":{}}}");
+            Assert.AreEqual(JsonValueType.String, header_type["foo"].Attributes["bar"].VariableType);
+        }
+
+        [TestMethod()]
+        public void ReadJsonBehaviorTest()
+        {
         }
     }
 }
