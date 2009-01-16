@@ -103,89 +103,103 @@ namespace Test
         }
 
         [TestMethod()]
-        public void WriteJsonNullException() {
+        public void WriteJsonAttributeException() {
             // AttributeType 
             AttributeType attr1 = new AttributeType();
-            attr1.Name = "foo-attr";
-            attr1.DisplayName = "foo";
-            attr1.VariableType = JsonValueType.Decimal;
+            attr1.DisplayName = "baz";
+
             attr1.AllocationType = AllocationType.Dynamic;
             attr1.CanGrouping = true;
-            attr1.Default = new Json(42);
+            attr1.VariableType = JsonValueType.String;
             attr1.VisualizeRule = "square";
 
             AttributeTypeList attrs = new AttributeTypeList();
-            attrs.Add(attr1.Name, attr1);
+            attrs.Add("bar", attr1);
 
             // ResouceType 
             ResourceType type1 = new ResourceType();
-            type1.Name = "foo-type";
             type1.DisplayName = "foo";
             type1.Attributes = attrs;
             type1.Behaviors = new BehaviorList();
 
             ResourceTypeList types = new ResourceTypeList();
-            types.Add(type1.Name, type1);
+            types.Add("foo", type1);
 
             ResourceHeader header = new ResourceHeader("x", types);
             header.Name = "hoge";
-            Write(header); 
+
+            Assert.AreEqual(@"
+{
+  ""foo"" : {
+    ""DisplayName"" : ""foo"",
+    ""Attributes"" : {
+      ""foo"" : {
+        ""DisplayName"" : ""baz"",
+        ""VariableType"":""String"",
+        ""AllocationType"" : ""Dynamic"",
+        ""CanGrouping"" : true,
+        ""VisualizeRule"" : ""squeare""
+      }
+    },
+    ""Behaviors"" : {}
+  }
+}
+".Replace("\r\n","").Replace(" ",""),Write(header));
+
         }
 
         [TestMethod()]
-        public void WriteJsonComplexTest()
+        public void WriteJsonBehaviorTest()
         {
-            // AttributeType 
-            AttributeType attr1 = new AttributeType();
-            attr1.Name = "foo-attr";
-            attr1.DisplayName = "foo";
-            attr1.VariableType = JsonValueType.Decimal;
-            attr1.AllocationType = AllocationType.Dynamic;
-            attr1.CanGrouping = true;
-            attr1.Default = new Json(42);
-            attr1.VisualizeRule = "square";
- 
-            AttributeTypeList attrs = new AttributeTypeList();
-            attrs.Add(attr1.Name,attr1);
-
-
             // Argument
             ArgumentType arg1 = new ArgumentType();
-            arg1.Name = "baz";
-            arg1.Type = JsonValueType.Boolean;
-
-            ArgumentType arg2 = new ArgumentType();
-            arg1.Name = "xyzzy";
+            arg1.Name = "name";
             arg1.Type = JsonValueType.String;
 
             ArgumentTypeList args = new ArgumentTypeList();
             args.Add(arg1);
-            args.Add(arg2);
+
 
             // Behavior
             Behavior behavior1 = new Behavior();
-            behavior1.Name = "foo-behavior";
-            behavior1.DisplayName = "behavior";
+            behavior1.DisplayName = "bar";
             behavior1.Arguments = args;
+            behavior1.VisualizeRule = "square";
 
 
             BehaviorList beharivors = new BehaviorList();
-            beharivors.Add(behavior1.Name, behavior1);
+            beharivors.Add("b1", behavior1);
 
             // ResouceType 
             ResourceType type1 = new ResourceType();
-            type1.Name = "foo-type";
-            type1.DisplayName = "foo";
-            type1.Attributes = attrs;
+            type1.DisplayName = "baz";
+            type1.Attributes = new AttributeTypeList();
             type1.Behaviors = beharivors;
 
             ResourceTypeList types = new ResourceTypeList();
-            types.Add(type1.Name, type1);
+            types.Add("bar", type1);
  
             ResourceHeader header = new ResourceHeader("x", types);
             header.Name = "hoge";
 
-           Assert.AreEqual(header,Read(Write(header))); 
+
+            Assert.AreEqual(@"
+{
+  ""foo"" : {
+    ""DisplayName"" : ""baz"",
+    ""Behaviors"" : {
+       ""b1"" : {
+          ""DisplayName"" : ""bar"",
+          ""VisualizeRule"" : ""square"",
+          ""Arguments"" : [
+            { ""Name"":""name"", ""Type"" : ""String"" }
+          ]
+       }
+    }
+  }
+}
+".Replace("\r\n", "").Replace(" ", ""), Write(header));
+
         }
 
         /// <summary>
@@ -214,6 +228,16 @@ namespace Test
         [TestMethod()]
         public void ReadJsonBehaviorTest()
         {
+            ResourceHeader header_name = Read(@"{""foo"":{""Attributes"":{},""Behaviors"":{""bar"":{""DisplayName"":""baz""} }}");
+            Assert.AreEqual("baz", header_name["foo"].Behaviors["bar"].DisplayName);
+
+            ResourceHeader header_rule = Read(@"{""foo"":{""Attributes"":{},""Behaviors"":{""bar"":{""VisualizeRule"":""baz""} }}");
+            Assert.AreEqual("baz", header_rule["foo"].Behaviors["bar"].VisualizeRule);
+
+            ResourceHeader header_arg = Read(@"{""foo"":{""Attributes"":{},""Behaviors"":{""bar"":{""Arguments"":[{""Name"":""baz"",""Type"":""String""}]}}}}");
+            Assert.AreEqual("baz", header_arg["foo"].Behaviors["bar"].Arguments[0].Name);
+            Assert.AreEqual(JsonValueType.String,header_arg["foo"].Behaviors["bar"].Arguments[0].Type);
         }
+
     }
 }
