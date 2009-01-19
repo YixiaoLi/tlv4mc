@@ -1,7 +1,7 @@
 %!PS-Adobe-3.0 EPSF-3.0
 %%Title: Microsoft PowerPoint - figures.ppt
 %%Creator: PScript5.dll Version 5.2
-%%CreationDate: 1/18/2009 23:23:40
+%%CreationDate: 1/19/2009 12:56:14
 %%For: junji
 %%BoundingBox: 23 18 819 577
 %%Pages: 1
@@ -238,8 +238,8 @@ GSE
 } put
 {setglobal} if
 GpPBeg1
-1 1 1 SC
-NP 689 433 m 458 565 l 1152 565 l 1383 433 l CP 
+1 0.6235 0.6235 SC
+NP 1564 790 m 1333 922 l 2027 922 l 2258 790 l CP 
 eofill
 GSE
 GpPBeg1
@@ -249,140 +249,84 @@ GpPBeg1
 1.0416 setlinewidth
 [] 0 setdash
 0 0 0 SC
-NP 689 433 m 458 565 l 1152 565 l 1383 433 l CP 
+NP 1564 790 m 1333 922 l 2027 922 l 2258 790 l CP 
+stroke
+GSE
+GpPBeg1
+1 0 0 setrgbcolor
+NP 1443 865 m 1333 922 l 2023 922 l 2133 865 l CP 
+eoclip
+/ds
+<eeee5555bbbb5555eeee
+5555bbbf5555eeee5555
+bbbb5555eeee5555bfbf
+5555>
+ def
+1332 864 translate
+0 16 59 { 0 16 802 { 1 index
+gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
+} for pop} for
+GSE
+/languagelevel where {pop languagelevel} {1} ifelse
+2 ge dup {currentglobal exch true setglobal globaldict} {userdict} ifelse
+/GpPBeg1 {
+    gsave initclip
+    16 dict begin
+    /c {curveto} def /l {lineto} def /m {moveto} def
+    /rc {rcurveto} def /rl {rlineto} def
+    /NP {newpath} def /CP {closepath} def /SC {setrgbcolor} def
+    /GSE {end grestore} def
+} put
+{setglobal} if
+GpPBeg1
+0 0 0 SC
+NP 1758 874 m 1605 874 l 1605 856 l 1758 856 l CP 
+1614 893 m 1558 865 l 1614 837 l CP 
+fill
+GSE
+/languagelevel where {pop languagelevel} {1} ifelse
+2 ge dup {currentglobal exch true setglobal globaldict} {userdict} ifelse
+/GpPBeg1 {
+    gsave initclip
+    16 dict begin
+    /c {curveto} def /l {lineto} def /m {moveto} def
+    /rc {rcurveto} def /rl {rlineto} def
+    /NP {newpath} def /CP {closepath} def /SC {setrgbcolor} def
+    /GSE {end grestore} def
+} put
+{setglobal} if
+GpPBeg1
+0 0 0 SC
+NP 1678 907 m 1789 833 l 1800 849 l 1689 923 l CP 
+1771 823 m 1833 815 l 1802 870 l CP 
+fill
+GSE
+GpPBeg1
+1 1 1 SC
+NP 639 408 m 407 540 l 1102 540 l 1333 408 l CP 
+eofill
+GSE
+GpPBeg1
+1 setlinecap
+1 setlinejoin
+10 setmiterlimit
+1.0416 setlinewidth
+[] 0 setdash
+0 0 0 SC
+NP 639 408 m 407 540 l 1102 540 l 1333 408 l CP 
 stroke
 GSE
 GpPBeg1
 0.2000 0.2000 0.6000 setrgbcolor
-NP 1141 531 m 1113 461 l 950 524 l CP 
+NP 1090 506 m 1063 436 l 900 499 l CP 
 eoclip
 /ds
-<ffffbbbbffffaaaaffff
-babaffffaaaaffffbbbb
-ffffaaaaffffbabaffff
-aaaa>
+<ffffaaaaffffaeaeffff
+aaaaffffeeeeffffaaaa
+ffffaeaeffffaaaaffff
+eeee>
  def
-949 460 translate
-0 16 72 { 0 16 193 { 1 index
-gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
-} for pop} for
-GSE
-GpPBeg1
-1 setlinecap
-0 setlinejoin
-8 setmiterlimit
-9.3750 setlinewidth
-[] 0 setdash
-0.2000 0.2000 0.6000 SC
-NP 1141 531 m 1113 461 l 950 524 l CP 
-stroke
-GSE
-GpPBeg1
-1 1 1 SC
-NP 689 340 m 458 472 l 1152 472 l 1383 340 l CP 
-eofill
-GSE
-GpPBeg1
-1 setlinecap
-1 setlinejoin
-10 setmiterlimit
-1.0416 setlinewidth
-[] 0 setdash
-0 0 0 SC
-NP 689 340 m 458 472 l 1152 472 l 1383 340 l CP 
-stroke
-GSE
-GpPBeg1
-0.2000 0.8000 0.2000 setrgbcolor
-NP 812 377 m 723 427 l 992 427 l 1081 377 l CP 
-eoclip
-/ds
-<fbfb5555eeee5555bbbb
-5555eeee5555fbbb5555
-eeee5555bbbb5555eeee
-5555>
- def
-722 377 translate
-0 16 51 { 0 16 360 { 1 index
-gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
-} for pop} for
-GSE
-GpPBeg1
-1 setlinecap
-0 setlinejoin
-8 setmiterlimit
-12.5000 setlinewidth
-[] 0 setdash
-0.2000 0.8000 0.2000 SC
-NP 812 377 m 723 427 l 992 427 l 1081 377 l CP 
-stroke
-GSE
-GpPBeg1
-1 1 1 SC
-NP 689 240 m 458 372 l 1152 372 l 1383 240 l CP 
-eofill
-GSE
-GpPBeg1
-1 setlinecap
-1 setlinejoin
-10 setmiterlimit
-1.0416 setlinewidth
-[] 0 setdash
-0 0 0 SC
-NP 689 240 m 458 372 l 1152 372 l 1383 240 l CP 
-stroke
-GSE
-GpPBeg1
-1 0.6000 0 setrgbcolor
-NP 758 265 m 703 265 658 276 658 290 c 658 304 703 315 758 315 c 813 315 858 304 858 290 c 858 276 813 265 758 265 c CP 
-eoclip
-/ds
-<ffffaaaadfdfaaaaffff
-aaaafdfdaaaaffffaaaa
-dfdfaaaaffffaaaafdfd
-aaaa>
- def
-657 264 translate
-0 16 52 { 0 16 202 { 1 index
-gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
-} for pop} for
-GSE
-GpPBeg1
-0 setlinecap
-1 setlinejoin
-10 setmiterlimit
-12.5000 setlinewidth
-[12.5000 12.5000] 0 setdash
-1 0.6000 0 SC
-NP 758 265 m 703 265 658 276 658 290 c 658 304 703 315 758 315 c 813 315 858 304 858 290 c 858 276 813 265 758 265 c CP 
-stroke
-GSE
-GpPBeg1
-1 1 1 SC
-NP 1789 340 m 1558 472 l 2252 472 l 2483 340 l CP 
-eofill
-GSE
-GpPBeg1
-1 setlinecap
-1 setlinejoin
-10 setmiterlimit
-1.0416 setlinewidth
-[] 0 setdash
-0 0 0 SC
-NP 1789 340 m 1558 472 l 2252 472 l 2483 340 l CP 
-stroke
-GSE
-GpPBeg1
-0.2000 0.2000 0.6000 setrgbcolor
-NP 2236 435 m 2209 365 l 2046 429 l CP 
-eoclip
-/ds
-<ffffddddffff5555ffff
-d5d5ffff5555ffffdddd
-ffff5555ffffd5d5ffff
-5555>
- def
-2045 364 translate
+899 435 translate
 0 16 72 { 0 16 192 { 1 index
 gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
 } for pop} for
@@ -394,20 +338,35 @@ GpPBeg1
 9.3750 setlinewidth
 [] 0 setdash
 0.2000 0.2000 0.6000 SC
-NP 2236 435 m 2209 365 l 2046 429 l CP 
+NP 1090 506 m 1063 436 l 900 499 l CP 
+stroke
+GSE
+GpPBeg1
+1 1 1 SC
+NP 639 315 m 407 447 l 1102 447 l 1333 315 l CP 
+eofill
+GSE
+GpPBeg1
+1 setlinecap
+1 setlinejoin
+10 setmiterlimit
+1.0416 setlinewidth
+[] 0 setdash
+0 0 0 SC
+NP 639 315 m 407 447 l 1102 447 l 1333 315 l CP 
 stroke
 GSE
 GpPBeg1
 0.2000 0.8000 0.2000 setrgbcolor
-NP 1923 377 m 1833 427 l 2102 427 l 2192 377 l CP 
+NP 762 352 m 672 402 l 941 402 l 1031 352 l CP 
 eoclip
 /ds
-<dfdfaaaa7777aaaadddd
-aaaa7777aaaadddfaaaa
-7777aaaaddddaaaa7777
-aaaa>
+<5555eeee5555bbbb5555
+eefe5555bbbb5555eeee
+5555bbbb5555fefe5555
+bbbb>
  def
-1832 377 translate
+671 352 translate
 0 16 51 { 0 16 361 { 1 index
 gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
 } for pop} for
@@ -419,20 +378,35 @@ GpPBeg1
 12.5000 setlinewidth
 [] 0 setdash
 0.2000 0.8000 0.2000 SC
-NP 1923 377 m 1833 427 l 2102 427 l 2192 377 l CP 
+NP 762 352 m 672 402 l 941 402 l 1031 352 l CP 
+stroke
+GSE
+GpPBeg1
+1 1 1 SC
+NP 639 215 m 407 347 l 1102 347 l 1333 215 l CP 
+eofill
+GSE
+GpPBeg1
+1 setlinecap
+1 setlinejoin
+10 setmiterlimit
+1.0416 setlinewidth
+[] 0 setdash
+0 0 0 SC
+NP 639 215 m 407 347 l 1102 347 l 1333 215 l CP 
 stroke
 GSE
 GpPBeg1
 1 0.6000 0 setrgbcolor
-NP 1858 365 m 1803 365 1758 376 1758 390 c 1758 404 1803 415 1858 415 c 1913 415 1958 404 1958 390 c 1958 376 1913 365 1858 365 c CP 
+NP 707 240 m 652 240 607 251 607 265 c 607 279 652 290 707 290 c 763 290 807 279 807 265 c 807 251 763 240 707 240 c CP 
 eoclip
 /ds
-<ffff5555fefe5555ffff
-5555efef5555ffff5555
-fefe5555ffff5555efef
-5555>
+<aaaaffffaaaa7f7faaaa
+ffffaaaaf7f7aaaaffff
+aaaa7f7faaaaffffaaaa
+f7f7>
  def
-1757 364 translate
+606 239 translate
 0 16 52 { 0 16 202 { 1 index
 gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
 } for pop} for
@@ -444,7 +418,97 @@ GpPBeg1
 12.5000 setlinewidth
 [12.5000 12.5000] 0 setdash
 1 0.6000 0 SC
-NP 1858 365 m 1803 365 1758 376 1758 390 c 1758 404 1803 415 1858 415 c 1913 415 1958 404 1958 390 c 1958 376 1913 365 1858 365 c CP 
+NP 707 240 m 652 240 607 251 607 265 c 607 279 652 290 707 290 c 763 290 807 279 807 265 c 807 251 763 240 707 240 c CP 
+stroke
+GSE
+GpPBeg1
+1 1 1 SC
+NP 639 790 m 408 922 l 1102 922 l 1333 790 l CP 
+eofill
+GSE
+GpPBeg1
+1 setlinecap
+1 setlinejoin
+10 setmiterlimit
+1.0416 setlinewidth
+[] 0 setdash
+0 0 0 SC
+NP 639 790 m 408 922 l 1102 922 l 1333 790 l CP 
+stroke
+GSE
+GpPBeg1
+0.2000 0.2000 0.6000 setrgbcolor
+NP 1086 885 m 1059 815 l 896 879 l CP 
+eoclip
+/ds
+<5555ffff7575ffff5555
+ffff7777ffff5555ffff
+7575ffff5555ffff7777
+ffff>
+ def
+895 814 translate
+0 16 72 { 0 16 192 { 1 index
+gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
+} for pop} for
+GSE
+GpPBeg1
+1 setlinecap
+0 setlinejoin
+8 setmiterlimit
+9.3750 setlinewidth
+[] 0 setdash
+0.2000 0.2000 0.6000 SC
+NP 1086 885 m 1059 815 l 896 879 l CP 
+stroke
+GSE
+GpPBeg1
+0.2000 0.8000 0.2000 setrgbcolor
+NP 773 827 m 683 877 l 952 877 l 1042 827 l CP 
+eoclip
+/ds
+<aaaa7777aaaaddddaaaa
+77f7aaaaddddaaaa7777
+aaaaddddaaaaf7f7aaaa
+dddd>
+ def
+682 827 translate
+0 16 51 { 0 16 361 { 1 index
+gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
+} for pop} for
+GSE
+GpPBeg1
+1 setlinecap
+0 setlinejoin
+8 setmiterlimit
+12.5000 setlinewidth
+[] 0 setdash
+0.2000 0.8000 0.2000 SC
+NP 773 827 m 683 877 l 952 877 l 1042 827 l CP 
+stroke
+GSE
+GpPBeg1
+1 0.6000 0 setrgbcolor
+NP 708 815 m 653 815 608 826 608 840 c 608 854 653 865 708 865 c 763 865 808 854 808 840 c 808 826 763 815 708 815 c CP 
+eoclip
+/ds
+<5555ffff5555fbfb5555
+ffff5555bfbf5555ffff
+5555fbfb5555ffff5555
+bfbf>
+ def
+607 814 translate
+0 16 52 { 0 16 202 { 1 index
+gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
+} for pop} for
+GSE
+GpPBeg1
+0 setlinecap
+1 setlinejoin
+10 setmiterlimit
+12.5000 setlinewidth
+[12.5000 12.5000] 0 setdash
+1 0.6000 0 SC
+NP 708 815 m 653 815 608 826 608 840 c 608 854 653 865 708 865 c 763 865 808 854 808 840 c 808 826 763 815 708 815 c CP 
 stroke
 GSE
 
@@ -454,7 +518,7 @@ Pscript_WinNT_Compat dup /suspend get exec
 Pscript_WinNT_Incr dup /resume get exec
 /DeviceRGB dup setcolorspace /colspABC exch def
 0 0 0 1 scol 11 dict begin
-/FontName /TTE012o00 def
+/FontName /TT824Eo00 def
 /FontMatrix [1 256 div 0 0 1 256 div 0 0 ] def
 /Encoding  256 array 0 1 255 {1 index exch /.notdef put} for  def
 /PaintType 0 def
@@ -498,34 +562,19 @@ ac089b7b058f8787897f8d08747070796d82088b06636f156a0688517b63
 069898059b7f058f888b89878a08680647079d069898059b7f058f888b89
 878a085c06fb06078183868a8b9308f70707d4046a064707ac06cf07090e
  ND 
-/g10226 345 RD 
-90f7940df731f74a158e858c858b8408858989861e878b898d8a92088a98
-8498809808898e8c8c8f8a08988294838f84088b06fb2cfb37159ba696a6
-90a60873069007a4068d938c968d9b0868069007ae068b958c968b99086e
-069007d1069393059680058f878a89848a086d0794069898059b7e05b006
-a4ca059c80058f858989828e086e5c05a4069898059b7f058f888b89878a
-0851065f079f069898059b7f058f888b88878b085a065c07a9069898059b
-7f058f888b89878a08500654078183868a8b9308c3075e069007b806ba07
-66069007b006b7074d065a078183868a8b930895076a0689818983898508
-908605b0069193059981058f878a89848a084c078183868a8b9308940766
-0679078183868a8b9308d7078578817c7e7e0887888a8b8d90088b06c1f7
-35158b7d8b808a8108a606ae07710684fb3c15b006c10766065507ace815
-ae0770068a7b8980898308ab06090e ND 
 end
 end
 put
 put
 dup /FontName get exch definefont pop
 end
-/TTE012o00 findfont /Encoding get
+/TT824Eo00 findfont /Encoding get
 dup 1 /g4049 put
 dup 2 /g5307 put
-dup 3 /g10226 put
 pop
- /TTE012o00 /Font G2UBegin
+ /TT824Eo00 /Font G2UBegin
 /g4049 <56F3> def
 /g5307 <5F62> def
-/g10226 <7FA4> def
 G2UEnd
 Pscript_WinNT_Incr begin
 %%BeginResource: file Pscript_Text 5.0 0
@@ -564,13 +613,13 @@ findfont 1 ^ ~ definefont Pscript_Windows_Font 3 1 $ put}b/UmF{L2?
 get undefinefont}forall undefinefont}b
 %%EndResource
 end reinitialize
-F /F0 0 /0 F /TTE012o00 mF 
+F /F0 0 /0 F /TT824Eo00 mF 
 /F0S32 F0 [50 0 0 -50 0 0 ] mFS
 F0S32 Ji 
-1863 556 M <010203>[50 50  0]xS 
+763 1006 M <0102>[50  0]xS 
 
 systemdict begin
-/TTE012o00 
+/TT824Eo00 
 findfont dup
 /Private get begin
 /CharStrings get begin
@@ -595,18 +644,18 @@ fb3c078b8389858687088787868a868a08878a898d8b8f088b8e898d888d
 0e ND 
 end end
 end
-/TTE012o00 findfont /Encoding get
-dup 4 /g6950 put
-dup 5 /g3166 put
+/TT824Eo00 findfont /Encoding get
+dup 3 /g6950 put
+dup 4 /g3166 put
 pop
- /TTE012o00 /Font G2UBegin
+ /TT824Eo00 /Font G2UBegin
 /g6950 <6955> def
 /g3166 <5186> def
 G2UEnd
-288 341 M <040502>[50 50  0]xS 
+238 316 M <030402>[50 50  0]xS 
 
 systemdict begin
-/TTE012o00 
+/TT824Eo00 
 findfont dup
 /Private get begin
 /CharStrings get begin
@@ -628,18 +677,18 @@ b00755066607c106b504af0755066707c106466115b0075a066607bc06b5
 04af075a066707bc06090e ND 
 end end
 end
-/TTE012o00 findfont /Encoding get
-dup 6 /g4030 put
-dup 7 /g11770 put
+/TT824Eo00 findfont /Encoding get
+dup 5 /g4030 put
+dup 6 /g11770 put
 pop
- /TTE012o00 /Font G2UBegin
+ /TT824Eo00 /Font G2UBegin
 /g4030 <56DB> def
 /g11770 <89D2> def
 G2UEnd
-288 441 M <060702>[50 50  0]xS 
+238 416 M <050602>[50 50  0]xS 
 
 systemdict begin
-/TTE012o00 
+/TT824Eo00 
 findfont dup
 /Private get begin
 /CharStrings get begin
@@ -655,13 +704,13 @@ a17a058b062c8e15848383838284089786938690870892848d85898508a4
 9c9e9e989f084a06090e ND 
 end end
 end
-/TTE012o00 findfont /Encoding get
-dup 8 /g4377 put
+/TT824Eo00 findfont /Encoding get
+dup 7 /g4377 put
 pop
- /TTE012o00 /Font G2UBegin
+ /TT824Eo00 /Font G2UBegin
 /g4377 <591A> def
 G2UEnd
-288 541 M <080702>[50 50  0]xS 
+238 516 M <070602>[50 50  0]xS 
 : N Pscript_WinNT_Incr begin
 %%BeginResource: file Pscript_Win_GdiObject 5.0 0
 /SavedCTM null d/CTMsave{/SavedCTM SavedCTM currentmatrix d}b/CTMrestore
@@ -715,7 +764,7 @@ T 1 1 dtransform abs ~ abs ~ 0 0 3 -1 $ 0 0 6 array astore{PaintData}imagemask
 E}b & mx makepattern setpattern E fEOFill{O}{L}? ;}b
 %%EndResource
 end reinitialize
-1520 315 M 1520 365 I 1408 365 I 1408 465 I 1520 465 I 1520 515 I 1558 415 I C 
+958 690 M 917 690 I 917 590 I 799 590 I 799 690 I 758 690 I 858 740 I C 
 eoclip Pscript_WinNT_Incr begin
 %%BeginResource: file Pscript_Win_Dib_L2 5.0 0
 /iw 0 d/ih 0 d/im_save 0 d/s 0 d/polarity 0 d/smoothflag 0 d/mystring 0 d/bpc 0
@@ -759,15 +808,400 @@ ih d/Decode[0 1 0 1 0 1 0 1]d/ImageMatrix[iw 0 0 ih 0 0]d/DataSource s d
 /BitsPerComponent 8 d/Interpolate smoothflag d E image}b
 %%EndResource
 end reinitialize
-: 152 1 4 76 152 202 1407 314 F F 3 [ 0 ] F 
+: 1 152 4 1 202 152 757 589 F F 3 [ 0 ] F 
 X
 <
 000000 FFFFFF FF0000 000000 000000 000000 000000 000000
 000000 000000 000000 000000 000000 000000 000000 000000
 >
 doclutimage
-[3>~> Z
-; ; LH
+!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a
+!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a
+!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a
+!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a
+!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a
+!$D7a~> Z
+; ; 
+systemdict begin
+/TT824Eo00 
+findfont dup
+/Private get begin
+/CharStrings get begin
+/g4206 231 RD 
+95f7940df731d8159e71a67aad8508838486878988086d98729f78a90851
+06786c6f71667508878a8a8d8e8f08a99fa2a49ba8084d069007c206e607
+5c069007ba06a6079e880591878989838a087a07cc06a7079e8805918789
+89838a087907aa069898059b7f058f888b89878a084f063007b706989805
+9b7f058f888b89878a083e06683815ce069a9a059e7d058f888b89878a08
+fb60069007e306b00764069007b206a9079e880590878a89838a087707a7
+069696059981058f888b89878a0856066607a3e315a6074a067007cc06c6
+044a067007cc06a607ab044a067007cc06a607090e ND 
+/g6596 127 RD 
+90f7940df704b4155e069007b806db076c576967647508878a8a8c8d8f08
+b3a8acb5a5c10830069007ee06c1079e880590878a89838a085f07d5069a
+9a059e7d058f888b89878a082406a557b067bc7708828885878885085ea4
+6ab276c1082b07a1069898059b7f058f888b89878a08580652078183868a
+8b9308c507090e ND 
+end end
+end
+/TT824Eo00 findfont /Encoding get
+dup 8 /g4206 put
+dup 9 /g6596 put
+pop
+ /TT824Eo00 /Font G2UBegin
+/g4206 <57FA> def
+/g6596 <672C> def
+G2UEnd
+763 156 M <08090102>[50 50 50  0]xS 
+Pscript_WinNT_Compat begin /$x mysetup def end
+Pscript_WinNT_Incr dup /suspend get exec
+Pscript_WinNT_Compat dup /initialize get exec
+%%BeginDocument: Pscript_Win_PassThrough
+/languagelevel where {pop languagelevel} {1} ifelse
+2 ge dup {currentglobal exch true setglobal globaldict} {userdict} ifelse
+/GpPBeg1 {
+    gsave initclip
+    16 dict begin
+    /c {curveto} def /l {lineto} def /m {moveto} def
+    /rc {rcurveto} def /rl {rlineto} def
+    /NP {newpath} def /CP {closepath} def /SC {setrgbcolor} def
+    /GSE {end grestore} def
+} put
+{setglobal} if
+GpPBeg1
+1 0.6235 0.6235 SC
+NP 1565 415 m 1333 547 l 2028 547 l 2259 415 l CP 
+eofill
+GSE
+GpPBeg1
+1 setlinecap
+1 setlinejoin
+10 setmiterlimit
+1.0416 setlinewidth
+[] 0 setdash
+0 0 0 SC
+NP 1565 415 m 1333 547 l 2028 547 l 2259 415 l CP 
+stroke
+GSE
+GpPBeg1
+1 1 1 SC
+NP 1565 315 m 1333 447 l 2028 447 l 2259 315 l CP 
+eofill
+GSE
+GpPBeg1
+1 setlinecap
+1 setlinejoin
+10 setmiterlimit
+1.0416 setlinewidth
+[] 0 setdash
+0 0 0 SC
+NP 1565 315 m 1333 447 l 2028 447 l 2259 315 l CP 
+stroke
+GSE
+/languagelevel where {pop languagelevel} {1} ifelse
+2 ge dup {currentglobal exch true setglobal globaldict} {userdict} ifelse
+/GpPBeg1 {
+    gsave initclip
+    16 dict begin
+    /c {curveto} def /l {lineto} def /m {moveto} def
+    /rc {rcurveto} def /rl {rlineto} def
+    /NP {newpath} def /CP {closepath} def /SC {setrgbcolor} def
+    /GSE {end grestore} def
+} put
+{setglobal} if
+GpPBeg1
+0 0 0 SC
+NP 1678 432 m 1789 358 l 1800 374 l 1689 448 l CP 
+1771 348 m 1833 340 l 1802 395 l CP 
+fill
+GSE
+: N 
+%%EndDocument
+
+Pscript_WinNT_Compat dup /suspend get exec
+Pscript_WinNT_Incr dup /resume get exec
+1858 690 M 1817 690 I 1817 590 I 1700 590 I 1700 690 I 1658 690 I 1758 740 I C 
+eoclip /DeviceRGB dup setcolorspace /colspABC exch def
+: 1 152 4 1 202 152 1658 589 F F 3 [ 0 ] F 
+X
+<
+000000 FFFFFF FF0000 000000 000000 000000 000000 000000
+000000 000000 000000 000000 000000 000000 000000 000000
+>
+doclutimage
+!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a
+!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a
+!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a
+!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a
+!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a!$D7a
+!$D7a~> Z
+; ; Pscript_WinNT_Compat begin /$x mysetup def end
+Pscript_WinNT_Incr dup /suspend get exec
+Pscript_WinNT_Compat dup /initialize get exec
+%%BeginDocument: Pscript_Win_PassThrough
+GpPBeg1
+1 1 1 SC
+NP 1564 215 m 1333 347 l 2027 347 l 2258 215 l CP 
+eofill
+GSE
+GpPBeg1
+1 setlinecap
+1 setlinejoin
+10 setmiterlimit
+1.0416 setlinewidth
+[] 0 setdash
+0 0 0 SC
+NP 1564 215 m 1333 347 l 2027 347 l 2258 215 l CP 
+stroke
+GSE
+GpPBeg1
+0.2000 0.2000 0.6000 setrgbcolor
+NP 2011 310 m 1984 240 l 1821 304 l CP 
+eoclip
+/ds
+<aaaaffffababffffaaaa
+ffffbbbbffffaaaaffff
+ababffffaaaaffffbbbb
+ffff>
+ def
+1820 239 translate
+0 16 72 { 0 16 192 { 1 index
+gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
+} for pop} for
+GSE
+GpPBeg1
+1 setlinecap
+0 setlinejoin
+8 setmiterlimit
+9.3750 setlinewidth
+[] 0 setdash
+0.2000 0.2000 0.6000 SC
+NP 2011 310 m 1984 240 l 1821 304 l CP 
+stroke
+GSE
+GpPBeg1
+0.2000 0.8000 0.2000 setrgbcolor
+NP 1698 252 m 1608 302 l 1877 302 l 1967 252 l CP 
+eoclip
+/ds
+<5555bbbb5555eeee5555
+bfbb5555eeee5555bbbb
+5555eeee5555bfbf5555
+eeee>
+ def
+1607 252 translate
+0 16 51 { 0 16 361 { 1 index
+gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
+} for pop} for
+GSE
+GpPBeg1
+1 setlinecap
+0 setlinejoin
+8 setmiterlimit
+12.5000 setlinewidth
+[] 0 setdash
+0.2000 0.8000 0.2000 SC
+NP 1698 252 m 1608 302 l 1877 302 l 1967 252 l CP 
+stroke
+GSE
+GpPBeg1
+1 0.6000 0 setrgbcolor
+NP 1633 240 m 1578 240 1533 251 1533 265 c 1533 279 1578 290 1633 290 c 1688 290 1733 279 1733 265 c 1733 251 1688 240 1633 240 c CP 
+eoclip
+/ds
+<aaaaffffaaaadfdfaaaa
+ffffaaaafdfdaaaaffff
+aaaadfdfaaaaffffaaaa
+fdfd>
+ def
+1532 239 translate
+0 16 52 { 0 16 202 { 1 index
+gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
+} for pop} for
+GSE
+GpPBeg1
+0 setlinecap
+1 setlinejoin
+10 setmiterlimit
+12.5000 setlinewidth
+[12.5000 12.5000] 0 setdash
+1 0.6000 0 SC
+NP 1633 240 m 1578 240 1533 251 1533 265 c 1533 279 1578 290 1633 290 c 1688 290 1733 279 1733 265 c 1733 251 1688 240 1633 240 c CP 
+stroke
+GSE
+
+%%EndDocument
+
+Pscript_WinNT_Compat dup /suspend get exec
+Pscript_WinNT_Incr dup /resume get exec
+/DeviceRGB dup setcolorspace /colspABC exch def
+0 0 0 1 scol 1753 156 M <0102>[50  0]xS 
+Pscript_WinNT_Compat begin /$x mysetup def end
+Pscript_WinNT_Incr dup /suspend get exec
+Pscript_WinNT_Compat dup /initialize get exec
+%%BeginDocument: Pscript_Win_PassThrough
+/languagelevel where {pop languagelevel} {1} ifelse
+2 ge dup {currentglobal exch true setglobal globaldict} {userdict} ifelse
+/GpPBeg1 {
+    gsave initclip
+    16 dict begin
+    /c {curveto} def /l {lineto} def /m {moveto} def
+    /rc {rcurveto} def /rl {rlineto} def
+    /NP {newpath} def /CP {closepath} def /SC {setrgbcolor} def
+    /GSE {end grestore} def
+} put
+{setglobal} if
+GpPBeg1
+0.2000 0.2000 0.6000 setrgbcolor
+NP 2011 885 m 1984 815 l 1821 879 l CP 
+eoclip
+/ds
+<5555ffff5d5dffff5555
+ffffddddffff5555ffff
+5d5dffff5555ffffdddd
+ffff>
+ def
+1820 814 translate
+0 16 72 { 0 16 192 { 1 index
+gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
+} for pop} for
+GSE
+GpPBeg1
+1 setlinecap
+0 setlinejoin
+8 setmiterlimit
+9.3750 setlinewidth
+[] 0 setdash
+0.2000 0.2000 0.6000 SC
+NP 2011 885 m 1984 815 l 1821 879 l CP 
+stroke
+GSE
+GpPBeg1
+0.2000 0.8000 0.2000 setrgbcolor
+NP 1698 827 m 1608 877 l 1877 877 l 1967 827 l CP 
+eoclip
+/ds
+<aaaaddddaaaa7777aaaa
+fdddaaaa7777aaaadddd
+aaaa7777aaaafdfdaaaa
+7777>
+ def
+1607 827 translate
+0 16 51 { 0 16 361 { 1 index
+gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
+} for pop} for
+GSE
+GpPBeg1
+1 setlinecap
+0 setlinejoin
+8 setmiterlimit
+12.5000 setlinewidth
+[] 0 setdash
+0.2000 0.8000 0.2000 SC
+NP 1698 827 m 1608 877 l 1877 877 l 1967 827 l CP 
+stroke
+GSE
+GpPBeg1
+1 0.6000 0 setrgbcolor
+NP 1633 815 m 1578 815 1533 826 1533 840 c 1533 854 1578 865 1633 865 c 1688 865 1733 854 1733 840 c 1733 826 1688 815 1633 815 c CP 
+eoclip
+/ds
+<5555ffff5555fefe5555
+ffff5555efef5555ffff
+5555fefe5555ffff5555
+efef>
+ def
+1532 814 translate
+0 16 52 { 0 16 202 { 1 index
+gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
+} for pop} for
+GSE
+GpPBeg1
+0 setlinecap
+1 setlinejoin
+10 setmiterlimit
+12.5000 setlinewidth
+[12.5000 12.5000] 0 setdash
+1 0.6000 0 SC
+NP 1633 815 m 1578 815 1533 826 1533 840 c 1533 854 1578 865 1633 865 c 1688 865 1733 854 1733 840 c 1733 826 1688 815 1633 815 c CP 
+stroke
+GSE
+
+%%EndDocument
+
+Pscript_WinNT_Compat dup /suspend get exec
+Pscript_WinNT_Incr dup /resume get exec
+/DeviceRGB dup setcolorspace /colspABC exch def
+0 0 0 1 scol 1688 1006 M <0102>[50  0]xS 
+
+systemdict begin
+/TT824Eo00 
+findfont dup
+/Private get begin
+/CharStrings get begin
+/g12781 315 RD 
+95f7940d8d9e159ea598a792aa086f069007a8068d928c968d9908600690
+07b6068b918c968b9a086a069007dd069393059a80058f86898a818c086e
+0796069696059981058f888b89878a0867065f078183868a8b9308930762
+0689818881878208958505b5069193059981058f878a89848a084a078183
+868b8b920896075e067b078183868a8b9308d70782787f7b7d7e0887888a
+8c8d90088b06f77aac158b7a888185850885848589848b08898a8d901f8b
+8d898d878d087d8f05898c8b8c8d8d089789058f8a8f8a8f8c08948a8f93
+8b9a088ba17fa074a108a5cd056206fb5a078183868a8b9308f769079c82
+05af069292059d79058d878889828d086d5405a77298768b79088b06fb1b
+f7121569068b7c8b808a8508ae06ab076866158a7d8980898408b306ab07
+6806b13e155e065507b806c107090e ND 
+end end
+end
+/TT824Eo00 findfont /Encoding get
+dup 10 /g12781 put
+pop
+ /TT824Eo00 /Font G2UBegin
+/g12781 <90E1> def
+G2UEnd
+1788 1006 M <0A>S 
+Pscript_WinNT_Compat begin /$x mysetup def end
+Pscript_WinNT_Incr dup /suspend get exec
+Pscript_WinNT_Compat dup /initialize get exec
+%%BeginDocument: Pscript_Win_PassThrough
+/languagelevel where {pop languagelevel} {1} ifelse
+2 ge dup {currentglobal exch true setglobal globaldict} {userdict} ifelse
+/GpPBeg1 {
+    gsave initclip
+    16 dict begin
+    /c {curveto} def /l {lineto} def /m {moveto} def
+    /rc {rcurveto} def /rl {rlineto} def
+    /NP {newpath} def /CP {closepath} def /SC {setrgbcolor} def
+    /GSE {end grestore} def
+} put
+{setglobal} if
+GpPBeg1
+0 0 0 SC
+NP 1758 399 m 1605 399 l 1605 381 l 1758 381 l CP 
+1614 418 m 1558 390 l 1614 362 l CP 
+fill
+GSE
+GpPBeg1
+1 0 0 setrgbcolor
+NP 1443 490 m 1333 547 l 2023 547 l 2133 490 l CP 
+eoclip
+/ds
+<aaaa7777aaaaddddaaaa
+f777aaaaddddaaaa7777
+aaaaddddaaaaf7f7aaaa
+dddd>
+ def
+1332 489 translate
+0 16 59 { 0 16 802 { 1 index
+gsave translate 16 16 scale 16 16 true [16 0 0 -16 0 16] ds imagemask grestore
+} for pop} for
+GSE
+
+%%EndDocument
+
+Pscript_WinNT_Compat dup /suspend get exec
+Pscript_WinNT_Incr dup /resume get exec
+LH
 %%PageTrailer
 
 %%Trailer

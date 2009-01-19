@@ -192,12 +192,15 @@ x軸は水平方向に右の方向を正の向きとし，y軸は垂直方向に
 図形を時系列にマッピングする際の座標系をワールド座標系，
 表示デバイスの座標系をデバイス座標系と呼称する．
 
-ローカル座標系において図形を定義する際は，pixel単位による絶対指定か，ワールド座標系に対する割合を\%で指定する相対指定かのいずれかを用いる．
+ローカル座標系において図形を定義する際は，pixel単位による絶対指定か，ワールド座標系のマッピング領域に対する割合を\%で指定する相対指定かのいずれかを用いる．
 
 ワールド座標系のx軸は時間軸となる．
-ローカル座標系で定義された図形は，表示する時間の領域にワールド変換される．
+ローカル座標系で定義された図形は，表示する時間の領域にマッピングされる．
+これをワールド変換と呼称する．
+また，表示する時間の領域を表示期間と呼称する．
+表示期間は開始時刻と終了時刻で表される時刻のペアである．
 
-図\ref{fig:coordinate}に座標系の例を示す．
+図\ref{fig:coordinate}に座標系の例を，図\ref{fig:shapes}にワールド変換の例を示す．
 
 \begin{figure}[p]
 \begin{center}
@@ -207,29 +210,60 @@ x軸は水平方向に右の方向を正の向きとし，y軸は垂直方向に
 \end{center}
 \end{figure}
 
-\subsubsection{基本単位と図形群}
-図形の基本単位は楕円形，多角形，四角形，線分，矢印，扇形，文字列とする．
+\begin{figure}[p]
+\begin{center}
+\includegraphics[scale=0.75]{img/worldTransform.eps}
+\caption{ワールド変換}
+\label{fig:worldTransform}
+\end{center}
+\end{figure}
 
-複数の図形を仮想的にz軸方向に階層的に重ねたものを図形群と呼称し，可視化表現の最小単位とする．
-図\ref{fig:shapes}に図形群の例を示す．
+\subsubsection{基本図形と図形}
+図形の基本単位は楕円形，多角形，四角形，線分，矢印，扇形，文字列とし，これらを基本図形と呼称する．
+
+複数の基本図形を仮想的にz軸方向に階層的に重ねたものを単に図形と呼称し，可視化表現の最小単位とする．
+また，同じように複数の図形を仮想的にz軸方向に階層的に重ねたものを図形群と呼称する．
+図\ref{fig:shapes}に図形と図形群の例を示す．
 
 \begin{figure}[p]
 \begin{center}
 \includegraphics[scale=0.75]{img/shapes.eps}
-\caption{図形群}
+\caption{図形と図形群}
 \label{fig:shapes}
 \end{center}
 \end{figure}
 
-\subsection{可視化表現とイベントの対応}
+\subsection{図形とイベントの対応}
 
-本小節では，前小節で述べた可視化表現とトレースログのイベントをどのように対応づけるのかを述べる．
+本小節では，前小節で述べた可視化表現とトレースログのイベントをどのように対応付けるのかを述べる．
 
-\subsubsection{可視化の対象}
+\subsubsection{開始イベント，終了イベント，イベント期間}
+前小節において，図形はワールド変換を経て表示期間にマッピングされることを説明した．
+ここで表示期間の開始時刻，終了時刻はイベントを用いて指定する．
+つまり，指定されたイベントが発生する時刻をトレースログより抽出することにより表示期間を決定する．
+ここで，開始時刻と終了時刻に対応するイベントを開始イベント，終了イベントと呼称し，表示期間をイベントで表現したものをイベント期間と呼称する．
 
+\subsubsection{期間図形}
+図形群あるいは図形とそのマッピング対象であるイベント期間を構成要素としてもつ構造体を期間図形と呼称する．
 
+図\ref{fig:timeShape}に，標準形式トレースログを用いてイベント期間を定義した期間図形の例を示す．
+ここで，runningShapeを位置がローカル座標の原点，大きさがワールド座標系のマッピング領域に対して横幅100\%，縦幅80\%の長方形で色が緑色の図形とする．
+この図形を，開始イベント\verb|MAIN_TASK.state=RUNNING|，終了イベント\verb|MAIN_TASK.state|となるイベント期間で表示するよう定義したものが期間図形runningTimeShapeである．
+開始イベント\verb|MAIN_TASK.state=RUNNING|は，リソース\verb|MAIN_TASK|の属性\verb|state|の値が\verb|RUNNING|になったことを表し，終了イベント\verb|MAIN_TASK.state|は，リソース\verb|MAIN_TASK|の属性\verb|state|の値が単に変わったことを表している．
 
-\subsubsection{可視化の単位}
+runningTimeShapeを以下のトレースログからイベントを抽出して表示期間の時刻を決定しワールド変換を行った結果が図\ref{fig:timeShape}の右下に示すものである．
 
+\begin{EBNF}
+[1000]MAIN_TASK.state=RUNNING
+[1100]MAIN_TASK.state=WAITING
+\end{EBNF}
 
-\section{可視化方法とトレースログの対応}
+\begin{figure}[p]
+\begin{center}
+\includegraphics{img/timeShape.eps}
+\caption{期間図形}
+\label{fig:timeShape}
+\end{center}
+\end{figure}
+
+開始イベントと終了イベントから表示期間が決定されワールド変換が行われている．

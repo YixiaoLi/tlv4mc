@@ -26,7 +26,7 @@ SVNCOMMIT	= svn commit -m ''
 	$(DVIPDFM) $<
 	$(SVNADD) $@
 
-$(TARGET).dvi: $(EPS) $(TARGET).tex $(TEX)
+$(TARGET).dvi: $(EPS) $(TEX) $(TARGET).tex
 
 pdf: $(TARGET).pdf
 
