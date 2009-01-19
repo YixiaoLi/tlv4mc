@@ -1,22 +1,21 @@
 TARGET	= goto-thesis-paper
-SRC		= src/chapter1.tex \
-		  src/chapter2.tex \
-		  src/chapter3.tex \
-		  src/chapter4.tex \
-		  src/chapter5.tex \
-		  src/chapter6.tex \
-		  src/chapter7.tex \
-		  src/abstract_en.tex \
-		  src/abstract_jp.tex
+TEX		= $(shell ls src/*.tex)
+PRN		= $(shell ls img/*.prn)
+EPS		= $(PRN:%.prn=%.eps)
 LATEX	= platex --kanji=utf8
 DVIPDFM	= dvipdfmx.exe
+PS2EPSI	= ps2epsi
 RM		= rm -f
 SVNADD	= svn add
 SVNDEL	= svn st | grep '^!' | awk '{ print $$2 }' | xargs svn delete
 SVNCOMMIT	= svn commit -m ''
 
 .SUFFIXES:
-.SUFFIXES:	.tex .dvi .pdf
+.SUFFIXES:	.tex .prn .eps .dvi .pdf
+
+.prn.eps:
+	$(PS2EPSI) $< $@
+	$(SVNADD) $@
 
 .tex.dvi:
 	$(LATEX) $<
@@ -27,7 +26,7 @@ SVNCOMMIT	= svn commit -m ''
 	$(DVIPDFM) $<
 	$(SVNADD) $@
 
-$(TARGET).dvi: $(TARGET).tex $(SRC)
+$(TARGET).dvi: $(EPS) $(TARGET).tex $(TEX)
 
 pdf: $(TARGET).pdf
 

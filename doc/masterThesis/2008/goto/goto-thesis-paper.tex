@@ -1,4 +1,6 @@
 \documentclass[a4paper,12pt]{jreport}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{mymacros}
 \textheight 9.0in
 \textwidth 6.0in
 \topmargin 0in
@@ -26,6 +28,8 @@ OJLによるトレースログ可視化ツールの開発\\
 2009年1月
 \vfill
 }
+\renewcommand{\bibname}{参考文献}
+\renewcommand{\baselinestretch}{1.075}
 \begin{document}
 \pagestyle{empty}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -42,7 +46,9 @@ OJLによるトレースログ可視化ツールの開発\\
 \begin{center}
 \large\sffamily\gtfamily 要旨
 \end{center}
+
 \input{src/abstract_jp.tex}
+
 \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 英文要旨
@@ -59,7 +65,9 @@ Development of Visualization Tool for Trace Log by OJL
 \begin{center}
 \large\sffamily Abstract
 \end{center}
+
 \input{src/abstract_en.tex}
+
 \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 中表紙
@@ -85,7 +93,8 @@ Development of Visualization Tool for Trace Log by OJL
 \input{src/chapter4.tex}
 \input{src/chapter5.tex}
 \input{src/chapter6.tex}
-\input{src/chapter7.tex}
+\input{src/thanks.tex}
+\input{src/bibliography.tex}
 \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 背表紙
