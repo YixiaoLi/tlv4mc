@@ -1,10 +1,22 @@
-\usepackage{framed,fancybox}
+\usepackage{framed,fancybox,eclbkbox}
 
 \newenvironment{EBNF}%
 {\VerbatimEnvironment 
 \begin{quote}
-\begin{framed}
+\begin{breakbox}
 \begin{Verbatim}}%
 {\end{Verbatim}
-\end{framed}
+\end{breakbox}
+\end{quote}}
+
+\newenvironment{File}%
+{\VerbatimEnvironment 
+\begin{quote}
+\footnotesize
+\bkcounttrue
+\begin{breakbox}
+\setlength{\baselineskip}{\normalbaselineskip}
+\begin{Verbatim}}%
+{\end{Verbatim}
+\end{breakbox}
 \end{quote}}
