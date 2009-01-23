@@ -103,17 +103,21 @@ TLVの開発目標は，汎用性と拡張性を備えることである．
 正規表現はスラッシュ記号(/)で挟むものとする．
 
 前小節によればトレースログとは時系列にイベントを記録したものであるので，１つのログには時刻とイベントが含まれるべきである．
+トレースログが記録されたファイルのデータを\verb|TraceLog|，\verb|TraceLog|を改行記号で区切った１行を\verb|TraceLogLine|とする．
 
 \begin{EBNF}
 TraceLog = { TraceLogLine };
 TraceLogLine = "[",Time,"]",Event,"\n";
+\end{EBNF}
+
+\verb|TraceLogLine|は"\verb|[|","\verb|]|"で時刻を囲み，その後ろにイベントを記述するものとする．
+
+時刻は\verb|Time|として定義され，数値とアルファベットで構成される．
+
+\begin{EBNF}
 Time = /[0-9a-Z]+/;
 \end{EBNF}
 
-トレースログが記録されたファイルのデータを\verb|TraceLog|とした．
-また，\verb|TraceLog|を改行記号で区切った１行を\verb|TraceLogLine|とし，トレースログの単位とした．
-\verb|TraceLogLine|は"\verb|[|","\verb|]|"で時刻を囲み，その後ろにイベントを記述するものとする．
-時刻は\verb|Time|として定義され，数値とアルファベットで構成される．
 アルファベットが含まれるのは，10進数以外の時刻を表現できるようにするためである．
 これは，時刻の単位として「秒」以外のもの，たとえば「実行命令数」などを表現出来るように考慮したためである．
 この定義から時刻には2進数から36進数までを指定できることがわかる．
@@ -135,21 +139,7 @@ ResourceTypeName = Name;
 Name = /[0-9a-Z_]+/;
 \end{EBNF}
 
-\verb|AttributeChange|は属性の値の変化を，\verb|BehaviorHappen|は振る舞いを表現している．
-これらは，リソースとドット"\verb|.|"でつなげることでそのリソース固有のものであることを示す．
-リソースの属性の値の変化と振る舞いは次のように定義した．
-
-\begin{EBNF}
-AttributeChange = AttributeName,"=",Value;
-AttributeName = Name;
-Value = /[^"\\]+/;
-BehaviorHappen =  BehaviorName,"(",Arguments,")";
-BehaviorName = Name;
-Arguments = [{Argument,[","]}];
-Argument = /[^"\\]*/;
-\end{EBNF}
-
-リソースの条件指定の際の\verb|AttributeCondition|は次のように定義する．
+条件指定の際の\verb|AttributeCondition|は次のように定義する．
 
 \begin{EBNF}
 AttributeCondition = BooleanExpression;
@@ -163,11 +153,30 @@ LogicalOpe = "&&"|"||";
 ComparisonOpe = "=="|"!="|"<"|">"|"<="|">=";
 \end{EBNF}
 
+{\tt AttributeName}はリソースの名前である．
+
+\begin{EBNF}
+AttributeName = Name;
+\end{EBNF}
+
+{\tt Event}の定義にて，\verb|AttributeChange|は属性の値の変化を，\verb|BehaviorHappen|は振る舞いを表現している．
+これらは，リソースとドット"\verb|.|"でつなげることでそのリソース固有のものであることを示す．
+リソースの属性の値の変化と振る舞いは次のように定義した．
+
+\begin{EBNF}
+AttributeChange = AttributeName,"=",Value;
+Value = /[^"\\]+/;
+BehaviorHappen =  BehaviorName,"(",Arguments,")";
+BehaviorName = Name;
+Arguments = [{Argument,[","]}];
+Argument = /[^"\\]*/;
+\end{EBNF}
+
 \subsection{標準形式トレースログの例}
 
 前小節の定義を元に記述した標準形式トレースログの例を次に示す．
 
-\begin{File}
+\begin{File}{標準形式トレースログの例}{standartFormatTraceLogSample}
 [2403010]MAIN_TASK.leaveSVC(ena_tex,ercd=0)
 [4496099]MAIN_TASK.state=RUNNABLE
 [4496802]TASK(state==RUNNING).preempt()
@@ -271,10 +280,10 @@ TLVにおいて，トレースログの可視化表現とは，x軸を時系列�
 
 taskBecomeRunningを以下のトレースログからイベントを抽出して表示期間の時刻を決定し，図形のワールド変換を行った結果が図\ref{fig:timeShape}の右下に示すものである．
 
-\begin{File}
+\begin{FileNoTitle}
 [1000]MAIN_TASK.state=RUNNING
 [1100]MAIN_TASK.state=WAITING
-\end{File}
+\end{FileNoTitle}
 \vfill
 \begin{figure}[h]
 \begin{center}

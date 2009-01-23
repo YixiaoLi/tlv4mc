@@ -20,9 +20,9 @@ TLVは，トレースログとリソースファイルを読み込み，ター�
 生成された標準形式トレースログと図形データは，TLVデータとしてまとめられ可視化表示の元データとして用いられる．
 TLVデータはTLVファイルとして外部ファイルに保存することが可能であり，TLVファイルを読み込むことで，標準形式変換と図形データ生成の処理を行わなくても可視化表示できるようになる．
 
-\begin{figure}[h]
+\begin{figure}[!t]
 \begin{center}
-\includegraphics[scale=0.5]{img/tlv.eps}
+\includegraphics[scale=0.7]{img/tlv.eps}
 \caption{TLVの全体像}
 \label{fig:tlv}
 \end{center}
@@ -92,9 +92,9 @@ Digit = /[0-9]+/;
 Digit1-9 = /[1-9]/;
 \end{EBNF}
 
-以下にオブジェクトの例を示す．
+以下にJsonにおけるオブジェクトの例を示す．
 
-\begin{File}
+\begin{File}{Jsonにおけるオブジェクトの例}{JsonObject}
 {
   "Image":{
     "Width":  800,
@@ -110,9 +110,9 @@ Digit1-9 = /[1-9]/;
 }
 \end{File}
 
-以下に配列の例を示す．
+以下にJsonにおける配列の例を示す．
 
-\begin{File}
+\begin{File}{Jsonにおける配列の例}{JsonArray}
 [
   {
     "City":      "SAN FRANCISCO",
@@ -142,9 +142,9 @@ Digit1-9 = /[1-9]/;
 １つの置換ルールに対して複数の標準形式トレースログを出力可能である．
 また，所望の標準形式トレースログに変換する際，トレースログファイルの情報だけでは足りない場合がある．
 例として，TOPPERS/ASPカーネルというRTOSのトレースログを標準形式トレースログに変換することを考えてみる．
-TOPPERS/ASPカーネルのトレースログを次に示す．
+TOPPERS/ASPカーネルのトレースログの例を次に示す．
 
-\begin{File}
+\begin{File}{変換元となるTOPPERS/ASPカーネルのトレースログの例}{aspSample}
 [1000]task 1 becomes RUNNABLE
 [1005]dispatch to task 1.
 [1100]task 1 becomes WAITING
@@ -154,7 +154,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
 この場合，標準形式トレースログは次のように出力されることが要求される．
 なお，説明のため簡略化しており，実際の変換結果とは異なる．
 
-\begin{File}
+\begin{File}{表\ref{aspSample}を標準形式トレースログで表現した例}{aspSample}
 [1000]Task(id==1).activate()
 [1000]Task(id==1).state = RUNNABLE
 [1005]Task(state==RUNNING).state=RUNNABLE
@@ -195,7 +195,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
 
 以下に，RTOSであるTOPPERS/ASPカーネルのトレースログの例を示す．
 
-\begin{File}
+\begin{File}{TOPPERS/ASPカーネルのトレースログの例}{aspTraceLog}
 [11005239]: task 4 becomes RUNNABLE.
 [11005778]: dispatch from task 2.
 [11005954]: dispatch to task 4.
@@ -221,7 +221,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
 
 以下に，ターゲット\verb|fmp|のリソースタイプ\verb|Task|を定義したリソースヘッダファイルの例を示す．
 
-\begin{File}
+\begin{File}{リソースヘッダファイルの例}{resourceHeaderSample}
 {
   "asp":{
     "Task":{
@@ -274,6 +274,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
 以下に，リソースタイプを定義するオブジェクトのメンバの説明と値について説明する．
 
 \begin{description}
+{\nopagebreak
 \item[\texttt{DisplayName}] \mbox{}
     \vspace{-1zw}
     \begin{description}
@@ -281,38 +282,45 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
     \item[説明] リソースタイプの表示名．主にGUI表示の際に用いられる
     \item[値] 文字列
     \end{description}
+}
 \item[\texttt{Attributes}] \mbox{}
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
     \item[説明] 属性の定義
     \item[値] オブジェクト．メンバ名に属性名，値に属性の定義をオブジェクトで記述する．その際のオブジェクトのメンバの説明は以下の通りである．
+    
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
+            {\nopagebreak
             \item[\texttt{VariableType}] \mbox{}
             \vspace{-0.25zw}
                 \begin{description}
                 \item[説明] 属性値の型
                 \item[値] 文字列(\verb|"Number"|：数値，\verb|"Boolean"|：真偽値，\verb|"String"|：文字列のいずれか)
                 \end{description}
+            }{\nopagebreak
             \item[\texttt{DisplayName}] \mbox{}
             \vspace{-0.25zw}
                 \begin{description}
                 \item[説明] 属性の表示名．主にGUI表示の際に用いられる
                 \item[値] 文字列
                 \end{description}
+            }{\nopagebreak
             \item[\texttt{AllocationType}] \mbox{}
             \vspace{-0.25zw}
                 \begin{description}
                 \item[説明] 属性の値が動的か静的かの指定．ここで動的とは，属性値変更イベントが発生すること指し，静的とは発生しないことを指す．
                 \item[値] 文字列(\verb|"Static"|，\verb|"Dynamic"|のいずれか)
                 \end{description}
+            }{\nopagebreak
             \item[\texttt{CanGrouping}] \mbox{}
             \vspace{-0.25zw}
                 \begin{description}
                 \item[説明] リソースをグループ化できるかどうか．ここで\verb|true|を指定された場合，GUIでリソースの一覧を表示する際に初期値でグループ化され表示することができる．
                 \item[値] 真偽値
                 \end{description}
+            }
             \end{description}
     \end{description}
 \item[\texttt{Behaviors}] \mbox{}
@@ -321,20 +329,24 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
     \setlength{\itemsep}{-1.5\itemsep}
     \item[説明] 振る舞いの定義
     \item[値] オブジェクト．メンバ名に振る舞い名，値に振る舞いの定義をオブジェクトで記述する．その際のオブジェクトのメンバの説明は以下の通りである．
+    
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
+            {\nopagebreak
             \item[\texttt{DisplayName}] \mbox{}
             \vspace{-0.25zw}
                 \begin{description}
                 \item[説明] 振る舞いの表示名．主にGUI表示の際に用いられる
                 \item[値] 文字列
                 \end{description}
+            }{\nopagebreak
             \item[\texttt{Arguments}] \mbox{}
             \vspace{-0.25zw}
                 \begin{description}
                 \item[説明] 振る舞いの引数
                 \item[値] オブジェクト．メンバ名に引数名，値に引数の型を記述する．
                 \end{description}
+            }
             \end{description}
     \end{description}
 \end{description}
@@ -348,7 +360,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
 
 以下にリソースファイルの例を示す．
 
-\begin{File}
+\begin{File}{リソースファイルの例}{resourceSample}
 {
   "TimeScale" :"us",
   "TimeRadix" :10,
@@ -391,6 +403,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
 以下にそれぞれのメンバについて説明する．
 
 \begin{description}
+{\nopagebreak
 \item[\texttt{TimeScale}] \mbox{}
     \vspace{-1zw}
     \begin{description}
@@ -398,6 +411,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
     \item[説明] 時間の単位
     \item[値] 文字列
     \end{description}
+}{\nopagebreak
 \item[\texttt{TimeRadix}] \mbox{}
     \vspace{-1zw}
     \begin{description}
@@ -405,6 +419,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
     \item[説明] 時間の基数
     \item[値] 数値
     \end{description}
+}{\nopagebreak
 \item[\texttt{ConvertRules}] \mbox{}
     \vspace{-1zw}
     \begin{description}
@@ -412,6 +427,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
     \item[説明] 適用する変換ルールのターゲット．複数のターゲットを指定可能
     \item[値] 文字列の配列
     \end{description}
+}{\nopagebreak
 \item[\texttt{VisualizeRules}] \mbox{}
     \vspace{-1zw}
     \begin{description}
@@ -419,6 +435,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
     \item[説明] 適用する可視化ルール．複数のターゲットを指定可能
     \item[値] 文字列の配列
     \end{description}
+}{\nopagebreak
 \item[\texttt{ResourceHeaders}] \mbox{}
     \vspace{-1zw}
     \begin{description}
@@ -426,13 +443,16 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
     \item[説明] \verb|Resources|で定義されるリソースのリソースタイプを定義しているターゲット．複数のターゲットを指定可能
     \item[値] 文字列の配列
     \end{description}
+}
 \item[\texttt{Resources}] \mbox{}
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
     \item[説明] リソースを定義
     \item[値] オブジェクト．メンバ名にリソースの名前，値にリソースの定義をオブジェクトで記述．値として与えるオブジェクトで使えるメンバは以下のとおりである．
+    
         \begin{description}
+        {\nopagebreak
         \item[\texttt{Type}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
@@ -440,6 +460,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
             \item[説明] 必須項目である．リソースタイプ名を記述
             \item[値] 文字列
             \end{description}
+        }{\nopagebreak
         \item[\texttt{Color}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
@@ -447,6 +468,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
             \item[説明] リソース固有の色を指定．可視化表示の際に用いられる
             \item[値] 文字列．RGBを各8bitで表現したものを16進法表記で記述
             \end{description}
+        }{\nopagebreak
         \item[\texttt{Attributes}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
@@ -454,6 +476,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
             \item[説明] 属性の初期値．指定できる属性はリソースタイプで定義されているものに限る
             \item[値] オブジェクト．メンバ名に属性名，値に属性の初期値を記述
             \end{description}
+        }
         \end{description}
     \end{description}
 \end{description}
@@ -464,7 +487,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
 変換ルールファイルには，ターゲットとなるトレースログを標準形式トレースログに変換するためのルールが記述される．
 以下に，変換ルールファイルの例を示す．
 
-\vspace{1zw}
+\begin{table}[h]
 {\scriptsize
 \begin{quote}
 \bkcounttrue
@@ -504,9 +527,11 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
 }
 \end{verbatim}
 \end{breakbox}
+\caption{変換ルールファイルの例}
+\label{convertRuleFileSample}
 \end{quote}
 }
-\vspace{1zw}
+\end{table}
 
 変換ルールファイルは，1つのオブジェクトで構成され，各メンバにターゲット毎の変換ルールを記述する．
 メンバ名にターゲット名を記述し，値としてそのターゲットが出力するトレースログを標準形式へ変換するためのルールをオブジェクトとして記述する．
@@ -534,6 +559,7 @@ TOPPERS/ASPカーネルのトレースログを次に示す．
 利用できる置換マクロは以下の通りである．
 
 \vspace{1zw}
+{\nopagebreak
 \noindent
 \verb|$EXIST{|\textit{resource}\verb|}|
 \vspace{-1zw}
@@ -555,7 +581,9 @@ true
 \end{description}
 
 \end{quote}
-
+}
+{\nopagebreak
+\noindent
 \verb|$COUNT{|\textit{resource}\verb|}|
 \vspace{-1zw}
 \begin{quote}
@@ -576,7 +604,9 @@ $COUNT{[1000]Task(state==WAITING)}
 \end{description}
 
 \end{quote}
-
+}
+{\nopagebreak
+\noindent
 \verb|$ATTR{|\textit{attribute}\verb|}|
 \vspace{-1zw}
 \begin{quote}
@@ -597,7 +627,9 @@ WAITING
 \end{description}
 
 \end{quote}
-
+}
+{\nopagebreak
+\noindent
 \verb|$RES_NAME{|\textit{resource}\verb|}|
 \vspace{-1zw}
 \begin{quote}
@@ -618,7 +650,9 @@ MAIN_TASK
 \end{description}
 
 \end{quote}
-
+}
+{\nopagebreak
+\noindent
 \verb|$RES_DISPLAYNAME{|\textit{resource}\verb|}|
 \vspace{-1zw}
 \begin{quote}
@@ -640,7 +674,9 @@ $RES_DISPLAYNAME{Task(id==1)}
 \end{description}
 
 \end{quote}
-
+}
+{\nopagebreak
+\noindent
 \verb|$RES_COLOR{|\textit{resource}\verb|}|
 \vspace{-1zw}
 \begin{quote}
@@ -662,6 +698,7 @@ ff0000
 \end{description}
 
 \end{quote}
+}
 
 \section{図形データの生成}
 
@@ -678,11 +715,13 @@ ff0000
 可視化ルールファイルは，1つのオブジェクトで構成され，オブジェクトのメンバにターゲット毎の変換ルールを記述する．
 メンバ名にターゲット名を記述し，値としてオブジェクトを与え，そのオブジェクトに可視化ルールと図形の定義を記述する．
 
+\subsubsection{図形の定義}
+
 以下に{\tt toppers}をターゲットとする図形を定義した例を示す．
 例では，{\tt runningShapes}と{\tt runnableShapes}，{\tt svcShapes}の3つの図形を定義している．
 {\tt runningShapes}と{\tt runnableShapes}は1つの基本図形で構成され，{\tt svcShapes}は3つの基本図形から構成される．
 
-\begin{File}
+\begin{File}{可視化ルールファイルで図形を定義した例}{shapeSample}
 {
   "toppers":{
     "Shapes":{
@@ -735,27 +774,31 @@ ff0000
 すべての形状に共通なメンバの説明を以下に示す．
 
 \begin{description}
+{\nopagebreak
 \item[\texttt{Type}] \mbox{}
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
     \item[説明] 図形の形状．必須である．
-    \item[値] 文字列（"{\tt Rectangle}"：長方形，"{\tt Line}"：直線，"{\tt Arrow}"：矢印，"{\tt Polygon}"：多角形，"{\tt Pie}"：扇形，"{\tt Ellipse}"：楕円形，"{\tt Text}"：文字列のいずれか）
+    \item[値] 文字列（"{\tt Rectangle}"：長方形，"{\tt Line}"：線分，"{\tt Arrow}"：矢印，"{\tt Polygon}"：多角形，"{\tt Pie}"：扇形，"{\tt Ellipse}"：楕円形，"{\tt Text}"：文字列のいずれか）
     \end{description}
+}{\nopagebreak
 \item[\texttt{Size}] \mbox{}
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
     \item[説明] 図形のサイズ．省略した場合，値は"\verb|100%,100%|"となる
-    \item[値] 文字列．サイズ指定形式
+    \item[値] サイズ指定形式の文字列
     \end{description}
+}{\samepage
 \item[\texttt{Location}] \mbox{}
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
     \item[説明] 図形の位置．省略した場合，値は"\verb|0,0|"となる
-    \item[値] 文字列．位置指定形式
+    \item[値] 位置指定形式の文字列
     \end{description}
+}{\nopagebreak
 \item[\texttt{Area}] \mbox{}
     \vspace{-1zw}
     \begin{description}
@@ -763,13 +806,15 @@ ff0000
     \item[説明] 図形の表示領域．サイズと位置を同時に指定する．省略した場合は，サイズに{\tt Size}の値が，位置に{\tt Location}の値が設定される．
     \item[値] 文字列2つの配列．1つ目の要素は位置指定形式，2つ目の要素はサイズ指定形式を記述する
     \end{description}
+}{\nopagebreak
 \item[\texttt{Offset}] \mbox{}
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
     \item[説明] 図形のオフセット．省略した場合，値は"\verb|0,0|"となる
-    \item[値] 文字列．位置指定形式
+    \item[値] 位置指定形式の文字列
     \end{description}
+}
 \end{description}
 
 図形のサイズを指定する形式として，サイズ指定形式（{\tt ShapeSize}）を次のように定めた．
@@ -809,19 +854,196 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
 これは，図形をデバイス座標系へマッピングしない限り，図形の大きさをピクセル単位で知ることが出来ないからである．
 基準指定を行えば"右端から5ピクセル"という指定は{\tt r(5px)}と記述することで行える．
 
+図形の位置とサイズは描画領域を表し，この描画領域に内接するように図形が描画される．
+楕円形や扇形はこの描画領域の中心を円の中心として描かれる．
+
+図の形状が線分({\tt Line})，矢印({\tt Arrow})のときは始点と終点，多角形({\tt Polygon})は各頂点を{\tt Points}というメンバを使い座標を指定する．
+{\tt Points}の説明は次の通り．
+
+\begin{description}
+{\nopagebreak
+\item[\texttt{Points}] \mbox{}
+    \vspace{-1zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5\itemsep}
+    \item[説明] 線分({\tt Line})，矢印({\tt Arrow})は始点と終点，多角形({\tt Polygon})は各頂点を指定する．これらの形状の時は必須である
+    \item[値] 位置指定形式の文字列の配列
+    \end{description}
+}
+\end{description}
+
+図の形状が扇形({\tt Pie})のとき，扇形の開始角度，開口角度を{\tt Arc}というメンバを用いて定義する．
+{\tt Arc}の説明は次の通り．
+
+\begin{description}
+{\nopagebreak
+\item[\texttt{Arc}] \mbox{}
+    \vspace{-1zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5\itemsep}
+    \item[説明] 扇形の開始角度，開口角度を指定する．省略した場合は"{\tt 0,90}"となる
+    \item[値] 数値2つの配列．1つ目の要素が開始角度，2つ目の要素が開口角度である
+    \end{description}
+}
+\end{description}
+
+図の形状が文字列({\tt Text})の場合，{\tt Text}というメンバで描画する文字列を，{\tt Font}でフォントの設定を指定できる．
+{\tt Text}の説明は次の通り．
+
+\begin{description}
+{\nopagebreak
+\item[\texttt{Text}] \mbox{}
+    \vspace{-1zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5\itemsep}
+    \item[説明] 描画する文字列を指定する．省略した場合は文字列を描画しない
+    \item[値] 文字列．
+    \end{description}
+}
+\item[\texttt{Font}] \mbox{}
+    \vspace{-1zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5\itemsep}
+    \item[説明] 描画する文字列の色，透明度，フォント，サイズ，スタイル，領域内での位置を指定する．
+    \item[値] オブジェクト．オブジェクトのメンバとして以下が使える
+    
+        \begin{description}
+        {\nopagebreak
+        \item[\texttt{Color}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 文字列の色．省略した場合，"{\tt 000000}"となる
+            \item[値] 文字列．ARGBあるいはRGBを各8bitで表現したものを16進法表記で記述する．Aは透明度である．
+            \end{description}
+        }{\nopagebreak
+        \item[\texttt{Family}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 文字のフォントを指定する．省略した場合，システムでSansSerifとして設定してあるフォント名になる
+            \item[値] 文字列．システムにインストールされているフォント名でなければならない．
+            \end{description}
+        }{\nopagebreak
+        \item[\texttt{Style}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 文字列のスタイルを指定する．
+            \item[値] 文字列．{\tt "Bold"}：太字，{\tt "Italic"}：斜体，{\tt "Regular"}：標準，{\tt "Strikeout"}：中央線付き，{\tt "Underline"}：下線付きのいずれか
+            \end{description}
+        }{\nopagebreak
+        \item[\texttt{Alpha}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 文字列の透明度．省略した場合，255になる
+            \item[値] 数値．0～255の値
+            \end{description}
+        }{\nopagebreak
+        \item[\texttt{Size}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 文字列のサイズ
+            \item[値] 数値．単位はポイントである
+            \end{description}
+        }{\nopagebreak
+        \item[\texttt{Align}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 文字列の領域内での位置
+            \item[値] 文字列．{\tt "BottomCenter"}：下端中央，{\tt "BottomLeft"}：下端左寄せ，{\tt "BottomRight"}：下端右寄せ，{\tt "MiddleCenter"}：中段中央，{\tt "MiddleLeft"}：中段左寄せ，{\tt "MiddleRight"}：中段右寄せ，{\tt "TopCenter"}：上端中央，{\tt "TopLeft"}：上端左寄せ，{\tt "TopRight"}：上端右寄せのいずれか
+            \end{description}
+        }
+        \end{description}
+    \end{description}
+\end{description}
+
+図の形状が文字列({\tt Text})以外の場合，{\tt Fill}というメンバで塗りつぶしの色，{\tt Alpha}で塗りつぶしの透明度，{\tt Pen}で図形の縁取り線を指定できる．
+これらの説明は次の通り．
+
+\begin{description}
+{\nopagebreak
+\item[\texttt{Fill}] \mbox{}
+    \vspace{-1zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5\itemsep}
+    \item[説明] 塗りつぶしの色．省略した場合，"{\tt ffffff}"となる
+    \item[値] 文字列．ARGBまたはRGBを各8bitで表現したものを16進法表記で記述する．Aは透明度である．
+    \end{description}
+}{\nopagebreak
+\item[\texttt{Alpha}] \mbox{}
+    \vspace{-1zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5\itemsep}
+    \item[説明] 塗りつぶしの色の透明度．省略した場合，255となる
+    \item[値] 数値．0～255の値
+    \end{description}
+}
+\item[\texttt{Pen}] \mbox{}
+    \vspace{-1zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5\itemsep}
+    \item[説明] 縁取り線を指定する．
+    \item[値] オブジェクト．オブジェクトのメンバとして以下が使える
+    
+        \begin{description}
+        {\samepage
+        \item[\texttt{Color}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 線の色．省略した場合，"{\tt 000000}"となる
+            \item[値] 文字列．ARGBあるいはRGBを各8bitで表現したものを16進法表記で記述する．Aは透明度である
+            \end{description}
+        }{\nopagebreak
+        \item[\texttt{Alpha}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 文字列の透明度．省略した場合，255になる
+            \item[値] 数値．0～255の値
+            \end{description}
+        }{\nopagebreak
+        \item[\texttt{Width}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 線の幅．省略した場合は，1となる
+            \item[値] 数値
+            \end{description}
+        }{\nopagebreak
+        \item[\texttt{DashStyle}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 線種の指定．省略した場合，"{\tt Solid}"となる
+            \item[値] 文字列．{\tt "Dash"}：ダッシュ，{\tt "DashDot"}：ダッシュとドットの繰り返し，{\tt "DashDotDot"}：ダッシュと 2 つのドットの繰り返し，{\tt "Dot"}：ドット，{\tt "Solid"}：実線，のいずれか
+            \end{description}
+        }
+        \end{description}
+    \end{description}
+\end{description}
+
+\subsubsection{可視化ルールの定義}
+
+あ
+
 \section{TraceLogVisualizerのその他の機能}
 
 本節では，標準形式変換と可視化データ生成の他にTLVが備える機能について詳述する．
 
 \subsection{マーカー}
-TLVでは，可視化表示部にマーカーと呼ぶ印を指定の時刻に配置することが出来る．
+TLVでは，可視化表示部にマーカーと呼ぶ印を指定の時刻に配置することが出来る
+注目するべきイベントの発生時刻にマーカーを配置することで，理解の補助することが出来る．
+
 マーカーとマーカーの間には，その間の時間が表示される．
 マーカーには名前を付けることができ，色の指定が可能である．
 また，マーカーはマウス操作で選択することができ，各種操作に利用される．
 
 マーカーは階層構造で管理し，階層ごとに表示の切り替え，マーカー間時間の表示などを行うことが出来る．
-
-注目するべきイベントの発生時刻にマーカーを配置することでトレースログ内容の理解を補助することが出来る．
 
 \subsection{可視化表示部の制御}
 

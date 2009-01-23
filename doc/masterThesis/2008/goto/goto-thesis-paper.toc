@@ -14,47 +14,49 @@
 \contentsline {subsection}{\numberline {2.2.1}トレースログの抽象化}{10}
 \contentsline {subsection}{\numberline {2.2.2}標準形式トレースログの定義}{13}
 \contentsline {subsection}{\numberline {2.2.3}標準形式トレースログの例}{14}
-\contentsline {section}{\numberline {2.3}可視化表示メカニズムの抽象化}{14}
+\contentsline {section}{\numberline {2.3}可視化表示メカニズムの抽象化}{15}
 \contentsline {subsection}{\numberline {2.3.1}可視化表現}{15}
 \contentsline {subsubsection}{座標系}{15}
-\contentsline {subsubsection}{基本図形と図形，図形群}{15}
+\contentsline {subsubsection}{基本図形と図形，図形群}{17}
 \contentsline {subsection}{\numberline {2.3.2}図形とイベントの対応}{17}
 \contentsline {subsubsection}{開始イベント，終了イベント，イベント期間}{17}
 \contentsline {subsubsection}{可視化ルール}{17}
-\contentsline {chapter}{\numberline {第3章}トレースログ可視化ツール TraceLogVisualizer の実装}{19}
-\contentsline {section}{\numberline {3.1}TraceLogVisualizerの全体像}{19}
-\contentsline {subsection}{\numberline {3.1.1}Json}{19}
-\contentsline {section}{\numberline {3.2}標準形式への変換}{22}
-\contentsline {subsection}{\numberline {3.2.1}トレースログファイル}{24}
-\contentsline {subsection}{\numberline {3.2.2}リソースヘッダファイル}{24}
-\contentsline {subsection}{\numberline {3.2.3}リソースファイル}{26}
-\contentsline {subsection}{\numberline {3.2.4}変換ルールファイル}{28}
-\contentsline {subsubsection}{置換マクロ}{30}
-\contentsline {section}{\numberline {3.3}図形データの生成}{32}
-\contentsline {subsection}{\numberline {3.3.1}可視化ルールファイル}{32}
-\contentsline {section}{\numberline {3.4}TraceLogVisualizerのその他の機能}{35}
-\contentsline {subsection}{\numberline {3.4.1}マーカー}{35}
-\contentsline {subsection}{\numberline {3.4.2}可視化表示部の制御}{35}
-\contentsline {subsection}{\numberline {3.4.3}マクロ表示}{36}
-\contentsline {subsection}{\numberline {3.4.4}トレースログのテキスト表示}{36}
-\contentsline {subsection}{\numberline {3.4.5}可視化表示項目の表示非表示切り替え}{36}
-\contentsline {chapter}{\numberline {第4章}トレースログ可視化ツール TraceLogVisualizer の利用}{37}
-\contentsline {section}{\numberline {4.1}組み込みRTOSのトレースログの可視化}{37}
-\contentsline {subsection}{\numberline {4.1.1}シングルコアプロセッサ用RTOSのトレースログの可視化}{37}
-\contentsline {subsection}{\numberline {4.1.2}マルチコアプロセッサ用RTOS対応への拡張}{37}
-\contentsline {subsection}{\numberline {4.1.3}その他のシステムのトレースログの可視化}{37}
-\contentsline {section}{\numberline {4.2}可視化表示項目の追加・変更}{37}
-\contentsline {chapter}{\numberline {第5章}開発プロセス}{38}
-\contentsline {section}{\numberline {5.1}OJL}{38}
-\contentsline {subsection}{\numberline {5.1.1}フェーズ分割}{38}
-\contentsline {section}{\numberline {5.2}ユースケース駆動アジャイル開発}{38}
-\contentsline {subsection}{\numberline {5.2.1}プロジェクト管理}{38}
-\contentsline {subsection}{\numberline {5.2.2}設計}{38}
-\contentsline {subsection}{\numberline {5.2.3}テスト}{38}
-\contentsline {subsection}{\numberline {5.2.4}実装}{38}
-\contentsline {section}{\numberline {5.3}開発成果物}{38}
-\contentsline {chapter}{\numberline {第6章}おわりに}{39}
-\contentsline {section}{\numberline {6.1}まとめ}{39}
-\contentsline {section}{\numberline {6.2}今後の展望と課題}{39}
-\contentsline {chapter}{謝辞}{40}
-\contentsline {chapter}{参考文献}{41}
+\contentsline {chapter}{\numberline {第3章}トレースログ可視化ツール TraceLogVisualizer の実装}{20}
+\contentsline {section}{\numberline {3.1}TraceLogVisualizerの全体像}{20}
+\contentsline {subsection}{\numberline {3.1.1}Json}{20}
+\contentsline {section}{\numberline {3.2}標準形式への変換}{23}
+\contentsline {subsection}{\numberline {3.2.1}トレースログファイル}{25}
+\contentsline {subsection}{\numberline {3.2.2}リソースヘッダファイル}{25}
+\contentsline {subsection}{\numberline {3.2.3}リソースファイル}{28}
+\contentsline {subsection}{\numberline {3.2.4}変換ルールファイル}{30}
+\contentsline {subsubsection}{置換マクロ}{32}
+\contentsline {section}{\numberline {3.3}図形データの生成}{34}
+\contentsline {subsection}{\numberline {3.3.1}可視化ルールファイル}{34}
+\contentsline {subsubsection}{図形の定義}{34}
+\contentsline {subsubsection}{可視化ルールの定義}{39}
+\contentsline {section}{\numberline {3.4}TraceLogVisualizerのその他の機能}{39}
+\contentsline {subsection}{\numberline {3.4.1}マーカー}{39}
+\contentsline {subsection}{\numberline {3.4.2}可視化表示部の制御}{40}
+\contentsline {subsection}{\numberline {3.4.3}マクロ表示}{40}
+\contentsline {subsection}{\numberline {3.4.4}トレースログのテキスト表示}{41}
+\contentsline {subsection}{\numberline {3.4.5}可視化表示項目の表示非表示切り替え}{41}
+\contentsline {chapter}{\numberline {第4章}トレースログ可視化ツール TraceLogVisualizer の利用}{42}
+\contentsline {section}{\numberline {4.1}トレースログの可視化}{42}
+\contentsline {subsection}{\numberline {4.1.1}シングルコアプロセッサ用RTOSのトレースログの可視化}{42}
+\contentsline {subsection}{\numberline {4.1.2}マルチコアプロセッサ用RTOS対応への拡張}{43}
+\contentsline {subsection}{\numberline {4.1.3}組み込みコンポーネントシステムの可視化}{43}
+\contentsline {section}{\numberline {4.2}可視化表示項目の追加・変更}{43}
+\contentsline {chapter}{\numberline {第5章}開発プロセス}{44}
+\contentsline {section}{\numberline {5.1}OJL}{44}
+\contentsline {subsection}{\numberline {5.1.1}フェーズ分割}{44}
+\contentsline {section}{\numberline {5.2}ユースケース駆動アジャイル開発}{44}
+\contentsline {subsection}{\numberline {5.2.1}プロジェクト管理}{44}
+\contentsline {subsection}{\numberline {5.2.2}設計}{44}
+\contentsline {subsection}{\numberline {5.2.3}テスト}{44}
+\contentsline {subsection}{\numberline {5.2.4}実装}{44}
+\contentsline {section}{\numberline {5.3}開発成果物}{44}
+\contentsline {chapter}{\numberline {第6章}おわりに}{45}
+\contentsline {section}{\numberline {6.1}まとめ}{45}
+\contentsline {section}{\numberline {6.2}今後の展望と課題}{45}
+\contentsline {chapter}{謝辞}{46}
+\contentsline {chapter}{参考文献}{47}
