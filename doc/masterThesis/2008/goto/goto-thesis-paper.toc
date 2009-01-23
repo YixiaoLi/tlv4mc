@@ -32,24 +32,29 @@
 \contentsline {subsubsection}{置換マクロ}{30}
 \contentsline {section}{\numberline {3.3}図形データの生成}{32}
 \contentsline {subsection}{\numberline {3.3.1}可視化ルールファイル}{32}
-\contentsline {section}{\numberline {3.4}TraceLogVisualizerの機能}{35}
-\contentsline {chapter}{\numberline {第4章}トレースログ可視化ツール TraceLogVisualizer の利用}{36}
-\contentsline {section}{\numberline {4.1}組み込みRTOSのトレースログの可視化}{36}
-\contentsline {subsection}{\numberline {4.1.1}シングルコアプロセッサ用RTOSのトレースログの可視化}{36}
-\contentsline {subsection}{\numberline {4.1.2}マルチコアプロセッサ用RTOS対応への拡張}{36}
-\contentsline {subsection}{\numberline {4.1.3}その他のシステムのトレースログの可視化}{36}
-\contentsline {section}{\numberline {4.2}可視化表示項目の追加・カスタマイズ}{36}
-\contentsline {chapter}{\numberline {第5章}開発プロセス}{37}
-\contentsline {section}{\numberline {5.1}OJL}{37}
-\contentsline {subsection}{\numberline {5.1.1}フェーズ分割}{37}
-\contentsline {section}{\numberline {5.2}ユースケース駆動アジャイル開発}{37}
-\contentsline {subsection}{\numberline {5.2.1}プロジェクト管理}{37}
-\contentsline {subsection}{\numberline {5.2.2}設計}{37}
-\contentsline {subsection}{\numberline {5.2.3}テスト}{37}
-\contentsline {subsection}{\numberline {5.2.4}実装}{37}
-\contentsline {section}{\numberline {5.3}開発成果物}{37}
-\contentsline {chapter}{\numberline {第6章}おわりに}{38}
-\contentsline {section}{\numberline {6.1}まとめ}{38}
-\contentsline {section}{\numberline {6.2}今後の展望と課題}{38}
-\contentsline {chapter}{謝辞}{39}
-\contentsline {chapter}{参考文献}{40}
+\contentsline {section}{\numberline {3.4}TraceLogVisualizerのその他の機能}{35}
+\contentsline {subsection}{\numberline {3.4.1}マーカー}{35}
+\contentsline {subsection}{\numberline {3.4.2}可視化表示部の制御}{35}
+\contentsline {subsection}{\numberline {3.4.3}マクロ表示}{36}
+\contentsline {subsection}{\numberline {3.4.4}トレースログのテキスト表示}{36}
+\contentsline {subsection}{\numberline {3.4.5}可視化表示項目の表示非表示切り替え}{36}
+\contentsline {chapter}{\numberline {第4章}トレースログ可視化ツール TraceLogVisualizer の利用}{37}
+\contentsline {section}{\numberline {4.1}組み込みRTOSのトレースログの可視化}{37}
+\contentsline {subsection}{\numberline {4.1.1}シングルコアプロセッサ用RTOSのトレースログの可視化}{37}
+\contentsline {subsection}{\numberline {4.1.2}マルチコアプロセッサ用RTOS対応への拡張}{37}
+\contentsline {subsection}{\numberline {4.1.3}その他のシステムのトレースログの可視化}{37}
+\contentsline {section}{\numberline {4.2}可視化表示項目の追加・変更}{37}
+\contentsline {chapter}{\numberline {第5章}開発プロセス}{38}
+\contentsline {section}{\numberline {5.1}OJL}{38}
+\contentsline {subsection}{\numberline {5.1.1}フェーズ分割}{38}
+\contentsline {section}{\numberline {5.2}ユースケース駆動アジャイル開発}{38}
+\contentsline {subsection}{\numberline {5.2.1}プロジェクト管理}{38}
+\contentsline {subsection}{\numberline {5.2.2}設計}{38}
+\contentsline {subsection}{\numberline {5.2.3}テスト}{38}
+\contentsline {subsection}{\numberline {5.2.4}実装}{38}
+\contentsline {section}{\numberline {5.3}開発成果物}{38}
+\contentsline {chapter}{\numberline {第6章}おわりに}{39}
+\contentsline {section}{\numberline {6.1}まとめ}{39}
+\contentsline {section}{\numberline {6.2}今後の展望と課題}{39}
+\contentsline {chapter}{謝辞}{40}
+\contentsline {chapter}{参考文献}{41}
