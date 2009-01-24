@@ -274,6 +274,15 @@ TLVにおいて，トレースログの可視化表現とは，x軸を時系列�
 図形群とそのマッピング対象であるイベント期間を構成要素としてもつ構造体を可視化ルールと呼称する．
 
 図\ref{fig:timeShape}に，標準形式トレースログを用いてイベント期間を定義した可視化ルールの例を示す．
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.9]{img/timeShape.eps}
+\caption{可視化ルール}
+\label{fig:timeShape}
+\end{center}
+\end{figure}
+
 ここで，runningShapeを位置がローカル座標の原点，大きさがワールド座標系のマッピング領域に対して横幅100\%，縦幅80\%の長方形で色が緑色の図形とする．
 この図形を，開始イベント\verb|MAIN_TASK.state=RUNNING|，終了イベント\verb|MAIN_TASK.state|となるイベント期間で表示するよう定義したものが可視化ルールtaskBecomeRunningである．
 開始イベント\verb|MAIN_TASK.state=RUNNING|は，リソース\verb|MAIN_TASK|の属性\verb|state|の値が\verb|RUNNING|になったことを表し，終了イベント\verb|MAIN_TASK.state|は，リソース\verb|MAIN_TASK|の属性\verb|state|の値が単に変わったことを表している．
@@ -284,12 +293,3 @@ taskBecomeRunningを以下のトレースログからイベントを抽出して
 [1000]MAIN_TASK.state=RUNNING
 [1100]MAIN_TASK.state=WAITING
 \end{FileNoTitle}
-\vfill
-\begin{figure}[h]
-\begin{center}
-\includegraphics[scale=0.9]{img/timeShape.eps}
-\caption{可視化ルール}
-\label{fig:timeShape}
-\end{center}
-\end{figure}
-．

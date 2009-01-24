@@ -142,19 +142,19 @@ Digit1-9 = /[1-9]/;
 １つの置換ルールに対して複数の標準形式トレースログを出力可能である．
 また，所望の標準形式トレースログに変換する際，トレースログファイルの情報だけでは足りない場合がある．
 例として，TOPPERS/ASPカーネルというRTOSのトレースログを標準形式トレースログに変換することを考えてみる．
-TOPPERS/ASPカーネルのトレースログの例を次に示す．
+TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示す．
 
-\begin{File}{変換元となるTOPPERS/ASPカーネルのトレースログの例}{aspSample}
+\begin{File}{変換元となるTOPPERS/ASPカーネルのトレースログの例}{aspLogSample}
 [1000]task 1 becomes RUNNABLE
 [1005]dispatch to task 1.
 [1100]task 1 becomes WAITING
 \end{File}
 
 上記のトレースログの内容を簡単に説明すると，時刻1000にタスクIDが1のタスクの状態がRUNNABLEになり，時刻1005に同タスクがディスパッチされ，時刻1100に同タスクの状態がWAITINGになったことを示している．
-この場合，標準形式トレースログは次のように出力されることが要求される．
+この場合，標準形式トレースログは表\ref{aspStandartLogSample}のように出力されることが要求される．
 なお，説明のため簡略化しており，実際の変換結果とは異なる．
 
-\begin{File}{表\ref{aspSample}を標準形式トレースログで表現した例}{aspSample}
+\begin{File}{表\ref{aspLogSample}を標準形式トレースログで表現した例}{aspStandartLogSample}
 [1000]Task(id==1).activate()
 [1000]Task(id==1).state = RUNNABLE
 [1005]Task(state==RUNNING).state=RUNNABLE
@@ -709,13 +709,19 @@ ff0000
 図形データの生成方法は，標準形式トレースログを一行ずつ可視化ルールのイベント期間と一致するか判断し，一致した場合にその可視化ルールの表示期間をワールド変換先の領域として採用しワールド変換することで行われる．
 
 \subsection{可視化ルールファイル}
+\label{visualizeRuleSection}
 可視化ルールファイルには，可視化ルールと，図形の定義を記述する．
-図形の定義は，\ref{subsec:visualization}小節にて述べた抽象化した図形を形式化したものである．
 
 可視化ルールファイルは，1つのオブジェクトで構成され，オブジェクトのメンバにターゲット毎の変換ルールを記述する．
 メンバ名にターゲット名を記述し，値としてオブジェクトを与え，そのオブジェクトに可視化ルールと図形の定義を記述する．
 
 \subsubsection{図形の定義}
+
+図形の定義は，\ref{subsec:visualization}小節にて述べた抽象化した図形を形式化したものである．
+
+図形の定義は{\tt Shapes}というメンバ名の値にオブジェクトとして記述する．
+このオブジェクトのメンバ名には図形の名前を記述する．
+そして，その値に図形の定義を基本図形の定義の配列として与える．
 
 以下に{\tt toppers}をターゲットとする図形を定義した例を示す．
 例では，{\tt runningShapes}と{\tt runnableShapes}，{\tt svcShapes}の3つの図形を定義している．
@@ -766,10 +772,6 @@ ff0000
 }
 \end{File}
 
-図形の定義は{\tt Shapes}というメンバ名の値にオブジェクトとして記述する．
-このオブジェクトのメンバ名には図形の名前を記述する．
-そして，その値に図形の定義を基本図形の定義の配列として与える．
-
 基本図形の定義に用いるメンバは，基本図形の形状により異なる．
 すべての形状に共通なメンバの説明を以下に示す．
 
@@ -791,7 +793,7 @@ ff0000
     \item[値] サイズ指定形式の文字列
     \end{description}
 }{\samepage
-\item[\texttt{Location}] \mbox{}
+\item[\texttt{Location}] \mbox{} 
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
@@ -858,7 +860,7 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
 楕円形や扇形はこの描画領域の中心を円の中心として描かれる．
 
 図の形状が線分({\tt Line})，矢印({\tt Arrow})のときは始点と終点，多角形({\tt Polygon})は各頂点を{\tt Points}というメンバを使い座標を指定する．
-{\tt Points}の説明は次の通り．
+{\tt Points}の説明を以下に述べる．
 
 \begin{description}
 {\nopagebreak
@@ -873,7 +875,7 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
 \end{description}
 
 図の形状が扇形({\tt Pie})のとき，扇形の開始角度，開口角度を{\tt Arc}というメンバを用いて定義する．
-{\tt Arc}の説明は次の通り．
+{\tt Arc}の説明を以下に述べる．
 
 \begin{description}
 {\nopagebreak
@@ -888,7 +890,7 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
 \end{description}
 
 図の形状が文字列({\tt Text})の場合，{\tt Text}というメンバで描画する文字列を，{\tt Font}でフォントの設定を指定できる．
-{\tt Text}の説明は次の通り．
+{\tt Text}の説明を以下に述べる．
 
 \begin{description}
 {\nopagebreak
@@ -962,7 +964,7 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
 \end{description}
 
 図の形状が文字列({\tt Text})以外の場合，{\tt Fill}というメンバで塗りつぶしの色，{\tt Alpha}で塗りつぶしの透明度，{\tt Pen}で図形の縁取り線を指定できる．
-これらの説明は次の通り．
+これらの説明を以下に述べる．
 
 \begin{description}
 {\nopagebreak
@@ -1027,9 +1029,182 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
     \end{description}
 \end{description}
 
+\ref{subsec:visualization}小節において，図形を参照する際に引数を与えることができ，任意の属性に引数の値を割り当てることが出来ると述べた．
+そのため，与えられた引数は，"{\tt ARG}{\it n}"で参照できることとした．
+
+表\ref{shapeSample}において，図形{\tt svcShapes}は3つの基本図形(四角形，文字列，文字列)で構成されており，四角形の{\tt Pen}の{\tt Color}と{\tt Fill}が"\verb|${ARG0}|"，文字列のそれぞれの{\tt Text}が"\verb|${ARG1}|"，"\verb|${ARG2}|"となっている．
+これは，図形{\tt svcShapes}が3つの引数をもつことを示している．
+たとえば，可視化ルールにおいて図形{\tt svcShapes}を参照する場合は，\verb|svcShapes(ff0000,act_tsk,ercd=0)|のように記述する．
+この場合，1つ目の引数として"{\tt ff0000}"，2つ目の引数として"{\tt act\_tsk}"，3つ目の引数として"{\tt ercd=0}"を与えており，それぞれが．\verb|${ARG0}|，\verb|${ARG1}|，\verb|${ARG2}|と置き換えられる．
+引数をとらない図形を参照する場合は，図形の名前のみで参照できる．
+
+このように，図形に引数を与えることで，図形の属性を外部から指定できるようになり，属性違いのために組み合わせ毎に図形を多量に定義しなければならないような状況を避けることが出来る．
+
 \subsubsection{可視化ルールの定義}
 
-あ
+可視化ルールの定義は，\ref{subsec:visualization}小節にて述べた可視化ルールを形式化したものである．
+
+可視化ルールの定義は{\tt VisualizeRules}というメンバ名の値にオブジェクトとして記述する．
+このオブジェクトのメンバ名には可視化ルールの名前を記述する．
+そして，その値に可視化ルールの定義を記述する．
+
+表\ref{shapeSample}に{\tt toppers}をターゲットとする可視化ルールを定義した例を示す．
+例では，{\tt taskStateChange}と{\tt callSvc}の2つの可視化ルールを定義している．
+
+{\begin{table}[!h]
+\footnotesize
+\bkcounttrue
+\begin{breakbox}
+\setlength{\baselineskip}{\normalbaselineskip}
+\begin{verbatim}
+{
+  "toppers":{
+    "VisualizeRules":{
+      "taskStateChange":{
+        "DisplayName":"状態遷移",
+        "Target":"Task",
+        "Shapes":{
+          "stateChangeEvent":{
+            "DisplayName":"状態",
+            "From":"${TARGET}.state",
+            "To"  :"${TARGET}.state",
+            "Figures":{
+              "${FROM_VAL}==RUNNING" :"runningShapes",
+              "${FROM_VAL}==RUNNABLE":"runnableShapes"
+            }
+          },
+          "activateHappenEvent":{
+            "DisplayName":"起動",
+            "When"   :"${TARGET}.activate()",
+            "Figures":"activateShapes"
+          }
+        }
+      },
+      "callSvc":{
+        "DisplayName":"システムコール",
+        "Target":"Task",
+        "Shapes":{
+          "callSvcEvent":{
+            "DisplayName":"システムコール",
+            "From":"${TARGET}.enterSVC()",
+            "To"  :"${TARGET}.leaveSVC(${FROM_ARG0})",
+            "Figures":{
+              "${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk"
+                :"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})",
+              "${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk"
+                :"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+\end{verbatim}
+\end{breakbox}
+\caption{可視化ルールファイルで可視化ルールを定義した例}
+\label{visualizeRuleSample}
+\end{table}}
+
+可視化ルールの定義に用いるメンバは{\tt DisplayName}，{\tt Target}，{\tt Shapes}である．
+これらについて，以下に詳述する．
+
+\begin{description}
+{\nopagebreak
+\item[\texttt{DisplayName}] \mbox{}
+    \vspace{-1zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5\itemsep}
+    \item[説明] 可視化ルールの表示名．省略した場合は可視化ルールの名前になる
+    \item[値] 文字列
+    \end{description}
+}{\nopagebreak
+\item[\texttt{Target}] \mbox{}
+    \vspace{-1zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5\itemsep}
+    \item[説明] 可視化ルールを適用するリソースタイプ
+    \item[値] 文字列
+    \end{description}
+}{\nopagebreak
+\item[\texttt{Shapes}] \mbox{}
+    \vspace{-1zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5\itemsep}
+    \item[説明] 図形群の定義を記述する
+    \item[値] オブジェクト．メンバ名に図形群の名前，メンバの値として図形群の定義をオブジェクトとして与える．その際，以下のメンバが使える
+    
+        \begin{description}
+        {\samepage
+        \item[\texttt{DisplayName}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 図形群の表示名．省略した場合は図形群の名前になる
+            \item[値] 文字列
+            \end{description}
+        }{\nopagebreak
+        \item[\texttt{From}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 図形群を構成する図形のワールド変換に適用される開始イベント
+            \item[値] イベント指定形式文字列
+            \end{description}
+        }{\nopagebreak
+        \item[\texttt{To}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 図形群を構成する図形のワールド変換に適用される終了イベント
+            \item[値] 標準形式トレースログの形式の文字列
+            \end{description}
+        }{\nopagebreak
+        \item[\texttt{When}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 図形群を構成する図形のワールド変換に適用されるイベント．開始時刻と終了時刻が同じ場合に用いる
+            \item[値] イベント指定形式文字列
+            \end{description}
+        }{\nopagebreak
+        \item[\texttt{Figures}]  \mbox{}
+            \vspace{-0.25zw}
+            \begin{description}
+            \setlength{\itemsep}{-1.5\itemsep}
+            \item[説明] 図形群を構成する図形の定義
+            \item[値] 文字列，配列，オブジェクトのいずれか．文字列の場合は図形の参照，オブジェクトの場合はメンバ名に条件，値に図形の参照を記述する．配列の要素には，これら文字列かオブジェクトを記述出来る．オブジェクトと配列はネストして記述することが出来る．
+            \end{description}
+        }
+        \end{description}
+    
+    \end{description}
+}
+\end{description}
+
+可視化ルールのイベント期間の指定には，イベント期間として適用するトレースログを，条件として必要な情報を標準形式トレースログの形式で記述する．
+
+たとえば，リソースの属性が変わったときをイベント期間に指定したいときは，標準形式トレースログの形式で属性名まで記述すればよい．
+また，属性の値が特定の値に変わったときをイベント期間に指定したいときは，標準形式トレースログの形式で値まで記述すればよい．
+
+リソースの振る舞いをイベント期間として指定したい場合は，標準形式トレースログの形式で振る舞い名と"{\tt ()}"を記述すればよく，特定の引数をとるときに条件を絞りたいときはその引数を"{\tt ()}"内に記述すればよい．
+
+イベント期間の指定でリソースを指定する際，{\tt Target}指定がしてある場合は，\verb|${TARGET}|という置換マクロで，リソースファイルで定義したリソースタイプ{\tt Target}の各リソースの名前に適時置換することが出来る．
+
+表\ref{shapeSample}の{\tt taskStateChange}を例に説明する．
+{\tt Target}には{\tt Task}が指定してある．
+このとき，リソースファイルにリソースタイプ{\tt Task}のリソースとして{\tt Task1}，{\tt Task2}，{\tt Task3}が定義してある場合は，{\tt From}と{\tt To}の\verb|${TARGET}|はこれらのリソース名に置換され，{\tt Task1.state}，{\tt Task2.state}，{\tt Task3.state}となる．
+
+{\tt Target}指定がないとき，{\tt To}を指定する際に{\tt From}で一致したトレースログのリソースを指定したい場合は，置換マクロ\verb|${FROM_TARGET}|を記述すればよい．
+また，{\tt From}で属性値の変化イベントを指定したとき，{\tt From}で一致したトレースログの属性の値を{\tt To}で指定したいときは置換マクロ\verb|${FROM_VAL}|を記述すればよい．
+同じように，{\tt From}で振る舞いの発生イベントを指定したとき，{\tt From}で一致したトレースログの振る舞いの引数を{\tt To}で指定したいときは置換マクロ\verb|${FROM_ARG|{\it n}\verb|}|を記述すればよい．
+{\it n}には何番目の引数かを0からで記述する．
+
+これらの置換マクロは図形の参照を記述する際にも利用できる．
+{\tt To}で一致したトレースログの属性値変化の値は\verb|${TO_VAL}|，振る舞いの引数は\verb|${TO_ARG|{\it n}\verb|}|という置換マクロで指定できる．
+また，{\tt Target}指定がないときに{\tt To}で一致したトレースログのリソースを指定したいときは置換マクロ\verb|${TO_TARGET}|を用いればよい．
+イベント期間指定が{\tt When}のときは，一致したトレースログのリソースを\verb|${TARGET}|，属性の値を\verb|${VAL}|，振る舞いの引数を\verb|${ARG|{\it n}\verb|}|で指定する．
+
 
 \section{TraceLogVisualizerのその他の機能}
 
