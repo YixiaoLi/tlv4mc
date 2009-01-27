@@ -7,13 +7,13 @@ TLVの主機能は，2つの主たるプロセスと6種の外部ファイルに
 
 2つの主たるプロセスとは，標準形式への変換と，図形データの生成である．
 標準形式への変換は，任意の形式をもつトレースログを標準形式トレースログに変換する処理である．
-この処理には外部ファイルとして変換元のトレースログファイル，リソースを定義したリソースファイル，リソースタイプを定義したリソースヘッダファイル，標準形式トレースログへの変換ルールを定義した変換ルールファイルが読み込まれる．
+この処理には，外部ファイルとして変換元のトレースログファイル，リソースを定義したリソースファイル，リソースタイプを定義したリソースヘッダファイル，標準形式トレースログへの変換ルールを定義した変換ルールファイルが読み込まれる．
 
 また，図形データの生成は，変換した標準形式トレースログに対して可視化ルールを適用し図形データを生成する処理である．
 この処理には外部ファイルとして可視化ルールファイルが読み込まれる．
 可視化ルールファイルとは図形と可視化ルールの定義を記述したファイルである．
 
-TLVは，トレースログとリソースファイルを読み込み，ターゲットに対応したリソースヘッダファイル，変換ルールファイルの定義に従い，標準形式トレースログを生成する．
+TLVは，トレースログとリソースファイルを読み込み，トレースログの対象に対応したリソースヘッダファイル，変換ルールファイルの定義に従い，標準形式トレースログを生成する．
 生成された標準形式トレースログに可視化ルールファイルで定義される可視化ルールを適用し図形データを生成した後，画面に表示する．
 
 
@@ -36,8 +36,8 @@ Jsonは，主にウェブブラウザなどで使用されるECMA-262，revision
 JsonはUnicodeのテキストデータで構成され，バイナリデータを扱うことは出来ない．
 また，Jsonではシンタックスのみの規定がなされ，セマンティクスは規定されていない．
 
-Jsonの特徴はシンタックスが単純であることである．
-これは，人間にとっても読み書きし易く，コンピュータにとってもパースし易いことを意味する．
+Jsonの特徴は，シンタックスが単純であることである．
+これは，人間にとっても読み書きし易く，コンピュータにとっても解析し易いことを意味する．
 また，複数のプログラミング言語でJsonファイルを扱うライブラリが実装されており，異なる言語間のデータ受け渡しに最適である．
 Jsonが利用可能なプログラミング言語としては，ActionScript, C, C++, C\#, ColdFusion, Common Lisp, Curl, D言語, Delphi, E, Erlang, Haskell, Java, JavaScript (ECMAScript), Lisp, Lua, ML, Objective CAML, Perl, PHP, Python, Rebol, Ruby, Scala, Squeakなどがある．
 
@@ -57,7 +57,7 @@ Jsonで表現するデータ型は以下のとおりであり，これらを組�
 
 Jsonの文法をEBNFと正規表現を用いて説明する．
 
-Jsonはオブジェクトか配列で構成される．
+Jsonは，次に示すようにオブジェクトか配列で構成される．
 
 \begin{EBNF}
 JsonText = Object | Array;
@@ -65,22 +65,25 @@ JsonText = Object | Array;
 
 オブジェクトは複数のメンバをカンマで区切り，中括弧で囲んで表現する．
 メンバは名前と値で構成され，名前のあとにはセミコロンが付く．
-メンバの名前は文字列である．
+メンバの名前は値であり，データ型は文字列である．
+オブジェクトの定義を次に示す．
 
 \begin{EBNF}
 Object = "{",Member,[{",",Member}],"}";
 Member = String,":",Value;
 \end{EBNF}
 
-配列は複数の値をコンマで区切り，角括弧で囲んで表現する．
+配列は複数の値を持つ順序付きリストであり，値をコンマで区切り，角括弧で囲んで表現する．
+次に配列の定義を示す．
 
 \begin{EBNF}
 Array = "[",Value,[{",",Value}],"]";
 \end{EBNF}
 
-値は文字列，数値，オブジェクト，配列，真偽値，nullのいずれかである．
+値は，文字列，数値，オブジェクト，配列，真偽値，nullのいずれかである．
 文字列はダブルクオーテーションで囲まれたUnicode列である．
 数値は10進法表記であり，指数表記も可能である．
+値の定義を次に示す．
 
 \begin{EBNF}
 Value = String|Number|Object|Array|Boolean|"null";
@@ -92,9 +95,9 @@ Digit = /[0-9]+/;
 Digit1-9 = /[1-9]/;
 \end{EBNF}
 
-以下にJsonにおけるオブジェクトの例を示す．
+表\ref{JsonObject}にJsonにおけるオブジェクトを定義した例を示す．
 
-\begin{File}{Jsonにおけるオブジェクトの例}{JsonObject}
+\begin{FileToPage}{Jsonにおけるオブジェクトを定義した例}{JsonObject}
 {
   "Image":{
     "Width":  800,
@@ -108,11 +111,11 @@ Digit1-9 = /[1-9]/;
     "IDs": [116, 943, 234, 38793]
   }
 }
-\end{File}
+\end{FileToPage}
 
-以下にJsonにおける配列の例を示す．
+表\ref{JsonArray}にJsonにおける配列を定義した例を示す．
 
-\begin{File}{Jsonにおける配列の例}{JsonArray}
+\begin{FileToPage}{Jsonにおける配列を定義した例}{JsonArray}
 [
   {
     "City":      "SAN FRANCISCO",
@@ -133,15 +136,15 @@ Digit1-9 = /[1-9]/;
     "Country":   "US"
   }
 ]
-\end{File}
+\end{FileToPage}
 
 \section{標準形式への変換}
 
 標準形式トレースログへの変換は，トレースログファイルを先頭から行単位で読み込み，変換ルールファイルで定義される置換ルールに従い標準形式トレースログに置換していくことで行われる．変換ルールファイルの詳細は\ref{subsec:cnvFile}小節で説明する．
 
 １つの置換ルールに対して複数の標準形式トレースログを出力可能である．
-また，所望の標準形式トレースログに変換する際，トレースログファイルの情報だけでは足りない場合がある．
-例として，TOPPERS/ASPカーネルというRTOSのトレースログを標準形式トレースログに変換することを考えてみる．
+しかし，所望の標準形式トレースログに変換する際，トレースログファイルの情報だけでは足りない場合がある．
+例として，TOPPERS/ASPカーネル\cite{TOPPERS}というRTOSのトレースログを標準形式トレースログに変換することを考えてみる．
 TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示す．
 
 \begin{File}{変換元となるTOPPERS/ASPカーネルのトレースログの例}{aspLogSample}
@@ -150,7 +153,7 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 [1100]task 1 becomes WAITING
 \end{File}
 
-上記のトレースログの内容を簡単に説明すると，時刻1000にタスクIDが1のタスクの状態がRUNNABLEになり，時刻1005に同タスクがディスパッチされ，時刻1100に同タスクの状態がWAITINGになったことを示している．
+表\ref{aspLogSample}のトレースログの内容を簡単に説明すると，時刻1000にタスクIDが1のタスクの状態がRUNNABLEになり，時刻1005に同タスクがディスパッチされ，時刻1100に同タスクの状態がWAITINGになったことを示している．
 この場合，標準形式トレースログは表\ref{aspStandartLogSample}のように出力されることが要求される．
 なお，説明のため簡略化しており，実際の変換結果とは異なる．
 
@@ -162,21 +165,22 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 [1100]Task(id==1).state = WAITING
 \end{File}
 
-元のトレースログが3行なのに対し，要求される標準形式トレースログは５行となっている．
-これは，標準形式トレースログの1行目と3行目が状況により追加される必要があるからである．
-標準形式トレースログの1行目は，元のトレースログの1行目に対応しており，起動(\verb|activate()|)というタスクの振る舞いを可視化したいという要求があるため追加される必要がある．
-また，標準形式トレースログの3行目は，元のトレースログの2行目に対応しており，すでに起動しているタスクがプリエンプトされて状態がRUNNABLEになるという情報が元のトレースログに存在しないため追加される必要がある．
+表\ref{aspLogSample}で示す元のトレースログが3行なのに対し，表\ref{aspStandartLogSample}で示す要求される標準形式トレースログは５行となっている．
+これは，表\ref{aspStandartLogSample}の1行目と3行目が状況により追加されるからである．
+表\ref{aspStandartLogSample}の1行目は，表\ref{aspLogSample}の1行目に対応しており，起動(\verb|activate()|)というタスクの振る舞いを可視化したいという要求があるため追加される必要がある．
+また，表\ref{aspStandartLogSample}の3行目は，表\ref{aspLogSample}の2行目に対応しており，すでに起動しているタスクが横取りされて状態がRUNNABLEになる，という情報が元のトレースログに存在しないため，追加される必要がある．
+
 しかしながら，これら標準形式トレースログの追加が必要になるのは一定の条件下のみである．
-標準形式トレースログの1行目は，タスクIDが1のタスクの状態が，時刻1000未満のときにDORMANTである場合だけである．
+表\ref{aspStandartLogSample}の1行目は，タスクIDが1のタスクの状態が，時刻1000未満のときにDORMANTである場合だけである．
 これは，起動という状態遷移を行うのが状態がDORMANTからRUNNABLEに遷移するときだけであり，状態がDORMANTになっただけでは起動であるのかどうか判断出来ないためである．
-また，標準形式トレースログの3行目が必要なときは，時刻1005のときに状態がRUNNINGのタスクが存在する場合だけである．
+また，表\ref{aspStandartLogSample}の3行目が必要なときは，時刻1005のときに状態がRUNNINGのタスクが存在する場合だけである．
 
 このように，リソース属性の遷移に伴うイベントや，元のトレースログに欠落している情報を補うイベントなど，元のトレースログの情報だけでは判断出来ないイベントを出力するには，特定時刻における特定リソースの有無やその数，特定リソースの属性の値などの条件で出力を制御出来る必要がある．
 そのため，TLVの変換ルールでは，置換する条件の指定と，条件指定の際に用いる情報を置換マクロを用いて取得できる仕組みを提供した．
 具体的な記述例は\ref{subsec:cnvFile}小節で述べる．
 
 標準形式トレースログに含まれるリソースは，リソースファイルで定義されていなければならない．
-リソースファイルには，各リソースについてその名前とリソースタイプ，必要であれば各属性の初期値を定義する．
+リソースファイルには，各リソースについて，その名前とリソースタイプ，必要であれば各属性の初期値を定義する．
 リソースファイルの詳細については\ref{subsec:resFile}小節で述べる．
 また，その際に使用されるリソースタイプはリソースヘッダファイルで定義されていなければならない．
 リソースヘッダファイルには各リソースタイプについて，その名前と属性，振る舞いの定義を記述する．
@@ -193,7 +197,7 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 
 任意のトレースログファイルを標準形式トレースログに変換するには，ターゲットとなるトレースログの形式毎に変換ルールファイルを用意する必要がある．
 
-以下に，RTOSであるTOPPERS/ASPカーネルのトレースログの例を示す．
+表\ref{aspTraceLog}に，RTOSであるTOPPERS/ASPカーネルのトレースログの例を示す．
 
 \begin{File}{TOPPERS/ASPカーネルのトレースログの例}{aspTraceLog}
 [11005239]: task 4 becomes RUNNABLE.
@@ -219,7 +223,7 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 リソースヘッダは可視化するターゲット毎にリソースタイプを定義することが出来る．
 つまり，タスクを表すリソースタイプ\verb|Task|を定義する際に，ターゲットとなるRTOS毎に属性の内容を変えたい場合，RTOS毎にリソースタイプ\verb|Task|を定義することが出来る．
 
-以下に，ターゲット\verb|fmp|のリソースタイプ\verb|Task|を定義したリソースヘッダファイルの例を示す．
+表\ref{resourceHeaderSample}に，ターゲット\verb|fmp|のリソースタイプ\verb|Task|を定義したリソースヘッダファイルの例を示す．
 
 \begin{File}{リソースヘッダファイルの例}{resourceHeaderSample}
 {
@@ -354,11 +358,11 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 \subsection{リソースファイル}
 \label{subsec:resFile}
 
-リソースファイルには，主に標準形式トレースログに登場するリソースの定義を記述する．
-また，他にも時間の単位や時間の基数，適用する標準形式変換ルール、リソースヘッダ、可視化ルールを定義する．
+リソースファイルには，主に，標準形式トレースログに登場するリソースの定義を記述する．
+他にも，時間の単位や時間の基数，適用する変換ルール、リソースヘッダ、可視化ルールを定義する．
 リソースの定義には，名前とリソースタイプ，必要があれば属性の初期値を記述する．
 
-以下にリソースファイルの例を示す．
+表\ref{resourceSample}にリソースファイルの例を示す．
 
 \begin{File}{リソースファイルの例}{resourceSample}
 {
@@ -427,7 +431,9 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
     \item[説明] 適用する変換ルールのターゲット．複数のターゲットを指定可能
     \item[値] 文字列の配列
     \end{description}
-}{\nopagebreak
+}
+\clearpage
+{\nopagebreak
 \item[\texttt{VisualizeRules}] \mbox{}
     \vspace{-1zw}
     \begin{description}
@@ -485,7 +491,7 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 \label{subsec:cnvFile}
 
 変換ルールファイルには，ターゲットとなるトレースログを標準形式トレースログに変換するためのルールが記述される．
-以下に，変換ルールファイルの例を示す．
+表\ref{convertRuleFileSample}に，変換ルールファイルの例を示す．
 
 \begin{table}[h]
 {\scriptsize
@@ -540,7 +546,7 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 また，値としてオブジェクトを記述することで，そのメンバ名に出力する条件を記述し，値に出力する標準形式トレースログを記述すれば，条件が真のときのみ出力するように定義できる．
 また，このときの配列やオブジェクトはネストして記述することが出来る．
 
-例を用いて具体的な説明を行う．
+表\ref{convertRuleFileSample}の例を用いて具体的な説明を行う．
 3行目，13行目，22行目，26行目が検索するトレースログの正規表現である．
 これらの正規表現に一致するトレースログが見つかったとき，対応する値の標準形式トレースログが出力される．
 3行目，13行目の正規表現に一致した場合は，標準形式トレースログが配列として与えられていて，複数の標準形式トレースログを出力する可能性がある．
@@ -562,11 +568,12 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 {\nopagebreak
 \noindent
 \verb|$EXIST{|\textit{resource}\verb|}|
-\vspace{-1zw}
+\vspace{-0.75zw}
 \begin{quote}
 指定されたリソース{\it resource}が存在すれば{\tt true}，存在しなければ{\tt false}に置換される．
 リソースがリソース名ではなく，リソースタイプと属性の条件で記述されることを想定している．
 
+\vspace{-1zw}
 \begin{description}
 \item[例] 時刻1000に属性{\tt state}の値が{\tt RUNNING}であるリソースタイプ{\tt Task}のリソースが存在する場合
 
@@ -585,11 +592,12 @@ true
 {\nopagebreak
 \noindent
 \verb|$COUNT{|\textit{resource}\verb|}|
-\vspace{-1zw}
+\vspace{-0.75zw}
 \begin{quote}
 指定されたリソース{\it resource}の数に置換される．
 リソースがリソース名ではなく，リソースタイプと属性の条件で記述されることを想定している．
 
+\vspace{-1zw}
 \begin{description}
 \item[例] 時刻1000に属性{\tt state}の値が{\tt WAITING}であるリソースタイプ{\tt Task}のリソースが3つ存在する場合
 
@@ -608,11 +616,12 @@ $COUNT{[1000]Task(state==WAITING)}
 {\nopagebreak
 \noindent
 \verb|$ATTR{|\textit{attribute}\verb|}|
-\vspace{-1zw}
+\vspace{-0.75zw}
 \begin{quote}
 指定された属性{\it attribute}の値に置換される．
 リソースをリソースタイプと属性の条件で記述する場合は，条件に一致するリソースが1つになるようにしなければならない．
 
+\vspace{-1zw}
 \begin{description}
 \item[例] 時刻1000にリソース{\tt MAIN\_TASK}の属性{\tt state}の値が{\tt WAITING}である場合
 
@@ -631,7 +640,7 @@ WAITING
 {\nopagebreak
 \noindent
 \verb|$RES_NAME{|\textit{resource}\verb|}|
-\vspace{-1zw}
+\vspace{-0.5zw}
 \begin{quote}
 指定されたリソース{\it resource}の名前に置換される．
 リソースをリソースタイプと属性の条件で記述する場合は，条件に一致するリソースが1つになるようにしなければならない．
@@ -654,7 +663,7 @@ MAIN_TASK
 {\nopagebreak
 \noindent
 \verb|$RES_DISPLAYNAME{|\textit{resource}\verb|}|
-\vspace{-1zw}
+\vspace{-0.5zw}
 \begin{quote}
 指定されたリソース{\it resource}の表示名に置換される．
 リソースの表示名はリソースファイルで定義される．
@@ -678,7 +687,7 @@ $RES_DISPLAYNAME{Task(id==1)}
 {\nopagebreak
 \noindent
 \verb|$RES_COLOR{|\textit{resource}\verb|}|
-\vspace{-1zw}
+\vspace{-0.5zw}
 \begin{quote}
 指定されたリソース{\it resource}の色に置換される．
 リソースの色はリソースファイルで定義される．
@@ -723,7 +732,7 @@ ff0000
 このオブジェクトのメンバ名には図形の名前を記述する．
 そして，その値に図形の定義を基本図形の定義の配列として与える．
 
-以下に{\tt toppers}をターゲットとする図形を定義した例を示す．
+表\ref{shapeSample}に{\tt toppers}をターゲットとする図形を定義した例を示す．
 例では，{\tt runningShapes}と{\tt runnableShapes}，{\tt svcShapes}の3つの図形を定義している．
 {\tt runningShapes}と{\tt runnableShapes}は1つの基本図形で構成され，{\tt svcShapes}は3つの基本図形から構成される．
 
@@ -800,7 +809,9 @@ ff0000
     \item[説明] 図形の位置．省略した場合，値は"\verb|0,0|"となる
     \item[値] 位置指定形式の文字列
     \end{description}
-}{\nopagebreak
+}
+\clearpage
+{\nopagebreak
 \item[\texttt{Area}] \mbox{}
     \vspace{-1zw}
     \begin{description}
@@ -918,7 +929,9 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
             \item[説明] 文字列の色．省略した場合，"{\tt 000000}"となる
             \item[値] 文字列．ARGBあるいはRGBを各8bitで表現したものを16進法表記で記述する．Aは透明度である．
             \end{description}
-        }{\nopagebreak
+        }
+        \vspace{-0.5zw}
+        {\nopagebreak
         \item[\texttt{Family}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
@@ -926,7 +939,9 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
             \item[説明] 文字のフォントを指定する．省略した場合，システムでSansSerifとして設定してあるフォント名になる
             \item[値] 文字列．システムにインストールされているフォント名でなければならない．
             \end{description}
-        }{\nopagebreak
+        }
+        \vspace{-0.5zw}
+        {\nopagebreak
         \item[\texttt{Style}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
@@ -975,7 +990,9 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
     \item[説明] 塗りつぶしの色．省略した場合，"{\tt ffffff}"となる
     \item[値] 文字列．ARGBまたはRGBを各8bitで表現したものを16進法表記で記述する．Aは透明度である．
     \end{description}
-}{\nopagebreak
+}
+\vspace{-1zw}
+{\nopagebreak
 \item[\texttt{Alpha}] \mbox{}
     \vspace{-1zw}
     \begin{description}
@@ -984,6 +1001,7 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
     \item[値] 数値．0～255の値
     \end{description}
 }
+\vspace{-1zw}
 \item[\texttt{Pen}] \mbox{}
     \vspace{-1zw}
     \begin{description}
@@ -1016,7 +1034,9 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
             \item[説明] 線の幅．省略した場合は，1となる
             \item[値] 数値
             \end{description}
-        }{\nopagebreak
+        }
+        \clearpage
+        {\nopagebreak
         \item[\texttt{DashStyle}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
@@ -1051,7 +1071,7 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
 表\ref{shapeSample}に{\tt toppers}をターゲットとする可視化ルールを定義した例を示す．
 例では，{\tt taskStateChange}と{\tt callSvc}の2つの可視化ルールを定義している．
 
-{\begin{table}[!h]
+{\begin{table}[p]
 \footnotesize
 \bkcounttrue
 \begin{breakbox}
@@ -1126,7 +1146,9 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
     \item[説明] 可視化ルールを適用するリソースタイプ
     \item[値] 文字列
     \end{description}
-}{\nopagebreak
+}
+\clearpage
+{\nopagebreak
 \item[\texttt{Shapes}] \mbox{}
     \vspace{-1zw}
     \begin{description}
@@ -1211,12 +1233,13 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
 本節では，標準形式変換と可視化データ生成の他にTLVが備える機能について詳述する．
 
 \subsection{マーカー}
-TLVでは，可視化表示部にマーカーと呼ぶ印を指定の時刻に配置することが出来る
-注目するべきイベントの発生時刻にマーカーを配置することで，理解の補助することが出来る．
+TLVでは，可視化表示部にマーカーと呼ぶ印を指定の時刻に配置することが出来る．
+注目するべきイベントの発生時刻にマーカーを配置することで，可視化表示内容の理解を補助することが出来る．
 
-マーカーとマーカーの間には，その間の時間が表示される．
+マーカーとマーカーの間には，その間の時間が表示されるので，ソフトウェアの計測を行うことが出来る．
+
 マーカーには名前を付けることができ，色の指定が可能である．
-また，マーカーはマウス操作で選択することができ，各種操作に利用される．
+また，マーカーはマウス操作で選択することができ，拡大縮小などの各種操作に利用される．
 
 マーカーは階層構造で管理し，階層ごとに表示の切り替え，マーカー間時間の表示などを行うことが出来る．
 

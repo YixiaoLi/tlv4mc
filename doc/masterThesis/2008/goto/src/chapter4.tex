@@ -373,7 +373,7 @@ TOPPERS/ASPカーネルでは，コンパイル過程において，タスクや
 
 図\ref{fig:rtosMakeProcess}に，TOPPERS/ASPカーネルにおけるトレースログファイルとリソースファイルの生成過程を示す．
 
-\begin{figure}[!h]
+\begin{figure}[tb]
 \begin{center}
 \includegraphics[scale=0.9]{img/rtosMakeProcess.eps}
 \caption{TOPPERS/ASPカーネルにおけるトレースログファイルとリソースファイルの生成過程}
@@ -385,7 +385,7 @@ TOPPERS/ASPカーネルでは，コンパイル過程において，タスクや
 
 TLVでTOPPERS/ASPカーネルのトレースログファイルと，リソースファイルを読み込み，可視化表示した実行結果のスクリーンショットを図\ref{fig:aspTLVscreenShot}に示す．
 
-\begin{figure}[!h]
+\begin{figure}[tb]
 \begin{center}
 \includegraphics[width=15cm]{img/aspTLVscreenShot.eps}
 \caption{TOPPERS/ASPカーネルのトレースログを可視化したTLV実行結果のスクリーンショット}
@@ -399,7 +399,7 @@ TLVでTOPPERS/ASPカーネルのトレースログファイルと，リソース
 \section{マルチコアプロセッサ用RTOS対応への拡張}
 
 前小節にて，シングルコアプロセッサ用RTOSである，TOPPERS/ASPカーネルのトレースログを可視化表示できることを確認した．
-本小節では，これを拡張し，マルチコアプロセッサ用RTOSである，TOPPERS/FMPカーネルのトレースログの可視化表示を試みる．
+本小節では，これを拡張し，マルチコアプロセッサ用RTOSである，TOPPERS/FMPカーネル\cite{TOPPERS}のトレースログの可視化表示を試みる．
 
 TOPPERS/FMPカーネルは，対称型(SMP)またはそれに近いマルチコアプロセッサに対応し，リアルタイム性と柔軟性を両立させたRTOSである．
 タスクに対してコア間を移動させるシステムコールを実装しており，アプリケーションレベルで負荷分散を実装することが出来る．
@@ -556,8 +556,264 @@ ASPカーネル用の可視化ルールファイルは，そのまま用いる�
 \end{figure}
 
 図\ref{fig:fmpTLVscreenShot}より，各タスクの所属プロセッサにより，背景の色が分けて表示されていることがわかる．
+以上の結果から，シングルコアプロセッサ用RTOSのトレースログの可視化に必要なファイルをそのまま利用し，マルチコアプロセッサ用RTOSのトレースログの可視化に必要な可視化ルールファイルを追加するだけで可視化表示項目の追加に対応できることを示し，拡張性があることを示せた．
 
 \section{組み込みコンポーネントシステムの可視化}
+
+本節では，これらRTOSのトレースログとは形式の異なるトレースログの可視化を行い，汎用性の確認を試みる．
+
+RTOSのトレースログとは形式の異なるトレースログとして，ここでは，組み込みコンポーネントシステムTECS(Toppers Embedded Component System)\cite{TOPPERS}のトレースログを採用した．
+
+組み込みコンポーネントシステムTECSとは，組み込みに適したソフトウェアの部品化の仕組みで，セルと呼ばれるコンポーネントのインスタンス同士を接続することでソフトウェアを構築する．
+
+セルは呼び口，受け口を持ち，それぞれシグニチャを持つ．
+同じシグニチャ同士の呼び口と受け口を接続することが出来る．
+シグニチャは関数ヘッダの集合で，複数の関数インターフェイスを持つ．
+図\ref{fig:tecsSample}にTECSのコンポーネント図を示す．
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[scale=0.8]{img/tecsSample.eps}
+\caption{TECSのコンポーネント図}
+\label{fig:tecsSample}
+\end{center}
+\end{figure}
+
+図\ref{fig:tecsSample}では，tMainComというセルタイプ(セルの型)のセルMainComの，sMainというシグネチャをもつ呼び口cMainと，セルタイプtSubComのセルSubComの，シグネチャsMainの受け口eMainを接続していることを示している．
+ここで，sMainに{\tt void print( [in,string]const char\_t *str )}という関数インターフェイスが定義してある場合，MainComの実装で{\tt cMain\_print("HelloWorld")}と記述すれば，接続されているSubComのeMainで実装されている{\tt print("HelloWorld")}が呼び出される．
+SubComを他のセルに切り替えることで，MainComで呼ぶ{\tt print}の実装を容易に変更することが出来る．
+
+\subsection{可視化表示する項目の決定}
+\label{subsec431}
+
+TECSのトレースログを可視化表示する項目として，セルの呼び出し関係を採用した．
+
+簡略化のため，セルがシグネチャのどの関数を呼んだかどうかは可視化せず，どのセルが，どのセルを，どのくらいの期間呼び出していたかを可視化表示するとする．
+セルの呼び出し関係の可視化表現として，図\ref{fig:tecsVisualize}のように描画することとした．
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[scale=0.8]{img/tecsVisualize.eps}
+\caption{セルの呼び出し関係の可視化表現例}
+\label{fig:tecsVisualize}
+\end{center}
+\end{figure}
+
+\subsection{リソースヘッダファイルの記述}
+
+セルをリソースタイプ{\tt Cell}としてリソースヘッダファイルに定義した．
+表\ref{tecsResh}にTECS用リソースヘッダファイルを示す．
+
+\begin{File}{TECS用リソースヘッダファイル}{tecsResh}
+{
+  "tecs":
+  {
+    "Cell":{
+      "DisplayName":"セル",
+      "Attributes":{
+        "active":{
+          "VariableType"  :"Boolean",
+          "DisplayName"   :"能動",
+          "AllocationType":"Dynamic",
+          "CanGrouping"   :false,
+          "Default"       :false
+        }
+      },
+      "Behaviors":{
+        "call":{
+          "Arguments" :{
+            "cellName":"String"
+          }
+        },
+        "callback":{
+          "Arguments" :{
+            "cellName":"String"
+          }
+        },
+        "called":{
+          "Arguments"   :{
+            "cellerName":"String"
+          }
+        },
+        "return":{
+          "Arguments" :{
+            "cellName":"String"
+          }
+        }
+      }
+    }
+  }
+}
+\end{File}
+
+属性として，能動セルかどうかを表す{\tt active}を定義した．
+振る舞いとして，セルの呼び出しを{\tt call}，呼び出し先からのリターンを{\tt callback}，セルが呼び出されるのを{\tt called}，呼び出し元へのリターンを{\tt return}として定義した．
+
+\subsection{変換ルールファイルの記述}
+
+TECSのトレースログの形式は表\ref{tecsTraceLog}の用になっている．
+
+\begin{table}[p]
+\begin{quote}
+\begin{breakbox}
+{\tt time=}{\it time}{\tt us }{\it caller}{\tt ->}{\it callee}{\tt .enter(}{\it ...}{\tt )}
+
+{\tt time=}{\it time}{\tt us }{\it caller}{\tt ->}{\it callee}{\tt .leave(}{\it ...}{\tt )}
+\end{breakbox}
+\caption{TECSのトレースログの形式}
+\label{tecsTraceLog}
+\end{quote}
+\end{table}
+
+{\it time}は時間であり，時間の単位はマイクロ秒である．
+{\it caller}は呼び出しセルを，{\it callee}は呼び出されるセルを表している．
+{\it ...}には，シグニチャの名前や引数，返値が入るが，今回の可視化には必要がないので省略した．
+{\tt .enter(}{\it ...}{\tt )}がセルの呼び出しを，{\tt .leave(}{\it ...}{\tt )}が呼び出し先からのリターンを表している．
+
+この形式を標準形式トレースログに変換するため，変換ルールファイルを表\ref{tecsCnv}のように記述した．
+
+\begin{FileNoQuote}{TECS用変換ルールファイル}{tecsCnv}
+{
+  "tecs":
+  {
+    "time=(?<time>\d+)[^ ]+ (?<caller>[^-]+)->(?<callee>[^\.]+)\.enter\([^\)]*\)":
+    [
+      "\[${time}\]${caller}.call(${callee})",
+      "\[${time}\]${callee}.called(${caller})"
+    ],
+    "time=(?<time>\d+)[^ ]+ (?<caller>[^-]+)->(?<callee>[^\.]+)\.leave\([^\)]*\)":
+    [
+      "\[${time}\]${callee}.return(${caller})",
+      "\[${time}\]${caller}.callback(${callee})"
+    ]
+  }
+}
+\end{FileNoQuote}
+
+{\tt .enter(}{\it ...}{\tt )}で，呼び出し元セルで振る舞い{\tt call}のイベントを，呼び出し先セルで振る舞い{\tt called}のイベントを出力するようにしている．
+また，{\tt .leave(}{\it ...}{\tt )}で，呼び出し先セルで振る舞い{\tt return}のイベントを，呼び出し元セルで振る舞い{\tt callback}のイベントを出力するようにしている．
+
+\subsection{可視化ルールファイルの記述}
+
+\ref{subsec431}小節にて，セルの呼び出し関係の可視化表現を決定した．
+これに従い，可視化ルールファイルにおいて，図の定義を表\ref{tecsShpaeViz}のように記述した．
+また，可視化ルールの定義を表\ref{tecsRuleViz}のように記述した．
+
+\begin{FileNoQuote}{TECS用の図形を定義した可視化ルールファイル}{tecsShpaeViz}
+{
+  "tecs":{
+    "Shapes":{
+      "running":[{
+          "Type":"Polygon",
+          "Size":"100%,100%",
+          "Points":["0%,90%","100%,90%","100%,10%","0%,10%"],
+          "Fill":"${ARG0}",
+          "Alpha":100
+        }],
+      "calledCalleeShape":[{
+          "Type":"Polygon",
+          "Size":"100%,100%",
+          "Points":["0%,100%","10%,100%","20%,90%","80%,90%",
+                    "90%,100%","100%,100%","100%,90%","0%,90%"],
+          "Fill":"${ARG0}",
+          "Alpha":100
+        }],
+      "calledCallerShape":[{
+          "Type":"Polygon",
+          "Size":"100%,100%",
+          "Points":["10%,100%","90%,100%","80%,90%","20%,90%"],
+          "Fill":"${ARG0}",
+          "Alpha":100
+        }],
+      "callingCalleeShape":[{
+          "Type":"Polygon",
+          "Size":"100%,100%",
+          "Points":["0%,0%","0%,10%","10%,0%","90%,0%","100%,10%","100%,0%"],
+          "Fill":"${ARG0}",
+          "Alpha":100
+        }],
+      "callingCallerShape":[{
+          "Type":"Polygon",
+          "Size":"100%,100%",
+          "Points":["0%,10%","100%,10%","90%,0%","10%,0%"],
+          "Fill":"${ARG0}",
+          "Alpha":100
+        }]
+    }
+  }
+}
+\end{FileNoQuote}
+
+\begin{FileNoQuote}{TECS用の可視化ルールを定義した可視化ルールファイル}{tecsRuleViz}
+{
+  "tecs":{
+    "VisualizeRules":{
+      "callRelative":{
+        "DisplayName":"呼び出し関係",
+        "Target":"Cell",
+        "Shapes":{
+          "activeRunning":{
+            "DisplayName":"能動的実行中",
+            "When":"${TARGET}.active",
+            "Figures":{"${VAL}==True":"running($RES_COLOR{${TARGET}})"}
+          },
+          "passiveRunning":{
+            "DisplayName":"受動的実行中",
+            "From":"${TARGET}.called()",
+            "To":"${TARGET}.return()",
+            "Figures":"running($RES_COLOR{${TARGET}})"
+          },
+          "calledEvent":{
+            "DisplayName":"呼び出され中",
+            "From":"${TARGET}.called()",
+            "To":"${TARGET}.return()",
+            "Figures":[
+              "calledCallerShape($RES_COLOR{${FROM_ARG0}})",
+              "calledCalleeShape($RES_COLOR{${TARGET}})"
+            ]
+          },
+          "callingEvent":{
+            "DisplayName":"呼び出し中",
+            "From":"${TARGET}.call()",
+            "To":"${TARGET}.callback()",
+            "Figures":[
+              "callingCallerShape($RES_COLOR{${TARGET}})",
+              "callingCalleeShape($RES_COLOR{${FROM_ARG0}})"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+
+\end{FileNoQuote}
+
+図\ref{fig:tecsVisualize}において，行間の接続を表現するために，多角形を用いているが，この方法では，行をまたぐセル間の呼び出し関係を表現することが出来ない．
+\ref{tecsRun}小節にて，この点について言及する．
+
+\subsection{実行結果}
+\label{tecsRun}
+
+以上のファイルの修正・追加を行い，TECSのトレースログをTLVで可視化した．
+図\ref{fig:tecsTLVscreenShot}にスクリーンショットを示す．
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[width=15cm]{img/tecsTLVscreenShot.eps}
+\caption{TECSのトレースログを可視化したTLV実行結果のスクリーンショット}
+\label{fig:tecsTLVscreenShot}
+\end{center}
+\end{figure}
+
+図\ref{fig:tecsTLVscreenShot}より，セルの呼び出し関係が想定した可視化表現どおりに可視化表示出来ていることがわかる．
+
+これにより，TLVを用いることで形式の異なるトレースログを可視化できることが示せた．
+
+しかしながら，前小節で述べたとおり，現状の方法では行をまたぐセル間の呼び出し関係を表現することが出来ない．
+これは，TLVがリソース単位で行毎に可視化表示することを想定しているからである．
+
+これを解決する手段として，可視化ルールファイルの図形定義の際に，図形を表示する行を指定させる方法が考えられる．
 
 
 

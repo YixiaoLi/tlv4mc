@@ -1,1 +1,28 @@
-Abstract
+In recent years, multiprocessors have been used even in embedded systems.
+The reason for this is limits of effectiveness that improve a performance through overclocking in single processor.
+Multiprocessor system can reduce the increase in power consumption even though improving a performance by parallel processing.
+But, there is a problem that it is difficult to debug a software executed in a multiprocessor.
+Because, a traditional debugging way using breakpoints and step excuting is ineffective since a repeatability of bug is low by a nondeterministic behavior of parallel processing.
+
+On the other hand, an effective technique to debug software excuted in a multiprocessor includes analyzing a trace log that is a program execution history.
+The reason for that the technique is effective is that it can know necessary information for a parallel program debugging by analyzing trace log.
+The information, for example, are when, where or how long processes executed.
+However, it is inefficient that developeres analyze trace log directly. Because searching a desired information in tremendous quantities of trace log and analyzing time-series trace log recorded by a number of processors sequentially are difficult.
+
+Techniques to support developeres to analyze trace log includes visualizing trace log by tools.
+And, many visualizing tools for trace log have been developed before now.
+In particular, there are debugging softwares or integrated development environments for embedded systems and trace log profilers for Unix-like operating systems.
+However, these existing tools lack general versatility because they treat only own format trace log. 
+And, they lack expandability because visualized information are limited to items provided by them.
+
+To that end, we developed TraceLogVisualizer(TLV), visualization tool for trace log, for the purpose of implementation of general versatility and expandability.
+First, we defined the standard format trace log with generalizing a trace log.
+This is necessity for that the TLV treat trace log abstractively.
+And, we provided a mechanism that any format trace log convert to the standard-format-trace-log by writing a convert-rule-file.
+Next, we formalized a mechanism associating shapes and trace logs as visualize-rule-file through abstracting them.
+
+We confirmed general versatility through attemptting to visualize trace logs of a wide variety of formats including trace log of RTOS for singlecore processor and multicore processor, and embedded component systems.
+Also, we confirmed expandability through attemptting to add and change visualized information.
+In the result, they are achieved by writing convert-rule-files and visualize-rule-files.
+
+Development of TLV was performed as OJL(On the Job Learning), and development process carried out by applying an use case driven agile development.
