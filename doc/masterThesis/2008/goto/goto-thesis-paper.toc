@@ -1,8 +1,8 @@
 \contentsline {chapter}{\numberline {第1章}はじめに}{1}
 \contentsline {section}{\numberline {1.1}開発背景}{1}
 \contentsline {section}{\numberline {1.2}既存のトレースログ可視化ツール}{2}
-\contentsline {subsection}{\numberline {1.2.1}組み込みシステム向けデバッガソフトウェア}{2}
-\contentsline {subsection}{\numberline {1.2.2}組み込みOS向けの統合開発環境}{2}
+\contentsline {subsection}{\numberline {1.2.1}組込みシステム向けデバッガソフトウェア}{2}
+\contentsline {subsection}{\numberline {1.2.2}組込みOS向けの統合開発環境}{2}
 \contentsline {subsection}{\numberline {1.2.3}Unix系OSのトレースログプロファイラ}{4}
 \contentsline {subsection}{\numberline {1.2.4}波形表示ツールの流用}{4}
 \contentsline {subsection}{\numberline {1.2.5}既存のトレースログ可視化ツールの問題点}{7}
@@ -24,10 +24,10 @@
 \contentsline {chapter}{\numberline {第3章}トレースログ可視化ツール TraceLogVisualizer の実装}{18}
 \contentsline {section}{\numberline {3.1}TraceLogVisualizerの全体像}{18}
 \contentsline {subsection}{\numberline {3.1.1}Json}{18}
-\contentsline {section}{\numberline {3.2}標準形式への変換}{22}
+\contentsline {section}{\numberline {3.2}標準形式への変換}{21}
 \contentsline {subsection}{\numberline {3.2.1}トレースログファイル}{23}
-\contentsline {subsection}{\numberline {3.2.2}リソースヘッダファイル}{23}
-\contentsline {subsection}{\numberline {3.2.3}リソースファイル}{25}
+\contentsline {subsection}{\numberline {3.2.2}リソースヘッダファイル}{24}
+\contentsline {subsection}{\numberline {3.2.3}リソースファイル}{26}
 \contentsline {subsection}{\numberline {3.2.4}変換ルールファイル}{28}
 \contentsline {subsubsection}{置換マクロ}{30}
 \contentsline {section}{\numberline {3.3}図形データの生成}{31}
@@ -46,31 +46,31 @@
 \contentsline {subsection}{\numberline {4.1.2}リソースヘッダファイルの記述}{44}
 \contentsline {subsection}{\numberline {4.1.3}変換ルールファイルの記述}{44}
 \contentsline {subsection}{\numberline {4.1.4}可視化ルールファイルの記述}{46}
-\contentsline {subsection}{\numberline {4.1.5}トレースログファイルとリソースファイルの生成}{46}
-\contentsline {subsection}{\numberline {4.1.6}実行結果}{46}
-\contentsline {section}{\numberline {4.2}マルチコアプロセッサ用RTOS対応への拡張}{46}
-\contentsline {subsection}{\numberline {4.2.1}可視化表示する項目の追加}{47}
-\contentsline {subsection}{\numberline {4.2.2}リソースヘッダファイルの修正}{48}
-\contentsline {subsection}{\numberline {4.2.3}変換ルールファイルの修正}{48}
-\contentsline {subsection}{\numberline {4.2.4}可視化ルールファイルの記述}{49}
-\contentsline {subsection}{\numberline {4.2.5}実行結果}{49}
-\contentsline {section}{\numberline {4.3}組み込みコンポーネントシステムの可視化}{49}
-\contentsline {subsection}{\numberline {4.3.1}可視化表示する項目の決定}{50}
-\contentsline {subsection}{\numberline {4.3.2}リソースヘッダファイルの記述}{51}
-\contentsline {subsection}{\numberline {4.3.3}変換ルールファイルの記述}{51}
-\contentsline {subsection}{\numberline {4.3.4}可視化ルールファイルの記述}{52}
-\contentsline {subsection}{\numberline {4.3.5}実行結果}{52}
-\contentsline {chapter}{\numberline {第5章}開発プロセス}{65}
-\contentsline {section}{\numberline {5.1}OJL}{65}
-\contentsline {subsection}{\numberline {5.1.1}フェーズ分割}{65}
-\contentsline {subsubsection}{フェーズ1}{65}
-\contentsline {subsubsection}{フェーズ2}{66}
-\contentsline {subsubsection}{フェーズ3}{66}
-\contentsline {section}{\numberline {5.2}ユースケース駆動アジャイルソフトウェア開発}{67}
-\contentsline {subsection}{\numberline {5.2.1}プロジェクト管理}{68}
-\contentsline {subsection}{\numberline {5.2.2}設計}{69}
-\contentsline {subsection}{\numberline {5.2.3}テスト}{69}
-\contentsline {subsection}{\numberline {5.2.4}実装}{70}
-\contentsline {chapter}{\numberline {第6章}おわりに}{72}
-\contentsline {section}{\numberline {6.1}まとめ}{72}
-\contentsline {section}{\numberline {6.2}今後の課題と展望}{73}
+\contentsline {subsection}{\numberline {4.1.5}トレースログファイルとリソースファイルの生成}{48}
+\contentsline {subsection}{\numberline {4.1.6}実行結果}{49}
+\contentsline {section}{\numberline {4.2}マルチコアプロセッサ用RTOS対応への拡張}{49}
+\contentsline {subsection}{\numberline {4.2.1}可視化表示する項目の追加}{50}
+\contentsline {subsection}{\numberline {4.2.2}リソースヘッダファイルの修正}{51}
+\contentsline {subsection}{\numberline {4.2.3}変換ルールファイルの修正}{51}
+\contentsline {subsection}{\numberline {4.2.4}可視化ルールファイルの記述}{51}
+\contentsline {subsection}{\numberline {4.2.5}実行結果}{51}
+\contentsline {section}{\numberline {4.3}組込みコンポーネントシステムの可視化}{52}
+\contentsline {subsection}{\numberline {4.3.1}可視化表示する項目の決定}{53}
+\contentsline {subsection}{\numberline {4.3.2}リソースヘッダファイルの記述}{53}
+\contentsline {subsection}{\numberline {4.3.3}変換ルールファイルの記述}{54}
+\contentsline {subsection}{\numberline {4.3.4}可視化ルールファイルの記述}{54}
+\contentsline {subsection}{\numberline {4.3.5}実行結果}{55}
+\contentsline {chapter}{\numberline {第5章}開発プロセス}{64}
+\contentsline {section}{\numberline {5.1}OJL}{64}
+\contentsline {subsection}{\numberline {5.1.1}フェーズ分割}{64}
+\contentsline {subsubsection}{フェーズ1}{64}
+\contentsline {subsubsection}{フェーズ2}{65}
+\contentsline {subsubsection}{フェーズ3}{65}
+\contentsline {section}{\numberline {5.2}ユースケース駆動アジャイルソフトウェア開発}{66}
+\contentsline {subsection}{\numberline {5.2.1}プロジェクト管理}{67}
+\contentsline {subsection}{\numberline {5.2.2}設計}{68}
+\contentsline {subsection}{\numberline {5.2.3}テスト}{68}
+\contentsline {subsection}{\numberline {5.2.4}実装}{69}
+\contentsline {chapter}{\numberline {第6章}おわりに}{71}
+\contentsline {section}{\numberline {6.1}まとめ}{71}
+\contentsline {section}{\numberline {6.2}今後の課題と展望}{72}
