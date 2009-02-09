@@ -10,7 +10,7 @@
 \fi
 
 \section{シングルコアプロセッサ用RTOSのトレースログの可視化}
-可視化するシングルコアプロセッサ用RTOSとして，TOPPERS/ASPカーネルを用いた．TOPPERS/ASPカーネルは，標準でトレースログを取得する機能を搭載しており，カーネルの動作開始と終了，処理単位の実行開始と終了，タスク状態の変化，ディスパッチャの実行開始と終了，サービスコールの入口と出口といった情報をトレースログ取得できる．
+可視化するシングルコアプロセッサ用RTOSとして，TOPPERS/ASPカーネルを用いた．TOPPERS/ASPカーネルは，標準でトレースログを取得する機能を搭載しており，カーネルの動作開始と終了，処理単位の実行開始と終了，タスク状態の変化，ディスパッチャの実行開始と終了，サービスコールの入口と出口といった情報を取得できる．
 処理単位とは，割込みハンドラ，割込みサービスルーチン，周期ハンドラ，アラームハンドラ，CPU例外ハンドラ，タスク例外処理ルーチンを指す．
 TOPPERS/ASPカーネルのトレースログの例は表\ref{aspTraceLog}で示している．
 
@@ -146,7 +146,7 @@ TOPPERS/ASPカーネルのトレースログは，タスクの状態遷移を表
 \end{quote}
 \end{table}
 
-しかし，TOPPERS/ASPカーネルでは，実行状態と実行可能状態を内部では状態として区別しておらず，{\tt RUNNING}への遷移と，{\tt RUNNABLE}から{\tt RUNNING}への遷移を上記の形式で記録しない．
+しかし，TOPPERS/ASPカーネルでは，実行状態と実行可能状態を内部では状態として区別しておらず，{\tt RUNNING}への遷移と，{\tt READY}への遷移を上記の形式で記録しない．
 そのため，上記の形式のトレースログでタスクの状態遷移のすべてを標準形式トレースログで出力するのは不可能である．
 
 \begin{table}[p]
@@ -162,9 +162,9 @@ TOPPERS/ASPカーネルのトレースログは，タスクの状態遷移を表
 TOPPERS/ASPカーネルでは，タスクが実行状態になったかどうかを表\ref{aspTaskStateBecomeRunningTraceLog}のような形式のトレースログで記録する．
 これは，ディスパッチャから出てタスクIDが{\it taskId}のタスクの実行に遷移したことを表している．
 この形式のトレースログによりタスクが{\tt RUNNING}へ遷移したことを標準形式トレースログで出力する．
-また，{\tt RUNNABLE}から{\tt RUNNING}への遷移は，この形式のトレースログに一致した際に，時刻がそのトレースログの{\it time}のときに状態が{\tt RUNNING}のタスクが存在する場合に，そのタスクを{\tt RUNNABLE}へ遷移したことを標準形式トレースログで出力することで行う．
+また，{\tt READY}から{\tt RUNNING}への遷移は，この形式のトレースログに一致した際に，時刻がそのトレースログの{\it time}のときに状態が{\tt RUNNING}のタスクが存在する場合に，そのタスクを{\tt READY}へ遷移したことを標準形式トレースログで出力することで行う．
 
-タスクの起動の標準形式トレースログは，表\ref{aspTaskStateChangeStandardTraceLog}の形式のトレースログに一致した際に，時刻{\it time}のときのタスクIDが{\it taskId}のタスクの状態が{\tt DORMANT}から{\tt RUNNABLE}になったときに表\ref{aspTaskActivateTraceLog}で示す形式で出力ればよい．
+タスクの起動の標準形式トレースログは，表\ref{aspTaskStateChangeStandardTraceLog}の形式のトレースログに一致した際に，時刻{\it time}のときのタスクIDが{\it taskId}のタスクの状態が{\tt DORMANT}から{\tt READY}になったときに表\ref{aspTaskActivateTraceLog}で示す形式で出力ればよい．
 おなじように，タスクの終了は時刻{\it time}のときのタスクIDが{\it taskId}のタスクの状態が{\tt RUNNING}から{\tt DORMANT}になったときに表\ref{aspTaskExitTraceLog}で示す形式で出力ればよい．
 
 \begin{table}[p]
@@ -220,13 +220,13 @@ TOPPERS/ASPカーネルのトレースログは，システムコールに入っ
     "\[(?<time>\d+)\] dispatch to task (?<id>\d+)\.":[
       {
         "$EXIST{Task(state==RUNNING)}":
-          "[${time}]$RES_NAME{Task(state==RUNNING)}.state=RUNNABLE"
+          "[${time}]$RES_NAME{Task(state==RUNNING)}.state=READY"
       },
       "[${time}]$RES_NAME{Task(id==${id})}.state=RUNNING"
     ],
     "\[(?<time>\d+)\] task (?<id>\d+) becomes (?<state>[^\.]+)\.":[
       {
-        "$ATTR{Task(id==${id}).state}==DORMANT && ${state}==RUNNABLE"
+        "$ATTR{Task(id==${id}).state}==DORMANT && ${state}==READY"
           :"[${time}]$RES_NAME{Task(id==${id})}.activate()",
         "$ATTR{Task(id==${id}).state}==RUNNING && ${state}==DORMANT"
           :"[${time}]$RES_NAME{Task(id==${id})}.exit()"
@@ -265,7 +265,7 @@ TOPPERS/ASPカーネルのトレースログは，システムコールに入っ
           "Pen":{"Color":"ff00ff00","Width":1},
           "Fill":"6600ff00"
         }],
-      "runnableShapes":[{
+      "readyShapes":[{
           "Type":"Line",
           "Points":["l(0),80%","r(0),80%"],
           "Pen":{"Color":"ffffaa00","Width":1}
@@ -328,7 +328,7 @@ TOPPERS/ASPカーネルのトレースログは，システムコールに入っ
             "To":"${TARGET}.state",
             "Figures":{
               "${FROM_VAL}==RUNNING" :"runningShapes",
-              "${FROM_VAL}==RUNNABLE":"runnableShapes",
+              "${FROM_VAL}==READY":"readyShapes",
               "${FROM_VAL}==WAITING" :"waitingShapes"
             }},
           "activateHappenEvent":{
@@ -386,7 +386,7 @@ TLVでTOPPERS/ASPカーネルのトレースログファイルと，リソース
 \end{figure}
 
 図\ref{fig:aspTLVscreenShot}より，可視化表示する項目が，想定した可視化表現で描画されていることが確認できる．
-たとえば，{\tt Task2}の状態が{\tt RUNNABLE}，{\tt RUNNING}，{\tt WAITING}と遷移し，状態が{\tt WAITING}なのは，{\tt slp\_tsk}というシステムコールを呼んで自ら待ち状態に遷移したから，ということがわかる．
+たとえば，{\tt Task2}の状態が{\tt READY}，{\tt RUNNING}，{\tt WAITING}と遷移し，状態が{\tt WAITING}なのは，{\tt slp\_tsk}というシステムコールを呼んで自ら待ち状態に遷移したから，ということがわかる．
 
 \section{マルチコアプロセッサ用RTOS対応への拡張}
 
@@ -472,7 +472,7 @@ ASPカーネル用の変換ルールファイルを元に記述した，FMPカ�
     "\[(?<time>\d+)\]:\[(?<pid>\d+)\]: dispatch to task (?<id>\d+)\." : [
       {
         "$EXIST{[${time}]Task(state==RUNNING && prcId==${pid})}"
-          :"[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.state=RUNNABLE"
+          :"[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.state=READY"
       },
       "[${time}]$RES_NAME{Task(id==${id})}.state=RUNNING"
     ],

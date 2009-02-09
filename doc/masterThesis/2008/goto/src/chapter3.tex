@@ -168,8 +168,8 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 
 \begin{File}{表\ref{aspLogSample}を標準形式トレースログで表現した例}{aspStandartLogSample}
 [1000]Task(id==1).activate()
-[1000]Task(id==1).state = RUNNABLE
-[1005]Task(state==RUNNING).state=RUNNABLE
+[1000]Task(id==1).state = READY
+[1005]Task(state==RUNNING).state=READY
 [1005]Task(id==1).state = RUNNING
 [1100]Task(id==1).state = WAITING
 \end{File}
@@ -177,11 +177,11 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 表\ref{aspLogSample}で示す元のトレースログが3行なのに対し，表\ref{aspStandartLogSample}で示す要求される標準形式トレースログは５行となっている．
 これは，表\ref{aspStandartLogSample}の1行目と3行目が状況により追加されるからである．
 表\ref{aspStandartLogSample}の1行目は，表\ref{aspLogSample}の1行目に対応しており，起動(\verb|activate()|)というタスクの振る舞いを可視化したいという要求があるため追加される必要がある．
-また，表\ref{aspStandartLogSample}の3行目は，表\ref{aspLogSample}の2行目に対応しており，すでに起動しているタスクが横取りされて状態がRUNNABLEになる，という情報が元のトレースログに存在しないため，追加される必要がある．
+また，表\ref{aspStandartLogSample}の3行目は，表\ref{aspLogSample}の2行目に対応しており，すでに起動しているタスクが横取りされて状態がREADYになる，という情報が元のトレースログに存在しないため，追加される必要がある．
 
 しかしながら，これら標準形式トレースログの追加が必要になるのは一定の条件下のみである．
 表\ref{aspStandartLogSample}の1行目は，タスクIDが1のタスクの状態が，時刻1000未満のときにDORMANTである場合だけである．
-これは，起動という状態遷移を行うのが状態がDORMANTからRUNNABLEに遷移するときだけであり，状態がDORMANTになっただけでは起動であるのかどうか判断できないためである．
+これは，起動という状態遷移を行うのが状態がDORMANTからREADYに遷移するときだけであり，状態がDORMANTになっただけでは起動であるのかどうか判断できないためである．
 また，表\ref{aspStandartLogSample}の3行目が必要なときは，時刻1005のときに状態がRUNNINGのタスクが存在する場合だけである．
 
 このように，リソース属性の遷移に伴うイベントや，元のトレースログに欠落している情報を補うイベントなど，元のトレースログの情報だけでは判断できないイベントを出力するには，特定時刻における特定リソースの有無やその数，特定リソースの属性の値などの条件で出力を制御できる必要がある．
@@ -406,7 +406,7 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
         "exinf" :0,
         "task"  :"task",
         "stksz" :4096,
-        "state" :"RUNNABLE"
+        "state" :"READY"
       }
     }
   }
@@ -512,7 +512,7 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
       {
         "$EXIST{[${time}]Task(state==RUNNING)}":[
           "[${time}]$RES_NAME{[${time}]Task(state==RUNNING)}.preempt()",
-          "[${time}]$RES_NAME{[${time}]Task(state==RUNNING)}.state=RUNNABLE"
+          "[${time}]$RES_NAME{[${time}]Task(state==RUNNING)}.state=READY"
         ]
       },
       "[${time}]$RES_NAME{Task(id==${id})}.dispatch()",
@@ -520,7 +520,7 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
     ],
     "\[(?<time>\d+)\] task (?<id>\d+) becomes (?<state>[^\.]+)\.":[
       {
-        "$ATTR{[${time}]Task(id==${id}).state}==DORMANT && ${state}==RUNNABLE"
+        "$ATTR{[${time}]Task(id==${id}).state}==DORMANT && ${state}==READY"
           :"[${time}]$RES_NAME{Task(id==${id})}.activate()",
         "$ATTR{[${time}]Task(id==${id}).state}==RUNNING && ${state}==DORMANT"
           :"[${time}]$RES_NAME{Task(id==${id})}.exit()",
@@ -738,8 +738,8 @@ ff0000
 そして，その値に図形の定義を基本図形の定義の配列として与える．
 
 表\ref{shapeSample}に{\tt toppers}をターゲットとする図形を定義した例を示す．
-例では，{\tt runningShapes}と{\tt runnableShapes}，{\tt svcShapes}の3つの図形を定義している．
-{\tt runningShapes}と{\tt runnableShapes}は1つの基本図形で構成され，{\tt svcShapes}は3つの基本図形から構成される．
+例では，{\tt runningShapes}と{\tt readyShapes}，{\tt svcShapes}の3つの図形を定義している．
+{\tt runningShapes}と{\tt readyShapes}は1つの基本図形で構成され，{\tt svcShapes}は3つの基本図形から構成される．
 
 \begin{File}{可視化ルールファイルで図形を定義した例}{shapeSample}
 {
@@ -753,7 +753,7 @@ ff0000
           "Fill":"6600ff00"
         }
       ],
-      "runnableShapes":[
+      "readyShapes":[
         {
           "Type":"Line",
           "Points":["l(0),80%","r(0),80%"],
@@ -1095,7 +1095,7 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
             "To"  :"${TARGET}.state",
             "Figures":{
               "${FROM_VAL}==RUNNING" :"runningShapes",
-              "${FROM_VAL}==RUNNABLE":"runnableShapes"
+              "${FROM_VAL}==READY":"readyShapes"
             }
           },
           "activateHappenEvent":{

@@ -192,16 +192,14 @@ Argument = /[^"\\]*/;
 
 \begin{File}{標準形式トレースログの例}{standartFormatTraceLogSample}
 [2403010]MAIN_TASK.leaveSVC(ena_tex,ercd=0)
-[4496099]MAIN_TASK.state=RUNNABLE
-[4496802]TASK(state==RUNNING).preempt()
-[4496802]TASK(state==RUNNING).state=RUNNABLE
-[4496802]TASK(id==2).dispatch()
+[4496099]MAIN_TASK.state=READY
+[4496802]TASK(state==RUNNING).state=READY
 \end{File}
 
-1行目，3行目，5行目がリソースの振る舞いイベントであり，2行目，4行目が属性の値の変化イベントである．
-1行目の振る舞いイベントには引数が指定されており，残りの振る舞いイベントには指定されていない．
+1行目がリソースの振る舞いイベントであり，2行目，3行目が属性の値の変化イベントである．
+1行目の振る舞いイベントには引数が指定されている．
 
-1行目，2行目はリソースを名前で直接指定しているが，残りはリソースタイプと属性の条件によってリソースを特定している．
+1行目，2行目はリソースを名前で直接指定しているが，3行目はリソースタイプと属性の条件によってリソースを特定している．
 
 \section{可視化表示の仕組みの抽象化}
 

@@ -1,7 +1,7 @@
 %!PS-Adobe-3.0 EPSF-3.0
 %%Title: Microsoft PowerPoint - figures.ppt
 %%Creator: PScript5.dll Version 5.2
-%%CreationDate: 1/18/2009 23:41:33
+%%CreationDate: 2/6/2009 16:46:56
 %%For: junji
 %%BoundingBox: 23 18 819 577
 %%Pages: 1
@@ -239,7 +239,7 @@ GSE
 {setglobal} if
 GpPBeg1
 1 1 1 SC
-NP 333 1105 m 1208 1105 l 1208 1715 l 333 1715 l CP 
+NP 333 1105 m 1208 1105 l 1208 1515 l 333 1515 l CP 
 eofill
 GSE
 GpPBeg1
@@ -249,7 +249,7 @@ GpPBeg1
 3.1250 setlinewidth
 [] 0 setdash
 0 0 0 SC
-NP 333 1105 m 333 1715 l 1208 1715 l 1208 1105 l CP 
+NP 333 1105 m 333 1515 l 1208 1515 l 1208 1105 l CP 
 stroke
 GSE
 
@@ -404,14 +404,12 @@ AddEuroGlyph
 F /F0 0 /256 T /Times-Roman mF 
 /F0S4B F0 [75 0 0 -75 0 0 ] mFS
 F0S4B Ji 
-629 1213 M (activate\(\))[33 33 21 21 37 33 21 33 25  0]xS 
-689 1303 M (exit\(\))[33 37 21 21 25  0]xS 
-621 1393 M (dispatch\(\))[38 21 29 38 33 21 33 38 25  0]xS 
-623 1483 M (preempt\(\))[38 25 33 34 57 38 21 25  0]xS 
-396 1573 M (enterSVC\(String)[33 38 21 33 25 42 55 50 25 41 21 25 21 38  0]xS 
-901 1573 M (, String\))[19 18 42 21 25 21 38 37  0]xS 
-391 1663 M (leaveSVC\(String)[21 33 33 37 33 42 55 50 25 42 21 25 21 38  0]xS 
-904 1663 M (, String\))[19 19 42 21 24 21 38 37  0]xS 
+681 1203 M (start\(\))[29 21 33 25 21 25  0]xS 
+689 1293 M (exit\(\))[33 37 21 21 25  0]xS 
+396 1383 M (enterSVC\(String)[33 38 21 33 25 42 55 50 25 41 21 25 21 38  0]xS 
+901 1383 M (, String\))[19 18 42 21 25 21 38 37  0]xS 
+391 1473 M (leaveSVC\(String)[21 33 33 37 33 42 55 50 25 42 21 25 21 38  0]xS 
+904 1473 M (, String\))[19 19 42 21 24 21 38 37  0]xS 
 Pscript_WinNT_Compat begin /$x mysetup def end
 Pscript_WinNT_Incr dup /suspend get exec
 Pscript_WinNT_Compat dup /initialize get exec

@@ -17,8 +17,8 @@
 \contentsline {section}{\numberline {2.3}可視化表示の仕組みの抽象化}{14}
 \contentsline {subsection}{\numberline {2.3.1}可視化表現}{14}
 \contentsline {subsubsection}{座標系}{14}
-\contentsline {subsubsection}{基本図形と図形，図形群}{15}
-\contentsline {subsection}{\numberline {2.3.2}図形とイベントの対応}{16}
+\contentsline {subsubsection}{基本図形と図形，図形群}{14}
+\contentsline {subsection}{\numberline {2.3.2}図形とイベントの対応}{15}
 \contentsline {subsubsection}{開始イベント，終了イベント，イベント期間}{16}
 \contentsline {subsubsection}{可視化ルール}{16}
 \contentsline {chapter}{\numberline {第3章}トレースログ可視化ツール TraceLogVisualizer の実装}{18}
