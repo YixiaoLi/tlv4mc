@@ -1,0 +1,31 @@
+{
+  "ResourceExplorerSetting": {
+    "ResourceVisibility": {
+      "LOGTASK": true,
+      "TASK1": true,
+      "TASK2": true,
+      "TASK3": true,
+      "MAIN_TASK": true
+    }
+  },
+  "VisualizeRuleExplorerSetting": {
+    "VisualizeRuleVisibility": {
+      "runningTaskChange": true,
+      "runningTaskChange:runningTaskChangeEvent": true,
+      "callSvc": true,
+      "callSvc:callSvcEvent": true,
+      "taskStateChange": true,
+      "taskStateChange:stateChangeEvent": true,
+      "taskStateChange:activateHappenEvent": true,
+      "taskStateChange:exitHappenEvent": true,
+      "taskPrcIdChange": true,
+      "taskPrcIdChange:prcIdChangeEvent": true
+    }
+  },
+  "TraceLogDisplayPanelSetting": {
+    "TimePerScaleMark": "1070(10)",
+    "RowHeight": 60,
+    "PixelPerScaleMark": 5,
+    "TimeLine": "[122418(10)-251060(10)]in[2000(10)-453000(10)]"
+  }
+}
