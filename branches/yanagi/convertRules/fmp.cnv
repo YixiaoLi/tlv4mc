@@ -1,45 +1,73 @@
-﻿{
-	"fmp":
+{
+    "fmp":
+    {
+	"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: dispatch to task (?<id>\d+)\." : [
+	    {
+		"$EXIST{[${time}]Task(state==RUNNING && prcId==${pid})}"	:[
+		    "[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.preempt()",
+		    "[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.state=RUNNABLE"
+		]
+	    },
+	    "[${time}]$RES_NAME{Task(prcId == ${pid} && id==${id})}.dispatch()",
+	    "[${time}]$RES_NAME{Task(prcId == ${pid} && id==${id})}.state=RUNNING"
+	],
+	"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: task (?<id>\d+) becomes (?<state>[^\.]+)\." : [
+	    {
+		"$ATTR{[${time}]Task(id==${id} && prcId==${pid}).state}==DORMANT && ${state}==RUNNABLE":
+		"[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.activate()",
+
+		"$ATTR{[${time}]Task(id==${id} && prcId==${pid}).state}==RUNNING && ${state}==DORMANT":
+		"[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.exit()",
+
+		"$ATTR{[${time}]Task(id==${id} && prcId==${pid}).state}==RUNNING && ${state}==WAITING":
+		"[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.wait()",
+
+		"$ATTR{[${time}]Task(id==${id} && prcId==${pid}).state}==RUNNABLE && ${state}==SUSPENDED":
+		"[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.suspend()",
+
+		"$ATTR{[${time}]Task(id==${id} && prcId==${pid}).state}==WAITING && ${state}==WAITING-SUSPENDED":
+		"[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.suspend()",
+
+		"$ATTR{[${time}]Task(id==${id} && prcId==${pid}).state}==SUSPENDED && ${state}==RUNNABLE":
+		"[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.resume()",
+		
+		"$ATTR{[${time}]Task(id==${id} && prcId==${pid}).state}==WAITING-SUSPENDED && ${state}==WAITING":
+		"[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.resume()",
+
+		"$ATTR{[${time}]Task(id==${id} && prcId==${pid}).state}==WAITING && ${state}==RUNNABLE":
+		"[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.releaseFromWaiting()",
+
+		"$ATTR{[${time}]Task(id==${id} && prcId==${pid}).state}==WAITING-SUSPENDED && ${state}==SUSPENDED":
+		"[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.releaseFromWaiting()",
+
+		"$ATTR{[${time}]Task(id==${id} && prcId==${pid}).state}==SUSPENDED && ${state}==DORMANT":
+		"[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.terminate()",
+
+		"$ATTR{[${time}]Task(id==${id} && prcId==${pid}).state}==WAITING-SUSPENDED && ${state}==DORMANT":
+		"[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.terminate()",
+
+		"$ATTR{[${time}]Task(id==${id} && prcId==${pid}).state}==WAITING && ${state}==DORMANT":
+		"[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.terminate()",
+
+		"$ATTR{[${time}]Task(id==${id} && prcId==${pid}).state}==RUNNABLE && ${state}==DORMANT":
+		"[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.terminate()"
+	    },
+	    "[${time}]$RES_NAME{Task(id==${id} && prcId==${pid})}.state=${state}"
+	],
+	"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: enter to (?<name>\w+)( (?<args>.+))?\.?"	:
 	{
-		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: dispatch to task (?<id>\d+)\." : [
-			{
-				"$EXIST{[${time}]Task(state==RUNNING && prcId==${pid})}"	:[
-					"[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.preempt()",
-					"[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.state=RUNNABLE"
-				]
-			},
-			"[${time}]$RES_NAME{Task(id==${id})}.dispatch()",
-			"[${time}]$RES_NAME{Task(id==${id})}.state=RUNNING"
-		],
-		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: task (?<id>\d+) becomes (?<state>[^\.]+)\." : [
-			{
-				"$ATTR{[${time}]Task(id==${id}).state}==DORMANT && ${state}==RUNNABLE"				:"[${time}]$RES_NAME{Task(id==${id})}.activate()",
-				"$ATTR{[${time}]Task(id==${id}).state}==RUNNING && ${state}==DORMANT"				:"[${time}]$RES_NAME{Task(id==${id})}.exit()",
-				"$ATTR{[${time}]Task(id==${id}).state}==RUNNING && ${state}==WAITING"				:"[${time}]$RES_NAME{Task(id==${id})}.wait()",
-				"$ATTR{[${time}]Task(id==${id}).state}==RUNNABLE && ${state}==SUSPENDED"			:"[${time}]$RES_NAME{Task(id==${id})}.suspend()",
-				"$ATTR{[${time}]Task(id==${id}).state}==WAITING && ${state}==WAITING-SUSPENDED"		:"[${time}]$RES_NAME{Task(id==${id})}.suspend()",
-				"$ATTR{[${time}]Task(id==${id}).state}==SUSPENDED && ${state}==RUNNABLE"			:"[${time}]$RES_NAME{Task(id==${id})}.resume()",
-				"$ATTR{[${time}]Task(id==${id}).state}==WAITING-SUSPENDED && ${state}==WAITING"		:"[${time}]$RES_NAME{Task(id==${id})}.resume()",
-				"$ATTR{[${time}]Task(id==${id}).state}==WAITING && ${state}==RUNNABLE"				:"[${time}]$RES_NAME{Task(id==${id})}.releaseFromWaiting()",
-				"$ATTR{[${time}]Task(id==${id}).state}==WAITING-SUSPENDED && ${state}==SUSPENDED"	:"[${time}]$RES_NAME{Task(id==${id})}.releaseFromWaiting()",
-				"$ATTR{[${time}]Task(id==${id}).state}==SUSPENDED && ${state}==DORMANT"				:"[${time}]$RES_NAME{Task(id==${id})}.terminate()",
-				"$ATTR{[${time}]Task(id==${id}).state}==WAITING-SUSPENDED && ${state}==DORMANT"		:"[${time}]$RES_NAME{Task(id==${id})}.terminate()",
-				"$ATTR{[${time}]Task(id==${id}).state}==WAITING && ${state}==DORMANT"				:"[${time}]$RES_NAME{Task(id==${id})}.terminate()",
-				"$ATTR{[${time}]Task(id==${id}).state}==RUNNABLE && ${state}==DORMANT"				:"[${time}]$RES_NAME{Task(id==${id})}.terminate()"
-			},
-			"[${time}]$RES_NAME{Task(id==${id})}.state=${state}"
-		],
-		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: enter to (?<name>\w+)( (?<args>.+))?\.?"	:
-		{
-            "$EXIST{[${time}]Task(state==RUNNING && prcId==${pid})}"	:"[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.enterSVC(${name}, ${args})"
-        },
-		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: leave to (?<name>\w+)( (?<args>.+))?\.?"	:
-		{
-            "$EXIST{[${time}]Task(state==RUNNING && prcId==${pid})}"	:"[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.leaveSVC(${name}, ${args})"
-        },
-		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: task (?<tskid>\d+) migrates from processor (?<fromPrcId>\d+) to processor (?<toPrcId>\d+)\." :
-		{
-            "$EXIST{[${time}]Task(id==${tskid})}" :"[${time}]$RES_NAME{Task(id==${tskid})}.prcId = ${toPrcId}"
+	    "$EXIST{[${time}]Task(state==RUNNING && prcId==${pid})}"	:
+	    "[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.enterSVC(${name}, ${args})"
+	},
+	"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: leave to (?<name>\w+)( (?<args>.+))?\.?"	:
+	{
+	    "$EXIST{[${time}]Task(state==RUNNING && prcId==${pid})}"	:
+	    "[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.leaveSVC(${name}, ${args})"
+	},
+	"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: task (?<tskid>\d+) migrates from processor (?<fromPrcId>\d+) to processor (?<toPrcId>\d+)\." :
+	{
+	    "$EXIST{[${time}]Task(id==${tskid} && prcId==${pid})}" :
+	    "[${time}]$RES_NAME{Task(id==${tskid} && prcId==${pid})}.prcId = ${toPrcId}"
         }
     }
 }
