@@ -3,12 +3,14 @@ $FILE "kernel.res"$
 $TAB$"TimeScale" :"us",$NL$
 $TAB$"TimeRadix" :10,$NL$
 $TAB$"ConvertRules"   :["asp","fmp"],$NL$
-$TAB$"VisualizeRules" :["toppers","fmp","fmp_core$TNUM_PRC$"],$NL$
+$TAB$"VisualizeRules" :["toppers","fmp",fmp_core$TNUM_PRC$],$NL$
 $TAB$"ResourceHeaders":["fmp"],$NL$
 $TAB$"Resources":$NL$
 $TAB${$NL$
-$JOINEACH tskid TSK.ID_LIST ",\n"$
-    $TAB$$TAB$"$tskid$":{$NL$
+$JOINEACH prcid RANGE(1, 2) ",\n"$
+    $TAB$$TAB$
+    $JOINEACH tskid TSK.ID_LIST ",\n"$
+    $TAB$$TAB$"CPU$prcid$_$tskid$":{$NL$
     $TAB$$TAB$$TAB$"Type":"Task",$NL$
     $TAB$$TAB$$TAB$"Attributes":$NL$
     $TAB$$TAB$$TAB${$NL$
@@ -28,6 +30,7 @@ $JOINEACH tskid TSK.ID_LIST ",\n"$
         $END$
     $TAB$$TAB$$TAB$}$NL$
     $TAB$$TAB$}
+    $END$
 $END$
 $NL$
 $TAB$}$NL$
