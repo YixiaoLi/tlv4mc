@@ -3,7 +3,7 @@ $FILE "kernel.res"$
 $TAB$"TimeScale" :"us",$NL$
 $TAB$"TimeRadix" :10,$NL$
 $TAB$"ConvertRules"   :["asp","fmp"],$NL$
-$TAB$"VisualizeRules" :["toppers","fmp","fmp_core$TNUM_PRC$"],$NL$
+$TAB$"VisualizeRules" :["toppers","fmp","fmp_core$+TNUM_PRC$"],$NL$
 $TAB$"ResourceHeaders":["fmp"],$NL$
 $TAB$"Resources":$NL$
 $TAB${$NL$

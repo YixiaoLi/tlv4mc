@@ -171,7 +171,6 @@
 [17170830]:[1]: leave to dly_tsk ercd=0.
 [17171023]:[1]: enter to mig_tsk tskid=1. prcid=2.
 [17171405]:[1]: task 1 migrates from processor 1 to processor 2.
-[17171582]:[1]: task 1 becomes RUNNABLE.
 [17171853]:[1]: leave to mig_tsk ercd=0.
 [17172040]:[1]: enter to dly_tsk dlytim=10.
 [17172165]:[2]: dispatch to task 1.
@@ -185,7 +184,6 @@
 [19266795]:[1]: leave to dly_tsk ercd=0.
 [19266988]:[1]: enter to mig_tsk tskid=2. prcid=2.
 [19267370]:[1]: task 2 migrates from processor 1 to processor 2.
-[19267547]:[1]: task 2 becomes RUNNABLE.
 [19267789]:[1]: leave to mig_tsk ercd=0.
 [19267976]:[1]: enter to dly_tsk dlytim=10.
 [19268465]:[1]: task 4 becomes WAITING.
@@ -198,7 +196,6 @@
 [21362756]:[1]: leave to dly_tsk ercd=0.
 [21362949]:[1]: enter to mig_tsk tskid=3. prcid=2.
 [21363352]:[1]: task 3 migrates from processor 1 to processor 2.
-[21363529]:[1]: task 3 becomes RUNNABLE.
 [21363771]:[1]: leave to mig_tsk ercd=0.
 [21363958]:[1]: enter to dly_tsk dlytim=10.
 [21364399]:[1]: task 4 becomes WAITING.
@@ -220,7 +217,6 @@
 [23336733]:[2]: leave to get_pid ercd=0. prcid=2
 [23336970]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [23337292]:[2]: task 1 migrates from processor 2 to processor 1.
-[23337610]:[2]: task 1 becomes RUNNABLE.
 [23337893]:[2]: dispatch from task 1.
 [23338069]:[2]: dispatch to task 2.
 [23338187]:[1]: dispatch to task 1.
@@ -244,7 +240,6 @@
 [25432845]:[2]: leave to get_pid ercd=0. prcid=2
 [25433082]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [25433404]:[2]: task 2 migrates from processor 2 to processor 1.
-[25433722]:[2]: task 2 becomes RUNNABLE.
 [25433973]:[2]: dispatch from task 2.
 [25434149]:[2]: dispatch to task 3.
 [27525667]:[1]: task 4 becomes RUNNABLE.
@@ -266,7 +261,6 @@
 [27528714]:[2]: leave to get_pid ercd=0. prcid=2
 [27528951]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [27529273]:[2]: task 3 migrates from processor 2 to processor 1.
-[27529617]:[2]: task 3 becomes RUNNABLE.
 [27529868]:[2]: dispatch from task 3.
 [29621485]:[1]: task 4 becomes RUNNABLE.
 [29622024]:[1]: dispatch from task 1.
@@ -469,7 +463,6 @@
 [52431914]:[1]: leave to dly_tsk ercd=0.
 [52432107]:[1]: enter to mig_tsk tskid=1. prcid=2.
 [52432489]:[1]: task 1 migrates from processor 1 to processor 2.
-[52432666]:[1]: task 1 becomes RUNNABLE.
 [52432937]:[1]: leave to mig_tsk ercd=0.
 [52433124]:[1]: enter to dly_tsk dlytim=10.
 [52433260]:[2]: dispatch to task 1.
@@ -483,7 +476,6 @@
 [54527879]:[1]: leave to dly_tsk ercd=0.
 [54528072]:[1]: enter to mig_tsk tskid=2. prcid=2.
 [54528454]:[1]: task 2 migrates from processor 1 to processor 2.
-[54528631]:[1]: task 2 becomes RUNNABLE.
 [54528873]:[1]: leave to mig_tsk ercd=0.
 [54529060]:[1]: enter to dly_tsk dlytim=10.
 [54529549]:[1]: task 4 becomes WAITING.
@@ -496,7 +488,6 @@
 [56623840]:[1]: leave to dly_tsk ercd=0.
 [56624033]:[1]: enter to mig_tsk tskid=3. prcid=2.
 [56624436]:[1]: task 3 migrates from processor 1 to processor 2.
-[56624613]:[1]: task 3 becomes RUNNABLE.
 [56624855]:[1]: leave to mig_tsk ercd=0.
 [56625042]:[1]: enter to dly_tsk dlytim=10.
 [56625483]:[1]: task 4 becomes WAITING.
@@ -518,7 +509,6 @@
 [58597912]:[2]: leave to get_pid ercd=0. prcid=2
 [58598149]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [58598471]:[2]: task 1 migrates from processor 2 to processor 1.
-[58598789]:[2]: task 1 becomes RUNNABLE.
 [58599072]:[2]: dispatch from task 1.
 [58599248]:[2]: dispatch to task 2.
 [58599375]:[1]: dispatch to task 1.
@@ -542,7 +532,6 @@
 [60693920]:[2]: leave to get_pid ercd=0. prcid=2
 [60694157]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [60694479]:[2]: task 2 migrates from processor 2 to processor 1.
-[60694797]:[2]: task 2 becomes RUNNABLE.
 [60695048]:[2]: dispatch from task 2.
 [60695224]:[2]: dispatch to task 3.
 [62786721]:[1]: task 4 becomes RUNNABLE.
@@ -564,7 +553,6 @@
 [62789727]:[2]: leave to get_pid ercd=0. prcid=2
 [62789964]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [62790286]:[2]: task 3 migrates from processor 2 to processor 1.
-[62790630]:[2]: task 3 becomes RUNNABLE.
 [62790881]:[2]: dispatch from task 3.
 [64882584]:[1]: task 4 becomes RUNNABLE.
 [64883123]:[1]: dispatch from task 1.
@@ -767,7 +755,6 @@
 [87693018]:[1]: leave to dly_tsk ercd=0.
 [87693211]:[1]: enter to mig_tsk tskid=1. prcid=2.
 [87693593]:[1]: task 1 migrates from processor 1 to processor 2.
-[87693770]:[1]: task 1 becomes RUNNABLE.
 [87694041]:[1]: leave to mig_tsk ercd=0.
 [87694228]:[1]: enter to dly_tsk dlytim=10.
 [87694405]:[2]: dispatch to task 1.
@@ -781,7 +768,6 @@
 [89788983]:[1]: leave to dly_tsk ercd=0.
 [89789176]:[1]: enter to mig_tsk tskid=2. prcid=2.
 [89789558]:[1]: task 2 migrates from processor 1 to processor 2.
-[89789735]:[1]: task 2 becomes RUNNABLE.
 [89789977]:[1]: leave to mig_tsk ercd=0.
 [89790164]:[1]: enter to dly_tsk dlytim=10.
 [89790653]:[1]: task 4 becomes WAITING.
@@ -794,7 +780,6 @@
 [91884944]:[1]: leave to dly_tsk ercd=0.
 [91885137]:[1]: enter to mig_tsk tskid=3. prcid=2.
 [91885540]:[1]: task 3 migrates from processor 1 to processor 2.
-[91885717]:[1]: task 3 becomes RUNNABLE.
 [91885959]:[1]: leave to mig_tsk ercd=0.
 [91886146]:[1]: enter to dly_tsk dlytim=10.
 [91886587]:[1]: task 4 becomes WAITING.
@@ -847,7 +832,6 @@
 [99777935]:[2]: leave to get_pid ercd=0. prcid=2
 [99778172]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [99778494]:[2]: task 2 migrates from processor 2 to processor 1.
-[99778812]:[2]: task 2 becomes RUNNABLE.
 [99779095]:[2]: dispatch from task 2.
 [99779271]:[2]: dispatch to task 3.
 [99779384]:[1]: dispatch to task 2.
@@ -863,7 +847,6 @@
 [99781258]:[2]: leave to get_pid ercd=0. prcid=2
 [99781495]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [99781817]:[2]: task 3 migrates from processor 2 to processor 1.
-[99782161]:[2]: task 3 becomes RUNNABLE.
 [99782412]:[2]: dispatch from task 3.
 [101867730]:[1]: task 4 becomes RUNNABLE.
 [101868269]:[1]: dispatch from task 2.
@@ -1056,7 +1039,6 @@
 [124677736]:[1]: leave to dly_tsk ercd=0.
 [124677929]:[1]: enter to mig_tsk tskid=2. prcid=2.
 [124678311]:[1]: task 2 migrates from processor 1 to processor 2.
-[124678488]:[1]: task 2 becomes RUNNABLE.
 [124678730]:[1]: leave to mig_tsk ercd=0.
 [124678917]:[1]: enter to dly_tsk dlytim=10.
 [124679406]:[1]: task 4 becomes WAITING.
@@ -1069,7 +1051,6 @@
 [126773666]:[1]: leave to dly_tsk ercd=0.
 [126773859]:[1]: enter to mig_tsk tskid=3. prcid=2.
 [126774262]:[1]: task 3 migrates from processor 1 to processor 2.
-[126774439]:[1]: task 3 becomes RUNNABLE.
 [126774681]:[1]: leave to mig_tsk ercd=0.
 [126774868]:[1]: enter to dly_tsk dlytim=10.
 [126775309]:[1]: task 4 becomes WAITING.
@@ -1122,7 +1103,6 @@
 [134666926]:[2]: leave to get_pid ercd=0. prcid=2
 [134667163]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [134667485]:[2]: task 2 migrates from processor 2 to processor 1.
-[134667803]:[2]: task 2 becomes RUNNABLE.
 [134668086]:[2]: dispatch from task 2.
 [134668262]:[2]: dispatch to task 3.
 [134668370]:[1]: dispatch to task 2.
@@ -1138,7 +1118,6 @@
 [134670280]:[2]: leave to get_pid ercd=0. prcid=2
 [134670517]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [134670839]:[2]: task 3 migrates from processor 2 to processor 1.
-[134671183]:[2]: task 3 becomes RUNNABLE.
 [134671434]:[2]: dispatch from task 3.
 [136756470]:[1]: task 4 becomes RUNNABLE.
 [136757009]:[1]: dispatch from task 2.
@@ -1331,7 +1310,6 @@
 [159566434]:[1]: leave to dly_tsk ercd=0.
 [159566627]:[1]: enter to mig_tsk tskid=2. prcid=2.
 [159567009]:[1]: task 2 migrates from processor 1 to processor 2.
-[159567186]:[1]: task 2 becomes RUNNABLE.
 [159567428]:[1]: leave to mig_tsk ercd=0.
 [159567615]:[1]: enter to dly_tsk dlytim=10.
 [159568104]:[1]: task 4 becomes WAITING.
@@ -1344,7 +1322,6 @@
 [161662364]:[1]: leave to dly_tsk ercd=0.
 [161662557]:[1]: enter to mig_tsk tskid=3. prcid=2.
 [161662960]:[1]: task 3 migrates from processor 1 to processor 2.
-[161663137]:[1]: task 3 becomes RUNNABLE.
 [161663379]:[1]: leave to mig_tsk ercd=0.
 [161663566]:[1]: enter to dly_tsk dlytim=10.
 [161664007]:[1]: task 4 becomes WAITING.
@@ -1366,7 +1343,6 @@
 [163636359]:[2]: leave to get_pid ercd=0. prcid=2
 [163636596]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [163636918]:[2]: task 1 migrates from processor 2 to processor 1.
-[163637236]:[2]: task 1 becomes RUNNABLE.
 [163637519]:[2]: dispatch from task 1.
 [163637695]:[2]: dispatch to task 2.
 [163637859]:[1]: dispatch to task 1.
@@ -1437,7 +1413,6 @@
 [171899343]:[2]: leave to get_pid ercd=0. prcid=2
 [171899580]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [171899902]:[2]: task 3 migrates from processor 2 to processor 1.
-[171900246]:[2]: task 3 becomes RUNNABLE.
 [171900529]:[2]: dispatch from task 3.
 [171900878]:[1]: dispatch to task 3.
 [171901077]:[1]: leave to mig_tsk ercd=0.
@@ -1600,7 +1575,6 @@
 [192607071]:[1]: leave to dly_tsk ercd=0.
 [192607264]:[1]: enter to mig_tsk tskid=1. prcid=2.
 [192607646]:[1]: task 1 migrates from processor 1 to processor 2.
-[192607823]:[1]: task 1 becomes RUNNABLE.
 [192608065]:[1]: leave to mig_tsk ercd=0.
 [192608252]:[1]: enter to dly_tsk dlytim=10.
 [192608741]:[1]: task 4 becomes WAITING.
@@ -1623,7 +1597,6 @@
 [196798917]:[1]: leave to dly_tsk ercd=0.
 [196799110]:[1]: enter to mig_tsk tskid=3. prcid=2.
 [196799513]:[1]: task 3 migrates from processor 1 to processor 2.
-[196799690]:[1]: task 3 becomes RUNNABLE.
 [196799932]:[1]: leave to mig_tsk ercd=0.
 [196800119]:[1]: enter to dly_tsk dlytim=10.
 [196800560]:[1]: task 4 becomes WAITING.
@@ -1651,7 +1624,6 @@
 [200744911]:[2]: leave to get_pid ercd=0. prcid=2
 [200745148]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [200745470]:[2]: task 2 migrates from processor 2 to processor 1.
-[200745788]:[2]: task 2 becomes RUNNABLE.
 [200746071]:[2]: dispatch from task 2.
 [200746247]:[2]: dispatch to task 1.
 [200746391]:[1]: dispatch to task 2.
@@ -1667,7 +1639,6 @@
 [200748265]:[2]: leave to get_pid ercd=0. prcid=2
 [200748502]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [200748824]:[2]: task 1 migrates from processor 2 to processor 1.
-[200749142]:[2]: task 1 becomes RUNNABLE.
 [200749393]:[2]: dispatch from task 1.
 [200749569]:[2]: dispatch to task 3.
 [202837935]:[1]: task 4 becomes RUNNABLE.
@@ -1689,7 +1660,6 @@
 [202840917]:[2]: leave to get_pid ercd=0. prcid=2
 [202841154]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [202841476]:[2]: task 3 migrates from processor 2 to processor 1.
-[202841820]:[2]: task 3 becomes RUNNABLE.
 [202842071]:[2]: dispatch from task 3.
 [204933759]:[1]: task 4 becomes RUNNABLE.
 [204934298]:[1]: dispatch from task 2.
@@ -1892,7 +1862,6 @@
 [227744200]:[1]: leave to dly_tsk ercd=0.
 [227744393]:[1]: enter to mig_tsk tskid=1. prcid=2.
 [227744775]:[1]: task 1 migrates from processor 1 to processor 2.
-[227744952]:[1]: task 1 becomes RUNNABLE.
 [227745223]:[1]: leave to mig_tsk ercd=0.
 [227745410]:[1]: enter to dly_tsk dlytim=10.
 [227745571]:[2]: dispatch to task 1.
@@ -1906,7 +1875,6 @@
 [229840165]:[1]: leave to dly_tsk ercd=0.
 [229840358]:[1]: enter to mig_tsk tskid=2. prcid=2.
 [229840740]:[1]: task 2 migrates from processor 1 to processor 2.
-[229840917]:[1]: task 2 becomes RUNNABLE.
 [229841159]:[1]: leave to mig_tsk ercd=0.
 [229841346]:[1]: enter to dly_tsk dlytim=10.
 [229841835]:[1]: task 4 becomes WAITING.
@@ -1919,7 +1887,6 @@
 [231936126]:[1]: leave to dly_tsk ercd=0.
 [231936319]:[1]: enter to mig_tsk tskid=3. prcid=2.
 [231936722]:[1]: task 3 migrates from processor 1 to processor 2.
-[231936899]:[1]: task 3 becomes RUNNABLE.
 [231937141]:[1]: leave to mig_tsk ercd=0.
 [231937328]:[1]: enter to dly_tsk dlytim=10.
 [231937769]:[1]: task 4 becomes WAITING.
@@ -1941,7 +1908,6 @@
 [233910114]:[2]: leave to get_pid ercd=0. prcid=2
 [233910351]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [233910673]:[2]: task 1 migrates from processor 2 to processor 1.
-[233910991]:[2]: task 1 becomes RUNNABLE.
 [233911274]:[2]: dispatch from task 1.
 [233911450]:[2]: dispatch to task 2.
 [233911621]:[1]: dispatch to task 1.
@@ -1965,7 +1931,6 @@
 [236006204]:[2]: leave to get_pid ercd=0. prcid=2
 [236006441]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [236006763]:[2]: task 2 migrates from processor 2 to processor 1.
-[236007081]:[2]: task 2 becomes RUNNABLE.
 [236007332]:[2]: dispatch from task 2.
 [236007508]:[2]: dispatch to task 3.
 [238099029]:[1]: task 4 becomes RUNNABLE.
@@ -1987,7 +1952,6 @@
 [238101881]:[2]: leave to get_pid ercd=0. prcid=2
 [238102118]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [238102440]:[2]: task 3 migrates from processor 2 to processor 1.
-[238102784]:[2]: task 3 becomes RUNNABLE.
 [238103035]:[2]: dispatch from task 3.
 [240194883]:[1]: task 4 becomes RUNNABLE.
 [240195422]:[1]: dispatch from task 1.
@@ -2190,7 +2154,6 @@
 [263005307]:[1]: leave to dly_tsk ercd=0.
 [263005500]:[1]: enter to mig_tsk tskid=1. prcid=2.
 [263005882]:[1]: task 1 migrates from processor 1 to processor 2.
-[263006059]:[1]: task 1 becomes RUNNABLE.
 [263006330]:[1]: leave to mig_tsk ercd=0.
 [263006517]:[1]: enter to dly_tsk dlytim=10.
 [263006679]:[2]: dispatch to task 1.
@@ -2204,7 +2167,6 @@
 [265101272]:[1]: leave to dly_tsk ercd=0.
 [265101465]:[1]: enter to mig_tsk tskid=2. prcid=2.
 [265101847]:[1]: task 2 migrates from processor 1 to processor 2.
-[265102024]:[1]: task 2 becomes RUNNABLE.
 [265102266]:[1]: leave to mig_tsk ercd=0.
 [265102453]:[1]: enter to dly_tsk dlytim=10.
 [265102942]:[1]: task 4 becomes WAITING.
@@ -2217,7 +2179,6 @@
 [267197233]:[1]: leave to dly_tsk ercd=0.
 [267197426]:[1]: enter to mig_tsk tskid=3. prcid=2.
 [267197829]:[1]: task 3 migrates from processor 1 to processor 2.
-[267198006]:[1]: task 3 becomes RUNNABLE.
 [267198248]:[1]: leave to mig_tsk ercd=0.
 [267198435]:[1]: enter to dly_tsk dlytim=10.
 [267198876]:[1]: task 4 becomes WAITING.
@@ -2239,7 +2200,6 @@
 [269171216]:[2]: leave to get_pid ercd=0. prcid=2
 [269171453]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [269171775]:[2]: task 1 migrates from processor 2 to processor 1.
-[269172093]:[2]: task 1 becomes RUNNABLE.
 [269172376]:[2]: dispatch from task 1.
 [269172552]:[2]: dispatch to task 2.
 [269172678]:[1]: dispatch to task 1.
@@ -2263,7 +2223,6 @@
 [271267296]:[2]: leave to get_pid ercd=0. prcid=2
 [271267533]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [271267855]:[2]: task 2 migrates from processor 2 to processor 1.
-[271268173]:[2]: task 2 becomes RUNNABLE.
 [271268424]:[2]: dispatch from task 2.
 [271268600]:[2]: dispatch to task 3.
 [273360128]:[1]: task 4 becomes RUNNABLE.
@@ -2285,7 +2244,6 @@
 [273363115]:[2]: leave to get_pid ercd=0. prcid=2
 [273363352]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [273363674]:[2]: task 3 migrates from processor 2 to processor 1.
-[273364018]:[2]: task 3 becomes RUNNABLE.
 [273364269]:[2]: dispatch from task 3.
 [275455958]:[1]: task 4 becomes RUNNABLE.
 [275456497]:[1]: dispatch from task 1.
@@ -2488,7 +2446,6 @@
 [298266424]:[1]: leave to dly_tsk ercd=0.
 [298266617]:[1]: enter to mig_tsk tskid=1. prcid=2.
 [298266999]:[1]: task 1 migrates from processor 1 to processor 2.
-[298267176]:[1]: task 1 becomes RUNNABLE.
 [298267447]:[1]: leave to mig_tsk ercd=0.
 [298267634]:[1]: enter to dly_tsk dlytim=10.
 [298267793]:[2]: dispatch to task 1.
@@ -2502,7 +2459,6 @@
 [300362389]:[1]: leave to dly_tsk ercd=0.
 [300362582]:[1]: enter to mig_tsk tskid=2. prcid=2.
 [300362964]:[1]: task 2 migrates from processor 1 to processor 2.
-[300363141]:[1]: task 2 becomes RUNNABLE.
 [300363383]:[1]: leave to mig_tsk ercd=0.
 [300363570]:[1]: enter to dly_tsk dlytim=10.
 [300364059]:[1]: task 4 becomes WAITING.
@@ -2515,7 +2471,6 @@
 [302458350]:[1]: leave to dly_tsk ercd=0.
 [302458543]:[1]: enter to mig_tsk tskid=3. prcid=2.
 [302458946]:[1]: task 3 migrates from processor 1 to processor 2.
-[302459123]:[1]: task 3 becomes RUNNABLE.
 [302459365]:[1]: leave to mig_tsk ercd=0.
 [302459552]:[1]: enter to dly_tsk dlytim=10.
 [302459993]:[1]: task 4 becomes WAITING.
@@ -2537,7 +2492,6 @@
 [304432436]:[2]: leave to get_pid ercd=0. prcid=2
 [304432673]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [304432995]:[2]: task 1 migrates from processor 2 to processor 1.
-[304433313]:[2]: task 1 becomes RUNNABLE.
 [304433596]:[2]: dispatch from task 1.
 [304433772]:[2]: dispatch to task 2.
 [304433893]:[1]: dispatch to task 1.
@@ -2561,7 +2515,6 @@
 [306528414]:[2]: leave to get_pid ercd=0. prcid=2
 [306528651]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [306528973]:[2]: task 2 migrates from processor 2 to processor 1.
-[306529291]:[2]: task 2 becomes RUNNABLE.
 [306529542]:[2]: dispatch from task 2.
 [306529718]:[2]: dispatch to task 3.
 [308621233]:[1]: task 4 becomes RUNNABLE.
@@ -2583,7 +2536,6 @@
 [308624213]:[2]: leave to get_pid ercd=0. prcid=2
 [308624450]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [308624772]:[2]: task 3 migrates from processor 2 to processor 1.
-[308625116]:[2]: task 3 becomes RUNNABLE.
 [308625367]:[2]: dispatch from task 3.
 [310717083]:[1]: task 4 becomes RUNNABLE.
 [310717622]:[1]: dispatch from task 1.
@@ -2786,7 +2738,6 @@
 [333527543]:[1]: leave to dly_tsk ercd=0.
 [333527736]:[1]: enter to mig_tsk tskid=1. prcid=2.
 [333528118]:[1]: task 1 migrates from processor 1 to processor 2.
-[333528295]:[1]: task 1 becomes RUNNABLE.
 [333528566]:[1]: leave to mig_tsk ercd=0.
 [333528753]:[1]: enter to dly_tsk dlytim=10.
 [333528915]:[2]: dispatch to task 1.
@@ -2800,7 +2751,6 @@
 [335623508]:[1]: leave to dly_tsk ercd=0.
 [335623701]:[1]: enter to mig_tsk tskid=2. prcid=2.
 [335624083]:[1]: task 2 migrates from processor 1 to processor 2.
-[335624260]:[1]: task 2 becomes RUNNABLE.
 [335624502]:[1]: leave to mig_tsk ercd=0.
 [335624689]:[1]: enter to dly_tsk dlytim=10.
 [335625178]:[1]: task 4 becomes WAITING.
@@ -2813,7 +2763,6 @@
 [337719469]:[1]: leave to dly_tsk ercd=0.
 [337719662]:[1]: enter to mig_tsk tskid=3. prcid=2.
 [337720065]:[1]: task 3 migrates from processor 1 to processor 2.
-[337720242]:[1]: task 3 becomes RUNNABLE.
 [337720484]:[1]: leave to mig_tsk ercd=0.
 [337720671]:[1]: enter to dly_tsk dlytim=10.
 [337721112]:[1]: task 4 becomes WAITING.
@@ -2835,7 +2784,6 @@
 [339693452]:[2]: leave to get_pid ercd=0. prcid=2
 [339693689]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [339694011]:[2]: task 1 migrates from processor 2 to processor 1.
-[339694329]:[2]: task 1 becomes RUNNABLE.
 [339694612]:[2]: dispatch from task 1.
 [339694788]:[2]: dispatch to task 2.
 [339694964]:[1]: dispatch to task 1.
@@ -2859,7 +2807,6 @@
 [341789522]:[2]: leave to get_pid ercd=0. prcid=2
 [341789759]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [341790081]:[2]: task 2 migrates from processor 2 to processor 1.
-[341790399]:[2]: task 2 becomes RUNNABLE.
 [341790650]:[2]: dispatch from task 2.
 [341790826]:[2]: dispatch to task 3.
 [343882352]:[1]: task 4 becomes RUNNABLE.
@@ -2881,7 +2828,6 @@
 [343885321]:[2]: leave to get_pid ercd=0. prcid=2
 [343885558]:[2]: enter to mig_tsk tskid=0. prcid=1.
 [343885880]:[2]: task 3 migrates from processor 2 to processor 1.
-[343886224]:[2]: task 3 becomes RUNNABLE.
 [343886475]:[2]: dispatch from task 3.
 [345978182]:[1]: task 4 becomes RUNNABLE.
 [345978721]:[1]: dispatch from task 1.
