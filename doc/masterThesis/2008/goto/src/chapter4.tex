@@ -128,21 +128,21 @@ TOPPERS/ASPカーネルのトレースログは，タスクの状態遷移を表
 
 \begin{table}[p]
 \begin{quote}
+\caption{TOPPERS/ASPカーネルのトレースログにおけるタスクの状態遷移を表す形式}
+\label{aspTaskStateChangeTraceLog}
 \begin{breakbox}
 {\tt [}{\it time}{\tt ] task }{\it taskId}{\tt \ becomes }{\it state}{\tt .}
 \end{breakbox}
-\caption{TOPPERS/ASPカーネルのトレースログにおけるタスクの状態遷移を表す形式}
-\label{aspTaskStateChangeTraceLog}
 \end{quote}
 \end{table}
 
 \begin{table}[p]
 \begin{quote}
+\caption{タスクの状態遷移を表す標準形式トレースログ}
+\label{aspTaskStateChangeStandardTraceLog}
 \begin{breakbox}
 {\tt [}{\it time}{\tt ] Task(id==}{\it taskId}{\tt ).state=}{\it state}
 \end{breakbox}
-\caption{タスクの状態遷移を表す標準形式トレースログ}
-\label{aspTaskStateChangeStandardTraceLog}
 \end{quote}
 \end{table}
 
@@ -151,11 +151,11 @@ TOPPERS/ASPカーネルのトレースログは，タスクの状態遷移を表
 
 \begin{table}[p]
 \begin{quote}
+\caption{TOPPERS/ASPカーネルのトレースログにおけるタスクが実行状態になったことを表す形式}
+\label{aspTaskStateBecomeRunningTraceLog}
 \begin{breakbox}
 {\tt [}{\it time}{\tt ] dispatch to task }{\it taskId}{\tt .}
 \end{breakbox}
-\caption{TOPPERS/ASPカーネルのトレースログにおけるタスクが実行状態になったことを表す形式}
-\label{aspTaskStateBecomeRunningTraceLog}
 \end{quote}
 \end{table}
 
@@ -169,41 +169,41 @@ TOPPERS/ASPカーネルでは，タスクが実行状態になったかどうか
 
 \begin{table}[p]
 \begin{quote}
+\caption{タスクの起動を表す標準形式トレースログ}
+\label{aspTaskActivateTraceLog}
 \begin{breakbox}
 {\tt [}{\it time}{\tt ] Task(id==}{\it taskId}{\tt ).activate()}
 \end{breakbox}
-\caption{タスクの起動を表す標準形式トレースログ}
-\label{aspTaskActivateTraceLog}
 \end{quote}
 \end{table}
 
 \begin{table}[p]
 \begin{quote}
+\caption{タスクの終了を表す標準形式トレースログ}
+\label{aspTaskExitTraceLog}
 \begin{breakbox}
 {\tt [}{\it time}{\tt ] Task(id==}{\it taskId}{\tt ).exit()}
 \end{breakbox}
-\caption{タスクの終了を表す標準形式トレースログ}
-\label{aspTaskExitTraceLog}
 \end{quote}
 \end{table}
 
 \begin{table}[p]
 \begin{quote}
+\caption{TOPPERS/ASPカーネルのトレースログにおけるシステムコールに入ったことを表す形式}
+\label{aspSVCcallEnterTraceLog}
 \begin{breakbox}
 {\tt [}{\it time}{\tt ] enter to }{\it svcName}{\tt \ }{\it args}{\tt .}
 \end{breakbox}
-\caption{TOPPERS/ASPカーネルのトレースログにおけるシステムコールに入ったことを表す形式}
-\label{aspSVCcallEnterTraceLog}
 \end{quote}
 \end{table}
 
 \begin{table}[p]
 \begin{quote}
+\caption{TOPPERS/ASPカーネルのトレースログにおけるシステムコールから出たことを表す形式}
+\label{aspSVCcallLeaveTraceLog}
 \begin{breakbox}
 {\tt [}{\it time}{\tt ] leave to }{\it svcName}{\tt \ ercd=}{\it ercd}{\tt .}
 \end{breakbox}
-\caption{TOPPERS/ASPカーネルのトレースログにおけるシステムコールから出たことを表す形式}
-\label{aspSVCcallLeaveTraceLog}
 \end{quote}
 \end{table}
 
@@ -450,11 +450,11 @@ TOPPERS/ASPカーネル用のリソースヘッダをコピーし，表\ref{fmpR
 
 \begin{table}[!h]
 \begin{quote}
+\caption{TOPPERS/FMPカーネルのトレースログの形式}
+\label{fmpTraceLogFormat}
 \begin{breakbox}
 {\tt [}{\it time}{\tt ]:[}{\it prcId}{\tt ]: }{\it tracelog}
 \end{breakbox}
-\caption{TOPPERS/FMPカーネルのトレースログの形式}
-\label{fmpTraceLogFormat}
 \end{quote}
 \end{table}
 
@@ -644,13 +644,13 @@ TECSのトレースログの形式は表\ref{tecsTraceLog}の用になってい�
 
 \begin{table}[p]
 \begin{quote}
+\caption{TECSのトレースログの形式}
+\label{tecsTraceLog}
 \begin{breakbox}
 {\tt time=}{\it time}{\tt us }{\it caller}{\tt ->}{\it callee}{\tt .enter(}{\it ...}{\tt )}
 
 {\tt time=}{\it time}{\tt us }{\it caller}{\tt ->}{\it callee}{\tt .leave(}{\it ...}{\tt )}
 \end{breakbox}
-\caption{TECSのトレースログの形式}
-\label{tecsTraceLog}
 \end{quote}
 \end{table}
 
