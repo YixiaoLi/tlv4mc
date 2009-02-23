@@ -67,12 +67,9 @@
 	"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: task (?<tskid>\d+) migrates from processor (?<fromPrcId>\d+) to processor (?<toPrcId>\d+)\." :
 	{
 	    "$EXIST{[${time}]Task(id==${tskid} && prcId==${fromPrcId})}" :
-	    {
-	      "temp=$ATTR{[${time}]Task(id==${tskid} && prcId==${fromPrcId}).state}",
-	      "[${time}]$RES_NAME{Task(id==${tskid} && prcId==${fromPrcId})}.state=DORMANT"
-	    },
+	      "[${time}]$RES_NAME{Task(id==${tskid} && prcId==${fromPrcId})}.state=DORMANT",
 	    "$EXIST{[${time}]Task(id==${tskid} && prcId==${toPrcId})}" :
-	      "$ATTR{[${time}]Task(id==${tskid} && prcId==${toPrcId}).state}=${temp}"
+	      "[${time}]$RES_NAME{Task(id==${tskid} && prcId==${toPrcId})}.state=$ATTR{[${time}]Task(id==${tskid} && prcId==${fromPrcId}).state}"
         }
     }
 }

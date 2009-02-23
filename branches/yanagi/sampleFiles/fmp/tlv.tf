@@ -20,7 +20,7 @@ $JOINEACH prcid RANGE(1, 2) ",\n"$
     $TAB$$TAB$$TAB$$TAB$"tskid"    :$+tskid$,$NL$
     $TAB$$TAB$$TAB$$TAB$"atr"   :"$TSK.TSKATR[tskid]$",$NL$
     $TAB$$TAB$$TAB$$TAB$"pri"   :$+TSK.ITSKPRI[tskid]$,$NL$
-    $TAB$$TAB$$TAB$$TAB$"exinf" :$TSK.EXINF[tskid]$,$NL$
+    $TAB$$TAB$$TAB$$TAB$"exinf" :$+TSK.EXINF[tskid]$,$NL$
     $TAB$$TAB$$TAB$$TAB$"task"  :"$TSK.TASK[tskid]$",$NL$
     $TAB$$TAB$$TAB$$TAB$"stksz" :$+TSK.STKSZ[tskid]$,$NL$
     $TAB$$TAB$$TAB$$TAB$"stk"   :"NULL",$NL$
