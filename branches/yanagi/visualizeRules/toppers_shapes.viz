@@ -1,5 +1,5 @@
 {
-	"toppers":{
+	"toppers_mig":{
 		"Shapes":{
 			"runningShapes":[
 				{
@@ -65,6 +65,15 @@
 					"Pen":{"Color":"ff999999","Width":1}
 				}
 			],
+			"nonexistentShapes":[
+				{
+					"Type":"Line",
+					"Points":["l(0),0","r(0),0"],
+					"Pen":{"Color":"00000000","Width":1},
+					"Fill":"00000000"
+				}
+			],
+
 			"activateShapes":[
 				{
 					"Type":"Arrow",

@@ -1,5 +1,5 @@
 ﻿{
-	"toppers":{
+	"toppers_mig":{
 		"VisualizeRules":{
 			"taskStateChange":{
 				"DisplayName":"状態遷移",

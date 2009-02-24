@@ -1,19 +1,6 @@
 ﻿{
-	"fmp_core1":{
+	"fmp_mig_core1":{
 		"VisualizeRules":{
-			"taskPrcIdChange":{
-				"DisplayName":"所属プロセッサ",
-				"Target":"Task",
-				"Events":{
-					"prcIdChangeEvent":{
-						"DisplayName":"プロセッサID",
-						"When":"${TARGET}.prcId",
-						"Figures":{
-							"${VAL}==1":"prcIdShapes(ff0000)"
-						}
-					}
-				}
-			},
 			"runningTaskChange":{
 				"DisplayName":"実行タスク変化",
 				"Events":{
@@ -29,22 +16,8 @@
 			}
 		}
 	},
-	"fmp_core2":{
+	"fmp_mig_core2":{
 		"VisualizeRules":{
-			"taskPrcIdChange":{
-				"DisplayName":"所属プロセッサ",
-				"Target":"Task",
-				"Events":{
-					"prcIdChangeEvent":{
-						"DisplayName":"プロセッサID",
-						"When":"${TARGET}.prcId",
-						"Figures":{
-							"${VAL}==1":"prcIdShapes(ff0000)",
-							"${VAL}==2":"prcIdShapes(0000ff)"
-						}
-					}
-				}
-			},
 			"runningTaskChange":{
 				"DisplayName":"実行タスク変化",
 				"Events":{
@@ -61,23 +34,8 @@
 			}
 		}
 	},
-	"fmp_core3":{
+	"fmp_mig_core3":{
 		"VisualizeRules":{
-			"taskPrcIdChange":{
-				"DisplayName":"所属プロセッサ",
-				"Target":"Task",
-				"Events":{
-					"prcIdChangeEvent":{
-						"DisplayName":"プロセッサID",
-						"When":"${TARGET}.prcId",
-						"Figures":{
-							"${VAL}==1":"prcIdShapes(ff0000)",
-							"${VAL}==2":"prcIdShapes(0000ff)",
-							"${VAL}==3":"prcIdShapes(00ff00)"
-    					}
-					}
-				}
-			},
 			"runningTaskChange":{
 				"DisplayName":"実行タスク変化",
 				"Events":{
@@ -95,24 +53,8 @@
 			}
 		}
 	},
-	"fmp_core4":{
+	"fmp_mig_core4":{
 		"VisualizeRules":{
-			"taskPrcIdChange":{
-				"DisplayName":"所属プロセッサ",
-				"Target":"Task",
-				"Events":{
-					"prcIdChangeEvent":{
-						"DisplayName":"プロセッサID",
-						"When":"${TARGET}.prcId",
-						"Figures":{
-							"${VAL}==1":"prcIdShapes(ff0000)",
-							"${VAL}==2":"prcIdShapes(0000ff)",
-							"${VAL}==3":"prcIdShapes(00ff00)",
-							"${VAL}==4":"prcIdShapes(ffff00)"
-    					}
-					}
-				}
-			},
 			"runningTaskChange":{
 				"DisplayName":"実行タスク変化",
 				"Events":{

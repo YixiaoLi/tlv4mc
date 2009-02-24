@@ -1,10 +1,10 @@
-$FILE "kernel.res"$
+$FILE "fmp_mig.res"$
 {$NL$
 $TAB$"TimeScale" :"us",$NL$
 $TAB$"TimeRadix" :10,$NL$
-$TAB$"ConvertRules"   :["asp","fmp"],$NL$
-$TAB$"VisualizeRules" :["toppers","fmp","fmp_core$+TNUM_PRC$"],$NL$
-$TAB$"ResourceHeaders":["fmp"],$NL$
+$TAB$"ConvertRules"   :["asp","fmp_mig"],$NL$
+$TAB$"VisualizeRules" :["toppers_mig","fmp_mig","fmp_mig_core$+TNUM_PRC$"],$NL$
+$TAB$"ResourceHeaders":["fmp_mig"],$NL$
 $TAB$"Resources":$NL$
 $TAB${$NL$
 $JOINEACH prcid RANGE(1, 2) ",\n"$

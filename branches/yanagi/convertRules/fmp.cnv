@@ -1,5 +1,5 @@
 {
-    "fmp":
+    "fmp_mig":
     {
 	"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: dispatch to task (?<id>\d+)\." : [
 	    {
@@ -66,10 +66,14 @@
 	},
 	"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: task (?<tskid>\d+) migrates from processor (?<fromPrcId>\d+) to processor (?<toPrcId>\d+)\." :
 	{
+	    "$EXIST{[${time}]Task(id==${tskid} && prcId==${toPrcId})}" : {
+	      "$ATTR{[${time}]Task(id==${tskid} && prcId==${fromPrcId}).state}==RUNNING" :
+	        "[${time}]$RES_NAME{Task(id==${tskid} && prcId==${toPrcId})}.state=RUNNABLE",
+	      "$ATTR{[${time}]Task(id==${tskid} && prcId==${fromPrcId}).state}!=RUNNING" :
+	        "[${time}]$RES_NAME{Task(id==${tskid} && prcId==${toPrcId})}.state=$ATTR{[${time}]Task(id==${tskid} && prcId==${fromPrcId}).state}"
+	    },
 	    "$EXIST{[${time}]Task(id==${tskid} && prcId==${fromPrcId})}" :
-	      "[${time}]$RES_NAME{Task(id==${tskid} && prcId==${fromPrcId})}.state=DORMANT",
-	    "$EXIST{[${time}]Task(id==${tskid} && prcId==${toPrcId})}" :
-	      "[${time}]$RES_NAME{Task(id==${tskid} && prcId==${toPrcId})}.state=$ATTR{[${time}]Task(id==${tskid} && prcId==${fromPrcId}).state}"
+	      "[${time}]$RES_NAME{Task(id==${tskid} && prcId==${fromPrcId})}.state=NONEXISTENT"
         }
     }
 }
