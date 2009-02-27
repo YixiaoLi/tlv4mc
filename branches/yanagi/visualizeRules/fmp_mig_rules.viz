@@ -1,4 +1,4 @@
-﻿{
+{
 	"fmp_mig_core1":{
 		"VisualizeRules":{
 			"runningTaskChange":{
@@ -18,6 +18,67 @@
 	},
 	"fmp_mig_core2":{
 		"VisualizeRules":{
+			"taskPrcId":{
+				"DisplayName":"所属プロセッサ",
+				"Target":"Task",
+				"Events":{
+					"taskprcid_running":{
+						"DisplayName":"プロセッサID",
+						"From":"Task(state!=RUNNING).state=RUNNING",
+						"To":"${FROM_TARGET}.state",
+						"Figures":{
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.prcId}==1":"prcIdShapes(ff0000)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.prcId}==2":"prcIdShapes(0000ff)"
+						}
+					},
+					"taskprcid_runnble":{
+						"DisplayName":"プロセッサID",
+						"From":"Task(state!=RUNNABLE).state=RUNNABLE",
+						"To":"${FROM_TARGET}.state",
+						"Figures":{
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.prcId}==1":"prcIdShapes(ff0000)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.prcId}==2":"prcIdShapes(0000ff)"
+						}
+					},
+					"taskprcid_waiting":{
+						"DisplayName":"プロセッサID",
+						"From":"Task(state!=WAITING).state=WAITING",
+						"To":"${FROM_TARGET}.state",
+						"Figures":{
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.prcId}==1":"prcIdShapes(ff0000)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.prcId}==2":"prcIdShapes(0000ff)"
+						}
+					},
+					"taskprcid_suspended":{
+						"DisplayName":"プロセッサID",
+						"From":"Task(state!=SUSPENDED).state=SUSPENDED",
+						"To":"${FROM_TARGET}.state",
+						"Figures":{
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.prcId}==1":"prcIdShapes(ff0000)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.prcId}==2":"prcIdShapes(0000ff)"
+						}
+					},
+					"taskprcid_wai-sus":{
+						"DisplayName":"プロセッサID",
+						"From":"Task(state!=WAITING_SUSPENDED).state=WAITING_SUSPENDED",
+						"To":"${FROM_TARGET}.state",
+						"Figures":{
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.prcId}==1":"prcIdShapes(ff0000)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.prcId}==2":"prcIdShapes(0000ff)"
+						}
+					},
+					"taskprcid_dormant":{
+						"DisplayName":"プロセッサID",
+						"From":"Task(state!=DORMANT).state=DPRMANT",
+						"To":"${FROM_TARGET}.state",
+						"Figures":{
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.prcId}==1":"prcIdShapes(ff0000)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.prcId}==2":"prcIdShapes(0000ff)"
+						}
+					}
+
+				}
+			},
 			"runningTaskChange":{
 				"DisplayName":"実行タスク変化",
 				"Events":{
