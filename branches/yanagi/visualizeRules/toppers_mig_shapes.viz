@@ -73,7 +73,6 @@
 					"Fill":"00000000"
 				}
 			],
-
 			"activateShapes":[
 				{
 					"Type":"Arrow",
@@ -114,6 +113,13 @@
 					"Size":"100%,40%",
 					"Font":{"Align":"BottomRight", "Size":7},
 					"Text":"return ${ARG2}"
+				}
+			],
+			"migrateShapes":[
+				{
+					"Type":"Arrow",
+					"Points":["0,0","0,100%"],
+					"Pen":{"Color":"ff000000","Width":2}
 				}
 			]
 		}

@@ -190,3 +190,271 @@
 [19268679]:[1]: dispatch from task 4.
 [19268855]:[1]: dispatch to task 3.
 [19269067]:[1]: leave to slp_tsk ercd=0.
+[21361835]:[1]: task 4 becomes RUNNABLE.
+[21362374]:[1]: dispatch from task 3.
+[21362550]:[1]: dispatch to task 4.
+[21362756]:[1]: leave to dly_tsk ercd=0.
+[21362949]:[1]: enter to mig_tsk tskid=3. prcid=2.
+[21363352]:[1]: task 3 migrates from processor 1 to processor 2.
+[21363771]:[1]: leave to mig_tsk ercd=0.
+[21363958]:[1]: enter to dly_tsk dlytim=10.
+[21364399]:[1]: task 4 becomes WAITING.
+[21364613]:[1]: dispatch from task 4.
+[23333993]:[1]: task 4 becomes RUNNABLE.
+[23334504]:[1]: dispatch to task 4.
+[23334710]:[1]: leave to dly_tsk ercd=0.
+[23334897]:[1]: enter to dly_tsk dlytim=10.
+[23335233]:[2]: enter to sns_ctx.
+[23335338]:[1]: task 4 becomes WAITING.
+[23335439]:[2]: leave to sns_ctx state=0.
+[23335552]:[1]: dispatch from task 4.
+[23335641]:[2]: enter to get_pid p_prcid=1377908.
+[23335833]:[2]: leave to get_pid ercd=0. prcid=2
+[23335997]:[2]: #1#mig_tsk(PE1)
+[23336181]:[2]: enter to sns_ctx.
+[23336357]:[2]: leave to sns_ctx state=0.
+[23336541]:[2]: enter to get_pid p_prcid=1377952.
+[23336733]:[2]: leave to get_pid ercd=0. prcid=2
+[23336970]:[2]: enter to mig_tsk tskid=0. prcid=1.
+[23337292]:[2]: task 1 migrates from processor 2 to processor 1.
+[23337893]:[2]: dispatch from task 1.
+[23338069]:[2]: dispatch to task 2.
+[23338187]:[1]: dispatch to task 1.
+[23338386]:[1]: leave to mig_tsk ercd=0.
+[25429813]:[1]: task 4 becomes RUNNABLE.
+[25430352]:[1]: dispatch from task 1.
+[25430528]:[1]: dispatch to task 4.
+[25430734]:[1]: leave to dly_tsk ercd=0.
+[25430921]:[1]: enter to dly_tsk dlytim=10.
+[25431345]:[2]: enter to sns_ctx.
+[25431440]:[1]: task 4 becomes WAITING.
+[25431521]:[2]: leave to sns_ctx state=0.
+[25431654]:[1]: dispatch from task 4.
+[25431753]:[2]: enter to get_pid p_prcid=1382004.
+[25431830]:[1]: dispatch to task 1.
+[25431945]:[2]: leave to get_pid ercd=0. prcid=2
+[25432109]:[2]: #2#mig_tsk(PE1)
+[25432293]:[2]: enter to sns_ctx.
+[25432469]:[2]: leave to sns_ctx state=0.
+[25432653]:[2]: enter to get_pid p_prcid=1382048.
+[25432845]:[2]: leave to get_pid ercd=0. prcid=2
+[25433082]:[2]: enter to mig_tsk tskid=0. prcid=1.
+[25433404]:[2]: task 2 migrates from processor 2 to processor 1.
+[25433973]:[2]: dispatch from task 2.
+[25434149]:[2]: dispatch to task 3.
+[27525667]:[1]: task 4 becomes RUNNABLE.
+[27526206]:[1]: dispatch from task 1.
+[27526382]:[1]: dispatch to task 4.
+[27526588]:[1]: leave to dly_tsk ercd=0.
+[27526775]:[1]: enter to dly_tsk dlytim=10.
+[27527154]:[2]: enter to sns_ctx.
+[27527284]:[1]: task 4 becomes WAITING.
+[27527390]:[2]: leave to sns_ctx state=0.
+[27527518]:[1]: dispatch from task 4.
+[27527622]:[2]: enter to get_pid p_prcid=1386100.
+[27527714]:[1]: dispatch to task 1.
+[27527814]:[2]: leave to get_pid ercd=0. prcid=2
+[27527978]:[2]: #3#mig_tsk(PE1)
+[27528162]:[2]: enter to sns_ctx.
+[27528338]:[2]: leave to sns_ctx state=0.
+[27528522]:[2]: enter to get_pid p_prcid=1386144.
+[27528714]:[2]: leave to get_pid ercd=0. prcid=2
+[27528951]:[2]: enter to mig_tsk tskid=0. prcid=1.
+[27529273]:[2]: task 3 migrates from processor 2 to processor 1.
+[27529868]:[2]: dispatch from task 3.
+[29621485]:[1]: task 4 becomes RUNNABLE.
+[29622024]:[1]: dispatch from task 1.
+[29622200]:[1]: dispatch to task 4.
+[29622406]:[1]: leave to dly_tsk ercd=0.
+[29622593]:[1]: enter to dly_tsk dlytim=10.
+[29623082]:[1]: task 4 becomes WAITING.
+[29623296]:[1]: dispatch from task 4.
+[29623472]:[1]: dispatch to task 1.
+[29623988]:[1]: enter to sns_ctx.
+[29624164]:[1]: leave to sns_ctx state=0.
+[29624346]:[1]: enter to get_pid p_prcid=1377908.
+[29624538]:[1]: leave to get_pid ercd=0. prcid=1
+[29624702]:[1]: #1#ext_tsk()
+[29624886]:[1]: enter to sns_ctx.
+[29625062]:[1]: leave to sns_ctx state=0.
+[29625246]:[1]: enter to get_pid p_prcid=1377952.
+[29625438]:[1]: leave to get_pid ercd=0. prcid=1
+[29625718]:[1]: enter to ext_tsk.
+[29626110]:[1]: task 1 becomes DORMANT.
+[29626326]:[1]: dispatch from task 1.
+[29626502]:[1]: dispatch to task 2.
+[29626701]:[1]: leave to mig_tsk ercd=0.
+[31717652]:[1]: task 4 becomes RUNNABLE.
+[31718191]:[1]: dispatch from task 2.
+[31718367]:[1]: dispatch to task 4.
+[31718573]:[1]: leave to dly_tsk ercd=0.
+[31718760]:[1]: enter to dly_tsk dlytim=10.
+[31719249]:[1]: task 4 becomes WAITING.
+[31719463]:[1]: dispatch from task 4.
+[31719639]:[1]: dispatch to task 2.
+[31720155]:[1]: enter to sns_ctx.
+[31720331]:[1]: leave to sns_ctx state=0.
+[31720513]:[1]: enter to get_pid p_prcid=1382004.
+[31720705]:[1]: leave to get_pid ercd=0. prcid=1
+[31720869]:[1]: #2#ext_tsk()
+[31721053]:[1]: enter to sns_ctx.
+[31721229]:[1]: leave to sns_ctx state=0.
+[31721413]:[1]: enter to get_pid p_prcid=1382048.
+[31721605]:[1]: leave to get_pid ercd=0. prcid=1
+[31721885]:[1]: enter to ext_tsk.
+[31722277]:[1]: task 2 becomes DORMANT.
+[31722493]:[1]: dispatch from task 2.
+[31722669]:[1]: dispatch to task 3.
+[31722868]:[1]: leave to mig_tsk ercd=0.
+[33813819]:[1]: task 4 becomes RUNNABLE.
+[33814358]:[1]: dispatch from task 3.
+[33814534]:[1]: dispatch to task 4.
+[33814740]:[1]: leave to dly_tsk ercd=0.
+[33814927]:[1]: enter to dly_tsk dlytim=10.
+[33815416]:[1]: task 4 becomes WAITING.
+[33815630]:[1]: dispatch from task 4.
+[33815806]:[1]: dispatch to task 3.
+[33816322]:[1]: enter to sns_ctx.
+[33816498]:[1]: leave to sns_ctx state=0.
+[33816680]:[1]: enter to get_pid p_prcid=1386100.
+[33816872]:[1]: leave to get_pid ercd=0. prcid=1
+[33817036]:[1]: #3#ext_tsk()
+[33817220]:[1]: enter to sns_ctx.
+[33817396]:[1]: leave to sns_ctx state=0.
+[33817580]:[1]: enter to get_pid p_prcid=1386144.
+[33817772]:[1]: leave to get_pid ercd=0. prcid=1
+[33818052]:[1]: enter to ext_tsk.
+[33818470]:[1]: task 3 becomes DORMANT.
+[33818686]:[1]: dispatch from task 3.
+[35786301]:[1]: task 4 becomes RUNNABLE.
+[35786813]:[1]: dispatch to task 4.
+[35787019]:[1]: leave to dly_tsk ercd=0.
+[35787204]:[1]: enter to act_tsk tskid=1.
+[35787471]:[1]: task 1 becomes RUNNABLE.
+[35787706]:[1]: leave to act_tsk ercd=0.
+[35787892]:[1]: enter to act_tsk tskid=2.
+[35788159]:[1]: task 2 becomes RUNNABLE.
+[35788394]:[1]: leave to act_tsk ercd=0.
+[35788577]:[1]: enter to act_tsk tskid=3.
+[35788844]:[1]: task 3 becomes RUNNABLE.
+[35789079]:[1]: leave to act_tsk ercd=0.
+[35789264]:[1]: enter to dly_tsk dlytim=10.
+[35789753]:[1]: task 4 becomes WAITING.
+[35789967]:[1]: dispatch from task 4.
+[35790143]:[1]: dispatch to task 1.
+[35790343]:[1]: enter to ena_tex.
+[35790613]:[1]: leave to ena_tex ercd=0
+[37882399]:[1]: task 4 becomes RUNNABLE.
+[37882938]:[1]: dispatch from task 1.
+[37883114]:[1]: dispatch to task 4.
+[37883320]:[1]: leave to dly_tsk ercd=0.
+[37883503]:[1]: enter to rot_rdq tskpri=10.
+[37883812]:[1]: leave to rot_rdq ercd=0.
+[37883995]:[1]: enter to dly_tsk dlytim=10.
+[37884484]:[1]: task 4 becomes WAITING.
+[37884698]:[1]: dispatch from task 4.
+[37884874]:[1]: dispatch to task 2.
+[37885074]:[1]: enter to ena_tex.
+[37885344]:[1]: leave to ena_tex ercd=0
+[39978339]:[1]: task 4 becomes RUNNABLE.
+[39978878]:[1]: dispatch from task 2.
+[39979054]:[1]: dispatch to task 4.
+[39979260]:[1]: leave to dly_tsk ercd=0.
+[39979443]:[1]: enter to rot_rdq tskpri=10.
+[39979752]:[1]: leave to rot_rdq ercd=0.
+[39979935]:[1]: enter to dly_tsk dlytim=10.
+[39980424]:[1]: task 4 becomes WAITING.
+[39980638]:[1]: dispatch from task 4.
+[39980814]:[1]: dispatch to task 3.
+[39981014]:[1]: enter to ena_tex.
+[39981284]:[1]: leave to ena_tex ercd=0
+[42074279]:[1]: task 4 becomes RUNNABLE.
+[42074818]:[1]: dispatch from task 3.
+[42074994]:[1]: dispatch to task 4.
+[42075200]:[1]: leave to dly_tsk ercd=0.
+[42075383]:[1]: enter to rot_rdq tskpri=10.
+[42075692]:[1]: leave to rot_rdq ercd=0.
+[42075875]:[1]: enter to dly_tsk dlytim=10.
+[42076364]:[1]: task 4 becomes WAITING.
+[42076578]:[1]: dispatch from task 4.
+[42076754]:[1]: dispatch to task 1.
+[44170168]:[1]: task 4 becomes RUNNABLE.
+[44170707]:[1]: dispatch from task 1.
+[44170883]:[1]: dispatch to task 4.
+[44171089]:[1]: leave to dly_tsk ercd=0.
+[44171276]:[1]: enter to dly_tsk dlytim=10.
+[44171765]:[1]: task 4 becomes WAITING.
+[44171979]:[1]: dispatch from task 4.
+[44172155]:[1]: dispatch to task 1.
+[44172675]:[1]: enter to sns_ctx.
+[44172851]:[1]: leave to sns_ctx state=0.
+[44173033]:[1]: enter to get_pid p_prcid=1377908.
+[44173225]:[1]: leave to get_pid ercd=0. prcid=1
+[44173389]:[1]: #1#slp_tsk()
+[44173573]:[1]: enter to sns_ctx.
+[44173749]:[1]: leave to sns_ctx state=0.
+[44173933]:[1]: enter to get_pid p_prcid=1377952.
+[44174125]:[1]: leave to get_pid ercd=0. prcid=1
+[44174401]:[1]: enter to slp_tsk.
+[44174730]:[1]: task 1 becomes WAITING.
+[44174944]:[1]: dispatch from task 1.
+[44175120]:[1]: dispatch to task 2.
+[46266329]:[1]: task 4 becomes RUNNABLE.
+[46266868]:[1]: dispatch from task 2.
+[46267044]:[1]: dispatch to task 4.
+[46267250]:[1]: leave to dly_tsk ercd=0.
+[46267437]:[1]: enter to dly_tsk dlytim=10.
+[46267926]:[1]: task 4 becomes WAITING.
+[46268140]:[1]: dispatch from task 4.
+[46268316]:[1]: dispatch to task 2.
+[46268848]:[1]: enter to sns_ctx.
+[46269024]:[1]: leave to sns_ctx state=0.
+[46269206]:[1]: enter to get_pid p_prcid=1382004.
+[46269398]:[1]: leave to get_pid ercd=0. prcid=1
+[46269562]:[1]: #2#slp_tsk()
+[46269746]:[1]: enter to sns_ctx.
+[46269922]:[1]: leave to sns_ctx state=0.
+[46270106]:[1]: enter to get_pid p_prcid=1382048.
+[46270298]:[1]: leave to get_pid ercd=0. prcid=1
+[46270574]:[1]: enter to slp_tsk.
+[46270903]:[1]: task 2 becomes WAITING.
+[46271117]:[1]: dispatch from task 2.
+[46271293]:[1]: dispatch to task 3.
+[48362502]:[1]: task 4 becomes RUNNABLE.
+[48363041]:[1]: dispatch from task 3.
+[48363217]:[1]: dispatch to task 4.
+[48363423]:[1]: leave to dly_tsk ercd=0.
+[48363610]:[1]: enter to dly_tsk dlytim=10.
+[48364099]:[1]: task 4 becomes WAITING.
+[48364313]:[1]: dispatch from task 4.
+[48364489]:[1]: dispatch to task 3.
+[48365021]:[1]: enter to sns_ctx.
+[48365197]:[1]: leave to sns_ctx state=0.
+[48365379]:[1]: enter to get_pid p_prcid=1386100.
+[48365571]:[1]: leave to get_pid ercd=0. prcid=1
+[48365735]:[1]: #3#slp_tsk()
+[48365919]:[1]: enter to sns_ctx.
+[48366095]:[1]: leave to sns_ctx state=0.
+[48366279]:[1]: enter to get_pid p_prcid=1386144.
+[48366471]:[1]: leave to get_pid ercd=0. prcid=1
+[48366747]:[1]: enter to slp_tsk.
+[48367102]:[1]: task 3 becomes WAITING.
+[48367316]:[1]: dispatch from task 3.
+[50334943]:[1]: task 4 becomes RUNNABLE.
+[50335455]:[1]: dispatch to task 4.
+[50335661]:[1]: leave to dly_tsk ercd=0.
+[50335844]:[1]: enter to wup_tsk tskid=1.
+[50336151]:[1]: task 1 becomes RUNNABLE.
+[50336398]:[1]: leave to wup_tsk ercd=0.
+[50336579]:[1]: enter to wup_tsk tskid=2.
+[50336886]:[1]: task 2 becomes RUNNABLE.
+[50337133]:[1]: leave to wup_tsk ercd=0.
+[50337314]:[1]: enter to wup_tsk tskid=3.
+[50337621]:[1]: task 3 becomes RUNNABLE.
+[50337868]:[1]: leave to wup_tsk ercd=0.
+[50338051]:[1]: enter to dly_tsk dlytim=10.
+[50338540]:[1]: task 4 becomes WAITING.
+[50338754]:[1]: dispatch from task 4.
+[50338930]:[1]: dispatch to task 1.
+[50339142]:[1]: leave to slp_tsk ercd=0.
+[52430993]:[1]: task 4 becomes RUNNABLE.
