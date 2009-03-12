@@ -12,9 +12,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			this.SuspendLayout();
 			// 
-			// TimeLine
+			// TimeLineControl
 			// 
-			this.Name = "TimeLine";
+			this.Name = "TimeLineControl";
 			this.Size = new System.Drawing.Size(438, 36);
 			this.ResumeLayout(false);
 

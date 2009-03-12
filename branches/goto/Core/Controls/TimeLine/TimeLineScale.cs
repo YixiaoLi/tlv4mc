@@ -207,11 +207,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			if (DisplayCursorTime)
 			{
-				drawCursorLabel(graphics, color, time);
+				drawCursorLabel(graphics, color, time, false);
 			}
 		}
 
-		private void drawCursorLabel(Graphics graphics, Color color, Time time)
+		public override void DrawMarker(Graphics g, TimeLineMarker marker)
+		{
+			base.DrawMarker(g, marker);
+
+			if (DisplayCursorTime)
+			{
+				drawCursorLabel(g, marker.Color, marker.Time, marker.Selected);
+			}
+		}
+
+		private void drawCursorLabel(Graphics graphics, Color color, Time time, bool selected)
 		{
 			if (time.IsEmpty || TimeLine == null)
 				return;
@@ -260,11 +270,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				};
 			}
 
-			using (SolidBrush brush = new SolidBrush(Color.FromArgb(250, Color.White)))
+			int a = selected ? 255 : 250;
+			float w = selected ? 3 : 1;
+
+			using (SolidBrush brush = new SolidBrush(Color.FromArgb(a, Color.White)))
 			{
 				graphics.FillPolygon(brush, points);
 			}
-			using (System.Drawing.Pen pen = new System.Drawing.Pen(color))
+			using (System.Drawing.Pen pen = new System.Drawing.Pen(color, w))
 			{
 				graphics.DrawPolygon(pen, points);
 			}

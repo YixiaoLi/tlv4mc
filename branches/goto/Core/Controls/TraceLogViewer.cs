@@ -97,7 +97,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 			dataGridView.ClearSelection();
 			dataGridView.Rows[i].Selected = true;
-			dataGridView.FirstDisplayedScrollingRowIndex = i;
+			if (dataGridView.FirstDisplayedScrollingRowIndex != -1)
+				dataGridView.FirstDisplayedScrollingRowIndex = i;
 
 		}
 
@@ -321,7 +322,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		private void dataGridViewMouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			Time time = _dataSource[dataGridView.HitTest(e.X, e.Y).RowIndex].Time;
+			int i = dataGridView.HitTest(e.X, e.Y).RowIndex;
+
+			if (i < 0)
+				return;
+
+			Time time = _dataSource[i].Time;
 
 			Time span = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.ViewingSpan / 2;
 

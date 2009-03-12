@@ -151,10 +151,14 @@
 			this.bottomTimeLineScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.bottomTimeLineScale.BackColor = System.Drawing.Color.Black;
+			this.bottomTimeLineScale.CursorTimeDrawed = true;
+			this.bottomTimeLineScale.CursorTimeTracked = true;
+			this.bottomTimeLineScale.DisplayCursorTime = true;
 			this.bottomTimeLineScale.Font = new System.Drawing.Font("Courier New", 8F);
 			this.bottomTimeLineScale.Location = new System.Drawing.Point(245, 34);
 			this.bottomTimeLineScale.Name = "bottomTimeLineScale";
 			this.bottomTimeLineScale.ScaleMarkDirection = NU.OJL.MPRTOS.TLV.Core.Controls.ScaleMarkDirection.Top;
+			this.bottomTimeLineScale.SelectedTimeRangeTracked = true;
 			this.bottomTimeLineScale.Size = new System.Drawing.Size(527, 20);
 			this.bottomTimeLineScale.TabIndex = 5;
 			this.bottomTimeLineScale.TimeLine = null;
@@ -164,10 +168,14 @@
 			this.topTimeLineScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.topTimeLineScale.BackColor = System.Drawing.Color.Black;
+			this.topTimeLineScale.CursorTimeDrawed = true;
+			this.topTimeLineScale.CursorTimeTracked = true;
+			this.topTimeLineScale.DisplayCursorTime = true;
 			this.topTimeLineScale.Font = new System.Drawing.Font("Courier New", 8F);
 			this.topTimeLineScale.Location = new System.Drawing.Point(245, 1);
 			this.topTimeLineScale.Name = "topTimeLineScale";
 			this.topTimeLineScale.ScaleMarkDirection = NU.OJL.MPRTOS.TLV.Core.Controls.ScaleMarkDirection.Bottom;
+			this.topTimeLineScale.SelectedTimeRangeTracked = true;
 			this.topTimeLineScale.Size = new System.Drawing.Size(527, 20);
 			this.topTimeLineScale.TabIndex = 4;
 			this.topTimeLineScale.TimeLine = null;
@@ -201,7 +209,7 @@
             this.toolStripLabel5});
 			this.viewingAreaToolStrip.Location = new System.Drawing.Point(3, 0);
 			this.viewingAreaToolStrip.Name = "viewingAreaToolStrip";
-			this.viewingAreaToolStrip.Size = new System.Drawing.Size(576, 25);
+			this.viewingAreaToolStrip.Size = new System.Drawing.Size(545, 25);
 			this.viewingAreaToolStrip.TabIndex = 1;
 			// 
 			// viewingTimeRangeLabel

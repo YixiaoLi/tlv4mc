@@ -152,6 +152,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			hScrollBarValueUpdate();
 
+			_timeLineMarkerManager.SelectedMarkerChanged += (o, _e) => { timeLineRedraw(); };
+
 			timeLineRedraw();
 
 		}
@@ -282,6 +284,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				Rectangle rect = new Rectangle(_timeLineX - 1, _e.ClipRectangle.Y, _timeLineWidth, _e.ClipRectangle.Width);
 				if (_data != null)
 					DrawCursor(_e.Graphics, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, ApplicationFactory.BlackBoard.CursorTime);
+				if (_data != null && _data.SettingData != null)
+				{
+					foreach(TimeLineMarker tlm in _globalTimeLineMarkers)
+					{
+						DrawMarker(_e.Graphics, tlm);
+					}
+				}
 			};
 
 			treeGridView.DataGridView.MouseMove += (o, _e) =>
@@ -289,6 +298,30 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				if (_e.X > _timeLineX && TimeLine != null)
 				{
 					ApplicationFactory.BlackBoard.CursorTime = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, _e.X - _timeLineX + 1);
+				}
+			};
+
+			treeGridView.DataGridView.MouseClick += (o, _e) =>
+			{
+				int x = _e.X - _timeLineX + 1;
+
+				if (TimeLine == null)
+					return;
+
+				Time t = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, x);
+				Time b = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, x - 5);
+				Time a = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, x + 5);
+
+				TimeLineMarker foucsMarker = _globalTimeLineMarkers.FirstOrDefault<TimeLineMarker>(m => m.Time > b && a > m.Time);
+
+				if ((Control.ModifierKeys & Keys.Control) != Keys.Control)
+				{
+					_timeLineMarkerManager.ResetSelect();
+				}
+
+				if (foucsMarker != null)
+				{
+					foucsMarker.SelectToggle();
 				}
 			};
 
@@ -741,6 +774,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		public override void DrawCursor(Graphics graphics, Color color, Time time)
 		{
 			drawCursor(graphics, new Rectangle(Location.X + _timeLineX, Location.Y, _timeLineWidth, Height), color, time);
+		}
+
+		public override void DrawMarker(Graphics g, TimeLineMarker marker)
+		{
+			drawMarker(g, new Rectangle(Location.X + _timeLineX, Location.Y, _timeLineWidth, Height), marker);
 		}
 	}
 }

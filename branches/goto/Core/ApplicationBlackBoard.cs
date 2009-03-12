@@ -12,20 +12,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public EventHandler<GeneralChangedEventArgs<Pair<Time,Time>>> SelectedTimeRangeChanged;
 
 		private Time _cursorTime;
-		public Time CursorTime { get { return _cursorTime; } set { setValue<Time>(ref _cursorTime, value, CursorTimeChanged); } }
+		public Time CursorTime { get { return _cursorTime; } set { ApplicationMethod.SetValue<Time>(ref _cursorTime, value, CursorTimeChanged, this); } }
 		private Pair<Time, Time> _selectedTimeRange;
-		public Pair<Time, Time> SelectedTimeRange { get { return _selectedTimeRange; } set { setValue<Pair<Time, Time>>(ref _selectedTimeRange, value, SelectedTimeRangeChanged); } }
-
-		private void setValue<T>(ref T nowValue, T newValue, EventHandler<GeneralChangedEventArgs<T>> changedEvent)
-		{
-			if (!nowValue.Equals(newValue))
-			{
-				T old = nowValue;
-				nowValue = newValue;
-				if (changedEvent != null)
-					changedEvent(this, new GeneralChangedEventArgs<T>(old, nowValue));
-			}
-		}
+		public Pair<Time, Time> SelectedTimeRange { get { return _selectedTimeRange; } set { ApplicationMethod.SetValue<Pair<Time, Time>>(ref _selectedTimeRange, value, SelectedTimeRangeChanged, this); } }
 
 		public ApplicationBlackBoard()
 		{

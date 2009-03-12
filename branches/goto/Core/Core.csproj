@@ -47,11 +47,13 @@
     <Compile Include="ApplicationBlackBoard.cs" />
     <Compile Include="ApplicationData.cs" />
     <Compile Include="ApplicationFactory.cs" />
+    <Compile Include="ApplicationMethod.cs" />
     <Compile Include="ApplicationSetting.cs" />
     <Compile Include="Base\EventShape.cs" />
     <Compile Include="Base\EventShapes.cs" />
     <Compile Include="Base\TimeLineEvents.cs" />
     <Compile Include="Base\TimeLineMarker.cs" />
+    <Compile Include="Base\TimeLineMarkerManager.cs" />
     <Compile Include="Base\TLVFunction.cs" />
     <Compile Include="Base\Extensions\ColorExtension.cs" />
     <Compile Include="Base\IHavingNullableProperty.cs" />
@@ -100,6 +102,7 @@
     <Compile Include="FileContext\ResourceData\Attribute\Attribute.cs" />
     <Compile Include="FileContext\ResourceData\Behavior\Behavior.cs" />
     <Compile Include="FileContext\SettingData\ISetting.cs" />
+    <Compile Include="FileContext\SettingData\LocalSetting.cs" />
     <Compile Include="FileContext\SettingData\ResourceExplorerSetting.cs" />
     <Compile Include="FileContext\SettingData\SettingData.cs" />
     <Compile Include="FileContext\SettingData\TraceLogDisplayPanelSetting.cs" />

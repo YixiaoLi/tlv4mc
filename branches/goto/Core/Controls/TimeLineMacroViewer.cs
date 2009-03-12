@@ -95,11 +95,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				Time from = ViewingAreaTimeLine.FromTime.Truncate();
 				Time to = ViewingAreaTimeLine.ToTime.Truncate();
 
-				if (!_scale.TimeLineMarkers.ContainsKey("___fromMarker"))
-					_scale.TimeLineMarkers.Add(new TimeLineMarker("___fromMarker", _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor, from));
+				if (!_scale.LocalTimeLineMarkers.ContainsKey("___fromMarker"))
+					_scale.LocalTimeLineMarkers.Add(new TimeLineMarker("___fromMarker", _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor, from));
 
-				if (!_scale.TimeLineMarkers.ContainsKey("___toMarker"))
-					_scale.TimeLineMarkers.Add(new TimeLineMarker("___toMarker", _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor, to));
+				if (!_scale.LocalTimeLineMarkers.ContainsKey("___toMarker"))
+					_scale.LocalTimeLineMarkers.Add(new TimeLineMarker("___toMarker", _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor, to));
 
 				TimeLine = new TimeLine(_data.TraceLogData.MinTime, _data.TraceLogData.MaxTime);
 
@@ -447,14 +447,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			Time from = ViewingAreaTimeLine.FromTime.Truncate();
 			Time to = ViewingAreaTimeLine.ToTime.Truncate();
 
-			if (!_scale.TimeLineMarkers.ContainsKey("___fromMarker"))
-				_scale.TimeLineMarkers.Add(new TimeLineMarker("___fromMarker", _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor, from));
+			if (!_scale.LocalTimeLineMarkers.ContainsKey("___fromMarker"))
+				_scale.LocalTimeLineMarkers.Add(new TimeLineMarker("___fromMarker", _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor, from));
 			else
-				_scale.TimeLineMarkers["___fromMarker"] = new TimeLineMarker("___fromMarker", _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor, from);
-			if (!_scale.TimeLineMarkers.ContainsKey("___toMarker"))
-				_scale.TimeLineMarkers.Add(new TimeLineMarker("___toMarker", _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor, to));
+				_scale.LocalTimeLineMarkers["___fromMarker"] = new TimeLineMarker("___fromMarker", _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor, from);
+			if (!_scale.LocalTimeLineMarkers.ContainsKey("___toMarker"))
+				_scale.LocalTimeLineMarkers.Add(new TimeLineMarker("___toMarker", _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor, to));
 			else
-				_scale.TimeLineMarkers["___toMarker"] = new TimeLineMarker("___toMarker", _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor, to);
+				_scale.LocalTimeLineMarkers["___toMarker"] = new TimeLineMarker("___toMarker", _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor, to);
 
 			Refresh();
 		}

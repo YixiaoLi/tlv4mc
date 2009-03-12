@@ -86,7 +86,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 						object o = ApplicationFactory.JsonSerializer.Deserialize(reader, pi.PropertyType);
 
-						pi.SetValue(obj, o, null);
+						if (pi.CanWrite)
+							pi.SetValue(obj, o, null);
 					}
 					reader.Read();
 				}
