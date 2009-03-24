@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="79e7ba1f-7968-4c8d-be85-1260862ab7a8" name="junji@JUNJI_X200 2008-12-25 00:25:46" runUser="JUNJI_X200\junji" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestRunConfiguration name="既定の実行構成" id="0a4dd4ea-63bf-4a40-b0f8-8e82837fa616">
+    <Deployment runDeploymentRoot="C:\junji\doc\school\ojl\tlv\src\TestResults\junji_JUNJI_X200 2008-12-25 00_25_46">
+      <DeploymentItem filename="C:\junji\doc\school\ojl\tlv\src\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Core.dll" />
+      <DeploymentItem filename="C:\junji\doc\school\ojl\tlv\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Third.dll" />
+      <DeploymentItem filename="C:\junji\doc\school\ojl\tlv\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll" />
+    </Deployment>
+    <Hosts skipUnhostableTests="false" />
+    <TestTypeSpecific />
+  </TestRunConfiguration>
+  <ResultSummary outcome="Error">
+    <Counters total="1" executed="1" error="0" failed="0" timeout="0" aborted="1" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="JUNJI_X200" outcome="Error" timestamp="2008-12-25T00:25:56.4531250+09:00">
+        <Text>テストのホスト プロセスは予期せずに終了しました。</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <Times creation="2008-12-25T00:25:46.3593750+09:00" queuing="2008-12-25T00:25:47.7031250+09:00" start="2008-12-25T00:25:47.9531250+09:00" finish="2008-12-25T00:25:56.4531250+09:00" />
+  <TestDefinitions>
+    <UnitTest name="op_AdditionTest" storage="c:\junji\doc\school\ojl\tlv\src\test\bin\debug\test.dll" id="9a7c7a44-7cb8-2cef-d8c4-073b3e2da935">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="c2da77d3-23cf-40dd-a385-ab7df1095470" />
+      <TestMethod codeBase="C:\junji\doc\school\ojl\tlv\src\Test\bin\Debug\Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Test.LogDataEnumeableTest, Test" name="op_AdditionTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="一覧に存在しない結果" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="読み込まれたすべての結果" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="9a7c7a44-7cb8-2cef-d8c4-073b3e2da935" executionId="ec70019d-aafb-441f-af1b-0aca87e00469" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="ec70019d-aafb-441f-af1b-0aca87e00469" testId="9a7c7a44-7cb8-2cef-d8c4-073b3e2da935" testName="op_AdditionTest" computerName="JUNJI_X200" duration="00:00:08.3750000" startTime="2008-12-25T00:25:48.0781250+09:00" endTime="2008-12-25T00:25:56.4531250+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Aborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+  </Results>
+</TestRun>
