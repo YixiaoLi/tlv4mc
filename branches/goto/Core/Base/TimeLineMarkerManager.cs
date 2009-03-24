@@ -11,7 +11,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	{
 		public event EventHandler SelectedMarkerChanged = null;
 
-		public ObservableMultiKeyDictionary<TimeLineMarker> Markers { get; private set; }
+		public ObservableNamedCollection<TimeLineMarker> Markers { get; private set; }
 
 		public IEnumerable<TimeLineMarker> GetSelectedMarker()
 		{
@@ -20,7 +20,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public TimeLineMarkerManager()
 		{
-			Markers = new ObservableMultiKeyDictionary<TimeLineMarker>();
+			Markers = new ObservableNamedCollection<TimeLineMarker>();
 			Markers.CollectionChanged += (o, e) =>
 			{
 				if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)

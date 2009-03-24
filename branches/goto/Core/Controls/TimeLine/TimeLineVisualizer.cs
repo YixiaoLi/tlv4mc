@@ -10,14 +10,20 @@ using System.Threading;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
-	partial class TimeLineVisualizer : TimeLineControl
+	public partial class TimeLineVisualizer : TimeLineControl
 	{
 		private TimeLineEvents _timeLineEvents;
 
-		public TimeLineEvents TimeLineEvents { get { return _timeLineEvents; } }
+		public TimeLineEvents TimeLineEvents { get { return _timeLineEvents; } set { _timeLineEvents = value; } }
 		public VisualizeRule Rule { get { return _timeLineEvents.Rule; } }
 		public Event Event { get { return _timeLineEvents.Event; } }
 		public Resource Target { get { return _timeLineEvents.Target; } }
+
+		public TimeLineVisualizer()
+			: base()
+		{
+			InitializeComponent();
+		}
 
 		public TimeLineVisualizer(TimeLineEvents timeLineVizData)
 			:base()
@@ -29,13 +35,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		public override void SetData(TraceLogVisualizerData data)
 		{
 			base.SetData(data);
-			TimeLineEvents.SetData(data);
+			if (TimeLineEvents != null)
+				TimeLineEvents.SetData(data);
 		}
 
-		public override void ClearData()
+		public override void ClearData()		
 		{
 			base.ClearData();
-			_timeLineEvents.ClearData();
+			if (TimeLineEvents != null)
+				TimeLineEvents.ClearData();
 		}
 
 		public override void Draw(Graphics g, Rectangle rect)
@@ -48,7 +56,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			if (rect.Width == 0)
 				return;
 
-			if (!_timeLineEvents.IsDataSet)
+			if (TimeLineEvents == null)
+				return;
+
+			if (!TimeLineEvents.IsDataSet)
 				return;
 
 			foreach (EventShape ds in _timeLineEvents.GetEventShapes(TimeLine.FromTime, TimeLine.ToTime))

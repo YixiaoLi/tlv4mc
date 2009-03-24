@@ -21,10 +21,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		private int _timeLineX = 0;
 		private int _timeLineWidth = 0;
 		private string _timeScale = string.Empty;
-		public int TimeLineX
+		public override int TimeLineX
 		{
 			get { return _timeLineX; }
-			private set
+			set
 			{
 				if (_timeLineX != value)
 				{
@@ -36,10 +36,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				}
 			}
 		}
-		public int TimeLineWidth
+		public override int TimeLineWidth
 		{
 			get { return _timeLineWidth; }
-			private set
+			set
 			{
 				if (_timeLineWidth != value)
 				{
@@ -130,16 +130,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			setNodes();
 
-			foreach(TimeLineVisualizer tlv in _list)
+			foreach (TimeLineVisualizer tlv in _list)
 			{
 				tlv.SetData(_data);
 				tlv.TimeLine = TimeLine;
 			}
-
-			//foreach (TimeLineVisualizer tlv in _list)
-			//{
-			//    tlv.WaitSetData();
-			//}
 
 			setRowHeight(treeGridView.Nodes.Values, _data.SettingData.TraceLogDisplayPanelSetting.RowHeight);
 
@@ -297,45 +292,69 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			{
 				if (_e.X > _timeLineX && TimeLine != null)
 				{
-					ApplicationFactory.BlackBoard.CursorTime = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, _e.X - _timeLineX + 1);
+					OnMouseMove(_e);
 				}
 			};
 
-			treeGridView.DataGridView.MouseClick += (o, _e) =>
+			treeGridView.DataGridView.MouseDown += (o, _e) =>
 			{
-				int x = _e.X - _timeLineX + 1;
-
-				if (TimeLine == null)
-					return;
-
-				Time t = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, x);
-				Time b = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, x - 5);
-				Time a = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, x + 5);
-
-				TimeLineMarker foucsMarker = _globalTimeLineMarkers.FirstOrDefault<TimeLineMarker>(m => m.Time > b && a > m.Time);
-
-				if ((Control.ModifierKeys & Keys.Control) != Keys.Control)
+				if (_e.X > _timeLineX && TimeLine != null)
 				{
-					_timeLineMarkerManager.ResetSelect();
+					OnMouseDown(_e);
 				}
+			};
 
-				if (foucsMarker != null)
+			treeGridView.DataGridView.MouseUp += (o, _e) =>
+			{
+				if (_e.X > _timeLineX && TimeLine != null)
 				{
-					foucsMarker.SelectToggle();
+					OnMouseUp(_e);
 				}
 			};
 
 			treeGridView.DataGridView.MouseDoubleClick += (o, _e) =>
 			{
-				if (_e.X > _timeLineX)
+				if (_e.X > _timeLineX && TimeLine != null)
 				{
-					Time time = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, _e.X - _timeLineX + 1);
-					Time span = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.ViewingSpan / 2;
-
-					_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.SetTime((time - span).Truncate(), (time + span).Truncate());
-					_data.SettingData.TraceLogViewerSetting.FirstDisplayedTime = time;
+					OnMouseDoubleClick(_e);
 				}
 			};
+
+			//treeGridView.DataGridView.MouseClick += (o, _e) =>
+			//{
+			//    int x = _e.X - _timeLineX + 1;
+
+			//    if (TimeLine == null)
+			//        return;
+
+			//    Time t = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, x);
+			//    Time b = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, x - 5);
+			//    Time a = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, x + 5);
+
+			//    TimeLineMarker foucsMarker = _globalTimeLineMarkers.FirstOrDefault<TimeLineMarker>(m => m.Time > b && a > m.Time);
+
+			//    if ((Control.ModifierKeys & Keys.Control) != Keys.Control)
+			//    {
+			//        _timeLineMarkerManager.ResetSelect();
+			//    }
+
+			//    if (foucsMarker != null)
+			//    {
+			//        foucsMarker.SelectToggle();
+			//    }
+			//};
+
+			//treeGridView.DataGridView.MouseDoubleClick += (o, _e) =>
+			//{
+			//    if (_e.X > _timeLineX)
+			//    {
+			//        Time time = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, _timeLineWidth, _e.X - _timeLineX + 1);
+			//        Time span = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.ViewingSpan / 2;
+
+			//        _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.SetTime((time - span).Truncate(), (time + span).Truncate());
+			//        _data.SettingData.TraceLogViewerSetting.FirstDisplayedTime = time;
+			//    }
+			//};
 
 			#endregion
 

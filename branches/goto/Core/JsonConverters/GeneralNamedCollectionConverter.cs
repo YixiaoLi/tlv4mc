@@ -9,7 +9,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public class GeneralNamedCollectionConverter : IJsonConverter
 	{
 		public Type Type { get { return typeof(GeneralNamedCollection<>); } }
-
+		
 		private Stack<Type> _types = new Stack<Type>();
 
 		public bool CanConvert(Type type)

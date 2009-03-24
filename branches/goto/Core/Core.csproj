@@ -51,6 +51,7 @@
     <Compile Include="ApplicationSetting.cs" />
     <Compile Include="Base\EventShape.cs" />
     <Compile Include="Base\EventShapes.cs" />
+    <Compile Include="Base\ObservableNamedCollection.cs" />
     <Compile Include="Base\TimeLineEvents.cs" />
     <Compile Include="Base\TimeLineMarker.cs" />
     <Compile Include="Base\TimeLineMarkerManager.cs" />

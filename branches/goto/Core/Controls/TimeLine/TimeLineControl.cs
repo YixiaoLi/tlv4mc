@@ -12,6 +12,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
 	public partial class TimeLineControl : UserControl, ITimeLineControl
 	{
+		public enum CursorModes
+		{
+			Normal,
+			Move,
+			ResizeL,
+			ResizeR,
+			MarkerMode
+		}
+
+		protected int _lastMouseMoveX;
+		protected int _mouseDownX = -1;
+		protected CursorModes _cursorMode = CursorModes.Normal;
+		protected CursorModes _lastCursorMode;
 		protected int _timeRadix = 10;
 		protected TraceLogVisualizerData _data;
 		protected ToolStripMenuItem _addMarkerContextToolStripItem;
@@ -27,6 +40,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					return _timeLineMarkerManager.Markers.Values.AsEnumerable();
 				else
 					return Enumerable.Empty<TimeLineMarker>();
+			}
+		}
+
+		public virtual int TimeLineWidth { get { return Width; } set { } }
+		public virtual int TimeLineX { get { return 0; } set { } }
+
+		public CursorModes CursorMode
+		{
+			get { return _cursorMode; }
+			set
+			{
+				if (_cursorMode != value)
+				{
+					_lastCursorMode = _cursorMode;
+					_cursorMode = value;
+				}
 			}
 		}
 
@@ -57,6 +86,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			_normalContextMenuStrip.Items.Add(_addMarkerContextToolStripItem);
 			_markerSelectedContextMenuStrip = new ContextMenuStrip();
 			_markerSelectedContextMenuStrip.Items.Add(_delMarkerContextToolStripItem);
+		}
+
+		public Cursor GetCursor(CursorModes mode)
+		{
+			switch (mode)
+			{
+				default:
+				case CursorModes.Normal:
+					return Cursors.Default;
+				case CursorModes.Move:
+					return Cursors.Hand;
+				case CursorModes.ResizeL:
+				case CursorModes.ResizeR:
+					return Cursors.SizeWE;
+				case CursorModes.MarkerMode:
+					return Cursors.VSplit;
+			}
 		}
 
 		protected void addMarkerContextToolStripItemClick(object sender, EventArgs e)
@@ -141,6 +187,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			if (_data != null)
 			{
+
+				DrawCursor(e.Graphics, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, ApplicationFactory.BlackBoard.CursorTime);
+
 				foreach (TimeLineMarker tlm in LocalTimeLineMarkers)
 				{
 					DrawCursor(e.Graphics, tlm.Color, tlm.Time);
@@ -151,7 +200,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					DrawMarker(e.Graphics, tlm);
 				}
 
-				DrawCursor(e.Graphics, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, ApplicationFactory.BlackBoard.CursorTime);
 			}
 		}
 
@@ -198,54 +246,116 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			base.OnMouseMove(e);
 
-			int x = e.X;
+			int x = e.X - TimeLineX;
 
 			if (TimeLine == null)
 				return;
 
-			if (CursorTimeTracked)
+			if (e.Button == MouseButtons.Left)
 			{
-				ApplicationFactory.BlackBoard.CursorTime = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, Width, x);
+
+				if (CursorMode == CursorModes.MarkerMode)
+				{
+					if (e.Button == MouseButtons.Left && _timeLineMarkerManager.GetSelectedMarker().Count() != 0 && _mouseDownX != -1)
+					{
+						foreach (TimeLineMarker tlm in _timeLineMarkerManager.GetSelectedMarker())
+						{
+							Time dt = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x) - Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, _lastMouseMoveX);
+							tlm.Time += dt;
+						}
+					}
+				}
+			}
+			else
+			{
+				Time t = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x);
+				Time b = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x - 3);
+				Time a = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x + 3);
+
+				TimeLineMarker onMarker = _globalTimeLineMarkers.FirstOrDefault<TimeLineMarker>(m => m.Time > b && a > m.Time);
+
+				if (onMarker != null)
+				{
+					CursorMode = CursorModes.MarkerMode;
+					Cursor = GetCursor(CursorMode);
+				}
+				else if(CursorMode == CursorModes.MarkerMode)
+				{
+					CursorMode = _lastCursorMode;
+					Cursor = GetCursor(CursorMode);
+				}
+
 			}
 
+			if (CursorTimeTracked)
+			{
+				ApplicationFactory.BlackBoard.CursorTime = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x);
+			}
+
+			_lastMouseMoveX = x;
+		}
+
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			base.OnMouseDown(e);
+
+			if (_data == null)
+				return;
+
+			_timeLineMarkerManager.ResetSelect();
+
+			if (e.Button == MouseButtons.Left)
+			{
+				int x = e.X - TimeLineX;
+				_mouseDownX = x;
+
+				if (TimeLine == null)
+					return;
+
+				Time t = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x);
+				Time b = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x - 5);
+				Time a = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x + 5);
+
+				TimeLineMarker foucsMarker = _globalTimeLineMarkers.FirstOrDefault<TimeLineMarker>(m => m.Time > b && a > m.Time);
+
+				if (foucsMarker != null)
+				{
+					foucsMarker.SelectToggle();
+					if (foucsMarker.Selected)
+					{
+						_timeLineMarkerManager.Markers.Move(_timeLineMarkerManager.Markers.IndexOf(foucsMarker.Name), _timeLineMarkerManager.Markers.Count - 1);
+					}
+				}
+
+				Refresh();
+			}
+		}
+
+		protected override void OnMouseUp(MouseEventArgs e)
+		{
+			base.OnMouseUp(e);
+
+			int x = e.X - TimeLineX;
+
+			if (_data == null)
+				return;
+
+			if (e.Button == MouseButtons.Left)
+			{
+				_mouseDownX = -1;
+			}
 		}
 
 		protected override void OnMouseDoubleClick(MouseEventArgs e)
 		{
 			base.OnMouseDoubleClick(e);
 
-			Time time = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, Width, e.X);
+			Time time = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, e.X);
 			Time span = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.ViewingSpan / 2;
 
 			_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.SetTime((time - span).Truncate(), (time + span).Truncate());
 
 			_data.SettingData.TraceLogViewerSetting.FirstDisplayedTime = time;
-		}
-
-		protected override void OnMouseClick(MouseEventArgs e)
-		{
-			base.OnMouseClick(e);
-
-			int x = e.X;
-
-			if (TimeLine == null)
-				return;
-
-			Time t = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, Width, x);
-			Time b = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, Width, x - 5);
-			Time a = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, Width, x + 5);
-
-			TimeLineMarker foucsMarker = _globalTimeLineMarkers.FirstOrDefault<TimeLineMarker>(m => m.Time > b && a > m.Time);
-			
-			if ((Control.ModifierKeys & Keys.Control) != Keys.Control)
-			{
-				_timeLineMarkerManager.ResetSelect();
-			}
-			
-			if (foucsMarker != null)
-			{
-				foucsMarker.SelectToggle();
-			}
 		}
 
 		protected override bool ProcessDialogKey(Keys keyData)

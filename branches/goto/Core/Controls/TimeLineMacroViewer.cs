@@ -13,26 +13,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
 	public class TimeLineMacroViewer : TimeLineControl
 	{
-		enum CursorMode
-		{
-			Normal,
-			Move,
-			ResizeL,
-			ResizeR
-		}
-
-		private int _delta = 1;
 		private List<TimeLineVisualizer> _list = new List<TimeLineVisualizer>();
 		private TimeLineScale _scale = new TimeLineScale();
 		private int _num;
 		private int _rowHeight;
 		private float _fx;
 		private float _tx;
-		private int _mouseDownX = -1;
 		private int _lastX;
 		private Cursor HandHoldCursor { get { return new Cursor(Properties.Resources.handHold.Handle) { Tag = "handHold" }; } }
 		private Cursor HandCursor { get { return new Cursor(Properties.Resources.hand.Handle) { Tag = "hand" }; } }
-		private CursorMode _cursorMode = CursorMode.Normal;
 		private TimeLine ViewingAreaTimeLine;
 		private Bitmap _macroVizData;
 
@@ -185,7 +174,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			_tx = 0f;
 			_mouseDownX = -1;
 			_lastX = 0;
-			_cursorMode = CursorMode.Normal;
+			_cursorMode = CursorModes.Normal;
 		}
 
 		protected void ruleBecameDirty(object sender, string propertyName)
@@ -270,10 +259,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			if (e.Button == MouseButtons.Left)
 			{
-				if(_cursorMode == CursorMode.Move)
+				if(_cursorMode == CursorModes.Move)
 					Cursor = HandHoldCursor;
 
-				_mouseDownX = e.X;
 				_lastX = (int)_fx;
 			}
 		}
@@ -287,9 +275,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			if (e.Button == MouseButtons.Left)
 			{
-				_mouseDownX = -1;
 
-				if (_cursorMode == CursorMode.Move)
+				if (_cursorMode == CursorModes.Move)
 					Cursor = HandCursor;
 			}
 		}
@@ -308,7 +295,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				ApplicationFactory.StatusManager.HideHint(GetType() + Name + "viewingAreaMove");
 				ApplicationFactory.StatusManager.HideHint(GetType() + Name + "viewingAreaSizeChange");
 
-				if (_cursorMode == CursorMode.ResizeL)
+				if (_cursorMode == CursorModes.ResizeL)
 				{
 					try
 					{
@@ -317,8 +304,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					}
 					catch { }
 				}
-				else
-				if (_cursorMode == CursorMode.ResizeR)
+				else if (_cursorMode == CursorModes.ResizeR)
 				{
 					try
 					{
@@ -327,12 +313,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					}
 					catch { }
 				}
-				else if (_cursorMode == CursorMode.Move)
+				else if (_cursorMode == CursorModes.Move)
 				{
 					int _x = _lastX + x - _mouseDownX - 5;
 					ViewingAreaTimeLine.MoveBySettingFromTime(ViewingAreaTimeLine.MinTime + Time.FromX(ViewingAreaTimeLine.MinTime, ViewingAreaTimeLine.MaxTime, _scale.Width, _x).Round(0));
 				}
-				else if (_cursorMode == CursorMode.Normal)
+				else if (_cursorMode == CursorModes.Normal)
 				{
 					Time t1 = Time.FromX(ViewingAreaTimeLine.MinTime, ViewingAreaTimeLine.MaxTime, _scale.Width, _mouseDownX).Truncate();
 					Time t2 = Time.FromX(ViewingAreaTimeLine.MinTime, ViewingAreaTimeLine.MaxTime, _scale.Width, (int)x).Truncate();
@@ -357,9 +343,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					if (Cursor != Cursors.SizeWE)
 					{
 						if (Math.Abs(x - _fx) < 1)
-							_cursorMode = CursorMode.ResizeL;
+							_cursorMode = CursorModes.ResizeL;
 						if (Math.Abs(x - _tx) < 1)
-							_cursorMode = CursorMode.ResizeR;
+							_cursorMode = CursorModes.ResizeR;
 
 						Cursor = Cursors.SizeWE;
 
@@ -369,9 +355,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					ApplicationFactory.StatusManager.ShowHint(GetType() + Name + "viewingAreaMove", "可視化表示領域移動", "ドラッグ");
 					ApplicationFactory.StatusManager.HideHint(GetType() + Name + "viewingAreaSizeChange");
-					if (_cursorMode != CursorMode.Move)
+					if (_cursorMode != CursorModes.Move)
 					{
-						_cursorMode = CursorMode.Move;
+						_cursorMode = CursorModes.Move;
 						Cursor = HandCursor;
 					}
 				}
@@ -379,9 +365,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					ApplicationFactory.StatusManager.HideHint(GetType() + Name + "viewingAreaMove");
 					ApplicationFactory.StatusManager.HideHint(GetType() + Name + "viewingAreaSizeChange");
-
-					Cursor = Cursors.Default;
-					_cursorMode = CursorMode.Normal;
 				}
 			}
 
