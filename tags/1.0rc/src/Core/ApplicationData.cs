@@ -8,7 +8,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
     public static class ApplicationData
     {
         public static readonly string Name = "TraceLogVisualizer";
-        public static readonly string Version = "1.0a";
+        public static readonly string Version = "1.0rc";
 		public static readonly string ApplicationPath = Application.ExecutablePath;
 		public static readonly string ApplicationDirectory = System.IO.Path.GetDirectoryName(Application.ExecutablePath) + @"\";
 		public static readonly ApplicationSetting Setting = new ApplicationSetting();

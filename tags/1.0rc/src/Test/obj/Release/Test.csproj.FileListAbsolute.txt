@@ -45,3 +45,15 @@ C:\junji\doc\school\ojl\tlv\phase2\src\Test\bin\Release\Newtonsoft.Json.dll
 C:\junji\doc\school\ojl\tlv\phase2\src\Test\obj\Release\ResolveAssemblyReference.cache
 C:\junji\doc\school\ojl\tlv\phase2\src\Test\obj\Release\Test.dll
 C:\junji\doc\school\ojl\tlv\phase2\src\Test\obj\Release\Test.pdb
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Test\bin\Release\Test.dll
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Test\bin\Release\Test.pdb
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Test\bin\Release\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Test\bin\Release\NU.OJL.MPRTOS.TLV.Core.dll
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Test\bin\Release\NU.OJL.MPRTOS.TLV.Third.dll
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Test\bin\Release\ExpandableGridView.dll
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Test\bin\Release\WeifenLuo.WinFormsUI.Docking.dll
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Test\bin\Release\ICSharpCode.SharpZipLib.dll
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Test\bin\Release\Newtonsoft.Json.dll
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Test\obj\Release\ResolveAssemblyReference.cache
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Test\obj\Release\Test.dll
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Test\obj\Release\Test.pdb

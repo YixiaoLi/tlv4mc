@@ -287,7 +287,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             }
 
 			if (Directory.Exists(ApplicationData.Setting.TemporaryDirectoryPath))
-				Directory.Delete(ApplicationData.Setting.TemporaryDirectoryPath, true);
+			{
+				try
+				{
+					Directory.Delete(ApplicationData.Setting.TemporaryDirectoryPath, true);
+				}
+				catch(Exception _e)
+				{
+					MessageBox.Show("エラーが発生しました．\n一時ディレクトリ：[" + ApplicationData.Setting.TemporaryDirectoryPath + "]\n強制終了します．\n----\n" + _e.Message, "エラーが発生しました", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
         }
 
         protected override void OnDragEnter(DragEventArgs drgevent)
