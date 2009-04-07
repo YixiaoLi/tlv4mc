@@ -1,0 +1,66 @@
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Documents and Settings\junji\My Documents\Visual Studio 2008\Projects\TLV\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\trunk\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.BackGroundWorkForm.resources
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.StatusManager.StatusManagerResource.resources
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\obj\Debug\Base.csproj.GenerateResource.Cache
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Work\OJL\TLV\フェーズ2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\junji\Documents\OJL\TLV\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\Documents\OJL\TLV\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\junji\Documents\OJL\TLV\src\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\junji\Documents\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.BackGroundWorkForm.resources
+C:\junji\Documents\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.StatusManager.StatusManagerResource.resources
+C:\junji\Documents\OJL\TLV\src\Base\obj\Debug\Base.csproj.GenerateResource.Cache
+C:\junji\Documents\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\Documents\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Documents\School\OJL\TLV\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Documents\School\OJL\TLV\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\Junji\Documents\School\OJL\TLV\src\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\Junji\Documents\School\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.BackGroundWorkForm.resources
+C:\Junji\Documents\School\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.StatusManager.StatusManagerResource.resources
+C:\Junji\Documents\School\OJL\TLV\src\Base\obj\Debug\Base.csproj.GenerateResource.Cache
+C:\Junji\Documents\School\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\Junji\Documents\School\OJL\TLV\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\junji\doc\school\ojl\tlv\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\doc\school\ojl\tlv\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\junji\doc\school\ojl\tlv\src\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\junji\doc\school\ojl\tlv\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.BackGroundWorkForm.resources
+C:\junji\doc\school\ojl\tlv\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.StatusManager.StatusManagerResource.resources
+C:\junji\doc\school\ojl\tlv\src\Base\obj\Debug\Base.csproj.GenerateResource.Cache
+C:\junji\doc\school\ojl\tlv\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\doc\school\ojl\tlv\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.BackGroundWorkForm.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.MiniTrackBarForm.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.MiniTrackBar.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.TextNumericUpDownTrackBarControl.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Properties.Resources.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.StatusManager.StatusManagerResource.resources
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\Base.csproj.GenerateResource.Cache
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\doc\school\ojl\tlv\phase2\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Base\obj\Debug\ResolveAssemblyReference.cache
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.BackGroundWorkForm.resources
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.MiniTrackBarForm.resources
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.MiniTrackBar.resources
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Controls.TextNumericUpDownTrackBarControl.resources
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.Properties.Resources.resources
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.StatusManager.StatusManagerResource.resources
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Base\obj\Debug\Base.csproj.GenerateResource.Cache
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.dll
+C:\junji\doc\school\ojl\tlv\phase2\1.0rc\src\Base\obj\Debug\NU.OJL.MPRTOS.TLV.Base.pdb
