@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="9b66f889-6797-4c2e-ab7c-74d8c50b7230" name="junji@JUNJI_X200 2008-12-25 00:38:57" runUser="JUNJI_X200\junji" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestRunConfiguration name="既定の実行構成" id="6156302c-653d-429b-a9a7-4cef9f33cfe6">
+    <Deployment runDeploymentRoot="C:\junji\doc\school\ojl\tlv\src\TestResults\junji_JUNJI_X200 2008-12-25 00_38_57">
+      <DeploymentItem filename="C:\junji\doc\school\ojl\tlv\src\Core\bin\Debug\NU.OJL.MPRTOS.TLV.Core.dll" />
+      <DeploymentItem filename="C:\junji\doc\school\ojl\tlv\src\Third\bin\Debug\NU.OJL.MPRTOS.TLV.Third.dll" />
+      <DeploymentItem filename="C:\junji\doc\school\ojl\tlv\src\Base\bin\Debug\NU.OJL.MPRTOS.TLV.Base.dll" />
+    </Deployment>
+    <Hosts skipUnhostableTests="false" />
+    <TestTypeSpecific />
+  </TestRunConfiguration>
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <Times creation="2008-12-25T00:38:57.2968750+09:00" queuing="2008-12-25T00:38:58.6875000+09:00" start="2008-12-25T00:38:58.9531250+09:00" finish="2008-12-25T00:38:59.9062500+09:00" />
+  <TestDefinitions>
+    <UnitTest name="op_AdditionTest" storage="c:\junji\doc\school\ojl\tlv\src\test\bin\debug\test.dll" id="9a7c7a44-7cb8-2cef-d8c4-073b3e2da935">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="8ebd1720-4e6c-4bbd-a894-d94c9236b6ce" />
+      <TestMethod codeBase="C:\junji\doc\school\ojl\tlv\src\Test\bin\Debug\Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Test.LogDataEnumeableTest, Test" name="op_AdditionTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="一覧に存在しない結果" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="読み込まれたすべての結果" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="9a7c7a44-7cb8-2cef-d8c4-073b3e2da935" executionId="8ebd1720-4e6c-4bbd-a894-d94c9236b6ce" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="8ebd1720-4e6c-4bbd-a894-d94c9236b6ce" testId="9a7c7a44-7cb8-2cef-d8c4-073b3e2da935" testName="op_AdditionTest" computerName="JUNJI_X200" duration="00:00:00.3584265" startTime="2008-12-25T00:38:59.0468750+09:00" endTime="2008-12-25T00:38:59.8125000+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.AreEqual に失敗しました。&lt;NU.OJL.MPRTOS.TLV.Core.LogDataEnumeable&gt; が必要ですが、&lt;NU.OJL.MPRTOS.TLV.Core.LogDataEnumeable&gt; が指定されました。</Message>
+          <StackTrace>   場所 Test.LogDataEnumeableTest.op_AdditionTest() 場所 C:\junji\doc\school\ojl\tlv\src\Test\LogDataEnumeableTest.cs:行 106
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>
