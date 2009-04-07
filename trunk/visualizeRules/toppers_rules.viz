@@ -79,8 +79,8 @@
 						"From":"${TARGET}.state",
 						"To":"${TARGET}.state",
 						"Figures":{
-						    "${FROM_VAL}==RUNNING"	:"runningShapes",
-						    "${FROM_VAL}==DORMANT"      :"dormantShapes"
+						    "${FROM_VAL}==RUNNING"	:"handlerRunningShapes",
+						    "${FROM_VAL}==DORMANT"      :"handlerDormantShapes"
 						}
 					}
 		        	}
