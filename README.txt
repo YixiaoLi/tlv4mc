@@ -92,9 +92,9 @@ TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
 	TraceLogVisualizer.exe		TLVの本体
 
 	doc/
-		TLV.ppt					TLV本体のマニュアル
-		TLV_convert_rules.ppt	変換ルールのマニュアル
-		TLV_visualize_rules.ppt	可視化ルールのマニュアル
+		TLV.pdf					TLV本体のマニュアル
+		TLV_convert_rules.pdf	変換ルールのマニュアル
+		TLV_visualize_rules.pdf	可視化ルールのマニュアル
 
 	convertRules/
 		asp.cnv					TOPPERS/ASPカーネルの変換ルール
