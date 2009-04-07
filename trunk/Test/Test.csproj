@@ -60,6 +60,7 @@
     <Compile Include="StringExtensionTest.cs" />
     <Compile Include="SubWindowCollectionTest.cs" />
     <Compile Include="SubWindowTest.cs" />
+    <Compile Include="UnitTest1.cs" />
     <Compile Include="WindowManagerTest.cs" />
     <Compile Include="サブウィンドウ管理.cs" />
   </ItemGroup>
