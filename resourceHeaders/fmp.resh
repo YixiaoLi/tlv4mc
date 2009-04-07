@@ -1,6 +1,57 @@
 {
 	"fmp":
 	{
+	       "CyclicHandler":{
+			"DisplayName" :"周期ハンドラ",
+			"Attributes" :{
+				"prcIdC":{
+					"VariableType"	:"Number",
+					"DisplayName"	:"プロセッサID",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:true
+				},
+				"active":{
+					"VariableType"	:"Boolean",
+					"DisplayName"	:"active",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false
+				},
+				"state":{
+					"VariableType"	:"String",
+					"DisplayName"	:"状態",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false
+				},
+				"id":{
+					"VariableType"	:"Number",
+					"DisplayName"	:"ID",
+					"AllocationType":"Static",
+					"CanGrouping"	:false
+				}
+                        },
+			"Behaviors"	:{
+				"enter":{
+					"DisplayName"	:"周期ハンドラー開始",
+				},
+				"leave":{
+					"DisplayName"	:"周期ハンドラー終了",
+				},
+				"enterSVC":{
+					"DisplayName"	:"サービスコール開始",
+					"Arguments"		:{
+						"name":"String",
+						"args":"String"
+					}
+				},
+				"leaveSVC":{
+					"DisplayName"	:"サービスコール終了",
+					"Arguments"		:{
+						"name":"String",
+						"args":"String"
+					}
+				}
+			}
+                },
 		"Task":{
 			"DisplayName" :"タスク",
 			"Attributes" :{
@@ -101,23 +152,7 @@
 						"name":"String",
 						"args":"String"
 					}
-				},
-				"act_tsk":{
-					"Arguments"		:{
-						"tskid":"Number"
-					}
-                },
-				"dly_tsk":{
-					"Arguments"		:{
-						"dlytim":"Number"
-					}
-                },
-				"slp_tsk":{},
-				"wup_tsk":{
-					"Arguments"		:{
-						"tskid":"Number"
-					}
-                }
+				}
 			}
 		}
 	}

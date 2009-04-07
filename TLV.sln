@@ -45,7 +45,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualizeRules", "visualize
 		visualizeRules\asp_shapes.viz = visualizeRules\asp_shapes.viz
 		visualizeRules\fmp_rules.viz = visualizeRules\fmp_rules.viz
 		visualizeRules\fmp_shapes.viz = visualizeRules\fmp_shapes.viz
-		visualizeRules\toppers_rules.viz = visualizeRules\toppers_rules.viz
 		visualizeRules\toppers_shapes.viz = visualizeRules\toppers_shapes.viz
 	EndProjectSection
 EndProject

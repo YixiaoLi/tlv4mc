@@ -31,15 +31,23 @@
 		],
 		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: enter to (?<name>\w+)( (?<args>.+))?\.?"	:
 		{
-            "$EXIST{[${time}]Task(state==RUNNING && prcId==${pid})}"	:"[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.enterSVC(${name}, ${args})"
-        },
+            		"$EXIST{[${time}]Task(state==RUNNING && prcId==${pid})}"	:"[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.enterSVC(${name}, ${args})"
+        	},
 		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: leave to (?<name>\w+)( (?<args>.+))?\.?"	:
 		{
-            "$EXIST{[${time}]Task(state==RUNNING && prcId==${pid})}"	:"[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.leaveSVC(${name}, ${args})"
-        },
+            		"$EXIST{[${time}]Task(state==RUNNING && prcId==${pid})}"	:"[${time}]$RES_NAME{[${time}]Task(state==RUNNING && prcId==${pid})}.leaveSVC(${name}, ${args})"
+        	},
 		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: task (?<tskid>\d+) migrates from processor (?<fromPrcId>\d+) to processor (?<toPrcId>\d+)\." :
 		{
-            "$EXIST{[${time}]Task(id==${tskid})}" :"[${time}]$RES_NAME{Task(id==${tskid})}.prcId = ${toPrcId}"
-        }
-    }
+            		"$EXIST{[${time}]Task(id==${tskid})}" :"[${time}]$RES_NAME{Task(id==${tskid})}.prcId = ${toPrcId}"
+        	},
+		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: enter to cyclic handler (?<id>[^\.]+)\.?"	:[
+			"[${time}]$RES_NAME{CyclicHandler(id==${id} && prcIdC==${pid})}.enter()",
+			"[${time}]$RES_NAME{CyclicHandler(id==${id} && prcIdC==${pid})}.state=RUNNING",
+		],
+		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: leave from cyclic handler (?<id>[^\.]+)\.?"	:[
+			"[${time}]$RES_NAME{CyclicHandler(id==${id} && prcIdC==${pid})}.leave()",
+			"[${time}]$RES_NAME{CyclicHandler(id==${id} && prcIdC==${pid})}.state=DORMANT"
+		]
+    	}
 }

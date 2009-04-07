@@ -54,7 +54,36 @@
 						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk":"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
 						]
 					}
-		        }
+		        	}
+			},
+			"lockcpu":{
+				"DisplayName":"CPUロック",
+				"Target":"Task",
+				"Shapes":{
+					"callSvcEvent":{
+						"DisplayName":"システムコール",
+						"From":"Task.enterSVC(loc_cpu)",
+						"To":"${FROM_TARGET}.leaveSVC(unl_cpu)",
+						"Figures":[
+						    "cpulockShapes(ff0000,CPUロック開始,CPUロック解除)"
+						]
+					}
+				}
+		    	},
+			"cyclicStateChange":{
+				"DisplayName":"状態遷移",
+				"Target":"CyclicHandler",
+				"Shapes":{
+					"callCyclicEvent":{
+						"DisplayName":"状態",
+						"From":"${TARGET}.state",
+						"To":"${TARGET}.state",
+						"Figures":{
+						    "${FROM_VAL}==RUNNING"	:"runningShapes",
+						    "${FROM_VAL}==DORMANT"      :"dormantShapes"
+						}
+					}
+		        	}
 			}
 		}
 	}
