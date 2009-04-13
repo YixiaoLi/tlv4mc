@@ -223,6 +223,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             {
                 _commandManager.Do(new CloseCommand());
             };
+            aboutAToolStripMenuItem.Click += (o, e) =>
+            {
+                _commandManager.Do(new AboutCommand());
+            };
 
             #endregion
 
