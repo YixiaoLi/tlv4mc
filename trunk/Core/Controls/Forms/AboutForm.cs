@@ -20,5 +20,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls.Forms
         {
             Close();
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

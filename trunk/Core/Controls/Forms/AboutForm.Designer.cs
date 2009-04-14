@@ -1,4 +1,6 @@
-﻿namespace NU.OJL.MPRTOS.TLV.Core.Controls.Forms
+﻿using System.Reflection;
+using System;
+namespace NU.OJL.MPRTOS.TLV.Core.Controls.Forms
 {
     partial class AboutForm
     {
@@ -31,12 +33,12 @@
             this.titleLabel = new System.Windows.Forms.Label();
             this.versionLabel = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
+            this.buildLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // titleLabel
             // 
             this.titleLabel.AutoSize = true;
-            this.titleLabel.Enabled = true;
             this.titleLabel.Font = new System.Drawing.Font("MS UI Gothic", 20F);
             this.titleLabel.Location = new System.Drawing.Point(25, 21);
             this.titleLabel.Name = "titleLabel";
@@ -47,11 +49,10 @@
             // versionLabel
             // 
             this.versionLabel.AutoSize = true;
-            this.versionLabel.Enabled = true;
             this.versionLabel.Font = new System.Drawing.Font("MS UI Gothic", 12F);
             this.versionLabel.Location = new System.Drawing.Point(48, 58);
             this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(111, 16);
+            this.versionLabel.Size = new System.Drawing.Size(106, 16);
             this.versionLabel.TabIndex = 1;
             this.versionLabel.Text = "バージョン " + ApplicationData.Version;
             // 
@@ -65,11 +66,26 @@
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
+            // buildLabel
+            // 
+            this.buildLabel.AutoSize = true;
+            this.buildLabel.Font = new System.Drawing.Font("MS UI Gothic", 12F);
+            this.buildLabel.Location = new System.Drawing.Point(51, 78);
+            this.buildLabel.Name = "buildLabel";
+            this.buildLabel.Size = new System.Drawing.Size(76, 16);
+            this.buildLabel.TabIndex = 3;
+            //AssemblyInfo.csで設定したAssemblyVersionを取得
+            Assembly asm = Assembly.GetExecutingAssembly();
+            Version ver = asm.GetName().Version;
+            this.buildLabel.Text = "ビルド番号 " + ver;
+
+            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(292, 148);
+            this.Controls.Add(this.buildLabel);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.titleLabel);
@@ -85,5 +101,6 @@
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.Button okButton;
+        private System.Windows.Forms.Label buildLabel;
     }
 }
