@@ -47,7 +47,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("TOPPERS")]
 [assembly: AssemblyProduct("TraceLogVisualizer")]
-[assembly: AssemblyCopyright("Copyright TOPPERS 2008")]
+[assembly: AssemblyCopyright("Copyright TOPPERS 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -69,5 +69,5 @@ using System.Runtime.InteropServices;
 // すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を 
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
