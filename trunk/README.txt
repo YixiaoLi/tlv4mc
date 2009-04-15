@@ -134,16 +134,11 @@ TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
 			asp.log
 			asp.res
 			asp.tlv
-			full.log
-			full.res
-			full.tlv
-			tlv.tf
 
 		fmp/					TOPPERS/FMPカーネルのトレースログのサンプル
 			fmp.log
 			fmp.res
 			fmp.tlv
-			tlv.tf
 
 		tecs/					TECSのトレースログのサンプル
 			tecs.log
@@ -154,6 +149,7 @@ TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
 		asp/					TOPPERS/ASPカーネルのログトレースモジュール
 			kernel_fncode.h
 			tlv.tf
+			trace_config.c
 			trace_config.h
 			trace_dump.c
 		fmp/					TOPPERS/FMPカーネルのログトレースモジュール
