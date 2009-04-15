@@ -588,46 +588,46 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 
 #define LOG_IROT_RDQ_ENTER(tskpri) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_IROT_RDQ, tskpri)
 #define LOG_IROT_RDQ_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_IROT_RDQ, ercd)
-/*
-#define LOG_GET_TID_ENTER(p_tskid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_GET_TID, p_tskid)
-#define LOG_GET_TID_LEAVE(ercd, tskid) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_GET_TID, ercd, tskid)
 
-#define LOG_IGET_TID_ENTER(p_tskid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_IGET_TID, p_tskid)
-#define LOG_IGET_TID_LEAVE(ercd, tskid) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_IGET_TID, ercd, tskid)
+//#define LOG_GET_TID_ENTER(p_tskid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_GET_TID, p_tskid)
+//#define LOG_GET_TID_LEAVE(ercd, tskid) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_GET_TID, ercd, tskid)
 
-#define LOG_LOC_CPU_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_LOC_CPU)
-#define LOG_LOC_CPU_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_LOC_CPU, ercd)
+//#define LOG_IGET_TID_ENTER(p_tskid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_IGET_TID, p_tskid)
+//#define LOG_IGET_TID_LEAVE(ercd, tskid) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_IGET_TID, ercd, tskid)
 
-#define LOG_ILOC_CPU_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_ILOC_CPU)
-#define LOG_ILOC_CPU_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_ILOC_CPU, ercd)
+//#define LOG_LOC_CPU_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_LOC_CPU)
+//#define LOG_LOC_CPU_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_LOC_CPU, ercd)
 
-#define LOG_UNL_CPU_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_UNL_CPU)
-#define LOG_UNL_CPU_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_UNL_CPU, ercd)
+//#define LOG_ILOC_CPU_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_ILOC_CPU)
+//#define LOG_ILOC_CPU_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_ILOC_CPU, ercd)
 
-#define LOG_IUNL_CPU_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_IUNL_CPU)
-#define LOG_IUNL_CPU_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_IUNL_CPU, ercd)
+//#define LOG_UNL_CPU_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_UNL_CPU)
+//#define LOG_UNL_CPU_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_UNL_CPU, ercd)
 
-#define LOG_DIS_DSP_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_DIS_DSP)
-#define LOG_DIS_DSP_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_DIS_DSP, ercd)
+//#define LOG_IUNL_CPU_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_IUNL_CPU)
+//#define LOG_IUNL_CPU_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_IUNL_CPU, ercd)
 
-#define LOG_ENA_DSP_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_ENA_DSP)
-#define LOG_ENA_DSP_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_ENA_DSP, ercd)
+//#define LOG_DIS_DSP_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_DIS_DSP)
+//#define LOG_DIS_DSP_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_DIS_DSP, ercd)
 
-#define LOG_SNS_CTX_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_SNS_CTX)
-#define LOG_SNS_CTX_LEAVE(state) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SNS_CTX, state)
+//#define LOG_ENA_DSP_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_ENA_DSP)
+//#define LOG_ENA_DSP_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_ENA_DSP, ercd)
 
-#define LOG_SNS_LOC_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_SNS_LOC)
-#define LOG_SNS_LOC_LEAVE(state) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SNS_LOC, state)
+//#define LOG_SNS_CTX_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_SNS_CTX)
+//#define LOG_SNS_CTX_LEAVE(state) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SNS_CTX, state)
 
-#define LOG_SNS_DSP_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_SNS_DSP)
-#define LOG_SNS_DSP_LEAVE(state) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SNS_DSP, state)
+//#define LOG_SNS_LOC_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_SNS_LOC)
+//#define LOG_SNS_LOC_LEAVE(state) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SNS_LOC, state)
 
-#define LOG_SNS_DPN_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_SNS_DPN)
-#define LOG_SNS_DPN_LEAVE(state) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SNS_DPN, state)
+//#define LOG_SNS_DSP_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_SNS_DSP)
+//#define LOG_SNS_DSP_LEAVE(state) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SNS_DSP, state)
 
-#define LOG_SNS_KER_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_SNS_KER)
-#define LOG_SNS_KER_LEAVE(state) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SNS_KER, state)
-*/
+//#define LOG_SNS_DPN_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_SNS_DPN)
+//#define LOG_SNS_DPN_LEAVE(state) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SNS_DPN, state)
+
+//#define LOG_SNS_KER_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_SNS_KER)
+//#define LOG_SNS_KER_LEAVE(state) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SNS_KER, state)
+
 
 /*
  *  カーネルの初期化と終了処理
