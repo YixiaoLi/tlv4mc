@@ -32,7 +32,7 @@ $JOINEACH tskid TSK.ORDER_LIST ",\n"$
 $END$,
 $NL$
 $JOINEACH inhno INH.ORDER_LIST ",\n"$
-    $TAB$$TAB$"$INH.INHNO[inhno]$":{$NL$
+    $TAB$$TAB$"INH_$INH.INHNO[inhno]$_$INH.INTHDR[inhno]$":{$NL$
     $TAB$$TAB$$TAB$"Type":"InterruptHandler",$NL$
     $TAB$$TAB$$TAB$"Attributes":$NL$
     $TAB$$TAB$$TAB${$NL$
@@ -44,7 +44,7 @@ $JOINEACH inhno INH.ORDER_LIST ",\n"$
 $END$,
 $NL$
 $JOINEACH order ISR.ORDER_LIST ",\n"$
-    $TAB$$TAB$"$ISR.INTNO[order]$":{$NL$
+    $TAB$$TAB$"ISR_$ISR.INTNO[order]$_$ISR.ISR[order]$_$ISR.EXINF[order]$":{$NL$
     $TAB$$TAB$$TAB$"Type":"InterruptServiceRoutine",$NL$
     $TAB$$TAB$$TAB$"Attributes":$NL$
     $TAB$$TAB$$TAB${$NL$
@@ -63,12 +63,6 @@ $JOINEACH cycid CYC.ORDER_LIST ",\n"$
     $TAB$$TAB$$TAB$$TAB$"prcIdC" :$CLASS_AFFINITY_INI[CYC.CLASS[cycid]]$,$NL$
     $TAB$$TAB$$TAB$$TAB$"id"    :$+cycid$,$NL$
     $TAB$$TAB$$TAB$$TAB$"state"    : "DORMANT"$NL$
-$    $TAB$$TAB$$TAB$$TAB$"active"    :
-$    $IF (CYC.CYCATR[cycid] & TA_STA) != 0$
-$        "True"
-$    $ELSE$
-$        "False"
-$    $END$$NL$
     $TAB$$TAB$$TAB$}$NL$
     $TAB$$TAB$}
 $END$,
