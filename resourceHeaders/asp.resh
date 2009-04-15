@@ -12,7 +12,7 @@
 				}
 			}
 		},
-		"InterruptHandler":{
+        	"InterruptHandler":{
 			"DisplayName" :"割込みハンドラ",
 			"Attributes" :{
 				"active":{
@@ -33,7 +33,7 @@
 					"AllocationType":"Static",
 					"CanGrouping"	:false
 				}
-			},
+                        },
 			"Behaviors"	:{
 				"enter":{
 					"DisplayName"	:"割込みハンドラー開始",
@@ -54,10 +54,9 @@
 						"name":"String",
 						"args":"String"
 					}
-				}
-			}
-		},
-		"InterruptServiceRoutine":{
+				}	}
+                },
+                "InterruptServiceRoutine":{
 			"DisplayName" :"割込みサービスルーチン",
 			"Attributes" :{
 				"active":{
@@ -78,7 +77,7 @@
 					"AllocationType":"Static",
 					"CanGrouping"	:false
 				}
-			},
+                        },
 			"Behaviors"	:{
 				"enter":{
 					"DisplayName"	:"割込みサービスルーチン開始",
@@ -101,8 +100,8 @@
 					}
 				}	
 			}
-		},
-		"CyclicHandler":{
+                },
+                "CyclicHandler":{
 			"DisplayName" :"周期ハンドラ",
 			"Attributes" :{
 				"active":{
@@ -123,7 +122,7 @@
 					"AllocationType":"Static",
 					"CanGrouping"	:false
 				}
-			},
+                        },
 			"Behaviors"	:{
 				"enter":{
 					"DisplayName"	:"周期ハンドラー開始",
@@ -146,8 +145,8 @@
 					}
 				}
 			}
-		},
-		"AlarmHandler":{
+                },
+                "AlarmHandler":{
 			"DisplayName" :"アラームハンドラ",
 			"Attributes" :{
 				"active":{
@@ -168,7 +167,7 @@
 					"AllocationType":"Static",
 					"CanGrouping"	:false
 				}
-			},
+                        },
 			"Behaviors"	:{
 				"enter":{
 					"DisplayName"	:"アラームハンドラー開始",
@@ -191,8 +190,8 @@
 					}
 				}
 			}
-		},
-		"CPUExceptionHandler":{
+                },
+                "CPUExceptionHandler":{
 			"DisplayName" :"CPU例外ハンドラ",
 			"Attributes" :{
 				"active":{
@@ -213,7 +212,7 @@
 					"AllocationType":"Static",
 					"CanGrouping"	:false
 				}
-			},
+                        },
 			"Behaviors"	:{
 				"enter":{
 					"DisplayName"	:"CPU例外ハンドラー開始",
@@ -236,8 +235,8 @@
 					}
 				}
 			}
-		},
-		"TaskExceptionRoutine":{
+        },
+        "TaskExceptionRoutine":{
 			"DisplayName" :"タスク例外ルーチン",
 			"Attributes" :{
 				"active":{
@@ -258,7 +257,7 @@
 					"AllocationType":"Static",
 					"CanGrouping"	:false
 				}
-			},
+                        },
 			"Behaviors"	:{
 				"enter":{
 					"DisplayName"	:"タスク例外ルーチン開始",
@@ -281,7 +280,7 @@
 					}
 				}
 			}
-		},
+        	},
 		"Task":{
 			"DisplayName" :"タスク",
 			"Attributes" :{
@@ -376,7 +375,23 @@
 						"name":"String",
 						"args":"String"
 					}
-				}
+				},
+				"act_tsk":{
+					"Arguments"		:{
+						"tskid":"Number"
+					}
+                		},
+				"dly_tsk":{
+					"Arguments"		:{
+						"dlytim":"Number"
+					}
+                		},
+				"slp_tsk":{},
+				"wup_tsk":{
+					"Arguments"		:{
+						"tskid":"Number"
+					}
+                		}
 			}
 		}
 	}

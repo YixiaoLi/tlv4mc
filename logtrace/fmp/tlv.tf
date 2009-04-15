@@ -7,6 +7,7 @@ $TAB$"VisualizeRules" :["toppers","fmp","fmp_core$+TNUM_PRC$"],$NL$
 $TAB$"ResourceHeaders":["fmp"],$NL$
 $TAB$"Resources":$NL$
 $TAB${$NL$
+$NL$
 $JOINEACH tskid TSK.ORDER_LIST ",\n"$
     $TAB$$TAB$"$tskid$":{$NL$
     $TAB$$TAB$$TAB$"Type":"Task",$NL$
@@ -35,7 +36,7 @@ $JOINEACH inhno INH.ORDER_LIST ",\n"$
     $TAB$$TAB$$TAB$"Type":"InterruptHandler",$NL$
     $TAB$$TAB$$TAB$"Attributes":$NL$
     $TAB$$TAB$$TAB${$NL$
-    $TAB$$TAB$$TAB$$TAB$"prcId" :$CLASS_AFFINITY_INI[INH.CLASS[inhno]]$,$NL$
+    $TAB$$TAB$$TAB$$TAB$"prcIdI" :$CLASS_AFFINITY_INI[INH.CLASS[inhno]]$,$NL$
     $TAB$$TAB$$TAB$$TAB$"id"    :$+INH.INHNO[inhno]-(0x10000)*(CLASS_AFFINITY_INI[INH.CLASS[inhno]])$,$NL$
     $TAB$$TAB$$TAB$$TAB$"state"    : "DORMANT"$NL$
     $TAB$$TAB$$TAB$}$NL$
@@ -47,7 +48,7 @@ $JOINEACH order ISR.ORDER_LIST ",\n"$
     $TAB$$TAB$$TAB$"Type":"InterruptServiceRoutine",$NL$
     $TAB$$TAB$$TAB$"Attributes":$NL$
     $TAB$$TAB$$TAB${$NL$
-    $TAB$$TAB$$TAB$$TAB$"prcId" :$CLASS_AFFINITY_INI[ISR.CLASS[order]]$,$NL$
+    $TAB$$TAB$$TAB$$TAB$"prcIdR" :$CLASS_AFFINITY_INI[ISR.CLASS[order]]$,$NL$
     $TAB$$TAB$$TAB$$TAB$"id"    :$+ISR.INTNO[order]$,$NL$
     $TAB$$TAB$$TAB$$TAB$"state"    : "DORMANT"$NL$
     $TAB$$TAB$$TAB$}$NL$
@@ -59,7 +60,7 @@ $JOINEACH cycid CYC.ORDER_LIST ",\n"$
     $TAB$$TAB$$TAB$"Type":"CyclicHandler",$NL$
     $TAB$$TAB$$TAB$"Attributes":$NL$
     $TAB$$TAB$$TAB${$NL$
-    $TAB$$TAB$$TAB$$TAB$"prcId" :$CLASS_AFFINITY_INI[CYC.CLASS[cycid]]$,$NL$
+    $TAB$$TAB$$TAB$$TAB$"prcIdC" :$CLASS_AFFINITY_INI[CYC.CLASS[cycid]]$,$NL$
     $TAB$$TAB$$TAB$$TAB$"id"    :$+cycid$,$NL$
     $TAB$$TAB$$TAB$$TAB$"state"    : "DORMANT"$NL$
 $    $TAB$$TAB$$TAB$$TAB$"active"    :
@@ -77,7 +78,7 @@ $JOINEACH almid ALM.ORDER_LIST ",\n"$
     $TAB$$TAB$$TAB$"Type":"AlarmHandler",$NL$
     $TAB$$TAB$$TAB$"Attributes":$NL$
     $TAB$$TAB$$TAB${$NL$
-    $TAB$$TAB$$TAB$$TAB$"prcId" :$CLASS_AFFINITY_INI[ALM.CLASS[almid]]$,$NL$
+    $TAB$$TAB$$TAB$$TAB$"prcIdA" :$CLASS_AFFINITY_INI[ALM.CLASS[almid]]$,$NL$
     $TAB$$TAB$$TAB$$TAB$"id"    :$+almid$,$NL$
     $TAB$$TAB$$TAB$$TAB$"state"    : "DORMANT"$NL$
     $TAB$$TAB$$TAB$}$NL$
@@ -89,7 +90,7 @@ $JOINEACH excno EXC.ORDER_LIST ",\n"$
     $TAB$$TAB$$TAB$"Type":"CPUExceptionHandler",$NL$
     $TAB$$TAB$$TAB$"Attributes":$NL$
     $TAB$$TAB$$TAB${$NL$
-    $TAB$$TAB$$TAB$$TAB$"prcId" :$CLASS_AFFINITY_INI[EXC.CLASS[excno]]$,$NL$
+    $TAB$$TAB$$TAB$$TAB$"prcIdE" :$CLASS_AFFINITY_INI[EXC.CLASS[excno]]$,$NL$
     $TAB$$TAB$$TAB$$TAB$"id"    :$+EXC.EXCNO[excno]-(0x10000)*(CLASS_AFFINITY_INI[EXC.CLASS[excno]])$,$NL$
     $TAB$$TAB$$TAB$$TAB$"state"    : "DORMANT"$NL$
     $TAB$$TAB$$TAB$}$NL$
@@ -97,11 +98,11 @@ $JOINEACH excno EXC.ORDER_LIST ",\n"$
 $END$,
 $NL$
 $JOINEACH prcid RANGE(1, TNUM_PRC) ",\n"$
-    $TAB$$TAB$"PRC$prcid$_TASK_TEX":{$NL$
+    $TAB$$TAB$"TASK_TEX_PRC$prcid$":{$NL$
     $TAB$$TAB$$TAB$"Type":"TaskExceptionRoutine",$NL$
     $TAB$$TAB$$TAB$"Attributes":$NL$
     $TAB$$TAB$$TAB${$NL$
-    $TAB$$TAB$$TAB$$TAB$"prcId" :$prcid$,$NL$
+    $TAB$$TAB$$TAB$$TAB$"prcIdX" :$prcid$,$NL$
     $TAB$$TAB$$TAB$$TAB$"state"    : "DORMANT"$NL$
     $TAB$$TAB$$TAB$}$NL$
     $TAB$$TAB$}

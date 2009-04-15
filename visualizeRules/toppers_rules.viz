@@ -70,6 +70,36 @@
 					}
 				}
 		    	},
+			"interruptStateChange":{
+				"DisplayName":"状態遷移",
+				"Target":"InterruptHandler",
+				"Shapes":{
+					"callInterruptEvent":{
+						"DisplayName":"状態",
+						"From":"${TARGET}.state",
+						"To":"${TARGET}.state",
+						"Figures":{
+						    "${FROM_VAL}==RUNNING"	:"handlerRunningShapes",
+						    "${FROM_VAL}==DORMANT"      :"handlerDormantShapes"
+						}
+					}
+		        	}
+			},
+			"interruptserviceroutineStateChange":{
+				"DisplayName":"状態遷移",
+				"Target":"InterruptServiceRoutine",
+				"Shapes":{
+					"callInterruptServiceRoutineEvent":{
+						"DisplayName":"状態",
+						"From":"${TARGET}.state",
+						"To":"${TARGET}.state",
+						"Figures":{
+						    "${FROM_VAL}==RUNNING"	:"handlerRunningShapes",
+						    "${FROM_VAL}==DORMANT"      :"handlerDormantShapes"
+						}
+					}
+		        	}
+			},
 			"cyclicStateChange":{
 				"DisplayName":"状態遷移",
 				"Target":"CyclicHandler",
@@ -84,6 +114,136 @@
 						}
 					}
 		        	}
+			},
+			"alarmStateChange":{
+				"DisplayName":"状態遷移",
+				"Target":"AlarmHandler",
+				"Shapes":{
+					"callAlarmEvent":{
+						"DisplayName":"状態",
+						"From":"${TARGET}.state",
+						"To":"${TARGET}.state",
+						"Figures":{
+						    "${FROM_VAL}==RUNNING"	:"handlerRunningShapes",
+						    "${FROM_VAL}==DORMANT"      :"handlerDormantShapes"
+						}
+					}
+		        	}
+			},
+			"cpuexceptionStateChange":{
+				"DisplayName":"状態遷移",
+				"Target":"CPUExceptionHandler",
+				"Shapes":{
+					"callCPUExceptionEvent":{
+						"DisplayName":"状態",
+						"From":"${TARGET}.state",
+						"To":"${TARGET}.state",
+						"Figures":{
+						    "${FROM_VAL}==RUNNING"	:"handlerRunningShapes",
+						    "${FROM_VAL}==DORMANT"      :"handlerDormantShapes"
+						}
+					}
+		        	}
+			},
+			"taskexceptionStateChange":{
+				"DisplayName":"状態遷移",
+				"Target":"TaskExceptionRoutine",
+				"Shapes":{
+					"callTaskExceptionEvent":{
+						"DisplayName":"状態",
+						"From":"${TARGET}.state",
+						"To":"${TARGET}.state",
+						"Figures":{
+						    "${FROM_VAL}==RUNNING"	:"handlerRunningShapes",
+						    "${FROM_VAL}==DORMANT"      :"handlerDormantShapes"
+						}
+					}
+		        	}
+			},
+			"interruptSVCcall":{
+				"DisplayName":"システムコール",
+				"Target":"InterruptHandler",
+				"Shapes":{
+					"callSvcEvent":{
+						"DisplayName":"システムコール",
+						"From":"${TARGET}.enterSVC()",
+						"To":"${TARGET}.leaveSVC(${FROM_ARG0})",
+						"Figures":[
+						    {"${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk"
+							:"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"},
+						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk"
+							:"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
+						]
+					}
+				}
+			},
+			"cyclicSVCcall":{
+				"DisplayName":"システムコール",
+				"Target":"CyclicHandler",
+				"Shapes":{
+					"callSvcEvent":{
+						"DisplayName":"システムコール",
+						"From":"${TARGET}.enterSVC()",
+						"To":"${TARGET}.leaveSVC(${FROM_ARG0})",
+						"Figures":[
+						    {"${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk"
+							:"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"},
+						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk"
+							:"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
+						]
+					}
+				}
+			},
+			"alarmSVCcall":{
+				"DisplayName":"システムコール",
+				"Target":"AlarmHandler",
+				"Shapes":{
+					"callSvcEvent":{
+						"DisplayName":"システムコール",
+						"From":"${TARGET}.enterSVC()",
+						"To":"${TARGET}.leaveSVC(${FROM_ARG0})",
+						"Figures":[
+						    {"${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk"
+							:"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"},
+						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk"
+							:"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
+						]
+					}
+				}
+			},
+			"cpuexceptionSVCcall":{
+				"DisplayName":"システムコール",
+				"Target":"CPUExceptionHandler",
+				"Shapes":{
+					"callSvcEvent":{
+						"DisplayName":"システムコール",
+						"From":"${TARGET}.enterSVC()",
+						"To":"${TARGET}.leaveSVC(${FROM_ARG0})",
+						"Figures":[
+						    {"${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk"
+							:"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"},
+						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk"
+							:"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
+						]
+					}
+				}
+			},
+			"taskexceptionSVCcall":{
+				"DisplayName":"システムコール",
+				"Target":"TaskExceptionRoutine",
+				"Shapes":{
+					"callSvcEvent":{
+						"DisplayName":"システムコール",
+						"From":"${TARGET}.enterSVC()",
+						"To":"${TARGET}.leaveSVC(${FROM_ARG0})",
+						"Figures":[
+						    {"${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk"
+							:"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"},
+						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk"
+							:"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
+						]
+					}
+				}
 			}
 		}
 	}
