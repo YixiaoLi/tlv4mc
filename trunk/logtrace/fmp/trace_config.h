@@ -60,7 +60,7 @@
  *  トレースログバッファのサイズ
  */
 #ifndef TCNT_TRACE_BUFFER
-#define TCNT_TRACE_BUFFER	4096
+#define TCNT_TRACE_BUFFER	15000
 #endif /* TCNT_TRACE_BUFFER */
 
 /*
@@ -522,8 +522,8 @@ extern void trace_task_phase(uint_t phase);
 #define LOG_GET_TIM_ENTER(p_systim) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_GET_TIM, p_systim)
 #define LOG_GET_TIM_LEAVE(ercd, systim) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_GET_TIM, ercd, systim)
 
-//#define LOG_GET_UTM_ENTER(p_sysutm) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_GET_UTM, p_sysutm)
-//#define LOG_GET_UTM_LEAVE(ercd, sysutm) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_GET_UTM, ercd, sysutm)
+#define LOG_GET_UTM_ENTER(p_sysutm) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_GET_UTM, p_sysutm)
+#define LOG_GET_UTM_LEAVE(ercd, sysutm) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_GET_UTM, ercd, sysutm)
 
 /*
  *  周期ハンドラ機能
@@ -581,7 +581,7 @@ extern void trace_task_phase(uint_t phase);
 
 /*
  *  システム状態管理機能
-
+ 
 #define LOG_ROT_RDQ_ENTER(tskpri) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_ROT_RDQ, tskpri)
 #define LOG_ROT_RDQ_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_ROT_RDQ, ercd)
 
@@ -626,7 +626,7 @@ extern void trace_task_phase(uint_t phase);
 
 #define LOG_SNS_KER_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_SNS_KER)
 #define LOG_SNS_KER_LEAVE(state) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SNS_KER, state)
- */
+*/
 /*
  *  FMPで追加されたシステムコール
  */

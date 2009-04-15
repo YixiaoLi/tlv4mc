@@ -153,7 +153,7 @@ trace_print_tskenter(TRACE *trace, intptr_t *info)
 		break;
         
 		/* タスク付属同期機能 */
-	case TFN_SLP_TSK:
+          case TFN_SLP_TSK:
 		tracemsg = "enter to slp_tsk.";
 		break;
 	  case TFN_TSLP_TSK:
@@ -193,7 +193,7 @@ trace_print_tskenter(TRACE *trace, intptr_t *info)
 		tracemsg = "enter to dly_tsk dlytim=%d.";
 		break;
 	  default:
-		tracemsg = "unknown tsk service call";
+		tracemsg = "unknown service call";
 		break;
 	}
 
@@ -2004,19 +2004,19 @@ trace_print(TRACE *p_trace, void (*putc)(char_t))
 		tracemsg = "leave from isr %d.";
 		break;
 	case LOG_TYPE_CYC|LOG_ENTER:
-		traceinfo[0] = (intptr_t)(((CYCCB*)(p_trace->loginfo[0]))->p_cycinib->cychdr);
+		traceinfo[0] = (intptr_t)((ID)((((CYCCB*)(p_trace->loginfo[0])) - cyccb_table) + TMIN_CYCID));
 		tracemsg = "enter to cyclic handler %d.";
 		break;
 	case LOG_TYPE_CYC|LOG_LEAVE:
-		traceinfo[0] = (intptr_t)(((CYCCB*)(p_trace->loginfo[0]))->p_cycinib->cychdr);
+		traceinfo[0] = (intptr_t)((ID)((((CYCCB*)(p_trace->loginfo[0])) - cyccb_table) + TMIN_CYCID));
 		tracemsg = "leave from cyclic handler %d.";
 		break;
 	case LOG_TYPE_ALM|LOG_ENTER:
-		traceinfo[0] = (intptr_t)(((ALMCB*)(p_trace->loginfo[0]))->p_alminib->almhdr);
+		traceinfo[0] = (intptr_t)((ID)((((ALMCB*)(p_trace->loginfo[0])) - almcb_table) + TMIN_ALMID));
 		tracemsg = "enter to alarm handler %d.";
 		break;
 	case LOG_TYPE_ALM|LOG_LEAVE:
-		traceinfo[0] = (intptr_t)(((ALMCB*)(p_trace->loginfo[0]))->p_alminib->almhdr);
+		traceinfo[0] = (intptr_t)((ID)((((ALMCB*)(p_trace->loginfo[0])) - almcb_table) + TMIN_ALMID));
 		tracemsg = "leave from alarm handler %d.";
 		break;
 	case LOG_TYPE_EXC|LOG_ENTER:
@@ -2084,8 +2084,8 @@ trace_dump(intptr_t exinf)
 	TRACE	trace;
 	void	(*putc)(char_t);
 
-	putc = (void (*)(char_t)) exinf;
+        putc = (void (*)(char_t)) exinf;
 	while (trace_rea_log(&trace) >= 0) {
 		trace_print(&trace, putc);
-	}
+        }
 }
