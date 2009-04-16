@@ -25,7 +25,8 @@
 				"stksz" :1024,
 				"stk"   :"NULL",
 				"state" :"RUNNABLE"
-			}		},
+			}
+		},
 		"TASK1":{
 			"Type":"Task",
 			"Attributes":
@@ -38,7 +39,8 @@
 				"stksz" :4096,
 				"stk"   :"NULL",
 				"state" :"DORMANT"
-			}		},
+			}
+		},
 		"TASK2":{
 			"Type":"Task",
 			"Attributes":
@@ -51,7 +53,8 @@
 				"stksz" :4096,
 				"stk"   :"NULL",
 				"state" :"DORMANT"
-			}		},
+			}
+		},
 		"TASK3":{
 			"Type":"Task",
 			"Attributes":
@@ -64,7 +67,8 @@
 				"stksz" :4096,
 				"stk"   :"NULL",
 				"state" :"DORMANT"
-			}		},
+			}
+		},
 		"MAIN_TASK":{
 			"Type":"Task",
 			"Attributes":
@@ -77,8 +81,9 @@
 				"stksz" :4096,
 				"stk"   :"NULL",
 				"state" :"RUNNABLE"
-			}		},
-		"target_timer_handler":{
+			}
+		},
+		"INH_INHNO_TIMER_target_timer_handler":{
 			"Type":"InterruptHandler",
 			"Attributes":
 			{
@@ -86,7 +91,7 @@
 				"state"    : "DORMANT"
 			}
 		},
-		"sio_handler0":{
+		"INH_INHNO_SIO_sio_handler0":{
 			"Type":"InterruptHandler",
 			"Attributes":
 			{
