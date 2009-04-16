@@ -15,12 +15,6 @@
         	"InterruptHandler":{
 			"DisplayName" :"割込みハンドラ",
 			"Attributes" :{
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
-				},
 				"state":{
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
@@ -59,12 +53,6 @@
                 "InterruptServiceRoutine":{
 			"DisplayName" :"割込みサービスルーチン",
 			"Attributes" :{
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
-				},
 				"state":{
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
@@ -104,12 +92,6 @@
                 "CyclicHandler":{
 			"DisplayName" :"周期ハンドラ",
 			"Attributes" :{
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
-				},
 				"state":{
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
@@ -149,12 +131,6 @@
                 "AlarmHandler":{
 			"DisplayName" :"アラームハンドラ",
 			"Attributes" :{
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
-				},
 				"state":{
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
@@ -194,12 +170,6 @@
                 "CPUExceptionHandler":{
 			"DisplayName" :"CPU例外ハンドラ",
 			"Attributes" :{
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
-				},
 				"state":{
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
@@ -239,12 +209,6 @@
         "TaskExceptionRoutine":{
 			"DisplayName" :"タスク例外ルーチン",
 			"Attributes" :{
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
-				},
 				"state":{
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",

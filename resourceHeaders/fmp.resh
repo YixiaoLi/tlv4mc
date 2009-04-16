@@ -10,12 +10,6 @@
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
 				},
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
-				},
 				"state":{
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
@@ -60,12 +54,6 @@
 					"DisplayName"	:"プロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
-				},
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
 				},
 				"state":{
 					"VariableType"	:"String",
@@ -112,12 +100,6 @@
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
 				},
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
-				},
 				"state":{
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
@@ -162,12 +144,6 @@
 					"DisplayName"	:"プロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
-				},
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
 				},
 				"state":{
 					"VariableType"	:"String",
@@ -214,12 +190,6 @@
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
 				},
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
-				},
 				"state":{
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
@@ -264,12 +234,6 @@
 					"DisplayName"	:"プロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
-				},
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
 				},
 				"state":{
 					"VariableType"	:"String",
