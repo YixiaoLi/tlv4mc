@@ -134,6 +134,9 @@ TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
 			asp.log
 			asp.res
 			asp.tlv
+			full.log
+			full.res
+			full.tlv
 
 		fmp/					TOPPERS/FMPカーネルのトレースログのサンプル
 			fmp.log
