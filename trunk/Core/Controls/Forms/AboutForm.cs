@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls.Forms
 {
@@ -14,16 +15,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls.Forms
         public AboutForm()
         {
             InitializeComponent();
+            //AssemblyInfo.csで設定したAssemblyVersionを取得
+            Assembly asm = Assembly.GetExecutingAssembly();
+            Version ver = asm.GetName().Version;
+            this.buildLabel.Text = "ビルド番号 " + ver;
         }
 
         private void okButton_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
