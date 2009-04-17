@@ -45,9 +45,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("TraceLogVisualizer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("TOPPERS")]
+[assembly: AssemblyCompany("Embedded and Real-Time Systems Laboratory, Graduate School of Information Science, Nagoya Univ., JAPAN")]
 [assembly: AssemblyProduct("TraceLogVisualizer")]
-[assembly: AssemblyCopyright("Copyright TOPPERS 2009")]
+[assembly: AssemblyCopyright("Copyright (C) 2008,2009 by Embedded and Real-Time Systems Laboratory")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
