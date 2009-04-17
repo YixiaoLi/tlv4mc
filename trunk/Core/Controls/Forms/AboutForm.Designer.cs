@@ -35,18 +35,20 @@
             this.buildLabel = new System.Windows.Forms.Label();
             this.logoPicture = new System.Windows.Forms.PictureBox();
             this.copyrightLabel = new System.Windows.Forms.Label();
+            this.lineLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.logoPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // titleLabel
             // 
             this.titleLabel.AutoSize = true;
-            this.titleLabel.Font = new System.Drawing.Font("MS UI Gothic", 20F);
+            this.titleLabel.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleLabel.Location = new System.Drawing.Point(4, 9);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(228, 27);
+            this.titleLabel.Size = new System.Drawing.Size(262, 38);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "TraceLogVisualizer";
+            this.titleLabel.Click += new System.EventHandler(this.titleLabel_Click);
             // 
             // versionLabel
             // 
@@ -60,7 +62,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(240, 150);
+            this.okButton.Location = new System.Drawing.Point(236, 149);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 2;
@@ -81,7 +83,7 @@
             // logoPicture
             // 
             this.logoPicture.Image = ((System.Drawing.Image)(resources.GetObject("logoPicture.Image")));
-            this.logoPicture.Location = new System.Drawing.Point(240, 9);
+            this.logoPicture.Location = new System.Drawing.Point(259, 12);
             this.logoPicture.Name = "logoPicture";
             this.logoPicture.Size = new System.Drawing.Size(286, 88);
             this.logoPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -92,18 +94,28 @@
             // 
             this.copyrightLabel.AutoSize = true;
             this.copyrightLabel.Font = new System.Drawing.Font("MS UI Gothic", 12F);
-            this.copyrightLabel.Location = new System.Drawing.Point(14, 100);
+            this.copyrightLabel.Location = new System.Drawing.Point(8, 103);
             this.copyrightLabel.Name = "copyrightLabel";
             this.copyrightLabel.Size = new System.Drawing.Size(512, 32);
             this.copyrightLabel.TabIndex = 5;
             this.copyrightLabel.Text = "Copyright (C) 2008,2009 by Embedded and Real-Time Systems Laboratory\r\n           " +
                 " Graduate School of Information Science, Nagoya Univ., JAPAN";
             // 
+            // lineLabel
+            // 
+            this.lineLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lineLabel.Font = new System.Drawing.Font("MS UI Gothic", 12F);
+            this.lineLabel.Location = new System.Drawing.Point(10, 98);
+            this.lineLabel.Name = "lineLabel";
+            this.lineLabel.Size = new System.Drawing.Size(524, 1);
+            this.lineLabel.TabIndex = 6;
+            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(535, 185);
+            this.ClientSize = new System.Drawing.Size(545, 184);
+            this.Controls.Add(this.lineLabel);
             this.Controls.Add(this.copyrightLabel);
             this.Controls.Add(this.logoPicture);
             this.Controls.Add(this.buildLabel);
@@ -132,5 +144,6 @@
         private System.Windows.Forms.Label buildLabel;
         private System.Windows.Forms.PictureBox logoPicture;
         private System.Windows.Forms.Label copyrightLabel;
+        private System.Windows.Forms.Label lineLabel;
     }
 }
