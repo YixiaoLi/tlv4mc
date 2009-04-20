@@ -58,7 +58,7 @@
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(106, 16);
             this.versionLabel.TabIndex = 1;
-            this.versionLabel.Text = "バージョン 1.0rc";
+            this.versionLabel.Text = "version";
             // 
             // okButton
             // 
@@ -78,7 +78,7 @@
             this.buildLabel.Name = "buildLabel";
             this.buildLabel.Size = new System.Drawing.Size(81, 16);
             this.buildLabel.TabIndex = 3;
-            this.buildLabel.Text = "ビルド番号 ";
+            this.buildLabel.Text = "build";
             // 
             // logoPicture
             // 
