@@ -137,6 +137,7 @@ xcopy $(SolutionDir)visualizeRules $(TargetDir)visualizeRules /e /c /q /y /exclu
 xcopy $(SolutionDir)sampleFiles $(TargetDir)sampleFiles /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
 copy $(SolutionDir)doc\*.pdf $(TargetDir)doc
 copy $(SolutionDir)dll\*.dll $(TargetDir)
+copy $(SolutionDir)README.txt $(TargetDir)
 
 if $(ConfigurationName) == Release move $(TargetPath) $(TargetDir)___$(TargetFileName)
 if $(ConfigurationName) == Release $(SolutionDir)bin\ILMerge.exe /wildcards /ndebug /out:$(TargetPath) $(TargetDir)___$(TargetFileName) *.dll

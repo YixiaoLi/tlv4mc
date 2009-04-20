@@ -15,6 +15,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls.Forms
         public AboutForm()
         {
             InitializeComponent();
+            //バージョン情報
+            this.versionLabel.Text = "バージョン " + ApplicationData.Version;
             //AssemblyInfo.csで設定したAssemblyVersionを取得
             Assembly asm = Assembly.GetExecutingAssembly();
             Version ver = asm.GetName().Version;
