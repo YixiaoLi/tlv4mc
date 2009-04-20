@@ -126,16 +126,18 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>if not exist $(TargetDir)convertRules mkdir $(TargetDir)convertRules
-if not exist $(TargetDir)resourceHeaders mkdir $(TargetDir)resourceHeaders
-if not exist $(TargetDir)visualizeRules mkdir $(TargetDir)visualizeRules
-if not exist $(TargetDir)sampleFiles mkdir $(TargetDir)sampleFiles
-if not exist $(TargetDir)doc mkdir $(Target)doc
-
 xcopy $(SolutionDir)convertRules $(TargetDir)convertRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+if not exist $(TargetDir)resourceHeaders mkdir $(TargetDir)resourceHeaders
 xcopy $(SolutionDir)resourceHeaders $(TargetDir)resourceHeaders /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+if not exist $(TargetDir)visualizeRules mkdir $(TargetDir)visualizeRules
 xcopy $(SolutionDir)visualizeRules $(TargetDir)visualizeRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+if not exist $(TargetDir)sampleFiles mkdir $(TargetDir)sampleFiles
 xcopy $(SolutionDir)sampleFiles $(TargetDir)sampleFiles /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+if not exist $(TargetDir)doc mkdir $(Target)doc
 copy $(SolutionDir)doc\*.pdf $(TargetDir)doc
+if not exist $(TargetDir)logtrace mkdir $(Target)logtrace
+xcopy $(SolutionDir)logtrace $(TargetDir)logtrace /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+
 copy $(SolutionDir)dll\*.dll $(TargetDir)
 copy $(SolutionDir)README.txt $(TargetDir)
 
