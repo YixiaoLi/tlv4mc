@@ -7,6 +7,15 @@ $TAB$"VisualizeRules" :["toppers","fmp","fmp_core$+TNUM_PRC$"],$NL$
 $TAB$"ResourceHeaders":["fmp"],$NL$
 $TAB$"Resources":$NL$
 $TAB${$NL$
+$JOINEACH prcid RANGE(1, TNUM_PRC) ",\n"$
+    $TAB$$TAB$"CurrentContext_PRC$prcid$":{$NL$
+    $TAB$$TAB$$TAB$"Type":"Context",$NL$
+    $TAB$$TAB$$TAB$"Attributes":$NL$
+    $TAB$$TAB$$TAB${$NL$
+    $TAB$$TAB$$TAB$$TAB$"name"    : "LOGTASK$prcid$"$NL$
+    $TAB$$TAB$$TAB$}$NL$
+    $TAB$$TAB$}
+$END$,
 $NL$
 $JOINEACH tskid TSK.ORDER_LIST ",\n"$
     $TAB$$TAB$"$tskid$":{$NL$
@@ -63,6 +72,12 @@ $JOINEACH cycid CYC.ORDER_LIST ",\n"$
     $TAB$$TAB$$TAB$$TAB$"prcIdC" :$CLASS_AFFINITY_INI[CYC.CLASS[cycid]]$,$NL$
     $TAB$$TAB$$TAB$$TAB$"id"    :$+cycid$,$NL$
     $TAB$$TAB$$TAB$$TAB$"state"    : "DORMANT"$NL$
+$    $TAB$$TAB$$TAB$$TAB$"active"    :
+$    $IF (CYC.CYCATR[cycid] & TA_STA) != 0$
+$        "True"
+$    $ELSE$
+$        "False"
+$    $END$$NL$
     $TAB$$TAB$$TAB$}$NL$
     $TAB$$TAB$}
 $END$,
