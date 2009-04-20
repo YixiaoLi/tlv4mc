@@ -6,11 +6,18 @@
 	"ResourceHeaders":["fmp"],
 	"Resources":
 	{
-		"CurrentContext":{
+		"CurrentContext_PRC1":{
 			"Type":"Context",
 			"Attributes":
 			{
-				"name"    : "None"
+				"name"    : "LOGTASK1"
+			}
+		},
+		"CurrentContext_PRC2":{
+			"Type":"Context",
+			"Attributes":
+			{
+				"name"    : "LOGTASK2"
 			}
 		},
 		"LOGTASK1":{

@@ -1,14 +1,31 @@
 {
 	"fmp":
 	{
+		"Context":{
+			"DisplayName":"コンテキスト",
+			"Attributes":{
+				"name":{
+					"VariableType"	:"String",
+					"DisplayName"	:"コンテキスト名",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false
+				}
+			}
+		},
 		"InterruptHandler":{
 			"DisplayName" :"割込みハンドラ",
 			"Attributes" :{
 				"prcIdI":{
 					"VariableType"	:"Number",
-					"DisplayName"	:"プロセッサID",
+					"DisplayName"	:"割込みハンドラプロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
+				},
+				"active":{
+					"VariableType"	:"Boolean",
+					"DisplayName"	:"active",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false
 				},
 				"state":{
 					"VariableType"	:"String",
@@ -51,9 +68,15 @@
 			"Attributes" :{
 				"prcIdR":{
 					"VariableType"	:"Number",
-					"DisplayName"	:"プロセッサID",
+					"DisplayName"	:"割込みサービスルーチンプロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
+				},
+				"active":{
+					"VariableType"	:"Boolean",
+					"DisplayName"	:"active",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false
 				},
 				"state":{
 					"VariableType"	:"String",
@@ -96,9 +119,15 @@
 			"Attributes" :{
 				"prcIdC":{
 					"VariableType"	:"Number",
-					"DisplayName"	:"プロセッサID",
+					"DisplayName"	:"周期ハンドラプロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
+				},
+				"active":{
+					"VariableType"	:"Boolean",
+					"DisplayName"	:"active",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false
 				},
 				"state":{
 					"VariableType"	:"String",
@@ -141,9 +170,15 @@
 			"Attributes" :{
 				"prcIdA":{
 					"VariableType"	:"Number",
-					"DisplayName"	:"プロセッサID",
+					"DisplayName"	:"アラームハンドラプロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
+				},
+				"active":{
+					"VariableType"	:"Boolean",
+					"DisplayName"	:"active",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false
 				},
 				"state":{
 					"VariableType"	:"String",
@@ -186,9 +221,15 @@
 			"Attributes" :{
 				"prcIdE":{
 					"VariableType"	:"Number",
-					"DisplayName"	:"プロセッサID",
+					"DisplayName"	:"CPU例外ハンドラプロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
+				},
+				"active":{
+					"VariableType"	:"Boolean",
+					"DisplayName"	:"active",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false
 				},
 				"state":{
 					"VariableType"	:"String",
@@ -231,9 +272,15 @@
 			"Attributes" :{
 				"prcIdX":{
 					"VariableType"	:"Number",
-					"DisplayName"	:"プロセッサID",
+					"DisplayName"	:"タスク例外ルーチンプロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
+				},
+				"active":{
+					"VariableType"	:"Boolean",
+					"DisplayName"	:"active",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false
 				},
 				"state":{
 					"VariableType"	:"String",
@@ -276,7 +323,7 @@
 			"Attributes" :{
 				"prcId":{
 					"VariableType"	:"Number",
-					"DisplayName"	:"プロセッサID",
+					"DisplayName"	:"タスクプロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
 				},
