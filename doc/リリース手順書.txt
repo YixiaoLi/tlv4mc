@@ -1,0 +1,39 @@
+
+	TLVリリース手順書
+
+					最終更新 : 2009年04月22日
+
+ ----------------------------------------------------------------------
+【リリースに必要なもの】
+    ・Visual Studio 2008
+    ・SVNクライアント
+    ・zipアーカイバ
+
+【リリース手順】
+    1. https://www.nces.is.nagoya-u.ac.jp/svn/tlv/trunk/ をチェックアウト
+    2. [チェックアウトディレクトリ]\trunk\TLV\bin\Release ディレクトリを
+        削除
+    3. TLV.sln を開き、ソリューション構成を"Release"に設定する
+    4. [ビルド]->[ソリューションのビルド]を実行
+    5. [チェックアウトディレクトリ]\trunk\TLV\bin\Release ディレクトリを
+        tlv-*** にリネーム（***はバージョン｜例：tlv-1.0rc1）
+    6. tlv-*** ディレクトリをzip
+    ※以下はとりあえず※
+    7. サイボウズにアップロード
+    8. ビルドしたリビジョンを添え、MLにアップロード報告
+    9. リリースの承認を得たら、そのリビジョンでtagを切る
+
+【リリースにファイルを含める方法】
+ReleaseやDebug時にどのようなファイルを含めるかは、Mainプロジェクトの
+"ビルド後に実行するコマンドライン"で制御している。
+例えば /trunk/foo というディレクトリをリリースに含めたい場合は、
+次の記述を"ビルド後に実行するコマンドライン"に追加する。
+
+    if not exist $(TargetDir)foo mkdir $(TargetDir)foo
+    xcopy $(SolutionDir)foo $(TargetDir)foo /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+
+ここで、foo内にリリースに含めたくないファイルがある場合、
+xcopyExcludeFile.txtを編集すればよい。
+
+以上．
+
