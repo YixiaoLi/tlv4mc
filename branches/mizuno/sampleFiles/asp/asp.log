@@ -1,0 +1,4159 @@
+[1925973] dispatch to task 1.
+[1926320] enter to ena_int intno=2.
+[1926498] leave from ena_int ercd=0.
+[1926800] System logging task is started on port 1.
+[1927290] enter to wai_sem semid=2.
+[1927476] leave from wai_sem ercd=0.
+[1927755] enter to sig_sem semid=2.
+[1927955] leave from sig_sem ercd=0.
+[1928225] enter to wai_sem semid=2.
+[1928411] leave from wai_sem ercd=0.
+[1928690] enter to sig_sem semid=2.
+[1928890] leave from sig_sem ercd=0.
+[1929160] enter to wai_sem semid=2.
+[1929346] leave from wai_sem ercd=0.
+[1929625] enter to sig_sem semid=2.
+[1929825] leave from sig_sem ercd=0.
+[1930095] enter to wai_sem semid=2.
+[1930281] leave from wai_sem ercd=0.
+[1930560] enter to sig_sem semid=2.
+[1930760] leave from sig_sem ercd=0.
+[1931030] enter to wai_sem semid=2.
+[1931216] leave from wai_sem ercd=0.
+[1931495] enter to sig_sem semid=2.
+[1931695] leave from sig_sem ercd=0.
+[1931965] enter to wai_sem semid=2.
+[1932151] leave from wai_sem ercd=0.
+[1932430] enter to sig_sem semid=2.
+[1932630] leave from sig_sem ercd=0.
+[1932900] enter to wai_sem semid=2.
+[1933086] leave from wai_sem ercd=0.
+[1933365] enter to sig_sem semid=2.
+[1933565] leave from sig_sem ercd=0.
+[1933835] enter to wai_sem semid=2.
+[1934021] leave from wai_sem ercd=0.
+[1934300] enter to sig_sem semid=2.
+[1934500] leave from sig_sem ercd=0.
+[1934770] enter to wai_sem semid=2.
+[1934956] leave from wai_sem ercd=0.
+[1935235] enter to sig_sem semid=2.
+[1935435] leave from sig_sem ercd=0.
+[1935705] enter to wai_sem semid=2.
+[1935891] leave from wai_sem ercd=0.
+[1936170] enter to sig_sem semid=2.
+[1936370] leave from sig_sem ercd=0.
+[1936640] enter to wai_sem semid=2.
+[1936826] leave from wai_sem ercd=0.
+[1937105] enter to sig_sem semid=2.
+[1937305] leave from sig_sem ercd=0.
+[1937575] enter to wai_sem semid=2.
+[1937761] leave from wai_sem ercd=0.
+[1938040] enter to sig_sem semid=2.
+[1938240] leave from sig_sem ercd=0.
+[1938510] enter to wai_sem semid=2.
+[1938696] leave from wai_sem ercd=0.
+[1938975] enter to sig_sem semid=2.
+[1939175] leave from sig_sem ercd=0.
+[1939445] enter to wai_sem semid=2.
+[1939631] leave from wai_sem ercd=0.
+[1939910] enter to sig_sem semid=2.
+[1940110] leave from sig_sem ercd=0.
+[1940380] enter to wai_sem semid=2.
+[1940566] leave from wai_sem ercd=0.
+[1940845] enter to sig_sem semid=2.
+[1941045] leave from sig_sem ercd=0.
+[1941315] enter to wai_sem semid=2.
+[1941501] leave from wai_sem ercd=0.
+[1941780] enter to sig_sem semid=2.
+[1941980] leave from sig_sem ercd=0.
+[1942250] enter to wai_sem semid=2.
+[1942436] leave from wai_sem ercd=0.
+[1942715] enter to sig_sem semid=2.
+[1942915] leave from sig_sem ercd=0.
+[1943185] enter to wai_sem semid=2.
+[1943371] leave from wai_sem ercd=0.
+[1943650] enter to sig_sem semid=2.
+[1943850] leave from sig_sem ercd=0.
+[1944120] enter to wai_sem semid=2.
+[1944306] leave from wai_sem ercd=0.
+[1944585] enter to sig_sem semid=2.
+[1944785] leave from sig_sem ercd=0.
+[1945055] enter to wai_sem semid=2.
+[1945241] leave from wai_sem ercd=0.
+[1945520] enter to sig_sem semid=2.
+[1945720] leave from sig_sem ercd=0.
+[1945990] enter to wai_sem semid=2.
+[1946176] leave from wai_sem ercd=0.
+[1946455] enter to sig_sem semid=2.
+[1946655] leave from sig_sem ercd=0.
+[1946925] enter to wai_sem semid=2.
+[1947111] leave from wai_sem ercd=0.
+[1947390] enter to sig_sem semid=2.
+[1947590] leave from sig_sem ercd=0.
+[1947860] enter to wai_sem semid=2.
+[1948046] leave from wai_sem ercd=0.
+[1948325] enter to sig_sem semid=2.
+[1948525] leave from sig_sem ercd=0.
+[1948795] enter to wai_sem semid=2.
+[1948981] leave from wai_sem ercd=0.
+[1949260] enter to sig_sem semid=2.
+[1949460] leave from sig_sem ercd=0.
+[1949730] enter to wai_sem semid=2.
+[1949916] leave from wai_sem ercd=0.
+[1950195] enter to sig_sem semid=2.
+[1950395] leave from sig_sem ercd=0.
+[1950665] enter to wai_sem semid=2.
+[1950851] leave from wai_sem ercd=0.
+[1951130] enter to sig_sem semid=2.
+[1951330] leave from sig_sem ercd=0.
+[1951600] enter to wai_sem semid=2.
+[1951786] leave from wai_sem ercd=0.
+[1952065] enter to sig_sem semid=2.
+[1952265] leave from sig_sem ercd=0.
+[1952535] enter to wai_sem semid=2.
+[1952721] leave from wai_sem ercd=0.
+[1953000] enter to sig_sem semid=2.
+[1953200] leave from sig_sem ercd=0.
+[1953470] enter to wai_sem semid=2.
+[1953656] leave from wai_sem ercd=0.
+[1953935] enter to sig_sem semid=2.
+[1954135] leave from sig_sem ercd=0.
+[1954405] enter to wai_sem semid=2.
+[1954591] leave from wai_sem ercd=0.
+[1954870] enter to sig_sem semid=2.
+[1955070] leave from sig_sem ercd=0.
+[1955340] enter to wai_sem semid=2.
+[1955526] leave from wai_sem ercd=0.
+[1955805] enter to sig_sem semid=2.
+[1956005] leave from sig_sem ercd=0.
+[1956275] enter to wai_sem semid=2.
+[1956461] leave from wai_sem ercd=0.
+[1956740] enter to sig_sem semid=2.
+[1956940] leave from sig_sem ercd=0.
+[1957210] enter to wai_sem semid=2.
+[1957396] leave from wai_sem ercd=0.
+[1957675] enter to sig_sem semid=2.
+[1957875] leave from sig_sem ercd=0.
+[1958145] enter to wai_sem semid=2.
+[1958331] leave from wai_sem ercd=0.
+[1958610] enter to sig_sem semid=2.
+[1958810] leave from sig_sem ercd=0.
+[1959080] enter to wai_sem semid=2.
+[1959266] leave from wai_sem ercd=0.
+[1959545] enter to sig_sem semid=2.
+[1959745] leave from sig_sem ercd=0.
+[1960015] enter to wai_sem semid=2.
+[1960201] leave from wai_sem ercd=0.
+[1960480] enter to sig_sem semid=2.
+[1960680] leave from sig_sem ercd=0.
+[1960950] enter to wai_sem semid=2.
+[1961136] leave from wai_sem ercd=0.
+[1961415] enter to sig_sem semid=2.
+[1961615] leave from sig_sem ercd=0.
+[1961885] enter to wai_sem semid=2.
+[1962071] leave from wai_sem ercd=0.
+[1962350] enter to sig_sem semid=2.
+[1962550] leave from sig_sem ercd=0.
+[1962820] enter to wai_sem semid=2.
+[1963006] leave from wai_sem ercd=0.
+[1963285] enter to sig_sem semid=2.
+[1963485] leave from sig_sem ercd=0.
+[1963899] enter to wai_sem semid=2.
+[1964085] leave from wai_sem ercd=0.
+[1964364] enter to sig_sem semid=2.
+[1964564] leave from sig_sem ercd=0.
+[1964851] enter to wai_sem semid=2.
+[1965037] leave from wai_sem ercd=0.
+[1965316] enter to sig_sem semid=2.
+[1965516] leave from sig_sem ercd=0.
+[1965789] enter to wai_sem semid=2.
+[1965975] leave from wai_sem ercd=0.
+[1966374] enter to sig_sem semid=2.
+[1966574] leave from sig_sem ercd=0.
+[1966798] enter to dly_tsk dlytim=10.
+[1967196] task 1 becomes WAITING.
+[1967358] dispatch from task 1.
+[1967505] dispatch to task 5.
+[1968210] Sample program starts (exinf = 0).
+[1968724] enter to act_tsk tskid=2.
+[1968924] task 2 becomes RUNNABLE.
+[1969113] leave from act_tsk ercd=0.
+[1969259] enter to act_tsk tskid=3.
+[1969459] task 3 becomes RUNNABLE.
+[1969648] leave from act_tsk ercd=0.
+[1969794] enter to act_tsk tskid=4.
+[1969994] task 4 becomes RUNNABLE.
+[1970183] leave from act_tsk ercd=0.
+[1970413] enter to wai_sem semid=1.
+[1970807] task 5 becomes WAITING.
+[1970969] dispatch from task 5.
+[1971116] dispatch to task 2.
+[1971296] enter to ena_tex.
+[1971477] leave from ena_tex ercd=0
+[1972147] task1 is running (001).   |
+[2138087] enter to int handler 5.
+[2138311] leave from int handler 5.
+[2364547] enter to int handler 5.
+[2364771] leave from int handler 5.
+[2591005] enter to int handler 5.
+[2591229] leave from int handler 5.
+[2817464] enter to int handler 5.
+[2817688] leave from int handler 5.
+[3043924] enter to int handler 5.
+[3044148] leave from int handler 5.
+[3270382] enter to int handler 5.
+[3270606] leave from int handler 5.
+[3496842] enter to int handler 5.
+[3497066] leave from int handler 5.
+[3723302] enter to int handler 5.
+[3723526] leave from int handler 5.
+[3949760] enter to int handler 5.
+[3949984] leave from int handler 5.
+[4176219] enter to int handler 5.
+[4176443] leave from int handler 5.
+[4402679] enter to int handler 5.
+[4402940] task 1 becomes RUNNABLE.
+[4403181] leave from int handler 5.
+[4403435] dispatch from task 2.
+[4403582] dispatch to task 1.
+[4403747] leave from dly_tsk ercd=0.
+[4404141] enter to wai_sem semid=2.
+[4404327] leave from wai_sem ercd=0.
+[4404606] enter to sig_sem semid=2.
+[4404806] leave from sig_sem ercd=0.
+[4405076] enter to wai_sem semid=2.
+[4405262] leave from wai_sem ercd=0.
+[4405541] enter to sig_sem semid=2.
+[4405741] leave from sig_sem ercd=0.
+[4406011] enter to wai_sem semid=2.
+[4406197] leave from wai_sem ercd=0.
+[4406476] enter to sig_sem semid=2.
+[4406676] leave from sig_sem ercd=0.
+[4406946] enter to wai_sem semid=2.
+[4407132] leave from wai_sem ercd=0.
+[4407411] enter to sig_sem semid=2.
+[4407611] leave from sig_sem ercd=0.
+[4407881] enter to wai_sem semid=2.
+[4408067] leave from wai_sem ercd=0.
+[4408346] enter to sig_sem semid=2.
+[4408546] leave from sig_sem ercd=0.
+[4408816] enter to wai_sem semid=2.
+[4409002] leave from wai_sem ercd=0.
+[4409281] enter to sig_sem semid=2.
+[4409481] leave from sig_sem ercd=0.
+[4409751] enter to wai_sem semid=2.
+[4409937] leave from wai_sem ercd=0.
+[4410216] enter to sig_sem semid=2.
+[4410416] leave from sig_sem ercd=0.
+[4410686] enter to wai_sem semid=2.
+[4410872] leave from wai_sem ercd=0.
+[4411151] enter to sig_sem semid=2.
+[4411351] leave from sig_sem ercd=0.
+[4411621] enter to wai_sem semid=2.
+[4411807] leave from wai_sem ercd=0.
+[4412086] enter to sig_sem semid=2.
+[4412286] leave from sig_sem ercd=0.
+[4412556] enter to wai_sem semid=2.
+[4412742] leave from wai_sem ercd=0.
+[4413021] enter to sig_sem semid=2.
+[4413221] leave from sig_sem ercd=0.
+[4413491] enter to wai_sem semid=2.
+[4413677] leave from wai_sem ercd=0.
+[4413956] enter to sig_sem semid=2.
+[4414156] leave from sig_sem ercd=0.
+[4414426] enter to wai_sem semid=2.
+[4414612] leave from wai_sem ercd=0.
+[4414891] enter to sig_sem semid=2.
+[4415091] leave from sig_sem ercd=0.
+[4415361] enter to wai_sem semid=2.
+[4415547] leave from wai_sem ercd=0.
+[4415826] enter to sig_sem semid=2.
+[4416026] leave from sig_sem ercd=0.
+[4416296] enter to wai_sem semid=2.
+[4416482] leave from wai_sem ercd=0.
+[4416761] enter to sig_sem semid=2.
+[4416961] leave from sig_sem ercd=0.
+[4417231] enter to wai_sem semid=2.
+[4417417] leave from wai_sem ercd=0.
+[4417696] enter to sig_sem semid=2.
+[4417896] leave from sig_sem ercd=0.
+[4418166] enter to wai_sem semid=2.
+[4418352] leave from wai_sem ercd=0.
+[4418631] enter to sig_sem semid=2.
+[4418831] leave from sig_sem ercd=0.
+[4419101] enter to wai_sem semid=2.
+[4419287] leave from wai_sem ercd=0.
+[4419566] enter to sig_sem semid=2.
+[4419766] leave from sig_sem ercd=0.
+[4420036] enter to wai_sem semid=2.
+[4420222] leave from wai_sem ercd=0.
+[4420501] enter to sig_sem semid=2.
+[4420701] leave from sig_sem ercd=0.
+[4420971] enter to wai_sem semid=2.
+[4421157] leave from wai_sem ercd=0.
+[4421436] enter to sig_sem semid=2.
+[4421636] leave from sig_sem ercd=0.
+[4421906] enter to wai_sem semid=2.
+[4422092] leave from wai_sem ercd=0.
+[4422371] enter to sig_sem semid=2.
+[4422571] leave from sig_sem ercd=0.
+[4422841] enter to wai_sem semid=2.
+[4423027] leave from wai_sem ercd=0.
+[4423306] enter to sig_sem semid=2.
+[4423506] leave from sig_sem ercd=0.
+[4423776] enter to wai_sem semid=2.
+[4423962] leave from wai_sem ercd=0.
+[4424241] enter to sig_sem semid=2.
+[4424441] leave from sig_sem ercd=0.
+[4424711] enter to wai_sem semid=2.
+[4424897] leave from wai_sem ercd=0.
+[4425176] enter to sig_sem semid=2.
+[4425376] leave from sig_sem ercd=0.
+[4425646] enter to wai_sem semid=2.
+[4425832] leave from wai_sem ercd=0.
+[4426111] enter to sig_sem semid=2.
+[4426311] leave from sig_sem ercd=0.
+[4426581] enter to wai_sem semid=2.
+[4426767] leave from wai_sem ercd=0.
+[4427046] enter to sig_sem semid=2.
+[4427246] leave from sig_sem ercd=0.
+[4427516] enter to wai_sem semid=2.
+[4427702] leave from wai_sem ercd=0.
+[4427981] enter to sig_sem semid=2.
+[4428181] leave from sig_sem ercd=0.
+[4428451] enter to wai_sem semid=2.
+[4428637] leave from wai_sem ercd=0.
+[4428916] enter to sig_sem semid=2.
+[4429116] leave from sig_sem ercd=0.
+[4429386] enter to wai_sem semid=2.
+[4429572] leave from wai_sem ercd=0.
+[4429851] enter to sig_sem semid=2.
+[4430051] leave from sig_sem ercd=0.
+[4430321] enter to wai_sem semid=2.
+[4430507] leave from wai_sem ercd=0.
+[4430786] enter to sig_sem semid=2.
+[4430986] leave from sig_sem ercd=0.
+[4431256] enter to wai_sem semid=2.
+[4431442] leave from wai_sem ercd=0.
+[4431721] enter to sig_sem semid=2.
+[4431921] leave from sig_sem ercd=0.
+[4432191] enter to wai_sem semid=2.
+[4432377] leave from wai_sem ercd=0.
+[4432656] enter to sig_sem semid=2.
+[4432856] leave from sig_sem ercd=0.
+[4433270] enter to wai_sem semid=2.
+[4433456] leave from wai_sem ercd=0.
+[4433735] enter to sig_sem semid=2.
+[4433935] leave from sig_sem ercd=0.
+[4434222] enter to wai_sem semid=2.
+[4434408] leave from wai_sem ercd=0.
+[4434687] enter to sig_sem semid=2.
+[4434887] leave from sig_sem ercd=0.
+[4435157] enter to wai_sem semid=2.
+[4435343] leave from wai_sem ercd=0.
+[4435622] enter to sig_sem semid=2.
+[4435822] leave from sig_sem ercd=0.
+[4436095] enter to wai_sem semid=2.
+[4436281] leave from wai_sem ercd=0.
+[4436680] enter to sig_sem semid=2.
+[4436880] leave from sig_sem ercd=0.
+[4437292] enter to wai_sem semid=2.
+[4437478] leave from wai_sem ercd=0.
+[4437757] enter to sig_sem semid=2.
+[4437957] leave from sig_sem ercd=0.
+[4438227] enter to wai_sem semid=2.
+[4438413] leave from wai_sem ercd=0.
+[4438692] enter to sig_sem semid=2.
+[4438892] leave from sig_sem ercd=0.
+[4439162] enter to wai_sem semid=2.
+[4439348] leave from wai_sem ercd=0.
+[4439627] enter to sig_sem semid=2.
+[4439827] leave from sig_sem ercd=0.
+[4440097] enter to wai_sem semid=2.
+[4440283] leave from wai_sem ercd=0.
+[4440562] enter to sig_sem semid=2.
+[4440762] leave from sig_sem ercd=0.
+[4441176] enter to wai_sem semid=2.
+[4441362] leave from wai_sem ercd=0.
+[4441641] enter to sig_sem semid=2.
+[4441841] leave from sig_sem ercd=0.
+[4442128] enter to wai_sem semid=2.
+[4442314] leave from wai_sem ercd=0.
+[4442593] enter to sig_sem semid=2.
+[4442793] leave from sig_sem ercd=0.
+[4443063] enter to wai_sem semid=2.
+[4443249] leave from wai_sem ercd=0.
+[4443528] enter to sig_sem semid=2.
+[4443728] leave from sig_sem ercd=0.
+[4443998] enter to wai_sem semid=2.
+[4444184] leave from wai_sem ercd=0.
+[4444463] enter to sig_sem semid=2.
+[4444663] leave from sig_sem ercd=0.
+[4444933] enter to wai_sem semid=2.
+[4445119] leave from wai_sem ercd=0.
+[4445398] enter to sig_sem semid=2.
+[4445598] leave from sig_sem ercd=0.
+[4445868] enter to wai_sem semid=2.
+[4446054] leave from wai_sem ercd=0.
+[4446333] enter to sig_sem semid=2.
+[4446533] leave from sig_sem ercd=0.
+[4446803] enter to wai_sem semid=2.
+[4446989] leave from wai_sem ercd=0.
+[4447268] enter to sig_sem semid=2.
+[4447468] leave from sig_sem ercd=0.
+[4447738] enter to wai_sem semid=2.
+[4447924] leave from wai_sem ercd=0.
+[4448203] enter to sig_sem semid=2.
+[4448403] leave from sig_sem ercd=0.
+[4448673] enter to wai_sem semid=2.
+[4448859] leave from wai_sem ercd=0.
+[4449138] enter to sig_sem semid=2.
+[4449338] leave from sig_sem ercd=0.
+[4449608] enter to wai_sem semid=2.
+[4449794] leave from wai_sem ercd=0.
+[4450073] enter to sig_sem semid=2.
+[4450273] leave from sig_sem ercd=0.
+[4450543] enter to wai_sem semid=2.
+[4450729] leave from wai_sem ercd=0.
+[4451008] enter to sig_sem semid=2.
+[4451208] leave from sig_sem ercd=0.
+[4451478] enter to wai_sem semid=2.
+[4451664] leave from wai_sem ercd=0.
+[4451943] enter to sig_sem semid=2.
+[4452143] leave from sig_sem ercd=0.
+[4452413] enter to wai_sem semid=2.
+[4452599] leave from wai_sem ercd=0.
+[4452878] enter to sig_sem semid=2.
+[4453078] leave from sig_sem ercd=0.
+[4453348] enter to wai_sem semid=2.
+[4453534] leave from wai_sem ercd=0.
+[4453813] enter to sig_sem semid=2.
+[4454013] leave from sig_sem ercd=0.
+[4454426] enter to wai_sem semid=2.
+[4454612] leave from wai_sem ercd=0.
+[4454891] enter to sig_sem semid=2.
+[4455091] leave from sig_sem ercd=0.
+[4455357] enter to wai_sem semid=2.
+[4455543] leave from wai_sem ercd=0.
+[4455822] enter to sig_sem semid=2.
+[4456022] leave from sig_sem ercd=0.
+[4456297] enter to wai_sem semid=2.
+[4456483] leave from wai_sem ercd=0.
+[4456762] enter to sig_sem semid=2.
+[4456962] leave from sig_sem ercd=0.
+[4457249] enter to wai_sem semid=2.
+[4457435] leave from wai_sem ercd=0.
+[4457714] enter to sig_sem semid=2.
+[4457914] leave from sig_sem ercd=0.
+[4458184] enter to wai_sem semid=2.
+[4458370] leave from wai_sem ercd=0.
+[4458649] enter to sig_sem semid=2.
+[4458849] leave from sig_sem ercd=0.
+[4459119] enter to wai_sem semid=2.
+[4459305] leave from wai_sem ercd=0.
+[4459584] enter to sig_sem semid=2.
+[4459784] leave from sig_sem ercd=0.
+[4460054] enter to wai_sem semid=2.
+[4460240] leave from wai_sem ercd=0.
+[4460519] enter to sig_sem semid=2.
+[4460719] leave from sig_sem ercd=0.
+[4460989] enter to wai_sem semid=2.
+[4461175] leave from wai_sem ercd=0.
+[4461454] enter to sig_sem semid=2.
+[4461654] leave from sig_sem ercd=0.
+[4461957] enter to wai_sem semid=2.
+[4462143] leave from wai_sem ercd=0.
+[4462422] enter to sig_sem semid=2.
+[4462622] leave from sig_sem ercd=0.
+[4462905] enter to wai_sem semid=2.
+[4463091] leave from wai_sem ercd=0.
+[4463490] enter to sig_sem semid=2.
+[4463690] leave from sig_sem ercd=0.
+[4463914] enter to dly_tsk dlytim=10.
+[4464312] task 1 becomes WAITING.
+[4464474] dispatch from task 1.
+[4464621] dispatch to task 2.
+[4627866] enter to int handler 5.
+[4628090] leave from int handler 5.
+[4854326] enter to int handler 5.
+[4854550] leave from int handler 5.
+[5080784] enter to int handler 5.
+[5081008] leave from int handler 5.
+[5307243] enter to int handler 5.
+[5307467] leave from int handler 5.
+[5533703] enter to int handler 5.
+[5533927] leave from int handler 5.
+[5760161] enter to int handler 5.
+[5760385] leave from int handler 5.
+[5943607] task1 is running (002).   |
+[5986391] enter to int handler 5.
+[5986615] leave from int handler 5.
+[6212851] enter to int handler 5.
+[6213075] leave from int handler 5.
+[6439309] enter to int handler 5.
+[6439533] leave from int handler 5.
+[6665769] enter to int handler 5.
+[6665993] leave from int handler 5.
+[6892229] enter to int handler 5.
+[6892490] task 1 becomes RUNNABLE.
+[6892731] leave from int handler 5.
+[6892985] dispatch from task 2.
+[6893132] dispatch to task 1.
+[6893297] leave from dly_tsk ercd=0.
+[6893691] enter to wai_sem semid=2.
+[6893877] leave from wai_sem ercd=0.
+[6894156] enter to sig_sem semid=2.
+[6894356] leave from sig_sem ercd=0.
+[6894626] enter to wai_sem semid=2.
+[6894812] leave from wai_sem ercd=0.
+[6895091] enter to sig_sem semid=2.
+[6895291] leave from sig_sem ercd=0.
+[6895561] enter to wai_sem semid=2.
+[6895747] leave from wai_sem ercd=0.
+[6896026] enter to sig_sem semid=2.
+[6896226] leave from sig_sem ercd=0.
+[6896496] enter to wai_sem semid=2.
+[6896682] leave from wai_sem ercd=0.
+[6896961] enter to sig_sem semid=2.
+[6897161] leave from sig_sem ercd=0.
+[6897575] enter to wai_sem semid=2.
+[6897761] leave from wai_sem ercd=0.
+[6898040] enter to sig_sem semid=2.
+[6898240] leave from sig_sem ercd=0.
+[6898527] enter to wai_sem semid=2.
+[6898713] leave from wai_sem ercd=0.
+[6898992] enter to sig_sem semid=2.
+[6899192] leave from sig_sem ercd=0.
+[6899462] enter to wai_sem semid=2.
+[6899648] leave from wai_sem ercd=0.
+[6899927] enter to sig_sem semid=2.
+[6900127] leave from sig_sem ercd=0.
+[6900397] enter to wai_sem semid=2.
+[6900583] leave from wai_sem ercd=0.
+[6900862] enter to sig_sem semid=2.
+[6901062] leave from sig_sem ercd=0.
+[6901332] enter to wai_sem semid=2.
+[6901518] leave from wai_sem ercd=0.
+[6901797] enter to sig_sem semid=2.
+[6901997] leave from sig_sem ercd=0.
+[6902267] enter to wai_sem semid=2.
+[6902453] leave from wai_sem ercd=0.
+[6902732] enter to sig_sem semid=2.
+[6902932] leave from sig_sem ercd=0.
+[6903202] enter to wai_sem semid=2.
+[6903388] leave from wai_sem ercd=0.
+[6903667] enter to sig_sem semid=2.
+[6903867] leave from sig_sem ercd=0.
+[6904137] enter to wai_sem semid=2.
+[6904323] leave from wai_sem ercd=0.
+[6904602] enter to sig_sem semid=2.
+[6904802] leave from sig_sem ercd=0.
+[6905072] enter to wai_sem semid=2.
+[6905258] leave from wai_sem ercd=0.
+[6905537] enter to sig_sem semid=2.
+[6905737] leave from sig_sem ercd=0.
+[6906007] enter to wai_sem semid=2.
+[6906193] leave from wai_sem ercd=0.
+[6906472] enter to sig_sem semid=2.
+[6906672] leave from sig_sem ercd=0.
+[6906942] enter to wai_sem semid=2.
+[6907128] leave from wai_sem ercd=0.
+[6907407] enter to sig_sem semid=2.
+[6907607] leave from sig_sem ercd=0.
+[6907877] enter to wai_sem semid=2.
+[6908063] leave from wai_sem ercd=0.
+[6908342] enter to sig_sem semid=2.
+[6908542] leave from sig_sem ercd=0.
+[6908812] enter to wai_sem semid=2.
+[6908998] leave from wai_sem ercd=0.
+[6909277] enter to sig_sem semid=2.
+[6909477] leave from sig_sem ercd=0.
+[6909747] enter to wai_sem semid=2.
+[6909933] leave from wai_sem ercd=0.
+[6910212] enter to sig_sem semid=2.
+[6910412] leave from sig_sem ercd=0.
+[6910825] enter to wai_sem semid=2.
+[6911011] leave from wai_sem ercd=0.
+[6911290] enter to sig_sem semid=2.
+[6911490] leave from sig_sem ercd=0.
+[6911756] enter to wai_sem semid=2.
+[6911942] leave from wai_sem ercd=0.
+[6912221] enter to sig_sem semid=2.
+[6912421] leave from sig_sem ercd=0.
+[6912696] enter to wai_sem semid=2.
+[6912882] leave from wai_sem ercd=0.
+[6913161] enter to sig_sem semid=2.
+[6913361] leave from sig_sem ercd=0.
+[6913648] enter to wai_sem semid=2.
+[6913834] leave from wai_sem ercd=0.
+[6914113] enter to sig_sem semid=2.
+[6914313] leave from sig_sem ercd=0.
+[6914583] enter to wai_sem semid=2.
+[6914769] leave from wai_sem ercd=0.
+[6915048] enter to sig_sem semid=2.
+[6915248] leave from sig_sem ercd=0.
+[6915518] enter to wai_sem semid=2.
+[6915704] leave from wai_sem ercd=0.
+[6915983] enter to sig_sem semid=2.
+[6916183] leave from sig_sem ercd=0.
+[6916453] enter to wai_sem semid=2.
+[6916639] leave from wai_sem ercd=0.
+[6916918] enter to sig_sem semid=2.
+[6917118] leave from sig_sem ercd=0.
+[6917388] enter to wai_sem semid=2.
+[6917574] leave from wai_sem ercd=0.
+[6917853] enter to sig_sem semid=2.
+[6918053] leave from sig_sem ercd=0.
+[6918356] enter to wai_sem semid=2.
+[6918542] leave from wai_sem ercd=0.
+[6918821] enter to sig_sem semid=2.
+[6919021] leave from sig_sem ercd=0.
+[6919304] enter to wai_sem semid=2.
+[6919490] leave from wai_sem ercd=0.
+[6919889] enter to sig_sem semid=2.
+[6920089] leave from sig_sem ercd=0.
+[6920313] enter to dly_tsk dlytim=10.
+[6920711] task 1 becomes WAITING.
+[6920873] dispatch from task 1.
+[6921020] dispatch to task 2.
+[7118127] enter to int handler 5.
+[7118351] leave from int handler 5.
+[7344586] enter to int handler 5.
+[7344810] leave from int handler 5.
+[7571046] enter to int handler 5.
+[7571270] leave from int handler 5.
+[7797504] enter to int handler 5.
+[7797728] leave from int handler 5.
+[8023964] enter to int handler 5.
+[8024188] leave from int handler 5.
+[8250424] enter to int handler 5.
+[8250648] leave from int handler 5.
+[8476882] enter to int handler 5.
+[8477106] leave from int handler 5.
+[8703341] enter to int handler 5.
+[8703565] leave from int handler 5.
+[8929801] enter to int handler 5.
+[8930025] leave from int handler 5.
+[9156259] enter to int handler 5.
+[9156483] leave from int handler 5.
+[9382719] enter to int handler 5.
+[9382980] task 1 becomes RUNNABLE.
+[9383221] leave from int handler 5.
+[9383475] dispatch from task 2.
+[9383622] dispatch to task 1.
+[9383787] leave from dly_tsk ercd=0.
+[9383997] enter to dly_tsk dlytim=10.
+[9384395] task 1 becomes WAITING.
+[9384557] dispatch from task 1.
+[9384704] dispatch to task 2.
+[9609301] enter to int handler 5.
+[9609525] leave from int handler 5.
+[9835759] enter to int handler 5.
+[9835983] leave from int handler 5.
+[9884161] task1 is running (003).   |
+[10061989] enter to int handler 5.
+[10062213] leave from int handler 5.
+[10288449] enter to int handler 5.
+[10288673] leave from int handler 5.
+[10514907] enter to int handler 5.
+[10515131] leave from int handler 5.
+[10741367] enter to int handler 5.
+[10741591] leave from int handler 5.
+[10967827] enter to int handler 5.
+[10968051] leave from int handler 5.
+[11194285] enter to int handler 5.
+[11194509] leave from int handler 5.
+[11420744] enter to int handler 5.
+[11420968] leave from int handler 5.
+[11647204] enter to int handler 5.
+[11647428] leave from int handler 5.
+[11873662] enter to int handler 5.
+[11873923] task 1 becomes RUNNABLE.
+[11874164] leave from int handler 5.
+[11874418] dispatch from task 2.
+[11874565] dispatch to task 1.
+[11874730] leave from dly_tsk ercd=0.
+[11875124] enter to wai_sem semid=2.
+[11875310] leave from wai_sem ercd=0.
+[11875589] enter to sig_sem semid=2.
+[11875789] leave from sig_sem ercd=0.
+[11876059] enter to wai_sem semid=2.
+[11876245] leave from wai_sem ercd=0.
+[11876524] enter to sig_sem semid=2.
+[11876724] leave from sig_sem ercd=0.
+[11876994] enter to wai_sem semid=2.
+[11877180] leave from wai_sem ercd=0.
+[11877459] enter to sig_sem semid=2.
+[11877659] leave from sig_sem ercd=0.
+[11877929] enter to wai_sem semid=2.
+[11878115] leave from wai_sem ercd=0.
+[11878394] enter to sig_sem semid=2.
+[11878594] leave from sig_sem ercd=0.
+[11879008] enter to wai_sem semid=2.
+[11879194] leave from wai_sem ercd=0.
+[11879473] enter to sig_sem semid=2.
+[11879673] leave from sig_sem ercd=0.
+[11879960] enter to wai_sem semid=2.
+[11880146] leave from wai_sem ercd=0.
+[11880425] enter to sig_sem semid=2.
+[11880625] leave from sig_sem ercd=0.
+[11880895] enter to wai_sem semid=2.
+[11881081] leave from wai_sem ercd=0.
+[11881360] enter to sig_sem semid=2.
+[11881560] leave from sig_sem ercd=0.
+[11881830] enter to wai_sem semid=2.
+[11882016] leave from wai_sem ercd=0.
+[11882295] enter to sig_sem semid=2.
+[11882495] leave from sig_sem ercd=0.
+[11882765] enter to wai_sem semid=2.
+[11882951] leave from wai_sem ercd=0.
+[11883230] enter to sig_sem semid=2.
+[11883430] leave from sig_sem ercd=0.
+[11883700] enter to wai_sem semid=2.
+[11883886] leave from wai_sem ercd=0.
+[11884165] enter to sig_sem semid=2.
+[11884365] leave from sig_sem ercd=0.
+[11884635] enter to wai_sem semid=2.
+[11884821] leave from wai_sem ercd=0.
+[11885100] enter to sig_sem semid=2.
+[11885300] leave from sig_sem ercd=0.
+[11885570] enter to wai_sem semid=2.
+[11885756] leave from wai_sem ercd=0.
+[11886035] enter to sig_sem semid=2.
+[11886235] leave from sig_sem ercd=0.
+[11886505] enter to wai_sem semid=2.
+[11886691] leave from wai_sem ercd=0.
+[11886970] enter to sig_sem semid=2.
+[11887170] leave from sig_sem ercd=0.
+[11887440] enter to wai_sem semid=2.
+[11887626] leave from wai_sem ercd=0.
+[11887905] enter to sig_sem semid=2.
+[11888105] leave from sig_sem ercd=0.
+[11888375] enter to wai_sem semid=2.
+[11888561] leave from wai_sem ercd=0.
+[11888840] enter to sig_sem semid=2.
+[11889040] leave from sig_sem ercd=0.
+[11889310] enter to wai_sem semid=2.
+[11889496] leave from wai_sem ercd=0.
+[11889775] enter to sig_sem semid=2.
+[11889975] leave from sig_sem ercd=0.
+[11890245] enter to wai_sem semid=2.
+[11890431] leave from wai_sem ercd=0.
+[11890710] enter to sig_sem semid=2.
+[11890910] leave from sig_sem ercd=0.
+[11891180] enter to wai_sem semid=2.
+[11891366] leave from wai_sem ercd=0.
+[11891645] enter to sig_sem semid=2.
+[11891845] leave from sig_sem ercd=0.
+[11892258] enter to wai_sem semid=2.
+[11892444] leave from wai_sem ercd=0.
+[11892723] enter to sig_sem semid=2.
+[11892923] leave from sig_sem ercd=0.
+[11893189] enter to wai_sem semid=2.
+[11893375] leave from wai_sem ercd=0.
+[11893654] enter to sig_sem semid=2.
+[11893854] leave from sig_sem ercd=0.
+[11894129] enter to wai_sem semid=2.
+[11894315] leave from wai_sem ercd=0.
+[11894594] enter to sig_sem semid=2.
+[11894794] leave from sig_sem ercd=0.
+[11895081] enter to wai_sem semid=2.
+[11895267] leave from wai_sem ercd=0.
+[11895546] enter to sig_sem semid=2.
+[11895746] leave from sig_sem ercd=0.
+[11896016] enter to wai_sem semid=2.
+[11896202] leave from wai_sem ercd=0.
+[11896481] enter to sig_sem semid=2.
+[11896681] leave from sig_sem ercd=0.
+[11896951] enter to wai_sem semid=2.
+[11897137] leave from wai_sem ercd=0.
+[11897416] enter to sig_sem semid=2.
+[11897616] leave from sig_sem ercd=0.
+[11897886] enter to wai_sem semid=2.
+[11898072] leave from wai_sem ercd=0.
+[11898351] enter to sig_sem semid=2.
+[11898551] leave from sig_sem ercd=0.
+[11898821] enter to wai_sem semid=2.
+[11899007] leave from wai_sem ercd=0.
+[11899286] enter to sig_sem semid=2.
+[11899486] leave from sig_sem ercd=0.
+[11899789] enter to wai_sem semid=2.
+[11899975] leave from wai_sem ercd=0.
+[11900254] enter to sig_sem semid=2.
+[11900454] leave from sig_sem ercd=0.
+[11900737] enter to wai_sem semid=2.
+[11900923] leave from wai_sem ercd=0.
+[11901322] enter to sig_sem semid=2.
+[11901522] leave from sig_sem ercd=0.
+[11901746] enter to dly_tsk dlytim=10.
+[11902144] task 1 becomes WAITING.
+[11902306] dispatch from task 1.
+[11902453] dispatch to task 2.
+[11964531] enter to int handler 2.
+[11964807] enter to isig_sem semid=1.
+[11965034] task 5 becomes RUNNABLE.
+[11965244] leave from isig_sem ercd=0.
+[11965468] leave from int handler 2.
+[11965722] dispatch from task 2.
+[11965869] dispatch to task 5.
+[11966034] leave from wai_sem ercd=0.
+[11966673] #rot_rdq(three priorities)
+[11966926] enter to rot_rdq tskpri=9.
+[11967124] leave from rot_rdq ercd=0.
+[11967270] enter to rot_rdq tskpri=10.
+[11967491] leave from rot_rdq ercd=0.
+[11967637] enter to rot_rdq tskpri=11.
+[11967835] leave from rot_rdq ercd=0.
+[11968074] enter to wai_sem semid=1.
+[11968468] task 5 becomes WAITING.
+[11968630] dispatch from task 5.
+[11968777] dispatch to task 3.
+[11968957] enter to ena_tex.
+[11969138] leave from ena_tex ercd=0
+[11969808] task2 is running (001).     +
+[12099293] enter to int handler 5.
+[12099517] leave from int handler 5.
+[12325753] enter to int handler 5.
+[12325977] leave from int handler 5.
+[12552213] enter to int handler 5.
+[12552437] leave from int handler 5.
+[12778671] enter to int handler 5.
+[12778895] leave from int handler 5.
+[13005130] enter to int handler 5.
+[13005354] leave from int handler 5.
+[13231590] enter to int handler 5.
+[13231814] leave from int handler 5.
+[13458048] enter to int handler 5.
+[13458272] leave from int handler 5.
+[13684508] enter to int handler 5.
+[13684732] leave from int handler 5.
+[13910968] enter to int handler 5.
+[13911192] leave from int handler 5.
+[14137426] enter to int handler 5.
+[14137650] leave from int handler 5.
+[14363885] enter to int handler 5.
+[14364146] task 1 becomes RUNNABLE.
+[14364387] leave from int handler 5.
+[14364641] dispatch from task 3.
+[14364788] dispatch to task 1.
+[14364953] leave from dly_tsk ercd=0.
+[14365347] enter to wai_sem semid=2.
+[14365533] leave from wai_sem ercd=0.
+[14365812] enter to sig_sem semid=2.
+[14366012] leave from sig_sem ercd=0.
+[14366282] enter to wai_sem semid=2.
+[14366468] leave from wai_sem ercd=0.
+[14366747] enter to sig_sem semid=2.
+[14366947] leave from sig_sem ercd=0.
+[14367217] enter to wai_sem semid=2.
+[14367403] leave from wai_sem ercd=0.
+[14367682] enter to sig_sem semid=2.
+[14367882] leave from sig_sem ercd=0.
+[14368152] enter to wai_sem semid=2.
+[14368338] leave from wai_sem ercd=0.
+[14368617] enter to sig_sem semid=2.
+[14368817] leave from sig_sem ercd=0.
+[14369087] enter to wai_sem semid=2.
+[14369273] leave from wai_sem ercd=0.
+[14369552] enter to sig_sem semid=2.
+[14369752] leave from sig_sem ercd=0.
+[14370022] enter to wai_sem semid=2.
+[14370208] leave from wai_sem ercd=0.
+[14370487] enter to sig_sem semid=2.
+[14370687] leave from sig_sem ercd=0.
+[14370957] enter to wai_sem semid=2.
+[14371143] leave from wai_sem ercd=0.
+[14371422] enter to sig_sem semid=2.
+[14371622] leave from sig_sem ercd=0.
+[14371892] enter to wai_sem semid=2.
+[14372078] leave from wai_sem ercd=0.
+[14372357] enter to sig_sem semid=2.
+[14372557] leave from sig_sem ercd=0.
+[14372827] enter to wai_sem semid=2.
+[14373013] leave from wai_sem ercd=0.
+[14373292] enter to sig_sem semid=2.
+[14373492] leave from sig_sem ercd=0.
+[14373762] enter to wai_sem semid=2.
+[14373948] leave from wai_sem ercd=0.
+[14374227] enter to sig_sem semid=2.
+[14374427] leave from sig_sem ercd=0.
+[14374697] enter to wai_sem semid=2.
+[14374883] leave from wai_sem ercd=0.
+[14375162] enter to sig_sem semid=2.
+[14375362] leave from sig_sem ercd=0.
+[14375632] enter to wai_sem semid=2.
+[14375818] leave from wai_sem ercd=0.
+[14376097] enter to sig_sem semid=2.
+[14376297] leave from sig_sem ercd=0.
+[14376567] enter to wai_sem semid=2.
+[14376753] leave from wai_sem ercd=0.
+[14377032] enter to sig_sem semid=2.
+[14377232] leave from sig_sem ercd=0.
+[14377502] enter to wai_sem semid=2.
+[14377688] leave from wai_sem ercd=0.
+[14377967] enter to sig_sem semid=2.
+[14378167] leave from sig_sem ercd=0.
+[14378437] enter to wai_sem semid=2.
+[14378623] leave from wai_sem ercd=0.
+[14378902] enter to sig_sem semid=2.
+[14379102] leave from sig_sem ercd=0.
+[14379372] enter to wai_sem semid=2.
+[14379558] leave from wai_sem ercd=0.
+[14379837] enter to sig_sem semid=2.
+[14380037] leave from sig_sem ercd=0.
+[14380307] enter to wai_sem semid=2.
+[14380493] leave from wai_sem ercd=0.
+[14380772] enter to sig_sem semid=2.
+[14380972] leave from sig_sem ercd=0.
+[14381242] enter to wai_sem semid=2.
+[14381428] leave from wai_sem ercd=0.
+[14381707] enter to sig_sem semid=2.
+[14381907] leave from sig_sem ercd=0.
+[14382177] enter to wai_sem semid=2.
+[14382363] leave from wai_sem ercd=0.
+[14382642] enter to sig_sem semid=2.
+[14382842] leave from sig_sem ercd=0.
+[14383112] enter to wai_sem semid=2.
+[14383298] leave from wai_sem ercd=0.
+[14383577] enter to sig_sem semid=2.
+[14383777] leave from sig_sem ercd=0.
+[14384047] enter to wai_sem semid=2.
+[14384233] leave from wai_sem ercd=0.
+[14384512] enter to sig_sem semid=2.
+[14384712] leave from sig_sem ercd=0.
+[14384982] enter to wai_sem semid=2.
+[14385168] leave from wai_sem ercd=0.
+[14385447] enter to sig_sem semid=2.
+[14385647] leave from sig_sem ercd=0.
+[14385917] enter to wai_sem semid=2.
+[14386103] leave from wai_sem ercd=0.
+[14386382] enter to sig_sem semid=2.
+[14386582] leave from sig_sem ercd=0.
+[14386852] enter to wai_sem semid=2.
+[14387038] leave from wai_sem ercd=0.
+[14387317] enter to sig_sem semid=2.
+[14387517] leave from sig_sem ercd=0.
+[14387787] enter to wai_sem semid=2.
+[14387973] leave from wai_sem ercd=0.
+[14388252] enter to sig_sem semid=2.
+[14388452] leave from sig_sem ercd=0.
+[14388722] enter to wai_sem semid=2.
+[14388908] leave from wai_sem ercd=0.
+[14389187] enter to sig_sem semid=2.
+[14389387] leave from sig_sem ercd=0.
+[14389660] enter to wai_sem semid=2.
+[14389846] leave from wai_sem ercd=0.
+[14390245] enter to sig_sem semid=2.
+[14390445] leave from sig_sem ercd=0.
+[14390857] enter to wai_sem semid=2.
+[14391043] leave from wai_sem ercd=0.
+[14391322] enter to sig_sem semid=2.
+[14391522] leave from sig_sem ercd=0.
+[14391792] enter to wai_sem semid=2.
+[14391978] leave from wai_sem ercd=0.
+[14392257] enter to sig_sem semid=2.
+[14392457] leave from sig_sem ercd=0.
+[14392727] enter to wai_sem semid=2.
+[14392913] leave from wai_sem ercd=0.
+[14393192] enter to sig_sem semid=2.
+[14393392] leave from sig_sem ercd=0.
+[14393662] enter to wai_sem semid=2.
+[14393848] leave from wai_sem ercd=0.
+[14394127] enter to sig_sem semid=2.
+[14394327] leave from sig_sem ercd=0.
+[14394741] enter to wai_sem semid=2.
+[14394927] leave from wai_sem ercd=0.
+[14395206] enter to sig_sem semid=2.
+[14395406] leave from sig_sem ercd=0.
+[14395693] enter to wai_sem semid=2.
+[14395879] leave from wai_sem ercd=0.
+[14396158] enter to sig_sem semid=2.
+[14396358] leave from sig_sem ercd=0.
+[14396628] enter to wai_sem semid=2.
+[14396814] leave from wai_sem ercd=0.
+[14397093] enter to sig_sem semid=2.
+[14397293] leave from sig_sem ercd=0.
+[14397563] enter to wai_sem semid=2.
+[14397749] leave from wai_sem ercd=0.
+[14398028] enter to sig_sem semid=2.
+[14398228] leave from sig_sem ercd=0.
+[14398498] enter to wai_sem semid=2.
+[14398684] leave from wai_sem ercd=0.
+[14398963] enter to sig_sem semid=2.
+[14399163] leave from sig_sem ercd=0.
+[14399433] enter to wai_sem semid=2.
+[14399619] leave from wai_sem ercd=0.
+[14399898] enter to sig_sem semid=2.
+[14400098] leave from sig_sem ercd=0.
+[14400368] enter to wai_sem semid=2.
+[14400554] leave from wai_sem ercd=0.
+[14400833] enter to sig_sem semid=2.
+[14401033] leave from sig_sem ercd=0.
+[14401303] enter to wai_sem semid=2.
+[14401489] leave from wai_sem ercd=0.
+[14401768] enter to sig_sem semid=2.
+[14401968] leave from sig_sem ercd=0.
+[14402238] enter to wai_sem semid=2.
+[14402424] leave from wai_sem ercd=0.
+[14402703] enter to sig_sem semid=2.
+[14402903] leave from sig_sem ercd=0.
+[14403173] enter to wai_sem semid=2.
+[14403359] leave from wai_sem ercd=0.
+[14403638] enter to sig_sem semid=2.
+[14403838] leave from sig_sem ercd=0.
+[14404108] enter to wai_sem semid=2.
+[14404294] leave from wai_sem ercd=0.
+[14404573] enter to sig_sem semid=2.
+[14404773] leave from sig_sem ercd=0.
+[14405043] enter to wai_sem semid=2.
+[14405229] leave from wai_sem ercd=0.
+[14405508] enter to sig_sem semid=2.
+[14405708] leave from sig_sem ercd=0.
+[14405978] enter to wai_sem semid=2.
+[14406164] leave from wai_sem ercd=0.
+[14406443] enter to sig_sem semid=2.
+[14406643] leave from sig_sem ercd=0.
+[14406913] enter to wai_sem semid=2.
+[14407099] leave from wai_sem ercd=0.
+[14407378] enter to sig_sem semid=2.
+[14407578] leave from sig_sem ercd=0.
+[14407991] enter to wai_sem semid=2.
+[14408177] leave from wai_sem ercd=0.
+[14408456] enter to sig_sem semid=2.
+[14408656] leave from sig_sem ercd=0.
+[14408922] enter to wai_sem semid=2.
+[14409108] leave from wai_sem ercd=0.
+[14409387] enter to sig_sem semid=2.
+[14409587] leave from sig_sem ercd=0.
+[14409862] enter to wai_sem semid=2.
+[14410048] leave from wai_sem ercd=0.
+[14410327] enter to sig_sem semid=2.
+[14410527] leave from sig_sem ercd=0.
+[14410814] enter to wai_sem semid=2.
+[14411000] leave from wai_sem ercd=0.
+[14411279] enter to sig_sem semid=2.
+[14411479] leave from sig_sem ercd=0.
+[14411749] enter to wai_sem semid=2.
+[14411935] leave from wai_sem ercd=0.
+[14412214] enter to sig_sem semid=2.
+[14412414] leave from sig_sem ercd=0.
+[14412684] enter to wai_sem semid=2.
+[14412870] leave from wai_sem ercd=0.
+[14413149] enter to sig_sem semid=2.
+[14413349] leave from sig_sem ercd=0.
+[14413619] enter to wai_sem semid=2.
+[14413805] leave from wai_sem ercd=0.
+[14414084] enter to sig_sem semid=2.
+[14414284] leave from sig_sem ercd=0.
+[14414554] enter to wai_sem semid=2.
+[14414740] leave from wai_sem ercd=0.
+[14415019] enter to sig_sem semid=2.
+[14415219] leave from sig_sem ercd=0.
+[14415522] enter to wai_sem semid=2.
+[14415708] leave from wai_sem ercd=0.
+[14415987] enter to sig_sem semid=2.
+[14416187] leave from sig_sem ercd=0.
+[14416452] enter to wai_sem semid=2.
+[14416638] leave from wai_sem ercd=0.
+[14416917] enter to sig_sem semid=2.
+[14417117] leave from sig_sem ercd=0.
+[14417382] enter to wai_sem semid=2.
+[14417568] leave from wai_sem ercd=0.
+[14417847] enter to sig_sem semid=2.
+[14418047] leave from sig_sem ercd=0.
+[14418330] enter to wai_sem semid=2.
+[14418516] leave from wai_sem ercd=0.
+[14418915] enter to sig_sem semid=2.
+[14419115] leave from sig_sem ercd=0.
+[14419339] enter to dly_tsk dlytim=10.
+[14419737] task 1 becomes WAITING.
+[14419899] dispatch from task 1.
+[14420046] dispatch to task 3.
+[14589239] enter to int handler 5.
+[14589463] leave from int handler 5.
+[14815698] enter to int handler 5.
+[14815922] leave from int handler 5.
+[15042158] enter to int handler 5.
+[15042382] leave from int handler 5.
+[15268616] enter to int handler 5.
+[15268840] leave from int handler 5.
+[15495076] enter to int handler 5.
+[15495300] leave from int handler 5.
+[15721536] enter to int handler 5.
+[15721760] leave from int handler 5.
+[15935487] task2 is running (002).     +
+[15947764] enter to int handler 5.
+[15947988] leave from int handler 5.
+[16150245] enter to int handler 2.
+[16150521] enter to isig_sem semid=1.
+[16150748] task 5 becomes RUNNABLE.
+[16150958] leave from isig_sem ercd=0.
+[16151182] leave from int handler 2.
+[16151436] dispatch from task 3.
+[16151583] dispatch to task 5.
+[16151748] leave from wai_sem ercd=0.
+[16152387] #rot_rdq(three priorities)
+[16152640] enter to rot_rdq tskpri=9.
+[16152838] leave from rot_rdq ercd=0.
+[16152984] enter to rot_rdq tskpri=10.
+[16153205] leave from rot_rdq ercd=0.
+[16153351] enter to rot_rdq tskpri=11.
+[16153549] leave from rot_rdq ercd=0.
+[16153788] enter to wai_sem semid=1.
+[16154182] task 5 becomes WAITING.
+[16154344] dispatch from task 5.
+[16154491] dispatch to task 4.
+[16154671] enter to ena_tex.
+[16154852] leave from ena_tex ercd=0
+[16155522] task3 is running (001).       *
+[16173955] enter to int handler 5.
+[16174179] leave from int handler 5.
+[16400414] enter to int handler 5.
+[16400638] leave from int handler 5.
+[16626874] enter to int handler 5.
+[16627098] leave from int handler 5.
+[16853332] enter to int handler 5.
+[16853593] task 1 becomes RUNNABLE.
+[16853834] leave from int handler 5.
+[16854088] dispatch from task 4.
+[16854235] dispatch to task 1.
+[16854400] leave from dly_tsk ercd=0.
+[16854794] enter to wai_sem semid=2.
+[16854980] leave from wai_sem ercd=0.
+[16855259] enter to sig_sem semid=2.
+[16855459] leave from sig_sem ercd=0.
+[16855729] enter to wai_sem semid=2.
+[16855915] leave from wai_sem ercd=0.
+[16856194] enter to sig_sem semid=2.
+[16856394] leave from sig_sem ercd=0.
+[16856664] enter to wai_sem semid=2.
+[16856850] leave from wai_sem ercd=0.
+[16857129] enter to sig_sem semid=2.
+[16857329] leave from sig_sem ercd=0.
+[16857599] enter to wai_sem semid=2.
+[16857785] leave from wai_sem ercd=0.
+[16858064] enter to sig_sem semid=2.
+[16858264] leave from sig_sem ercd=0.
+[16858678] enter to wai_sem semid=2.
+[16858864] leave from wai_sem ercd=0.
+[16859143] enter to sig_sem semid=2.
+[16859343] leave from sig_sem ercd=0.
+[16859630] enter to wai_sem semid=2.
+[16859816] leave from wai_sem ercd=0.
+[16860095] enter to sig_sem semid=2.
+[16860295] leave from sig_sem ercd=0.
+[16860565] enter to wai_sem semid=2.
+[16860751] leave from wai_sem ercd=0.
+[16861030] enter to sig_sem semid=2.
+[16861230] leave from sig_sem ercd=0.
+[16861500] enter to wai_sem semid=2.
+[16861686] leave from wai_sem ercd=0.
+[16861965] enter to sig_sem semid=2.
+[16862165] leave from sig_sem ercd=0.
+[16862435] enter to wai_sem semid=2.
+[16862621] leave from wai_sem ercd=0.
+[16862900] enter to sig_sem semid=2.
+[16863100] leave from sig_sem ercd=0.
+[16863370] enter to wai_sem semid=2.
+[16863556] leave from wai_sem ercd=0.
+[16863835] enter to sig_sem semid=2.
+[16864035] leave from sig_sem ercd=0.
+[16864305] enter to wai_sem semid=2.
+[16864491] leave from wai_sem ercd=0.
+[16864770] enter to sig_sem semid=2.
+[16864970] leave from sig_sem ercd=0.
+[16865240] enter to wai_sem semid=2.
+[16865426] leave from wai_sem ercd=0.
+[16865705] enter to sig_sem semid=2.
+[16865905] leave from sig_sem ercd=0.
+[16866175] enter to wai_sem semid=2.
+[16866361] leave from wai_sem ercd=0.
+[16866640] enter to sig_sem semid=2.
+[16866840] leave from sig_sem ercd=0.
+[16867110] enter to wai_sem semid=2.
+[16867296] leave from wai_sem ercd=0.
+[16867575] enter to sig_sem semid=2.
+[16867775] leave from sig_sem ercd=0.
+[16868045] enter to wai_sem semid=2.
+[16868231] leave from wai_sem ercd=0.
+[16868510] enter to sig_sem semid=2.
+[16868710] leave from sig_sem ercd=0.
+[16868980] enter to wai_sem semid=2.
+[16869166] leave from wai_sem ercd=0.
+[16869445] enter to sig_sem semid=2.
+[16869645] leave from sig_sem ercd=0.
+[16869915] enter to wai_sem semid=2.
+[16870101] leave from wai_sem ercd=0.
+[16870380] enter to sig_sem semid=2.
+[16870580] leave from sig_sem ercd=0.
+[16870850] enter to wai_sem semid=2.
+[16871036] leave from wai_sem ercd=0.
+[16871315] enter to sig_sem semid=2.
+[16871515] leave from sig_sem ercd=0.
+[16871928] enter to wai_sem semid=2.
+[16872114] leave from wai_sem ercd=0.
+[16872393] enter to sig_sem semid=2.
+[16872593] leave from sig_sem ercd=0.
+[16872859] enter to wai_sem semid=2.
+[16873045] leave from wai_sem ercd=0.
+[16873324] enter to sig_sem semid=2.
+[16873524] leave from sig_sem ercd=0.
+[16873799] enter to wai_sem semid=2.
+[16873985] leave from wai_sem ercd=0.
+[16874264] enter to sig_sem semid=2.
+[16874464] leave from sig_sem ercd=0.
+[16874751] enter to wai_sem semid=2.
+[16874937] leave from wai_sem ercd=0.
+[16875216] enter to sig_sem semid=2.
+[16875416] leave from sig_sem ercd=0.
+[16875686] enter to wai_sem semid=2.
+[16875872] leave from wai_sem ercd=0.
+[16876151] enter to sig_sem semid=2.
+[16876351] leave from sig_sem ercd=0.
+[16876621] enter to wai_sem semid=2.
+[16876807] leave from wai_sem ercd=0.
+[16877086] enter to sig_sem semid=2.
+[16877286] leave from sig_sem ercd=0.
+[16877556] enter to wai_sem semid=2.
+[16877742] leave from wai_sem ercd=0.
+[16878021] enter to sig_sem semid=2.
+[16878221] leave from sig_sem ercd=0.
+[16878491] enter to wai_sem semid=2.
+[16878677] leave from wai_sem ercd=0.
+[16878956] enter to sig_sem semid=2.
+[16879156] leave from sig_sem ercd=0.
+[16879459] enter to wai_sem semid=2.
+[16879645] leave from wai_sem ercd=0.
+[16879924] enter to sig_sem semid=2.
+[16880124] leave from sig_sem ercd=0.
+[16880389] enter to wai_sem semid=2.
+[16880575] leave from wai_sem ercd=0.
+[16880854] enter to sig_sem semid=2.
+[16881054] leave from sig_sem ercd=0.
+[16881319] enter to wai_sem semid=2.
+[16881505] leave from wai_sem ercd=0.
+[16881784] enter to sig_sem semid=2.
+[16881984] leave from sig_sem ercd=0.
+[16882267] enter to wai_sem semid=2.
+[16882453] leave from wai_sem ercd=0.
+[16882852] enter to sig_sem semid=2.
+[16883052] leave from sig_sem ercd=0.
+[16883464] enter to wai_sem semid=2.
+[16883650] leave from wai_sem ercd=0.
+[16883929] enter to sig_sem semid=2.
+[16884129] leave from sig_sem ercd=0.
+[16884399] enter to wai_sem semid=2.
+[16884585] leave from wai_sem ercd=0.
+[16884864] enter to sig_sem semid=2.
+[16885064] leave from sig_sem ercd=0.
+[16885334] enter to wai_sem semid=2.
+[16885520] leave from wai_sem ercd=0.
+[16885799] enter to sig_sem semid=2.
+[16885999] leave from sig_sem ercd=0.
+[16886269] enter to wai_sem semid=2.
+[16886455] leave from wai_sem ercd=0.
+[16886734] enter to sig_sem semid=2.
+[16886934] leave from sig_sem ercd=0.
+[16887204] enter to wai_sem semid=2.
+[16887390] leave from wai_sem ercd=0.
+[16887669] enter to sig_sem semid=2.
+[16887869] leave from sig_sem ercd=0.
+[16888139] enter to wai_sem semid=2.
+[16888325] leave from wai_sem ercd=0.
+[16888604] enter to sig_sem semid=2.
+[16888804] leave from sig_sem ercd=0.
+[16889074] enter to wai_sem semid=2.
+[16889260] leave from wai_sem ercd=0.
+[16889539] enter to sig_sem semid=2.
+[16889739] leave from sig_sem ercd=0.
+[16890009] enter to wai_sem semid=2.
+[16890195] leave from wai_sem ercd=0.
+[16890474] enter to sig_sem semid=2.
+[16890674] leave from sig_sem ercd=0.
+[16890944] enter to wai_sem semid=2.
+[16891130] leave from wai_sem ercd=0.
+[16891409] enter to sig_sem semid=2.
+[16891609] leave from sig_sem ercd=0.
+[16891879] enter to wai_sem semid=2.
+[16892065] leave from wai_sem ercd=0.
+[16892344] enter to sig_sem semid=2.
+[16892544] leave from sig_sem ercd=0.
+[16892814] enter to wai_sem semid=2.
+[16893000] leave from wai_sem ercd=0.
+[16893279] enter to sig_sem semid=2.
+[16893479] leave from sig_sem ercd=0.
+[16893749] enter to wai_sem semid=2.
+[16893935] leave from wai_sem ercd=0.
+[16894214] enter to sig_sem semid=2.
+[16894414] leave from sig_sem ercd=0.
+[16894684] enter to wai_sem semid=2.
+[16894870] leave from wai_sem ercd=0.
+[16895149] enter to sig_sem semid=2.
+[16895349] leave from sig_sem ercd=0.
+[16895619] enter to wai_sem semid=2.
+[16895805] leave from wai_sem ercd=0.
+[16896084] enter to sig_sem semid=2.
+[16896284] leave from sig_sem ercd=0.
+[16896554] enter to wai_sem semid=2.
+[16896740] leave from wai_sem ercd=0.
+[16897019] enter to sig_sem semid=2.
+[16897219] leave from sig_sem ercd=0.
+[16897489] enter to wai_sem semid=2.
+[16897675] leave from wai_sem ercd=0.
+[16897954] enter to sig_sem semid=2.
+[16898154] leave from sig_sem ercd=0.
+[16898424] enter to wai_sem semid=2.
+[16898610] leave from wai_sem ercd=0.
+[16898889] enter to sig_sem semid=2.
+[16899089] leave from sig_sem ercd=0.
+[16899359] enter to wai_sem semid=2.
+[16899545] leave from wai_sem ercd=0.
+[16899824] enter to sig_sem semid=2.
+[16900024] leave from sig_sem ercd=0.
+[16900294] enter to wai_sem semid=2.
+[16900480] leave from wai_sem ercd=0.
+[16900759] enter to sig_sem semid=2.
+[16900959] leave from sig_sem ercd=0.
+[16901229] enter to wai_sem semid=2.
+[16901415] leave from wai_sem ercd=0.
+[16901694] enter to sig_sem semid=2.
+[16901894] leave from sig_sem ercd=0.
+[16902164] enter to wai_sem semid=2.
+[16902350] leave from wai_sem ercd=0.
+[16902629] enter to sig_sem semid=2.
+[16902829] leave from sig_sem ercd=0.
+[16903099] enter to wai_sem semid=2.
+[16903285] leave from wai_sem ercd=0.
+[16903564] enter to sig_sem semid=2.
+[16903764] leave from sig_sem ercd=0.
+[16904034] enter to wai_sem semid=2.
+[16904220] leave from wai_sem ercd=0.
+[16904499] enter to sig_sem semid=2.
+[16904699] leave from sig_sem ercd=0.
+[16904969] enter to wai_sem semid=2.
+[16905155] leave from wai_sem ercd=0.
+[16905434] enter to sig_sem semid=2.
+[16905634] leave from sig_sem ercd=0.
+[16905904] enter to wai_sem semid=2.
+[16906090] leave from wai_sem ercd=0.
+[16906369] enter to sig_sem semid=2.
+[16906569] leave from sig_sem ercd=0.
+[16906839] enter to wai_sem semid=2.
+[16907025] leave from wai_sem ercd=0.
+[16907304] enter to sig_sem semid=2.
+[16907504] leave from sig_sem ercd=0.
+[16907777] enter to wai_sem semid=2.
+[16907963] leave from wai_sem ercd=0.
+[16908362] enter to sig_sem semid=2.
+[16908562] leave from sig_sem ercd=0.
+[16908974] enter to wai_sem semid=2.
+[16909160] leave from wai_sem ercd=0.
+[16909439] enter to sig_sem semid=2.
+[16909639] leave from sig_sem ercd=0.
+[16909909] enter to wai_sem semid=2.
+[16910095] leave from wai_sem ercd=0.
+[16910374] enter to sig_sem semid=2.
+[16910574] leave from sig_sem ercd=0.
+[16910844] enter to wai_sem semid=2.
+[16911030] leave from wai_sem ercd=0.
+[16911309] enter to sig_sem semid=2.
+[16911509] leave from sig_sem ercd=0.
+[16911779] enter to wai_sem semid=2.
+[16911965] leave from wai_sem ercd=0.
+[16912244] enter to sig_sem semid=2.
+[16912444] leave from sig_sem ercd=0.
+[16912858] enter to wai_sem semid=2.
+[16913044] leave from wai_sem ercd=0.
+[16913323] enter to sig_sem semid=2.
+[16913523] leave from sig_sem ercd=0.
+[16913810] enter to wai_sem semid=2.
+[16913996] leave from wai_sem ercd=0.
+[16914275] enter to sig_sem semid=2.
+[16914475] leave from sig_sem ercd=0.
+[16914745] enter to wai_sem semid=2.
+[16914931] leave from wai_sem ercd=0.
+[16915210] enter to sig_sem semid=2.
+[16915410] leave from sig_sem ercd=0.
+[16915680] enter to wai_sem semid=2.
+[16915866] leave from wai_sem ercd=0.
+[16916145] enter to sig_sem semid=2.
+[16916345] leave from sig_sem ercd=0.
+[16916615] enter to wai_sem semid=2.
+[16916801] leave from wai_sem ercd=0.
+[16917080] enter to sig_sem semid=2.
+[16917280] leave from sig_sem ercd=0.
+[16917550] enter to wai_sem semid=2.
+[16917736] leave from wai_sem ercd=0.
+[16918015] enter to sig_sem semid=2.
+[16918215] leave from sig_sem ercd=0.
+[16918485] enter to wai_sem semid=2.
+[16918671] leave from wai_sem ercd=0.
+[16918950] enter to sig_sem semid=2.
+[16919150] leave from sig_sem ercd=0.
+[16919420] enter to wai_sem semid=2.
+[16919606] leave from wai_sem ercd=0.
+[16919885] enter to sig_sem semid=2.
+[16920085] leave from sig_sem ercd=0.
+[16920355] enter to wai_sem semid=2.
+[16920541] leave from wai_sem ercd=0.
+[16920820] enter to sig_sem semid=2.
+[16921020] leave from sig_sem ercd=0.
+[16921290] enter to wai_sem semid=2.
+[16921476] leave from wai_sem ercd=0.
+[16921755] enter to sig_sem semid=2.
+[16921955] leave from sig_sem ercd=0.
+[16922225] enter to wai_sem semid=2.
+[16922411] leave from wai_sem ercd=0.
+[16922690] enter to sig_sem semid=2.
+[16922890] leave from sig_sem ercd=0.
+[16923160] enter to wai_sem semid=2.
+[16923346] leave from wai_sem ercd=0.
+[16923625] enter to sig_sem semid=2.
+[16923825] leave from sig_sem ercd=0.
+[16924095] enter to wai_sem semid=2.
+[16924281] leave from wai_sem ercd=0.
+[16924560] enter to sig_sem semid=2.
+[16924760] leave from sig_sem ercd=0.
+[16925030] enter to wai_sem semid=2.
+[16925216] leave from wai_sem ercd=0.
+[16925495] enter to sig_sem semid=2.
+[16925695] leave from sig_sem ercd=0.
+[16926108] enter to wai_sem semid=2.
+[16926294] leave from wai_sem ercd=0.
+[16926573] enter to sig_sem semid=2.
+[16926773] leave from sig_sem ercd=0.
+[16927039] enter to wai_sem semid=2.
+[16927225] leave from wai_sem ercd=0.
+[16927504] enter to sig_sem semid=2.
+[16927704] leave from sig_sem ercd=0.
+[16927979] enter to wai_sem semid=2.
+[16928165] leave from wai_sem ercd=0.
+[16928444] enter to sig_sem semid=2.
+[16928644] leave from sig_sem ercd=0.
+[16928931] enter to wai_sem semid=2.
+[16929117] leave from wai_sem ercd=0.
+[16929396] enter to sig_sem semid=2.
+[16929596] leave from sig_sem ercd=0.
+[16929866] enter to wai_sem semid=2.
+[16930052] leave from wai_sem ercd=0.
+[16930331] enter to sig_sem semid=2.
+[16930531] leave from sig_sem ercd=0.
+[16930801] enter to wai_sem semid=2.
+[16930987] leave from wai_sem ercd=0.
+[16931266] enter to sig_sem semid=2.
+[16931466] leave from sig_sem ercd=0.
+[16931736] enter to wai_sem semid=2.
+[16931922] leave from wai_sem ercd=0.
+[16932201] enter to sig_sem semid=2.
+[16932401] leave from sig_sem ercd=0.
+[16932671] enter to wai_sem semid=2.
+[16932857] leave from wai_sem ercd=0.
+[16933136] enter to sig_sem semid=2.
+[16933336] leave from sig_sem ercd=0.
+[16933639] enter to wai_sem semid=2.
+[16933825] leave from wai_sem ercd=0.
+[16934104] enter to sig_sem semid=2.
+[16934304] leave from sig_sem ercd=0.
+[16934569] enter to wai_sem semid=2.
+[16934755] leave from wai_sem ercd=0.
+[16935034] enter to sig_sem semid=2.
+[16935234] leave from sig_sem ercd=0.
+[16935499] enter to wai_sem semid=2.
+[16935685] leave from wai_sem ercd=0.
+[16935964] enter to sig_sem semid=2.
+[16936164] leave from sig_sem ercd=0.
+[16936429] enter to wai_sem semid=2.
+[16936615] leave from wai_sem ercd=0.
+[16936894] enter to sig_sem semid=2.
+[16937094] leave from sig_sem ercd=0.
+[16937359] enter to wai_sem semid=2.
+[16937545] leave from wai_sem ercd=0.
+[16937824] enter to sig_sem semid=2.
+[16938024] leave from sig_sem ercd=0.
+[16938307] enter to wai_sem semid=2.
+[16938493] leave from wai_sem ercd=0.
+[16938892] enter to sig_sem semid=2.
+[16939092] leave from sig_sem ercd=0.
+[16939316] enter to dly_tsk dlytim=10.
+[16939714] task 1 becomes WAITING.
+[16939876] dispatch from task 1.
+[16940023] dispatch to task 4.
+[17077940] enter to int handler 5.
+[17078164] leave from int handler 5.
+[17304400] enter to int handler 5.
+[17304624] leave from int handler 5.
+[17530860] enter to int handler 5.
+[17531084] leave from int handler 5.
+[17757318] enter to int handler 5.
+[17757542] leave from int handler 5.
+[17983777] enter to int handler 5.
+[17984001] leave from int handler 5.
+[18210237] enter to int handler 5.
+[18210461] leave from int handler 5.
+[18436695] enter to int handler 5.
+[18436919] leave from int handler 5.
+[18663155] enter to int handler 5.
+[18663379] leave from int handler 5.
+[18889615] enter to int handler 5.
+[18889839] leave from int handler 5.
+[19116073] enter to int handler 5.
+[19116297] leave from int handler 5.
+[19342532] enter to int handler 5.
+[19342793] task 1 becomes RUNNABLE.
+[19343034] leave from int handler 5.
+[19343288] dispatch from task 4.
+[19343435] dispatch to task 1.
+[19343600] leave from dly_tsk ercd=0.
+[19343810] enter to dly_tsk dlytim=10.
+[19344208] task 1 becomes WAITING.
+[19344370] dispatch from task 1.
+[19344517] dispatch to task 4.
+[19569115] enter to int handler 5.
+[19569339] leave from int handler 5.
+[19795573] enter to int handler 5.
+[19795797] leave from int handler 5.
+[20022032] enter to int handler 5.
+[20022256] leave from int handler 5.
+[20153976] task3 is running (002).       *
+[20248263] enter to int handler 5.
+[20248487] leave from int handler 5.
+[20474721] enter to int handler 5.
+[20474945] leave from int handler 5.
+[20701180] enter to int handler 5.
+[20701404] leave from int handler 5.
+[20927640] enter to int handler 5.
+[20927864] leave from int handler 5.
+[21154098] enter to int handler 5.
+[21154322] leave from int handler 5.
+[21319120] enter to int handler 2.
+[21319396] enter to isig_sem semid=1.
+[21319623] task 5 becomes RUNNABLE.
+[21319833] leave from isig_sem ercd=0.
+[21320057] leave from int handler 2.
+[21320311] dispatch from task 4.
+[21320458] dispatch to task 5.
+[21320623] leave from wai_sem ercd=0.
+[21321262] #rot_rdq(three priorities)
+[21321515] enter to rot_rdq tskpri=9.
+[21321713] leave from rot_rdq ercd=0.
+[21321859] enter to rot_rdq tskpri=10.
+[21322080] leave from rot_rdq ercd=0.
+[21322226] enter to rot_rdq tskpri=11.
+[21322424] leave from rot_rdq ercd=0.
+[21322663] enter to wai_sem semid=1.
+[21323057] task 5 becomes WAITING.
+[21323219] dispatch from task 5.
+[21323366] dispatch to task 2.
+[21380501] enter to int handler 5.
+[21380725] leave from int handler 5.
+[21606961] enter to int handler 5.
+[21607185] leave from int handler 5.
+[21833419] enter to int handler 5.
+[21833680] task 1 becomes RUNNABLE.
+[21833921] leave from int handler 5.
+[21834175] dispatch from task 2.
+[21834322] dispatch to task 1.
+[21834487] leave from dly_tsk ercd=0.
+[21834881] enter to wai_sem semid=2.
+[21835067] leave from wai_sem ercd=0.
+[21835346] enter to sig_sem semid=2.
+[21835546] leave from sig_sem ercd=0.
+[21835816] enter to wai_sem semid=2.
+[21836002] leave from wai_sem ercd=0.
+[21836281] enter to sig_sem semid=2.
+[21836481] leave from sig_sem ercd=0.
+[21836751] enter to wai_sem semid=2.
+[21836937] leave from wai_sem ercd=0.
+[21837216] enter to sig_sem semid=2.
+[21837416] leave from sig_sem ercd=0.
+[21837686] enter to wai_sem semid=2.
+[21837872] leave from wai_sem ercd=0.
+[21838151] enter to sig_sem semid=2.
+[21838351] leave from sig_sem ercd=0.
+[21838765] enter to wai_sem semid=2.
+[21838951] leave from wai_sem ercd=0.
+[21839230] enter to sig_sem semid=2.
+[21839430] leave from sig_sem ercd=0.
+[21839717] enter to wai_sem semid=2.
+[21839903] leave from wai_sem ercd=0.
+[21840182] enter to sig_sem semid=2.
+[21840382] leave from sig_sem ercd=0.
+[21840652] enter to wai_sem semid=2.
+[21840838] leave from wai_sem ercd=0.
+[21841117] enter to sig_sem semid=2.
+[21841317] leave from sig_sem ercd=0.
+[21841587] enter to wai_sem semid=2.
+[21841773] leave from wai_sem ercd=0.
+[21842052] enter to sig_sem semid=2.
+[21842252] leave from sig_sem ercd=0.
+[21842522] enter to wai_sem semid=2.
+[21842708] leave from wai_sem ercd=0.
+[21842987] enter to sig_sem semid=2.
+[21843187] leave from sig_sem ercd=0.
+[21843457] enter to wai_sem semid=2.
+[21843643] leave from wai_sem ercd=0.
+[21843922] enter to sig_sem semid=2.
+[21844122] leave from sig_sem ercd=0.
+[21844392] enter to wai_sem semid=2.
+[21844578] leave from wai_sem ercd=0.
+[21844857] enter to sig_sem semid=2.
+[21845057] leave from sig_sem ercd=0.
+[21845327] enter to wai_sem semid=2.
+[21845513] leave from wai_sem ercd=0.
+[21845792] enter to sig_sem semid=2.
+[21845992] leave from sig_sem ercd=0.
+[21846262] enter to wai_sem semid=2.
+[21846448] leave from wai_sem ercd=0.
+[21846727] enter to sig_sem semid=2.
+[21846927] leave from sig_sem ercd=0.
+[21847197] enter to wai_sem semid=2.
+[21847383] leave from wai_sem ercd=0.
+[21847662] enter to sig_sem semid=2.
+[21847862] leave from sig_sem ercd=0.
+[21848132] enter to wai_sem semid=2.
+[21848318] leave from wai_sem ercd=0.
+[21848597] enter to sig_sem semid=2.
+[21848797] leave from sig_sem ercd=0.
+[21849067] enter to wai_sem semid=2.
+[21849253] leave from wai_sem ercd=0.
+[21849532] enter to sig_sem semid=2.
+[21849732] leave from sig_sem ercd=0.
+[21850002] enter to wai_sem semid=2.
+[21850188] leave from wai_sem ercd=0.
+[21850467] enter to sig_sem semid=2.
+[21850667] leave from sig_sem ercd=0.
+[21850937] enter to wai_sem semid=2.
+[21851123] leave from wai_sem ercd=0.
+[21851402] enter to sig_sem semid=2.
+[21851602] leave from sig_sem ercd=0.
+[21852015] enter to wai_sem semid=2.
+[21852201] leave from wai_sem ercd=0.
+[21852480] enter to sig_sem semid=2.
+[21852680] leave from sig_sem ercd=0.
+[21852946] enter to wai_sem semid=2.
+[21853132] leave from wai_sem ercd=0.
+[21853411] enter to sig_sem semid=2.
+[21853611] leave from sig_sem ercd=0.
+[21853886] enter to wai_sem semid=2.
+[21854072] leave from wai_sem ercd=0.
+[21854351] enter to sig_sem semid=2.
+[21854551] leave from sig_sem ercd=0.
+[21854838] enter to wai_sem semid=2.
+[21855024] leave from wai_sem ercd=0.
+[21855303] enter to sig_sem semid=2.
+[21855503] leave from sig_sem ercd=0.
+[21855773] enter to wai_sem semid=2.
+[21855959] leave from wai_sem ercd=0.
+[21856238] enter to sig_sem semid=2.
+[21856438] leave from sig_sem ercd=0.
+[21856708] enter to wai_sem semid=2.
+[21856894] leave from wai_sem ercd=0.
+[21857173] enter to sig_sem semid=2.
+[21857373] leave from sig_sem ercd=0.
+[21857643] enter to wai_sem semid=2.
+[21857829] leave from wai_sem ercd=0.
+[21858108] enter to sig_sem semid=2.
+[21858308] leave from sig_sem ercd=0.
+[21858578] enter to wai_sem semid=2.
+[21858764] leave from wai_sem ercd=0.
+[21859043] enter to sig_sem semid=2.
+[21859243] leave from sig_sem ercd=0.
+[21859546] enter to wai_sem semid=2.
+[21859732] leave from wai_sem ercd=0.
+[21860011] enter to sig_sem semid=2.
+[21860211] leave from sig_sem ercd=0.
+[21860476] enter to wai_sem semid=2.
+[21860662] leave from wai_sem ercd=0.
+[21860941] enter to sig_sem semid=2.
+[21861141] leave from sig_sem ercd=0.
+[21861406] enter to wai_sem semid=2.
+[21861592] leave from wai_sem ercd=0.
+[21861871] enter to sig_sem semid=2.
+[21862071] leave from sig_sem ercd=0.
+[21862336] enter to wai_sem semid=2.
+[21862522] leave from wai_sem ercd=0.
+[21862801] enter to sig_sem semid=2.
+[21863001] leave from sig_sem ercd=0.
+[21863266] enter to wai_sem semid=2.
+[21863452] leave from wai_sem ercd=0.
+[21863731] enter to sig_sem semid=2.
+[21863931] leave from sig_sem ercd=0.
+[21864214] enter to wai_sem semid=2.
+[21864400] leave from wai_sem ercd=0.
+[21864799] enter to sig_sem semid=2.
+[21864999] leave from sig_sem ercd=0.
+[21865411] enter to wai_sem semid=2.
+[21865597] leave from wai_sem ercd=0.
+[21865876] enter to sig_sem semid=2.
+[21866076] leave from sig_sem ercd=0.
+[21866346] enter to wai_sem semid=2.
+[21866532] leave from wai_sem ercd=0.
+[21866811] enter to sig_sem semid=2.
+[21867011] leave from sig_sem ercd=0.
+[21867281] enter to wai_sem semid=2.
+[21867467] leave from wai_sem ercd=0.
+[21867746] enter to sig_sem semid=2.
+[21867946] leave from sig_sem ercd=0.
+[21868216] enter to wai_sem semid=2.
+[21868402] leave from wai_sem ercd=0.
+[21868681] enter to sig_sem semid=2.
+[21868881] leave from sig_sem ercd=0.
+[21869151] enter to wai_sem semid=2.
+[21869337] leave from wai_sem ercd=0.
+[21869616] enter to sig_sem semid=2.
+[21869816] leave from sig_sem ercd=0.
+[21870086] enter to wai_sem semid=2.
+[21870272] leave from wai_sem ercd=0.
+[21870551] enter to sig_sem semid=2.
+[21870751] leave from sig_sem ercd=0.
+[21871021] enter to wai_sem semid=2.
+[21871207] leave from wai_sem ercd=0.
+[21871486] enter to sig_sem semid=2.
+[21871686] leave from sig_sem ercd=0.
+[21871956] enter to wai_sem semid=2.
+[21872142] leave from wai_sem ercd=0.
+[21872421] enter to sig_sem semid=2.
+[21872621] leave from sig_sem ercd=0.
+[21872891] enter to wai_sem semid=2.
+[21873077] leave from wai_sem ercd=0.
+[21873356] enter to sig_sem semid=2.
+[21873556] leave from sig_sem ercd=0.
+[21873826] enter to wai_sem semid=2.
+[21874012] leave from wai_sem ercd=0.
+[21874291] enter to sig_sem semid=2.
+[21874491] leave from sig_sem ercd=0.
+[21874761] enter to wai_sem semid=2.
+[21874947] leave from wai_sem ercd=0.
+[21875226] enter to sig_sem semid=2.
+[21875426] leave from sig_sem ercd=0.
+[21875696] enter to wai_sem semid=2.
+[21875882] leave from wai_sem ercd=0.
+[21876161] enter to sig_sem semid=2.
+[21876361] leave from sig_sem ercd=0.
+[21876631] enter to wai_sem semid=2.
+[21876817] leave from wai_sem ercd=0.
+[21877096] enter to sig_sem semid=2.
+[21877296] leave from sig_sem ercd=0.
+[21877566] enter to wai_sem semid=2.
+[21877752] leave from wai_sem ercd=0.
+[21878031] enter to sig_sem semid=2.
+[21878231] leave from sig_sem ercd=0.
+[21878501] enter to wai_sem semid=2.
+[21878687] leave from wai_sem ercd=0.
+[21878966] enter to sig_sem semid=2.
+[21879166] leave from sig_sem ercd=0.
+[21879436] enter to wai_sem semid=2.
+[21879622] leave from wai_sem ercd=0.
+[21879901] enter to sig_sem semid=2.
+[21880101] leave from sig_sem ercd=0.
+[21880371] enter to wai_sem semid=2.
+[21880557] leave from wai_sem ercd=0.
+[21880836] enter to sig_sem semid=2.
+[21881036] leave from sig_sem ercd=0.
+[21881306] enter to wai_sem semid=2.
+[21881492] leave from wai_sem ercd=0.
+[21881771] enter to sig_sem semid=2.
+[21881971] leave from sig_sem ercd=0.
+[21882241] enter to wai_sem semid=2.
+[21882427] leave from wai_sem ercd=0.
+[21882706] enter to sig_sem semid=2.
+[21882906] leave from sig_sem ercd=0.
+[21883176] enter to wai_sem semid=2.
+[21883362] leave from wai_sem ercd=0.
+[21883641] enter to sig_sem semid=2.
+[21883841] leave from sig_sem ercd=0.
+[21884111] enter to wai_sem semid=2.
+[21884297] leave from wai_sem ercd=0.
+[21884576] enter to sig_sem semid=2.
+[21884776] leave from sig_sem ercd=0.
+[21885046] enter to wai_sem semid=2.
+[21885232] leave from wai_sem ercd=0.
+[21885511] enter to sig_sem semid=2.
+[21885711] leave from sig_sem ercd=0.
+[21885981] enter to wai_sem semid=2.
+[21886167] leave from wai_sem ercd=0.
+[21886446] enter to sig_sem semid=2.
+[21886646] leave from sig_sem ercd=0.
+[21886916] enter to wai_sem semid=2.
+[21887102] leave from wai_sem ercd=0.
+[21887381] enter to sig_sem semid=2.
+[21887581] leave from sig_sem ercd=0.
+[21887851] enter to wai_sem semid=2.
+[21888037] leave from wai_sem ercd=0.
+[21888316] enter to sig_sem semid=2.
+[21888516] leave from sig_sem ercd=0.
+[21888786] enter to wai_sem semid=2.
+[21888972] leave from wai_sem ercd=0.
+[21889251] enter to sig_sem semid=2.
+[21889451] leave from sig_sem ercd=0.
+[21889724] enter to wai_sem semid=2.
+[21889910] leave from wai_sem ercd=0.
+[21890309] enter to sig_sem semid=2.
+[21890509] leave from sig_sem ercd=0.
+[21890733] enter to dly_tsk dlytim=10.
+[21891131] task 1 becomes WAITING.
+[21891293] dispatch from task 1.
+[21891440] dispatch to task 2.
+[22058739] enter to int handler 5.
+[22058963] leave from int handler 5.
+[22285199] enter to int handler 5.
+[22285423] leave from int handler 5.
+[22511657] enter to int handler 5.
+[22511881] leave from int handler 5.
+[22738117] enter to int handler 5.
+[22738341] leave from int handler 5.
+[22964577] enter to int handler 5.
+[22964801] leave from int handler 5.
+[23191035] enter to int handler 5.
+[23191259] leave from int handler 5.
+[23239846] task1 is running (004).   |
+[23417265] enter to int handler 5.
+[23417489] leave from int handler 5.
+[23643725] enter to int handler 5.
+[23643949] leave from int handler 5.
+[23870183] enter to int handler 5.
+[23870407] leave from int handler 5.
+[24096642] enter to int handler 5.
+[24096866] leave from int handler 5.
+[24323102] enter to int handler 5.
+[24323363] task 1 becomes RUNNABLE.
+[24323604] leave from int handler 5.
+[24323858] dispatch from task 2.
+[24324005] dispatch to task 1.
+[24324170] leave from dly_tsk ercd=0.
+[24324564] enter to wai_sem semid=2.
+[24324750] leave from wai_sem ercd=0.
+[24325029] enter to sig_sem semid=2.
+[24325229] leave from sig_sem ercd=0.
+[24325499] enter to wai_sem semid=2.
+[24325685] leave from wai_sem ercd=0.
+[24325964] enter to sig_sem semid=2.
+[24326164] leave from sig_sem ercd=0.
+[24326434] enter to wai_sem semid=2.
+[24326620] leave from wai_sem ercd=0.
+[24326899] enter to sig_sem semid=2.
+[24327099] leave from sig_sem ercd=0.
+[24327369] enter to wai_sem semid=2.
+[24327555] leave from wai_sem ercd=0.
+[24327834] enter to sig_sem semid=2.
+[24328034] leave from sig_sem ercd=0.
+[24328448] enter to wai_sem semid=2.
+[24328634] leave from wai_sem ercd=0.
+[24328913] enter to sig_sem semid=2.
+[24329113] leave from sig_sem ercd=0.
+[24329400] enter to wai_sem semid=2.
+[24329586] leave from wai_sem ercd=0.
+[24329865] enter to sig_sem semid=2.
+[24330065] leave from sig_sem ercd=0.
+[24330335] enter to wai_sem semid=2.
+[24330521] leave from wai_sem ercd=0.
+[24330800] enter to sig_sem semid=2.
+[24331000] leave from sig_sem ercd=0.
+[24331270] enter to wai_sem semid=2.
+[24331456] leave from wai_sem ercd=0.
+[24331735] enter to sig_sem semid=2.
+[24331935] leave from sig_sem ercd=0.
+[24332205] enter to wai_sem semid=2.
+[24332391] leave from wai_sem ercd=0.
+[24332670] enter to sig_sem semid=2.
+[24332870] leave from sig_sem ercd=0.
+[24333140] enter to wai_sem semid=2.
+[24333326] leave from wai_sem ercd=0.
+[24333605] enter to sig_sem semid=2.
+[24333805] leave from sig_sem ercd=0.
+[24334075] enter to wai_sem semid=2.
+[24334261] leave from wai_sem ercd=0.
+[24334540] enter to sig_sem semid=2.
+[24334740] leave from sig_sem ercd=0.
+[24335010] enter to wai_sem semid=2.
+[24335196] leave from wai_sem ercd=0.
+[24335475] enter to sig_sem semid=2.
+[24335675] leave from sig_sem ercd=0.
+[24335945] enter to wai_sem semid=2.
+[24336131] leave from wai_sem ercd=0.
+[24336410] enter to sig_sem semid=2.
+[24336610] leave from sig_sem ercd=0.
+[24336880] enter to wai_sem semid=2.
+[24337066] leave from wai_sem ercd=0.
+[24337345] enter to sig_sem semid=2.
+[24337545] leave from sig_sem ercd=0.
+[24337815] enter to wai_sem semid=2.
+[24338001] leave from wai_sem ercd=0.
+[24338280] enter to sig_sem semid=2.
+[24338480] leave from sig_sem ercd=0.
+[24338750] enter to wai_sem semid=2.
+[24338936] leave from wai_sem ercd=0.
+[24339215] enter to sig_sem semid=2.
+[24339415] leave from sig_sem ercd=0.
+[24339685] enter to wai_sem semid=2.
+[24339871] leave from wai_sem ercd=0.
+[24340150] enter to sig_sem semid=2.
+[24340350] leave from sig_sem ercd=0.
+[24340620] enter to wai_sem semid=2.
+[24340806] leave from wai_sem ercd=0.
+[24341085] enter to sig_sem semid=2.
+[24341285] leave from sig_sem ercd=0.
+[24341698] enter to wai_sem semid=2.
+[24341884] leave from wai_sem ercd=0.
+[24342163] enter to sig_sem semid=2.
+[24342363] leave from sig_sem ercd=0.
+[24342629] enter to wai_sem semid=2.
+[24342815] leave from wai_sem ercd=0.
+[24343094] enter to sig_sem semid=2.
+[24343294] leave from sig_sem ercd=0.
+[24343569] enter to wai_sem semid=2.
+[24343755] leave from wai_sem ercd=0.
+[24344034] enter to sig_sem semid=2.
+[24344234] leave from sig_sem ercd=0.
+[24344521] enter to wai_sem semid=2.
+[24344707] leave from wai_sem ercd=0.
+[24344986] enter to sig_sem semid=2.
+[24345186] leave from sig_sem ercd=0.
+[24345456] enter to wai_sem semid=2.
+[24345642] leave from wai_sem ercd=0.
+[24345921] enter to sig_sem semid=2.
+[24346121] leave from sig_sem ercd=0.
+[24346391] enter to wai_sem semid=2.
+[24346577] leave from wai_sem ercd=0.
+[24346856] enter to sig_sem semid=2.
+[24347056] leave from sig_sem ercd=0.
+[24347326] enter to wai_sem semid=2.
+[24347512] leave from wai_sem ercd=0.
+[24347791] enter to sig_sem semid=2.
+[24347991] leave from sig_sem ercd=0.
+[24348261] enter to wai_sem semid=2.
+[24348447] leave from wai_sem ercd=0.
+[24348726] enter to sig_sem semid=2.
+[24348926] leave from sig_sem ercd=0.
+[24349229] enter to wai_sem semid=2.
+[24349415] leave from wai_sem ercd=0.
+[24349694] enter to sig_sem semid=2.
+[24349894] leave from sig_sem ercd=0.
+[24350177] enter to wai_sem semid=2.
+[24350363] leave from wai_sem ercd=0.
+[24350762] enter to sig_sem semid=2.
+[24350962] leave from sig_sem ercd=0.
+[24351186] enter to dly_tsk dlytim=10.
+[24351584] task 1 becomes WAITING.
+[24351746] dispatch from task 1.
+[24351893] dispatch to task 2.
+[24549000] enter to int handler 5.
+[24549224] leave from int handler 5.
+[24775460] enter to int handler 5.
+[24775684] leave from int handler 5.
+[25001920] enter to int handler 5.
+[25002144] leave from int handler 5.
+[25228378] enter to int handler 5.
+[25228602] leave from int handler 5.
+[25454837] enter to int handler 5.
+[25455061] leave from int handler 5.
+[25681297] enter to int handler 5.
+[25681521] leave from int handler 5.
+[25907755] enter to int handler 5.
+[25907979] leave from int handler 5.
+[26134215] enter to int handler 5.
+[26134439] leave from int handler 5.
+[26360675] enter to int handler 5.
+[26360899] leave from int handler 5.
+[26483484] enter to int handler 2.
+[26483760] enter to isig_sem semid=1.
+[26483987] task 5 becomes RUNNABLE.
+[26484197] leave from isig_sem ercd=0.
+[26484421] leave from int handler 2.
+[26484675] dispatch from task 2.
+[26484822] dispatch to task 5.
+[26484987] leave from wai_sem ercd=0.
+[26485349] enter to wai_sem semid=1.
+[26485743] task 5 becomes WAITING.
+[26485905] dispatch from task 5.
+[26486052] dispatch to task 2.
+[26587240] enter to int handler 5.
+[26587464] leave from int handler 5.
+[26813700] enter to int handler 5.
+[26813961] task 1 becomes RUNNABLE.
+[26814202] leave from int handler 5.
+[26814456] dispatch from task 2.
+[26814603] dispatch to task 1.
+[26814768] leave from dly_tsk ercd=0.
+[26814978] enter to dly_tsk dlytim=10.
+[26815376] task 1 becomes WAITING.
+[26815538] dispatch from task 1.
+[26815685] dispatch to task 2.
+[27040280] enter to int handler 5.
+[27040504] leave from int handler 5.
+[27182698] task1 is running (005).   |
+[27266510] enter to int handler 5.
+[27266734] leave from int handler 5.
+[27492970] enter to int handler 5.
+[27493194] leave from int handler 5.
+[27719428] enter to int handler 5.
+[27719652] leave from int handler 5.
+[27945888] enter to int handler 5.
+[27946112] leave from int handler 5.
+[28172348] enter to int handler 5.
+[28172572] leave from int handler 5.
+[28264438] enter to int handler 2.
+[28264714] enter to isig_sem semid=1.
+[28264941] task 5 becomes RUNNABLE.
+[28265151] leave from isig_sem ercd=0.
+[28265375] leave from int handler 2.
+[28265629] dispatch from task 2.
+[28265776] dispatch to task 5.
+[28265941] leave from wai_sem ercd=0.
+[28266311] enter to wai_sem semid=1.
+[28266705] task 5 becomes WAITING.
+[28266867] dispatch from task 5.
+[28267014] dispatch to task 2.
+[28398911] enter to int handler 5.
+[28399135] leave from int handler 5.
+[28625369] enter to int handler 5.
+[28625593] leave from int handler 5.
+[28851828] enter to int handler 5.
+[28852052] leave from int handler 5.
+[29078288] enter to int handler 5.
+[29078512] leave from int handler 5.
+[29304746] enter to int handler 5.
+[29305007] task 1 becomes RUNNABLE.
+[29305248] leave from int handler 5.
+[29305502] dispatch from task 2.
+[29305649] dispatch to task 1.
+[29305814] leave from dly_tsk ercd=0.
+[29306208] enter to wai_sem semid=2.
+[29306394] leave from wai_sem ercd=0.
+[29306673] enter to sig_sem semid=2.
+[29306873] leave from sig_sem ercd=0.
+[29307143] enter to wai_sem semid=2.
+[29307329] leave from wai_sem ercd=0.
+[29307608] enter to sig_sem semid=2.
+[29307808] leave from sig_sem ercd=0.
+[29308078] enter to wai_sem semid=2.
+[29308264] leave from wai_sem ercd=0.
+[29308543] enter to sig_sem semid=2.
+[29308743] leave from sig_sem ercd=0.
+[29309013] enter to wai_sem semid=2.
+[29309199] leave from wai_sem ercd=0.
+[29309478] enter to sig_sem semid=2.
+[29309678] leave from sig_sem ercd=0.
+[29310092] enter to wai_sem semid=2.
+[29310278] leave from wai_sem ercd=0.
+[29310557] enter to sig_sem semid=2.
+[29310757] leave from sig_sem ercd=0.
+[29311044] enter to wai_sem semid=2.
+[29311230] leave from wai_sem ercd=0.
+[29311509] enter to sig_sem semid=2.
+[29311709] leave from sig_sem ercd=0.
+[29311979] enter to wai_sem semid=2.
+[29312165] leave from wai_sem ercd=0.
+[29312444] enter to sig_sem semid=2.
+[29312644] leave from sig_sem ercd=0.
+[29312914] enter to wai_sem semid=2.
+[29313100] leave from wai_sem ercd=0.
+[29313379] enter to sig_sem semid=2.
+[29313579] leave from sig_sem ercd=0.
+[29313849] enter to wai_sem semid=2.
+[29314035] leave from wai_sem ercd=0.
+[29314314] enter to sig_sem semid=2.
+[29314514] leave from sig_sem ercd=0.
+[29314784] enter to wai_sem semid=2.
+[29314970] leave from wai_sem ercd=0.
+[29315249] enter to sig_sem semid=2.
+[29315449] leave from sig_sem ercd=0.
+[29315719] enter to wai_sem semid=2.
+[29315905] leave from wai_sem ercd=0.
+[29316184] enter to sig_sem semid=2.
+[29316384] leave from sig_sem ercd=0.
+[29316654] enter to wai_sem semid=2.
+[29316840] leave from wai_sem ercd=0.
+[29317119] enter to sig_sem semid=2.
+[29317319] leave from sig_sem ercd=0.
+[29317589] enter to wai_sem semid=2.
+[29317775] leave from wai_sem ercd=0.
+[29318054] enter to sig_sem semid=2.
+[29318254] leave from sig_sem ercd=0.
+[29318524] enter to wai_sem semid=2.
+[29318710] leave from wai_sem ercd=0.
+[29318989] enter to sig_sem semid=2.
+[29319189] leave from sig_sem ercd=0.
+[29319459] enter to wai_sem semid=2.
+[29319645] leave from wai_sem ercd=0.
+[29319924] enter to sig_sem semid=2.
+[29320124] leave from sig_sem ercd=0.
+[29320394] enter to wai_sem semid=2.
+[29320580] leave from wai_sem ercd=0.
+[29320859] enter to sig_sem semid=2.
+[29321059] leave from sig_sem ercd=0.
+[29321329] enter to wai_sem semid=2.
+[29321515] leave from wai_sem ercd=0.
+[29321794] enter to sig_sem semid=2.
+[29321994] leave from sig_sem ercd=0.
+[29322264] enter to wai_sem semid=2.
+[29322450] leave from wai_sem ercd=0.
+[29322729] enter to sig_sem semid=2.
+[29322929] leave from sig_sem ercd=0.
+[29323342] enter to wai_sem semid=2.
+[29323528] leave from wai_sem ercd=0.
+[29323807] enter to sig_sem semid=2.
+[29324007] leave from sig_sem ercd=0.
+[29324273] enter to wai_sem semid=2.
+[29324459] leave from wai_sem ercd=0.
+[29324738] enter to sig_sem semid=2.
+[29324938] leave from sig_sem ercd=0.
+[29325213] enter to wai_sem semid=2.
+[29325399] leave from wai_sem ercd=0.
+[29325678] enter to sig_sem semid=2.
+[29325878] leave from sig_sem ercd=0.
+[29326165] enter to wai_sem semid=2.
+[29326351] leave from wai_sem ercd=0.
+[29326630] enter to sig_sem semid=2.
+[29326830] leave from sig_sem ercd=0.
+[29327100] enter to wai_sem semid=2.
+[29327286] leave from wai_sem ercd=0.
+[29327565] enter to sig_sem semid=2.
+[29327765] leave from sig_sem ercd=0.
+[29328035] enter to wai_sem semid=2.
+[29328221] leave from wai_sem ercd=0.
+[29328500] enter to sig_sem semid=2.
+[29328700] leave from sig_sem ercd=0.
+[29328970] enter to wai_sem semid=2.
+[29329156] leave from wai_sem ercd=0.
+[29329435] enter to sig_sem semid=2.
+[29329635] leave from sig_sem ercd=0.
+[29329905] enter to wai_sem semid=2.
+[29330091] leave from wai_sem ercd=0.
+[29330370] enter to sig_sem semid=2.
+[29330570] leave from sig_sem ercd=0.
+[29330873] enter to wai_sem semid=2.
+[29331059] leave from wai_sem ercd=0.
+[29331338] enter to sig_sem semid=2.
+[29331538] leave from sig_sem ercd=0.
+[29331821] enter to wai_sem semid=2.
+[29332007] leave from wai_sem ercd=0.
+[29332406] enter to sig_sem semid=2.
+[29332606] leave from sig_sem ercd=0.
+[29332830] enter to dly_tsk dlytim=10.
+[29333228] task 1 becomes WAITING.
+[29333390] dispatch from task 1.
+[29333537] dispatch to task 2.
+[29530646] enter to int handler 5.
+[29530870] leave from int handler 5.
+[29757106] enter to int handler 5.
+[29757330] leave from int handler 5.
+[29983564] enter to int handler 5.
+[29983788] leave from int handler 5.
+[30210023] enter to int handler 5.
+[30210247] leave from int handler 5.
+[30382007] enter to int handler 2.
+[30382283] enter to isig_sem semid=1.
+[30382510] task 5 becomes RUNNABLE.
+[30382720] leave from isig_sem ercd=0.
+[30382944] leave from int handler 2.
+[30383198] dispatch from task 2.
+[30383345] dispatch to task 5.
+[30383510] leave from wai_sem ercd=0.
+[30383872] enter to wai_sem semid=1.
+[30384266] task 5 becomes WAITING.
+[30384428] dispatch from task 5.
+[30384575] dispatch to task 2.
+[30436589] enter to int handler 5.
+[30436813] leave from int handler 5.
+[30663048] enter to int handler 5.
+[30663272] leave from int handler 5.
+[30889508] enter to int handler 5.
+[30889732] leave from int handler 5.
+[31115966] enter to int handler 5.
+[31116190] leave from int handler 5.
+[31126925] #1#slp_tsk()
+[31127176] enter to slp_tsk.
+[31127423] task 2 becomes WAITING.
+[31127585] dispatch from task 2.
+[31127732] dispatch to task 3.
+[31342412] enter to int handler 5.
+[31342636] leave from int handler 5.
+[31568871] enter to int handler 5.
+[31569095] leave from int handler 5.
+[31795331] enter to int handler 5.
+[31795592] task 1 becomes RUNNABLE.
+[31795833] leave from int handler 5.
+[31796087] dispatch from task 3.
+[31796234] dispatch to task 1.
+[31796399] leave from dly_tsk ercd=0.
+[31796793] enter to wai_sem semid=2.
+[31796979] leave from wai_sem ercd=0.
+[31797258] enter to sig_sem semid=2.
+[31797458] leave from sig_sem ercd=0.
+[31797872] enter to wai_sem semid=2.
+[31798058] leave from wai_sem ercd=0.
+[31798337] enter to sig_sem semid=2.
+[31798537] leave from sig_sem ercd=0.
+[31798824] enter to wai_sem semid=2.
+[31799010] leave from wai_sem ercd=0.
+[31799289] enter to sig_sem semid=2.
+[31799489] leave from sig_sem ercd=0.
+[31799759] enter to wai_sem semid=2.
+[31799945] leave from wai_sem ercd=0.
+[31800224] enter to sig_sem semid=2.
+[31800424] leave from sig_sem ercd=0.
+[31800694] enter to wai_sem semid=2.
+[31800880] leave from wai_sem ercd=0.
+[31801159] enter to sig_sem semid=2.
+[31801359] leave from sig_sem ercd=0.
+[31801629] enter to wai_sem semid=2.
+[31801815] leave from wai_sem ercd=0.
+[31802094] enter to sig_sem semid=2.
+[31802294] leave from sig_sem ercd=0.
+[31802564] enter to wai_sem semid=2.
+[31802750] leave from wai_sem ercd=0.
+[31803029] enter to sig_sem semid=2.
+[31803229] leave from sig_sem ercd=0.
+[31803499] enter to wai_sem semid=2.
+[31803685] leave from wai_sem ercd=0.
+[31803964] enter to sig_sem semid=2.
+[31804164] leave from sig_sem ercd=0.
+[31804434] enter to wai_sem semid=2.
+[31804620] leave from wai_sem ercd=0.
+[31804899] enter to sig_sem semid=2.
+[31805099] leave from sig_sem ercd=0.
+[31805369] enter to wai_sem semid=2.
+[31805555] leave from wai_sem ercd=0.
+[31805834] enter to sig_sem semid=2.
+[31806034] leave from sig_sem ercd=0.
+[31806304] enter to wai_sem semid=2.
+[31806490] leave from wai_sem ercd=0.
+[31806769] enter to sig_sem semid=2.
+[31806969] leave from sig_sem ercd=0.
+[31807239] enter to wai_sem semid=2.
+[31807425] leave from wai_sem ercd=0.
+[31807704] enter to sig_sem semid=2.
+[31807904] leave from sig_sem ercd=0.
+[31808177] enter to wai_sem semid=2.
+[31808363] leave from wai_sem ercd=0.
+[31808762] enter to sig_sem semid=2.
+[31808962] leave from sig_sem ercd=0.
+[31809186] enter to dly_tsk dlytim=10.
+[31809584] task 1 becomes WAITING.
+[31809746] dispatch from task 1.
+[31809893] dispatch to task 3.
+[32021599] enter to int handler 5.
+[32021823] leave from int handler 5.
+[32138995] enter to int handler 2.
+[32139271] enter to isig_sem semid=1.
+[32139498] task 5 becomes RUNNABLE.
+[32139708] leave from isig_sem ercd=0.
+[32139932] leave from int handler 2.
+[32140186] dispatch from task 3.
+[32140333] dispatch to task 5.
+[32140498] leave from wai_sem ercd=0.
+[32140868] enter to wai_sem semid=1.
+[32141262] task 5 becomes WAITING.
+[32141424] dispatch from task 5.
+[32141571] dispatch to task 3.
+[32248162] enter to int handler 5.
+[32248386] leave from int handler 5.
+[32474622] enter to int handler 5.
+[32474846] leave from int handler 5.
+[32701082] enter to int handler 5.
+[32701306] leave from int handler 5.
+[32927540] enter to int handler 5.
+[32927764] leave from int handler 5.
+[33153999] enter to int handler 5.
+[33154223] leave from int handler 5.
+[33380459] enter to int handler 5.
+[33380683] leave from int handler 5.
+[33606917] enter to int handler 5.
+[33607141] leave from int handler 5.
+[33833377] enter to int handler 5.
+[33833601] leave from int handler 5.
+[34059837] enter to int handler 5.
+[34060061] leave from int handler 5.
+[34286295] enter to int handler 5.
+[34286556] task 1 becomes RUNNABLE.
+[34286797] leave from int handler 5.
+[34287051] dispatch from task 3.
+[34287198] dispatch to task 1.
+[34287363] leave from dly_tsk ercd=0.
+[34287573] enter to dly_tsk dlytim=10.
+[34287971] task 1 becomes WAITING.
+[34288133] dispatch from task 1.
+[34288280] dispatch to task 3.
+[34472102] enter to int handler 2.
+[34472378] enter to isig_sem semid=1.
+[34472605] task 5 becomes RUNNABLE.
+[34472815] leave from isig_sem ercd=0.
+[34473039] leave from int handler 2.
+[34473293] dispatch from task 3.
+[34473440] dispatch to task 5.
+[34473605] leave from wai_sem ercd=0.
+[34473967] enter to wai_sem semid=1.
+[34474361] task 5 becomes WAITING.
+[34474523] dispatch from task 5.
+[34474670] dispatch to task 3.
+[34512984] enter to int handler 5.
+[34513208] leave from int handler 5.
+[34739442] enter to int handler 5.
+[34739666] leave from int handler 5.
+[34844417] #2#slp_tsk()
+[34844668] enter to slp_tsk.
+[34844915] task 3 becomes WAITING.
+[34845077] dispatch from task 3.
+[34845224] dispatch to task 4.
+[34965887] enter to int handler 5.
+[34966111] leave from int handler 5.
+[35192347] enter to int handler 5.
+[35192571] leave from int handler 5.
+[35418807] enter to int handler 5.
+[35419031] leave from int handler 5.
+[35645265] enter to int handler 5.
+[35645489] leave from int handler 5.
+[35871724] enter to int handler 5.
+[35871948] leave from int handler 5.
+[36098184] enter to int handler 5.
+[36098408] leave from int handler 5.
+[36242320] enter to int handler 2.
+[36242596] enter to isig_sem semid=1.
+[36242823] task 5 becomes RUNNABLE.
+[36243033] leave from isig_sem ercd=0.
+[36243257] leave from int handler 2.
+[36243511] dispatch from task 4.
+[36243658] dispatch to task 5.
+[36243823] leave from wai_sem ercd=0.
+[36244193] enter to wai_sem semid=1.
+[36244587] task 5 becomes WAITING.
+[36244749] dispatch from task 5.
+[36244896] dispatch to task 4.
+[36324747] enter to int handler 5.
+[36324971] leave from int handler 5.
+[36551205] enter to int handler 5.
+[36551429] leave from int handler 5.
+[36777665] enter to int handler 5.
+[36777926] task 1 becomes RUNNABLE.
+[36778167] leave from int handler 5.
+[36778421] dispatch from task 4.
+[36778568] dispatch to task 1.
+[36778733] leave from dly_tsk ercd=0.
+[36779127] enter to wai_sem semid=2.
+[36779313] leave from wai_sem ercd=0.
+[36779592] enter to sig_sem semid=2.
+[36779792] leave from sig_sem ercd=0.
+[36780206] enter to wai_sem semid=2.
+[36780392] leave from wai_sem ercd=0.
+[36780671] enter to sig_sem semid=2.
+[36780871] leave from sig_sem ercd=0.
+[36781158] enter to wai_sem semid=2.
+[36781344] leave from wai_sem ercd=0.
+[36781623] enter to sig_sem semid=2.
+[36781823] leave from sig_sem ercd=0.
+[36782093] enter to wai_sem semid=2.
+[36782279] leave from wai_sem ercd=0.
+[36782558] enter to sig_sem semid=2.
+[36782758] leave from sig_sem ercd=0.
+[36783028] enter to wai_sem semid=2.
+[36783214] leave from wai_sem ercd=0.
+[36783493] enter to sig_sem semid=2.
+[36783693] leave from sig_sem ercd=0.
+[36783963] enter to wai_sem semid=2.
+[36784149] leave from wai_sem ercd=0.
+[36784428] enter to sig_sem semid=2.
+[36784628] leave from sig_sem ercd=0.
+[36784898] enter to wai_sem semid=2.
+[36785084] leave from wai_sem ercd=0.
+[36785363] enter to sig_sem semid=2.
+[36785563] leave from sig_sem ercd=0.
+[36785833] enter to wai_sem semid=2.
+[36786019] leave from wai_sem ercd=0.
+[36786298] enter to sig_sem semid=2.
+[36786498] leave from sig_sem ercd=0.
+[36786768] enter to wai_sem semid=2.
+[36786954] leave from wai_sem ercd=0.
+[36787233] enter to sig_sem semid=2.
+[36787433] leave from sig_sem ercd=0.
+[36787703] enter to wai_sem semid=2.
+[36787889] leave from wai_sem ercd=0.
+[36788168] enter to sig_sem semid=2.
+[36788368] leave from sig_sem ercd=0.
+[36788638] enter to wai_sem semid=2.
+[36788824] leave from wai_sem ercd=0.
+[36789103] enter to sig_sem semid=2.
+[36789303] leave from sig_sem ercd=0.
+[36789573] enter to wai_sem semid=2.
+[36789759] leave from wai_sem ercd=0.
+[36790038] enter to sig_sem semid=2.
+[36790238] leave from sig_sem ercd=0.
+[36790511] enter to wai_sem semid=2.
+[36790697] leave from wai_sem ercd=0.
+[36791096] enter to sig_sem semid=2.
+[36791296] leave from sig_sem ercd=0.
+[36791520] enter to dly_tsk dlytim=10.
+[36791918] task 1 becomes WAITING.
+[36792080] dispatch from task 1.
+[36792227] dispatch to task 4.
+[37003935] enter to int handler 5.
+[37004159] leave from int handler 5.
+[37230393] enter to int handler 5.
+[37230617] leave from int handler 5.
+[37456852] enter to int handler 5.
+[37457076] leave from int handler 5.
+[37606980] #3#slp_tsk()
+[37607231] enter to slp_tsk.
+[37607501] task 4 becomes WAITING.
+[37607663] dispatch from task 4.
+[37667533] enter to int handler 5.
+[37667757] leave from int handler 5.
+[37846829] enter to int handler 5.
+[37847053] leave from int handler 5.
+[38026113] enter to int handler 5.
+[38026337] leave from int handler 5.
+[38205397] enter to int handler 5.
+[38205621] leave from int handler 5.
+[38384682] enter to int handler 5.
+[38384906] leave from int handler 5.
+[38563977] enter to int handler 5.
+[38564201] leave from int handler 5.
+[38607830] enter to int handler 2.
+[38608106] enter to isig_sem semid=1.
+[38608333] task 5 becomes RUNNABLE.
+[38608539] leave from isig_sem ercd=0.
+[38608763] leave from int handler 2.
+[38609004] dispatch to task 5.
+[38609169] leave from wai_sem ercd=0.
+[38609531] enter to wai_sem semid=1.
+[38609874] task 5 becomes WAITING.
+[38610036] dispatch from task 5.
+[38743838] enter to int handler 5.
+[38744062] leave from int handler 5.
+[38923122] enter to int handler 5.
+[38923383] task 1 becomes RUNNABLE.
+[38923620] leave from int handler 5.
+[38923862] dispatch to task 1.
+[38924027] leave from dly_tsk ercd=0.
+[38924421] enter to wai_sem semid=2.
+[38924607] leave from wai_sem ercd=0.
+[38924886] enter to sig_sem semid=2.
+[38925086] leave from sig_sem ercd=0.
+[38925500] enter to wai_sem semid=2.
+[38925686] leave from wai_sem ercd=0.
+[38925965] enter to sig_sem semid=2.
+[38926165] leave from sig_sem ercd=0.
+[38926452] enter to wai_sem semid=2.
+[38926638] leave from wai_sem ercd=0.
+[38926917] enter to sig_sem semid=2.
+[38927117] leave from sig_sem ercd=0.
+[38927387] enter to wai_sem semid=2.
+[38927573] leave from wai_sem ercd=0.
+[38927852] enter to sig_sem semid=2.
+[38928052] leave from sig_sem ercd=0.
+[38928322] enter to wai_sem semid=2.
+[38928508] leave from wai_sem ercd=0.
+[38928787] enter to sig_sem semid=2.
+[38928987] leave from sig_sem ercd=0.
+[38929257] enter to wai_sem semid=2.
+[38929443] leave from wai_sem ercd=0.
+[38929722] enter to sig_sem semid=2.
+[38929922] leave from sig_sem ercd=0.
+[38930192] enter to wai_sem semid=2.
+[38930378] leave from wai_sem ercd=0.
+[38930657] enter to sig_sem semid=2.
+[38930857] leave from sig_sem ercd=0.
+[38931127] enter to wai_sem semid=2.
+[38931313] leave from wai_sem ercd=0.
+[38931592] enter to sig_sem semid=2.
+[38931792] leave from sig_sem ercd=0.
+[38932062] enter to wai_sem semid=2.
+[38932248] leave from wai_sem ercd=0.
+[38932527] enter to sig_sem semid=2.
+[38932727] leave from sig_sem ercd=0.
+[38932997] enter to wai_sem semid=2.
+[38933183] leave from wai_sem ercd=0.
+[38933462] enter to sig_sem semid=2.
+[38933662] leave from sig_sem ercd=0.
+[38933932] enter to wai_sem semid=2.
+[38934118] leave from wai_sem ercd=0.
+[38934397] enter to sig_sem semid=2.
+[38934597] leave from sig_sem ercd=0.
+[38934867] enter to wai_sem semid=2.
+[38935053] leave from wai_sem ercd=0.
+[38935332] enter to sig_sem semid=2.
+[38935532] leave from sig_sem ercd=0.
+[38935805] enter to wai_sem semid=2.
+[38935991] leave from wai_sem ercd=0.
+[38936390] enter to sig_sem semid=2.
+[38936590] leave from sig_sem ercd=0.
+[38936814] enter to dly_tsk dlytim=10.
+[38937161] task 1 becomes WAITING.
+[38937323] dispatch from task 1.
+[39105145] enter to int handler 5.
+[39105369] leave from int handler 5.
+[39284441] enter to int handler 5.
+[39284665] leave from int handler 5.
+[39463725] enter to int handler 5.
+[39463949] leave from int handler 5.
+[39643009] enter to int handler 5.
+[39643233] leave from int handler 5.
+[39822294] enter to int handler 5.
+[39822518] leave from int handler 5.
+[40001589] enter to int handler 5.
+[40001813] leave from int handler 5.
+[40149661] enter to int handler 2.
+[40149937] enter to isig_sem semid=1.
+[40150164] task 5 becomes RUNNABLE.
+[40150370] leave from isig_sem ercd=0.
+[40150594] leave from int handler 2.
+[40150836] dispatch to task 5.
+[40151001] leave from wai_sem ercd=0.
+[40151491] #wup_tsk(1)
+[40151744] enter to wup_tsk tskid=2.
+[40151963] task 2 becomes RUNNABLE.
+[40152160] leave from wup_tsk ercd=0.
+[40152399] enter to wai_sem semid=1.
+[40152793] task 5 becomes WAITING.
+[40152955] dispatch from task 5.
+[40153102] dispatch to task 2.
+[40153273] leave from slp_tsk ercd=0.
+[40153928] task1 is running (006).   |
+[40188922] enter to int handler 5.
+[40189146] leave from int handler 5.
+[40415380] enter to int handler 5.
+[40415604] leave from int handler 5.
+[40641839] enter to int handler 5.
+[40642063] leave from int handler 5.
+[40868299] enter to int handler 5.
+[40868523] leave from int handler 5.
+[41094757] enter to int handler 5.
+[41095018] task 1 becomes RUNNABLE.
+[41095259] leave from int handler 5.
+[41095513] dispatch from task 2.
+[41095660] dispatch to task 1.
+[41095825] leave from dly_tsk ercd=0.
+[41096219] enter to wai_sem semid=2.
+[41096405] leave from wai_sem ercd=0.
+[41096684] enter to sig_sem semid=2.
+[41096884] leave from sig_sem ercd=0.
+[41097154] enter to wai_sem semid=2.
+[41097340] leave from wai_sem ercd=0.
+[41097619] enter to sig_sem semid=2.
+[41097819] leave from sig_sem ercd=0.
+[41098089] enter to wai_sem semid=2.
+[41098275] leave from wai_sem ercd=0.
+[41098554] enter to sig_sem semid=2.
+[41098754] leave from sig_sem ercd=0.
+[41099024] enter to wai_sem semid=2.
+[41099210] leave from wai_sem ercd=0.
+[41099489] enter to sig_sem semid=2.
+[41099689] leave from sig_sem ercd=0.
+[41099959] enter to wai_sem semid=2.
+[41100145] leave from wai_sem ercd=0.
+[41100424] enter to sig_sem semid=2.
+[41100624] leave from sig_sem ercd=0.
+[41100894] enter to wai_sem semid=2.
+[41101080] leave from wai_sem ercd=0.
+[41101359] enter to sig_sem semid=2.
+[41101559] leave from sig_sem ercd=0.
+[41101829] enter to wai_sem semid=2.
+[41102015] leave from wai_sem ercd=0.
+[41102294] enter to sig_sem semid=2.
+[41102494] leave from sig_sem ercd=0.
+[41102764] enter to wai_sem semid=2.
+[41102950] leave from wai_sem ercd=0.
+[41103229] enter to sig_sem semid=2.
+[41103429] leave from sig_sem ercd=0.
+[41103699] enter to wai_sem semid=2.
+[41103885] leave from wai_sem ercd=0.
+[41104164] enter to sig_sem semid=2.
+[41104364] leave from sig_sem ercd=0.
+[41104778] enter to wai_sem semid=2.
+[41104964] leave from wai_sem ercd=0.
+[41105243] enter to sig_sem semid=2.
+[41105443] leave from sig_sem ercd=0.
+[41105730] enter to wai_sem semid=2.
+[41105916] leave from wai_sem ercd=0.
+[41106195] enter to sig_sem semid=2.
+[41106395] leave from sig_sem ercd=0.
+[41106668] enter to wai_sem semid=2.
+[41106854] leave from wai_sem ercd=0.
+[41107253] enter to sig_sem semid=2.
+[41107453] leave from sig_sem ercd=0.
+[41107865] enter to wai_sem semid=2.
+[41108051] leave from wai_sem ercd=0.
+[41108330] enter to sig_sem semid=2.
+[41108530] leave from sig_sem ercd=0.
+[41108800] enter to wai_sem semid=2.
+[41108986] leave from wai_sem ercd=0.
+[41109265] enter to sig_sem semid=2.
+[41109465] leave from sig_sem ercd=0.
+[41109735] enter to wai_sem semid=2.
+[41109921] leave from wai_sem ercd=0.
+[41110200] enter to sig_sem semid=2.
+[41110400] leave from sig_sem ercd=0.
+[41110670] enter to wai_sem semid=2.
+[41110856] leave from wai_sem ercd=0.
+[41111135] enter to sig_sem semid=2.
+[41111335] leave from sig_sem ercd=0.
+[41111749] enter to wai_sem semid=2.
+[41111935] leave from wai_sem ercd=0.
+[41112214] enter to sig_sem semid=2.
+[41112414] leave from sig_sem ercd=0.
+[41112701] enter to wai_sem semid=2.
+[41112887] leave from wai_sem ercd=0.
+[41113166] enter to sig_sem semid=2.
+[41113366] leave from sig_sem ercd=0.
+[41113636] enter to wai_sem semid=2.
+[41113822] leave from wai_sem ercd=0.
+[41114101] enter to sig_sem semid=2.
+[41114301] leave from sig_sem ercd=0.
+[41114571] enter to wai_sem semid=2.
+[41114757] leave from wai_sem ercd=0.
+[41115036] enter to sig_sem semid=2.
+[41115236] leave from sig_sem ercd=0.
+[41115506] enter to wai_sem semid=2.
+[41115692] leave from wai_sem ercd=0.
+[41115971] enter to sig_sem semid=2.
+[41116171] leave from sig_sem ercd=0.
+[41116441] enter to wai_sem semid=2.
+[41116627] leave from wai_sem ercd=0.
+[41116906] enter to sig_sem semid=2.
+[41117106] leave from sig_sem ercd=0.
+[41117376] enter to wai_sem semid=2.
+[41117562] leave from wai_sem ercd=0.
+[41117841] enter to sig_sem semid=2.
+[41118041] leave from sig_sem ercd=0.
+[41118311] enter to wai_sem semid=2.
+[41118497] leave from wai_sem ercd=0.
+[41118776] enter to sig_sem semid=2.
+[41118976] leave from sig_sem ercd=0.
+[41119246] enter to wai_sem semid=2.
+[41119432] leave from wai_sem ercd=0.
+[41119711] enter to sig_sem semid=2.
+[41119911] leave from sig_sem ercd=0.
+[41120181] enter to wai_sem semid=2.
+[41120367] leave from wai_sem ercd=0.
+[41120646] enter to sig_sem semid=2.
+[41120846] leave from sig_sem ercd=0.
+[41121116] enter to wai_sem semid=2.
+[41121302] leave from wai_sem ercd=0.
+[41121581] enter to sig_sem semid=2.
+[41121781] leave from sig_sem ercd=0.
+[41122051] enter to wai_sem semid=2.
+[41122237] leave from wai_sem ercd=0.
+[41122516] enter to sig_sem semid=2.
+[41122716] leave from sig_sem ercd=0.
+[41122986] enter to wai_sem semid=2.
+[41123172] leave from wai_sem ercd=0.
+[41123451] enter to sig_sem semid=2.
+[41123651] leave from sig_sem ercd=0.
+[41123921] enter to wai_sem semid=2.
+[41124107] leave from wai_sem ercd=0.
+[41124386] enter to sig_sem semid=2.
+[41124586] leave from sig_sem ercd=0.
+[41124999] enter to wai_sem semid=2.
+[41125185] leave from wai_sem ercd=0.
+[41125464] enter to sig_sem semid=2.
+[41125664] leave from sig_sem ercd=0.
+[41125930] enter to wai_sem semid=2.
+[41126116] leave from wai_sem ercd=0.
+[41126395] enter to sig_sem semid=2.
+[41126595] leave from sig_sem ercd=0.
+[41126870] enter to wai_sem semid=2.
+[41127056] leave from wai_sem ercd=0.
+[41127335] enter to sig_sem semid=2.
+[41127535] leave from sig_sem ercd=0.
+[41127822] enter to wai_sem semid=2.
+[41128008] leave from wai_sem ercd=0.
+[41128287] enter to sig_sem semid=2.
+[41128487] leave from sig_sem ercd=0.
+[41128757] enter to wai_sem semid=2.
+[41128943] leave from wai_sem ercd=0.
+[41129222] enter to sig_sem semid=2.
+[41129422] leave from sig_sem ercd=0.
+[41129692] enter to wai_sem semid=2.
+[41129878] leave from wai_sem ercd=0.
+[41130157] enter to sig_sem semid=2.
+[41130357] leave from sig_sem ercd=0.
+[41130627] enter to wai_sem semid=2.
+[41130813] leave from wai_sem ercd=0.
+[41131092] enter to sig_sem semid=2.
+[41131292] leave from sig_sem ercd=0.
+[41131562] enter to wai_sem semid=2.
+[41131748] leave from wai_sem ercd=0.
+[41132027] enter to sig_sem semid=2.
+[41132227] leave from sig_sem ercd=0.
+[41132530] enter to wai_sem semid=2.
+[41132716] leave from wai_sem ercd=0.
+[41132995] enter to sig_sem semid=2.
+[41133195] leave from sig_sem ercd=0.
+[41133478] enter to wai_sem semid=2.
+[41133664] leave from wai_sem ercd=0.
+[41134063] enter to sig_sem semid=2.
+[41134263] leave from sig_sem ercd=0.
+[41134487] enter to dly_tsk dlytim=10.
+[41134885] task 1 becomes WAITING.
+[41135047] dispatch from task 1.
+[41135194] dispatch to task 2.
+[41320366] enter to int handler 5.
+[41320590] leave from int handler 5.
+[41546826] enter to int handler 5.
+[41547050] leave from int handler 5.
+[41773286] enter to int handler 5.
+[41773510] leave from int handler 5.
+[41999744] enter to int handler 5.
+[41999968] leave from int handler 5.
+[42226203] enter to int handler 5.
+[42226427] leave from int handler 5.
+[42250448] enter to int handler 2.
+[42250724] enter to isig_sem semid=1.
+[42250951] task 5 becomes RUNNABLE.
+[42251161] leave from isig_sem ercd=0.
+[42251385] leave from int handler 2.
+[42251639] dispatch from task 2.
+[42251786] dispatch to task 5.
+[42251951] leave from wai_sem ercd=0.
+[42252313] enter to wai_sem semid=1.
+[42252707] task 5 becomes WAITING.
+[42252869] dispatch from task 5.
+[42253016] dispatch to task 2.
+[42452769] enter to int handler 5.
+[42452993] leave from int handler 5.
+[42679228] enter to int handler 5.
+[42679452] leave from int handler 5.
+[42905688] enter to int handler 5.
+[42905912] leave from int handler 5.
+[43132146] enter to int handler 5.
+[43132370] leave from int handler 5.
+[43358606] enter to int handler 5.
+[43358830] leave from int handler 5.
+[43585066] enter to int handler 5.
+[43585327] task 1 becomes RUNNABLE.
+[43585568] leave from int handler 5.
+[43585822] dispatch from task 2.
+[43585969] dispatch to task 1.
+[43586134] leave from dly_tsk ercd=0.
+[43586344] enter to dly_tsk dlytim=10.
+[43586742] task 1 becomes WAITING.
+[43586904] dispatch from task 1.
+[43587051] dispatch to task 2.
+[43811646] enter to int handler 5.
+[43811870] leave from int handler 5.
+[44007276] enter to int handler 2.
+[44007552] enter to isig_sem semid=1.
+[44007779] task 5 becomes RUNNABLE.
+[44007989] leave from isig_sem ercd=0.
+[44008213] leave from int handler 2.
+[44008467] dispatch from task 2.
+[44008614] dispatch to task 5.
+[44008779] leave from wai_sem ercd=0.
+[44009269] #wup_tsk(2)
+[44009522] enter to wup_tsk tskid=3.
+[44009741] task 3 becomes RUNNABLE.
+[44009938] leave from wup_tsk ercd=0.
+[44010177] enter to wai_sem semid=1.
+[44010571] task 5 becomes WAITING.
+[44010733] dispatch from task 5.
+[44010880] dispatch to task 2.
+[44038145] enter to int handler 5.
+[44038369] leave from int handler 5.
+[44112820] task1 is running (007).   |
+[44264375] enter to int handler 5.
+[44264599] leave from int handler 5.
+[44490835] enter to int handler 5.
+[44491059] leave from int handler 5.
+[44717293] enter to int handler 5.
+[44717517] leave from int handler 5.
+[44943753] enter to int handler 5.
+[44943977] leave from int handler 5.
+[45170213] enter to int handler 5.
+[45170437] leave from int handler 5.
+[45396671] enter to int handler 5.
+[45396895] leave from int handler 5.
+[45623130] enter to int handler 5.
+[45623354] leave from int handler 5.
+[45849590] enter to int handler 5.
+[45849814] leave from int handler 5.
+[46076048] enter to int handler 5.
+[46076309] task 1 becomes RUNNABLE.
+[46076550] leave from int handler 5.
+[46076804] dispatch from task 2.
+[46076951] dispatch to task 1.
+[46077116] leave from dly_tsk ercd=0.
+[46077510] enter to wai_sem semid=2.
+[46077696] leave from wai_sem ercd=0.
+[46077975] enter to sig_sem semid=2.
+[46078175] leave from sig_sem ercd=0.
+[46078445] enter to wai_sem semid=2.
+[46078631] leave from wai_sem ercd=0.
+[46078910] enter to sig_sem semid=2.
+[46079110] leave from sig_sem ercd=0.
+[46079380] enter to wai_sem semid=2.
+[46079566] leave from wai_sem ercd=0.
+[46079845] enter to sig_sem semid=2.
+[46080045] leave from sig_sem ercd=0.
+[46080315] enter to wai_sem semid=2.
+[46080501] leave from wai_sem ercd=0.
+[46080780] enter to sig_sem semid=2.
+[46080980] leave from sig_sem ercd=0.
+[46081250] enter to wai_sem semid=2.
+[46081436] leave from wai_sem ercd=0.
+[46081715] enter to sig_sem semid=2.
+[46081915] leave from sig_sem ercd=0.
+[46082185] enter to wai_sem semid=2.
+[46082371] leave from wai_sem ercd=0.
+[46082650] enter to sig_sem semid=2.
+[46082850] leave from sig_sem ercd=0.
+[46083120] enter to wai_sem semid=2.
+[46083306] leave from wai_sem ercd=0.
+[46083585] enter to sig_sem semid=2.
+[46083785] leave from sig_sem ercd=0.
+[46084055] enter to wai_sem semid=2.
+[46084241] leave from wai_sem ercd=0.
+[46084520] enter to sig_sem semid=2.
+[46084720] leave from sig_sem ercd=0.
+[46084990] enter to wai_sem semid=2.
+[46085176] leave from wai_sem ercd=0.
+[46085455] enter to sig_sem semid=2.
+[46085655] leave from sig_sem ercd=0.
+[46086069] enter to wai_sem semid=2.
+[46086255] leave from wai_sem ercd=0.
+[46086534] enter to sig_sem semid=2.
+[46086734] leave from sig_sem ercd=0.
+[46087021] enter to wai_sem semid=2.
+[46087207] leave from wai_sem ercd=0.
+[46087486] enter to sig_sem semid=2.
+[46087686] leave from sig_sem ercd=0.
+[46087959] enter to wai_sem semid=2.
+[46088145] leave from wai_sem ercd=0.
+[46088544] enter to sig_sem semid=2.
+[46088744] leave from sig_sem ercd=0.
+[46089156] enter to wai_sem semid=2.
+[46089342] leave from wai_sem ercd=0.
+[46089621] enter to sig_sem semid=2.
+[46089821] leave from sig_sem ercd=0.
+[46090091] enter to wai_sem semid=2.
+[46090277] leave from wai_sem ercd=0.
+[46090556] enter to sig_sem semid=2.
+[46090756] leave from sig_sem ercd=0.
+[46091026] enter to wai_sem semid=2.
+[46091212] leave from wai_sem ercd=0.
+[46091491] enter to sig_sem semid=2.
+[46091691] leave from sig_sem ercd=0.
+[46091961] enter to wai_sem semid=2.
+[46092147] leave from wai_sem ercd=0.
+[46092426] enter to sig_sem semid=2.
+[46092626] leave from sig_sem ercd=0.
+[46093040] enter to wai_sem semid=2.
+[46093226] leave from wai_sem ercd=0.
+[46093505] enter to sig_sem semid=2.
+[46093705] leave from sig_sem ercd=0.
+[46093992] enter to wai_sem semid=2.
+[46094178] leave from wai_sem ercd=0.
+[46094457] enter to sig_sem semid=2.
+[46094657] leave from sig_sem ercd=0.
+[46094927] enter to wai_sem semid=2.
+[46095113] leave from wai_sem ercd=0.
+[46095392] enter to sig_sem semid=2.
+[46095592] leave from sig_sem ercd=0.
+[46095862] enter to wai_sem semid=2.
+[46096048] leave from wai_sem ercd=0.
+[46096327] enter to sig_sem semid=2.
+[46096527] leave from sig_sem ercd=0.
+[46096797] enter to wai_sem semid=2.
+[46096983] leave from wai_sem ercd=0.
+[46097262] enter to sig_sem semid=2.
+[46097462] leave from sig_sem ercd=0.
+[46097732] enter to wai_sem semid=2.
+[46097918] leave from wai_sem ercd=0.
+[46098197] enter to sig_sem semid=2.
+[46098397] leave from sig_sem ercd=0.
+[46098667] enter to wai_sem semid=2.
+[46098853] leave from wai_sem ercd=0.
+[46099132] enter to sig_sem semid=2.
+[46099332] leave from sig_sem ercd=0.
+[46099602] enter to wai_sem semid=2.
+[46099788] leave from wai_sem ercd=0.
+[46100067] enter to sig_sem semid=2.
+[46100267] leave from sig_sem ercd=0.
+[46100537] enter to wai_sem semid=2.
+[46100723] leave from wai_sem ercd=0.
+[46101002] enter to sig_sem semid=2.
+[46101202] leave from sig_sem ercd=0.
+[46101472] enter to wai_sem semid=2.
+[46101658] leave from wai_sem ercd=0.
+[46101937] enter to sig_sem semid=2.
+[46102137] leave from sig_sem ercd=0.
+[46102407] enter to wai_sem semid=2.
+[46102593] leave from wai_sem ercd=0.
+[46102872] enter to sig_sem semid=2.
+[46103072] leave from sig_sem ercd=0.
+[46103342] enter to wai_sem semid=2.
+[46103528] leave from wai_sem ercd=0.
+[46103807] enter to sig_sem semid=2.
+[46104007] leave from sig_sem ercd=0.
+[46104277] enter to wai_sem semid=2.
+[46104463] leave from wai_sem ercd=0.
+[46104742] enter to sig_sem semid=2.
+[46104942] leave from sig_sem ercd=0.
+[46105212] enter to wai_sem semid=2.
+[46105398] leave from wai_sem ercd=0.
+[46105677] enter to sig_sem semid=2.
+[46105877] leave from sig_sem ercd=0.
+[46106290] enter to wai_sem semid=2.
+[46106476] leave from wai_sem ercd=0.
+[46106755] enter to sig_sem semid=2.
+[46106955] leave from sig_sem ercd=0.
+[46107221] enter to wai_sem semid=2.
+[46107407] leave from wai_sem ercd=0.
+[46107686] enter to sig_sem semid=2.
+[46107886] leave from sig_sem ercd=0.
+[46108161] enter to wai_sem semid=2.
+[46108347] leave from wai_sem ercd=0.
+[46108626] enter to sig_sem semid=2.
+[46108826] leave from sig_sem ercd=0.
+[46109113] enter to wai_sem semid=2.
+[46109299] leave from wai_sem ercd=0.
+[46109578] enter to sig_sem semid=2.
+[46109778] leave from sig_sem ercd=0.
+[46110048] enter to wai_sem semid=2.
+[46110234] leave from wai_sem ercd=0.
+[46110513] enter to sig_sem semid=2.
+[46110713] leave from sig_sem ercd=0.
+[46110983] enter to wai_sem semid=2.
+[46111169] leave from wai_sem ercd=0.
+[46111448] enter to sig_sem semid=2.
+[46111648] leave from sig_sem ercd=0.
+[46111918] enter to wai_sem semid=2.
+[46112104] leave from wai_sem ercd=0.
+[46112383] enter to sig_sem semid=2.
+[46112583] leave from sig_sem ercd=0.
+[46112853] enter to wai_sem semid=2.
+[46113039] leave from wai_sem ercd=0.
+[46113318] enter to sig_sem semid=2.
+[46113518] leave from sig_sem ercd=0.
+[46113821] enter to wai_sem semid=2.
+[46114007] leave from wai_sem ercd=0.
+[46114286] enter to sig_sem semid=2.
+[46114486] leave from sig_sem ercd=0.
+[46114769] enter to wai_sem semid=2.
+[46114955] leave from wai_sem ercd=0.
+[46115354] enter to sig_sem semid=2.
+[46115554] leave from sig_sem ercd=0.
+[46115778] enter to dly_tsk dlytim=10.
+[46116176] task 1 becomes WAITING.
+[46116338] dispatch from task 1.
+[46116485] dispatch to task 2.
+[46301657] enter to int handler 5.
+[46301881] leave from int handler 5.
+[46318940] enter to int handler 2.
+[46319216] enter to isig_sem semid=1.
+[46319443] task 5 becomes RUNNABLE.
+[46319653] leave from isig_sem ercd=0.
+[46319877] leave from int handler 2.
+[46320131] dispatch from task 2.
+[46320278] dispatch to task 5.
+[46320443] leave from wai_sem ercd=0.
+[46320805] enter to wai_sem semid=1.
+[46321199] task 5 becomes WAITING.
+[46321361] dispatch from task 5.
+[46321508] dispatch to task 2.
+[46528224] enter to int handler 5.
+[46528448] leave from int handler 5.
+[46754682] enter to int handler 5.
+[46754906] leave from int handler 5.
+[46981142] enter to int handler 5.
+[46981366] leave from int handler 5.
+[47207602] enter to int handler 5.
+[47207826] leave from int handler 5.
+[47434060] enter to int handler 5.
+[47434284] leave from int handler 5.
+[47660519] enter to int handler 5.
+[47660743] leave from int handler 5.
+[47886979] enter to int handler 5.
+[47887203] leave from int handler 5.
+[48065603] task1 is running (008).   |
+[48113208] enter to int handler 5.
+[48113432] leave from int handler 5.
+[48337899] enter to int handler 2.
+[48338175] enter to isig_sem semid=1.
+[48338402] task 5 becomes RUNNABLE.
+[48338612] leave from isig_sem ercd=0.
+[48338836] leave from int handler 2.
+[48339090] dispatch from task 2.
+[48339237] dispatch to task 5.
+[48339402] leave from wai_sem ercd=0.
+[48339727] enter to int handler 5.
+[48339951] leave from int handler 5.
+[48340422] #wup_tsk(3)
+[48340675] enter to wup_tsk tskid=4.
+[48340894] task 4 becomes RUNNABLE.
+[48341091] leave from wup_tsk ercd=0.
+[48341330] enter to wai_sem semid=1.
+[48341724] task 5 becomes WAITING.
+[48341886] dispatch from task 5.
+[48342033] dispatch to task 2.
+[48566166] enter to int handler 5.
+[48566427] task 1 becomes RUNNABLE.
+[48566668] leave from int handler 5.
+[48566922] dispatch from task 2.
+[48567069] dispatch to task 1.
+[48567234] leave from dly_tsk ercd=0.
+[48567628] enter to wai_sem semid=2.
+[48567814] leave from wai_sem ercd=0.
+[48568093] enter to sig_sem semid=2.
+[48568293] leave from sig_sem ercd=0.
+[48568563] enter to wai_sem semid=2.
+[48568749] leave from wai_sem ercd=0.
+[48569028] enter to sig_sem semid=2.
+[48569228] leave from sig_sem ercd=0.
+[48569498] enter to wai_sem semid=2.
+[48569684] leave from wai_sem ercd=0.
+[48569963] enter to sig_sem semid=2.
+[48570163] leave from sig_sem ercd=0.
+[48570433] enter to wai_sem semid=2.
+[48570619] leave from wai_sem ercd=0.
+[48570898] enter to sig_sem semid=2.
+[48571098] leave from sig_sem ercd=0.
+[48571512] enter to wai_sem semid=2.
+[48571698] leave from wai_sem ercd=0.
+[48571977] enter to sig_sem semid=2.
+[48572177] leave from sig_sem ercd=0.
+[48572464] enter to wai_sem semid=2.
+[48572650] leave from wai_sem ercd=0.
+[48572929] enter to sig_sem semid=2.
+[48573129] leave from sig_sem ercd=0.
+[48573399] enter to wai_sem semid=2.
+[48573585] leave from wai_sem ercd=0.
+[48573864] enter to sig_sem semid=2.
+[48574064] leave from sig_sem ercd=0.
+[48574334] enter to wai_sem semid=2.
+[48574520] leave from wai_sem ercd=0.
+[48574799] enter to sig_sem semid=2.
+[48574999] leave from sig_sem ercd=0.
+[48575269] enter to wai_sem semid=2.
+[48575455] leave from wai_sem ercd=0.
+[48575734] enter to sig_sem semid=2.
+[48575934] leave from sig_sem ercd=0.
+[48576204] enter to wai_sem semid=2.
+[48576390] leave from wai_sem ercd=0.
+[48576669] enter to sig_sem semid=2.
+[48576869] leave from sig_sem ercd=0.
+[48577139] enter to wai_sem semid=2.
+[48577325] leave from wai_sem ercd=0.
+[48577604] enter to sig_sem semid=2.
+[48577804] leave from sig_sem ercd=0.
+[48578074] enter to wai_sem semid=2.
+[48578260] leave from wai_sem ercd=0.
+[48578539] enter to sig_sem semid=2.
+[48578739] leave from sig_sem ercd=0.
+[48579009] enter to wai_sem semid=2.
+[48579195] leave from wai_sem ercd=0.
+[48579474] enter to sig_sem semid=2.
+[48579674] leave from sig_sem ercd=0.
+[48579944] enter to wai_sem semid=2.
+[48580130] leave from wai_sem ercd=0.
+[48580409] enter to sig_sem semid=2.
+[48580609] leave from sig_sem ercd=0.
+[48580879] enter to wai_sem semid=2.
+[48581065] leave from wai_sem ercd=0.
+[48581344] enter to sig_sem semid=2.
+[48581544] leave from sig_sem ercd=0.
+[48581814] enter to wai_sem semid=2.
+[48582000] leave from wai_sem ercd=0.
+[48582279] enter to sig_sem semid=2.
+[48582479] leave from sig_sem ercd=0.
+[48582749] enter to wai_sem semid=2.
+[48582935] leave from wai_sem ercd=0.
+[48583214] enter to sig_sem semid=2.
+[48583414] leave from sig_sem ercd=0.
+[48583684] enter to wai_sem semid=2.
+[48583870] leave from wai_sem ercd=0.
+[48584149] enter to sig_sem semid=2.
+[48584349] leave from sig_sem ercd=0.
+[48584762] enter to wai_sem semid=2.
+[48584948] leave from wai_sem ercd=0.
+[48585227] enter to sig_sem semid=2.
+[48585427] leave from sig_sem ercd=0.
+[48585693] enter to wai_sem semid=2.
+[48585879] leave from wai_sem ercd=0.
+[48586158] enter to sig_sem semid=2.
+[48586358] leave from sig_sem ercd=0.
+[48586633] enter to wai_sem semid=2.
+[48586819] leave from wai_sem ercd=0.
+[48587098] enter to sig_sem semid=2.
+[48587298] leave from sig_sem ercd=0.
+[48587585] enter to wai_sem semid=2.
+[48587771] leave from wai_sem ercd=0.
+[48588050] enter to sig_sem semid=2.
+[48588250] leave from sig_sem ercd=0.
+[48588520] enter to wai_sem semid=2.
+[48588706] leave from wai_sem ercd=0.
+[48588985] enter to sig_sem semid=2.
+[48589185] leave from sig_sem ercd=0.
+[48589455] enter to wai_sem semid=2.
+[48589641] leave from wai_sem ercd=0.
+[48589920] enter to sig_sem semid=2.
+[48590120] leave from sig_sem ercd=0.
+[48590390] enter to wai_sem semid=2.
+[48590576] leave from wai_sem ercd=0.
+[48590855] enter to sig_sem semid=2.
+[48591055] leave from sig_sem ercd=0.
+[48591325] enter to wai_sem semid=2.
+[48591511] leave from wai_sem ercd=0.
+[48591790] enter to sig_sem semid=2.
+[48591990] leave from sig_sem ercd=0.
+[48592293] enter to wai_sem semid=2.
+[48592479] leave from wai_sem ercd=0.
+[48592758] enter to sig_sem semid=2.
+[48592958] leave from sig_sem ercd=0.
+[48593241] enter to wai_sem semid=2.
+[48593427] leave from wai_sem ercd=0.
+[48593826] enter to sig_sem semid=2.
+[48594026] leave from sig_sem ercd=0.
+[48594438] enter to wai_sem semid=2.
+[48594624] leave from wai_sem ercd=0.
+[48594903] enter to sig_sem semid=2.
+[48595103] leave from sig_sem ercd=0.
+[48595373] enter to wai_sem semid=2.
+[48595559] leave from wai_sem ercd=0.
+[48595838] enter to sig_sem semid=2.
+[48596038] leave from sig_sem ercd=0.
+[48596308] enter to wai_sem semid=2.
+[48596494] leave from wai_sem ercd=0.
+[48596773] enter to sig_sem semid=2.
+[48596973] leave from sig_sem ercd=0.
+[48597243] enter to wai_sem semid=2.
+[48597429] leave from wai_sem ercd=0.
+[48597708] enter to sig_sem semid=2.
+[48597908] leave from sig_sem ercd=0.
+[48598178] enter to wai_sem semid=2.
+[48598364] leave from wai_sem ercd=0.
+[48598643] enter to sig_sem semid=2.
+[48598843] leave from sig_sem ercd=0.
+[48599113] enter to wai_sem semid=2.
+[48599299] leave from wai_sem ercd=0.
+[48599578] enter to sig_sem semid=2.
+[48599778] leave from sig_sem ercd=0.
+[48600048] enter to wai_sem semid=2.
+[48600234] leave from wai_sem ercd=0.
+[48600513] enter to sig_sem semid=2.
+[48600713] leave from sig_sem ercd=0.
+[48600983] enter to wai_sem semid=2.
+[48601169] leave from wai_sem ercd=0.
+[48601448] enter to sig_sem semid=2.
+[48601648] leave from sig_sem ercd=0.
+[48601918] enter to wai_sem semid=2.
+[48602104] leave from wai_sem ercd=0.
+[48602383] enter to sig_sem semid=2.
+[48602583] leave from sig_sem ercd=0.
+[48602997] enter to wai_sem semid=2.
+[48603183] leave from wai_sem ercd=0.
+[48603462] enter to sig_sem semid=2.
+[48603662] leave from sig_sem ercd=0.
+[48603949] enter to wai_sem semid=2.
+[48604135] leave from wai_sem ercd=0.
+[48604414] enter to sig_sem semid=2.
+[48604614] leave from sig_sem ercd=0.
+[48604887] enter to wai_sem semid=2.
+[48605073] leave from wai_sem ercd=0.
+[48605472] enter to sig_sem semid=2.
+[48605672] leave from sig_sem ercd=0.
+[48605896] enter to dly_tsk dlytim=10.
+[48606294] task 1 becomes WAITING.
+[48606456] dispatch from task 1.
+[48606603] dispatch to task 2.
+[48791775] enter to int handler 5.
+[48791999] leave from int handler 5.
+[49018235] enter to int handler 5.
+[49018459] leave from int handler 5.
+[49244693] enter to int handler 5.
+[49244917] leave from int handler 5.
+[49471153] enter to int handler 5.
+[49471377] leave from int handler 5.
+[49697613] enter to int handler 5.
+[49697837] leave from int handler 5.
+[49924071] enter to int handler 5.
+[49924295] leave from int handler 5.
+[50150530] enter to int handler 5.
+[50150754] leave from int handler 5.
+[50376990] enter to int handler 5.
+[50377214] leave from int handler 5.
+[50432615] enter to int handler 2.
+[50432891] enter to isig_sem semid=1.
+[50433118] task 5 becomes RUNNABLE.
+[50433328] leave from isig_sem ercd=0.
+[50433552] leave from int handler 2.
+[50433806] dispatch from task 2.
+[50433953] dispatch to task 5.
+[50434118] leave from wai_sem ercd=0.
+[50434480] enter to wai_sem semid=1.
+[50434874] task 5 becomes WAITING.
+[50435036] dispatch from task 5.
+[50435183] dispatch to task 2.
+[50603555] enter to int handler 5.
+[50603779] leave from int handler 5.
+[50830015] enter to int handler 5.
+[50830239] leave from int handler 5.
+[51056473] enter to int handler 5.
+[51056734] task 1 becomes RUNNABLE.
+[51056975] leave from int handler 5.
+[51057229] dispatch from task 2.
+[51057376] dispatch to task 1.
+[51057541] leave from dly_tsk ercd=0.
+[51057751] enter to dly_tsk dlytim=10.
+[51058149] task 1 becomes WAITING.
+[51058311] dispatch from task 1.
+[51058458] dispatch to task 2.
+[51283055] enter to int handler 5.
+[51283279] leave from int handler 5.
+[51509515] enter to int handler 5.
+[51509739] leave from int handler 5.
+[51735973] enter to int handler 5.
+[51736197] leave from int handler 5.
+[51962433] enter to int handler 5.
+[51962657] leave from int handler 5.
+[52024495] task1 is running (009).   |
+[52188663] enter to int handler 5.
+[52188887] leave from int handler 5.
+[52324732] enter to int handler 2.
+[52325008] enter to isig_sem semid=1.
+[52325235] task 5 becomes RUNNABLE.
+[52325445] leave from isig_sem ercd=0.
+[52325669] leave from int handler 2.
+[52325923] dispatch from task 2.
+[52326070] dispatch to task 5.
+[52326235] leave from wai_sem ercd=0.
+[52326605] enter to wai_sem semid=1.
+[52326999] task 5 becomes WAITING.
+[52327161] dispatch from task 5.
+[52327308] dispatch to task 2.
+[52415226] enter to int handler 5.
+[52415450] leave from int handler 5.
+[52641684] enter to int handler 5.
+[52641908] leave from int handler 5.
+[52868144] enter to int handler 5.
+[52868368] leave from int handler 5.
+[53094604] enter to int handler 5.
+[53094828] leave from int handler 5.
+[53321062] enter to int handler 5.
+[53321286] leave from int handler 5.
+[53547521] enter to int handler 5.
+[53547782] task 1 becomes RUNNABLE.
+[53548023] leave from int handler 5.
+[53548277] dispatch from task 2.
+[53548424] dispatch to task 1.
+[53548589] leave from dly_tsk ercd=0.
+[53548983] enter to wai_sem semid=2.
+[53549169] leave from wai_sem ercd=0.
+[53549448] enter to sig_sem semid=2.
+[53549648] leave from sig_sem ercd=0.
+[53549918] enter to wai_sem semid=2.
+[53550104] leave from wai_sem ercd=0.
+[53550383] enter to sig_sem semid=2.
+[53550583] leave from sig_sem ercd=0.
+[53550853] enter to wai_sem semid=2.
+[53551039] leave from wai_sem ercd=0.
+[53551318] enter to sig_sem semid=2.
+[53551518] leave from sig_sem ercd=0.
+[53551788] enter to wai_sem semid=2.
+[53551974] leave from wai_sem ercd=0.
+[53552253] enter to sig_sem semid=2.
+[53552453] leave from sig_sem ercd=0.
+[53552867] enter to wai_sem semid=2.
+[53553053] leave from wai_sem ercd=0.
+[53553332] enter to sig_sem semid=2.
+[53553532] leave from sig_sem ercd=0.
+[53553819] enter to wai_sem semid=2.
+[53554005] leave from wai_sem ercd=0.
+[53554284] enter to sig_sem semid=2.
+[53554484] leave from sig_sem ercd=0.
+[53554754] enter to wai_sem semid=2.
+[53554940] leave from wai_sem ercd=0.
+[53555219] enter to sig_sem semid=2.
+[53555419] leave from sig_sem ercd=0.
+[53555689] enter to wai_sem semid=2.
+[53555875] leave from wai_sem ercd=0.
+[53556154] enter to sig_sem semid=2.
+[53556354] leave from sig_sem ercd=0.
+[53556624] enter to wai_sem semid=2.
+[53556810] leave from wai_sem ercd=0.
+[53557089] enter to sig_sem semid=2.
+[53557289] leave from sig_sem ercd=0.
+[53557559] enter to wai_sem semid=2.
+[53557745] leave from wai_sem ercd=0.
+[53558024] enter to sig_sem semid=2.
+[53558224] leave from sig_sem ercd=0.
+[53558494] enter to wai_sem semid=2.
+[53558680] leave from wai_sem ercd=0.
+[53558959] enter to sig_sem semid=2.
+[53559159] leave from sig_sem ercd=0.
+[53559429] enter to wai_sem semid=2.
+[53559615] leave from wai_sem ercd=0.
+[53559894] enter to sig_sem semid=2.
+[53560094] leave from sig_sem ercd=0.
+[53560364] enter to wai_sem semid=2.
+[53560550] leave from wai_sem ercd=0.
+[53560829] enter to sig_sem semid=2.
+[53561029] leave from sig_sem ercd=0.
+[53561299] enter to wai_sem semid=2.
+[53561485] leave from wai_sem ercd=0.
+[53561764] enter to sig_sem semid=2.
+[53561964] leave from sig_sem ercd=0.
+[53562234] enter to wai_sem semid=2.
+[53562420] leave from wai_sem ercd=0.
+[53562699] enter to sig_sem semid=2.
+[53562899] leave from sig_sem ercd=0.
+[53563169] enter to wai_sem semid=2.
+[53563355] leave from wai_sem ercd=0.
+[53563634] enter to sig_sem semid=2.
+[53563834] leave from sig_sem ercd=0.
+[53564104] enter to wai_sem semid=2.
+[53564290] leave from wai_sem ercd=0.
+[53564569] enter to sig_sem semid=2.
+[53564769] leave from sig_sem ercd=0.
+[53565039] enter to wai_sem semid=2.
+[53565225] leave from wai_sem ercd=0.
+[53565504] enter to sig_sem semid=2.
+[53565704] leave from sig_sem ercd=0.
+[53566117] enter to wai_sem semid=2.
+[53566303] leave from wai_sem ercd=0.
+[53566582] enter to sig_sem semid=2.
+[53566782] leave from sig_sem ercd=0.
+[53567048] enter to wai_sem semid=2.
+[53567234] leave from wai_sem ercd=0.
+[53567513] enter to sig_sem semid=2.
+[53567713] leave from sig_sem ercd=0.
+[53567988] enter to wai_sem semid=2.
+[53568174] leave from wai_sem ercd=0.
+[53568453] enter to sig_sem semid=2.
+[53568653] leave from sig_sem ercd=0.
+[53568940] enter to wai_sem semid=2.
+[53569126] leave from wai_sem ercd=0.
+[53569405] enter to sig_sem semid=2.
+[53569605] leave from sig_sem ercd=0.
+[53569875] enter to wai_sem semid=2.
+[53570061] leave from wai_sem ercd=0.
+[53570340] enter to sig_sem semid=2.
+[53570540] leave from sig_sem ercd=0.
+[53570810] enter to wai_sem semid=2.
+[53570996] leave from wai_sem ercd=0.
+[53571275] enter to sig_sem semid=2.
+[53571475] leave from sig_sem ercd=0.
+[53571745] enter to wai_sem semid=2.
+[53571931] leave from wai_sem ercd=0.
+[53572210] enter to sig_sem semid=2.
+[53572410] leave from sig_sem ercd=0.
+[53572680] enter to wai_sem semid=2.
+[53572866] leave from wai_sem ercd=0.
+[53573145] enter to sig_sem semid=2.
+[53573345] leave from sig_sem ercd=0.
+[53573648] enter to wai_sem semid=2.
+[53573834] leave from wai_sem ercd=0.
+[53574113] enter to sig_sem semid=2.
+[53574313] leave from sig_sem ercd=0.
+[53574596] enter to wai_sem semid=2.
+[53574782] leave from wai_sem ercd=0.
+[53575181] enter to sig_sem semid=2.
+[53575381] leave from sig_sem ercd=0.
+[53575605] enter to dly_tsk dlytim=10.
+[53576003] task 1 becomes WAITING.
+[53576165] dispatch from task 1.
+[53576312] dispatch to task 2.
+[53773421] enter to int handler 5.
+[53773645] leave from int handler 5.
+[53999879] enter to int handler 5.
+[54000103] leave from int handler 5.
+[54226339] enter to int handler 5.
+[54226563] leave from int handler 5.
+[54452799] enter to int handler 5.
+[54453023] leave from int handler 5.
+[54679257] enter to int handler 5.
+[54679481] leave from int handler 5.
+[54905716] enter to int handler 5.
+[54905940] leave from int handler 5.
+[54911839] enter to int handler 2.
+[54912115] enter to isig_sem semid=1.
+[54912342] task 5 becomes RUNNABLE.
+[54912552] leave from isig_sem ercd=0.
+[54912776] leave from int handler 2.
+[54913030] dispatch from task 2.
+[54913177] dispatch to task 5.
+[54913342] leave from wai_sem ercd=0.
+[54913704] enter to wai_sem semid=1.
+[54914098] task 5 becomes WAITING.
+[54914260] dispatch from task 5.
+[54914407] dispatch to task 2.
+[55132282] enter to int handler 5.
+[55132506] leave from int handler 5.
+[55358741] enter to int handler 5.
+[55358965] leave from int handler 5.
+[55585201] enter to int handler 5.
+[55585425] leave from int handler 5.
+[55811659] enter to int handler 5.
+[55811883] leave from int handler 5.
+[55968192] #1#ext_tsk()
+[55968440] enter to ext_tsk.
+[55968709] task 2 becomes DORMANT.
+[55968854] dispatch from task 2.
+[55969001] dispatch to task 3.
+[55969172] leave from slp_tsk ercd=0.
+[55969827] task2 is running (003).     +
+[56037880] enter to int handler 5.
+[56038141] task 1 becomes RUNNABLE.
+[56038382] leave from int handler 5.
+[56038636] dispatch from task 3.
+[56038783] dispatch to task 1.
+[56038948] leave from dly_tsk ercd=0.
+[56039342] enter to wai_sem semid=2.
+[56039528] leave from wai_sem ercd=0.
+[56039807] enter to sig_sem semid=2.
+[56040007] leave from sig_sem ercd=0.
+[56040421] enter to wai_sem semid=2.
+[56040607] leave from wai_sem ercd=0.
+[56040886] enter to sig_sem semid=2.
+[56041086] leave from sig_sem ercd=0.
+[56041373] enter to wai_sem semid=2.
+[56041559] leave from wai_sem ercd=0.
+[56041838] enter to sig_sem semid=2.
+[56042038] leave from sig_sem ercd=0.
+[56042308] enter to wai_sem semid=2.
+[56042494] leave from wai_sem ercd=0.
+[56042773] enter to sig_sem semid=2.
+[56042973] leave from sig_sem ercd=0.
+[56043243] enter to wai_sem semid=2.
+[56043429] leave from wai_sem ercd=0.
+[56043708] enter to sig_sem semid=2.
+[56043908] leave from sig_sem ercd=0.
+[56044178] enter to wai_sem semid=2.
+[56044364] leave from wai_sem ercd=0.
+[56044643] enter to sig_sem semid=2.
+[56044843] leave from sig_sem ercd=0.
+[56045113] enter to wai_sem semid=2.
+[56045299] leave from wai_sem ercd=0.
+[56045578] enter to sig_sem semid=2.
+[56045778] leave from sig_sem ercd=0.
+[56046048] enter to wai_sem semid=2.
+[56046234] leave from wai_sem ercd=0.
+[56046513] enter to sig_sem semid=2.
+[56046713] leave from sig_sem ercd=0.
+[56046983] enter to wai_sem semid=2.
+[56047169] leave from wai_sem ercd=0.
+[56047448] enter to sig_sem semid=2.
+[56047648] leave from sig_sem ercd=0.
+[56047918] enter to wai_sem semid=2.
+[56048104] leave from wai_sem ercd=0.
+[56048383] enter to sig_sem semid=2.
+[56048583] leave from sig_sem ercd=0.
+[56048853] enter to wai_sem semid=2.
+[56049039] leave from wai_sem ercd=0.
+[56049318] enter to sig_sem semid=2.
+[56049518] leave from sig_sem ercd=0.
+[56049788] enter to wai_sem semid=2.
+[56049974] leave from wai_sem ercd=0.
+[56050253] enter to sig_sem semid=2.
+[56050453] leave from sig_sem ercd=0.
+[56050726] enter to wai_sem semid=2.
+[56050912] leave from wai_sem ercd=0.
+[56051311] enter to sig_sem semid=2.
+[56051511] leave from sig_sem ercd=0.
+[56051923] enter to wai_sem semid=2.
+[56052109] leave from wai_sem ercd=0.
+[56052388] enter to sig_sem semid=2.
+[56052588] leave from sig_sem ercd=0.
+[56052858] enter to wai_sem semid=2.
+[56053044] leave from wai_sem ercd=0.
+[56053323] enter to sig_sem semid=2.
+[56053523] leave from sig_sem ercd=0.
+[56053793] enter to wai_sem semid=2.
+[56053979] leave from wai_sem ercd=0.
+[56054258] enter to sig_sem semid=2.
+[56054458] leave from sig_sem ercd=0.
+[56054728] enter to wai_sem semid=2.
+[56054914] leave from wai_sem ercd=0.
+[56055193] enter to sig_sem semid=2.
+[56055393] leave from sig_sem ercd=0.
+[56055807] enter to wai_sem semid=2.
+[56055993] leave from wai_sem ercd=0.
+[56056272] enter to sig_sem semid=2.
+[56056472] leave from sig_sem ercd=0.
+[56056759] enter to wai_sem semid=2.
+[56056945] leave from wai_sem ercd=0.
+[56057224] enter to sig_sem semid=2.
+[56057424] leave from sig_sem ercd=0.
+[0] unknown trace log type: 0.
+[1] e
+[53] unknown trace log type: 909129015.
+[0] unknown trace log type: 0.
+[0] unknown trace log type: 42960.
+[0] unknown trace log type: 14044.
+[19] unknown trace log type: 1179360.
+[56059294] unknown trace log type: 25032.
+[56059564] enter to wai_sem semid=2.
+[56059750] leave from wai_sem ercd=0.
+[56060029] enter to sig_sem semid=2.
+[56060229] leave from sig_sem ercd=0.
+[56060499] enter to wai_sem semid=2.
+[56060685] leave from wai_sem ercd=0.
+[56060964] enter to sig_sem semid=2.
+[56061164] leave from sig_sem ercd=0.
+[56061434] enter to wai_sem semid=2.
+[56061620] leave from wai_sem ercd=0.
+[56061899] enter to sig_sem semid=2.
+[56062099] leave from sig_sem ercd=0.
+[56062369] enter to wai_sem semid=2.
+[56062555] leave from wai_sem ercd=0.
+[56062834] enter to sig_sem semid=2.
+[56063034] leave from sig_sem ercd=0.
+[56063304] enter to wai_sem semid=2.
+[56063490] leave from wai_sem ercd=0.
+[56063769] enter to sig_sem semid=2.
+[56063969] leave from sig_sem ercd=0.
+[56064239] enter to wai_sem semid=2.
+[56064425] leave from wai_sem ercd=0.
+[56064704] enter to sig_sem semid=2.
+[56064904] leave from sig_sem ercd=0.
+[56065174] enter to wai_sem semid=2.
+[56065360] leave from wai_sem ercd=0.
+[56065639] enter to sig_sem semid=2.
+[56065839] leave from sig_sem ercd=0.
+[56066109] enter to wai_sem semid=2.
+[56066295] leave from wai_sem ercd=0.
+[56066574] enter to sig_sem semid=2.
+[56066774] leave from sig_sem ercd=0.
+[56067044] enter to wai_sem semid=2.
+[56067230] leave from wai_sem ercd=0.
+[56067509] enter to sig_sem semid=2.
+[56067709] leave from sig_sem ercd=0.
+[56067979] enter to wai_sem semid=2.
+[56068165] leave from wai_sem ercd=0.
+[56068444] enter to sig_sem semid=2.
+[56068644] leave from sig_sem ercd=0.
+[56069057] enter to wai_sem semid=2.
+[56069243] leave from wai_sem ercd=0.
+[56069522] enter to sig_sem semid=2.
+[56069722] leave from sig_sem ercd=0.
+[56069988] enter to wai_sem semid=2.
+[56070174] leave from wai_sem ercd=0.
+[56070453] enter to sig_sem semid=2.
+[56070653] leave from sig_sem ercd=0.
+[56070928] enter to wai_sem semid=2.
+[56071114] leave from wai_sem ercd=0.
+[56071393] enter to sig_sem semid=2.
+[56071593] leave from sig_sem ercd=0.
+[56071880] enter to wai_sem semid=2.
+[56072066] leave from wai_sem ercd=0.
+[56072345] enter to sig_sem semid=2.
+[56072545] leave from sig_sem ercd=0.
+[56072815] enter to wai_sem semid=2.
+[56073001] leave from wai_sem ercd=0.
+[56073280] enter to sig_sem semid=2.
+[56073480] leave from sig_sem ercd=0.
+[56073750] enter to wai_sem semid=2.
+[56073936] leave from wai_sem ercd=0.
+[56074215] enter to sig_sem semid=2.
+[56074415] leave from sig_sem ercd=0.
+[56074685] enter to wai_sem semid=2.
+[56074871] leave from wai_sem ercd=0.
+[56075150] enter to sig_sem semid=2.
+[56075350] leave from sig_sem ercd=0.
+[56075620] enter to wai_sem semid=2.
+[56075806] leave from wai_sem ercd=0.
+[56076085] enter to sig_sem semid=2.
+[56076285] leave from sig_sem ercd=0.
+[56076588] enter to wai_sem semid=2.
+[56076774] leave from wai_sem ercd=0.
+[56077053] enter to sig_sem semid=2.
+[56077253] leave from sig_sem ercd=0.
+[56077518] enter to wai_sem semid=2.
+[56077704] leave from wai_sem ercd=0.
+[56077983] enter to sig_sem semid=2.
+[56078183] leave from sig_sem ercd=0.
+[56078448] enter to wai_sem semid=2.
+[56078634] leave from wai_sem ercd=0.
+[56078913] enter to sig_sem semid=2.
+[56079113] leave from sig_sem ercd=0.
+[56079396] enter to wai_sem semid=2.
+[56079582] leave from wai_sem ercd=0.
+[56079981] enter to sig_sem semid=2.
+[56080181] leave from sig_sem ercd=0.
+[56080405] enter to dly_tsk dlytim=10.
+[56080803] task 1 becomes WAITING.
+[56080965] dispatch from task 1.
+[56081112] dispatch to task 3.
+[56263437] enter to int handler 5.
+[56263661] leave from int handler 5.
+[56470999] enter to int handler 2.
+[56471275] enter to isig_sem semid=1.
+[56471502] task 5 becomes RUNNABLE.
+[56471712] leave from isig_sem ercd=0.
+[56471936] leave from int handler 2.
+[56472190] dispatch from task 3.
+[56472337] dispatch to task 5.
+[56472502] leave from wai_sem ercd=0.
+[56472872] enter to wai_sem semid=1.
+[56473266] task 5 becomes WAITING.
+[56473428] dispatch from task 5.
+[56473575] dispatch to task 3.
+[56490000] enter to int handler 5.
+[56490224] leave from int handler 5.
+[56716458] enter to int handler 5.
+[56716682] leave from int handler 5.
+[56942917] enter to int handler 5.
+[56943141] leave from int handler 5.
+[57169377] enter to int handler 5.
+[57169601] leave from int handler 5.
+[57395835] enter to int handler 5.
+[57396059] leave from int handler 5.
+[57622295] enter to int handler 5.
+[57622519] leave from int handler 5.
+[57848755] enter to int handler 5.
+[57848979] leave from int handler 5.
+[58075213] enter to int handler 5.
+[58075437] leave from int handler 5.
+[58301672] enter to int handler 5.
+[58301896] leave from int handler 5.
+[58528132] enter to int handler 5.
+[58528393] task 1 becomes RUNNABLE.
+[58528634] leave from int handler 5.
+[58528888] dispatch from task 3.
+[58529035] dispatch to task 1.
+[58529200] leave from dly_tsk ercd=0.
+[58529410] enter to dly_tsk dlytim=10.
+[58529808] task 1 becomes WAITING.
+[58529970] dispatch from task 1.
+[58530117] dispatch to task 3.
+[58754713] enter to int handler 5.
+[58754937] leave from int handler 5.
+[58981172] enter to int handler 5.
+[58981396] leave from int handler 5.
+[59083762] enter to int handler 2.
+[59084038] enter to isig_sem semid=1.
+[59084265] task 5 becomes RUNNABLE.
+[59084475] leave from isig_sem ercd=0.
+[59084699] leave from int handler 2.
+[59084953] dispatch from task 3.
+[59085100] dispatch to task 5.
+[59085265] leave from wai_sem ercd=0.
+[59085627] enter to wai_sem semid=1.
+[59086021] task 5 becomes WAITING.
+[59086183] dispatch from task 5.
+[59086330] dispatch to task 3.
+[59207738] enter to int handler 5.
+[59207962] leave from int handler 5.
+[59434197] enter to int handler 5.
+[59434421] leave from int handler 5.
+[59660657] enter to int handler 5.
+[59660881] leave from int handler 5.
+[59887115] enter to int handler 5.
+[59887339] leave from int handler 5.
+[59930210] #2#ext_tsk()
+[59930458] enter to ext_tsk.
+[59930727] task 3 becomes DORMANT.
+[59930872] dispatch from task 3.
+[59931019] dispatch to task 4.
+[59931190] leave from slp_tsk ercd=0.
+[59931845] task3 is running (003).       *
+[60113336] enter to int handler 5.
+[60113560] leave from int handler 5.
+[60339794] enter to int handler 5.
+[60340018] leave from int handler 5.
+[60566253] enter to int handler 5.
+[60566477] leave from int handler 5.
+[60792713] enter to int handler 5.
+[60792937] leave from int handler 5.
+[61019171] enter to int handler 5.
+[61019432] task 1 becomes RUNNABLE.
+[61019673] leave from int handler 5.
+[61019927] dispatch from task 4.
+[61020074] dispatch to task 1.
+[61020239] leave from dly_tsk ercd=0.
+[61020633] enter to wai_sem semid=2.
+[61020819] leave from wai_sem ercd=0.
+[61021098] enter to sig_sem semid=2.
+[61021298] leave from sig_sem ercd=0.
+[61021712] enter to wai_sem semid=2.
+[61021898] leave from wai_sem ercd=0.
+[61022177] enter to sig_sem semid=2.
+[61022377] leave from sig_sem ercd=0.
+[61022664] enter to wai_sem semid=2.
+[61022850] leave from wai_sem ercd=0.
+[61023129] enter to sig_sem semid=2.
+[61023329] leave from sig_sem ercd=0.
+[61023599] enter to wai_sem semid=2.
+[61023785] leave from wai_sem ercd=0.
+[61024064] enter to sig_sem semid=2.
+[61024264] leave from sig_sem ercd=0.
+[61024534] enter to wai_sem semid=2.
+[61024720] leave from wai_sem ercd=0.
+[61024999] enter to sig_sem semid=2.
+[61025199] leave from sig_sem ercd=0.
+[61025469] enter to wai_sem semid=2.
+[61025655] leave from wai_sem ercd=0.
+[61025934] enter to sig_sem semid=2.
+[61026134] leave from sig_sem ercd=0.
+[61026404] enter to wai_sem semid=2.
+[61026590] leave from wai_sem ercd=0.
+[61026869] enter to sig_sem semid=2.
+[61027069] leave from sig_sem ercd=0.
+[61027339] enter to wai_sem semid=2.
+[61027525] leave from wai_sem ercd=0.
+[61027804] enter to sig_sem semid=2.
+[61028004] leave from sig_sem ercd=0.
+[61028274] enter to wai_sem semid=2.
+[61028460] leave from wai_sem ercd=0.
+[61028739] enter to sig_sem semid=2.
+[61028939] leave from sig_sem ercd=0.
+[61029209] enter to wai_sem semid=2.
+[61029395] leave from wai_sem ercd=0.
+[61029674] enter to sig_sem semid=2.
+[61029874] leave from sig_sem ercd=0.
+[61030144] enter to wai_sem semid=2.
+[61030330] leave from wai_sem ercd=0.
+[61030609] enter to sig_sem semid=2.
+[61030809] leave from sig_sem ercd=0.
+[61031079] enter to wai_sem semid=2.
+[61031265] leave from wai_sem ercd=0.
+[61031544] enter to sig_sem semid=2.
+[61031744] leave from sig_sem ercd=0.
+[61032017] enter to wai_sem semid=2.
+[61032203] leave from wai_sem ercd=0.
+[61032602] enter to sig_sem semid=2.
+[61032802] leave from sig_sem ercd=0.
+[61033214] enter to wai_sem semid=2.
+[61033400] leave from wai_sem ercd=0.
+[61033679] enter to sig_sem semid=2.
+[61033879] leave from sig_sem ercd=0.
+[61034149] enter to wai_sem semid=2.
+[61034335] leave from wai_sem ercd=0.
+[61034614] enter to sig_sem semid=2.
+[61034814] leave from sig_sem ercd=0.
+[61035084] enter to wai_sem semid=2.
+[61035270] leave from wai_sem ercd=0.
+[61035549] enter to sig_sem semid=2.
+[61035749] leave from sig_sem ercd=0.
+[61036019] enter to wai_sem semid=2.
+[61036205] leave from wai_sem ercd=0.
+[61036484] enter to sig_sem semid=2.
+[61036684] leave from sig_sem ercd=0.
+[61037098] enter to wai_sem semid=2.
+[61037284] leave from wai_sem ercd=0.
+[61037563] enter to sig_sem semid=2.
+[61037763] leave from sig_sem ercd=0.
+[61038050] enter to wai_sem semid=2.
+[61038236] leave from wai_sem ercd=0.
+[61038515] enter to sig_sem semid=2.
+[61038715] leave from sig_sem ercd=0.
+[61038985] enter to wai_sem semid=2.
+[61039171] leave from wai_sem ercd=0.
+[61039450] enter to sig_sem semid=2.
+[61039650] leave from sig_sem ercd=0.
+[61039920] enter to wai_sem semid=2.
+[61040106] leave from wai_sem ercd=0.
+[61040385] enter to sig_sem semid=2.
+[61040585] leave from sig_sem ercd=0.
+[61040855] enter to wai_sem semid=2.
+[61041041] leave from wai_sem ercd=0.
+[61041320] enter to sig_sem semid=2.
+[61041520] leave from sig_sem ercd=0.
+[61041790] enter to wai_sem semid=2.
+[61041976] leave from wai_sem ercd=0.
+[61042255] enter to sig_sem semid=2.
+[61042455] leave from sig_sem ercd=0.
+[61042725] enter to wai_sem semid=2.
+[61042911] leave from wai_sem ercd=0.
+[61043190] enter to sig_sem semid=2.
+[61043390] leave from sig_sem ercd=0.
+[61043660] enter to wai_sem semid=2.
+[61043846] leave from wai_sem ercd=0.
+[61044125] enter to sig_sem semid=2.
+[61044325] leave from sig_sem ercd=0.
+[61044595] enter to wai_sem semid=2.
+[61044781] leave from wai_sem ercd=0.
+[61045060] enter to sig_sem semid=2.
+[61045260] leave from sig_sem ercd=0.
+[61045530] enter to wai_sem semid=2.
+[61045716] leave from wai_sem ercd=0.
+[61045995] enter to sig_sem semid=2.
+[61046195] leave from sig_sem ercd=0.
+[61046465] enter to wai_sem semid=2.
+[61046651] leave from wai_sem ercd=0.
+[61046930] enter to sig_sem semid=2.
+[61047130] leave from sig_sem ercd=0.
+[61047400] enter to wai_sem semid=2.
+[61047586] leave from wai_sem ercd=0.
+[61047865] enter to sig_sem semid=2.
+[61048065] leave from sig_sem ercd=0.
+[61048335] enter to wai_sem semid=2.
+[61048521] leave from wai_sem ercd=0.
+[61048800] enter to sig_sem semid=2.
+[61049000] leave from sig_sem ercd=0.
+[61049270] enter to wai_sem semid=2.
+[61049456] leave from wai_sem ercd=0.
+[61049735] enter to sig_sem semid=2.
+[61049935] leave from sig_sem ercd=0.
+[61050348] enter to wai_sem semid=2.
+[61050534] leave from wai_sem ercd=0.
+[61050813] enter to sig_sem semid=2.
+[61051013] leave from sig_sem ercd=0.
+[61051279] enter to wai_sem semid=2.
+[61051465] leave from wai_sem ercd=0.
+[61051744] enter to sig_sem semid=2.
+[61051944] leave from sig_sem ercd=0.
+[61052219] enter to wai_sem semid=2.
+[61052405] leave from wai_sem ercd=0.
+[61052684] enter to sig_sem semid=2.
+[61052884] leave from sig_sem ercd=0.
+[61053171] enter to wai_sem semid=2.
+[61053357] leave from wai_sem ercd=0.
+[61053636] enter to sig_sem semid=2.
+[61053836] leave from sig_sem ercd=0.
+[61054106] enter to wai_sem semid=2.
+[61054292] leave from wai_sem ercd=0.
+[61054571] enter to sig_sem semid=2.
+[61054771] leave from sig_sem ercd=0.
+[61055041] enter to wai_sem semid=2.
+[61055227] leave from wai_sem ercd=0.
+[61055506] enter to sig_sem semid=2.
+[61055706] leave from sig_sem ercd=0.
+[61055976] enter to wai_sem semid=2.
+[61056162] leave from wai_sem ercd=0.
+[61056441] enter to sig_sem semid=2.
+[61056641] leave from sig_sem ercd=0.
+[61056911] enter to wai_sem semid=2.
+[61057097] leave from wai_sem ercd=0.
+[61057376] enter to sig_sem semid=2.
+[61057576] leave from sig_sem ercd=0.
+[61057879] enter to wai_sem semid=2.
+[61058065] leave from wai_sem ercd=0.
+[61058344] enter to sig_sem semid=2.
+[61058544] leave from sig_sem ercd=0.
+[61058809] enter to wai_sem semid=2.
+[61058995] leave from wai_sem ercd=0.
+[61059274] enter to sig_sem semid=2.
+[61059474] leave from sig_sem ercd=0.
+[61059739] enter to wai_sem semid=2.
+[61059925] leave from wai_sem ercd=0.
+[61060204] enter to sig_sem semid=2.
+[61060404] leave from sig_sem ercd=0.
+[61060669] enter to wai_sem semid=2.
+[61060855] leave from wai_sem ercd=0.
+[61061134] enter to sig_sem semid=2.
+[61061334] leave from sig_sem ercd=0.
+[61061599] enter to wai_sem semid=2.
+[61061785] leave from wai_sem ercd=0.
+[61062064] enter to sig_sem semid=2.
+[61062264] leave from sig_sem ercd=0.
+[61062547] enter to wai_sem semid=2.
+[61062733] leave from wai_sem ercd=0.
+[61063132] enter to sig_sem semid=2.
+[61063332] leave from sig_sem ercd=0.
+[61063556] enter to dly_tsk dlytim=10.
+[61063954] task 1 becomes WAITING.
+[61064116] dispatch from task 1.
+[61064263] dispatch to task 4.
+[61244696] enter to int handler 5.
+[61244920] leave from int handler 5.
+[61312586] enter to int handler 2.
+[61312862] enter to isig_sem semid=1.
+[61313089] task 5 becomes RUNNABLE.
+[61313299] leave from isig_sem ercd=0.
+[61313523] leave from int handler 2.
+[61313777] dispatch from task 4.
+[61313924] dispatch to task 5.
+[61314089] leave from wai_sem ercd=0.
+[61314459] enter to wai_sem semid=1.
+[61314853] task 5 becomes WAITING.
+[61315015] dispatch from task 5.
+[61315162] dispatch to task 4.
+[61471259] enter to int handler 5.
+[61471483] leave from int handler 5.
+[61697717] enter to int handler 5.
+[61697941] leave from int handler 5.
+[61924176] enter to int handler 5.
+[61924400] leave from int handler 5.
+[62150636] enter to int handler 5.
+[62150860] leave from int handler 5.
+[62377094] enter to int handler 5.
+[62377318] leave from int handler 5.
+[62603554] enter to int handler 5.
+[62603778] leave from int handler 5.
+[62830014] enter to int handler 5.
+[62830238] leave from int handler 5.
+[63056472] enter to int handler 5.
+[63056696] leave from int handler 5.
+[63282931] enter to int handler 5.
+[63283155] leave from int handler 5.
+[63509391] enter to int handler 5.
+[63509652] task 1 becomes RUNNABLE.
+[63509893] leave from int handler 5.
+[63510147] dispatch from task 4.
+[63510294] dispatch to task 1.
+[63510459] leave from dly_tsk ercd=0.
+[63510669] enter to dly_tsk dlytim=10.
+[63511067] task 1 becomes WAITING.
+[63511229] dispatch from task 1.
+[63511376] dispatch to task 4.
+[63735972] enter to int handler 5.
+[63736196] leave from int handler 5.
+[63890730] #3#ext_tsk()
+[63890978] enter to ext_tsk.
+[63891270] task 4 becomes DORMANT.
+[63891415] dispatch from task 4.
+[63947614] enter to int handler 5.
+[63947838] leave from int handler 5.
+[64126909] enter to int handler 5.
+[64127133] leave from int handler 5.
+[64306193] enter to int handler 5.
+[64306417] leave from int handler 5.
+[64485477] enter to int handler 5.
+[64485701] leave from int handler 5.
+[64664773] enter to int handler 5.
+[64664997] leave from int handler 5.
+[64844057] enter to int handler 5.
+[64844281] leave from int handler 5.
+[65023341] enter to int handler 5.
+[65023565] leave from int handler 5.
+[65202626] enter to int handler 5.
+[65202850] leave from int handler 5.
+[65381921] enter to int handler 5.
+[65382145] leave from int handler 5.
+[65561205] enter to int handler 5.
+[65561466] task 1 becomes RUNNABLE.
+[65561703] leave from int handler 5.
+[65561945] dispatch to task 1.
+[65562110] leave from dly_tsk ercd=0.
+[65562504] enter to wai_sem semid=2.
+[65562690] leave from wai_sem ercd=0.
+[65562969] enter to sig_sem semid=2.
+[65563169] leave from sig_sem ercd=0.
+[65563583] enter to wai_sem semid=2.
+[65563769] leave from wai_sem ercd=0.
+[65564048] enter to sig_sem semid=2.
+[65564248] leave from sig_sem ercd=0.
+[65564535] enter to wai_sem semid=2.
+[65564721] leave from wai_sem ercd=0.
+[65565000] enter to sig_sem semid=2.
+[65565200] leave from sig_sem ercd=0.
+[65565470] enter to wai_sem semid=2.
+[65565656] leave from wai_sem ercd=0.
+[65565935] enter to sig_sem semid=2.
+[65566135] leave from sig_sem ercd=0.
+[65566405] enter to wai_sem semid=2.
+[65566591] leave from wai_sem ercd=0.
+[65566870] enter to sig_sem semid=2.
+[65567070] leave from sig_sem ercd=0.
+[65567340] enter to wai_sem semid=2.
+[65567526] leave from wai_sem ercd=0.
+[65567805] enter to sig_sem semid=2.
+[65568005] leave from sig_sem ercd=0.
+[65568275] enter to wai_sem semid=2.
+[65568461] leave from wai_sem ercd=0.
+[65568740] enter to sig_sem semid=2.
+[65568940] leave from sig_sem ercd=0.
+[65569210] enter to wai_sem semid=2.
+[65569396] leave from wai_sem ercd=0.
+[65569675] enter to sig_sem semid=2.
+[65569875] leave from sig_sem ercd=0.
+[65570145] enter to wai_sem semid=2.
+[65570331] leave from wai_sem ercd=0.
+[65570610] enter to sig_sem semid=2.
+[65570810] leave from sig_sem ercd=0.
+[65571080] enter to wai_sem semid=2.
+[65571266] leave from wai_sem ercd=0.
+[65571545] enter to sig_sem semid=2.
+[65571745] leave from sig_sem ercd=0.
+[65572015] enter to wai_sem semid=2.
+[65572201] leave from wai_sem ercd=0.
+[65572480] enter to sig_sem semid=2.
+[65572680] leave from sig_sem ercd=0.
+[65572950] enter to wai_sem semid=2.
+[65573136] leave from wai_sem ercd=0.
+[65573415] enter to sig_sem semid=2.
+[65573615] leave from sig_sem ercd=0.
+[65573888] enter to wai_sem semid=2.
+[65574074] leave from wai_sem ercd=0.
+[65574473] enter to sig_sem semid=2.
+[65574673] leave from sig_sem ercd=0.
+[65574897] enter to dly_tsk dlytim=10.
+[65575244] task 1 becomes WAITING.
+[65575406] dispatch from task 1.
+[65743228] enter to int handler 5.
+[65743452] leave from int handler 5.
+[65922512] enter to int handler 5.
+[65922736] leave from int handler 5.
+[66101808] enter to int handler 5.
+[66102032] leave from int handler 5.
+[66281092] enter to int handler 5.
+[66281316] leave from int handler 5.
+[66460376] enter to int handler 5.
+[66460600] leave from int handler 5.
+[66639661] enter to int handler 5.
+[66639885] leave from int handler 5.
+[66818956] enter to int handler 5.
+[66819180] leave from int handler 5.
+[66998240] enter to int handler 5.
+[66998464] leave from int handler 5.
+[67177524] enter to int handler 5.
+[67177748] leave from int handler 5.
+[67356820] enter to int handler 5.
+[67357044] leave from int handler 5.
+[67536104] enter to int handler 5.
+[67536365] task 1 becomes RUNNABLE.
+[67536602] leave from int handler 5.
+[67536844] dispatch to task 1.
+[67537009] leave from dly_tsk ercd=0.
+[67537219] enter to dly_tsk dlytim=10.
+[67537566] task 1 becomes WAITING.
+[67537728] dispatch from task 1.
+[67715750] enter to int handler 5.
+[67715974] leave from int handler 5.
+[67895034] enter to int handler 5.
+[67895258] leave from int handler 5.
+[68074318] enter to int handler 5.
+[68074542] leave from int handler 5.
+[68253614] enter to int handler 5.
+[68253838] leave from int handler 5.
+[68432898] enter to int handler 5.
+[68433122] leave from int handler 5.
+[68612182] enter to int handler 5.
+[68612406] leave from int handler 5.
+[68791467] enter to int handler 5.
+[68791691] leave from int handler 5.
+[68970762] enter to int handler 5.
+[68970986] leave from int handler 5.
+[69150046] enter to int handler 5.
+[69150270] leave from int handler 5.
+[69329330] enter to int handler 5.
+[69329554] leave from int handler 5.
+[69508626] enter to int handler 5.
+[69508887] task 1 becomes RUNNABLE.
+[69509124] leave from int handler 5.
+[69509366] dispatch to task 1.
+[69509531] leave from dly_tsk ercd=0.
+[69509741] enter to dly_tsk dlytim=10.
+[69510088] task 1 becomes WAITING.
+[69510250] dispatch from task 1.
+[69688261] enter to int handler 5.
+[69688485] leave from int handler 5.
+[69867556] enter to int handler 5.
+[69867780] leave from int handler 5.
+[70046840] enter to int handler 5.
+[70047064] leave from int handler 5.
+[70226124] enter to int handler 5.
+[70226348] leave from int handler 5.
+[70405420] enter to int handler 5.
+[70405644] leave from int handler 5.
+[70584704] enter to int handler 5.
+[70584928] leave from int handler 5.
+[70763988] enter to int handler 5.
+[70764212] leave from int handler 5.
+[70943273] enter to int handler 5.
+[70943497] leave from int handler 5.
+[71122568] enter to int handler 5.
+[71122792] leave from int handler 5.
+[71301852] enter to int handler 5.
+[71302076] leave from int handler 5.
+[71481136] enter to int handler 5.
+[71481397] task 1 becomes RUNNABLE.
+[71481634] leave from int handler 5.
+[71481876] dispatch to task 1.
+[71482041] leave from dly_tsk ercd=0.
+[71482251] enter to dly_tsk dlytim=10.
+[71482598] task 1 becomes WAITING.
+[71482760] dispatch from task 1.
+[71660782] enter to int handler 5.
+[71661006] leave from int handler 5.
+[71840067] enter to int handler 5.
+[71840291] leave from int handler 5.
+[72019362] enter to int handler 5.
+[72019586] leave from int handler 5.
+[72198646] enter to int handler 5.
+[72198870] leave from int handler 5.
+[72377930] enter to int handler 5.
+[72378154] leave from int handler 5.
+[72557226] enter to int handler 5.
+[72557450] leave from int handler 5.
+[72736510] enter to int handler 5.
+[72736734] leave from int handler 5.
+[72915794] enter to int handler 5.
+[72916018] leave from int handler 5.
+[73095079] enter to int handler 5.
+[73095303] leave from int handler 5.
+[73274374] enter to int handler 5.
+[73274598] leave from int handler 5.
+[73453658] enter to int handler 5.
+[73453919] task 1 becomes RUNNABLE.
+[73454156] leave from int handler 5.
+[73454398] dispatch to task 1.
+[73454563] leave from dly_tsk ercd=0.
+[73454773] enter to dly_tsk dlytim=10.
+[73455120] task 1 becomes WAITING.
+[73455282] dispatch from task 1.
+[73633304] enter to int handler 5.
+[73633528] leave from int handler 5.
+[73812588] enter to int handler 5.
+[73812812] leave from int handler 5.
+[73991873] enter to int handler 5.
+[73992097] leave from int handler 5.
+[74171168] enter to int handler 5.
+[74171392] leave from int handler 5.
+[74350452] enter to int handler 5.
+[74350676] leave from int handler 5.
+[74529736] enter to int handler 5.
+[74529960] leave from int handler 5.
+[74709032] enter to int handler 5.
+[74709256] leave from int handler 5.
+[74888316] enter to int handler 5.
+[74888540] leave from int handler 5.
+[75067600] enter to int handler 5.
+[75067824] leave from int handler 5.
+[75246885] enter to int handler 5.
+[75247109] leave from int handler 5.
+[75426180] enter to int handler 5.
+[75426441] task 1 becomes RUNNABLE.
+[75426678] leave from int handler 5.
+[75426920] dispatch to task 1.
+[75427085] leave from dly_tsk ercd=0.
+[75427295] enter to dly_tsk dlytim=10.
+[75427642] task 1 becomes WAITING.
+[75427804] dispatch from task 1.
+[75605826] enter to int handler 5.
+[75606050] leave from int handler 5.
+[75785110] enter to int handler 5.
+[75785334] leave from int handler 5.
+[75964394] enter to int handler 5.
+[75964618] leave from int handler 5.
+[76143679] enter to int handler 5.
+[76143903] leave from int handler 5.
+[76322974] enter to int handler 5.
+[76323198] leave from int handler 5.
+[76502258] enter to int handler 5.
+[76502482] leave from int handler 5.
+[76681542] enter to int handler 5.
+[76681766] leave from int handler 5.
+[76860838] enter to int handler 5.
+[76861062] leave from int handler 5.
+[77040122] enter to int handler 5.
+[77040346] leave from int handler 5.
+[77219406] enter to int handler 5.
+[77219630] leave from int handler 5.
+[77398691] enter to int handler 5.
+[77398952] task 1 becomes RUNNABLE.
+[77399189] leave from int handler 5.
+[77399430] dispatch to task 1.
+[77399595] leave from dly_tsk ercd=0.
+[77399805] enter to dly_tsk dlytim=10.
+[77400152] task 1 becomes WAITING.
+[77400314] dispatch from task 1.
+[77578336] enter to int handler 5.
+[77578560] leave from int handler 5.
+[77757632] enter to int handler 5.
+[77757856] leave from int handler 5.
+[77936916] enter to int handler 5.
+[77937140] leave from int handler 5.
+[78116200] enter to int handler 5.
+[78116424] leave from int handler 5.
+[78295485] enter to int handler 5.
+[78295709] leave from int handler 5.
+[78378084] enter to int handler 2.
+[78378360] enter to isig_sem semid=1.
+[78378587] task 5 becomes RUNNABLE.
+[78378793] leave from isig_sem ercd=0.
+[78379017] leave from int handler 2.
+[78379259] dispatch to task 5.
+[78379424] leave from wai_sem ercd=0.
+[78379990] Sample program ends.
+[78380237] enter to ext_ker.
