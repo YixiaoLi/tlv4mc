@@ -162,7 +162,7 @@
     <Compile Include="JsonConverters\AreaConverter.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AttributeType\AllocationType.cs" />
     <Compile Include="FileContext\ResourceData\Attribute\AttributeType\AttributeType.cs" />
-    <Compile Include="FileContext\TraceLogVisualizerData\StandartFormatConverter.cs" />
+    <Compile Include="FileContext\TraceLogVisualizerData\StandardFormatConverter.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogVisualizerData.cs" />
     <Compile Include="Base\GeneralKeyedJsonableCollection.cs" />
     <Compile Include="Base\GeneralJsonableCollection.cs" />
