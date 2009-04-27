@@ -4,34 +4,34 @@
  *  Copyright (C) 2008,2009 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  ¾åµ­Ãøºî¸¢¼Ô¤Ï¡¤°Ê²¼¤Î(1)¡Á(4)¤Î¾ò·ï¤òËş¤¿¤¹¾ì¹ç¤Ë¸Â¤ê¡¤ËÜ¥½¥Õ¥È¥¦¥§
- *  ¥¢¡ÊËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò²şÊÑ¤·¤¿¤â¤Î¤ò´Ş¤à¡¥°Ê²¼Æ±¤¸¡Ë¤ò»ÈÍÑ¡¦Ê£À½¡¦²ş
- *  ÊÑ¡¦ºÆÇÛÉÛ¡Ê°Ê²¼¡¤ÍøÍÑ¤È¸Æ¤Ö¡Ë¤¹¤ë¤³¤È¤òÌµ½ş¤ÇµöÂú¤¹¤ë¡¥
- *  (1) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¥½¡¼¥¹¥³¡¼¥É¤Î·Á¤ÇÍøÍÑ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¾åµ­¤ÎÃøºî
- *      ¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊİ¾Úµ¬Äê¤¬¡¤¤½¤Î¤Ş¤Ş¤Î·Á¤Ç¥½¡¼
- *      ¥¹¥³¡¼¥ÉÃæ¤Ë´Ş¤Ş¤ì¤Æ¤¤¤ë¤³¤È¡¥
- *  (2) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤¥é¥¤¥Ö¥é¥ê·Á¼°¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
- *      ÍÑ¤Ç¤­¤ë·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ
- *      ¼Ô¥Ş¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃøºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­
- *      ¤ÎÌµÊİ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
- *  (3) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤µ¡´ï¤ËÁÈ¤ß¹ş¤à¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
- *      ÍÑ¤Ç¤­¤Ê¤¤·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¼¡¤Î¤¤¤º¤ì¤«¤Î¾ò·ï¤òËş¤¿¤¹¤³
- *      ¤È¡¥
- *    (a) ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ¼Ô¥Ş¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃø
- *        ºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊİ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
- *    (b) ºÆÇÛÉÛ¤Î·ÁÂÖ¤ò¡¤ÊÌ¤ËÄê¤á¤ëÊıË¡¤Ë¤è¤Ã¤Æ¡¤TOPPERS¥×¥í¥¸¥§¥¯¥È¤Ë
- *        Êó¹ğ¤¹¤ë¤³¤È¡¥
- *  (4) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Ş¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤ë¤¤¤«¤Ê¤ëÂ»
- *      ³²¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤òÌÈÀÕ¤¹¤ë¤³¤È¡¥
- *      ¤Ş¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Î¥æ¡¼¥¶¤Ş¤¿¤Ï¥¨¥ó¥É¥æ¡¼¥¶¤«¤é¤Î¤¤¤«¤Ê¤ëÍı
- *      Í³¤Ë´ğ¤Å¤¯ÀÁµá¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤ò
- *      ÌÈÀÕ¤¹¤ë¤³¤È¡¥
+ *  ä¸Šè¨˜è‘—ä½œæ¨©è€…ã¯ï¼Œä»¥ä¸‹ã®(1)ã€œ(4)ã®æ¡ä»¶ã‚’æº€ãŸã™å ´åˆã«é™ã‚Šï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
+ *  ã‚¢ï¼ˆæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’æ”¹å¤‰ã—ãŸã‚‚ã®ã‚’å«ã‚€ï¼ä»¥ä¸‹åŒã˜ï¼‰ã‚’ä½¿ç”¨ãƒ»è¤‡è£½ãƒ»æ”¹
+ *  å¤‰ãƒ»å†é…å¸ƒï¼ˆä»¥ä¸‹ï¼Œåˆ©ç”¨ã¨å‘¼ã¶ï¼‰ã™ã‚‹ã“ã¨ã‚’ç„¡å„Ÿã§è¨±è«¾ã™ã‚‹ï¼
+ *  (1) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã®å½¢ã§åˆ©ç”¨ã™ã‚‹å ´åˆã«ã¯ï¼Œä¸Šè¨˜ã®è‘—ä½œ
+ *      æ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šãŒï¼Œãã®ã¾ã¾ã®å½¢ã§ã‚½ãƒ¼
+ *      ã‚¹ã‚³ãƒ¼ãƒ‰ä¸­ã«å«ã¾ã‚Œã¦ã„ã‚‹ã“ã¨ï¼
+ *  (2) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œãƒ©ã‚¤ãƒ–ãƒ©ãƒªå½¢å¼ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
+ *      ç”¨ã§ãã‚‹å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œå†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨
+ *      è€…ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜
+ *      ã®ç„¡ä¿è¨¼è¦å®šã‚’æ²è¼‰ã™ã‚‹ã“ã¨ï¼
+ *  (3) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œæ©Ÿå™¨ã«çµ„ã¿è¾¼ã‚€ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
+ *      ç”¨ã§ããªã„å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œæ¬¡ã®ã„ãšã‚Œã‹ã®æ¡ä»¶ã‚’æº€ãŸã™ã“
+ *      ã¨ï¼
+ *    (a) å†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨è€…ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—
+ *        ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šã‚’æ²è¼‰ã™ã‚‹ã“ã¨ï¼
+ *    (b) å†é…å¸ƒã®å½¢æ…‹ã‚’ï¼Œåˆ¥ã«å®šã‚ã‚‹æ–¹æ³•ã«ã‚ˆã£ã¦ï¼ŒTOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«
+ *        å ±å‘Šã™ã‚‹ã“ã¨ï¼
+ *  (4) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æ¥çš„ã¾ãŸã¯é–“æ¥çš„ã«ç”Ÿã˜ã‚‹ã„ã‹ãªã‚‹æ
+ *      å®³ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’å…è²¬ã™ã‚‹ã“ã¨ï¼
+ *      ã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®ãƒ¦ãƒ¼ã‚¶ã¾ãŸã¯ã‚¨ãƒ³ãƒ‰ãƒ¦ãƒ¼ã‚¶ã‹ã‚‰ã®ã„ã‹ãªã‚‹ç†
+ *      ç”±ã«åŸºã¥ãè«‹æ±‚ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’
+ *      å…è²¬ã™ã‚‹ã“ã¨ï¼
  *
- *  ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ï¡¤ÌµÊİ¾Ú¤ÇÄó¶¡¤µ¤ì¤Æ¤¤¤ë¤â¤Î¤Ç¤¢¤ë¡¥¾åµ­Ãøºî¸¢¼Ô¤ª
- *  ¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤Ï¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ë´Ø¤·¤Æ¡¤ÆÃÄê¤Î»ÈÍÑÌÜÅª
- *  ¤ËÂĞ¤¹¤ëÅ¬¹çÀ­¤â´Ş¤á¤Æ¡¤¤¤¤«¤Ê¤ëÊİ¾Ú¤â¹Ô¤ï¤Ê¤¤¡¥¤Ş¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§
- *  ¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Ş¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤¿¤¤¤«¤Ê¤ëÂ»³²¤Ë´Ø¤·¤Æ¤â¡¤¤½
- *  ¤ÎÀÕÇ¤¤òÉé¤ï¤Ê¤¤¡¥
+ *  æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã¯ï¼Œç„¡ä¿è¨¼ã§æä¾›ã•ã‚Œã¦ã„ã‚‹ã‚‚ã®ã§ã‚ã‚‹ï¼ä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠ
+ *  ã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã¯ï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã«é–¢ã—ã¦ï¼Œç‰¹å®šã®ä½¿ç”¨ç›®çš„
+ *  ã«å¯¾ã™ã‚‹é©åˆæ€§ã‚‚å«ã‚ã¦ï¼Œã„ã‹ãªã‚‹ä¿è¨¼ã‚‚è¡Œã‚ãªã„ï¼ã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
+ *  ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æ¥çš„ã¾ãŸã¯é–“æ¥çš„ã«ç”Ÿã˜ãŸã„ã‹ãªã‚‹æå®³ã«é–¢ã—ã¦ã‚‚ï¼Œã
+ *  ã®è²¬ä»»ã‚’è² ã‚ãªã„ï¼
  *
  *  @(#) $Id$
  */
@@ -75,7 +75,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             base.OnLoad(evntArgs);
 
-            #region ApplicationDatas¥¤¥Ù¥ó¥ÈÀßÄê
+            #region ApplicationDatasã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
             ApplicationData.FileContext.PathChanged += (o, e) =>
 			{
 				invoke((MethodInvoker)(() => 
@@ -118,7 +118,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				invoke((MethodInvoker)(() => 
 				{
 					Cursor.Current = Cursors.WaitCursor;
-					_statusManager.ShowProcessing(this.GetType().ToString() + ":saving", "ÊİÂ¸Ãæ");
+					_statusManager.ShowProcessing(this.GetType().ToString() + ":saving", "ä¿å­˜ä¸­");
 				}));
 			};
 			ApplicationData.FileContext.Saved += (o, e) =>
@@ -134,22 +134,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			};
             #endregion
 
-            #region ¥³¥Ş¥ó¥É´ÉÍı½é´ü²½
+            #region ã‚³ãƒãƒ³ãƒ‰ç®¡ç†åˆæœŸåŒ–
             undoToolStripMenuItem.SetCommandManagerAsUndo(_commandManager);
             redoToolStripMenuItem.SetCommandManagerAsRedo(_commandManager);
             undoToolStripButton.SetCommandManagerAsUndo(_commandManager);
             redoToolStripButton.SetCommandManagerAsRedo(_commandManager);
             #endregion
 
-            #region ¥µ¥Ö¥¦¥£¥ó¥É¥¦´ÉÍı½é´ü²½
+            #region ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç®¡ç†åˆæœŸåŒ–
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
 			_windowManager.MainPanel = new TraceLogDisplayPanel();
 			SubWindow[] sws = new[]
             {
-                new SubWindow("macroViewer", new TimeLineMacroViewer(){ Text = "¥Ş¥¯¥í¥Ó¥å¡¼¥¢" }, DockState.DockBottom) { Text = "¥Ş¥¯¥í¥Ó¥å¡¼¥¢" },
-                new SubWindow("traceLogViewer", new TraceLogViewer(){ Text = "¥È¥ì¡¼¥¹¥í¥°¥Ó¥å¡¼¥¢" }, DockState.DockRight) { Text = "¥È¥ì¡¼¥¹¥í¥°¥Ó¥å¡¼¥¢" },
-                new SubWindow("resourceExplorer", new ResourceExplorer(){ Text = "¥ê¥½¡¼¥¹¥¨¥¯¥¹¥×¥í¡¼¥é" }, DockState.DockLeft) { Text = "¥ê¥½¡¼¥¹¥¨¥¯¥¹¥×¥í¡¼¥é" },
-                new SubWindow("visualizeRuleExplorer", new VisualizeRuleExplorer(){ Text = "²Ä»ë²½¥ë¡¼¥ë¥¨¥¯¥¹¥×¥í¡¼¥é" }, DockState.DockLeft) { Text = "²Ä»ë²½¥ë¡¼¥ë¥¨¥¯¥¹¥×¥í¡¼¥é" },
+                new SubWindow("macroViewer", new TimeLineMacroViewer(){ Text = "ãƒã‚¯ãƒ­ãƒ“ãƒ¥ãƒ¼ã‚¢" }, DockState.DockBottom) { Text = "ãƒã‚¯ãƒ­ãƒ“ãƒ¥ãƒ¼ã‚¢" },
+                new SubWindow("traceLogViewer", new TraceLogViewer(){ Text = "ãƒˆãƒ¬ãƒ¼ã‚¹ãƒ­ã‚°ãƒ“ãƒ¥ãƒ¼ã‚¢" }, DockState.DockRight) { Text = "ãƒˆãƒ¬ãƒ¼ã‚¹ãƒ­ã‚°ãƒ“ãƒ¥ãƒ¼ã‚¢" },
+                new SubWindow("resourceExplorer", new ResourceExplorer(){ Text = "ãƒªã‚½ãƒ¼ã‚¹ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©" }, DockState.DockLeft) { Text = "ãƒªã‚½ãƒ¼ã‚¹ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©" },
+                new SubWindow("visualizeRuleExplorer", new VisualizeRuleExplorer(){ Text = "å¯è¦–åŒ–ãƒ«ãƒ¼ãƒ«ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©" }, DockState.DockLeft) { Text = "å¯è¦–åŒ–ãƒ«ãƒ¼ãƒ«ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©" },
             };
 			_windowManager.AddSubWindow(sws);
 			_windowManager.Load();
@@ -160,40 +160,40 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             viewToolStripMenuItem.SetWindowManager(_windowManager);
             #endregion
 
-            #region ¥á¥Ë¥å¡¼¥Ğ¡¼¥¤¥Ù¥ó¥ÈÀßÄê
+            #region ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ¼ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
 
-            #region É½¼¨¥á¥Ë¥å¡¼
+            #region è¡¨ç¤ºãƒ¡ãƒ‹ãƒ¥ãƒ¼
             showAllToolStripMenuItem.Click += (o, e) =>
             {
-                // ÈóÉ½¼¨¾õÂÖ¤Î¥¦¥£¥ó¥É¥¦¤òÃµ¤·¥³¥Ş¥ó¥É¤òÀ¸À®¤¹¤ë
+                // éè¡¨ç¤ºçŠ¶æ…‹ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’æ¢ã—ã‚³ãƒãƒ³ãƒ‰ã‚’ç”Ÿæˆã™ã‚‹
                 var cswvc = from sw in sws
                          where !sw.Visible && sw.Enabled
                          select (ICommand)(new ChangeSubWindowVisiblityCommand(sw, true));
                 if (cswvc.Count() != 0)
                 {
-                    // SubWindowVisibleChanged¤òÌµ¸ú¤Ë¤·¤Æ¤ª¤«¤Ê¤¤¤Èundo¥¹¥¿¥Ã¥¯¤Ë¤¹¤Ù¤Æ¤Î¥¦¥£¥ó¥É¥¦¤ÎÉ½¼¨¥³¥Ş¥ó¥É¤¬ÄÉ²Ã¤µ¤ì¤Æ¤·¤Ş¤¦
+                    // SubWindowVisibleChangedã‚’ç„¡åŠ¹ã«ã—ã¦ãŠã‹ãªã„ã¨undoã‚¹ã‚¿ãƒƒã‚¯ã«ã™ã¹ã¦ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤ºã‚³ãƒãƒ³ãƒ‰ãŒè¿½åŠ ã•ã‚Œã¦ã—ã¾ã†
                     _windowManager.SubWindowVisibleChanged -= v;
-                    _commandManager.Do(new MacroCommand(cswvc) { Text="¤¹¤Ù¤Æ¤Î¥¦¥£¥ó¥É¥¦¤òÉ½¼¨¤¹¤ë"});
+                    _commandManager.Do(new MacroCommand(cswvc) { Text="ã™ã¹ã¦ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ç¤ºã™ã‚‹"});
                     _windowManager.SubWindowVisibleChanged += v;
                 }
             };
             hideAllToolStripMenuItem.Click += (o, e) =>
             {
-                // É½¼¨¾õÂÖ¤Î¥¦¥£¥ó¥É¥¦¤òÃµ¤·¥³¥Ş¥ó¥É¤òÀ¸À®¤¹¤ë
+                // è¡¨ç¤ºçŠ¶æ…‹ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’æ¢ã—ã‚³ãƒãƒ³ãƒ‰ã‚’ç”Ÿæˆã™ã‚‹
                 var cswvc = from sw in sws
                             where sw.Visible && sw.Enabled
                             select (ICommand)(new ChangeSubWindowVisiblityCommand(sw, false));
                 if (cswvc.Count() != 0)
                 {
-                    // SubWindowVisibleChanged¤òÌµ¸ú¤Ë¤·¤Æ¤ª¤«¤Ê¤¤¤Èundo¥¹¥¿¥Ã¥¯¤Ë¤¹¤Ù¤Æ¤Î¥¦¥£¥ó¥É¥¦¤ÎÈóÉ½¼¨¥³¥Ş¥ó¥É¤¬ÄÉ²Ã¤µ¤ì¤Æ¤·¤Ş¤¦
+                    // SubWindowVisibleChangedã‚’ç„¡åŠ¹ã«ã—ã¦ãŠã‹ãªã„ã¨undoã‚¹ã‚¿ãƒƒã‚¯ã«ã™ã¹ã¦ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®éè¡¨ç¤ºã‚³ãƒãƒ³ãƒ‰ãŒè¿½åŠ ã•ã‚Œã¦ã—ã¾ã†
                     _windowManager.SubWindowVisibleChanged -= v;
-                    _commandManager.Do(new MacroCommand(cswvc) { Text = "¤¹¤Ù¤Æ¤Î¥¦¥£¥ó¥É¥¦¤òÈóÉ½¼¨¤Ë¤¹¤ë" });
+                    _commandManager.Do(new MacroCommand(cswvc) { Text = "ã™ã¹ã¦ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’éè¡¨ç¤ºã«ã™ã‚‹" });
                     _windowManager.SubWindowVisibleChanged += v;
                 }
             };
             #endregion
 
-            #region ¥Õ¥¡¥¤¥ë¥á¥Ë¥å¡¼
+            #region ãƒ•ã‚¡ã‚¤ãƒ«ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 
             newToolStripMenuItem.Click += (o, e) =>
             {
@@ -232,14 +232,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             #endregion
 
-			#region ¥¹¥Æ¡¼¥¿¥¹¥Ğ¡¼ÀßÄê
+			#region ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒãƒ¼è¨­å®š
 
 			_statusManager = ApplicationFactory.StatusManager;
 			_statusManager.StatusStrip = statusStrip;
 
 			#endregion
 
-			#region ¥Ä¡¼¥ë¥Ğ¡¼¥¤¥Ù¥ó¥ÈÀßÄê
+			#region ãƒ„ãƒ¼ãƒ«ãƒãƒ¼ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
 
 			newToolStripButton.Click += (o, e) =>
             {
@@ -335,7 +335,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				}
 				catch(Exception _e)
 				{
-					MessageBox.Show("¥¨¥é¡¼¤¬È¯À¸¤·¤Ş¤·¤¿¡¥\n°ì»ş¥Ç¥£¥ì¥¯¥È¥ê¡§[" + ApplicationData.Setting.TemporaryDirectoryPath + "]\n¶¯À©½ªÎ»¤·¤Ş¤¹¡¥\n----\n" + _e.Message, "¥¨¥é¡¼¤¬È¯À¸¤·¤Ş¤·¤¿", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸï¼\nä¸€æ™‚ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªï¼š[" + ApplicationData.Setting.TemporaryDirectoryPath + "]\nå¼·åˆ¶çµ‚äº†ã—ã¾ã™ï¼\n----\n" + _e.Message, "ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸ", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
         }
@@ -417,7 +417,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             if(ApplicationData.FileContext.Data != null)
             {
                 if (ApplicationData.FileContext.Path == string.Empty)
-                    Text += "¿·µ¬¥È¥ì¡¼¥¹¥í¥°";
+                    Text += "æ–°è¦ãƒˆãƒ¬ãƒ¼ã‚¹ãƒ­ã‚°";
                 else
                     Text += Path.GetFileNameWithoutExtension(ApplicationData.FileContext.Path);
 

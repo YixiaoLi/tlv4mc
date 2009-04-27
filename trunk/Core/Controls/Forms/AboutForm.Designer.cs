@@ -129,7 +129,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls.Forms
             this.Name = "AboutForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "TLV§À§ƒ§§§∆";
+            this.Text = "TLV„Å´„Å§„ÅÑ„Å¶";
             ((System.ComponentModel.ISupportInitialize)(this.logoPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

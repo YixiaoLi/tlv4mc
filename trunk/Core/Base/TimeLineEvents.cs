@@ -4,34 +4,34 @@
  *  Copyright (C) 2008,2009 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  �嵭����Ԥϡ��ʲ���(1)��(4)�ξ������������˸¤ꡤ�ܥ��եȥ���
- *  �����ܥ��եȥ���������Ѥ�����Τ�ޤࡥ�ʲ�Ʊ���ˤ���ѡ�ʣ������
- *  �ѡ������ۡʰʲ������ѤȸƤ֡ˤ��뤳�Ȥ�̵���ǵ������롥
- *  (1) �ܥ��եȥ������򥽡��������ɤη������Ѥ�����ˤϡ��嵭������
- *      ��ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ��꤬�����Τޤޤη��ǥ���
- *      ����������˴ޤޤ�Ƥ��뤳�ȡ�
- *  (2) �ܥ��եȥ������򡤥饤�֥������ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ�����Ǻ����ۤ�����ˤϡ������ۤ�ȼ���ɥ�����ȡ�����
- *      �ԥޥ˥奢��ʤɡˤˡ��嵭�����ɽ�����������Ѿ�浪��Ӳ���
- *      ��̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *  (3) �ܥ��եȥ������򡤵�����Ȥ߹���ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ��ʤ����Ǻ����ۤ�����ˤϡ����Τ����줫�ξ�����������
- *      �ȡ�
- *    (a) �����ۤ�ȼ���ɥ�����ȡ����Ѽԥޥ˥奢��ʤɡˤˡ��嵭����
- *        �ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *    (b) �����ۤη��֤��̤�������ˡ�ˤ�äơ�TOPPERS�ץ��������Ȥ�
- *        ��𤹤뤳�ȡ�
- *  (4) �ܥ��եȥ����������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������뤤���ʤ�»
- *      ������⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ����դ��뤳�ȡ�
- *      �ޤ����ܥ��եȥ������Υ桼���ޤ��ϥ���ɥ桼������Τ����ʤ���
- *      ͳ�˴�Ť����ᤫ��⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ�
- *      ���դ��뤳�ȡ�
+ *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
+ *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
+ *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
+ *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
+ *      権表示，この利用条件および下記の無保証規定が，そのままの形でソー
+ *      スコード中に含まれていること．
+ *  (2) 本ソフトウェアを，ライブラリ形式など，他のソフトウェア開発に使
+ *      用できる形で再配布する場合には，再配布に伴うドキュメント（利用
+ *      者マニュアルなど）に，上記の著作権表示，この利用条件および下記
+ *      の無保証規定を掲載すること．
+ *  (3) 本ソフトウェアを，機器に組み込むなど，他のソフトウェア開発に使
+ *      用できない形で再配布する場合には，次のいずれかの条件を満たすこ
+ *      と．
+ *    (a) 再配布に伴うドキュメント（利用者マニュアルなど）に，上記の著
+ *        作権表示，この利用条件および下記の無保証規定を掲載すること．
+ *    (b) 再配布の形態を，別に定める方法によって，TOPPERSプロジェクトに
+ *        報告すること．
+ *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
+ *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
+ *      また，本ソフトウェアのユーザまたはエンドユーザからのいかなる理
+ *      由に基づく請求からも，上記著作権者およびTOPPERSプロジェクトを
+ *      免責すること．
  *
- *  �ܥ��եȥ������ϡ�̵�ݾڤ��󶡤���Ƥ����ΤǤ��롥�嵭����Ԥ�
- *  ���TOPPERS�ץ��������Ȥϡ��ܥ��եȥ������˴ؤ��ơ�����λ�����Ū
- *  ���Ф���Ŭ������ޤ�ơ������ʤ��ݾڤ�Ԥ�ʤ����ޤ����ܥ��եȥ���
- *  �������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������������ʤ�»���˴ؤ��Ƥ⡤��
- *  ����Ǥ�����ʤ���
+ *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
+ *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，特定の使用目的
+ *  に対する適合性も含めて，いかなる保証も行わない．また，本ソフトウェ
+ *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
+ *  の責任を負わない．
  *
  *  @(#) $Id$
  */
@@ -79,14 +79,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		private TimeLineEvents(VisualizeRule rule, Event evnt, Resource target)
 		{
 			if (rule != null && rule.IsBelongedTargetResourceType() && target == null)
-				throw new ArgumentException("�������åȻ��꤬����롼���target��null�˽���ޤ���");
+				throw new ArgumentException("ターゲット指定があるルールはtargetをnullに出来ません。");
 
 			if (!(rule != null && evnt == null && target == null
 				|| rule == null && evnt != null && target == null
 				|| rule == null && evnt == null && target != null
 				|| rule != null && evnt == null && target != null
 				|| rule == null && evnt != null && target != null))
-				throw new ArgumentException("�������۾�Ǥ���");
+				throw new ArgumentException("引数が異常です。");
 
 			_rule = rule;
 			_evnt = evnt;
@@ -452,7 +452,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				return log;
 
 			if (!new string[] { "TARGET", "FROM_TARGET", "TO_TARGET" }.Contains(type))
-				throw new ArgumentException("type��TARGET, FROM_TARGET, TO_TARGET�Τ����줫�Ǥʤ���Фʤ�ޤ���");
+				throw new ArgumentException("typeはTARGET, FROM_TARGET, TO_TARGETのいずれかでなければなりません。");
 
 			string logstr = log;
 			logstr = Regex.Replace(logstr, @"\${" + type + "}", resource.Name);
@@ -470,7 +470,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				return log;
 
 			if (!new string[] { "TIME", "FROM_TIME", "TO_TIME" }.Contains(type))
-				throw new ArgumentException("type��TIME, FROM_TIME, TO_TIME�Τ����줫�Ǥʤ���Фʤ�ޤ���");
+				throw new ArgumentException("typeはTIME, FROM_TIME, TO_TIMEのいずれかでなければなりません。");
 
 			string logstr = log;
 			logstr = Regex.Replace(logstr, @"\${" + type + "}", time.ToString());
@@ -485,10 +485,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		protected string applyVAL(string type, string log, string value)
 		{
 			if (value == null)
-				throw new ArgumentException("value��null�Ǥ���");
+				throw new ArgumentException("valueがnullです。");
 
 			if (!new string[] { "VAL", "FROM_VAL", "TO_VAL" }.Contains(type))
-				throw new ArgumentException("type��VAL, FROM_VAL, TO_VAL�Τ����줫�Ǥʤ���Фʤ�ޤ���");
+				throw new ArgumentException("typeはVAL, FROM_VAL, TO_VALのいずれかでなければなりません。");
 
 			string logstr = log;
 			logstr = Regex.Replace(logstr, @"\${" + type + "}", value);
@@ -503,7 +503,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		protected string applyARG(string type, string log, string[] args)
 		{
 			if (!new string[] { "ARG", "FROM_ARG", "TO_ARG" }.Contains(type))
-				throw new ArgumentException("type��ARG, FROM_ARG, TO_ARG�Τ����줫�Ǥʤ���Фʤ�ޤ���");
+				throw new ArgumentException("typeはARG, FROM_ARG, TO_ARGのいずれかでなければなりません。");
 
 			string logstr = log;
 			foreach (Match m in Regex.Matches(logstr, @"\${" + type + @"(?<id>\d+)}"))

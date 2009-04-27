@@ -4,34 +4,34 @@
  *  Copyright (C) 2008,2009 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  ¾åµ­Ãøºî¸¢¼Ô¤Ï¡¤°Ê²¼¤Î(1)¡Á(4)¤Î¾ò·ï¤òËþ¤¿¤¹¾ì¹ç¤Ë¸Â¤ê¡¤ËÜ¥½¥Õ¥È¥¦¥§
- *  ¥¢¡ÊËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò²þÊÑ¤·¤¿¤â¤Î¤ò´Þ¤à¡¥°Ê²¼Æ±¤¸¡Ë¤ò»ÈÍÑ¡¦Ê£À½¡¦²þ
- *  ÊÑ¡¦ºÆÇÛÉÛ¡Ê°Ê²¼¡¤ÍøÍÑ¤È¸Æ¤Ö¡Ë¤¹¤ë¤³¤È¤òÌµ½þ¤ÇµöÂú¤¹¤ë¡¥
- *  (1) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¥½¡¼¥¹¥³¡¼¥É¤Î·Á¤ÇÍøÍÑ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¾åµ­¤ÎÃøºî
- *      ¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊÝ¾Úµ¬Äê¤¬¡¤¤½¤Î¤Þ¤Þ¤Î·Á¤Ç¥½¡¼
- *      ¥¹¥³¡¼¥ÉÃæ¤Ë´Þ¤Þ¤ì¤Æ¤¤¤ë¤³¤È¡¥
- *  (2) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤¥é¥¤¥Ö¥é¥ê·Á¼°¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
- *      ÍÑ¤Ç¤­¤ë·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ
- *      ¼Ô¥Þ¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃøºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­
- *      ¤ÎÌµÊÝ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
- *  (3) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤µ¡´ï¤ËÁÈ¤ß¹þ¤à¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
- *      ÍÑ¤Ç¤­¤Ê¤¤·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¼¡¤Î¤¤¤º¤ì¤«¤Î¾ò·ï¤òËþ¤¿¤¹¤³
- *      ¤È¡¥
- *    (a) ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ¼Ô¥Þ¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃø
- *        ºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊÝ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
- *    (b) ºÆÇÛÉÛ¤Î·ÁÂÖ¤ò¡¤ÊÌ¤ËÄê¤á¤ëÊýË¡¤Ë¤è¤Ã¤Æ¡¤TOPPERS¥×¥í¥¸¥§¥¯¥È¤Ë
- *        Êó¹ð¤¹¤ë¤³¤È¡¥
- *  (4) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Þ¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤ë¤¤¤«¤Ê¤ëÂ»
- *      ³²¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤òÌÈÀÕ¤¹¤ë¤³¤È¡¥
- *      ¤Þ¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Î¥æ¡¼¥¶¤Þ¤¿¤Ï¥¨¥ó¥É¥æ¡¼¥¶¤«¤é¤Î¤¤¤«¤Ê¤ëÍý
- *      Í³¤Ë´ð¤Å¤¯ÀÁµá¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤ò
- *      ÌÈÀÕ¤¹¤ë¤³¤È¡¥
+ *  ä¸Šè¨˜è‘—ä½œæ¨©è€…ã¯ï¼Œä»¥ä¸‹ã®(1)ã€œ(4)ã®æ¡ä»¶ã‚’æº€ãŸã™å ´åˆã«é™ã‚Šï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
+ *  ã‚¢ï¼ˆæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’æ”¹å¤‰ã—ãŸã‚‚ã®ã‚’å«ã‚€ï¼Žä»¥ä¸‹åŒã˜ï¼‰ã‚’ä½¿ç”¨ãƒ»è¤‡è£½ãƒ»æ”¹
+ *  å¤‰ãƒ»å†é…å¸ƒï¼ˆä»¥ä¸‹ï¼Œåˆ©ç”¨ã¨å‘¼ã¶ï¼‰ã™ã‚‹ã“ã¨ã‚’ç„¡å„Ÿã§è¨±è«¾ã™ã‚‹ï¼Ž
+ *  (1) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã®å½¢ã§åˆ©ç”¨ã™ã‚‹å ´åˆã«ã¯ï¼Œä¸Šè¨˜ã®è‘—ä½œ
+ *      æ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šãŒï¼Œãã®ã¾ã¾ã®å½¢ã§ã‚½ãƒ¼
+ *      ã‚¹ã‚³ãƒ¼ãƒ‰ä¸­ã«å«ã¾ã‚Œã¦ã„ã‚‹ã“ã¨ï¼Ž
+ *  (2) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œãƒ©ã‚¤ãƒ–ãƒ©ãƒªå½¢å¼ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
+ *      ç”¨ã§ãã‚‹å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œå†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨
+ *      è€…ãƒžãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜
+ *      ã®ç„¡ä¿è¨¼è¦å®šã‚’æŽ²è¼‰ã™ã‚‹ã“ã¨ï¼Ž
+ *  (3) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œæ©Ÿå™¨ã«çµ„ã¿è¾¼ã‚€ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
+ *      ç”¨ã§ããªã„å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œæ¬¡ã®ã„ãšã‚Œã‹ã®æ¡ä»¶ã‚’æº€ãŸã™ã“
+ *      ã¨ï¼Ž
+ *    (a) å†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨è€…ãƒžãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—
+ *        ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šã‚’æŽ²è¼‰ã™ã‚‹ã“ã¨ï¼Ž
+ *    (b) å†é…å¸ƒã®å½¢æ…‹ã‚’ï¼Œåˆ¥ã«å®šã‚ã‚‹æ–¹æ³•ã«ã‚ˆã£ã¦ï¼ŒTOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«
+ *        å ±å‘Šã™ã‚‹ã“ã¨ï¼Ž
+ *  (4) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æŽ¥çš„ã¾ãŸã¯é–“æŽ¥çš„ã«ç”Ÿã˜ã‚‹ã„ã‹ãªã‚‹æ
+ *      å®³ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’å…è²¬ã™ã‚‹ã“ã¨ï¼Ž
+ *      ã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®ãƒ¦ãƒ¼ã‚¶ã¾ãŸã¯ã‚¨ãƒ³ãƒ‰ãƒ¦ãƒ¼ã‚¶ã‹ã‚‰ã®ã„ã‹ãªã‚‹ç†
+ *      ç”±ã«åŸºã¥ãè«‹æ±‚ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’
+ *      å…è²¬ã™ã‚‹ã“ã¨ï¼Ž
  *
- *  ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ï¡¤ÌµÊÝ¾Ú¤ÇÄó¶¡¤µ¤ì¤Æ¤¤¤ë¤â¤Î¤Ç¤¢¤ë¡¥¾åµ­Ãøºî¸¢¼Ô¤ª
- *  ¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤Ï¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ë´Ø¤·¤Æ¡¤ÆÃÄê¤Î»ÈÍÑÌÜÅª
- *  ¤ËÂÐ¤¹¤ëÅ¬¹çÀ­¤â´Þ¤á¤Æ¡¤¤¤¤«¤Ê¤ëÊÝ¾Ú¤â¹Ô¤ï¤Ê¤¤¡¥¤Þ¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§
- *  ¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Þ¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤¿¤¤¤«¤Ê¤ëÂ»³²¤Ë´Ø¤·¤Æ¤â¡¤¤½
- *  ¤ÎÀÕÇ¤¤òÉé¤ï¤Ê¤¤¡¥
+ *  æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã¯ï¼Œç„¡ä¿è¨¼ã§æä¾›ã•ã‚Œã¦ã„ã‚‹ã‚‚ã®ã§ã‚ã‚‹ï¼Žä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠ
+ *  ã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã¯ï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã«é–¢ã—ã¦ï¼Œç‰¹å®šã®ä½¿ç”¨ç›®çš„
+ *  ã«å¯¾ã™ã‚‹é©åˆæ€§ã‚‚å«ã‚ã¦ï¼Œã„ã‹ãªã‚‹ä¿è¨¼ã‚‚è¡Œã‚ãªã„ï¼Žã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
+ *  ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æŽ¥çš„ã¾ãŸã¯é–“æŽ¥çš„ã«ç”Ÿã˜ãŸã„ã‹ãªã‚‹æå®³ã«é–¢ã—ã¦ã‚‚ï¼Œã
+ *  ã®è²¬ä»»ã‚’è² ã‚ãªã„ï¼Ž
  *
  *  @(#) $Id$
  */
@@ -60,29 +60,29 @@ namespace NU.OJL.MPRTOS.TLV.Test
             }
         }
 
-        #region ÄÉ²Ã¤Î¥Æ¥¹¥ÈÂ°À­
+        #region è¿½åŠ ã®ãƒ†ã‚¹ãƒˆå±žæ€§
         // 
-        //¥Æ¥¹¥È¤òºîÀ®¤¹¤ë¤È¤­¤Ë¡¢¼¡¤ÎÄÉ²ÃÂ°À­¤ò»ÈÍÑ¤¹¤ë¤³¤È¤¬¤Ç¤­¤Þ¤¹:
+        //ãƒ†ã‚¹ãƒˆã‚’ä½œæˆã™ã‚‹ã¨ãã«ã€æ¬¡ã®è¿½åŠ å±žæ€§ã‚’ä½¿ç”¨ã™ã‚‹ã“ã¨ãŒã§ãã¾ã™:
         //
-        //¥¯¥é¥¹¤ÎºÇ½é¤Î¥Æ¥¹¥È¤ò¼Â¹Ô¤¹¤ëÁ°¤Ë¥³¡¼¥É¤ò¼Â¹Ô¤¹¤ë¤Ë¤Ï¡¢ClassInitialize ¤ò»ÈÍÑ
+        //ã‚¯ãƒ©ã‚¹ã®æœ€åˆã®ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹å‰ã«ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã™ã‚‹ã«ã¯ã€ClassInitialize ã‚’ä½¿ç”¨
         //[ClassInitialize()]
         //public static void MyClassInitialize(TestContext testContext)
         //{
         //}
         //
-        //¥¯¥é¥¹¤Î¤¹¤Ù¤Æ¤Î¥Æ¥¹¥È¤ò¼Â¹Ô¤·¤¿¸å¤Ë¥³¡¼¥É¤ò¼Â¹Ô¤¹¤ë¤Ë¤Ï¡¢ClassCleanup ¤ò»ÈÍÑ
+        //ã‚¯ãƒ©ã‚¹ã®ã™ã¹ã¦ã®ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã—ãŸå¾Œã«ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã™ã‚‹ã«ã¯ã€ClassCleanup ã‚’ä½¿ç”¨
         //[ClassCleanup()]
         //public static void MyClassCleanup()
         //{
         //}
         //
-        //³Æ¥Æ¥¹¥È¤ò¼Â¹Ô¤¹¤ëÁ°¤Ë¥³¡¼¥É¤ò¼Â¹Ô¤¹¤ë¤Ë¤Ï¡¢TestInitialize ¤ò»ÈÍÑ
+        //å„ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹å‰ã«ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã™ã‚‹ã«ã¯ã€TestInitialize ã‚’ä½¿ç”¨
         //[TestInitialize()]
         //public void MyTestInitialize()
         //{
         //}
         //
-        //³Æ¥Æ¥¹¥È¤ò¼Â¹Ô¤·¤¿¸å¤Ë¥³¡¼¥É¤ò¼Â¹Ô¤¹¤ë¤Ë¤Ï¡¢TestCleanup ¤ò»ÈÍÑ
+        //å„ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã—ãŸå¾Œã«ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã™ã‚‹ã«ã¯ã€TestCleanup ã‚’ä½¿ç”¨
         //[TestCleanup()]
         //public void MyTestCleanup()
         //{
@@ -94,24 +94,24 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void UndoTextTest()
         {
-            CommandManager target = new CommandManager(); // TODO: Å¬ÀÚ¤ÊÃÍ¤Ë½é´ü²½¤·¤Æ¤¯¤À¤µ¤¤
+            CommandManager target = new CommandManager(); // TODO: é©åˆ‡ãªå€¤ã«åˆæœŸåŒ–ã—ã¦ãã ã•ã„
             target.Do(new GeneralCommand("UndoTextTest", () => { }, () => { }));
-            Assert.AreEqual("¡ÖUndoTextTest¡×¤ò", target.UndoText);
+            Assert.AreEqual("ã€ŒUndoTextTestã€ã‚’", target.UndoText);
         }
 
         [TestMethod()]
         public void RedoTextTest()
         {
-            CommandManager target = new CommandManager(); // TODO: Å¬ÀÚ¤ÊÃÍ¤Ë½é´ü²½¤·¤Æ¤¯¤À¤µ¤¤
+            CommandManager target = new CommandManager(); // TODO: é©åˆ‡ãªå€¤ã«åˆæœŸåŒ–ã—ã¦ãã ã•ã„
             target.Do(new GeneralCommand("RedoTextTest", () => { }, () => { }));
             target.Undo();
-            Assert.AreEqual("¡ÖRedoTextTest¡×¤ò", target.RedoText);
+            Assert.AreEqual("ã€ŒRedoTextTestã€ã‚’", target.RedoText);
         }
 
         [TestMethod()]
         public void CanUndoTest()
         {
-            CommandManager target = new CommandManager(); // TODO: Å¬ÀÚ¤ÊÃÍ¤Ë½é´ü²½¤·¤Æ¤¯¤À¤µ¤¤
+            CommandManager target = new CommandManager(); // TODO: é©åˆ‡ãªå€¤ã«åˆæœŸåŒ–ã—ã¦ãã ã•ã„
             Assert.IsFalse(target.CanUndo);
             target.Do(new GeneralCommand("CanUndoTest", () => { }, () => { }));
             Assert.IsTrue(target.CanUndo);
@@ -120,7 +120,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         [TestMethod()]
         public void CanRedoTest()
         {
-            CommandManager target = new CommandManager(); // TODO: Å¬ÀÚ¤ÊÃÍ¤Ë½é´ü²½¤·¤Æ¤¯¤À¤µ¤¤
+            CommandManager target = new CommandManager(); // TODO: é©åˆ‡ãªå€¤ã«åˆæœŸåŒ–ã—ã¦ãã ã•ã„
             Assert.IsFalse(target.CanRedo);
             target.Do(new GeneralCommand("CanRedoTest", () => { }, () => { }));
             Assert.IsFalse(target.CanRedo);
@@ -132,7 +132,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         public void UndoTest()
         {
             string str = "";
-            CommandManager target = new CommandManager(); // TODO: Å¬ÀÚ¤ÊÃÍ¤Ë½é´ü²½¤·¤Æ¤¯¤À¤µ¤¤
+            CommandManager target = new CommandManager(); // TODO: é©åˆ‡ãªå€¤ã«åˆæœŸåŒ–ã—ã¦ãã ã•ã„
             target.Do(new GeneralCommand("CanRedoTest", () => { str = "CanRedoTest"; }, () => { str = ""; }));
             Assert.AreEqual("CanRedoTest", str);
             target.Undo();
@@ -143,7 +143,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         public void RedoTest()
         {
             string str = "";
-            CommandManager target = new CommandManager(); // TODO: Å¬ÀÚ¤ÊÃÍ¤Ë½é´ü²½¤·¤Æ¤¯¤À¤µ¤¤
+            CommandManager target = new CommandManager(); // TODO: é©åˆ‡ãªå€¤ã«åˆæœŸåŒ–ã—ã¦ãã ã•ã„
             target.Do(new GeneralCommand("CanRedoTest", () => { str = "CanRedoTest"; }, () => { str = ""; }));
             Assert.AreEqual("CanRedoTest", str);
             target.Undo();
@@ -156,7 +156,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         public void DoneTest()
         {
             string str = "";
-            CommandManager target = new CommandManager(); // TODO: Å¬ÀÚ¤ÊÃÍ¤Ë½é´ü²½¤·¤Æ¤¯¤À¤µ¤¤
+            CommandManager target = new CommandManager(); // TODO: é©åˆ‡ãªå€¤ã«åˆæœŸåŒ–ã—ã¦ãã ã•ã„
             target.Done(new GeneralCommand("CanRedoTest", () => { str = "CanRedoTest"; }, () => { str = ""; }));
             Assert.AreEqual("", str);
             target.Undo();
@@ -169,7 +169,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         public void DoTest()
         {
             string str = "";
-            CommandManager target = new CommandManager(); // TODO: Å¬ÀÚ¤ÊÃÍ¤Ë½é´ü²½¤·¤Æ¤¯¤À¤µ¤¤
+            CommandManager target = new CommandManager(); // TODO: é©åˆ‡ãªå€¤ã«åˆæœŸåŒ–ã—ã¦ãã ã•ã„
             target.Do(new GeneralCommand("CanRedoTest", () => { str = "CanRedoTest"; }, () => { str = ""; }));
             Assert.AreEqual("CanRedoTest", str);
             target.Undo();
