@@ -4,34 +4,34 @@
  *  Copyright (C) 2008,2009 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
- *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
- *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
- *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
- *      権表示，この利用条件および下記の無保証規定が，そのままの形でソー
- *      スコード中に含まれていること．
- *  (2) 本ソフトウェアを，ライブラリ形式など，他のソフトウェア開発に使
- *      用できる形で再配布する場合には，再配布に伴うドキュメント（利用
- *      者マニュアルなど）に，上記の著作権表示，この利用条件および下記
- *      の無保証規定を掲載すること．
- *  (3) 本ソフトウェアを，機器に組み込むなど，他のソフトウェア開発に使
- *      用できない形で再配布する場合には，次のいずれかの条件を満たすこ
- *      と．
- *    (a) 再配布に伴うドキュメント（利用者マニュアルなど）に，上記の著
- *        作権表示，この利用条件および下記の無保証規定を掲載すること．
- *    (b) 再配布の形態を，別に定める方法によって，TOPPERSプロジェクトに
- *        報告すること．
- *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
- *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
- *      また，本ソフトウェアのユーザまたはエンドユーザからのいかなる理
- *      由に基づく請求からも，上記著作権者およびTOPPERSプロジェクトを
- *      免責すること．
+ *  �嵭����Ԥϡ��ʲ���(1)��(4)�ξ������������˸¤ꡤ�ܥ��եȥ���
+ *  �����ܥ��եȥ���������Ѥ�����Τ�ޤࡥ�ʲ�Ʊ���ˤ���ѡ�ʣ������
+ *  �ѡ������ۡʰʲ������ѤȸƤ֡ˤ��뤳�Ȥ�̵���ǵ������롥
+ *  (1) �ܥ��եȥ������򥽡��������ɤη������Ѥ�����ˤϡ��嵭������
+ *      ��ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ��꤬�����Τޤޤη��ǥ���
+ *      ����������˴ޤޤ�Ƥ��뤳�ȡ�
+ *  (2) �ܥ��եȥ������򡤥饤�֥������ʤɡ�¾�Υ��եȥ�������ȯ�˻�
+ *      �ѤǤ�����Ǻ����ۤ�����ˤϡ������ۤ�ȼ���ɥ�����ȡ�����
+ *      �ԥޥ˥奢��ʤɡˤˡ��嵭�����ɽ�����������Ѿ�浪��Ӳ���
+ *      ��̵�ݾڵ����Ǻܤ��뤳�ȡ�
+ *  (3) �ܥ��եȥ������򡤵�����Ȥ߹���ʤɡ�¾�Υ��եȥ�������ȯ�˻�
+ *      �ѤǤ��ʤ����Ǻ����ۤ�����ˤϡ����Τ����줫�ξ�����������
+ *      �ȡ�
+ *    (a) �����ۤ�ȼ���ɥ�����ȡ����Ѽԥޥ˥奢��ʤɡˤˡ��嵭����
+ *        �ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ����Ǻܤ��뤳�ȡ�
+ *    (b) �����ۤη��֤��̤�������ˡ�ˤ�äơ�TOPPERS�ץ��������Ȥ�
+ *        ��𤹤뤳�ȡ�
+ *  (4) �ܥ��եȥ����������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������뤤���ʤ�»
+ *      ������⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ����դ��뤳�ȡ�
+ *      �ޤ����ܥ��եȥ������Υ桼���ޤ��ϥ���ɥ桼������Τ����ʤ���
+ *      ͳ�˴�Ť����ᤫ��⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ�
+ *      ���դ��뤳�ȡ�
  *
- *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
- *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，特定の使用目的
- *  に対する適合性も含めて，いかなる保証も行わない．また，本ソフトウェ
- *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
- *  の責任を負わない．
+ *  �ܥ��եȥ������ϡ�̵�ݾڤ��󶡤���Ƥ����ΤǤ��롥�嵭����Ԥ�
+ *  ���TOPPERS�ץ��������Ȥϡ��ܥ��եȥ������˴ؤ��ơ�����λ�����Ū
+ *  ���Ф���Ŭ������ޤ�ơ������ʤ��ݾڤ�Ԥ�ʤ����ޤ����ܥ��եȥ���
+ *  �������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������������ʤ�»���˴ؤ��Ƥ⡤��
+ *  ����Ǥ�����ʤ���
  *
  *  @(#) $Id$
  */
@@ -73,13 +73,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			if (_data.ResourceData != null)
 			{
-				dataGridView.Columns["time"].HeaderText = "時間[" + _data.ResourceData.TimeScale + "]";
+				dataGridView.Columns["time"].HeaderText = "����[" + _data.ResourceData.TimeScale + "]";
 
 				setDataGridViewDataSource();
 			}
 			else
 			{
-				dataGridView.Columns["time"].HeaderText = "時間";
+				dataGridView.Columns["time"].HeaderText = "����";
 			}
 
 			if (!_data.SettingData.TraceLogViewerSetting.FirstDisplayedTime.IsEmpty)
@@ -150,11 +150,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			base.OnLoad(e);
 
-			addColumn("eventType", "", "アイコン", "EventType", typeof(DataGridViewImageColumn));
-			addColumn("time", "時間", "Time", typeof(DataGridViewTextBoxColumn));
-			addColumn("resourceType", "リソースタイプ", "ResourceType", typeof(DataGridViewTextBoxColumn), false);
-			addColumn("resource", "リソース", "ResourceDisplayName", typeof(DataGridViewTextBoxColumn));
-			addColumn("event", "イベント", "Event", typeof(DataGridViewTextBoxColumn));
+			addColumn("eventType", "", "��������", "EventType", typeof(DataGridViewImageColumn));
+			addColumn("time", "����", "Time", typeof(DataGridViewTextBoxColumn));
+			addColumn("resourceType", "�꥽����������", "ResourceType", typeof(DataGridViewTextBoxColumn), false);
+			addColumn("resource", "�꥽����", "ResourceDisplayName", typeof(DataGridViewTextBoxColumn));
+			addColumn("event", "���٥��", "Event", typeof(DataGridViewTextBoxColumn));
 
 			dataGridView.Columns["eventType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 			dataGridView.Columns["eventType"].Width = 22;
@@ -167,16 +167,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					if (dataGridView.DataSource != null)
 					{
-						ApplicationFactory.StatusManager.ShowHint(this.GetType().ToString() + ":zoomString", "文字サイズ変更", new[] { "Ctrl", "ホイール" });
+						ApplicationFactory.StatusManager.ShowHint(this.GetType().ToString() + ":zoomString", "ʸ���������ѹ�", new[] { "Ctrl", "�ۥ�����" });
 						if (dataGridView.SelectedRows.Count != 0)
 						{
-							ApplicationFactory.StatusManager.ShowHint(this.GetType().ToString() + ":copy", "クリップボードへコピー", new[] { "Ctrl", "C" });
+							ApplicationFactory.StatusManager.ShowHint(this.GetType().ToString() + ":copy", "����åץܡ��ɤإ��ԡ�", new[] { "Ctrl", "C" });
 						}
 						else
 						{
 							ApplicationFactory.StatusManager.HideHint(this.GetType().ToString() + ":copy");
 						}
-						ApplicationFactory.StatusManager.ShowHint(GetType() + Name + "mouseDoubleClickMove", "移動", "左ダブルクリック");
+						ApplicationFactory.StatusManager.ShowHint(GetType() + Name + "mouseDoubleClickMove", "��ư", "�����֥륯��å�");
 					}
 				};
 			dataGridView.MouseLeave += (o, _e) =>
@@ -203,12 +203,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					{
 						if (_e.X > 0 && _e.X < dataGridView.Width && _e.Y > 0 && _e.Y < dataGridView.ColumnHeadersHeight)
 						{
-							ApplicationFactory.StatusManager.ShowHint(this.GetType().ToString() + ":sortInfo", "ソート", "左クリック");
-							ApplicationFactory.StatusManager.ShowHint(this.GetType().ToString() + ":dragInfo", "列入れ替え", "ドラッグ");
+							ApplicationFactory.StatusManager.ShowHint(this.GetType().ToString() + ":sortInfo", "������", "������å�");
+							ApplicationFactory.StatusManager.ShowHint(this.GetType().ToString() + ":dragInfo", "�������ؤ�", "�ɥ�å�");
 						}
 						else
 						{
-							ApplicationFactory.StatusManager.ShowHint(this.GetType().ToString() + ":rightClickMenu", "メニュー", "右クリック");
+							ApplicationFactory.StatusManager.ShowHint(this.GetType().ToString() + ":rightClickMenu", "��˥塼", "������å�");
 							ApplicationFactory.StatusManager.HideHint(this.GetType().ToString() + ":sortInfo");
 							ApplicationFactory.StatusManager.HideHint(this.GetType().ToString() + ":dragInfo");
 						}
@@ -244,16 +244,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		}
 
 		/// <summary>
-		/// 指定された列を基準にして並び替えを行う
+		/// ���ꤵ�줿�����ˤ����¤��ؤ���Ԥ�
 		/// </summary>
-		/// <param name="sortColumn">基準にする列</param>
-		/// <param name="orderToggle">並び替えの方向をトグルで変更する</param>
+		/// <param name="sortColumn">���ˤ�����</param>
+		/// <param name="orderToggle">�¤��ؤ���������ȥ�����ѹ�����</param>
 		private void sortDataGridViewRows(DataGridViewColumn sortColumn, bool orderToggle)
 		{
 			if (sortColumn == null)
 				return;
 
-			//今までの並び替えグリフを消す
+			//���ޤǤ��¤��ؤ�����դ�ä�
 			if (sortColumn.SortMode == DataGridViewColumnSortMode.Programmatic
 				&& dataGridView.SortedColumn != null
 				&& !dataGridView.SortedColumn.Equals(sortColumn))
@@ -263,7 +263,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			ListSortDirection sortDirection;
 
-			//並び替えの方向（昇順か降順か）を決める
+			//�¤��ؤ��������ʾ��礫�߽礫�ˤ����
 			if (orderToggle)
 				sortDirection = dataGridView.SortOrder == SortOrder.Descending ? ListSortDirection.Ascending : ListSortDirection.Descending;
 			else
@@ -271,19 +271,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			SortOrder sortOrder = sortDirection == ListSortDirection.Ascending ? SortOrder.Ascending : SortOrder.Descending;
 
-			//並び替えグリフを変更
+			//�¤��ؤ�����դ��ѹ�
 			if (sortColumn.SortMode == DataGridViewColumnSortMode.Programmatic)
 				sortColumn.HeaderCell.SortGlyphDirection = sortOrder;
 
-			//並び替えを行う
-			ApplicationFactory.CommandManager.Do(new GeneralCommand(Text + " 並び替え",
+			//�¤��ؤ���Ԥ�
+			ApplicationFactory.CommandManager.Do(new GeneralCommand(Text + " �¤��ؤ�",
 				() =>
 				{
-					dataGridView.Sort(sortColumn, sortDirection); 			//セルの色設定を変更する
+					dataGridView.Sort(sortColumn, sortDirection); 			//����ο�������ѹ�����
 				},
 				() =>
 				{
-					dataGridView.Sort(sortColumn, sortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending);			//セルの色設定を変更する
+					dataGridView.Sort(sortColumn, sortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending);			//����ο�������ѹ�����
 				}));
 
 		}
@@ -428,7 +428,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					{
 						this.Invoke(new MethodInvoker(() =>
 						{
-							ApplicationFactory.StatusManager.ShowProcessing(this.GetType().ToString() + ":sorting", "ソート中");
+							ApplicationFactory.StatusManager.ShowProcessing(this.GetType().ToString() + ":sorting", "��������");
 						}));
 					};
 				_dataSource.Sorted += (o, e) =>

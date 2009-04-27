@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,12 +15,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls.Forms
         public AboutForm()
         {
             InitializeComponent();
-            //ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±
-            this.versionLabel.Text = "ãƒãƒ¼ã‚¸ãƒ§ãƒ³ " + ApplicationData.Version;
-            //AssemblyInfo.csã§è¨­å®šã—ãŸAssemblyVersionã‚’å–å¾—
+            //¥Ğ¡¼¥¸¥ç¥ó¾ğÊó
+            this.versionLabel.Text = "¥Ğ¡¼¥¸¥ç¥ó " + ApplicationData.Version;
+            //AssemblyInfo.cs¤ÇÀßÄê¤·¤¿AssemblyVersion¤ò¼èÆÀ
             Assembly asm = Assembly.GetExecutingAssembly();
             Version ver = asm.GetName().Version;
-            this.buildLabel.Text = "ãƒ“ãƒ«ãƒ‰ç•ªå· " + ver;
+            this.buildLabel.Text = "¥Ó¥ë¥ÉÈÖ¹æ " + ver;
         }
 
         private void okButton_Click(object sender, EventArgs e)

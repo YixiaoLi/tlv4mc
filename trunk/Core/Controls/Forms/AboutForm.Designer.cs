@@ -1,4 +1,4 @@
-Ôªønamespace NU.OJL.MPRTOS.TLV.Core.Controls.Forms
+namespace NU.OJL.MPRTOS.TLV.Core.Controls.Forms
 {
     partial class AboutForm
     {
@@ -129,7 +129,7 @@
             this.Name = "AboutForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "TLV„Å´„Å§„ÅÑ„Å¶";
+            this.Text = "TLV§À§ƒ§§§∆";
             ((System.ComponentModel.ISupportInitialize)(this.logoPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
