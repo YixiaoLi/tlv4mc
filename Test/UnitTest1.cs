@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Test
 {
     /// <summary>
-    /// UnitTest1 �γ��פ�����
+    /// UnitTest1 の概要の説明
     /// </summary>
     [TestClass]
     public class UnitTest1
@@ -15,15 +15,15 @@ namespace Test
         public UnitTest1()
         {
             //
-            // TODO: ���󥹥ȥ饯�� �����å��򤳤����ɲä��ޤ�
+            // TODO: コンストラクタ ロジックをここに追加します
             //
         }
 
         private TestContext testContextInstance;
 
         /// <summary>
-        ///���ߤΥƥ��Ȥμ¹ԤˤĤ��Ƥξ��󤪤�ӵ�ǽ��
-        ///�󶡤���ƥ��� ����ƥ����Ȥ�����ޤ������ꤷ�ޤ���
+        ///現在のテストの実行についての情報および機能を
+        ///提供するテスト コンテキストを取得または設定します。
         ///</summary>
         public TestContext TestContext
         {
@@ -37,23 +37,23 @@ namespace Test
             }
         }
 
-        #region �ɲäΥƥ���°��
+        #region 追加のテスト属性
         //
-        // �ƥ��Ȥ��������ݤˤϡ������ɲ�°������ѤǤ��ޤ�:
+        // テストを作成する際には、次の追加属性を使用できます:
         //
-        // ���饹��Ǻǽ�Υƥ��Ȥ�¹Ԥ������ˡ�ClassInitialize ����Ѥ��ƥ����ɤ�¹Ԥ��Ƥ�������
+        // クラス内で最初のテストを実行する前に、ClassInitialize を使用してコードを実行してください
         // [ClassInitialize()]
         // public static void MyClassInitialize(TestContext testContext) { }
         //
-        // ���饹��Υƥ��Ȥ򤹤٤Ƽ¹Ԥ����顢ClassCleanup ����Ѥ��ƥ����ɤ�¹Ԥ��Ƥ�������
+        // クラス内のテストをすべて実行したら、ClassCleanup を使用してコードを実行してください
         // [ClassCleanup()]
         // public static void MyClassCleanup() { }
         //
-        // �ƥƥ��Ȥ�¹Ԥ������ˡ�TestInitialize ����Ѥ��ƥ����ɤ�¹Ԥ��Ƥ�������
+        // 各テストを実行する前に、TestInitialize を使用してコードを実行してください
         // [TestInitialize()]
         // public void MyTestInitialize() { }
         //
-        // �ƥƥ��Ȥ�¹Ԥ�����ˡ�TestCleanup ����Ѥ��ƥ����ɤ�¹Ԥ��Ƥ�������
+        // 各テストを実行した後に、TestCleanup を使用してコードを実行してください
         // [TestCleanup()]
         // public void MyTestCleanup() { }
         //
@@ -63,7 +63,7 @@ namespace Test
         public void TestMethod1()
         {
             //
-            // TODO: �ƥ��� �����å��򤳤����ɲä��Ƥ�������
+            // TODO: テスト ロジックをここに追加してください
             //
         }
     }
