@@ -4,34 +4,34 @@
  *  Copyright (C) 2008,2009 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  ä¸Šè¨˜è‘—ä½œæ¨©è€…ã¯ï¼Œä»¥ä¸‹ã®(1)ã€œ(4)ã®æ¡ä»¶ã‚’æº€ãŸã™å ´åˆã«é™ã‚Šï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
- *  ã‚¢ï¼ˆæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’æ”¹å¤‰ã—ãŸã‚‚ã®ã‚’å«ã‚€ï¼ä»¥ä¸‹åŒã˜ï¼‰ã‚’ä½¿ç”¨ãƒ»è¤‡è£½ãƒ»æ”¹
- *  å¤‰ãƒ»å†é…å¸ƒï¼ˆä»¥ä¸‹ï¼Œåˆ©ç”¨ã¨å‘¼ã¶ï¼‰ã™ã‚‹ã“ã¨ã‚’ç„¡å„Ÿã§è¨±è«¾ã™ã‚‹ï¼
- *  (1) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã®å½¢ã§åˆ©ç”¨ã™ã‚‹å ´åˆã«ã¯ï¼Œä¸Šè¨˜ã®è‘—ä½œ
- *      æ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šãŒï¼Œãã®ã¾ã¾ã®å½¢ã§ã‚½ãƒ¼
- *      ã‚¹ã‚³ãƒ¼ãƒ‰ä¸­ã«å«ã¾ã‚Œã¦ã„ã‚‹ã“ã¨ï¼
- *  (2) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œãƒ©ã‚¤ãƒ–ãƒ©ãƒªå½¢å¼ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
- *      ç”¨ã§ãã‚‹å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œå†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨
- *      è€…ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜
- *      ã®ç„¡ä¿è¨¼è¦å®šã‚’æ²è¼‰ã™ã‚‹ã“ã¨ï¼
- *  (3) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œæ©Ÿå™¨ã«çµ„ã¿è¾¼ã‚€ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
- *      ç”¨ã§ããªã„å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œæ¬¡ã®ã„ãšã‚Œã‹ã®æ¡ä»¶ã‚’æº€ãŸã™ã“
- *      ã¨ï¼
- *    (a) å†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨è€…ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—
- *        ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šã‚’æ²è¼‰ã™ã‚‹ã“ã¨ï¼
- *    (b) å†é…å¸ƒã®å½¢æ…‹ã‚’ï¼Œåˆ¥ã«å®šã‚ã‚‹æ–¹æ³•ã«ã‚ˆã£ã¦ï¼ŒTOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«
- *        å ±å‘Šã™ã‚‹ã“ã¨ï¼
- *  (4) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æ¥çš„ã¾ãŸã¯é–“æ¥çš„ã«ç”Ÿã˜ã‚‹ã„ã‹ãªã‚‹æ
- *      å®³ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’å…è²¬ã™ã‚‹ã“ã¨ï¼
- *      ã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®ãƒ¦ãƒ¼ã‚¶ã¾ãŸã¯ã‚¨ãƒ³ãƒ‰ãƒ¦ãƒ¼ã‚¶ã‹ã‚‰ã®ã„ã‹ãªã‚‹ç†
- *      ç”±ã«åŸºã¥ãè«‹æ±‚ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’
- *      å…è²¬ã™ã‚‹ã“ã¨ï¼
+ *  ¾åµ­Ãøºî¸¢¼Ô¤Ï¡¤°Ê²¼¤Î(1)¡Á(4)¤Î¾ò·ï¤òËş¤¿¤¹¾ì¹ç¤Ë¸Â¤ê¡¤ËÜ¥½¥Õ¥È¥¦¥§
+ *  ¥¢¡ÊËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò²şÊÑ¤·¤¿¤â¤Î¤ò´Ş¤à¡¥°Ê²¼Æ±¤¸¡Ë¤ò»ÈÍÑ¡¦Ê£À½¡¦²ş
+ *  ÊÑ¡¦ºÆÇÛÉÛ¡Ê°Ê²¼¡¤ÍøÍÑ¤È¸Æ¤Ö¡Ë¤¹¤ë¤³¤È¤òÌµ½ş¤ÇµöÂú¤¹¤ë¡¥
+ *  (1) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¥½¡¼¥¹¥³¡¼¥É¤Î·Á¤ÇÍøÍÑ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¾åµ­¤ÎÃøºî
+ *      ¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊİ¾Úµ¬Äê¤¬¡¤¤½¤Î¤Ş¤Ş¤Î·Á¤Ç¥½¡¼
+ *      ¥¹¥³¡¼¥ÉÃæ¤Ë´Ş¤Ş¤ì¤Æ¤¤¤ë¤³¤È¡¥
+ *  (2) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤¥é¥¤¥Ö¥é¥ê·Á¼°¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
+ *      ÍÑ¤Ç¤­¤ë·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ
+ *      ¼Ô¥Ş¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃøºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­
+ *      ¤ÎÌµÊİ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
+ *  (3) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤µ¡´ï¤ËÁÈ¤ß¹ş¤à¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
+ *      ÍÑ¤Ç¤­¤Ê¤¤·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¼¡¤Î¤¤¤º¤ì¤«¤Î¾ò·ï¤òËş¤¿¤¹¤³
+ *      ¤È¡¥
+ *    (a) ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ¼Ô¥Ş¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃø
+ *        ºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊİ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
+ *    (b) ºÆÇÛÉÛ¤Î·ÁÂÖ¤ò¡¤ÊÌ¤ËÄê¤á¤ëÊıË¡¤Ë¤è¤Ã¤Æ¡¤TOPPERS¥×¥í¥¸¥§¥¯¥È¤Ë
+ *        Êó¹ğ¤¹¤ë¤³¤È¡¥
+ *  (4) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Ş¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤ë¤¤¤«¤Ê¤ëÂ»
+ *      ³²¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤òÌÈÀÕ¤¹¤ë¤³¤È¡¥
+ *      ¤Ş¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Î¥æ¡¼¥¶¤Ş¤¿¤Ï¥¨¥ó¥É¥æ¡¼¥¶¤«¤é¤Î¤¤¤«¤Ê¤ëÍı
+ *      Í³¤Ë´ğ¤Å¤¯ÀÁµá¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤ò
+ *      ÌÈÀÕ¤¹¤ë¤³¤È¡¥
  *
- *  æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã¯ï¼Œç„¡ä¿è¨¼ã§æä¾›ã•ã‚Œã¦ã„ã‚‹ã‚‚ã®ã§ã‚ã‚‹ï¼ä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠ
- *  ã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã¯ï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã«é–¢ã—ã¦ï¼Œç‰¹å®šã®ä½¿ç”¨ç›®çš„
- *  ã«å¯¾ã™ã‚‹é©åˆæ€§ã‚‚å«ã‚ã¦ï¼Œã„ã‹ãªã‚‹ä¿è¨¼ã‚‚è¡Œã‚ãªã„ï¼ã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
- *  ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æ¥çš„ã¾ãŸã¯é–“æ¥çš„ã«ç”Ÿã˜ãŸã„ã‹ãªã‚‹æå®³ã«é–¢ã—ã¦ã‚‚ï¼Œã
- *  ã®è²¬ä»»ã‚’è² ã‚ãªã„ï¼
+ *  ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ï¡¤ÌµÊİ¾Ú¤ÇÄó¶¡¤µ¤ì¤Æ¤¤¤ë¤â¤Î¤Ç¤¢¤ë¡¥¾åµ­Ãøºî¸¢¼Ô¤ª
+ *  ¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤Ï¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ë´Ø¤·¤Æ¡¤ÆÃÄê¤Î»ÈÍÑÌÜÅª
+ *  ¤ËÂĞ¤¹¤ëÅ¬¹çÀ­¤â´Ş¤á¤Æ¡¤¤¤¤«¤Ê¤ëÊİ¾Ú¤â¹Ô¤ï¤Ê¤¤¡¥¤Ş¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§
+ *  ¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Ş¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤¿¤¤¤«¤Ê¤ëÂ»³²¤Ë´Ø¤·¤Æ¤â¡¤¤½
+ *  ¤ÎÀÕÇ¤¤òÉé¤ï¤Ê¤¤¡¥
  *
  *  @(#) $Id$
  */
@@ -47,10 +47,10 @@ using System.Windows.Forms;
 namespace NU.OJL.MPRTOS.TLV.Test
 {
     /// <summary>
-    /// ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç®¡ç†ãƒ¦ãƒ¼ã‚¹ã‚±ãƒ¼ã‚¹éƒ¡ã®ãƒ†ã‚¹ãƒˆã‚±ãƒ¼ã‚¹
+    /// ¥µ¥Ö¥¦¥£¥ó¥É¥¦´ÉÍı¥æ¡¼¥¹¥±¡¼¥¹·´¤Î¥Æ¥¹¥È¥±¡¼¥¹
     /// </summary>
     [TestClass]
-    public class ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç®¡ç†
+    public class ¥µ¥Ö¥¦¥£¥ó¥É¥¦´ÉÍı
     {
         private TestContext testContextInstance;
 
@@ -66,30 +66,30 @@ namespace NU.OJL.MPRTOS.TLV.Test
             }
         }
 
-        #region è¿½åŠ ã®ãƒ†ã‚¹ãƒˆå±æ€§
+        #region ÄÉ²Ã¤Î¥Æ¥¹¥ÈÂ°À­
         //
-        // ãƒ†ã‚¹ãƒˆã‚’ä½œæˆã™ã‚‹éš›ã«ã¯ã€æ¬¡ã®è¿½åŠ å±æ€§ã‚’ä½¿ç”¨ã§ãã¾ã™:
+        // ¥Æ¥¹¥È¤òºîÀ®¤¹¤ëºİ¤Ë¤Ï¡¢¼¡¤ÎÄÉ²ÃÂ°À­¤ò»ÈÍÑ¤Ç¤­¤Ş¤¹:
         //
-        // ã‚¯ãƒ©ã‚¹å†…ã§æœ€åˆã®ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹å‰ã«ã€ClassInitialize ã‚’ä½¿ç”¨ã—ã¦ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã—ã¦ãã ã•ã„
+        // ¥¯¥é¥¹Æâ¤ÇºÇ½é¤Î¥Æ¥¹¥È¤ò¼Â¹Ô¤¹¤ëÁ°¤Ë¡¢ClassInitialize ¤ò»ÈÍÑ¤·¤Æ¥³¡¼¥É¤ò¼Â¹Ô¤·¤Æ¤¯¤À¤µ¤¤
         // [ClassInitialize()]
         // public static void MyClassInitialize(TestContext testContext) { }
         //
-        // ã‚¯ãƒ©ã‚¹å†…ã®ãƒ†ã‚¹ãƒˆã‚’ã™ã¹ã¦å®Ÿè¡Œã—ãŸã‚‰ã€ClassCleanup ã‚’ä½¿ç”¨ã—ã¦ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã—ã¦ãã ã•ã„
+        // ¥¯¥é¥¹Æâ¤Î¥Æ¥¹¥È¤ò¤¹¤Ù¤Æ¼Â¹Ô¤·¤¿¤é¡¢ClassCleanup ¤ò»ÈÍÑ¤·¤Æ¥³¡¼¥É¤ò¼Â¹Ô¤·¤Æ¤¯¤À¤µ¤¤
         // [ClassCleanup()]
         // public static void MyClassCleanup() { }
         //
-        // å„ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹å‰ã«ã€TestInitialize ã‚’ä½¿ç”¨ã—ã¦ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã—ã¦ãã ã•ã„
+        // ³Æ¥Æ¥¹¥È¤ò¼Â¹Ô¤¹¤ëÁ°¤Ë¡¢TestInitialize ¤ò»ÈÍÑ¤·¤Æ¥³¡¼¥É¤ò¼Â¹Ô¤·¤Æ¤¯¤À¤µ¤¤
         // [TestInitialize()]
         // public void MyTestInitialize() { }
         //
-        // å„ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã—ãŸå¾Œã«ã€TestCleanup ã‚’ä½¿ç”¨ã—ã¦ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã—ã¦ãã ã•ã„
+        // ³Æ¥Æ¥¹¥È¤ò¼Â¹Ô¤·¤¿¸å¤Ë¡¢TestCleanup ¤ò»ÈÍÑ¤·¤Æ¥³¡¼¥É¤ò¼Â¹Ô¤·¤Æ¤¯¤À¤µ¤¤
         // [TestCleanup()]
         // public void MyTestCleanup() { }
         //
         #endregion
 
         [TestMethod]
-        public void ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¿½åŠ ()
+        public void ¥µ¥Ö¥¦¥£¥ó¥É¥¦¤ÎÄÉ²Ã()
         {
             WindowManager wm = new WindowManager();
             wm.Parent = new Control();
@@ -97,11 +97,11 @@ namespace NU.OJL.MPRTOS.TLV.Test
 
             SubWindow[] sws = new[]
             {
-                new SubWindow("sb1", new Control(), DockState.DockLeft) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦1" },
-                new SubWindow("sb2", new Control(), DockState.DockRight) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦2" },
-                new SubWindow("sb3", new Control(), DockState.DockTop) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦3" },
-                new SubWindow("sb4", new Control(), DockState.DockBottom) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦4", Visible = false },
-                new SubWindow("sb5", new Control(), DockState.DockLeft) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦5" },
+                new SubWindow("sb1", new Control(), DockState.DockLeft) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦1" },
+                new SubWindow("sb2", new Control(), DockState.DockRight) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦2" },
+                new SubWindow("sb3", new Control(), DockState.DockTop) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦3" },
+                new SubWindow("sb4", new Control(), DockState.DockBottom) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦4", Visible = false },
+                new SubWindow("sb5", new Control(), DockState.DockLeft) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦5" },
             };
 
             wm.AddSubWindow(sws);
@@ -117,11 +117,11 @@ namespace NU.OJL.MPRTOS.TLV.Test
             Assert.AreEqual(DockState.DockTop, wm.GetSubWindow("sb3").DockState);
             Assert.AreEqual(DockState.DockBottom, wm.GetSubWindow("sb4").DockState);
             Assert.AreEqual(DockState.DockLeft, wm.GetSubWindow("sb5").DockState);
-            Assert.AreEqual("ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦1", wm.GetSubWindow("sb1").Text);
-            Assert.AreEqual("ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦2", wm.GetSubWindow("sb2").Text);
-            Assert.AreEqual("ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦3", wm.GetSubWindow("sb3").Text);
-            Assert.AreEqual("ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦4", wm.GetSubWindow("sb4").Text);
-            Assert.AreEqual("ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦5", wm.GetSubWindow("sb5").Text);
+            Assert.AreEqual("¥µ¥Ö¥¦¥£¥ó¥É¥¦1", wm.GetSubWindow("sb1").Text);
+            Assert.AreEqual("¥µ¥Ö¥¦¥£¥ó¥É¥¦2", wm.GetSubWindow("sb2").Text);
+            Assert.AreEqual("¥µ¥Ö¥¦¥£¥ó¥É¥¦3", wm.GetSubWindow("sb3").Text);
+            Assert.AreEqual("¥µ¥Ö¥¦¥£¥ó¥É¥¦4", wm.GetSubWindow("sb4").Text);
+            Assert.AreEqual("¥µ¥Ö¥¦¥£¥ó¥É¥¦5", wm.GetSubWindow("sb5").Text);
             Assert.IsTrue(wm.GetSubWindow("sb1").Visible);
             Assert.IsTrue(wm.GetSubWindow("sb2").Visible);
             Assert.IsTrue(wm.GetSubWindow("sb3").Visible);
@@ -130,7 +130,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         }
 
         [TestMethod]
-        public void ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤º()
+        public void ¥µ¥Ö¥¦¥£¥ó¥É¥¦¤ÎÉ½¼¨()
         {
             WindowManager wm = new WindowManager();
             wm.Parent = new Control();
@@ -139,11 +139,11 @@ namespace NU.OJL.MPRTOS.TLV.Test
 
             SubWindow[] sws = new[]
             {
-                new SubWindow("sb1", new Control(), DockState.DockLeft) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦1" , Visible = false },
-                new SubWindow("sb2", new Control(), DockState.DockRight) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦2" , Visible = false },
-                new SubWindow("sb3", new Control(), DockState.DockTop) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦3" , Visible = false },
-                new SubWindow("sb4", new Control(), DockState.DockBottom) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦4", Visible = false },
-                new SubWindow("sb5", new Control(), DockState.DockLeft) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦5" , Visible = false },
+                new SubWindow("sb1", new Control(), DockState.DockLeft) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦1" , Visible = false },
+                new SubWindow("sb2", new Control(), DockState.DockRight) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦2" , Visible = false },
+                new SubWindow("sb3", new Control(), DockState.DockTop) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦3" , Visible = false },
+                new SubWindow("sb4", new Control(), DockState.DockBottom) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦4", Visible = false },
+                new SubWindow("sb5", new Control(), DockState.DockLeft) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦5" , Visible = false },
             };
 
             wm.AddSubWindow(sws);
@@ -169,7 +169,7 @@ namespace NU.OJL.MPRTOS.TLV.Test
         }
 
         [TestMethod]
-        public void ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®éè¡¨ç¤º()
+        public void ¥µ¥Ö¥¦¥£¥ó¥É¥¦¤ÎÈóÉ½¼¨()
         {
             WindowManager wm = new WindowManager();
             wm.Parent = new Control();
@@ -178,11 +178,11 @@ namespace NU.OJL.MPRTOS.TLV.Test
 
             SubWindow[] sws = new[]
             {
-                new SubWindow("sb1", new Control(), DockState.DockLeft) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦1" , Visible = true },
-                new SubWindow("sb2", new Control(), DockState.DockRight) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦2" , Visible = true },
-                new SubWindow("sb3", new Control(), DockState.DockTop) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦3" , Visible = true },
-                new SubWindow("sb4", new Control(), DockState.DockBottom) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦4", Visible = true },
-                new SubWindow("sb5", new Control(), DockState.DockLeft) { Text = "ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦5" , Visible = true },
+                new SubWindow("sb1", new Control(), DockState.DockLeft) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦1" , Visible = true },
+                new SubWindow("sb2", new Control(), DockState.DockRight) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦2" , Visible = true },
+                new SubWindow("sb3", new Control(), DockState.DockTop) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦3" , Visible = true },
+                new SubWindow("sb4", new Control(), DockState.DockBottom) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦4", Visible = true },
+                new SubWindow("sb5", new Control(), DockState.DockLeft) { Text = "¥µ¥Ö¥¦¥£¥ó¥É¥¦5" , Visible = true },
             };
 
             wm.AddSubWindow(sws);

@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Test
 {
     /// <summary>
-    /// UnitTest1 ã®æ¦‚è¦ã®èª¬æ˜
+    /// UnitTest1 ¤Î³µÍ×¤ÎÀâÌÀ
     /// </summary>
     [TestClass]
     public class UnitTest1
@@ -15,15 +15,15 @@ namespace Test
         public UnitTest1()
         {
             //
-            // TODO: ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ ãƒ­ã‚¸ãƒƒã‚¯ã‚’ã“ã“ã«è¿½åŠ ã—ã¾ã™
+            // TODO: ¥³¥ó¥¹¥È¥é¥¯¥¿ ¥í¥¸¥Ã¥¯¤ò¤³¤³¤ËÄÉ²Ã¤·¤Ş¤¹
             //
         }
 
         private TestContext testContextInstance;
 
         /// <summary>
-        ///ç¾åœ¨ã®ãƒ†ã‚¹ãƒˆã®å®Ÿè¡Œã«ã¤ã„ã¦ã®æƒ…å ±ãŠã‚ˆã³æ©Ÿèƒ½ã‚’
-        ///æä¾›ã™ã‚‹ãƒ†ã‚¹ãƒˆ ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
+        ///¸½ºß¤Î¥Æ¥¹¥È¤Î¼Â¹Ô¤Ë¤Ä¤¤¤Æ¤Î¾ğÊó¤ª¤è¤Óµ¡Ç½¤ò
+        ///Äó¶¡¤¹¤ë¥Æ¥¹¥È ¥³¥ó¥Æ¥­¥¹¥È¤ò¼èÆÀ¤Ş¤¿¤ÏÀßÄê¤·¤Ş¤¹¡£
         ///</summary>
         public TestContext TestContext
         {
@@ -37,23 +37,23 @@ namespace Test
             }
         }
 
-        #region è¿½åŠ ã®ãƒ†ã‚¹ãƒˆå±æ€§
+        #region ÄÉ²Ã¤Î¥Æ¥¹¥ÈÂ°À­
         //
-        // ãƒ†ã‚¹ãƒˆã‚’ä½œæˆã™ã‚‹éš›ã«ã¯ã€æ¬¡ã®è¿½åŠ å±æ€§ã‚’ä½¿ç”¨ã§ãã¾ã™:
+        // ¥Æ¥¹¥È¤òºîÀ®¤¹¤ëºİ¤Ë¤Ï¡¢¼¡¤ÎÄÉ²ÃÂ°À­¤ò»ÈÍÑ¤Ç¤­¤Ş¤¹:
         //
-        // ã‚¯ãƒ©ã‚¹å†…ã§æœ€åˆã®ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹å‰ã«ã€ClassInitialize ã‚’ä½¿ç”¨ã—ã¦ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã—ã¦ãã ã•ã„
+        // ¥¯¥é¥¹Æâ¤ÇºÇ½é¤Î¥Æ¥¹¥È¤ò¼Â¹Ô¤¹¤ëÁ°¤Ë¡¢ClassInitialize ¤ò»ÈÍÑ¤·¤Æ¥³¡¼¥É¤ò¼Â¹Ô¤·¤Æ¤¯¤À¤µ¤¤
         // [ClassInitialize()]
         // public static void MyClassInitialize(TestContext testContext) { }
         //
-        // ã‚¯ãƒ©ã‚¹å†…ã®ãƒ†ã‚¹ãƒˆã‚’ã™ã¹ã¦å®Ÿè¡Œã—ãŸã‚‰ã€ClassCleanup ã‚’ä½¿ç”¨ã—ã¦ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã—ã¦ãã ã•ã„
+        // ¥¯¥é¥¹Æâ¤Î¥Æ¥¹¥È¤ò¤¹¤Ù¤Æ¼Â¹Ô¤·¤¿¤é¡¢ClassCleanup ¤ò»ÈÍÑ¤·¤Æ¥³¡¼¥É¤ò¼Â¹Ô¤·¤Æ¤¯¤À¤µ¤¤
         // [ClassCleanup()]
         // public static void MyClassCleanup() { }
         //
-        // å„ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹å‰ã«ã€TestInitialize ã‚’ä½¿ç”¨ã—ã¦ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã—ã¦ãã ã•ã„
+        // ³Æ¥Æ¥¹¥È¤ò¼Â¹Ô¤¹¤ëÁ°¤Ë¡¢TestInitialize ¤ò»ÈÍÑ¤·¤Æ¥³¡¼¥É¤ò¼Â¹Ô¤·¤Æ¤¯¤À¤µ¤¤
         // [TestInitialize()]
         // public void MyTestInitialize() { }
         //
-        // å„ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã—ãŸå¾Œã«ã€TestCleanup ã‚’ä½¿ç”¨ã—ã¦ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã—ã¦ãã ã•ã„
+        // ³Æ¥Æ¥¹¥È¤ò¼Â¹Ô¤·¤¿¸å¤Ë¡¢TestCleanup ¤ò»ÈÍÑ¤·¤Æ¥³¡¼¥É¤ò¼Â¹Ô¤·¤Æ¤¯¤À¤µ¤¤
         // [TestCleanup()]
         // public void MyTestCleanup() { }
         //
@@ -63,7 +63,7 @@ namespace Test
         public void TestMethod1()
         {
             //
-            // TODO: ãƒ†ã‚¹ãƒˆ ãƒ­ã‚¸ãƒƒã‚¯ã‚’ã“ã“ã«è¿½åŠ ã—ã¦ãã ã•ã„
+            // TODO: ¥Æ¥¹¥È ¥í¥¸¥Ã¥¯¤ò¤³¤³¤ËÄÉ²Ã¤·¤Æ¤¯¤À¤µ¤¤
             //
         }
     }
