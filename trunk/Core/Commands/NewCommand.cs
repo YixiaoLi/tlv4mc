@@ -89,7 +89,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 				{
 					string[] visualizeRuleFilePaths = Directory.GetFiles(ApplicationData.Setting.VisualizeRulesDirectoryPath, "*." + Properties.Resources.VisualizeRuleFileExtension);
 
-					StandartFormatConverter cfc = new StandartFormatConverter(
+					StandardFormatConverter cfc = new StandardFormatConverter(
 						_resFilePath,
 						_logFilePath,
 						visualizeRuleFilePaths,
