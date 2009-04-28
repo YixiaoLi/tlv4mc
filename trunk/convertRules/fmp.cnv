@@ -40,6 +40,10 @@
         	},
 		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: task (?<tskid>\d+) migrates from processor (?<fromPrcId>\d+) to processor (?<toPrcId>\d+)\." :
 		{
+			"$EXIST{[${time}]Task(id==${tskid} && prcId==${fromPrcId})}" :{
+				"$ATTR{[${time}]Task(id==${tskid} && prcId==${fromPrcId}).state}==RUNNING" :
+					"[${time}]$RES_NAME{Task(id==${tskid} && prcId==${fromPrcId})}.state=RUNNABLE"
+			},
             		"$EXIST{[${time}]Task(id==${tskid})}" :"[${time}]$RES_NAME{Task(id==${tskid})}.prcId = ${toPrcId}"
         	},
 		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: enter to (?<name>(i\w+[_]\w+))( (?<args>.+))?\.?"	:
