@@ -63,7 +63,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					}
 					else if (result.Value is Dictionary<string, Json>)
 					{
-						((Dictionary<string, Json>)result.Value).Add(keyStack.Pop(), new Json(value));
+                        string key = keyStack.Pop();
+                        try
+                        {
+                            ((Dictionary<string, Json>)result.Value).Add(key, new Json(value));
+                        }
+                        catch (ArgumentException e)
+                        {
+                            e.Data.Add("jsonValueSet key", key);
+                            throw e;
+                        }
 					}
 				}
 				else
@@ -119,7 +128,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						objectNest--;
 						break;
 					default:
-						jsonValueSet(reader.Value);
+                        try
+                        {
+                            jsonValueSet(reader.Value);
+                        }
+                        catch (Exception e)
+                        {
+                            System.Diagnostics.Debug.WriteLine(e.Data);
+                            throw e;
+                        }
 						break;
 				}
 			} while (!(objectNest == 0 && arrayNest == 0) && reader.Read());
