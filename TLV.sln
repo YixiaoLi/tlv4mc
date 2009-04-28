@@ -62,7 +62,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fmp", "fmp", "{2F0F8178-CAC0-4C76-9A4D-6D3BA5FCD6A4}"
 	ProjectSection(SolutionItems) = preProject
 		sampleFiles\fmp\fmp.log = sampleFiles\fmp\fmp.log
-		sampleFiles\fmp\fmp.res = sampleFiles\fmp\fmp.res
 		sampleFiles\fmp\tlv.tf = sampleFiles\fmp\tlv.tf
 	EndProjectSection
 EndProject

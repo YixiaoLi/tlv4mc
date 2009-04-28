@@ -107,7 +107,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			}
 			catch (Exception _e)
 			{
-				throw new Exception(exceptionMessage + "\n" + _e.Message);
+                foreach (System.Collections.DictionaryEntry de in _e.Data)
+                {
+                    exceptionMessage += "\n" + de.Value;
+                }
+                throw new Exception(exceptionMessage + "\n" + _e.Message);
 			}
 		}
 		private ResourceData getResourceData(string resourceFilePath)
