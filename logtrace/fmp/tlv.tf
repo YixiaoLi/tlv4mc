@@ -72,12 +72,6 @@ $JOINEACH cycid CYC.ORDER_LIST ",\n"$
     $TAB$$TAB$$TAB$$TAB$"prcIdC" :$CLASS_AFFINITY_INI[CYC.CLASS[cycid]]$,$NL$
     $TAB$$TAB$$TAB$$TAB$"id"    :$+cycid$,$NL$
     $TAB$$TAB$$TAB$$TAB$"state"    : "DORMANT"$NL$
-$    $TAB$$TAB$$TAB$$TAB$"active"    :
-$    $IF (CYC.CYCATR[cycid] & TA_STA) != 0$
-$        "True"
-$    $ELSE$
-$        "False"
-$    $END$$NL$
     $TAB$$TAB$$TAB$}$NL$
     $TAB$$TAB$}
 $END$,
