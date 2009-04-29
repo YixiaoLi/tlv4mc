@@ -1,7 +1,7 @@
 
 	TraceLogVisualizer(TLV)（Release 1.0rc1）
 
-					最終更新 : 2009年04月21日
+					最終更新 : 2009年04月29日
 
 ----------------------------------------------------------------------
  TraceLogVisualizer(TLV)
@@ -137,17 +137,20 @@ TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
 
 	sampleFiles/
 		asp/					TOPPERS/ASPカーネルのトレースログのサンプル
-			asp.log
-			asp.res
-			asp.tlv
-			full.log
-			full.res
-			full.tlv
+			asp_short.log
+			asp_short.res
+			asp_short.tlv
+			asp_long.log
+			asp_long.res
+			asp_long.tlv
 
 		fmp/					TOPPERS/FMPカーネルのトレースログのサンプル
-			fmp.log
-			fmp.res
-			fmp.tlv
+			fmp_short.log
+			fmp_short.res
+			fmp_short.tlv
+			fmp_long.log
+			fmp_long.res
+			fmp_long.tlv
 
 		tecs/					TECSのトレースログのサンプル
 			tecs.log
@@ -162,7 +165,6 @@ TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
 			trace_config.h
 			trace_dump.c
 		fmp/					TOPPERS/FMPカーネルのログトレースモジュール
-			kernel_fncode.h
 			tlv.tf
 			trace_config.c
 			trace_config.h
