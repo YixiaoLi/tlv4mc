@@ -20,13 +20,7 @@
 					"DisplayName"	:"割込みハンドラプロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
-				},
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
-				},
+				},,
 				"state":{
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
@@ -71,12 +65,6 @@
 					"DisplayName"	:"割込みサービスルーチンプロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
-				},
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
 				},
 				"state":{
 					"VariableType"	:"String",
@@ -123,17 +111,12 @@
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
 				},
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
-				},
 				"state":{
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
 					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
+					"CanGrouping"	:false,
+					"Default"	:"DORMANT"
 				},
 				"id":{
 					"VariableType"	:"Number",
@@ -174,17 +157,12 @@
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
 				},
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
-				},
 				"state":{
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
 					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
+					"CanGrouping"	:false,
+					"Default"	:"DORMANT"
 				},
 				"id":{
 					"VariableType"	:"Number",
@@ -224,12 +202,6 @@
 					"DisplayName"	:"CPU例外ハンドラプロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
-				},
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
 				},
 				"state":{
 					"VariableType"	:"String",
@@ -275,12 +247,6 @@
 					"DisplayName"	:"タスク例外ルーチンプロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
-				},
-				"active":{
-					"VariableType"	:"Boolean",
-					"DisplayName"	:"active",
-					"AllocationType":"Dynamic",
-					"CanGrouping"	:false
 				},
 				"state":{
 					"VariableType"	:"String",
