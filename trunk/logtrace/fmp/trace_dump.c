@@ -35,7 +35,7 @@
  *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
  *  の責任を負わない．
  * 
- *  @(#) $Id: trace_dump.c 116 2009-01-29 13:23:36Z ertl-honda $
+ *  @(#) $Id: trace_dump.c 231 2009-04-27 01:40:10Z ertl-honda $
  */
 
 /*
@@ -1052,6 +1052,10 @@ trace_print_spnenter(TRACE *trace, intptr_t *info)
 		info[0] = (intptr_t)trace->loginfo[1];
 		tracemsg = "enter to iunl_spn spnid=%d.";
 		break;
+	  case TFN_REF_SPN:
+		info[0] = (intptr_t)trace->loginfo[1];
+		tracemsg = "enter to ref_spn spnid=%d.";
+		break;
 	default:
 		tracemsg = "unknown service call";
 		break;
@@ -1096,6 +1100,10 @@ trace_print_spnleave(TRACE *trace, intptr_t *info)
 	  case TFN_IUNL_SPN:
 		info[0] = (intptr_t)trace->loginfo[1];
 		tracemsg = "leave from iunl_spn ercd=%d.";
+		break;
+	  case TFN_REF_SPN:
+		info[0] = (intptr_t)trace->loginfo[1];
+		tracemsg = "leave from ref_spn ercd=%d.";
 		break;
 	default:
 		tracemsg = "unknown service call";
@@ -2220,6 +2228,18 @@ trace_print(TRACE *p_trace, void (*putc)(char_t))
 		traceinfo[1] = p_trace->loginfo[1];
 		traceinfo[2] = p_trace->loginfo[2];
 		tracemsg = "task %d migrates from processor %d to processor %d.";
+		break;
+	case LOG_TYPE_CYCMIG:
+		traceinfo[0] = (intptr_t)((ID)(((((CYCCB*)(p_trace->loginfo[0]))->p_cycinib) - cycinib_table) + TMIN_CYCID));
+		traceinfo[1] = p_trace->loginfo[1];
+		traceinfo[2] = p_trace->loginfo[2];
+		tracemsg = "cyclic handler %d migrates from processor %d to processor %d.";
+		break;
+	case LOG_TYPE_ALMMIG:
+		traceinfo[0] = (intptr_t)((ID)(((((ALMCB*)(p_trace->loginfo[0]))->p_alminib) - alminib_table) + TMIN_ALMID));
+		traceinfo[1] = p_trace->loginfo[1];
+		traceinfo[2] = p_trace->loginfo[2];
+		tracemsg = "alarm handler %d migrates from processor %d to processor %d.";
 		break;
 	case LOG_TYPE_DSP|LOG_ENTER:
 		traceinfo[0] = get_tskid(p_trace->loginfo[0]);

@@ -666,11 +666,11 @@ extern void trace_task_phase(uint_t phase);
 #define LOG_IUNL_SPN_ENTER(spnid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_IUNL_SPN, spnid)
 #define LOG_IUNL_SPN_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_IUNL_SPN, ercd)
 
-#define LOG_GET_PID_ENTER(p_prcid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_GET_PID, p_prcid)
-#define LOG_GET_PID_LEAVE(ercd, prcid) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_GET_PID, ercd, prcid)
+//#define LOG_GET_PID_ENTER(p_prcid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_GET_PID, p_prcid)
+//#define LOG_GET_PID_LEAVE(ercd, prcid) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_GET_PID, ercd, prcid)
 
-#define LOG_IGET_PID_ENTER(p_prcid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_IGET_PID, p_prcid)
-#define LOG_IGET_PID_LEAVE(ercd, prcid) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_IGET_PID, ercd, prcid)
+//#define LOG_IGET_PID_ENTER(p_prcid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_IGET_PID, p_prcid)
+//#define LOG_IGET_PID_LEAVE(ercd, prcid) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_IGET_PID, ercd, prcid)
 
 #define LOG_MROT_RDQ_ENTER(tskpri, prcid) trace_3(LOG_TYPE_SVC|LOG_ENTER, TFN_MROT_RDQ, tskpri, prcid)
 #define LOG_MROT_RDQ_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_MROT_RDQ, ercd)
