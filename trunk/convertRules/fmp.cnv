@@ -14,19 +14,19 @@
 		],
 		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: task (?<id>\d+) becomes (?<state>[^\.]+)\." : [
 			{
-				"$ATTR{[${time}]Task(id==${id}).state}==DORMANT && ${state}==RUNNABLE"				:"[${time}]$RES_NAME{Task(id==${id})}.activate()",
-				"$ATTR{[${time}]Task(id==${id}).state}==RUNNING && ${state}==DORMANT"				:"[${time}]$RES_NAME{Task(id==${id})}.exit()",
-				"$ATTR{[${time}]Task(id==${id}).state}==RUNNING && ${state}==WAITING"				:"[${time}]$RES_NAME{Task(id==${id})}.wait()",
-				"$ATTR{[${time}]Task(id==${id}).state}==RUNNABLE && ${state}==SUSPENDED"			:"[${time}]$RES_NAME{Task(id==${id})}.suspend()",
+				"$ATTR{[${time}]Task(id==${id}).state}==DORMANT && ${state}==RUNNABLE"			:"[${time}]$RES_NAME{Task(id==${id})}.activate()",
+				"$ATTR{[${time}]Task(id==${id}).state}==RUNNING && ${state}==DORMANT"			:"[${time}]$RES_NAME{Task(id==${id})}.exit()",
+				"$ATTR{[${time}]Task(id==${id}).state}==RUNNING && ${state}==WAITING"			:"[${time}]$RES_NAME{Task(id==${id})}.wait()",
+				"$ATTR{[${time}]Task(id==${id}).state}==RUNNABLE && ${state}==SUSPENDED"		:"[${time}]$RES_NAME{Task(id==${id})}.suspend()",
 				"$ATTR{[${time}]Task(id==${id}).state}==WAITING && ${state}==WAITING-SUSPENDED"		:"[${time}]$RES_NAME{Task(id==${id})}.suspend()",
-				"$ATTR{[${time}]Task(id==${id}).state}==SUSPENDED && ${state}==RUNNABLE"			:"[${time}]$RES_NAME{Task(id==${id})}.resume()",
+				"$ATTR{[${time}]Task(id==${id}).state}==SUSPENDED && ${state}==RUNNABLE"		:"[${time}]$RES_NAME{Task(id==${id})}.resume()",
 				"$ATTR{[${time}]Task(id==${id}).state}==WAITING-SUSPENDED && ${state}==WAITING"		:"[${time}]$RES_NAME{Task(id==${id})}.resume()",
-				"$ATTR{[${time}]Task(id==${id}).state}==WAITING && ${state}==RUNNABLE"				:"[${time}]$RES_NAME{Task(id==${id})}.releaseFromWaiting()",
+				"$ATTR{[${time}]Task(id==${id}).state}==WAITING && ${state}==RUNNABLE"			:"[${time}]$RES_NAME{Task(id==${id})}.releaseFromWaiting()",
 				"$ATTR{[${time}]Task(id==${id}).state}==WAITING-SUSPENDED && ${state}==SUSPENDED"	:"[${time}]$RES_NAME{Task(id==${id})}.releaseFromWaiting()",
-				"$ATTR{[${time}]Task(id==${id}).state}==SUSPENDED && ${state}==DORMANT"				:"[${time}]$RES_NAME{Task(id==${id})}.terminate()",
+				"$ATTR{[${time}]Task(id==${id}).state}==SUSPENDED && ${state}==DORMANT"			:"[${time}]$RES_NAME{Task(id==${id})}.terminate()",
 				"$ATTR{[${time}]Task(id==${id}).state}==WAITING-SUSPENDED && ${state}==DORMANT"		:"[${time}]$RES_NAME{Task(id==${id})}.terminate()",
-				"$ATTR{[${time}]Task(id==${id}).state}==WAITING && ${state}==DORMANT"				:"[${time}]$RES_NAME{Task(id==${id})}.terminate()",
-				"$ATTR{[${time}]Task(id==${id}).state}==RUNNABLE && ${state}==DORMANT"				:"[${time}]$RES_NAME{Task(id==${id})}.terminate()"
+				"$ATTR{[${time}]Task(id==${id}).state}==WAITING && ${state}==DORMANT"			:"[${time}]$RES_NAME{Task(id==${id})}.terminate()",
+				"$ATTR{[${time}]Task(id==${id}).state}==RUNNABLE && ${state}==DORMANT"			:"[${time}]$RES_NAME{Task(id==${id})}.terminate()"
 			},
 			"[${time}]$RES_NAME{Task(id==${id})}.state=${state}"
 		],
@@ -45,6 +45,22 @@
 					"[${time}]$RES_NAME{Task(id==${tskid} && prcId==${fromPrcId})}.state=RUNNABLE"
 			},
             		"$EXIST{[${time}]Task(id==${tskid})}" :"[${time}]$RES_NAME{Task(id==${tskid})}.prcId = ${toPrcId}"
+        	},
+		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: cyclic handler (?<cycid>\d+) migrates from processor (?<fromPrcId>\d+) to processor (?<toPrcId>\d+)\." :
+		{
+			"$EXIST{[${time}]CyclicHandler(id==${cycid} && prcIdC==${fromPrcId})}" :{
+				"$ATTR{[${time}]CyclicHandler(id==${cycid} && prcIdC==${fromPrcId}).state}==RUNNING" :
+					"[${time}]$RES_NAME{CyclicHandler(id==${cycid} && prcIdC==${fromPrcId})}.state=RUNNABLE"
+			},
+            		"$EXIST{[${time}]CyclicHandler(id==${cycid})}" :"[${time}]$RES_NAME{CyclicHandler(id==${cycid})}.prcIdC = ${toPrcId}"
+        	},
+		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: alarm handler (?<almid>\d+) migrates from processor (?<fromPrcId>\d+) to processor (?<toPrcId>\d+)\." :
+		{
+			"$EXIST{[${time}]AlarmHandler(id==${almid} && prcIdA==${fromPrcId})}" :{
+				"$ATTR{[${time}]AlarmHandler(id==${almid} && prcIdA==${fromPrcId}).state}==RUNNING" :
+					"[${time}]$RES_NAME{AlarmHandler(id==${almid} && prcIdA==${fromPrcId})}.state=RUNNABLE"
+			},
+            		"$EXIST{[${time}]AlarmHandler(id==${almid})}" :"[${time}]$RES_NAME{AlarmHandler(id==${almid})}.prcIdA = ${toPrcId}"
         	},
 		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: enter to (?<name>(i\w+[_]\w+))( (?<args>.+))?\.?"	:
 		[
