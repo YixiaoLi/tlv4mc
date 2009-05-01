@@ -20,7 +20,7 @@
 					"DisplayName"	:"割込みハンドラプロセッサID",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:true
-				},,
+				},
 				"state":{
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
@@ -115,8 +115,7 @@
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
 					"AllocationType":"Dynamic",
-					"CanGrouping"	:false,
-					"Default"	:"DORMANT"
+					"CanGrouping"	:false
 				},
 				"id":{
 					"VariableType"	:"Number",
@@ -161,8 +160,7 @@
 					"VariableType"	:"String",
 					"DisplayName"	:"状態",
 					"AllocationType":"Dynamic",
-					"CanGrouping"	:false,
-					"Default"	:"DORMANT"
+					"CanGrouping"	:false
 				},
 				"id":{
 					"VariableType"	:"Number",
