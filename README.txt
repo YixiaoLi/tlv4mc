@@ -1,7 +1,7 @@
 
 	TraceLogVisualizer(TLV)（Release 1.0rc1）
 
-					最終更新 : 2009年04月29日
+					最終更新 : 2009年05月1日
 
 ----------------------------------------------------------------------
  TraceLogVisualizer(TLV)
@@ -166,9 +166,6 @@ TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
 			trace_dump.c
 		fmp/					TOPPERS/FMPカーネルのログトレースモジュール
 			tlv.tf
-			trace_config.c
-			trace_config.h
-			trace_dump.c
 
 【バージョン履歴】
 
