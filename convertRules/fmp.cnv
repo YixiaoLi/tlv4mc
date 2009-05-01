@@ -139,12 +139,12 @@
 			"[${time}]$RES_NAME{CPUExceptionHandler(id==${id} && prcIdE==${pid})}.leave()",
 			"[${time}]$RES_NAME{CPUExceptionHandler(id==${id} && prcIdE==${pid})}.state=DORMANT"
 		],
-		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: enter to tex (?<id>[^\.]+)\.?"	:[
+		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: task (?<tskid>\d+) enter to tex (?<id>[^\.]+)\.?"	:[
 			"[${time}]$RES_NAME{TaskExceptionRoutine(prcIdX==${pid})}.enter()",
 			"[${time}]$RES_NAME{TaskExceptionRoutine(prcIdX==${pid})}.state=RUNNING",
 			"[${time}]CurrentContext_PRC${pid}.name=$RES_NAME{TaskExceptionRoutine(prcIdX==${pid})}",
 		],
-		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: leave from tex (?<id>[^\.]+)\.?"	:[
+		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: task (?<tskid>\d+) leave from tex (?<id>[^\.]+)\.?"	:[
 			"[${time}]$RES_NAME{TaskExceptionRoutine(prcIdX==${pid})}.leave()",
 			"[${time}]$RES_NAME{TaskExceptionRoutine(prcIdX==${pid})}.state=DORMANT",
 		]
