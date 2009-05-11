@@ -136,7 +136,18 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				// 関数を適用
 				s = TLVFunction.Apply(s, _resourceData, traceLogData);
 				// ログを追加
-				traceLogData.Add(new TraceLog(s));
+                try
+                {
+                    traceLogData.Add(new TraceLog(s));
+                }
+                catch(Exception e)
+                {
+                    e.Data.Add("log", log.ToString());
+                    e.Data.Add("pattern", pattern.ToString());
+                    e.Data.Add("jsonvalue", value.ToString());
+                    throw (e);
+                }
+
 			}
 		}
 

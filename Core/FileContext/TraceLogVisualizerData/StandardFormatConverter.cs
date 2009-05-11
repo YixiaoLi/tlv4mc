@@ -111,7 +111,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 {
                     exceptionMessage += "\n" + de.Value;
                 }
+#if DEBUG
+                throw new Exception(exceptionMessage + "\n" + _e.Message + "\n" + _e.StackTrace);
+#else
                 throw new Exception(exceptionMessage + "\n" + _e.Message);
+#endif
 			}
 		}
 		private ResourceData getResourceData(string resourceFilePath)
