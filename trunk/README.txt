@@ -1,7 +1,7 @@
 
 	TraceLogVisualizer(TLV)（Release 1.0rc1）
 
-					最終更新 : 2009年05月1日
+					最終更新 : 2009年05月12日
 
 ----------------------------------------------------------------------
  TraceLogVisualizer(TLV)
@@ -119,6 +119,7 @@ TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
 	convertRules/
 		asp.cnv					TOPPERS/ASPカーネルの変換ルール
 		fmp.cnv					TOPPERS/FMPカーネルの変換ルール
+		fmp_mig.cnv				TOPPERS/FMPカーネルの変換ルール（プロセッサ毎）
 		tecs.cnv				TECSの変換ルール
 
 	resourceHeaders/
@@ -131,6 +132,8 @@ TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
 		asp_shapes.viz			TOPPERS/ASPカーネルの図形定義
 		fmp_rules.viz			TOPPERS/FMPカーネルの可視化ルール
 		fmp_shapes.viz			TOPPERS/FMPカーネルの図形定義
+		fmp_mig_rules.viz		TOPPERS/FMPカーネルの可視化ルール（プロセッサ毎）
+		fmp_mig_shapes.viz		TOPPERS/FMPカーネルの図形定義（プロセッサ毎）
 		tecs.viz				TECSの可視化ルール
 		toppers_rules.viz		TOPPERS共通の可視化ルール
 		toppers_shapes.viz		TOPPERS共通の図形定義
@@ -152,6 +155,12 @@ TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
 			fmp_long.res
 			fmp_long.tlv
 
+		fmp_mig/				TOPPERS/FMPカーネルのトレースログのサンプル
+									（プロセッサ毎のタスク表示）
+			fmp_short.log
+			fmp_mig.res
+			fmp_mig.tlv
+
 		tecs/					TECSのトレースログのサンプル
 			tecs.log
 			tecs.res
@@ -166,9 +175,12 @@ TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
 			trace_dump.c
 		fmp/					TOPPERS/FMPカーネルのログトレースモジュール
 			tlv.tf
+		fmp_mig/				TOPPERS/FMPカーネルのログトレースモジュール
+									（プロセッサ毎のタスク表示）
+			tlv.tf
 
 【バージョン履歴】
 
-	2009年04月23日	Release	1.0rc1		TOPPERS会員向け早期リリース
+	2009年05月13日	Release	1.0rc1		TOPPERS会員向け早期リリース
 
 以上．
