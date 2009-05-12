@@ -12,7 +12,7 @@ $JOINEACH prcid RANGE(1, TNUM_PRC) ",\n"$
     $TAB$$TAB$$TAB$"Type":"Context",$NL$
     $TAB$$TAB$$TAB$"Attributes":$NL$
     $TAB$$TAB$$TAB${$NL$
-    $TAB$$TAB$$TAB$$TAB$"name"    : "LOGTASK$prcid$"$NL$
+    $TAB$$TAB$$TAB$$TAB$"name"    : "None"$NL$
     $TAB$$TAB$$TAB$}$NL$
     $TAB$$TAB$}
 $END$,
