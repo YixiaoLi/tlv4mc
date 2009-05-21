@@ -47,14 +47,94 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	{
 		public override object ReadJson(NU.OJL.MPRTOS.TLV.Base.IJsonReader reader)
 		{
-			Shape shape = new Shape();
-			shape.MetaData = ApplicationFactory.JsonSerializer.Deserialize<Json>(reader);
+           Shape shape = new Shape();
+
+           return shape.MetaData = ApplicationFactory.JsonSerializer.Deserialize<Json>(reader);
 			return shape;
 		}
 
 		protected override void WriteJson(NU.OJL.MPRTOS.TLV.Base.IJsonWriter writer, Shape obj)
 		{
-			ApplicationFactory.JsonSerializer.Serialize(writer, obj.MetaData);
+            writer.WriteObject(w =>
+            {
+                if (obj.Alpha.HasValue)
+                {
+                    w.WriteProperty("Alpha");
+                    w.WriteValue(obj.Alpha.Value);
+                }
+                if (obj.Area != null)
+                {
+                    w.WriteProperty("Area");
+                    ApplicationFactory.JsonSerializer.Serialize(w, obj.Area);  
+                }
+                if (obj.Arc != null)
+                {
+                    w.WriteProperty("Arc");
+                    ApplicationFactory.JsonSerializer.Serialize(w, obj.Arc);  
+                }
+
+                if (obj.Fill.HasValue)
+                {
+                    w.WriteProperty("Fill");
+                    ApplicationFactory.JsonSerializer.Serialize(w, obj.Fill.Value);  
+                }
+
+                if (obj.Font != null)
+                {
+                    w.WriteProperty("Font");
+                    ApplicationFactory.JsonSerializer.Serialize(w, obj.Font);  
+                }
+
+                if (obj.Location != null)
+                {
+                    w.WriteProperty("Location");
+                    ApplicationFactory.JsonSerializer.Serialize(w, obj.Location);  
+                }
+
+                if (obj.MetaData != null)
+                {
+                    w.WriteProperty("MetaData");
+                    ApplicationFactory.JsonSerializer.Serialize(w, obj.MetaData);  
+                }
+
+                if (obj.Offset != null)
+                {
+                    w.WriteProperty("Offset");
+                    ApplicationFactory.JsonSerializer.Serialize(w, obj.Offset);  
+                }
+
+                if (obj.Pen != null)
+                {
+                    w.WriteProperty("Pen");
+                    ApplicationFactory.JsonSerializer.Serialize(w, obj.Pen);  
+                }
+
+                if (obj.Points != null)
+                {
+                    w.WriteProperty("Points");
+                    ApplicationFactory.JsonSerializer.Serialize(w, obj.Points);  
+                }
+
+                if (obj.Size != null)
+                {
+                    w.WriteProperty("Size");
+                    ApplicationFactory.JsonSerializer.Serialize(w, obj.Size);
+                }
+
+                if (obj.Text != null)
+                {
+                    w.WriteProperty("Text");
+                    w.WriteValue(obj.Text);
+                }
+
+                if (obj.Type.HasValue)
+                {
+                    w.WriteProperty("Type");
+                    w.WriteValue(obj.Type.Value.ToString());
+                }
+
+            });
+//			ApplicationFactory.JsonSerializer.Serialize(writer, obj);
 		}
 	}
 }

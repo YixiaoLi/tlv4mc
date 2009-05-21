@@ -44,7 +44,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class EventShapes
+    public class EventShapes : IJsonable<EventShapes>
 	{
 		public Dictionary<string, List<EventShape>> List { get { return _list; } set { _list = value; } }
 
@@ -104,5 +104,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			_list.Clear();
 		}
+
+        public EventShapes Parse(string traceLogData)
+        {
+            return ApplicationFactory.JsonSerializer.Deserialize<EventShapes>(traceLogData);
+        }
+
+        public string ToJson()
+        {
+            this.Optimize();
+            return ApplicationFactory.JsonSerializer.Serialize(_list);
+        }
+
 	}
 }
