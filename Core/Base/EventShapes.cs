@@ -105,9 +105,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			_list.Clear();
 		}
 
-        public EventShapes Parse(string traceLogData)
+        public EventShapes Parse(string eventShapes)
         {
-            return ApplicationFactory.JsonSerializer.Deserialize<EventShapes>(traceLogData);
+            EventShapes shapes = new EventShapes();
+            shapes.List = ApplicationFactory.JsonSerializer.Deserialize < Dictionary<string, List<EventShape>>> (eventShapes);
+            return shapes; 
         }
 
         public string ToJson()
