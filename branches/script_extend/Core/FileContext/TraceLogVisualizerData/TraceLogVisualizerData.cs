@@ -93,6 +93,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// </summary>
 		public SettingData SettingData { get; set; }
 
+       /// 図形データ
+        public EventShapes EventShapes { get; set; }
+ 
 		/// <summary>
 		/// <c>CommonFormatTraceLog</c>のインスタンスを生成する
 		/// </summary>
@@ -147,7 +150,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension, TraceLogData.TraceLogs.ToJson());
 			File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.VisualizeRuleFileExtension, VisualizeData.ToJson());
 			File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.SettingFileExtension, SettingData.ToJson());
-
+//            File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.EventShapesFileExtension, EventShapes.ToJson());
 			zip.Compress(path, targetTmpDirPath);
 
 			Directory.Delete(targetTmpDirPath, true);
