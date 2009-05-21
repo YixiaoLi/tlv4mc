@@ -87,23 +87,42 @@ namespace Test
             Shape shape = new Shape();
             shape.Type = t;
             return shape; 
-        } 
+        }
 
         [TestMethod()]
-        public void ToJsonTest() {
-            EventShape a = new EventShape(new Time("0",10),
-                new Time("10",10),
-               Shape.Default, 
-                makeEvent("sample","a"));
+        public void ToJsonTest()
+        {
+            EventShape a = new EventShape(new Time("0", 10),
+                new Time("10", 10),
+               Shape.Default,
+                makeEvent("sample", "a"));
 
             EventShapes target = new EventShapes();
             target.Add(a);
 
-            string expected = "{\r\n  \"sample:a\": [\r\n    {\r\n      \"From\": \"0(10)\",\r\n      \"To\": \"10(10)\",\r\n      \"Shape\": {\r\n        \"Alpha\": 255,\r\n        \"Area\": [\r\n          \"0,0\",\r\n          \"100%,100%\"\r\n        ],\r\n        \"Arc\": [\r\n          0,\r\n          90\r\n        ],\r\n        \"Fill\": \"ffffffff\",\r\n        \"Font\": {\r\n          \"Family\": \"[FontFamily: Name=Microsoft Sans Serif]\",\r\n          \"Style\": \"Regular\",\r\n          \"Color\": \"ff000000\",\r\n          \"Size\": 8,\r\n          \"Align\": \"MiddleCenter\"\r\n        },\r\n        \"Location\": \"0,0\",\r\n        \"Offset\": \"0,0\",\r\n        \"Pen\": {\r\n          \"Color\": \"ff000000\",\r\n          \"Alpha\": 255,\r\n          \"Width\": 1,\r\n          \"DashStyle\": \"Solid\",\r\n          \"DashPattern\": [\r\n            1,\r\n            1\r\n          ],\r\n          \"DashCap\": \"Flat\"\r\n        },\r\n        \"Points\": [\r\n          \"0,0\",\r\n          \"100%,0\",\r\n          \"100%,100%\",\r\n          \"0,100%\"\r\n        ],\r\n        \"Size\": \"100%,100%\",\r\n        \"Text\": \"\",\r\n        \"Type\": \"Undefined\"\r\n      },\r\n      \"Event\": {\r\n        \"DisplayName\": \"a\"\r\n      }\r\n    }\r\n  ]\r\n}";
+            string expected =   "{\r\n  \"sample:a\": [\r\n    {\r\n      \"From\": \"0(10)\",\r\n      \"To\": \"10(10)\",\r\n      \"Shape\": {\r\n        \"Alpha\": 255,\r\n        \"Area\": [\r\n          \"0,0\",\r\n          \"100%,100%\"\r\n        ],\r\n        \"Arc\": [\r\n          0,\r\n          90\r\n        ],\r\n        \"Fill\": \"ffffffff\",\r\n        \"Font\": {\r\n          \"Family\": \"Microsoft Sans Serif\",\r\n          \"Style\": \"Regular\",\r\n          \"Color\": \"ff000000\",\r\n          \"Size\": 8,\r\n          \"Align\": \"MiddleCenter\"\r\n        },\r\n        \"Location\": \"0,0\",\r\n        \"Offset\": \"0,0\",\r\n        \"Pen\": {\r\n          \"Color\": \"ff000000\",\r\n          \"Alpha\": 255,\r\n          \"Width\": 1,\r\n          \"DashStyle\": \"Solid\",\r\n          \"DashPattern\": [\r\n            1,\r\n            1\r\n          ],\r\n          \"DashCap\": \"Flat\"\r\n        },\r\n        \"Points\": [\r\n          \"0,0\",\r\n          \"100%,0\",\r\n          \"100%,100%\",\r\n          \"0,100%\"\r\n        ],\r\n        \"Size\": \"100%,100%\",\r\n        \"Text\": \"\",\r\n        \"Type\": \"Undefined\"\r\n      },\r\n      \"Event\": {\r\n        \"DisplayName\": \"a\"\r\n      }\r\n    }\r\n  ]\r\n}";
             string actual;
             actual = target.ToJson();
-            Assert.AreEqual(expected, actual);
-            
+           Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod()]
+        public void ParseTest()
+        {
+            EventShape a = new EventShape(new Time("0", 10),
+                new Time("10", 10),
+                Shape.Default,
+                makeEvent("sample", "a"));
+
+            EventShapes target = new EventShapes();
+            target.Add(a);
+
+            string json = target.ToJson();
+            EventShapes actual = target.Parse(json);
+            Assert.AreEqual(1, actual.List.Count);
+            Assert.AreEqual(true, actual.List.ContainsKey("sample:a"));
+            Assert.AreEqual(1,actual.List["sample:a"].Count);
+           // todo: and more 
+        } 
     }
 }
