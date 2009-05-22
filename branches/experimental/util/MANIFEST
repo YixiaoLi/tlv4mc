@@ -1,0 +1,12 @@
+PACKAGE asp
+VERSION 1.3.2
+
+makerelease.rb
+MANIFEST
+
+# comment
+# doc
+doc/readme.txt
+# header
+INCLUDE header/MANIFEST
+
