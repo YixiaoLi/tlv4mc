@@ -119,6 +119,7 @@
     <Compile Include="FileContext\SettingData\TimeLineMacroViewerSetting.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogGenerator.cs" />
+    <Compile Include="FileContext\VisualizeShapeData\EventShapesGenerator.cs" />
     <Compile Include="FileContext\VisualizeData\Event.cs" />
     <Compile Include="FileContext\VisualizeData\EventType.cs" />
     <Compile Include="FileContext\VisualizeData\Figure.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="FileContext\TraceLogData\TraceLogList.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\ShapeType.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\VisualizeAreaUnit.cs" />
+    <Compile Include="FileContext\VisualizeShapeData\VisualizeShapeData.cs" />
     <Compile Include="JsonConverters\ArcConverter.cs" />
     <Compile Include="JsonConverters\ArgumentTypeConverter.cs" />
     <Compile Include="JsonConverters\FontFamilyConverter.cs" />
