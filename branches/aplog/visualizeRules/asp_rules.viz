@@ -11,6 +11,28 @@
 						"Figures":"runningTaskChangeShapes($RES_COLOR{${FROM_TARGET}},$RES_NAME{${FROM_TARGET}})"
 					}
 				}
+			},
+			"applogStr":{
+				"DisplayName":"アプリログ",
+				"Target":"ApplogStr",
+				"Shapes":{
+					"strLog":{
+						"DisplayName":"文字列",
+						"When":"${TARGET}.str",
+						"Figures":"applogStrShapes(${VAL})"
+					}
+				}
+			},
+			"applogSyslog":{
+				"DisplayName":"syslog",
+				"Target":"Task",
+				"Shapes":{
+					"syslogEvent":{
+						"DisplayName":"syslog",
+						"When":"${TARGET}.applog_syslog",
+						"Figures":"applogStrShapes(${VAL})"
+					}
+				}
 			}
 		}
 	}

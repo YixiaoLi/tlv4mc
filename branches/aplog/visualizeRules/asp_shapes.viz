@@ -16,6 +16,22 @@
 					"Font":{"Align":"TopLeft","Size":7},
 					"Text":"${ARG1}"
 				}
+			],
+			"applogStrShapes":[
+				{
+					"Type":"Text",
+					"Size":"100%,100%",
+					"Font":{
+						"Align":"TopLeft",
+						"Size":7
+					},
+					"Text":"${ARG0}"
+				},
+				{
+					"Type":"Arrow",
+					"Points":["0,80%","0,0"],
+					"Pen":{"Color":"ff000000","Width":1}
+				}
 			]
 		}
 	}

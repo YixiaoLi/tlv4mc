@@ -123,6 +123,10 @@
 		"\[(?<time>\d+)\] leave from tex (?<id>[^\.]+)\.?"	:[
 			"[${time}]$RES_NAME{TaskExceptionRoutine}.leave()",
 			"[${time}]$RES_NAME{TaskExceptionRoutine}.state=DORMANT",
-		]
+		],
+		"\[(?<time>\d+)\] applog (?<str>[^\.]+)\.?"	:
+			"[${time}]$RES_NAME{ApplogStr}.str=${str}",
+		"\[(?<time>\d+)\] task (?<id>\d+) syslog (?<logstr>[^\.]+)\." :
+			"[${time}]$RES_NAME{Task(id==${id})}.applog_syslog=${logstr}"
 	}
 }

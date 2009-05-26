@@ -296,6 +296,13 @@
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:false,
 					"Default"	:"DORMANT"
+				},
+				"applog_syslog":{
+					"VariableType"	:"String",
+					"DisplayName"	:"syslog",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false,
+					"Default"	:""
 				}
 			},
 			"Behaviors"	:{
@@ -356,6 +363,18 @@
 						"tskid":"Number"
 					}
                 		}
+			}
+		},
+		"ApplogStr":{
+			"DisplayName":"アプリログ",
+			"Attributes":{
+				"str":{
+					"VariableType"	:"String",
+					"DisplayName"	:"文字列",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false,
+					"Default"	:""
+				}
 			}
 		}
 	}
