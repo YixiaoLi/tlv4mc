@@ -59,6 +59,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public TraceLogData TraceLogData { get; private set; }
 		public VisualizeData VisualizeData { get; private set; }
 		public SettingData SettingData { get; private set; }
+       public VisualizeShapeData VisualizeShapeData { get; private set; }
 
 		public StandardFormatConverter(string resourceFilePath, string traceLogFilePath, string[] visualizeRuleFilePaths, Action<int, string> ConstructProgressReport)
 		{
@@ -81,12 +82,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				"可視化データを生成中",
 				"可視化データの生成に失敗しました。\n可視化ルールファイルの記述に誤りがある可能性があります。");
 
-			progressUpdate(99);
+			progressUpdate(40);
 			generateData(
 				() => { TraceLogData = getTraceLogData(traceLogFilePath); },
 				"トレースログデータを生成中",
 				"トレースログデータの生成に失敗しました。\nトレースログ変換ルールファイルの記述に誤りがある可能性があります。");
-
+            progressUpdate(99);
+            generateData(
+               () => { VisualizeShapeData = getVisualizeShapeData(); },
+              "図形データを生成中",
+             "図形データの生成に失敗しました。\n可視化ルールファイルの記述に誤りがある可能性があります。" );
 			if (_constructProgressReport != null)
 				_constructProgressReport(_progressFrom, "初期化中");
 		}
@@ -183,6 +188,53 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			SettingData settingData = new SettingData();
 			return settingData;
 		}
+
+        private VisualizeShapeData getVisualizeShapeData()
+        {
+            VisualizeShapeData vizData = new VisualizeShapeData();
+
+            foreach (Resource res in this.ResourceData.Resources) {
+                var gen = new EventShapesGenerator(res);
+                gen.SetData(TraceLogData, VisualizeData, ResourceData);
+                vizData.Add(res, gen.GetEventShapes());
+            }
+
+            foreach (VisualizeRule rule in this.VisualizeData.VisualizeRules)
+            {
+                if (rule.IsBelongedTargetResourceType())
+                {
+                    foreach (Resource res in this.ResourceData.Resources.Where<Resource>(r => r.Type == rule.Target))
+                    {
+                        var gen = new EventShapesGenerator(rule, res);
+                        gen.SetData(TraceLogData, VisualizeData, ResourceData);
+                        vizData.Add(rule, res, gen.GetEventShapes());
+
+                        foreach (Event e in rule.Shapes)
+                        {
+                            gen = new EventShapesGenerator(e, res);
+                            gen.SetData(TraceLogData, VisualizeData, ResourceData);
+                            vizData.Add(rule,e, res, gen.GetEventShapes());
+                        }
+
+                    }
+                }
+                else
+                {
+                    var gen = new EventShapesGenerator(rule);
+                    gen.SetData(TraceLogData, VisualizeData, ResourceData);
+                    vizData.Add(rule, gen.GetEventShapes());
+
+                    foreach (Event e in rule.Shapes)
+                    {
+                        gen = new EventShapesGenerator(rule, e);
+                        gen.SetData(TraceLogData, VisualizeData, ResourceData);
+                        vizData.Add(rule, e, gen.GetEventShapes());
+                    }
+                }
+            }
+
+            return vizData;
+        }
 	}
 
 }

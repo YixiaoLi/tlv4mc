@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using NU.OJL.MPRTOS.TLV.Base;
 
-namespace NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeShapeData
+namespace NU.OJL.MPRTOS.TLV.Core
 {
     class EventShapesGenerator
     {
@@ -454,15 +454,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeShapeData
             return ConditionExpression.Result(condition);
         }
 
-        public IEnumerable<EventShape> GetEventShapes(Time from, Time to)
+        public EventShapes GetEventShapes()
         {
-            if (_drawShapes != null)
-            {
-                foreach (EventShape ds in _drawShapes.GetShapes(from, to))
-                {
-                    yield return ds;
-                }
-            }
+            return _drawShapes; 
         }
 
         public override string ToString()

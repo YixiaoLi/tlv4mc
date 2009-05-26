@@ -217,7 +217,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			// ノード名「リソース.Name」-「ルール.Name」-「イベント.Name」
 			foreach (VisualizeRule vizRule in _data.VisualizeData.VisualizeRules.Where<VisualizeRule>(v => v.IsBelongedTargetResourceType()))
 			{
-				foreach (Resource res in _data.ResourceData.Resources.Where<Resource>(r => r.Type == vizRule.Target))
+                foreach (Resource res in _data.ResourceData.Resources.Where<Resource>(r => r.Type == vizRule.Target))
 				{
 					if (!treeGridView.Nodes.ContainsKey(res.Name))
 					{
