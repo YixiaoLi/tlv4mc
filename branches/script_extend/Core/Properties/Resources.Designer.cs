@@ -147,15 +147,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             }
         }
         
-        /// <summary>
-        ///   shp に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string EventShapesFileExtension {
-            get {
-                return ResourceManager.GetString("EventShapesFileExtension", resourceCulture);
-            }
-        }
-        
         internal static System.Drawing.Icon hand {
             get {
                 object obj = ResourceManager.GetObject("hand", resourceCulture);
@@ -242,6 +233,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
         internal static string VisualizeRuleFileExtension {
             get {
                 return ResourceManager.GetString("VisualizeRuleFileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   shp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string VisualizeShapesFileExtension {
+            get {
+                return ResourceManager.GetString("VisualizeShapesFileExtension", resourceCulture);
             }
         }
         

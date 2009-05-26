@@ -88,13 +88,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// 可視化データ
 		/// </summary>
 		public VisualizeData VisualizeData { get; set; }
-		/// <summary>
+        /// <summary>
 		/// 設定データ
-		/// </summary>
+        /// </summary>
 		public SettingData SettingData { get; set; }
 
+        /// <summary>
        /// 図形データ
-        public EventShapes EventShapes { get; set; }
+        /// </summary>
+        public VisualizeShapeData VisualizeShapeData { get; set; }
  
 		/// <summary>
 		/// <c>CommonFormatTraceLog</c>のインスタンスを生成する
@@ -114,6 +116,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			TraceLogData = traceLogData;
 			VisualizeData = visualizeData;
 			SettingData = settingData;
+            VisualizeShapeData = new VisualizeShapeData(); 
 
 			setVisualizeRuleToEvent();
         }
@@ -150,7 +153,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension, TraceLogData.TraceLogs.ToJson());
 			File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.VisualizeRuleFileExtension, VisualizeData.ToJson());
 			File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.SettingFileExtension, SettingData.ToJson());
-//            File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.EventShapesFileExtension, EventShapes.ToJson());
+           File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.VisualizeShapesFileExtension, VisualizeShapeData.ToJson());
 			zip.Compress(path, targetTmpDirPath);
 
 			Directory.Delete(targetTmpDirPath, true);
@@ -176,17 +179,20 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			string resFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.ResourceFileExtension)[0];
 			string logFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.TraceLogFileExtension)[0];
 			string vixFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.VisualizeRuleFileExtension)[0];
-			string settingFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.SettingFileExtension)[0];
+           string settingFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.SettingFileExtension)[0];
+           string visualizeShapesPath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.VisualizeShapesFileExtension)[0];
 
 			ResourceData res = ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(resFilePath));
 			TraceLogList log = ApplicationFactory.JsonSerializer.Deserialize<TraceLogList>(File.ReadAllText(logFilePath));
 			VisualizeData viz = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(File.ReadAllText(vixFilePath));
 			SettingData setting = ApplicationFactory.JsonSerializer.Deserialize<SettingData>(File.ReadAllText(settingFilePath));
+            VisualizeShapeData shapes = ApplicationFactory.JsonSerializer.Deserialize<VisualizeShapeData>(File.ReadAllText(visualizeShapesPath));
 			
 			ResourceData = res;
 			TraceLogData = new TraceLogData(log, res);
 			VisualizeData = viz;
 			SettingData = setting;
+            VisualizeShapeData = shapes; 
 			
 			setVisualizeRuleToEvent();
 
