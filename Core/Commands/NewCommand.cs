@@ -104,7 +104,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 					_convertBw.ReportProgress(90);
 					_convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = "共通形式データを生成中"; }));
 
-					_cftl = new TraceLogVisualizerData(cfc.ResourceData, cfc.TraceLogData, cfc.VisualizeData, cfc.SettingData);
+					_cftl = new TraceLogVisualizerData(cfc.ResourceData, cfc.TraceLogData, cfc.VisualizeData, cfc.SettingData,cfc.VisualizeShapeData);
 
 					if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
 					_convertBw.ReportProgress(100);

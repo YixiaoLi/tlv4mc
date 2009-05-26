@@ -44,7 +44,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-    public class EventShapes : IJsonable<EventShapes>
+    public class EventShapes 
 	{
 		public Dictionary<string, List<EventShape>> List { get { return _list; } set { _list = value; } }
 
@@ -87,6 +87,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			string p = eventShape.Event.GetVisualizeRuleName() + ":" + eventShape.Event.Name;
 			if (!_list.ContainsKey(p))
 				_list.Add(p, new List<EventShape>());
+            eventShape.Event = null; 
 			_list[p].Add(eventShape);
 		}
 
@@ -104,19 +105,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			_list.Clear();
 		}
-
-        public EventShapes Parse(string eventShapes)
-        {
-            EventShapes shapes = new EventShapes();
-            shapes.List = ApplicationFactory.JsonSerializer.Deserialize < Dictionary<string, List<EventShape>>> (eventShapes);
-            return shapes; 
-        }
-
-        public string ToJson()
-        {
-            this.Optimize();
-            return ApplicationFactory.JsonSerializer.Serialize(_list);
-        }
 
 	}
 }

@@ -110,15 +110,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         /// <param name="resourceData">共通形式のリソースデータ</param>
         /// <param name="traceLogData">共通形式のトレースログデータ</param>
-		public TraceLogVisualizerData(ResourceData resourceData, TraceLogData traceLogData, VisualizeData visualizeData, SettingData settingData)
+        public TraceLogVisualizerData(ResourceData resourceData, TraceLogData traceLogData, VisualizeData visualizeData, SettingData settingData, VisualizeShapeData shapesData)
         {
-			ResourceData = resourceData;
-			TraceLogData = traceLogData;
-			VisualizeData = visualizeData;
-			SettingData = settingData;
-            VisualizeShapeData = new VisualizeShapeData(); 
+            ResourceData = resourceData;
+            TraceLogData = traceLogData;
+            VisualizeData = visualizeData;
+            SettingData = settingData;
+            VisualizeShapeData = shapesData;
 
-			setVisualizeRuleToEvent();
+            setVisualizeRuleToEvent();
         }
 
 		private void setVisualizeRuleToEvent()

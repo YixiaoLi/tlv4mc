@@ -114,7 +114,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			JsonSerializer.AddConverter(new ArgumentTypeConverter());
 			JsonSerializer.AddConverter(new ShapesConverter());
 			JsonSerializer.AddConverter(new FiguresConverter());
-			JsonSerializer.AddConverter(new ShapeConverter());
+            JsonSerializer.AddConverter(new ShapeConverter());
+            JsonSerializer.AddConverter(new EventShapesConverter());
 			JsonSerializer.AddConverter(new TimeConverter());
 			JsonSerializer.AddConverter(new TimeLineConverter());
 

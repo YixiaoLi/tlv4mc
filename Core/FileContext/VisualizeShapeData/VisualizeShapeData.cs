@@ -9,7 +9,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
     public class VisualizeShapeData : IJsonable<VisualizeShapeData>
     {
         //  Event
-        public Dictionary<string, EventShapes> EventShapes;
+        public Dictionary<string, EventShapes> RuleShapes;
 
         //  VisualizeRule Event
         public Dictionary<string, EventShapes> RuleEventShapes;
@@ -21,28 +21,49 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public Dictionary<string, EventShapes> RuleResourceShapes;
 
         //  VisualizeRule Resource Event
-        public Dictionary<string, EventShapes> RuleResourceEventShapes;
+        public Dictionary<string, EventShapes> RuleEventResourceShapes;
 
 
 
        public VisualizeShapeData() {
-           EventShapes = new Dictionary<string, EventShapes>();
+           RuleShapes = new Dictionary<string, EventShapes>();
            RuleEventShapes = new Dictionary<string, EventShapes>();
            ResourceShapes = new Dictionary<string, EventShapes>();
            RuleResourceShapes = new Dictionary<string, EventShapes>();
-           RuleResourceEventShapes = new Dictionary<string, EventShapes>();
-       } 
+           RuleEventResourceShapes = new Dictionary<string, EventShapes>();
+       }
+
+       public void Add(VisualizeRule rule, EventShapes shapes)
+       {
+           RuleShapes.Add(rule.Name, shapes);
+       }
+       public void Add(VisualizeRule rule, Event e, EventShapes shapes)
+       {
+           RuleEventShapes.Add(rule.Name + ":" + e.Name, shapes);
+       }
+       public void Add(Resource res, EventShapes shapes) {
+           ResourceShapes.Add(res.Name, shapes); 
+       }
+       public void Add(VisualizeRule rule, Resource res, EventShapes shapes) {
+           RuleResourceShapes.Add(rule.Name + ":" + res.Name, shapes);
+       }
+       public void Add(VisualizeRule rule, Event e, Resource res, EventShapes shapes)
+       {
+           RuleEventResourceShapes.Add(rule.Name + ":" + e.Name + ":" + res.Name, shapes);
+       }
+        
+ 
 
         #region IJsonable<VisualizeShapeData> メンバ
         public string ToJson()
         {
             var dict =
-               new Dictionary<string, Dictionary<string, EventShapes>>();
-            dict.Add("EventShapes", EventShapes);
+               new Dictionary<string,Dictionary<string,EventShapes>>();
+            dict.Add("RuleShapes", RuleShapes);
             dict.Add("RuleEventShapes", RuleEventShapes);
             dict.Add("ResourceShapes", ResourceShapes);
             dict.Add("RuleResourceShapes", RuleResourceShapes);
-            dict.Add("RuleResourceEventShapes", RuleResourceEventShapes);
+            dict.Add("RuleEventResourceShapes", RuleEventResourceShapes);
  
             return ApplicationFactory.JsonSerializer.Serialize(dict); 
         }
@@ -52,11 +73,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
             Dictionary<string, Dictionary<string, EventShapes>> dict =
                 ApplicationFactory.JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, EventShapes>>>(data);
             VisualizeShapeData vizShape= new VisualizeShapeData();
-            vizShape.EventShapes = dict["EventShapes"];
+            vizShape.RuleShapes = dict["RuleShapes"];
             vizShape.RuleEventShapes = dict["RuleEventShapes"];
             vizShape.ResourceShapes = dict["ResourceShapes"];
             vizShape.RuleResourceShapes = dict["RuleResourceShapes"];
-            vizShape.RuleResourceEventShapes = dict["RuleResourceEventShapes"];
+            vizShape.RuleEventResourceShapes = dict["RuleEventResourceShapes"];
 
             return vizShape; 
         }

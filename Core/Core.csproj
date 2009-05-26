@@ -150,6 +150,7 @@
     <Compile Include="FileContext\VisualizeShapeData\VisualizeShapeData.cs" />
     <Compile Include="JsonConverters\ArcConverter.cs" />
     <Compile Include="JsonConverters\ArgumentTypeConverter.cs" />
+    <Compile Include="JsonConverters\EventShapesConverter.cs" />
     <Compile Include="JsonConverters\FontFamilyConverter.cs" />
     <Compile Include="JsonConverters\GeneralConverter.cs" />
     <Compile Include="JsonConverters\GeneralNamedCollectionConverter.cs" />
