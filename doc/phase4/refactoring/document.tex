@@ -1,0 +1,176 @@
+\documentclass[a4j]{jsarticle}
+\usepackage[dvipdfmx]{graphics}
+\newcommand{\figref}[1]{図\ref{#1}}
+
+\title{組込みRTOS向けアプリケーション開発支援ツール\\
+TLV（トレース ログ ヴィジュアライザー）\\
+フェーズ4 リファクタリング仕様書}
+\begin{document}
+\maketitle
+\titlepage
+
+\section*{改訂履歴}
+\begin{table}[h]
+ \centering
+ \begin{tabular}{|c|c|c|c|} \hline
+  版番& 日付&    更新内容& 更新者\\ \hline\hline
+  1.0 & 09/5/28& 新規作成& 水野洋樹\\ \hline
+ \end{tabular}
+\end{table}
+\clearpage
+
+\tableofcontents
+\clearpage
+
+\section{はじめに}
+\subsection{本書の目的}
+本書の目的は、文部科学省先導的ITスペシャリスト育成推進プログラム「OJLに
+  よる最先端技術適応能力を持つIT人材育成拠点の形成」プロジェクトにおけ
+る、OJL科目ソフトウェア工学実践研究の研究テーマである「組込みRTOS向けア
+  プリケーション開発支援ツールの開発」に対して、その開発するソフトウェ
+アに対する要求を記述することである。
+
+本書は特に、フェーズ4におけるリファクタリング作業に関する記述を行う。
+
+\subsection{本書の適用範囲}
+本書は、組込みMPRTOS向けアプリケーション開発支援ツールの開発プロジェク
+ト（以下本プロジェクト）のフェーズ4におけるリファクタリング作業に関する
+記述を行う。
+
+\subsection{用語の定義/略語の説明}
+
+\begin{table}[h]
+ \centering
+ \caption{用語定義}
+ \begin{tabular}{|p{8em}|p{36em}|} \hline
+  用語・略語& 定義・説明\\ \hline \hline
+  TLV& Trace Log Visualizer\\ \hline
+  MPRTOS& マルチプロセッサ対応リアルタイムオペレーティングシステム\\
+  \hline
+  トレースログファイル&
+      RTOSのトレースログ機能を用いて出力したトレースログや、
+      シミュレータなどが出力するトレースログをファイルにしたもの\\
+  \hline
+  標準形式トレースログファイル&
+      本ソフトウェアが扱うことの出来る形式をもつトレースログファイル。
+      各種トレースログファイルは、この共通形式トレースログファイルに
+      変換することにより本ソフトウェアで扱うことが出来るようになる。 \\
+  \hline
+  変換ルール  &
+  トレースログファイルを標準形式トレースログファイルに変換する際に用いられるルール。
+  \\
+  \hline
+  可視化ルール  &
+  標準形式トレースログファイルを可視化する際に用いられるルール。
+  \\
+  \hline
+  TLVファイル &
+      本ソフトウェアが中間形式として用いるファイル。
+      前述の標準形式トレースログファイルは、このTLVファイルの一部である。 \\
+  \hline
+ \end{tabular}
+\end{table}
+
+\subsection{概要}
+本書では、組込みMPRTOS向けアプリケーション開発支援ツールの
+ソフトウェアの仕様を記述する。
+本書は特に、フェーズ4におけるリファクタリング作業に関する記述を行う。
+
+\clearpage
+\section{概要説明}
+\subsection{リファクタリングを実施する理由}
+フェーズ4では、変換・可視化ルールに外部スクリプトを利用できるようにTLVを拡張する予定である。
+現在のTLVままではTLVファイルの可搬性(ポータビリティ)が問題になるため、リファクタリングを実施する。
+
+現在のTLVは、標準形式トレースログを可視化ルールを用いた変換は、描画処理時に行なわれる。
+描画処理はTLVファイルを開くたびに実行されるため、
+可視化ルールに外部スクリプトを利用した場合、TLVファイルを別の環境で開くことが難しくなる。そのため、
+TLVファイルの可搬性が損なわれる。
+
+可視化ルールを用いた変換を、描画処理時でなくログファイル読み込みに行なうようにリファクタリングを実施する。
+ログファイル読み込みは、TLVを生成するときのみ実行されるため、TLVファイルの可搬性が確保できる。
+
+\subsection{リファクタリングを実施する対象}
+リファクタリング対象は、TLVファイルを生成するクラスと、TLVファイルを用いて描画処理を行なうクラスである。
+
+TLVファイル生成時に可視化ルールを用いた変換を行なうように、TLVファイルを生成するクラスを変更する。
+
+TLVファイル生成時に可視化ルールを用いた変換を行なうようにしたので、
+描画処理を行なうクラスでは可視化ルールを用いた変換を行なわないように変更する。
+
+\section{作業内容}
+\subsection{リファクタリング前と後の処理の流れ}
+リファクタリング前の処理の流れを図\ref{conv1},\ref{draw1}に示す。
+図\ref{conv1}はファイル読み込み時の処理を示す。\verb!TraceLogGenerator!を用いて、トレースログファイルを標準形式トレースログに変換している。
+図\ref{draw1}は描画処理を示す。\verb!TimeLineEvents!を用いて、標準形式トレースログを可視化ルールを用いて変換し、描画している。
+
+リファクタリング後の処理の流れを図\ref{conv2},\ref{draw2}に示す。
+図\ref{conv2}はファイル読み込み時の処理を示す。\verb!TraceLogGenerator!を用いてトレースログファイルを標準形式トレースログに変換し、
+\verb!VisualizeShapesGenerator!を用いて、標準形式トレースログを可視化ルールを用いて変換している。
+図\ref{draw2}は描画処理を示す。可視化処理済みの標準形式トレースログを描画している。
+
+\begin{figure}
+\centering
+\includegraphics{conv1.png}
+\caption{リファクタリング前の標準ログ変換処理}\label{conv1}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{draw1.png}
+\caption{リファクタリング前の可視化処理}\label{draw1}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{conv2.png}
+\caption{リファクタリング後の標準ログ変換処理}\label{conv2}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{draw2.png}
+\caption{リファクタリング後の可視化処理}\label{draw2}
+\end{figure}
+\clearpage
+
+\subsection{実施内容}
+リファクタリングは以下の手順で行なう。
+
+
+\begin{enumerate}
+\item EventShapesのシリアライズ・デシリアライズ処理
+\item 可視化ルールを用いた変換処理の移動
+\item 描画処理の修正
+\end{enumerate}
+
+\subsubsection{EventShapesのシリアライズ・デシリアライズ処理}
+描画対象である\verb!EventShapes!をJSON形式で保存できるように、シリアイラズ・デシリアライズ処理を記述する。
+
+\begin{enumerate}
+\item \verb!ShapeConvertor!を変更し、\verb!Shape!クラスのシリアイラズ・デシリアライズ可能する。
+\item \verb!EventShapesConvertor!を作成し、\verb!EventShapes!クラスのシリアイラズ・デシリアライズ可能する。
+\end{enumerate}
+
+\subsubsection{可視化ルールを用いた可視化処理の移動}
+\verb!TimeLineEvents!内にある可視化ルールを用いた可視化処理を独立したクラスに移動する。
+
+\begin{enumerate}
+\item \verb!TimeLineEvents!の処理の大半を、\verb!VisualizeShapeGenerator!に移動する。
+\end{enumerate}
+
+\subsubsection{描画処理の修正}
+\verb!TimeLineEvents!を用いて描画処理を行なっていたクラスを修正する。修正対象は以下のクラスである。
+
+
+\begin{itemize}
+\item TimeLineVisualizer(10箇所)
+\item TimeLineMacroViewer(2箇所)
+\item TraceLogDisplayPanel(5箇所)
+\end{itemize}
+
+
+\clearpage
+\section*{参考文献}
+
+\end{document}

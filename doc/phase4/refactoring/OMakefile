@@ -1,0 +1,9 @@
+.PHONY: clean
+LATEX = platex
+DVIPDFM = dvipdfmx
+
+LaTeXDocument(document, document)
+.DEFAULT: document.dvi
+
+clean:
+	rm -f *~ *.omc *.aux *.log *.fls *.toc *.dvi
