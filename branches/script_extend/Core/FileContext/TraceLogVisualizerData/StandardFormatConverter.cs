@@ -193,6 +193,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             VisualizeShapeData vizData = new VisualizeShapeData();
 
+
+            foreach (VisualizeRule rule in this.VisualizeData.VisualizeRules)
+            {
+                foreach (Event evnt in rule.Shapes)
+                {
+                    evnt.SetVisualizeRuleName(rule.Name);
+                }
+            }
+
             foreach (Resource res in this.ResourceData.Resources) {
                 var gen = new EventShapesGenerator(res);
                 gen.SetData(TraceLogData, VisualizeData, ResourceData);
