@@ -127,7 +127,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				foreach (Event evnt in rule.Shapes)
 				{
-					evnt.SetVisualizeRuleName(rule.Name);
+                    evnt.SetVisualizeRuleName(rule.Name); 
 				}
 			}
 		}

@@ -236,7 +236,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 					foreach (Event e in vizRule.Shapes)
 					{
-						TimeLineVisualizer _tlv = new TimeLineVisualizer(new TimeLineEvents(e, res));
+						TimeLineVisualizer _tlv = new TimeLineVisualizer(new TimeLineEvents(vizRule,e, res));
 						_list.Add(_tlv);
 						treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Add(e.Name, e.DisplayName, _tlv);
 						treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Nodes[e.Name].Visible = treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Visible && _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name, e.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name, e.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;

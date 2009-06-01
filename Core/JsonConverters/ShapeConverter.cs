@@ -120,6 +120,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
            {
                throw new ArgumentException();
            }
+           shape.SetDefaultValue();
+           shape.ChackValidate();
 			return shape;
 		}
 
