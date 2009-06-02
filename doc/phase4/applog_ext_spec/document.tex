@@ -1,5 +1,5 @@
 \documentclass[a4j]{jsarticle}
-\usepackage[dvipdfmx]{graphicx}
+\usepackage[dviout]{graphicx}
 \usepackage{ascmac}
 \newcommand{\figref}[1]{図\ref{#1}}
 
@@ -30,7 +30,7 @@ TLV（トレース ログ ヴィジュアライザー）\\
   よる最先端技術適応能力を持つIT人材育成拠点の形成」プロジェクトにおけ
 る、OJL科目ソフトウェア工学実践研究の研究テーマである「組込みRTOS向けア
   プリケーション開発支援ツールの開発」に対して、その開発するソフトウェ
-アに対する要求を記述することである。
+ア拡張の外部仕様を記述することである。
 
 本書は特に、フェーズ4におけるアプリログ拡張の外部仕様に関する記述を行う。
 
@@ -80,41 +80,54 @@ TLV（トレース ログ ヴィジュアライザー）\\
 
 \clearpage
 \section{概要説明}
-\subsection{アプリログ拡張を実施する理由}
-フェーズ4での要求として、ユーザアプリケーションにおいて出力されたsyslogを可視化したいというものがある。
-アプリケーションのデバッグには、一般的にprintfデバッグと呼ばれるような手法が有効である。
-これをuITRON仕様で実現するものがsyslogである。
-これをTLVで表示させることができるようにすることが本拡張の目的である。
+全体イメージ
+\subsection{アプリログ拡張}
+アプリケーションのデバッグには、一般的にprintfデバッグと呼ばれる手法が有効である。
+今までのTLVでは、任意の文字列を可視化することができないので、printfデバッグを行えない。
+そこで、フェーズ4での要求として任意文字列を可視化することが挙げられている。
 
-\subsection{アプリログ拡張で変更を実施する対象}
-拡張対象は、変換ルール、可視化ルール、リソースヘッダ、リソースファイル（ユーザによる拡張）である。
-拡張対象にTLV本体が含まれていない理由は、本格的な実装の前段階として、短納期でプロトタイプを実装するためである。
+例えば、\verb|[123456789] printf foobarbaz.|のようなログがあった場合、時刻123456789の位置にfoobarbazというメッセージが表示されるような可視化を想定する。
 
-\section{詳細説明}
-本拡張では、以下の3種類の可視化方法の入力、出力をそれぞれ定義する。
-\begin{itemize}
-  \item 文字列可視化
-  \item ユーザ定義状態可視化
-  \item ユーザ定義状態可視化（端点付き）
-\end{itemize}
+本拡張では、以下の3つの可視化方法を提供する。
+\begin{description}
+  \item[文字列可視化] 任意文字列をTLV上に表示
+  \item[ユーザ定義状態可視化] タスクの状態表示のように、ユーザが任意に決めた状態を可視化
+  \item[ユーザ定義状態可視化（端点付き）] 上記の可視化に加え、開始と終了があるもの。関数コールを想定
+\end{description}
+
+TOPPERSカーネルでは、ユーザアプリケーションからのログ出力はsyslog関数によって行う。
+よって、ユーザアプリケーション側からの利用はsyslog関数や、別に用意するAPIを介して行うものとする。
+
+本機能をユーザアプリケーションから利用する場合は、以下の手順で行う。
+\begin{enumerate}
+  \item TLVのリソースファイルに追記
+  \item アプリケーションにログ出力関数コールを追加（syslog関数または本拡張で提供するAPI）
+  \item アプリケーションを実行
+  \item TLVを実行
+\end{enumerate}
+
+また、今回の拡張はTLV本体には手を入れず、可視化ルールなどの記述のみで
+実現することとした。
 
 \subsection{文字列可視化}
 文字列の可視化には、タスクに関連するものとそうでないものがある。
-タスクに関連する文字列出力は、TLVのタスク可視化行にぶら下げて可視化することで
-現在のタスク状態表示などの上に重ねて表示することとする。
-タスクに関連しない文字列出力は、それ専用の行にて表示することとする。
+以降、タスクに関連する文字列可視化を\textbf{タスク文字列可視化}、タスクに関連しない文字列可視化を\textbf{文字列可視化}と呼ぶ。
+
+タスク文字列可視化は、タスクの属性として定義することで、
+現在のタスク状態表示などの上に重ねて表示する。
+文字列可視化は、それ専用の行で表示する。
 \subsubsection{入力}
 斜体で表示されている箇所は、アプリケーション開発者が望む値に置換する場所であることを示している。
 
 \paragraph{ログ書式} TLVへ入力するログの書式を定義する。
-\begin{itembox}[l]{タスクに関連しない文字列出力のログ書式}
+\begin{itembox}[l]{文字列可視化のログ書式}
   \verb|[| \textit{time} \verb|]| applog \textit{str}. 
   \begin{description}
     \item[\textit{time}] 時刻 \verb|[0-9a-zA-Z]+|
     \item[\textit{str}] 出力文字列 \verb|[^\.]*|
   \end{description}
 \end{itembox}
-\begin{itembox}[l]{タスクに関連する文字列出力のログ書式}
+\begin{itembox}[l]{タスク文字列可視化のログ書式}
   \verb|[| \textit{time} \verb|]| task \textit{tid} applog \textit{str}. 
   \begin{description}
     \item[\textit{time}] 時刻 \verb|[0-9a-zA-Z]+|
@@ -125,7 +138,7 @@ TLV（トレース ログ ヴィジュアライザー）\\
 
 \paragraph{リソースファイル書式}
 以下の記述は、タスクとは関係ない文字列出力を行う際に、ユーザがリソースファイルに追加するものである。
-\begin{itembox}[l]{タスクに関連しない文字列出力リソースファイル書式}
+\begin{itembox}[l]{文字列可視化リソースファイル書式}
   \begin{verbatim}
 "rowname":{
     "Type":"ApplogStr",
@@ -141,13 +154,13 @@ TLV（トレース ログ ヴィジュアライザー）\\
 \paragraph{API}
 また、アプリケーション開発者の利便のために、先ほど示した形式でログを出力するC言語の関数を用意する。
 
-\begin{itembox}[l]{タスクに関連しない文字列出力関数}
+\begin{itembox}[l]{文字列可視化関数}
   int applogstr(const char* str)
   \begin{description}
     \item[\textit{str}] 可視化したい文字列|
   \end{description}
 \end{itembox}
-\begin{itembox}[l]{タスクに関連する文字列出力関数}
+\begin{itembox}[l]{タスク文字列可視化関数}
   int applogstrtsk(const char* str, const int tid)
   \begin{description}
     \item[\textit{str}] 可視化したい文字列|
@@ -157,14 +170,14 @@ TLV（トレース ログ ヴィジュアライザー）\\
 \subsubsection{出力}
 以下では、文字列の可視化方法を定義する。
 
-\paragraph{タスクに関連しない文字列可視化}
-まず、タスクに関連しない文字列出力の可視化を示す。
+\paragraph{文字列可視化}
+まず、文字列可視化を示す。
 
 \begin{figure}[h]
   \begin{center}
     \includegraphics[width=15cm]{applog_str.png}
   \end{center}
-  \caption{タスクに関連しない文字列の可視化}
+  \caption{文字列可視化}
   \label{fig:str}
 \end{figure}
 
@@ -173,14 +186,14 @@ TLV（トレース ログ ヴィジュアライザー）\\
 \end{verbatim}
 このようなログが出力された場合、\figref{fig:str}のように可視化を行う。
 
-\paragraph{タスクに関連する文字列可視化}
+\paragraph{タスク文字列可視化}
 次に、タスクに関連する文字列の可視化を示す。
 
 \begin{figure}[h]
   \begin{center}
     \includegraphics[width=15cm]{applog_strtsk.png}
   \end{center}
-  \caption{タスクに関連する文字列の可視化}
+  \caption{タスク文字列の可視化}
   \label{fig:strtsk}
 \end{figure}
 
