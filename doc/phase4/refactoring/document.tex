@@ -1,10 +1,10 @@
 \documentclass[a4j]{jsarticle}
-\usepackage[dvipdfmx]{graphics}
+\usepackage[dvipdfmx]{graphicx}
 \newcommand{\figref}[1]{図\ref{#1}}
 
 \title{組込みRTOS向けアプリケーション開発支援ツール\\
 TLV（トレース ログ ヴィジュアライザー）\\
-フェーズ4 リファクタリング仕様書}
+フェーズ4 リファクタリング仕様書・作業計画書}
 \begin{document}
 \maketitle
 \titlepage
@@ -28,7 +28,7 @@ TLV（トレース ログ ヴィジュアライザー）\\
   よる最先端技術適応能力を持つIT人材育成拠点の形成」プロジェクトにおけ
 る、OJL科目ソフトウェア工学実践研究の研究テーマである「組込みRTOS向けア
   プリケーション開発支援ツールの開発」に対して、その開発するソフトウェ
-アに対する要求を記述することである。
+アに対する設計を記述することである。
 
 本書は特に、フェーズ4におけるリファクタリング作業に関する記述を行う。
 
@@ -76,19 +76,36 @@ TLV（トレース ログ ヴィジュアライザー）\\
 ソフトウェアの仕様を記述する。
 本書は特に、フェーズ4におけるリファクタリング作業に関する記述を行う。
 
+
+\part{リファクタリング仕様書}
+
 \clearpage
 \section{概要説明}
 \subsection{リファクタリングを実施する理由}
 フェーズ4では、変換・可視化ルールに外部スクリプトを利用できるようにTLVを拡張する予定である。
 現在のTLVままではTLVファイルの可搬性(ポータビリティ)が問題になるため、リファクタリングを実施する。
 
-現在のTLVは、標準形式トレースログを可視化ルールを用いた変換は、描画処理時に行なわれる。
+現在のTLVは、図\ref{tlv-before}のように標準形式トレースログを可視化ルールを用いた変換は、描画処理時に行なわれる。
 描画処理はTLVファイルを開くたびに実行されるため、
 可視化ルールに外部スクリプトを利用した場合、TLVファイルを別の環境で開くことが難しくなる。そのため、
 TLVファイルの可搬性が損なわれる。
 
-可視化ルールを用いた変換を、描画処理時でなくログファイル読み込みに行なうようにリファクタリングを実施する。
+リファクタリング後のTLVは、図\ref{tlv-after}のように可視化ルールを用いた変換を、描画処理時でなくログファイル読み込みに行なう。
 ログファイル読み込みは、TLVを生成するときのみ実行されるため、TLVファイルの可搬性が確保できる。
+
+\clearpage
+
+\begin{figure}
+\centering
+\includegraphics[width=15cm]{tlv-before.eps}
+\caption{リファクタリング前のTLV}\label{tlv-before}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=15cm]{tlv-after.eps}
+\caption{リファクタリング後のTLV}\label{tlv-after}
+\end{figure}
 
 \subsection{リファクタリングを実施する対象}
 リファクタリング対象は、TLVファイルを生成するクラスと、TLVファイルを用いて描画処理を行なうクラスである。
@@ -98,8 +115,8 @@ TLVファイル生成時に可視化ルールを用いた変換を行なうように、TLVファイルを生成する
 TLVファイル生成時に可視化ルールを用いた変換を行なうようにしたので、
 描画処理を行なうクラスでは可視化ルールを用いた変換を行なわないように変更する。
 
-\section{作業内容}
-\subsection{リファクタリング前と後の処理の流れ}
+\section{変更内容}
+\subsection{処理の流れ}
 リファクタリング前の処理の流れを図\ref{conv1},\ref{draw1}に示す。
 図\ref{conv1}はファイル読み込み時の処理を示す。\verb!TraceLogGenerator!を用いて、トレースログファイルを標準形式トレースログに変換している。
 図\ref{draw1}は描画処理を示す。\verb!TimeLineEvents!を用いて、標準形式トレースログを可視化ルールを用いて変換し、描画している。
@@ -132,9 +149,31 @@ TLVファイル生成時に可視化ルールを用いた変換を行なうようにしたので、
 \includegraphics{draw2.png}
 \caption{リファクタリング後の可視化処理}\label{draw2}
 \end{figure}
+
+\subsection{TLVファイルフォーマット}
+リファクタリングに共ない、TLVファイルに格納する情報も変更する。
+
+現在のTLVには、ZIP書庫形式で以下のファイルが格納されている。
+\begin{itemize}
+\item 標準ログファイル(\verb!*.log!)
+\item リソースファイル(\verb!*.res!)
+\item 設定ファイル(\verb!*.setting!)
+\item 可視化ルールファイルl(\verb!*.viz!)
+\end{itemize}
+
+これに加えて、可視化図形ファイルをTLVファイルに格納する。
+\begin{itemize}
+\item 標準ログファイル(\verb!*.log!)
+\item リソースファイル(\verb!*.res!)
+\item 設定ファイル(\verb!*.setting!)
+\item 可視化ルールファイルl(\verb!*.viz!)
+\item \emph{可視化図形ファイル}(\verb!*shp!)
+\end{itemize}
+
 \clearpage
 
-\subsection{実施内容}
+\part{リファクタリング作業計画}
+\section{実施内容}
 リファクタリングは以下の手順で行なう。
 
 
@@ -144,22 +183,25 @@ TLVファイル生成時に可視化ルールを用いた変換を行なうようにしたので、
 \item 描画処理の修正
 \end{enumerate}
 
-\subsubsection{EventShapesのシリアライズ・デシリアライズ処理}
+
+\section{EventShapesのシリアライズ・デシリアライズ処理}
 描画対象である\verb!EventShapes!をJSON形式で保存できるように、シリアイラズ・デシリアライズ処理を記述する。
 
 \begin{enumerate}
 \item \verb!ShapeConvertor!を変更し、\verb!Shape!クラスのシリアイラズ・デシリアライズ可能する。
 \item \verb!EventShapesConvertor!を作成し、\verb!EventShapes!クラスのシリアイラズ・デシリアライズ可能する。
+\item \verb!TraceLogVisualizerData!のファイル保存処理を追加する
 \end{enumerate}
 
-\subsubsection{可視化ルールを用いた可視化処理の移動}
+\subsection{可視化ルールを用いた可視化処理の移動}
 \verb!TimeLineEvents!内にある可視化ルールを用いた可視化処理を独立したクラスに移動する。
 
 \begin{enumerate}
 \item \verb!TimeLineEvents!の処理の大半を、\verb!VisualizeShapeGenerator!に移動する。
+\item \verb!StandardFormatConvertor!に、\verb!VisualizeShapeGenerator!を用いた処理を追加する。
 \end{enumerate}
 
-\subsubsection{描画処理の修正}
+\subsection{描画処理の修正}
 \verb!TimeLineEvents!を用いて描画処理を行なっていたクラスを修正する。修正対象は以下のクラスである。
 
 
@@ -169,8 +211,37 @@ TLVファイル生成時に可視化ルールを用いた変換を行なうようにしたので、
 \item TraceLogDisplayPanel(5箇所)
 \end{itemize}
 
+\section{作業見積り}
+各作業において、修正が必要な行数の見積りは次に示す通りである。
 
-\clearpage
-\section*{参考文献}
+\begin{enumerate}
+\item EventShapesのシリアライズ・デシリアライズ処理
+\begin{enumerate}
+\item \verb!ShapeConvertor!を変更し、\verb!Shape!クラスのシリアイラズ・デシリアライズ可能する。(約100行)
+\item \verb!EventShapesConvertor!を作成し、\verb!EventShapes!クラスのシリアイラズ・デシリアライズ可能する。(約10行)
+\item \verb!TraceLogVisualizerData!のファイル保存処理を追加する。(約5行)
+\end{enumerate}
+
+\item 可視化ルールを用いた変換処理の移動
+\begin{enumerate}
+\item \verb!TimeLineEvents!の処理の大半を、\verb!VisualizeShapeGenerator!に移動する。(約568行)
+\item \verb!StandardFormatConvertor!に、\verb!VisualizeShapeGenerator!を用いた処理を追加する。(約20行)
+\end{enumerate}
+
+\item 描画処理の修正
+\begin{enumerate}
+\item TimeLineVisualizer(10箇所)
+\item TimeLineMacroViewer(2箇所)
+\item TraceLogDisplayPanel(5箇所)
+\end{enumerate}
+\end{enumerate}
+
+
+\begin{table}
+\centering
+\caption{作業見積り}\label{estimate}
+\begin{tabular}{c|c|c}
+\end{tabular}
+\end{table}
 
 \end{document}
