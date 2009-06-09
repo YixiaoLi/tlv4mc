@@ -41,6 +41,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Diagnostics;
 using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
@@ -64,7 +65,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public TraceLogData Generate()
 		{
-			Dictionary<string, Json> dic = new Dictionary<string, Json>();
+            Dictionary<string, Json> oldRule = new Dictionary<string, Json>();
+            Json newRule = null;
 
 			string[] target = _resourceData.ConvertRules.ToArray();
 
@@ -78,39 +80,108 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				{
 					if (target.Contains(j.Key))
 					{
-						foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePairEnumerator())
-						{
-							dic.Add(_j.Key, _j.Value);
-						}
+                        if (j.Value.ContainsKey("$STYLE"))
+                        {
+                            if (newRule == null)
+                            {
+                                newRule = j.Value;
+                            }
+                            else {
+                                throw new Exception("複数の新形式変換ルールが存在します");
+                            }
+                        }
+                        else
+                        {
+                            foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePairEnumerator())
+                            {
+                                oldRule.Add(_j.Key, _j.Value);
+                            }
+                        }
 					}
 				}
 			}
-
-			TraceLogData t = new TraceLogData(_resourceData);
-
-			// トレースログを一行ずつ調べTraceLogクラスに変換しTraceLogListに追加していく
-			string[] logs = File.ReadAllLines(_traceLogFilePath);
-			float i = 1;
-			float max = logs.Length;
-			foreach (string s in logs)
-			{
-				if (_constructProgressReport != null)
-					_constructProgressReport((int)(((i / max) * (float)(_progressTo - _progressFrom)) + (float)_progressFrom), "トレースログを共通形式へ変換中 " + i + "/" + max + " 行目...");
-
-				foreach (KeyValuePair<string, Json> kvp in dic)
-				{
-					if (Regex.IsMatch(s, kvp.Key))
-					{
-						addTraceLog(s, kvp.Key, kvp.Value, t);
-					}
-				}
-				i++;
-			}
-
-			t.LogDataBase.SetIds();
-
-			return t;
+            if (newRule != null && oldRule.Count > 0)
+            {
+                throw new Exception("新形式変換ルールと旧形式変換ルールは混在させることはできません");
+            }
+            else if (oldRule.Count > 0)
+            {
+                return generateByOldRule(oldRule);
+            }
+            else if (newRule != null)
+            {
+                return generateByNewRule(newRule);
+            }
+            else
+            {
+                throw new Exception("一致する変換ルールが見つかりません。");
+            }
 		}
+
+        private TraceLogData generateByNewRule(Json rule)
+        {
+            ProcessStartInfo psi;
+            if (rule.ContainsKey("script"))
+            {
+                string path = Path.GetTempFileName();
+                StreamWriter sw = new StreamWriter(new FileStream(path, FileMode.Create));
+
+                string script = rule["script"];
+                sw.Write(script);
+                sw.Close();
+                psi = new ProcessStartInfo(rule["fileName"],
+                                           string.Format(rule["arguments"], path));
+            }
+            else
+            {
+                psi = new ProcessStartInfo(rule["fileName"], rule["arguments"]);
+            }
+            psi.UseShellExecute = false;
+            psi.RedirectStandardInput = true;
+            psi.RedirectStandardOutput = true;
+
+            Process p = Process.Start(psi);
+            string[] logs = File.ReadAllLines(_traceLogFilePath);
+            
+            foreach(string log in logs){
+                p.StandardInput.WriteLine(log);
+            }
+            p.WaitForExit();
+
+
+            TraceLogData t = new TraceLogData(_resourceData);
+            while (!p.StandardOutput.EndOfStream) {
+                t.Add(new TraceLog(p.StandardOutput.ReadLine()));
+            }
+            t.LogDataBase.SetIds();
+            return t;
+        }
+
+        private TraceLogData generateByOldRule(Dictionary<string, Json> dic) {
+            TraceLogData t = new TraceLogData(_resourceData);
+
+            // トレースログを一行ずつ調べTraceLogクラスに変換しTraceLogListに追加していく
+            string[] logs = File.ReadAllLines(_traceLogFilePath);
+            float i = 1;
+            float max = logs.Length;
+            foreach (string s in logs)
+            {
+                if (_constructProgressReport != null)
+                    _constructProgressReport((int)(((i / max) * (float)(_progressTo - _progressFrom)) + (float)_progressFrom), "トレースログを共通形式へ変換中 " + i + "/" + max + " 行目...");
+
+                foreach (KeyValuePair<string, Json> kvp in dic)
+                {
+                    if (Regex.IsMatch(s, kvp.Key))
+                    {
+                        addTraceLog(s, kvp.Key, kvp.Value, t);
+                    }
+                }
+                i++;
+            }
+
+            t.LogDataBase.SetIds();
+            return t;
+        }
 
 		/// <summary>
 		/// 読み込んだログがパターンにマッチした場合に変換してログを追加する
