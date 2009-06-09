@@ -1,7 +1,7 @@
 {
 	"TimeScale" :"us",
 	"TimeRadix" :10,
-	"ConvertRules"   :["asp"],
+	"ConvertRules"   :["asp2"],
 	"VisualizeRules" :["toppers","asp"],
 	"ResourceHeaders":["asp"],
 	"Resources":
