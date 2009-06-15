@@ -125,13 +125,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public IEnumerable<EventShape> GetEventShapes(Time from, Time to)
 		{
-			if (_drawShapes != null)
-			{
-				foreach (EventShape ds in _drawShapes.GetShapes(from, to))
-				{
-					yield return ds;
-				}
-			}
+            if (_drawShapes != null)
+            {
+                return _drawShapes.GetShapes(from, to);
+            }
+            else {
+                throw new Exception("_drawShapes is null");
+            }
 		}
 
 		public override string ToString()

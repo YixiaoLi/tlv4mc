@@ -39,72 +39,72 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Linq.Parallel;
 using NU.OJL.MPRTOS.TLV.Base;
+using System.Text.RegularExpressions;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-    public class EventShapes 
+	public class EventShapeConverter : GeneralConverter<EventShape>
 	{
-		public Dictionary<string, List<EventShape>> List { get { return _list; } set { _list = value; } }
-
-		private Dictionary<string, List<EventShape>> _list = new Dictionary<string, List<EventShape>>();
-
-		public IEnumerable<EventShape> GetShapes(Time from, Time to)
+		public override object ReadJson(IJsonReader reader)
 		{
-			if (ApplicationData.FileContext.Data != null)
-			{
-				//foreach (EventShape esp in this.AsParallel().OrderBy(l => l.From).Where(l =>
-				//    ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(l.Event.GetVisualizeRuleName(), l.Event.Name)
-				//    && ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(l.Event.GetVisualizeRuleName(), l.Event.Name)
-				//    && l.From < to
-				//    && l.To > from))
-				//{
-				//    yield return esp;
-				//}
+            Time? from=null, to=null;
+            Shape shape=null;
+            Event evnt=new Event();
 
-				foreach (KeyValuePair<string, List<EventShape>> kvp in _list)
-				{
-					string key1 = kvp.Key.Split(':')[0];
-					string key2 = kvp.Key.Split(':')[1];
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new ArgumentException();
+            }
 
-					if (ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(key1, key2)
-						&& ApplicationData.FileContext.Data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(key1, key2)
-					)
-					{
-						foreach (EventShape es in kvp.Value.AsParallel().Where(l => l.From < to))
-						{
-							if (es.To > from)
-								yield return es;
-						}
-					}
-				}
-			}
+            reader.Read();
+            while (reader.TokenType == JsonTokenType.PropertyName)
+            {
+                string name = (string)reader.Value;
+                if (name == "From")
+                {
+                    from = ApplicationFactory.JsonSerializer.Deserialize<Time>(reader);
+                }
+                else if (name == "To")
+                {
+                    to = ApplicationFactory.JsonSerializer.Deserialize<Time>(reader);
+                }
+                else if (name == "Shape")
+                {
+                    shape = ApplicationFactory.JsonSerializer.Deserialize<Shape>(reader);
+                }
+                else if (name == "EventName") {
+                    reader.Read();
+                    evnt.Name = (string)reader.Value;
+                }
+                else if (name == "RuleName") {
+                    reader.Read();
+                    evnt.SetVisualizeRuleName((string)reader.Value);
+                }
+                reader.Read(); 
+            }
+            return new EventShape(from.Value, to.Value, shape, evnt);
 		}
 
-		public void Add(EventShape eventShape)
+		protected override void WriteJson(IJsonWriter writer, EventShape obj)
 		{
-			string p = eventShape.Event.GetVisualizeRuleName() + ":" + eventShape.Event.Name;
-			if (!_list.ContainsKey(p))
-				_list.Add(p, new List<EventShape>());
-//            eventShape.Event = null; 
-			_list[p].Add(eventShape);
-		}
+            writer.WriteObject(w => {
+                w.WriteProperty("From");
+                ApplicationFactory.JsonSerializer.Serialize(w, obj.From);
 
-		public void Optimize()
-		{
-		    Dictionary<string, List<EventShape>> list = new Dictionary<string, List<EventShape>>();
-		    foreach (KeyValuePair<string, List<EventShape>> kvp in _list)
-		    {
-		        list.Add(kvp.Key, kvp.Value.OrderBy(l => l.From).ToList());
-		    }
-		    _list = list;
-		}
+                w.WriteProperty("To");
+                ApplicationFactory.JsonSerializer.Serialize(w, obj.To);
 
-		public void Clear()
-		{
-			_list.Clear();
-		}
+                w.WriteProperty("Shape");
+                ApplicationFactory.JsonSerializer.Serialize(w, obj.Shape);
 
+                w.WriteProperty("EventName");
+                ApplicationFactory.JsonSerializer.Serialize(w, obj.Event.Name);
+
+                w.WriteProperty("RuleName");
+                ApplicationFactory.JsonSerializer.Serialize(w, obj.Event.GetVisualizeRuleName());
+            });
+
+		}
 	}
 }

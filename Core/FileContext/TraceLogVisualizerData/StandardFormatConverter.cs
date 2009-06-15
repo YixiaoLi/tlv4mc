@@ -192,20 +192,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
         private VisualizeShapeData getVisualizeShapeData()
         {
             VisualizeShapeData vizData = new VisualizeShapeData();
-
-
             foreach (VisualizeRule rule in this.VisualizeData.VisualizeRules)
             {
                 foreach (Event evnt in rule.Shapes)
                 {
                     evnt.SetVisualizeRuleName(rule.Name);
                 }
-            }
-
-            foreach (Resource res in this.ResourceData.Resources) {
-                var gen = new EventShapesGenerator(res);
-                gen.SetData(TraceLogData, VisualizeData, ResourceData);
-                vizData.Add(res, gen.GetEventShapes());
             }
 
             foreach (VisualizeRule rule in this.VisualizeData.VisualizeRules)
@@ -217,14 +209,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
                         var gen = new EventShapesGenerator(rule, res);
                         gen.SetData(TraceLogData, VisualizeData, ResourceData);
                         vizData.Add(rule, res, gen.GetEventShapes());
-
-                        foreach (Event e in rule.Shapes)
-                        {
-                            gen = new EventShapesGenerator(e, res);
-                            gen.SetData(TraceLogData, VisualizeData, ResourceData);
-                            vizData.Add(rule,e, res, gen.GetEventShapes());
-                        }
-
                     }
                 }
                 else
@@ -232,13 +216,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     var gen = new EventShapesGenerator(rule);
                     gen.SetData(TraceLogData, VisualizeData, ResourceData);
                     vizData.Add(rule, gen.GetEventShapes());
-
-                    foreach (Event e in rule.Shapes)
-                    {
-                        gen = new EventShapesGenerator(rule, e);
-                        gen.SetData(TraceLogData, VisualizeData, ResourceData);
-                        vizData.Add(rule, e, gen.GetEventShapes());
-                    }
                 }
             }
 

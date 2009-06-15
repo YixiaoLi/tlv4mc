@@ -214,6 +214,7 @@
     <Compile Include="JsonConverters\TimeLineConverter.cs" />
     <Compile Include="JsonConverters\TraceLogConverter.cs" />
     <Compile Include="JsonConverters\ObservableNamedCollectionConverter.cs" />
+    <Compile Include="JsonConverters\EventShapeConverter.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
