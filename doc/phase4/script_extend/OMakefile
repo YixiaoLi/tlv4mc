@@ -1,0 +1,9 @@
+.PHONY: clean
+LATEX = platex
+DVIPDFM = dvipdfmx
+
+LaTeXDocument(script_extend, script_extend)
+.DEFAULT: script_extend.dvi
+
+clean:
+	rm -f *~ *.omc *.aux *.log *.fls *.toc *.dvi

@@ -1,0 +1,194 @@
+\documentclass[a4j]{jsarticle}
+\usepackage[dvipdfm]{graphicx}
+\newcommand{\figref}[1]{図\ref{#1}}
+\usepackage{amsmath,listings}
+\renewcommand{\lstlistingname}{リスト}
+\lstset{
+escapechar=\%,%
+columns=[l]{fullflexible}, % 文字をつめる
+tabsize={8},%
+basicstyle=\footnotesize,%
+classoffset=1,%
+frame=tRBl,framesep=5pt,%
+showstringspaces=false,%
+numbers=left,stepnumber=1,numberstyle=\footnotesize%
+}
+
+\title{組込みRTOS向けアプリケーション開発支援ツール\\
+TLV（トレース ログ ヴィジュアライザー）\\
+フェーズ4スクリプト拡張外部仕様書}
+\begin{document}
+\maketitle
+\titlepage
+
+\section*{改訂履歴}
+\begin{table}[h]
+ \centering
+ \begin{tabular}{|c|c|c|c|} \hline
+  版番& 日付&    更新内容& 更新者\\ \hline\hline
+  1.0 & 09/6/16 & 新規作成& 水野洋樹\\ \hline
+ \end{tabular}
+\end{table}
+\clearpage
+
+\tableofcontents
+\clearpage
+
+\section{はじめに}
+\subsection{本書の目的}
+本書の目的は、文部科学省先導的ITスペシャリスト育成推進プログラム「OJLに
+  よる最先端技術適応能力を持つIT人材育成拠点の形成」プロジェクトにおけ
+る、OJL科目ソフトウェア工学実践研究の研究テーマである「組込みRTOS向けア
+  プリケーション開発支援ツールの開発」に対して、その開発するソフトウェ
+アに対する仕様を記述することである。
+
+本書は特に、フェーズ4におけるスクリプト拡張の外部仕様を記述する。
+
+\subsection{本書の適用範囲}
+本書は、組込みMPRTOS向けアプリケーション開発支援ツールの開発プロジェク
+ト（以下本プロジェクト）のフェーズ4におけるリファクタリング作業に関する
+記述を行う。
+
+\subsection{用語の定義/略語の説明}
+
+\begin{table}[h]
+ \centering
+ \caption{用語定義}
+ \begin{tabular}{|p{8em}|p{36em}|} \hline
+  用語・略語& 定義・説明\\ \hline \hline
+  TLV& Trace Log Visualizer\\ \hline
+  MPRTOS& マルチプロセッサ対応リアルタイムオペレーティングシステム\\
+  \hline
+  トレースログファイル&
+      RTOSのトレースログ機能を用いて出力したトレースログや、
+      シミュレータなどが出力するトレースログをファイルにしたもの\\
+  \hline
+  標準形式トレースログファイル&
+      本ソフトウェアが扱うことの出来る形式をもつトレースログファイル。
+      各種トレースログファイルは、この共通形式トレースログファイルに
+      変換することにより本ソフトウェアで扱うことが出来るようになる。 \\
+  \hline
+  変換ルール  &
+  トレースログファイルを標準形式トレースログファイルに変換する際に用いられるルール。
+  \\
+  \hline
+  可視化ルール  &
+  標準形式トレースログファイルを可視化する際に用いられるルール。
+  \\
+  \hline
+  TLVファイル &
+      本ソフトウェアが中間形式として用いるファイル。
+      前述の標準形式トレースログファイルは、このTLVファイルの一部である。 \\
+  \hline
+ \end{tabular}
+\end{table}
+
+\subsection{概要}
+本書では、組込みMPRTOS向けアプリケーション開発支援ツールの
+ソフトウェアの仕様を記述する。
+本書は特に、フェーズ4におけるスクリプト拡張の外部仕様を記述する。
+
+\section{概要}
+スクリプト拡張は、トレースログの変換・可視化を外部プロセスによって行うための拡張である。
+外部プロセスとは、標準入出力を通じて通信を行なう。
+
+トレースログの変換では、外部プロセスに対してトレースログが渡され、標準形式トレーストグを受け取る。
+標準形式トレースログの可視化では、外部プロセスに対して標準形式トレースログが渡され、可視化したShapeを受け取る。
+
+変換ルール・可視化ルールを拡張し、実行する外部プロセスを指定できるようにする。
+
+\section{変換ルール}
+変換ルールには、表\ref{conv}の要素が追加されている。
+
+\verb!script!を用いると、リスト\ref{inline}のようにルール内にスクリプトを直接記述することができる。
+\verb!arguments!を用いると、リスト\ref{outside}のようにが外部スクリプトを指定することができる。
+
+\begin{table}
+\centering
+\caption{追加された要素}\label{conv}
+\begin{tabular}{|c|l|l|}
+\hline
+要素 & 内容 & 例 \\\hline
+\verb!$!STYLE & 旧ルールと区別するための要素。常にscriptと記述する & script \\
+fileName  & スクリプトを実行する処理系 & \verb!c:/ruby/ruby.exe! \\
+arguments & 実行時に渡される引数。\verb!{0}!は一時ファイル名に置き換えられる。 & \verb!conv.rb! \\
+script    & 一時ファイルの内容 & \verb!puts 'hello'! \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{lstlisting}[caption=直接記述する変換ルールの例,label=inline]
+{
+  "asp2": {
+    "$STYLE": "script",
+    "fileName": "c:/cygwin/bin/ruby",
+    "arguments": "{0}",
+    "script" : "puts '[1]TASK1.state=RUNNING'"
+  }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=外部ファイルを指定する変換ルールの例,label=outside]
+{
+  "asp2": {
+    "$STYLE": "script",
+    "fileName": "c:/cygwin/bin/ruby",
+    "arguments": "conv.rb",
+  }
+}
+\end{lstlisting}
+
+\section{可視化ルール}
+変換ルールには、表\ref{viz}の要素が追加されている。
+
+\verb!script!を用いると、リスト\ref{inline-viz}のようにルール内にスクリプトを直接記述することができる。
+\verb!arguments!を用いると、リスト\ref{outside-viz}のようにが外部スクリプトを指定することができる。
+
+\begin{table}
+\centering
+\caption{追加された要素}\label{viz}
+\begin{tabular}{|c|l|l|}
+\hline
+要素 & 内容 & 例 \\\hline
+Style & 旧ルールと区別するための要素。常にscriptと記述する & script \\
+FileName  & スクリプトを実行する処理系 & \verb!c:/ruby/ruby.exe! \\
+Arguments & 実行時に渡される引数。\verb!{0}!は一時ファイル名に置き換えられる。 & \verb!conv.rb! \\
+Script    & 一時ファイルの内容 & \verb!puts '{  ... }'! \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{lstlisting}[caption=直接記述する可視化ルールの例,label=inline-viz]
+{
+  "asp2":{
+     "VisualizeRules":{
+        "taskStateChange":{
+           "Style": "script",
+	   "DisplayName":"状態遷移",
+   	   "Target":"Task",
+           "FileName": "c:/cygwin/bin/ruby",
+           "Arguments": "{0}",
+           "Script" : "puts '{ \"Type\":\"Rectangle\", ... }'"
+        }
+    }
+  }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=外部ファイルを指定する可視化ルールの例,label=outside-viz]
+{
+  "asp2":{
+     "VisualizeRules":{
+        "taskStateChange":{
+           "Style": "script",
+	   "DisplayName":"状態遷移",
+   	   "Target":"Task",
+           "FileName": "c:/cygwin/bin/ruby",
+           "Arguments": "viz.rb",
+        }
+    }
+  }
+}
+\end{lstlisting}
+
+\end{document}
