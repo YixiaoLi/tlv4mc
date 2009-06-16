@@ -1,22 +1,23 @@
 \documentclass[a4j]{jsarticle}
-\usepackage[dviout]{graphicx}
+%\usepackage[dviout]{graphicx}
+\usepackage[dvips]{graphicx}
 \usepackage{ascmac}
-\newcommand{\figref}[1]{$B?^(B\ref{#1}}
+\newcommand{\figref}[1]{¿Þ\ref{#1}}
 
-\title{$BAH9~$_(BRTOS$B8~$1%"%W%j%1!<%7%g%s3+H/;Y1g%D!<%k(B\\
-TLV$B!J%H%l!<%9(B $B%m%0(B $B%t%#%8%e%"%i%$%6!<!K(B\\
-$B%U%'!<%:(B4\\
-$B%"%W%j%m%03HD%30It;EMM=q(B}
+\title{ÁÈ¹þ¤ßRTOS¸þ¤±¥¢¥×¥ê¥±¡¼¥·¥ç¥ó³«È¯»Ù±ç¥Ä¡¼¥ë\\
+TLV¡Ê¥È¥ì¡¼¥¹ ¥í¥° ¥ô¥£¥¸¥å¥¢¥é¥¤¥¶¡¼¡Ë\\
+¥Õ¥§¡¼¥º4\\
+¥¢¥×¥ê¥í¥°³ÈÄ¥³°Éô»ÅÍÍ½ñ}
 \begin{document}
 \maketitle
 \titlepage
 
-\section*{$B2~D{MzNr(B}
+\section*{²þÄûÍúÎò}
 \begin{table}[h]
  \centering
  \begin{tabular}{|c|c|c|c|} \hline
-  $BHGHV(B& $BF|IU(B&    $B99?7FbMF(B& $B99?7<T(B\\ \hline\hline
-  1.0 & 09/6/2& $B?75,:n@.(B& $BLx_7BgM4(B\\ \hline
+  ÈÇÈÖ& ÆüÉÕ&    ¹¹¿·ÆâÍÆ& ¹¹¿·¼Ô\\ \hline\hline
+  1.0 & 09/6/2& ¿·µ¬ºîÀ®& Ìøß·ÂçÍ´\\ \hline
  \end{tabular}
 \end{table}
 \clearpage
@@ -24,201 +25,213 @@ TLV$B!J%H%l!<%9(B $B%m%0(B $B%t%#%8%e%"%i%$%6!<!K(B\\
 \tableofcontents
 \clearpage
 
-\section{$B$O$8$a$K(B}
-\subsection{$BK\=q$NL\E*(B}
-$BK\=q$NL\E*$O!"J8It2J3X>J@hF3E*(BIT$B%9%Z%7%c%j%9%H0i@.?d?J%W%m%0%i%`!V(BOJL$B$K(B
-  $B$h$k:G@hC<5;=QE,1~G=NO$r;}$D(BIT$B?M:`0i@.5rE@$N7A@.!W%W%m%8%'%/%H$K$*$1(B
-$B$k!"(BOJL$B2JL\%=%U%H%&%'%"9)3X<BA)8&5f$N8&5f%F!<%^$G$"$k!VAH9~$_(BRTOS$B8~$1%"(B
-  $B%W%j%1!<%7%g%s3+H/;Y1g%D!<%k$N3+H/!W$KBP$7$F!"$=$N3+H/$9$k%=%U%H%&%'(B
-$B%"3HD%$N30It;EMM$r5-=R$9$k$3$H$G$"$k!#(B
+\section{¤Ï¤¸¤á¤Ë}
+\subsection{ËÜ½ñ¤ÎÌÜÅª}
+ËÜ½ñ¤ÎÌÜÅª¤Ï¡¢Ê¸Éô²Ê³Ø¾ÊÀèÆ³ÅªIT¥¹¥Ú¥·¥ã¥ê¥¹¥È°éÀ®¿ä¿Ê¥×¥í¥°¥é¥à¡ÖOJL¤Ë
+  ¤è¤ëºÇÀèÃ¼µ»½ÑÅ¬±þÇ½ÎÏ¤ò»ý¤ÄIT¿Íºà°éÀ®µòÅÀ¤Î·ÁÀ®¡×¥×¥í¥¸¥§¥¯¥È¤Ë¤ª¤±
+¤ë¡¢OJL²ÊÌÜ¥½¥Õ¥È¥¦¥§¥¢¹©³Ø¼ÂÁ©¸¦µæ¤Î¸¦µæ¥Æ¡¼¥Þ¤Ç¤¢¤ë¡ÖÁÈ¹þ¤ßRTOS¸þ¤±¥¢
+  ¥×¥ê¥±¡¼¥·¥ç¥ó³«È¯»Ù±ç¥Ä¡¼¥ë¤Î³«È¯¡×¤ËÂÐ¤·¤Æ¡¢¤½¤Î³«È¯¤¹¤ë¥½¥Õ¥È¥¦¥§
+¥¢³ÈÄ¥¤Î³°Éô»ÅÍÍ¤òµ­½Ò¤¹¤ë¤³¤È¤Ç¤¢¤ë¡£
 
-$BK\=q$OFC$K!"%U%'!<%:(B4$B$K$*$1$k%"%W%j%m%03HD%$N30It;EMM$K4X$9$k5-=R$r9T$&!#(B
+ËÜ½ñ¤ÏÆÃ¤Ë¡¢¥Õ¥§¡¼¥º4¤Ë¤ª¤±¤ë¥¢¥×¥ê¥í¥°³ÈÄ¥¤Î³°Éô»ÅÍÍ¤Ë´Ø¤¹¤ëµ­½Ò¤ò¹Ô¤¦¡£
 
-\subsection{$BK\=q$NE,MQHO0O(B}
-$BK\=q$O!"AH9~$_(BMPRTOS$B8~$1%"%W%j%1!<%7%g%s3+H/;Y1g%D!<%k$N3+H/%W%m%8%'%/(B
-$B%H!J0J2<K\%W%m%8%'%/%H!K$N%U%'!<%:(B4$B$K$*$1$k%"%W%j%m%03HD%$N30It;EMM$K4X$9$k(B
-$B5-=R$r9T$&!#(B
+\subsection{ËÜ½ñ¤ÎÅ¬ÍÑÈÏ°Ï}
+ËÜ½ñ¤Ï¡¢ÁÈ¹þ¤ßMPRTOS¸þ¤±¥¢¥×¥ê¥±¡¼¥·¥ç¥ó³«È¯»Ù±ç¥Ä¡¼¥ë¤Î³«È¯¥×¥í¥¸¥§¥¯
+¥È¡Ê°Ê²¼ËÜ¥×¥í¥¸¥§¥¯¥È¡Ë¤Î¥Õ¥§¡¼¥º4¤Ë¤ª¤±¤ë¥¢¥×¥ê¥í¥°³ÈÄ¥¤Î³°Éô»ÅÍÍ¤Ë´Ø¤¹¤ë
+µ­½Ò¤ò¹Ô¤¦¡£
 
-\subsection{$BMQ8l$NDj5A(B/$BN,8l$N@bL@(B}
+\subsection{ÍÑ¸ì¤ÎÄêµÁ/Î¬¸ì¤ÎÀâÌÀ}
 
 \begin{table}[h]
  \centering
- \caption{$BMQ8lDj5A(B}
+ \caption{ÍÑ¸ìÄêµÁ}
  \begin{tabular}{|p{8em}|p{36em}|} \hline
-  $BMQ8l!&N,8l(B& $BDj5A!&@bL@(B\\ \hline \hline
+  ÍÑ¸ì¡¦Î¬¸ì& ÄêµÁ¡¦ÀâÌÀ\\ \hline \hline
   TLV& Trace Log Visualizer\\ \hline
-  MPRTOS& $B%^%k%A%W%m%;%C%5BP1~%j%"%k%?%$%`%*%Z%l!<%F%#%s%0%7%9%F%`(B\\
+  MPRTOS& ¥Þ¥ë¥Á¥×¥í¥»¥Ã¥µÂÐ±þ¥ê¥¢¥ë¥¿¥¤¥à¥ª¥Ú¥ì¡¼¥Æ¥£¥ó¥°¥·¥¹¥Æ¥à\\
   \hline
-  $B%H%l!<%9%m%0%U%!%$%k(B&
-      RTOS$B$N%H%l!<%9%m%05!G=$rMQ$$$F=PNO$7$?%H%l!<%9%m%0$d!"(B
-      $B%7%_%e%l!<%?$J$I$,=PNO$9$k%H%l!<%9%m%0$r%U%!%$%k$K$7$?$b$N(B\\
+  ¥È¥ì¡¼¥¹¥í¥°¥Õ¥¡¥¤¥ë&
+      RTOS¤Î¥È¥ì¡¼¥¹¥í¥°µ¡Ç½¤òÍÑ¤¤¤Æ½ÐÎÏ¤·¤¿¥È¥ì¡¼¥¹¥í¥°¤ä¡¢
+      ¥·¥ß¥å¥ì¡¼¥¿¤Ê¤É¤¬½ÐÎÏ¤¹¤ë¥È¥ì¡¼¥¹¥í¥°¤ò¥Õ¥¡¥¤¥ë¤Ë¤·¤¿¤â¤Î\\
   \hline
-  $BI8=`7A<0%H%l!<%9%m%0%U%!%$%k(B&
-      $BK\%=%U%H%&%'%"$,07$&$3$H$N=PMh$k7A<0$r$b$D%H%l!<%9%m%0%U%!%$%k!#(B
-      $B3F<o%H%l!<%9%m%0%U%!%$%k$O!"$3$N6&DL7A<0%H%l!<%9%m%0%U%!%$%k$K(B
-      $BJQ49$9$k$3$H$K$h$jK\%=%U%H%&%'%"$G07$&$3$H$,=PMh$k$h$&$K$J$k!#(B \\
+  É¸½à·Á¼°¥È¥ì¡¼¥¹¥í¥°¥Õ¥¡¥¤¥ë&
+      ËÜ¥½¥Õ¥È¥¦¥§¥¢¤¬°·¤¦¤³¤È¤Î½ÐÍè¤ë·Á¼°¤ò¤â¤Ä¥È¥ì¡¼¥¹¥í¥°¥Õ¥¡¥¤¥ë¡£
+      ³Æ¼ï¥È¥ì¡¼¥¹¥í¥°¥Õ¥¡¥¤¥ë¤Ï¡¢¤³¤Î¶¦ÄÌ·Á¼°¥È¥ì¡¼¥¹¥í¥°¥Õ¥¡¥¤¥ë¤Ë
+      ÊÑ´¹¤¹¤ë¤³¤È¤Ë¤è¤êËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ç°·¤¦¤³¤È¤¬½ÐÍè¤ë¤è¤¦¤Ë¤Ê¤ë¡£ \\
   \hline
-  $BJQ49%k!<%k(B  &
-  $B%H%l!<%9%m%0%U%!%$%k$rI8=`7A<0%H%l!<%9%m%0%U%!%$%k$KJQ49$9$k:]$KMQ$$$i$l$k%k!<%k!#(B
+  ÊÑ´¹¥ë¡¼¥ë  &
+  ¥È¥ì¡¼¥¹¥í¥°¥Õ¥¡¥¤¥ë¤òÉ¸½à·Á¼°¥È¥ì¡¼¥¹¥í¥°¥Õ¥¡¥¤¥ë¤ËÊÑ´¹¤¹¤ëºÝ¤ËÍÑ¤¤¤é¤ì¤ë¥ë¡¼¥ë¡£
   \\
   \hline
-  $B2D;k2=%k!<%k(B  &
-  $BI8=`7A<0%H%l!<%9%m%0%U%!%$%k$r2D;k2=$9$k:]$KMQ$$$i$l$k%k!<%k!#(B
+  ²Ä»ë²½¥ë¡¼¥ë  &
+  É¸½à·Á¼°¥È¥ì¡¼¥¹¥í¥°¥Õ¥¡¥¤¥ë¤ò²Ä»ë²½¤¹¤ëºÝ¤ËÍÑ¤¤¤é¤ì¤ë¥ë¡¼¥ë¡£
   \\
   \hline
-  TLV$B%U%!%$%k(B &
-      $BK\%=%U%H%&%'%"$,Cf4V7A<0$H$7$FMQ$$$k%U%!%$%k!#(B
-      $BA0=R$NI8=`7A<0%H%l!<%9%m%0%U%!%$%k$O!"$3$N(BTLV$B%U%!%$%k$N0lIt$G$"$k!#(B \\
+  TLV¥Õ¥¡¥¤¥ë &
+      ËÜ¥½¥Õ¥È¥¦¥§¥¢¤¬Ãæ´Ö·Á¼°¤È¤·¤ÆÍÑ¤¤¤ë¥Õ¥¡¥¤¥ë¡£
+      Á°½Ò¤ÎÉ¸½à·Á¼°¥È¥ì¡¼¥¹¥í¥°¥Õ¥¡¥¤¥ë¤Ï¡¢¤³¤ÎTLV¥Õ¥¡¥¤¥ë¤Î°ìÉô¤Ç¤¢¤ë¡£ \\
   \hline
  \end{tabular}
 \end{table}
 
-\subsection{$B35MW(B}
-$BK\=q$G$O!"AH9~$_(BMPRTOS$B8~$1%"%W%j%1!<%7%g%s3+H/;Y1g%D!<%k$N(B
-$B%=%U%H%&%'%"$N;EMM$r5-=R$9$k!#(B
-$BK\=q$OFC$K!"%U%'!<%:(B4$B$K$*$1$k%"%W%j%m%03HD%$N30It;EMM$K4X$9$k5-=R$r9T$&!#(B
+\subsection{³µÍ×}
+ËÜ½ñ¤Ç¤Ï¡¢ÁÈ¹þ¤ßMPRTOS¸þ¤±¥¢¥×¥ê¥±¡¼¥·¥ç¥ó³«È¯»Ù±ç¥Ä¡¼¥ë¤Î
+¥½¥Õ¥È¥¦¥§¥¢¤Î»ÅÍÍ¤òµ­½Ò¤¹¤ë¡£
+ËÜ½ñ¤ÏÆÃ¤Ë¡¢¥Õ¥§¡¼¥º4¤Ë¤ª¤±¤ë¥¢¥×¥ê¥í¥°³ÈÄ¥¤Î³°Éô»ÅÍÍ¤Ë´Ø¤¹¤ëµ­½Ò¤ò¹Ô¤¦¡£
 
 \clearpage
-\section{$B35MW@bL@(B}
-$B$3$l$^$G$K4s$;$i$l$?(BTLV$B$X$NMWK>$H$7$F!"(Bprintf$B%G%P%C%0$r9T$$$?$$$H$$$&$b$N$,$"$C$?!#(B
-$B$3$l$O!"0lHLE*$J(Bprintf$B%G%P%C%0$K$h$k=PNO$r(BTLV$B$N%?%$%`%i%$%s>e$KI=<($5$;$k$3$H$K$h$C$F!"(B
-$B%a%C%;!<%8$,=PNO$5$l$?$H$-$N%?%9%/>uBV$J$I$,0lL\$G$o$+$k$?$aM-MQ$G$"$k$H(B
+\section{³µÍ×ÀâÌÀ}
+¤³¤ì¤Þ¤Ç¤Ë´ó¤»¤é¤ì¤¿TLV¤Ø¤ÎÍ×Ë¾¤È¤·¤Æ¡¢printf¥Ç¥Ð¥Ã¥°¤ò¹Ô¤¤¤¿¤¤¤È¤¤¤¦¤â¤Î¤¬¤¢¤Ã¤¿¡£
+°ìÈÌÅª¤Êprintf¥Ç¥Ð¥Ã¥°¤Ë¤è¤ë½ÐÎÏ¤òTLV¤Î¥¿¥¤¥à¥é¥¤¥ó¾å¤ËÉ½¼¨¤µ¤»¤ë¤³¤È¤Ë¤è¤Ã¤Æ¡¢
+¥á¥Ã¥»¡¼¥¸¤¬½ÐÎÏ¤µ¤ì¤¿¤È¤­¤Î¥¿¥¹¥¯¾õÂÖ¤Ê¤É¤¬°ìÌÜ¤Ç¤ï¤«¤ë¤È¤¤¤¦ÍøÅÀ¤¬¤¢¤ë¡£
+¤³¤ÎÍ×Ë¾¤ò¼Â¸½¤¹¤ë¤â¤Î¤¬¥¢¥×¥ê¥í¥°³ÈÄ¥¤Ç¤¢¤ë¡£
 
-\subsection{$B%"%W%j%m%03HD%(B}
-$B%"%W%j%1!<%7%g%s$N%G%P%C%0$K$O!"0lHLE*$K(Bprintf$B%G%P%C%0$H8F$P$l$k<jK!$,M-8z$G$"$k!#(B
-$B:#$^$G$N(BTLV$B$G$O!"G$0U$NJ8;zNs$r2D;k2=$9$k$3$H$,$G$-$J$$$N$G!"(Bprintf$B%G%P%C%0$r9T$($J$$!#(B
-$B$=$3$G!"%U%'!<%:(B4$B$G$NMW5a$H$7$FG$0UJ8;zNs$r2D;k2=$9$k$3$H$,5s$2$i$l$F$$$k!#(B
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics{syslog_image.eps}
+  \end{center}
+  \caption{¥¢¥×¥ê¥í¥°³ÈÄ¥¥¤¥á¡¼¥¸}
+  \label{fig:applogimage}
+\end{figure}
 
-$BNc$($P!"(B\verb|[123456789] printf foobarbaz.|$B$N$h$&$J%m%0$,$"$C$?>l9g!";~9o(B123456789$B$N0LCV$K(Bfoobarbaz$B$H$$$&%a%C%;!<%8$,I=<($5$l$k$h$&$J2D;k2=$rA[Dj$9$k!#(B
+\subsection{¥¢¥×¥ê¥í¥°³ÈÄ¥}
+º£¤Þ¤Ç¤ÎTLV¤Ç¤Ï¡¢Ç¤°Õ¤ÎÊ¸»úÎó¤ò²Ä»ë²½¤¹¤ë¤³¤È¤¬¤Ç¤­¤Ê¤¤¤Î¤Ç¡¢printf¥Ç¥Ð¥Ã¥°¤ò¹Ô¤¨¤Ê¤¤¡£
+¤½¤³¤Ç¡¢¥Õ¥§¡¼¥º4¤Ç¤ÎÍ×µá¤È¤·¤ÆÇ¤°ÕÊ¸»úÎó¤ò²Ä»ë²½¤¹¤ë¤³¤È¤¬µó¤²¤é¤ì¤Æ¤¤¤ë¡£
 
-$BK\3HD%$G$O!"0J2<$N(B3$B$D$N2D;k2=J}K!$rDs6!$9$k!#(B
+Îã¤¨¤Ð¡¢\verb|[123456789] printf foobarbaz.|¤Î¤è¤¦¤Ê¥í¥°¤¬¤¢¤Ã¤¿¾ì¹ç¡¢»þ¹ï123456789¤Î°ÌÃÖ¤Ëfoobarbaz¤È¤¤¤¦¥á¥Ã¥»¡¼¥¸¤¬É½¼¨¤µ¤ì¤ë¤è¤¦¤Ê²Ä»ë²½¤òÁÛÄê¤¹¤ë¡£
+
+ËÜ³ÈÄ¥¤Ç¤Ï¡¢°Ê²¼¤Î3¤Ä¤Î²Ä»ë²½ÊýË¡¤òÄó¶¡¤¹¤ë¡£
 \begin{description}
-  \item[$BJ8;zNs2D;k2=(B] $BG$0UJ8;zNs$r(BTLV$B>e$KI=<((B
-  \item[$B%f!<%6Dj5A>uBV2D;k2=(B] $B%?%9%/$N>uBVI=<($N$h$&$K!"%f!<%6$,G$0U$K7h$a$?>uBV$r2D;k2=(B
-  \item[$B%f!<%6Dj5A>uBV2D;k2=!JC<E@IU$-!K(B] $B>e5-$N2D;k2=$K2C$(!"3+;O$H=*N;$,$"$k$b$N!#4X?t%3!<%k$rA[Dj(B
+  \item[Ê¸»úÎó²Ä»ë²½] Ç¤°ÕÊ¸»úÎó¤òTLV¾å¤ËÉ½¼¨
+  \item[¥æ¡¼¥¶ÄêµÁ¾õÂÖ²Ä»ë²½] ¥¿¥¹¥¯¤Î¾õÂÖÉ½¼¨¤Î¤è¤¦¤Ë¡¢¥æ¡¼¥¶¤¬Ç¤°Õ¤Ë·è¤á¤¿¾õÂÖ¤ò²Ä»ë²½
+  \item[¥æ¡¼¥¶ÄêµÁ¾õÂÖ²Ä»ë²½¡ÊÃ¼ÅÀÉÕ¤­¡Ë] ¾åµ­¤Î²Ä»ë²½¤Ë²Ã¤¨¡¢³«»Ï¤È½ªÎ»¤¬¤¢¤ë¤â¤Î¡£´Ø¿ô¥³¡¼¥ë¤òÁÛÄê
 \end{description}
 
-TOPPERS$B%+!<%M%k$G$O!"%f!<%6%"%W%j%1!<%7%g%s$+$i$N%m%0=PNO$O(Bsyslog$B4X?t$K$h$C$F9T$&!#(B
-$B$h$C$F!"%f!<%6%"%W%j%1!<%7%g%sB&$+$i$NMxMQ$O(Bsyslog$B4X?t$d!"JL$KMQ0U$9$k(BAPI$B$r2p$7$F9T$&$b$N$H$9$k!#(B
+TOPPERS¥«¡¼¥Í¥ë¤Ç¤Ï¡¢¥æ¡¼¥¶¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤«¤é¤Î¥í¥°½ÐÎÏ¤Ïsyslog´Ø¿ô¤Ë¤è¤Ã¤Æ¹Ô¤¦¡£
+¤è¤Ã¤Æ¡¢¥æ¡¼¥¶¥¢¥×¥ê¥±¡¼¥·¥ç¥óÂ¦¤«¤é¤ÎÍøÍÑ¤Ïsyslog´Ø¿ô¤ä¡¢ÊÌ¤ËÍÑ°Õ¤¹¤ëAPI¤ò²ð¤·¤Æ¹Ô¤¦¤â¤Î¤È¤¹¤ë¡£
 
-$BK\5!G=$r%f!<%6%"%W%j%1!<%7%g%s$+$iMxMQ$9$k>l9g$O!"0J2<$N<j=g$G9T$&!#(B
+ËÜµ¡Ç½¤ò¥æ¡¼¥¶¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤«¤éÍøÍÑ¤¹¤ë¾ì¹ç¤Ï¡¢°Ê²¼¤Î¼ê½ç¤Ç¹Ô¤¦¡£
 \begin{enumerate}
-  \item TLV$B$N%j%=!<%9%U%!%$%k$KDI5-(B
-  \item $B%"%W%j%1!<%7%g%s$K%m%0=PNO4X?t%3!<%k$rDI2C!J(Bsyslog$B4X?t$^$?$OK\3HD%$GDs6!$9$k(BAPI$B!K(B
-  \item $B%"%W%j%1!<%7%g%s$r<B9T(B
-  \item TLV$B$r<B9T(B
+  \item TLV¤Î¥ê¥½¡¼¥¹¥Õ¥¡¥¤¥ë¤ËÄÉµ­
+  \item ¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤Ë¥í¥°½ÐÎÏ´Ø¿ô¥³¡¼¥ë¤òÄÉ²Ã¡Êsyslog´Ø¿ô¤Þ¤¿¤ÏËÜ³ÈÄ¥¤ÇÄó¶¡¤¹¤ëAPI¡Ë
+  \item ¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ò¼Â¹Ô
+  \item TLV¤ò¼Â¹Ô
 \end{enumerate}
 
-$B$^$?!":#2s$N3HD%$O(BTLV$BK\BN$K$O<j$rF~$l$:!"2D;k2=%k!<%k$J$I$N5-=R$N$_$G(B
-$B<B8=$9$k$3$H$H$7$?!#(B
+¤Þ¤¿¡¢º£²ó¤Î³ÈÄ¥¤ÏTLVËÜÂÎ¤Ë¤Ï¼ê¤òÆþ¤ì¤º¡¢²Ä»ë²½¥ë¡¼¥ë¤Ê¤É¤Îµ­½Ò¤Î¤ß¤Ç
+¼Â¸½¤¹¤ë¤³¤È¤È¤·¤¿¡£
 
-\subsection{$BJ8;zNs2D;k2=(B}
-$BJ8;zNs$N2D;k2=$K$O!"%?%9%/$K4XO"$9$k$b$N$H$=$&$G$J$$$b$N$,$"$k!#(B
-$B0J9_!"%?%9%/$K4XO"$9$kJ8;zNs2D;k2=$r(B\textbf{$B%?%9%/J8;zNs2D;k2=(B}$B!"%?%9%/$K4XO"$7$J$$J8;zNs2D;k2=$r(B\textbf{$BJ8;zNs2D;k2=(B}$B$H8F$V!#(B
+\subsection{Ê¸»úÎó²Ä»ë²½}
+Ê¸»úÎó¤Î²Ä»ë²½¤Ë¤Ï¡¢¥¿¥¹¥¯¤Ë´ØÏ¢¤¹¤ë¤â¤Î¤È¤½¤¦¤Ç¤Ê¤¤¤â¤Î¤¬¤¢¤ë¡£
+°Ê¹ß¡¢¥¿¥¹¥¯¤Ë´ØÏ¢¤¹¤ëÊ¸»úÎó²Ä»ë²½¤ò\textbf{¥¿¥¹¥¯Ê¸»úÎó²Ä»ë²½}¡¢¥¿¥¹¥¯¤Ë´ØÏ¢¤·¤Ê¤¤Ê¸»úÎó²Ä»ë²½¤ò\textbf{Ê¸»úÎó²Ä»ë²½}¤È¸Æ¤Ö¡£
 
-$B%?%9%/J8;zNs2D;k2=$O!"%?%9%/$NB0@-$H$7$FDj5A$9$k$3$H$G!"(B
-$B8=:_$N%?%9%/>uBVI=<($J$I$N>e$K=E$M$FI=<($9$k!#(B
-$BJ8;zNs2D;k2=$O!"$=$l@lMQ$N9T$GI=<($9$k!#(B
-\subsubsection{$BF~NO(B}
-$B<PBN$GI=<($5$l$F$$$k2U=j$O!"%"%W%j%1!<%7%g%s3+H/<T$,K>$`CM$KCV49$9$k>l=j$G$"$k$3$H$r<($7$F$$$k!#(B
+¥¿¥¹¥¯Ê¸»úÎó²Ä»ë²½¤Ï¡¢¥¿¥¹¥¯¤ÎÂ°À­¤È¤·¤ÆÄêµÁ¤¹¤ë¤³¤È¤Ç¡¢
+¸½ºß¤Î¥¿¥¹¥¯¾õÂÖÉ½¼¨¤Ê¤É¤Î¾å¤Ë½Å¤Í¤ÆÉ½¼¨¤¹¤ë¡£
+Ê¸»úÎó²Ä»ë²½¤Ï¡¢¤½¤ìÀìÍÑ¤Î¹Ô¤ÇÉ½¼¨¤¹¤ë¡£
+\subsubsection{ÆþÎÏ}
+¼ÐÂÎ¤ÇÉ½¼¨¤µ¤ì¤Æ¤¤¤ë²Õ½ê¤Ï¡¢¥¢¥×¥ê¥±¡¼¥·¥ç¥ó³«È¯¼Ô¤¬Ë¾¤àÃÍ¤ËÃÖ´¹¤¹¤ë¾ì½ê¤Ç¤¢¤ë¤³¤È¤ò¼¨¤·¤Æ¤¤¤ë¡£
 
-\paragraph{$B%m%0=q<0(B} TLV$B$XF~NO$9$k%m%0$N=q<0$rDj5A$9$k!#(B
-\begin{itembox}[l]{$BJ8;zNs2D;k2=$N%m%0=q<0(B}
-  \verb|[| \textit{time} \verb|]| applog \textit{str}. 
+\paragraph{¥í¥°½ñ¼°} TLV¤ØÆþÎÏ¤¹¤ë¥í¥°¤Î½ñ¼°¤òÄêµÁ¤¹¤ë¡£
+\begin{itembox}[l]{Ê¸»úÎó²Ä»ë²½¤Î¥í¥°½ñ¼°}
+  \paragraph{syslog}
+  syslog(``applog id \%s \%s.'',\textit{id},\textit{str});
+  \paragraph{API}
+  void applog\_str(const char *\textit{id}, const char *\textit{str})
+  \paragraph{¥í¥°½ÐÎÏ}
+  \verb|[| \textit{time} \verb|]| applog id \textit{id} \textit{str}. 
   \begin{description}
-    \item[\textit{time}] $B;~9o(B \verb|[0-9a-zA-Z]+|
-    \item[\textit{str}] $B=PNOJ8;zNs(B \verb|[^\.]*|
+    \item[\textit{time}] »þ¹ï \verb|[0-9a-zA-Z]+|
+    \item[\textit{id}] É½¼¨¹ÔID \verb|[^\. ]+|
+    \item[\textit{str}] ½ÐÎÏÊ¸»úÎó \verb|[^\.]*|
   \end{description}
 \end{itembox}
-\begin{itembox}[l]{$B%?%9%/J8;zNs2D;k2=$N%m%0=q<0(B}
-  \verb|[| \textit{time} \verb|]| task \textit{tid} applog \textit{str}. 
+\begin{itembox}[l]{¥¿¥¹¥¯Ê¸»úÎó²Ä»ë²½¤Î¥í¥°½ñ¼°}
+  \paragraph{syslog}
+  syslog(``applog task \%s \%s.'',\textit{tid},\textit{str});
+  \paragraph{API}
+  void applog\_tsk(const char *\textit{tid}, const char *\textit{str})
+  \paragraph{¥í¥°½ÐÎÏ}
+  \verb|[| \textit{time} \verb|]| applog task \textit{tid} \textit{str}. 
   \begin{description}
-    \item[\textit{time}] $B;~9o(B \verb|[0-9a-zA-Z]+|
-    \item[\textit{tid}] $B%?%9%/(BID \verb|[0-9]+|
-    \item[\textit{str}] $B=PNOJ8;zNs(B \verb|[^\.]*|
+    \item[\textit{time}] »þ¹ï \verb|[0-9a-zA-Z]+|
+    \item[\textit{tid}] ¥¿¥¹¥¯ID \verb|[0-9]+|
+    \item[\textit{str}] ½ÐÎÏÊ¸»úÎó \verb|[^\.]*|
   \end{description}
 \end{itembox}
 
-\paragraph{$B%j%=!<%9%U%!%$%k=q<0(B}
-$B0J2<$N5-=R$O!"%?%9%/$H$O4X78$J$$J8;zNs=PNO$r9T$&:]$K!"%f!<%6$,%j%=!<%9%U%!%$%k$KDI2C$9$k$b$N$G$"$k!#(B
-\begin{itembox}[l]{$BJ8;zNs2D;k2=%j%=!<%9%U%!%$%k=q<0(B}
+\paragraph{¥ê¥½¡¼¥¹¥Õ¥¡¥¤¥ë½ñ¼°}
+°Ê²¼¤Îµ­½Ò¤Ï¡¢Ê¸»úÎó²Ä»ë²½¤ò¹Ô¤¦ºÝ¤Ë¡¢¥æ¡¼¥¶¤¬¥ê¥½¡¼¥¹¥Õ¥¡¥¤¥ë¤ËÄÉ²Ã¤¹¤ë¤â¤Î¤Ç¤¢¤ë¡£
+\begin{itembox}[l]{Ê¸»úÎó²Ä»ë²½¥ê¥½¡¼¥¹¥Õ¥¡¥¤¥ë½ñ¼°}
   \begin{verbatim}
 "rowname":{
     "Type":"ApplogStr",
     "Attributes":{
+        "id":"",
         "str":""
     }
 }\end{verbatim}
   \begin{description}
-    \item[\textit{rowname}] $BJ8;zNs2D;k2=9T$NL>A0(B \verb|[^"]+|
+    \item[\textit{rowname}] Ê¸»úÎó²Ä»ë²½¹Ô¤ÎÌ¾Á° \verb|[^"]+|
   \end{description}
 \end{itembox}
 
-\paragraph{API}
-$B$^$?!"%"%W%j%1!<%7%g%s3+H/<T$NMxJX$N$?$a$K!"@h$[$I<($7$?7A<0$G%m%0$r=PNO$9$k(BC$B8@8l$N4X?t$rMQ0U$9$k!#(B
+\subsubsection{½ÐÎÏ}
+°Ê²¼¤Ç¤Ï¡¢Ê¸»úÎó¤Î²Ä»ë²½ÊýË¡¤òÄêµÁ¤¹¤ë¡£
 
-\begin{itembox}[l]{$BJ8;zNs2D;k2=4X?t(B}
-  int applogstr(const char* str)
-  \begin{description}
-    \item[\textit{str}] $B2D;k2=$7$?$$J8;zNs(B|
-  \end{description}
-\end{itembox}
-\begin{itembox}[l]{$B%?%9%/J8;zNs2D;k2=4X?t(B}
-  int applogstrtsk(const char* str, const int tid)
-  \begin{description}
-    \item[\textit{str}] $B2D;k2=$7$?$$J8;zNs(B|
-    \item[\textit{tid}] $B%?%9%/(BID
-  \end{description}
-\end{itembox}
-\subsubsection{$B=PNO(B}
-$B0J2<$G$O!"J8;zNs$N2D;k2=J}K!$rDj5A$9$k!#(B
+\paragraph{Ê¸»úÎó²Ä»ë²½}
+¤Þ¤º¡¢Ê¸»úÎó²Ä»ë²½¤ò¼¨¤¹¡£
 
-\paragraph{$BJ8;zNs2D;k2=(B}
-$B$^$:!"J8;zNs2D;k2=$r<($9!#(B
-
-\begin{figure}[h]
+\begin{figure}
   \begin{center}
-    \includegraphics[width=15cm]{applog_str.png}
+    \includegraphics[width=15cm]{applog_str.eps}
   \end{center}
-  \caption{$BJ8;zNs2D;k2=(B}
+  \caption{Ê¸»úÎó²Ä»ë²½}
   \label{fig:str}
 \end{figure}
 
 \begin{verbatim}
-[9379610] applog foo.
+syslog("applog id 1 foo.");
 \end{verbatim}
-$B$3$N$h$&$J%m%0$,=PNO$5$l$?>l9g!"(B\figref{fig:str}$B$N$h$&$K2D;k2=$r9T$&!#(B
+¤Þ¤¿¤Ï
+\begin{verbatim}
+applog_str("1", "foo");
+\end{verbatim}
+¤³¤Î¤è¤¦¤Ê¥í¥°¤¬½ÐÎÏ¤µ¤ì¤¿¾ì¹ç¡¢\figref{fig:str}¤Î¤è¤¦¤Ë²Ä»ë²½¤ò¹Ô¤¦¡£
 
-\paragraph{$B%?%9%/J8;zNs2D;k2=(B}
-$B<!$K!"%?%9%/$K4XO"$9$kJ8;zNs$N2D;k2=$r<($9!#(B
+\paragraph{¥¿¥¹¥¯Ê¸»úÎó²Ä»ë²½}
+¼¡¤Ë¡¢¥¿¥¹¥¯¤Ë´ØÏ¢¤¹¤ëÊ¸»úÎó¤Î²Ä»ë²½¤ò¼¨¤¹¡£
 
-\begin{figure}[h]
+\begin{figure}
   \begin{center}
-    \includegraphics[width=15cm]{applog_strtsk.png}
+    \includegraphics[width=15cm]{applog_strtsk.eps}
   \end{center}
-  \caption{$B%?%9%/J8;zNs$N2D;k2=(B}
+  \caption{¥¿¥¹¥¯Ê¸»úÎó¤Î²Ä»ë²½}
   \label{fig:strtsk}
 \end{figure}
 
 \begin{verbatim}
-[10379610] task 1 syslog FOO.
+syslog("applog task 1 FOO.");
 \end{verbatim}
-$B$3$N$h$&$J%m%0$,=PNO$5$l$?>l9g!"(B\figref{fig:strtsk}$B$N$h$&$K2D;k2=$r9T$&!#(B
-$B%?%9%/$N>uBV$d%7%9%F%`%3!<%k$H=EJ#$7$F8+$E$i$$>l9g$O!"%f!<%6$,ITMW$J2D;k2=9`L\$r2D;k2=$7$J$$$h$&$K$9$k$3$H$G8+$d$9$$$h$&@_Dj$9$k$3$H$H$9$k!#(B
+¤Þ¤¿¤Ï
+\begin{verbatim}
+applog_tsk("1", "FOO");
+\end{verbatim}
+¤³¤Î¤è¤¦¤Ê¥í¥°¤¬½ÐÎÏ¤µ¤ì¤¿¾ì¹ç¡¢\figref{fig:strtsk}¤Î¤è¤¦¤Ë²Ä»ë²½¤ò¹Ô¤¦¡£
+¥¿¥¹¥¯¤Î¾õÂÖ¤ä¥·¥¹¥Æ¥à¥³¡¼¥ë¤È½ÅÊ£¤·¤Æ¸«¤Å¤é¤¤¾ì¹ç¤Ï¡¢¥æ¡¼¥¶¤¬ÉÔÍ×¤Ê²Ä»ë²½¹àÌÜ¤ò²Ä»ë²½¤·¤Ê¤¤¤è¤¦¤Ë¤¹¤ë¤³¤È¤Ç¸«¤ä¤¹¤¤¤è¤¦ÀßÄê¤¹¤ë¤³¤È¤È¤¹¤ë¡£
 
-\subsection{$B%f!<%6Dj5A>uBV2D;k2=(B}
-\subsubsection{$BF~NO(B}
+\subsection{¥æ¡¼¥¶ÄêµÁ¾õÂÖ²Ä»ë²½}
+\subsubsection{ÆþÎÏ}
 
-\subsubsection{$B=PNO(B}
-
-
-\subsection{$B%f!<%6Dj5A>uBV2D;k2=!JC<E@IU$-!K(B}
-\subsubsection{$BF~NO(B}
-
-\subsubsection{$B=PNO(B}
+\subsubsection{½ÐÎÏ}
 
 
+\subsection{¥æ¡¼¥¶ÄêµÁ¾õÂÖ²Ä»ë²½¡ÊÃ¼ÅÀÉÕ¤­¡Ë}
+\subsubsection{ÆþÎÏ}
 
-\section*{$B;29MJ88%(B}
+\subsubsection{½ÐÎÏ}
+
+
+
+\section*{»²¹ÍÊ¸¸¥}
 
 \end{document}
