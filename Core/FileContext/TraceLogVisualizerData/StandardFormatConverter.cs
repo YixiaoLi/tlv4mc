@@ -43,6 +43,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
@@ -168,6 +169,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             {
                                 visualizeData.VisualizeRules.Add(vizRule);
                             }
+
                         if (vizData.Shapes != null)
                             foreach (Shapes sp in vizData.Shapes)
                             {
@@ -189,6 +191,46 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return settingData;
 		}
 
+        private EventShapes generateByNewRule(VisualizeRule rule) {
+            ProcessStartInfo psi;
+            if (rule.Script != null)
+            {
+                string path = Path.GetTempFileName();
+                StreamWriter sw = new StreamWriter(new FileStream(path, FileMode.Create));
+
+                string script = rule.Script;
+                sw.Write(script);
+                sw.Close();
+                psi = new ProcessStartInfo(rule.FileName,
+                                           string.Format(rule.Arguments, path));
+            }
+            else
+            {
+                psi = new ProcessStartInfo(rule.FileName, rule.Arguments);
+            }
+            psi.UseShellExecute = false;
+            psi.RedirectStandardInput = true;
+            psi.RedirectStandardOutput = true;
+
+            Process p = Process.Start(psi);
+            //            string[] logs = File.ReadAllLines(this.TraceLogData.TraceLogs.GetEnumerator());
+
+            foreach (TraceLog log in TraceLogData.TraceLogs)
+            {
+                p.StandardInput.WriteLine(log.ToString());
+            }
+            p.WaitForExit();
+
+
+            EventShapes es = new EventShapes();
+            while (!p.StandardOutput.EndOfStream)
+            {
+                string shape = p.StandardOutput.ReadLine();
+                es.Add(ApplicationFactory.JsonSerializer.Deserialize<EventShape>(shape));
+            }
+            return es;
+        }
+
         private VisualizeShapeData getVisualizeShapeData()
         {
             VisualizeShapeData vizData = new VisualizeShapeData();
@@ -198,16 +240,30 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 {
                     foreach (Resource res in this.ResourceData.Resources.Where<Resource>(r => r.Type == rule.Target))
                     {
-                        var gen = new EventShapesGenerator(rule, res);
-                        gen.SetData(TraceLogData, VisualizeData, ResourceData);
-                        vizData.Add(rule, res, gen.GetEventShapes());
+                        if (rule.Style != "Script")
+                        {
+                            var gen = new EventShapesGenerator(rule, res);
+                            gen.SetData(TraceLogData, VisualizeData, ResourceData);
+                            vizData.Add(rule, res, gen.GetEventShapes());
+                        }
+                        else
+                        {
+                            vizData.Add(rule, res, this.generateByNewRule(rule));
+                        }
                     }
                 }
                 else
                 {
-                    var gen = new EventShapesGenerator(rule);
-                    gen.SetData(TraceLogData, VisualizeData, ResourceData);
-                    vizData.Add(rule, gen.GetEventShapes());
+                    if (rule.Style != "Script")
+                    {
+                        var gen = new EventShapesGenerator(rule);
+                        gen.SetData(TraceLogData, VisualizeData, ResourceData);
+                        vizData.Add(rule, gen.GetEventShapes());
+                    }
+                    else
+                    {
+                        vizData.Add(rule,this.generateByNewRule(rule));
+                    }
                 }
             }
 

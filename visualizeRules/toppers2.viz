@@ -1,0 +1,15 @@
+﻿{
+	"toppers2":{
+		"VisualizeRules":{
+			"Hoge":{
+				"DisplayName":"状態遷移",
+				"Target":"Task",
+                                "Style": "Script",
+                                "FileName": "c:/cygwin/bin/ruby",
+                                "Arguments": "{0}",
+                          "Script" : "puts 'Hello'"
+			}      
+
+		}
+	}
+}
