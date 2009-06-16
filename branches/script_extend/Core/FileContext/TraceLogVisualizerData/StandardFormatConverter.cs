@@ -153,29 +153,29 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			string[] target = ResourceData.VisualizeRules.ToArray();
 
 			// ファイルが複数ある場合を想定している
-			foreach (string s in visualizeRuleFilePaths)
-			{
-				Json json = new Json().Parse(File.ReadAllText(s));
-				foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
-				{
-					if (target.Contains(j.Key))
-					{
-						string d = ApplicationFactory.JsonSerializer.Serialize(j.Value);
-						VisualizeData vizData = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(d);
+            foreach (string s in visualizeRuleFilePaths)
+            {
+                Json json = new Json().Parse(File.ReadAllText(s));
+                foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
+                {
+                    if (target.Contains(j.Key))
+                    {
+                        string d = ApplicationFactory.JsonSerializer.Serialize(j.Value);
+                        VisualizeData vizData = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(d);
 
-						if (vizData.VisualizeRules != null)
-							foreach (VisualizeRule vizRule in vizData.VisualizeRules)
-							{
-								visualizeData.VisualizeRules.Add(vizRule);
-							}
-						if (vizData.Shapes != null)
-							foreach (Shapes sp in vizData.Shapes)
-							{
-								visualizeData.Shapes.Add(sp);
-							}
-					}
-				}
-			}
+                        if (vizData.VisualizeRules != null)
+                            foreach (VisualizeRule vizRule in vizData.VisualizeRules)
+                            {
+                                visualizeData.VisualizeRules.Add(vizRule);
+                            }
+                        if (vizData.Shapes != null)
+                            foreach (Shapes sp in vizData.Shapes)
+                            {
+                                visualizeData.Shapes.Add(sp);
+                            }
+                    }
+                }
+            }
 
 			return visualizeData;
 		}
@@ -192,14 +192,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
         private VisualizeShapeData getVisualizeShapeData()
         {
             VisualizeShapeData vizData = new VisualizeShapeData();
-            foreach (VisualizeRule rule in this.VisualizeData.VisualizeRules)
-            {
-                foreach (Event evnt in rule.Shapes)
-                {
-                    evnt.SetVisualizeRuleName(rule.Name);
-                }
-            }
-
             foreach (VisualizeRule rule in this.VisualizeData.VisualizeRules)
             {
                 if (rule.IsBelongedTargetResourceType())
