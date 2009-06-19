@@ -221,12 +221,22 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             p.WaitForExit();
 
-
-            EventShapes es = new EventShapes();
+            string json = "";
             while (!p.StandardOutput.EndOfStream)
             {
-                string shape = p.StandardOutput.ReadLine();
-                es.Add(ApplicationFactory.JsonSerializer.Deserialize<EventShape>(shape));
+                json += p.StandardOutput.ReadLine();
+            }
+            EventShapes es = new EventShapes();
+            List<EventShape> shapes = ApplicationFactory.JsonSerializer.Deserialize<List<EventShape>>(json);
+            
+            // FIXME: 古いルールと整合性を保つためにrule.Shapesを作成する
+            // Shapesに代入されたEventはNameしか使われないと仮定してる
+            rule.Shapes = new GeneralNamedCollection<Event>();
+            foreach (EventShape shape in shapes)
+            {
+                shape.Event.SetVisualizeRuleName(rule.Name);
+                es.Add(shape);
+                rule.Shapes.Add(shape.Event);
             }
             return es;
         }
