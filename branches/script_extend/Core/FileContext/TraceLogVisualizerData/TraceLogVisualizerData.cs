@@ -121,16 +121,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
             setVisualizeRuleToEvent();
         }
 
-		private void setVisualizeRuleToEvent()
-		{
-			foreach (VisualizeRule rule in VisualizeData.VisualizeRules)
-			{
-				foreach (Event evnt in rule.Shapes)
-				{
-                    evnt.SetVisualizeRuleName(rule.Name); 
-				}
-			}
-		}
+        private void setVisualizeRuleToEvent()
+        {
+            foreach (VisualizeRule rule in VisualizeData.VisualizeRules)
+            {
+                foreach (Event evnt in rule.Shapes)
+                {
+                    evnt.SetVisualizeRuleName(rule.Name);
+                }
+            }
+        }		
 
         /// <summary>
         /// パスを指定してシリアライズ
