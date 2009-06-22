@@ -1,5 +1,5 @@
 \documentclass[a4j]{jsarticle}
-\usepackage[dvipdfmx]{graphicx}
+\usepackage[dviout]{graphicx}
 %\usepackage[dvips]{graphicx}
 \usepackage{ascmac}
 \newcommand{\figref}[1]{図\ref{#1}}
@@ -109,7 +109,7 @@ TLV（トレース ログ ヴィジュアライザー）\\
 \begin{description}
   \item[文字列可視化] 任意文字列をTLV上に表示
   \item[ユーザ定義状態可視化] タスクの状態表示のように、ユーザが任意に決めた状態を可視化
-  \item[ユーザ定義状態可視化（端点付き）] 上記の可視化に加え、開始と終了があるもの。関数コールを想定
+  \item[端点付きユーザ定義状態可視化] 上記の可視化に加え、開始と終了があるもの。関数コールを想定
 \end{description}
 
 TOPPERSカーネルでは、ユーザアプリケーションからのログ出力はsyslog関数によって行う。
@@ -150,28 +150,28 @@ TLV認識可能なフォーマットのログを出力できる。
 文字列可視化をするためのログ出力方法を記述する。
 \begin{itembox}[l]{文字列可視化のログ書式}
   \paragraph{syslog}
-  syslog("applog id \%s \%s.",\textit{rid},\textit{str});
+  syslog("applog str : ID \%s : \%s.",\textit{rid},\textit{str});
   \paragraph{API}
   void applog\_str(const char *\textit{rid}, const char *\textit{str})
   \paragraph{ログ出力}
-  \verb|[| \textit{time} \verb|]| applog id \textit{rid} \textit{str}. 
+  \verb|[| \textit{time} \verb|]| applog str : ID \textit{rid} : \textit{str}. 
   \begin{description}
     \item[\textit{time}] 時刻 \verb|[0-9a-zA-Z]+|
-    \item[\textit{rid}] 表示行ID \verb|[^\. ]+|
-    \item[\textit{str}] 出力文字列 \verb|[^\.]*|
+    \item[\textit{rid}] 表示行ID \verb|[^.:"]+|
+    \item[\textit{str}] 出力文字列 \verb|[^.]*|
   \end{description}
 \end{itembox}
 \begin{itembox}[l]{タスク文字列可視化のログ書式}
   \paragraph{syslog}
-  syslog("applog task \%d \%s.",\textit{tid},\textit{str});
+  syslog("applog strtask : TASK \%d : \%s.",\textit{tid},\textit{str});
   \paragraph{API}
-  void applog\_strtsk(const int \textit{tid}, const char *\textit{str})
+  void applog\_strtask(const int \textit{tid}, const char *\textit{str})
   \paragraph{ログ出力}
-  \verb|[| \textit{time} \verb|]| applog task \textit{tid} \textit{str}. 
+  \verb|[| \textit{time} \verb|]| applog strtask : TASK \textit{tid} : \textit{str}. 
   \begin{description}
     \item[\textit{time}] 時刻 \verb|[0-9a-zA-Z]+|
     \item[\textit{tid}] タスクID \verb|[0-9]+|
-    \item[\textit{str}] 出力文字列 \verb|[^\.]*|
+    \item[\textit{str}] 出力文字列 \verb|[^.]*|
   \end{description}
 \end{itembox}
 
@@ -188,14 +188,14 @@ TLV認識可能なフォーマットのログを出力できる。
 }\end{verbatim}
   \begin{description}
     \item[\textit{rowname}] 文字列可視化行の名前 \verb|[^"]+|
-    \item[\textit{rid}] 文字列可視化行のID \verb|[^"]+|
+    \item[\textit{rid}] 文字列可視化行のID \verb|[^":]+|
   \end{description}
 \end{itembox}
 
 \subsection{出力}
 以下では、文字列の可視化方法を定義する。
 
-\paragraph{文字列可視化}
+\subsubsection{文字列可視化}
 まず、文字列可視化を示す。
 
 \begin{figure}
@@ -208,15 +208,26 @@ TLV認識可能なフォーマットのログを出力できる。
 \end{figure}
 
 \begin{verbatim}
-syslog("applog id 1 foo.");
+syslog("applog str : ID 1 : foo.");
 \end{verbatim}
 または
 \begin{verbatim}
 applog_str("1", "foo");
 \end{verbatim}
-このようなログ出力を行った場合、\figref{fig:str}のように可視化を行う。
+このようなログ出力および次のようなリソースファイル定義を行った場合、\figref{fig:str}のように可視化を行う。
+\begin{itembox}[l]{リソースファイル}
+\begin{verbatim}
+"APP_LOG":{
+    "Type":"ApplogStr",
+    "Attributes":{
+        "id":"applog",
+        "str":""
+    }
+}\end{verbatim}
+\end{itembox}
 
-\paragraph{タスク文字列可視化}
+
+\subsubsection{タスク文字列可視化}
 次に、タスクに関連する文字列の可視化を示す。
 
 \begin{figure}
@@ -229,11 +240,11 @@ applog_str("1", "foo");
 \end{figure}
 
 \begin{verbatim}
-syslog("applog task 1 FOO.");
+syslog("applog strtask : TASK 1 : FOO.");
 \end{verbatim}
 または
 \begin{verbatim}
-applog_tsk("1", "FOO");
+applog_strtsk("1", "FOO");
 \end{verbatim}
 このようなログ出力を行った場合、\figref{fig:strtsk}のように可視化を行う。
 
