@@ -135,7 +135,7 @@
 			"Type":"ApplogStr",
 			"Attributes":
 			{
-				"str":""
+				"id":"1"
 			}
 		}
 	}

@@ -368,6 +368,12 @@
 		"ApplogStr":{
 			"DisplayName":"アプリログ",
 			"Attributes":{
+				"id":{
+					"VariableType"	:"String",
+					"DisplayName"	:"ID",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false
+				},
 				"str":{
 					"VariableType"	:"String",
 					"DisplayName"	:"文字列",
