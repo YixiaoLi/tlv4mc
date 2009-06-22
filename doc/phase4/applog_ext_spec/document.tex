@@ -1,23 +1,23 @@
 \documentclass[a4j]{jsarticle}
-%\usepackage[dviout]{graphicx}
-\usepackage[dvips]{graphicx}
+\usepackage[dvipdfmx]{graphicx}
+%\usepackage[dvips]{graphicx}
 \usepackage{ascmac}
-\newcommand{\figref}[1]{哭\ref{#1}}
+\newcommand{\figref}[1]{恾\ref{#1}}
 
-\title{寥哈みRTOS羹けアプリケ〖ション倡券毁辩ツ〖ル\\
-TLV∈トレ〖ス ログ ヴィジュアライザ〖∷\\
-フェ〖ズ4\\
-アプリログ橙磨嘲婶慌屯今}
+\title{慻崬傒RTOS岦偗傾僾儕働乕僔儑儞奐敪巟墖僣乕儖\\
+TLV乮僩儗乕僗 儘僌 償傿僕儏傾儔僀僓乕乯\\
+僼僃乕僘4\\
+傾僾儕儘僌奼挘奜晹巇條彂}
 \begin{document}
 \maketitle
 \titlepage
 
-\section*{猖柠旺悟}
+\section*{夵掶棜楌}
 \begin{table}[h]
  \centering
  \begin{tabular}{|c|c|c|c|} \hline
-  惹戎& 泣烧&    构糠柒推& 构糠荚\\ \hline\hline
-  1.0 & 09/6/2& 糠惮侯喇& 跳叻络痛\\ \hline
+  斉斣& 擔晅&    峏怴撪梕& 峏怴幰\\ \hline\hline
+  1.0 & 09/6/2& 怴婯嶌惉& 桍郪戝桽\\ \hline
  \end{tabular}
 \end{table}
 \clearpage
@@ -25,213 +25,401 @@ TLV∈トレ〖ス ログ ヴィジュアライザ〖∷\\
 \tableofcontents
 \clearpage
 
-\section{はじめに}
-\subsection{塑今の誊弄}
-塑今の誊弄は、矢婶彩池臼黎瞥弄ITスペシャリスト伴喇夸渴プログラム≈OJLに
-  よる呵黎眉祷窖努炳墙蜗を积つIT客亨伴喇凋爬の妨喇∽プロジェクトにおけ
-る、OJL彩誊ソフトウェア供池悸俩甫垫の甫垫テ〖マである≈寥哈みRTOS羹けア
-  プリケ〖ション倡券毁辩ツ〖ルの倡券∽に滦して、その倡券するソフトウェ
-ア橙磨の嘲婶慌屯を淡揭することである。
+\section{偼偠傔偵}
+\subsection{杮彂偺栚揑}
+杮彂偺栚揑偼丄暥晹壢妛徣愭摫揑IT僗儁僔儍儕僗僩堢惉悇恑僾儘僌儔儉乽OJL偵
+  傛傞嵟愭抂媄弍揔墳擻椡傪帩偮IT恖嵽堢惉嫆揰偺宍惉乿僾儘僕僃僋僩偵偍偗
+傞丄OJL壢栚僜僼僩僂僃傾岺妛幚慔尋媶偺尋媶僥乕儅偱偁傞乽慻崬傒RTOS岦偗傾
+  僾儕働乕僔儑儞奐敪巟墖僣乕儖偺奐敪乿偵懳偟偰丄偦偺奐敪偡傞僜僼僩僂僃
+傾奼挘偺奜晹巇條傪婰弎偡傞偙偲偱偁傞丅
 
-塑今は泼に、フェ〖ズ4におけるアプリログ橙磨の嘲婶慌屯に簇する淡揭を乖う。
+杮彂偼摿偵丄僼僃乕僘4偵偍偗傞傾僾儕儘僌奼挘偺奜晹巇條偵娭偡傞婰弎傪峴偆丅
 
-\subsection{塑今の努脱认跋}
-塑今は、寥哈みMPRTOS羹けアプリケ〖ション倡券毁辩ツ〖ルの倡券プロジェク
-ト∈笆布塑プロジェクト∷のフェ〖ズ4におけるアプリログ橙磨の嘲婶慌屯に簇する
-淡揭を乖う。
+\subsection{杮彂偺揔梡斖埻}
+杮彂偼丄慻崬傒MPRTOS岦偗傾僾儕働乕僔儑儞奐敪巟墖僣乕儖偺奐敪僾儘僕僃僋
+僩乮埲壓杮僾儘僕僃僋僩乯偺僼僃乕僘4偵偍偗傞傾僾儕儘僌奼挘偺奜晹巇條偵娭偡傞
+婰弎傪峴偆丅
 
-\subsection{脱胳の年盗/维胳の棱汤}
+\subsection{梡岅偺掕媊/棯岅偺愢柧}
 
 \begin{table}[h]
  \centering
- \caption{脱胳年盗}
- \begin{tabular}{|p{8em}|p{36em}|} \hline
-  脱胳ˇ维胳& 年盗ˇ棱汤\\ \hline \hline
+ \caption{梡岅掕媊}
+ \begin{tabular}{|p{8em}|p{34em}|} \hline
+  梡岅丒棯岅& 掕媊丒愢柧\\ \hline \hline
   TLV& Trace Log Visualizer\\ \hline
-  MPRTOS& マルチプロセッサ滦炳リアルタイムオペレ〖ティングシステム\\
+  MPRTOS& 儅儖僠僾儘僙僢僒懳墳儕傾儖僞僀儉僆儁儗乕僥傿儞僌僔僗僥儉\\
   \hline
-  トレ〖スログファイル&
-      RTOSのトレ〖スログ怠墙を脱いて叫蜗したトレ〖スログや、
-      シミュレ〖タなどが叫蜗するトレ〖スログをファイルにしたもの\\
+  僩儗乕僗儘僌僼傽僀儖&
+      RTOS偺僩儗乕僗儘僌婡擻傪梡偄偰弌椡偟偨僩儗乕僗儘僌傗丄
+      僔儈儏儗乕僞側偳偑弌椡偡傞僩儗乕僗儘僌傪僼傽僀儖偵偟偨傕偺\\
   \hline
-  筛洁妨及トレ〖スログファイル&
-      塑ソフトウェアが胺うことの叫丸る妨及をもつトレ〖スログファイル。
-      称硷トレ〖スログファイルは、この鼎奶妨及トレ〖スログファイルに
-      恃垂することにより塑ソフトウェアで胺うことが叫丸るようになる。 \\
+  昗弨宍幃僩儗乕僗儘僌僼傽僀儖&
+      杮僜僼僩僂僃傾偑埖偆偙偲偺弌棃傞宍幃傪傕偮僩儗乕僗儘僌僼傽僀儖丅
+      奺庬僩儗乕僗儘僌僼傽僀儖偼丄偙偺嫟捠宍幃僩儗乕僗儘僌僼傽僀儖偵
+      曄姺偡傞偙偲偵傛傝杮僜僼僩僂僃傾偱埖偆偙偲偑弌棃傞傛偆偵側傞丅 \\
   \hline
-  恃垂ル〖ル  &
-  トレ〖スログファイルを筛洁妨及トレ〖スログファイルに恃垂する狠に脱いられるル〖ル。
+  曄姺儖乕儖  &
+  僩儗乕僗儘僌僼傽僀儖傪昗弨宍幃僩儗乕僗儘僌僼傽僀儖偵曄姺偡傞嵺偵梡偄傜傟傞儖乕儖丅
   \\
   \hline
-  材浑步ル〖ル  &
-  筛洁妨及トレ〖スログファイルを材浑步する狠に脱いられるル〖ル。
+  壜帇壔儖乕儖  &
+  昗弨宍幃僩儗乕僗儘僌僼傽僀儖傪壜帇壔偡傞嵺偵梡偄傜傟傞儖乕儖丅
   \\
   \hline
-  TLVファイル &
-      塑ソフトウェアが面粗妨及として脱いるファイル。
-      涟揭の筛洁妨及トレ〖スログファイルは、このTLVファイルの办婶である。 \\
+  TLV僼傽僀儖 &
+      杮僜僼僩僂僃傾偑拞娫宍幃偲偟偰梡偄傞僼傽僀儖丅
+      慜弎偺昗弨宍幃僩儗乕僗儘僌僼傽僀儖偼丄偙偺TLV僼傽僀儖偺堦晹偱偁傞丅 \\
   \hline
  \end{tabular}
 \end{table}
 
-\subsection{车妥}
-塑今では、寥哈みMPRTOS羹けアプリケ〖ション倡券毁辩ツ〖ルの
-ソフトウェアの慌屯を淡揭する。
-塑今は泼に、フェ〖ズ4におけるアプリログ橙磨の嘲婶慌屯に簇する淡揭を乖う。
+\subsection{奣梫}
+杮彂偱偼丄慻崬傒MPRTOS岦偗傾僾儕働乕僔儑儞奐敪巟墖僣乕儖偺
+僜僼僩僂僃傾偺巇條傪婰弎偡傞丅
+杮彂偼摿偵丄僼僃乕僘4偵偍偗傞傾僾儕儘僌奼挘偺奜晹巇條偵娭偡傞婰弎傪峴偆丅
 
 \clearpage
-\section{车妥棱汤}
-これまでに大せられたTLVへの妥司として、printfデバッグを乖いたいというものがあった。
-办忍弄なprintfデバッグによる叫蜗をTLVのタイムライン惧に山绩させることによって、
-メッセ〖ジが叫蜗されたときのタスク觉轮などが办誊でわかるという网爬がある。
-この妥司を悸附するものがアプリログ橙磨である。
+\section{奣梫愢柧}
+偙傟傑偱偵婑偣傜傟偨TLV傊偺梫朷偲偟偰丄printf僨僶僢僌傪峴偄偨偄偲偄偆傕偺偑偁偭偨丅
+堦斒揑側printf僨僶僢僌偵傛傞弌椡傪TLV偺僞僀儉儔僀儞忋偵昞帵偝偣傞偙偲偵傛偭偰丄
+儊僢僙乕僕偑弌椡偝傟偨偲偒偺僞僗僋忬懺側偳偑堦栚偱傢偐傞偲偄偆棙揰偑偁傞丅
+偙偺梫朷傪幚尰偡傞傕偺偑傾僾儕儘僌奼挘偱偁傞丅
+
+傑偨丄娭悢偺屇傃弌偟娭學傗楍嫇宆曄悢偺抣側偳傪丄僞僗僋忬懺偺傛偆偵
+壜帇壔偟偨偄偲偄偆梫朷偑偁偭偨偨傔丄偙傟偵懳偟偰傕傾僾儕儘僌奼挘偱懳墳偡傞丅
 
 \begin{figure}[h]
   \begin{center}
-    \includegraphics{syslog_image.eps}
+    \includegraphics{syslog_image.png}
+    %\includegraphics{syslog_image.eps}
   \end{center}
-  \caption{アプリログ橙磨イメ〖ジ}
+  \caption{傾僾儕儘僌奼挘僀儊乕僕}
   \label{fig:applogimage}
 \end{figure}
 
-\subsection{アプリログ橙磨}
-海までのTLVでは、扦罢の矢机误を材浑步することができないので、printfデバッグを乖えない。
-そこで、フェ〖ズ4での妥滇として扦罢矢机误を材浑步することが刁げられている。
+\subsection{傾僾儕儘僌奼挘}
+崱傑偱偺TLV偱偼丄擟堄偺暥帤楍傪壜帇壔偡傞偙偲偑偱偒側偄偺偱丄printf僨僶僢僌傪峴偊側偄丅
+偦偙偱丄僼僃乕僘4偱偺梫媮偲偟偰擟堄暥帤楍傪壜帇壔偡傞偙偲偑嫇偘傜傟偰偄傞丅
 
-毋えば、\verb|[123456789] printf foobarbaz.|のようなログがあった眷圭、箕癸123456789の疤弥にfoobarbazというメッセ〖ジが山绩されるような材浑步を鳞年する。
+椺偊偽丄\verb|[123456789] printf foobarbaz.|偺傛偆側儘僌偑偁偭偨応崌丄帪崗123456789偺埵抲偵foobarbaz偲偄偆儊僢僙乕僕偑昞帵偝傟傞傛偆側壜帇壔傪憐掕偡傞丅
 
-塑橙磨では、笆布の3つの材浑步数恕を捏丁する。
+杮奼挘偱偼丄埲壓偺3偮偺壜帇壔曽朄傪採嫙偡傞丅
+傑偨丄偦偺偦傟偧傟偼僞僗僋偵娭楢偡傞傕偺偲偟側偄傕偺偺2捠傝懚嵼偡傞丅
 \begin{description}
-  \item[矢机误材浑步] 扦罢矢机误をTLV惧に山绩
-  \item[ユ〖ザ年盗觉轮材浑步] タスクの觉轮山绩のように、ユ〖ザが扦罢に疯めた觉轮を材浑步
-  \item[ユ〖ザ年盗觉轮材浑步∈眉爬烧き∷] 惧淡の材浑步に裁え、倡幌と姜位があるもの。簇眶コ〖ルを鳞年
+  \item[暥帤楍壜帇壔] 擟堄暥帤楍傪TLV忋偵昞帵
+  \item[儐乕僓掕媊忬懺壜帇壔] 僞僗僋偺忬懺昞帵偺傛偆偵丄儐乕僓偑擟堄偵寛傔偨忬懺傪壜帇壔
+  \item[儐乕僓掕媊忬懺壜帇壔乮抂揰晅偒乯] 忋婰偺壜帇壔偵壛偊丄奐巒偲廔椆偑偁傞傕偺丅娭悢僐乕儖傪憐掕
 \end{description}
 
-TOPPERSカ〖ネルでは、ユ〖ザアプリケ〖ションからのログ叫蜗はsyslog簇眶によって乖う。
-よって、ユ〖ザアプリケ〖ション娄からの网脱はsyslog簇眶や、侍に脱罢するAPIを拆して乖うものとする。
+TOPPERS僇乕僱儖偱偼丄儐乕僓傾僾儕働乕僔儑儞偐傜偺儘僌弌椡偼syslog娭悢偵傛偭偰峴偆丅
+傛偭偰丄儐乕僓傾僾儕働乕僔儑儞懁偐傜偺棙梡偼syslog娭悢傗丄暿偵梡堄偡傞API傪夘偟偰峴偆傕偺偲偡傞丅
 
-塑怠墙をユ〖ザアプリケ〖ションから网脱する眷圭は、笆布の缄界で乖う。
+杮婡擻傪儐乕僓傾僾儕働乕僔儑儞偐傜棙梡偡傞応崌偼丄埲壓偺庤弴偱峴偆丅
 \begin{enumerate}
-  \item TLVのリソ〖スファイルに纳淡
-  \item アプリケ〖ションにログ叫蜗簇眶コ〖ルを纳裁∈syslog簇眶または塑橙磨で捏丁するAPI∷
-  \item アプリケ〖ションを悸乖
-  \item TLVを悸乖
+  \item TLV偺儕僜乕僗僼傽僀儖偵捛婰
+  \item 傾僾儕働乕僔儑儞偵儘僌弌椡娭悢僐乕儖傪捛壛乮syslog娭悢傑偨偼杮奼挘偱採嫙偡傞API乯
+  \item 傾僾儕働乕僔儑儞傪幚峴
+  \item TLV傪幚峴
 \end{enumerate}
 
-また、海搀の橙磨はTLV塑挛には缄を掐れず、材浑步ル〖ルなどの淡揭のみで
-悸附することとした。
+傑偨丄崱夞偺奼挘偼TLV杮懱偵偼庤傪擖傟偢丄壜帇壔儖乕儖側偳偺婰弎偺傒偱
+幚尰偡傞偙偲偲偟偨丅
 
-\subsection{矢机误材浑步}
-矢机误の材浑步には、タスクに簇息するものとそうでないものがある。
-笆惯、タスクに簇息する矢机误材浑步を\textbf{タスク矢机误材浑步}、タスクに簇息しない矢机误材浑步を\textbf{矢机误材浑步}と钙ぶ。
+\clearpage
+\section{暥帤楍壜帇壔}
+暥帤楍偺壜帇壔偵偼丄僞僗僋偵娭楢偡傞傕偺偲偦偆偱側偄傕偺偑偁傞丅
+埲崀丄僞僗僋偵娭楢偡傞暥帤楍壜帇壔傪\textbf{僞僗僋暥帤楍壜帇壔}丄僞僗僋偵娭楢偟側偄暥帤楍壜帇壔傪\textbf{暥帤楍壜帇壔}偲屇傇丅
 
-タスク矢机误材浑步は、タスクの掳拉として年盗することで、
-附哼のタスク觉轮山绩などの惧に脚ねて山绩する。
-矢机误材浑步は、それ漓脱の乖で山绩する。
-\subsubsection{掐蜗}
-夹挛で山绩されている舱疥は、アプリケ〖ション倡券荚が司む猛に弥垂する眷疥であることを绩している。
+僞僗僋暥帤楍壜帇壔偼丄僞僗僋偺懏惈偲偟偰掕媊偡傞偙偲偱丄
+尰嵼偺僞僗僋忬懺昞帵側偳偺忋偵廳偹偰昞帵偡傞丅
+暥帤楍壜帇壔偼丄偦傟愱梡偺峴偱昞帵偡傞丅
+\subsection{擖椡}
+TLV偑擣幆偡傞曽朄偱儘僌傪弌椡偡傞曽朄偼2捠傝偁傞丅
+傂偲偮偑丄TOPPERS僇乕僱儖偺syslog娭悢傪屇傇曽朄偱偁傞丅
+偙偺曽朄偼丄巜掕偝傟偨僼僅乕儅僢僩偱syslog娭悢傪屇傇偙偲偱丄
+TLV擣幆壜擻側僼僅乕儅僢僩偺儘僌傪弌椡偱偒傞丅
+傕偆傂偲偮偑丄杮僗僋儕僾僩奼挘偱梡堄偡傞API傪棙梡偡傞曽朄偱偁傞丅
+娭悢偺堷悢偵弌椡偟偨偄撪梕傪巜掕偟偰屇傃弌偟偰棙梡偡傞丅
+偙偺曽朄偺応崌丄syslog娭悢偺傛偆偵僼僅乕儅僢僩傪婥偵偡傞昁梫偑側偄丅
 
-\paragraph{ログ今及} TLVへ掐蜗するログの今及を年盗する。
-\begin{itembox}[l]{矢机误材浑步のログ今及}
+幬懱偱昞帵偝傟偰偄傞売強偼丄傾僾儕働乕僔儑儞奐敪幰偑朷傓抣偵抲姺偡傞応強偱偁傞偙偲傪帵偟偰偄傞丅
+嶲峫傑偱偵丄偳偺傛偆側儘僌偑弌椡偝傟傞偐傪晅偟偨丅
+
+\paragraph{彂幃}
+暥帤楍壜帇壔傪偡傞偨傔偺儘僌弌椡曽朄傪婰弎偡傞丅
+\begin{itembox}[l]{暥帤楍壜帇壔偺儘僌彂幃}
   \paragraph{syslog}
-  syslog(``applog id \%s \%s.'',\textit{id},\textit{str});
+  syslog("applog id \%s \%s.",\textit{rid},\textit{str});
   \paragraph{API}
-  void applog\_str(const char *\textit{id}, const char *\textit{str})
-  \paragraph{ログ叫蜗}
-  \verb|[| \textit{time} \verb|]| applog id \textit{id} \textit{str}. 
+  void applog\_str(const char *\textit{rid}, const char *\textit{str})
+  \paragraph{儘僌弌椡}
+  \verb|[| \textit{time} \verb|]| applog id \textit{rid} \textit{str}. 
   \begin{description}
-    \item[\textit{time}] 箕癸 \verb|[0-9a-zA-Z]+|
-    \item[\textit{id}] 山绩乖ID \verb|[^\. ]+|
-    \item[\textit{str}] 叫蜗矢机误 \verb|[^\.]*|
+    \item[\textit{time}] 帪崗 \verb|[0-9a-zA-Z]+|
+    \item[\textit{rid}] 昞帵峴ID \verb|[^\. ]+|
+    \item[\textit{str}] 弌椡暥帤楍 \verb|[^\.]*|
   \end{description}
 \end{itembox}
-\begin{itembox}[l]{タスク矢机误材浑步のログ今及}
+\begin{itembox}[l]{僞僗僋暥帤楍壜帇壔偺儘僌彂幃}
   \paragraph{syslog}
-  syslog(``applog task \%s \%s.'',\textit{tid},\textit{str});
+  syslog("applog task \%d \%s.",\textit{tid},\textit{str});
   \paragraph{API}
-  void applog\_tsk(const char *\textit{tid}, const char *\textit{str})
-  \paragraph{ログ叫蜗}
+  void applog\_strtsk(const int \textit{tid}, const char *\textit{str})
+  \paragraph{儘僌弌椡}
   \verb|[| \textit{time} \verb|]| applog task \textit{tid} \textit{str}. 
   \begin{description}
-    \item[\textit{time}] 箕癸 \verb|[0-9a-zA-Z]+|
-    \item[\textit{tid}] タスクID \verb|[0-9]+|
-    \item[\textit{str}] 叫蜗矢机误 \verb|[^\.]*|
+    \item[\textit{time}] 帪崗 \verb|[0-9a-zA-Z]+|
+    \item[\textit{tid}] 僞僗僋ID \verb|[0-9]+|
+    \item[\textit{str}] 弌椡暥帤楍 \verb|[^\.]*|
   \end{description}
 \end{itembox}
 
-\paragraph{リソ〖スファイル今及}
-笆布の淡揭は、矢机误材浑步を乖う狠に、ユ〖ザがリソ〖スファイルに纳裁するものである。
-\begin{itembox}[l]{矢机误材浑步リソ〖スファイル今及}
+\paragraph{儕僜乕僗僼傽僀儖彂幃}
+埲壓偺婰弎偼丄暥帤楍壜帇壔傪峴偆嵺偵丄儐乕僓偑儕僜乕僗僼傽僀儖偵捛壛偡傞傕偺偱偁傞丅僞僗僋暥帤楍壜帇壔偱偼晄梫偱偁傞丅
+\begin{itembox}[l]{暥帤楍壜帇壔儕僜乕僗僼傽僀儖彂幃}
   \begin{verbatim}
 "rowname":{
     "Type":"ApplogStr",
     "Attributes":{
-        "id":"",
+        "id":"rid",
         "str":""
     }
 }\end{verbatim}
   \begin{description}
-    \item[\textit{rowname}] 矢机误材浑步乖の叹涟 \verb|[^"]+|
+    \item[\textit{rowname}] 暥帤楍壜帇壔峴偺柤慜 \verb|[^"]+|
+    \item[\textit{rid}] 暥帤楍壜帇壔峴偺ID \verb|[^"]+|
   \end{description}
 \end{itembox}
 
-\subsubsection{叫蜗}
-笆布では、矢机误の材浑步数恕を年盗する。
+\subsection{弌椡}
+埲壓偱偼丄暥帤楍偺壜帇壔曽朄傪掕媊偡傞丅
 
-\paragraph{矢机误材浑步}
-まず、矢机误材浑步を绩す。
+\paragraph{暥帤楍壜帇壔}
+傑偢丄暥帤楍壜帇壔傪帵偡丅
 
 \begin{figure}
   \begin{center}
-    \includegraphics[width=15cm]{applog_str.eps}
+    \includegraphics[width=15cm]{applog_str.png}
+    %\includegraphics[width=15cm]{applog_str.eps}
   \end{center}
-  \caption{矢机误材浑步}
+  \caption{暥帤楍壜帇壔}
   \label{fig:str}
 \end{figure}
 
 \begin{verbatim}
 syslog("applog id 1 foo.");
 \end{verbatim}
-または
+傑偨偼
 \begin{verbatim}
 applog_str("1", "foo");
 \end{verbatim}
-このようなログが叫蜗された眷圭、\figref{fig:str}のように材浑步を乖う。
+偙偺傛偆側儘僌弌椡傪峴偭偨応崌丄\figref{fig:str}偺傛偆偵壜帇壔傪峴偆丅
 
-\paragraph{タスク矢机误材浑步}
-肌に、タスクに簇息する矢机误の材浑步を绩す。
+\paragraph{僞僗僋暥帤楍壜帇壔}
+師偵丄僞僗僋偵娭楢偡傞暥帤楍偺壜帇壔傪帵偡丅
 
 \begin{figure}
   \begin{center}
-    \includegraphics[width=15cm]{applog_strtsk.eps}
+    \includegraphics[width=15cm]{applog_strtsk.png}
+    %\includegraphics[width=15cm]{applog_strtsk.eps}
   \end{center}
-  \caption{タスク矢机误の材浑步}
+  \caption{僞僗僋暥帤楍偺壜帇壔}
   \label{fig:strtsk}
 \end{figure}
 
 \begin{verbatim}
 syslog("applog task 1 FOO.");
 \end{verbatim}
-または
+傑偨偼
 \begin{verbatim}
 applog_tsk("1", "FOO");
 \end{verbatim}
-このようなログが叫蜗された眷圭、\figref{fig:strtsk}のように材浑步を乖う。
-タスクの觉轮やシステムコ〖ルと脚剩して斧づらい眷圭は、ユ〖ザが稍妥な材浑步灌誊を材浑步しないようにすることで斧やすいよう肋年することとする。
+偙偺傛偆側儘僌弌椡傪峴偭偨応崌丄\figref{fig:strtsk}偺傛偆偵壜帇壔傪峴偆丅
 
-\subsection{ユ〖ザ年盗觉轮材浑步}
-\subsubsection{掐蜗}
+僞僗僋暥帤楍偺壜帇壔偑僞僗僋偺忬懺傗僔僗僥儉僐乕儖偲廳暋偟偰尒偯傜偄応崌偼丄
+儐乕僓偑晄梫側壜帇壔崁栚傪壜帇壔偟側偄傛偆偵偡傞偙偲偱尒傗偡偄傛偆愝掕偡傞偙偲偲偡傞丅
 
-\subsubsection{叫蜗}
+\clearpage
+\section{儐乕僓掕媊忬懺壜帇壔}
+埲壓偵丄儐乕僓掕媊忬懺偺壜帇壔曽朄傪愢柧偡傞丅
+TLV偼丄曄姺儖乕儖丒壜帇壔儖乕儖偲偟偰
+偁傜偐偠傔忬懺悢偺掕傔傜傟偨忬懺傪採嫙偡傞丅
+崱夞偼4忬懺偍傛傃8忬懺偺廤崌偲偡傞丅
+儐乕僓偼丄壜帇壔偟偨偄忬懺曄悢偺忬懺悢偵墳偠偨
+仏枹姰椆仏
+\subsection{擖椡}
+
+\paragraph{彂幃}
+儐乕僓掕媊忬懺壜帇壔傪偡傞偨傔偺儘僌弌椡曽朄傪婰弎偡傞丅
+\begin{itembox}[l]{儐乕僓掕媊忬懺壜帇壔偺儘僌彂幃}
+  \paragraph{syslog}
+  syslog("applog state id \%s \%d.",\textit{rid},\textit{sid});
+  \paragraph{API}
+  void applog\_stt(const char *\textit{rid}, const int \textit{sid})
+  \paragraph{儘僌弌椡}
+  \verb|[| \textit{time} \verb|]| applog state id \textit{rid} \textit{sid}. 
+  \begin{description}
+    \item[\textit{time}] 帪崗 \verb|[0-9a-zA-Z]+|
+    \item[\textit{rid}] 昞帵峴ID \verb|[^\. ]+|
+    \item[\textit{sid}] 忬懺 \verb|[0-9]+|
+  \end{description}
+\end{itembox}
+\begin{itembox}[l]{僞僗僋儐乕僓掕媊忬懺壜帇壔偺儘僌彂幃}
+  \paragraph{syslog}
+  syslog("applog state task \%d \%d.",\textit{tid},\textit{sid});
+  \paragraph{API}
+  void applog\_stttsk(const int \textit{tid}, const int \textit{sid})
+  \paragraph{儘僌弌椡}
+  \verb|[| \textit{time} \verb|]| applog state task \textit{tid} \textit{sid}. 
+  \begin{description}
+    \item[\textit{time}] 帪崗 \verb|[0-9a-zA-Z]+|
+    \item[\textit{tid}] 僞僗僋ID \verb|[0-9]+|
+    \item[\textit{sid}] 忬懺 \verb|[0-9]+|
+  \end{description}
+\end{itembox}
+
+\paragraph{儕僜乕僗僼傽僀儖彂幃}
+埲壓偺婰弎偼丄儐乕僓掕媊忬懺壜帇壔傪峴偆嵺偵丄儐乕僓偑儕僜乕僗僼傽僀儖偵捛壛偡傞傕偺偱偁傞丅僞僗僋儐乕僓掕媊忬懺壜帇壔偱偼晄梫偱偁傞丅
+\begin{itembox}[l]{儐乕僓掕媊忬懺壜帇壔儕僜乕僗僼傽僀儖彂幃乮4忬懺偺応崌乯}
+  \begin{verbatim}
+"rowname":{
+    "Type":"Applog4State",
+    "Attributes":{
+        "id":"rid",
+        "state":sid
+    }
+}\end{verbatim}
+  \begin{description}
+    \item[\textit{rowname}] 暥帤楍壜帇壔峴偺柤慜 \verb|[^"]+|
+    \item[\textit{rid}] 暥帤楍壜帇壔峴偺ID \verb|[^"]+|
+    \item[\textit{sid}] 弶婜忬懺 \verb|[0-9]+|
+  \end{description}
+\end{itembox}
+
+\subsection{弌椡}
+埲壓偱偼丄暥帤楍偺壜帇壔曽朄傪掕媊偡傞丅
+
+\paragraph{儐乕僓掕媊忬懺壜帇壔}
+傑偢丄儐乕僓掕媊忬懺壜帇壔傪帵偡丅
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=15cm]{userstate.png}
+  \end{center}
+  \caption{儐乕僓掕媊忬懺壜帇壔}
+  \label{fig:usrstt}
+\end{figure}
+
+\begin{verbatim}
+syslog("applog state id 1 0.");
+syslog("applog state id 1 1.");
+syslog("applog state id 1 2.");
+syslog("applog state id 1 1.");
+syslog("applog state id 1 0.");
+\end{verbatim}
+傑偨偼
+\begin{verbatim}
+applog_stt("1", 0);
+applog_stt("1", 1);
+applog_stt("1", 2);
+applog_stt("1", 1);
+applog_stt("1", 0);
+\end{verbatim}
+偙偺傛偆側儘僌弌椡傪峴偭偨応崌丄\figref{fig:usrstt}偺傛偆偵壜帇壔傪峴偆丅
 
 
-\subsection{ユ〖ザ年盗觉轮材浑步∈眉爬烧き∷}
-\subsubsection{掐蜗}
+\clearpage
+\section{儐乕僓掕媊忬懺壜帇壔乮抂揰晅偒乯}
+埲壓偵丄抂揰晅偒偺儐乕僓掕媊忬懺偺壜帇壔曽朄傪愢柧偡傞丅
+捠忢偲偺堘偄偼丄忬懺偺奐巒帪偲廔椆帪偵抂揰偑偮偄偰偄傞揰偱偁傞丅
+偙傟偵傛傝娭悢僐乕儖側偳傪昞尰偡傞丅
+\subsection{擖椡}
 
-\subsubsection{叫蜗}
+\paragraph{彂幃}
+抂揰晅偒儐乕僓掕媊忬懺壜帇壔傪偡傞偨傔偺儘僌弌椡曽朄傪婰弎偡傞丅
+\begin{itembox}[l]{抂揰晅偒儐乕僓掕媊忬懺壜帇壔偺儘僌彂幃}
+  \paragraph{syslog}丂\\
+  syslog("applog state id \%s \%d start.",\textit{rid},\textit{sid}); \\
+  syslog("applog state id \%s \%d end.",\textit{rid},\textit{sid});
+  \paragraph{API}丂\\
+  void applog\_stt\_st(const char *\textit{rid}, const int \textit{sid}) \\
+  void applog\_stt\_en(const char *\textit{rid}, const int \textit{sid})
+  \paragraph{儘僌弌椡}丂\\
+  \verb|[| \textit{time} \verb|]| applog state id \textit{rid} \textit{sid} start. \\
+  \verb|[| \textit{time} \verb|]| applog state id \textit{rid} \textit{sid} end. 
+  \begin{description}
+    \item[\textit{time}] 帪崗 \verb|[0-9a-zA-Z]+|
+    \item[\textit{rid}] 昞帵峴ID \verb|[^\. ]+|
+    \item[\textit{sid}] 忬懺 \verb|[0-9]+|
+  \end{description}
+\end{itembox}
+\begin{itembox}[l]{抂揰晅偒僞僗僋儐乕僓掕媊忬懺壜帇壔偺儘僌彂幃}
+  \paragraph{syslog}丂\\
+  syslog("applog state task \%s \%d start.",\textit{tid},\textit{sid}); \\
+  syslog("applog state task \%s \%d end.",\textit{tid},\textit{sid});
+  \paragraph{API}丂\\
+  void applog\_stttsk\_st(const char *\textit{tid}, const int \textit{sid}) \\
+  void applog\_stttsk\_en(const char *\textit{tid}, const int \textit{sid})
+  \paragraph{儘僌弌椡}丂\\
+  \verb|[| \textit{time} \verb|]| applog state tsk \textit{tid} \textit{sid} start. \\
+  \verb|[| \textit{time} \verb|]| applog state tsk \textit{tid} \textit{sid} end. 
+  \begin{description}
+    \item[\textit{time}] 帪崗 \verb|[0-9a-zA-Z]+|
+    \item[\textit{tid}] 僞僗僋ID \verb|[0-9]+|
+    \item[\textit{sid}] 忬懺 \verb|[0-9]+|
+  \end{description}
+\end{itembox}
 
+\paragraph{儕僜乕僗僼傽僀儖彂幃}
+埲壓偺婰弎偼丄抂揰晅偒儐乕僓掕媊忬懺壜帇壔傪峴偆嵺偵丄儐乕僓偑儕僜乕僗僼傽僀儖偵捛壛偡傞傕偺偱偁傞丅抂揰晅偒僞僗僋儐乕僓掕媊忬懺壜帇壔偱偼晄梫偱偁傞丅
+\begin{itembox}[l]{儐乕僓掕媊忬懺壜帇壔儕僜乕僗僼傽僀儖彂幃乮4忬懺偺応崌乯}
+  \begin{verbatim}
+"rowname":{
+    "Type":"Applog4StateTerminal",
+    "Attributes":{
+        "id":"rid",
+        "state":sid
+    }
+}\end{verbatim}
+  \begin{description}
+    \item[\textit{rowname}] 暥帤楍壜帇壔峴偺柤慜 \verb|[^"]+|
+    \item[\textit{rid}] 暥帤楍壜帇壔峴偺ID \verb|[^"]+|
+    \item[\textit{sid}] 弶婜忬懺 \verb|[0-9]+|
+  \end{description}
+\end{itembox}
 
+\subsection{弌椡}
+埲壓偱偼丄抂揰晅偒儐乕僓掕媊忬懺偺壜帇壔曽朄傪掕媊偡傞丅
+抂揰晅偒僞僗僋儐乕僓掕媊忬懺偵娭偟偰偼徣棯偡傞丅
 
-\section*{徊雇矢弗}
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=15cm]{userstate_terminal.png}
+  \end{center}
+  \caption{儐乕僓掕媊忬懺壜帇壔}
+  \label{fig:usrsttter}
+\end{figure}
+
+\begin{verbatim}
+syslog("applog state id 1 0 start.");
+syslog("applog state id 1 1 start.");
+syslog("applog state id 1 2 start.");
+syslog("applog state id 1 2 end.");
+syslog("applog state id 1 1 end.");
+syslog("applog state id 1 0 end.");
+\end{verbatim}
+傑偨偼
+\begin{verbatim}
+applog_stt_st("1", 0);
+applog_stt_st("1", 1);
+applog_stt_st("1", 2);
+applog_stt_en("1", 2);
+applog_stt_en("1", 1);
+applog_stt_en("1", 0);
+\end{verbatim}
+偙偺傛偆側儘僌弌椡傪峴偭偨応崌丄\figref{fig:usrsttter}偺傛偆偵壜帇壔傪峴偆丅
+\clearpage
+\section*{嶲峫暥專}
 
 \end{document}
