@@ -252,6 +252,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     {
                         if (rule.Style != "Script")
                         {
+                            foreach (Event e in rule.Shapes)
+                            {
+                                e.SetVisualizeRuleName(rule.Name);
+                            }
                             var gen = new EventShapesGenerator(rule, res);
                             gen.SetData(TraceLogData, VisualizeData, ResourceData);
                             vizData.Add(rule, res, gen.GetEventShapes());
@@ -266,6 +270,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 {
                     if (rule.Style != "Script")
                     {
+                        foreach (Event e in rule.Shapes)
+                        {
+                            e.SetVisualizeRuleName(rule.Name);
+                        }
                         var gen = new EventShapesGenerator(rule);
                         gen.SetData(TraceLogData, VisualizeData, ResourceData);
                         vizData.Add(rule, gen.GetEventShapes());
