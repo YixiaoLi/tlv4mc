@@ -2,11 +2,10 @@
 	"toppers2":{
 		"VisualizeRules":{
 			"Hoge":{
-				"DisplayName":"Script Added",
-				"Target":"Task",
+				"DisplayName":"CPU使用率",
                                 "Style": "Script",
                                 "FileName": "c:/cygwin/bin/ruby",
-                                "Arguments": "c:/cygwin/home/mzp/viz.rb",
+                                "Arguments": "c:/cygwin/home/mzp/tmp/ruby/cpu_load.rb",
 			}      
 
 		}

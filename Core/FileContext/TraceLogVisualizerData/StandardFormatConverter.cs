@@ -211,6 +211,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             psi.UseShellExecute = false;
             psi.RedirectStandardInput = true;
             psi.RedirectStandardOutput = true;
+            psi.RedirectStandardError = true;
 
             Process p = Process.Start(psi);
             //            string[] logs = File.ReadAllLines(this.TraceLogData.TraceLogs.GetEnumerator());
@@ -219,6 +220,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
             {
                 p.StandardInput.WriteLine(log.ToString());
             }
+            p.StandardInput.Close();
+            
             p.WaitForExit();
 
             string json = "";
@@ -236,7 +239,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
             {
                 shape.Event.SetVisualizeRuleName(rule.Name);
                 es.Add(shape);
-                rule.Shapes.Add(shape.Event);
+                if (!rule.Shapes.Keys.Contains(shape.Event.Name))
+                {
+                    rule.Shapes.Add(shape.Event);
+                }
             }
             return es;
         }
