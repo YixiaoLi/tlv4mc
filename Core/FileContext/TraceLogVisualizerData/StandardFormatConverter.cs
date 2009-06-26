@@ -214,8 +214,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
             psi.RedirectStandardError = true;
 
             Process p = Process.Start(psi);
-            //            string[] logs = File.ReadAllLines(this.TraceLogData.TraceLogs.GetEnumerator());
 
+            p.StandardInput.WriteLine(this.ResourceData.ToJson());
+            p.StandardInput.WriteLine("---");
             foreach (TraceLog log in TraceLogData.TraceLogs)
             {
                 p.StandardInput.WriteLine(log.ToString());
