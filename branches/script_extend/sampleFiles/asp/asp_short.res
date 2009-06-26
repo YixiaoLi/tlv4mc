@@ -99,7 +99,6 @@
 				"state"    : "DORMANT"
 			}
 		},
-,
 		"CYCHDR1":{
 			"Type":"CyclicHandler",
 			"Attributes":
