@@ -297,7 +297,7 @@
 					"CanGrouping"	:false,
 					"Default"	:"DORMANT"
 				},
-				"applog_syslog":{
+				"applog_str":{
 					"VariableType"	:"String",
 					"DisplayName"	:"syslog",
 					"AllocationType":"Dynamic",
@@ -365,7 +365,7 @@
                 		}
 			}
 		},
-		"ApplogStr":{
+		"ApplogString":{
 			"DisplayName":"アプリログ",
 			"Attributes":{
 				"id":{

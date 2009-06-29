@@ -99,7 +99,6 @@
 				"state"    : "DORMANT"
 			}
 		},
-,
 		"CYCHDR1":{
 			"Type":"CyclicHandler",
 			"Attributes":
@@ -131,13 +130,21 @@
 				"state"    : "DORMANT"
 			}
 		},
-		"APP_LOG":{
-			"Type":"ApplogStr",
+		"APP_LOG1":{
+			"Type":"ApplogString",
 			"Attributes":
 			{
-				"id":"1"
+				"id":"1",
+			}
+		},
+		"APP_LOG2":{
+			"Type":"ApplogString",
+			"Attributes":
+			{
+				"id":"2",
 			}
 		}
+
 	}
 }
 

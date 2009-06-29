@@ -12,25 +12,25 @@
 					}
 				}
 			},
-			"applogStr":{
+			"applogString":{
 				"DisplayName":"アプリログ",
-				"Target":"ApplogStr",
+				"Target":"ApplogString",
 				"Shapes":{
 					"strLog":{
-						"DisplayName":"文字列",
+						"DisplayName":"syslog",
 						"When":"${TARGET}.str",
-						"Figures":"applogStrShapes(${VAL})"
+						"Figures":"applogStringShapes(${VAL})"
 					}
 				}
 			},
-			"applogSyslog":{
-				"DisplayName":"syslog",
+			"applogStringTask":{
+				"DisplayName":"アプリログ",
 				"Target":"Task",
 				"Shapes":{
 					"syslogEvent":{
 						"DisplayName":"syslog",
-						"When":"${TARGET}.applog_syslog",
-						"Figures":"applogStrShapes(${VAL})"
+						"When":"${TARGET}.applog_str",
+						"Figures":"applogStringShapes(${VAL})"
 					}
 				}
 			}

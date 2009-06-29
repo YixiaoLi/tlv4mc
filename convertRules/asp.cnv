@@ -124,9 +124,9 @@
 			"[${time}]$RES_NAME{TaskExceptionRoutine}.leave()",
 			"[${time}]$RES_NAME{TaskExceptionRoutine}.state=DORMANT",
 		],
-		"\[(?<time>\d+)\] applog (?<str>[^\.]+)\.?"	:
-			"[${time}]$RES_NAME{ApplogStr}.str=${str}",
-		"\[(?<time>\d+)\] task (?<id>\d+) syslog (?<logstr>[^\.]+)\." :
-			"[${time}]$RES_NAME{Task(id==${id})}.applog_syslog=${logstr}"
+		"\[(?<time>\d+)\] applog str : ID (?<rid>[^: ]+) : (?<str>[^.]+)\.?"	:
+			"[${time}]$RES_NAME{ApplogString(id==${rid})}.str=${str}",
+		"\[(?<time>\d+)\] applog strtask : TASK (?<tid>[^: ]+) : (?<str>[^.]+)\.?"	:
+			"[${time}]$RES_NAME{Task(id==${tid})}.applog_str=${str}"
 	}
 }
