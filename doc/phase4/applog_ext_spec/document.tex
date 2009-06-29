@@ -1,5 +1,5 @@
 \documentclass[a4j]{jsarticle}
-\usepackage[dviout]{graphicx}
+\usepackage[dvipdfmx]{graphicx}
 %\usepackage[dvips]{graphicx}
 \usepackage{ascmac}
 \newcommand{\figref}[1]{図\ref{#1}}
@@ -180,7 +180,7 @@ TLV認識可能なフォーマットのログを出力できる。
 \begin{itembox}[l]{文字列可視化リソースファイル書式}
   \begin{verbatim}
 "rowname":{
-    "Type":"ApplogStr",
+    "Type":"ApplogString",
     "Attributes":{
         "id":"rid",
         "str":""
@@ -218,10 +218,9 @@ applog_str("1", "foo");
 \begin{itembox}[l]{リソースファイル}
 \begin{verbatim}
 "APP_LOG":{
-    "Type":"ApplogStr",
+    "Type":"ApplogString",
     "Attributes":{
-        "id":"applog",
-        "str":""
+        "id":"1",
     }
 }\end{verbatim}
 \end{itembox}

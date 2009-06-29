@@ -1442,9 +1442,15 @@
 [93121476] dispatch to task 5.
 [93122076] Sample program ends.
 [93122323] enter to ext_ker.
-[9379610] applog foo.
-[33796100] applog bar.
-[63796100] applog baz.
-[10379610] task 1 syslog FOO.
-[36796100] task 1 syslog BAR.
-[69796100] task 1 syslog BAZ.
+[9379610] applog str : ID 1 : foo.
+[33796100] applog str : ID 1 : bar.
+[63796100] applog str : ID 1 : baz.
+[15379610] applog str : ID 2 : hoge.
+[39796100] applog str : ID 2 : fuga.
+[70796100] applog str : ID 2 : piyo.
+[10379610] applog strtask : TASK 1 : FOO.
+[36796100] applog strtask : TASK 1 : BAR.
+[69796100] applog strtask : TASK 1 : BAZ.
+[18379610] applog strtask : TASK 2 : HOGE.
+[42796100] applog strtask : TASK 2 : FUGA.
+[77796100] applog strtask : TASK 2 : PIYO.

@@ -17,7 +17,7 @@
 					"Text":"${ARG1}"
 				}
 			],
-			"applogStrShapes":[
+			"applogStringShapes":[
 				{
 					"Type":"Text",
 					"Size":"100%,100%",
