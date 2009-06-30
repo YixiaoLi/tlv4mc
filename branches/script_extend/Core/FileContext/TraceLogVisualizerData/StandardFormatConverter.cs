@@ -83,16 +83,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				"可視化データを生成中",
 				"可視化データの生成に失敗しました。\n可視化ルールファイルの記述に誤りがある可能性があります。");
 
-			progressUpdate(40);
+            progressUpdate(40);
 			generateData(
 				() => { TraceLogData = getTraceLogData(traceLogFilePath); },
 				"トレースログデータを生成中",
 				"トレースログデータの生成に失敗しました。\nトレースログ変換ルールファイルの記述に誤りがある可能性があります。");
-            progressUpdate(99);
+            progressUpdate(50);
             generateData(
-               () => { VisualizeShapeData = getVisualizeShapeData(); },
+               () => { VisualizeShapeData = getVisualizeShapeData(50,99); },
               "図形データを生成中",
              "図形データの生成に失敗しました。\n可視化ルールファイルの記述に誤りがある可能性があります。" );
+            progressUpdate(99);
 			if (_constructProgressReport != null)
 				_constructProgressReport(_progressFrom, "初期化中");
 		}
@@ -191,7 +192,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			return settingData;
 		}
 
-        private EventShapes generateByNewRule(VisualizeRule rule) {
+        private EventShapes generateByNewRule(VisualizeRule rule)
+        {
             ProcessStartInfo psi;
             if (rule.Script != null)
             {
@@ -213,26 +215,46 @@ namespace NU.OJL.MPRTOS.TLV.Core
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardError = true;
 
-            Process p = Process.Start(psi);
+            Process p = new Process();
+            p.StartInfo = psi;
+            string json= "";
+        /*    p.OutputDataReceived += (object sendingProcess, DataReceivedEventArgs outLine) =>
+            {
+                json += outLine.Data;
+            };*/
 
+            p.Start();
+            //p.BeginOutputReadLine();
             p.StandardInput.WriteLine(this.ResourceData.ToJson());
             p.StandardInput.WriteLine("---");
             foreach (TraceLog log in TraceLogData.TraceLogs)
             {
                 p.StandardInput.WriteLine(log.ToString());
             }
-            p.StandardInput.Close();
-            
-            p.WaitForExit();
 
-            string json = "";
-            while (!p.StandardOutput.EndOfStream)
+
+            p.StandardInput.Close();
+
+            while (!(p.HasExited && p.StandardOutput.EndOfStream))
             {
                 json += p.StandardOutput.ReadLine();
             }
+
+//            p.WaitForExit();
+            if (p.ExitCode != 0)
+            {
+                string error = "";
+                while (!p.StandardError.EndOfStream)
+                {
+                    error += p.StandardError.ReadLine() + "\n";
+                }
+                throw new Exception(error);
+            }
+            p.Close();
+
             EventShapes es = new EventShapes();
             List<EventShape> shapes = ApplicationFactory.JsonSerializer.Deserialize<List<EventShape>>(json);
-            
+
             // FIXME: 古いルールと整合性を保つためにrule.Shapesを作成する
             // Shapesに代入されたEventはNameしか使われないと仮定してる
             rule.Shapes = new GeneralNamedCollection<Event>();
@@ -248,11 +270,22 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return es;
         }
 
-        private VisualizeShapeData getVisualizeShapeData()
+        void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+
+            throw new NotImplementedException();
+        }
+
+        private VisualizeShapeData getVisualizeShapeData(int from,int to)
         {
             VisualizeShapeData vizData = new VisualizeShapeData();
+            int count = this.VisualizeData.VisualizeRules.Count;
+            double current = 0.0;
             foreach (VisualizeRule rule in this.VisualizeData.VisualizeRules)
             {
+                this._constructProgressReport((int)((current / count) * (to - from) + from),
+rule.DisplayName);
+                current += 1.0;
                 if (rule.IsBelongedTargetResourceType())
                 {
                     foreach (Resource res in this.ResourceData.Resources.Where<Resource>(r => r.Type == rule.Target))
