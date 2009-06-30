@@ -127,6 +127,10 @@
 		"\[(?<time>\d+)\] applog str : ID (?<rid>[^: ]+) : (?<str>[^.]+)\.?"	:
 			"[${time}]$RES_NAME{ApplogString(id==${rid})}.str=${str}",
 		"\[(?<time>\d+)\] applog strtask : TASK (?<tid>[^: ]+) : (?<str>[^.]+)\.?"	:
-			"[${time}]$RES_NAME{Task(id==${tid})}.applog_str=${str}"
+			"[${time}]$RES_NAME{Task(id==${tid})}.applog_str=${str}",
+		"\[(?<time>\d+)\] applog state : ID (?<rid>[^: ]+) : (?<state>[0-9]+)\.?"	:
+			"[${time}]$RES_NAME{ApplogState(id==${rid})}.state=${state}",
+		"\[(?<time>\d+)\] applog statetask : TASK (?<tid>[^: ]+) : (?<state>[0-9]+)\.?"	:
+			"[${time}]$RES_NAME{Task(id==${tid})}.applog_state=${state}",
 	}
 }

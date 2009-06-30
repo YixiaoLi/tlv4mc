@@ -1454,3 +1454,5 @@
 [18379610] applog strtask : TASK 2 : HOGE.
 [42796100] applog strtask : TASK 2 : FUGA.
 [77796100] applog strtask : TASK 2 : PIYO.
+[13379610] applog state : ID 1 : 0.
+[26796100] applog state : ID 1 : 1.

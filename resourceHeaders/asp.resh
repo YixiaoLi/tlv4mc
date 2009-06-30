@@ -371,7 +371,7 @@
 				"id":{
 					"VariableType"	:"String",
 					"DisplayName"	:"ID",
-					"AllocationType":"Dynamic",
+					"AllocationType":"Static",
 					"CanGrouping"	:false
 				},
 				"str":{
@@ -380,6 +380,24 @@
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:false,
 					"Default"	:""
+				}
+			}
+		},
+		"ApplogState":{
+			"DisplayName":"アプリログ",
+			"Attributes":{
+				"id":{
+					"VariableType"	:"String",
+					"DisplayName"	:"ID",
+					"AllocationType":"Static",
+					"CanGrouping"	:false
+				},
+				"state":{
+					"VariableType"	:"Number",
+					"DisplayName"	:"文字列",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false,
+					"Default"	:0
 				}
 			}
 		}

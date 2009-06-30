@@ -32,6 +32,16 @@
 					"Points":["0,80%","0,0"],
 					"Pen":{"Color":"ff000000","Width":1}
 				}
+			],
+			"applogStateShapes":[
+				{
+					"Type":"Rectangle",
+					"Location":"0,0",
+					"Size":"100%,100%",
+					"Pen":{"Color":"${ARG0}","Width":1,"Alpha":255},
+					"Fill":"${ARG0}",
+					"Alpha":100
+				}
 			]
 		}
 	}

@@ -134,17 +134,23 @@
 			"Type":"ApplogString",
 			"Attributes":
 			{
-				"id":"1",
+				"id":"1"
 			}
 		},
 		"APP_LOG2":{
 			"Type":"ApplogString",
 			"Attributes":
 			{
-				"id":"2",
+				"id":"2"
+			}
+		},
+		"USER_STATE":{
+			"Type":"ApplogState",
+			"Attributes":
+			{
+				"id":"1"
 			}
 		}
-
 	}
 }
 
