@@ -17,7 +17,7 @@
 				"Target":"ApplogString",
 				"Shapes":{
 					"strLog":{
-						"DisplayName":"syslog",
+						"DisplayName":"文字列",
 						"When":"${TARGET}.str",
 						"Figures":"applogStringShapes(${VAL})"
 					}
@@ -28,12 +28,27 @@
 				"Target":"Task",
 				"Shapes":{
 					"syslogEvent":{
-						"DisplayName":"syslog",
+						"DisplayName":"タスク文字列",
 						"When":"${TARGET}.applog_str",
 						"Figures":"applogStringShapes(${VAL})"
 					}
 				}
-			}
+			},
+			"applogState":{
+				"DisplayName":"アプリログ",
+				"Target":"ApplogState",
+				"Shapes":{
+					"stateLog":{
+						"DisplayName":"ユーザ定義状態",
+						"From":"ApplogState.state",
+						"To":"${FROM_TARGET}.state",
+						"Figures":{
+							"${FROM_TARGET}.state==0":"applogStateShapes(ffffff),
+							"${FROM_TARGET}.state==1":"applogStateShapes(646464)
+						}
+					}
+				}
+			},
 		}
 	}
 }
