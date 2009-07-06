@@ -131,6 +131,6 @@
 		"\[(?<time>\d+)\] applog state : ID (?<rid>[^: ]+) : (?<state>[0-9]+)\.?"	:
 			"[${time}]$RES_NAME{ApplogState(id==${rid})}.state=${state}",
 		"\[(?<time>\d+)\] applog statetask : TASK (?<tid>[^: ]+) : (?<state>[0-9]+)\.?"	:
-			"[${time}]$RES_NAME{Task(id==${tid})}.applog_state=${state}",
+			"[${time}]$RES_NAME{Task(id==${tid})}.applog_state=${state}"
 	}
 }

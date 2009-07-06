@@ -366,7 +366,7 @@
 			}
 		},
 		"ApplogString":{
-			"DisplayName":"アプリログ",
+			"DisplayName":"アプリログ（文字列）",
 			"Attributes":{
 				"id":{
 					"VariableType"	:"String",
@@ -384,7 +384,7 @@
 			}
 		},
 		"ApplogState":{
-			"DisplayName":"アプリログ",
+			"DisplayName":"アプリログ（状態）",
 			"Attributes":{
 				"id":{
 					"VariableType"	:"String",
@@ -394,10 +394,10 @@
 				},
 				"state":{
 					"VariableType"	:"Number",
-					"DisplayName"	:"文字列",
+					"DisplayName"	:"ユーザ定義状態",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:false,
-					"Default"	:0
+					"Default"		:0
 				}
 			}
 		}
