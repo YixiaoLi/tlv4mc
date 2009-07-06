@@ -1,11 +1,11 @@
 ﻿{
-	"fmp":{
+	"toppers2":{
 		"VisualizeRules":{
-			"CPU":{
+			"Hoge":{
 				"DisplayName":"CPU使用率",
                                 "Style": "Script",
                                 "FileName": "c:/cygwin/bin/ruby",
-                                "Arguments": "c:/cygwin/home/mzp/tmp/ruby/fmp.rb",
+                                "Arguments": "c:/cygwin/home/mzp/tmp/ruby/cpu_load.rb",
 			}      
 
 		}
