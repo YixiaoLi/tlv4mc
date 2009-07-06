@@ -27,7 +27,7 @@
 				"DisplayName":"アプリログ",
 				"Target":"Task",
 				"Shapes":{
-					"syslogEvent":{
+					"strLogTask":{
 						"DisplayName":"タスク文字列",
 						"When":"${TARGET}.applog_str",
 						"Figures":"applogStringShapes(${VAL})"
@@ -40,15 +40,31 @@
 				"Shapes":{
 					"stateLog":{
 						"DisplayName":"ユーザ定義状態",
-						"From":"ApplogState.state",
-						"To":"${FROM_TARGET}.state",
+						"From":"${TARGET}.state",
+						"To":"${TARGET}.state",
 						"Figures":{
-							"${FROM_TARGET}.state==0":"applogStateShapes(ffffff),
-							"${FROM_TARGET}.state==1":"applogStateShapes(646464)
+							"${TARGET}.state==0":"applogStateShapes(ff0000)",
+							"${TARGET}.state==1":"applogStateShapes(00ff00)"
 						}
 					}
 				}
 			},
+			"applogStateTask":{
+				"DisplayName":"アプリログ",
+				"Target":"Task",
+				"Shapes":{
+					"stateLogTask":{
+						"DisplayName":"ユーザ定義状態",
+						"From":"${TARGET}.applog_state",
+						"To":"${TARGET}.applog_state",
+						"Figures":{
+							"${TARGET}.applog_state==0":"applogStateShapes(ff0000)",
+							"${TARGET}.applog_state==1":"applogStateShapes(00ff00)"
+						}
+					}
+				}
+			}
 		}
 	}
 }
+

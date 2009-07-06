@@ -1456,3 +1456,9 @@
 [77796100] applog strtask : TASK 2 : PIYO.
 [13379610] applog state : ID 1 : 0.
 [26796100] applog state : ID 1 : 1.
+[10379610] applog statetask : TASK 1 : 0.
+[36796100] applog statetask : TASK 1 : 1.
+[69796100] applog statetask : TASK 1 : 0.
+[18379610] applog statetask : TASK 2 : 1.
+[42796100] applog statetask : TASK 2 : 0.
+[77796100] applog statetask : TASK 2 : 1.
