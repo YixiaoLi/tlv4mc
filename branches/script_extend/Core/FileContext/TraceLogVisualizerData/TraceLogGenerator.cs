@@ -154,6 +154,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 t.Add(new TraceLog(p.StandardOutput.ReadLine()));
             }
             t.LogDataBase.SetIds();
+            t.Path = this._traceLogFilePath;
             return t;
         }
 
@@ -180,6 +181,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
 
             t.LogDataBase.SetIds();
+            t.Path = this._traceLogFilePath;
             return t;
         }
 

@@ -60,7 +60,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public TraceLogData TraceLogData { get; private set; }
 		public VisualizeData VisualizeData { get; private set; }
 		public SettingData SettingData { get; private set; }
-       public VisualizeShapeData VisualizeShapeData { get; private set; }
+        public VisualizeShapeData VisualizeShapeData { get; private set; }
 
 		public StandardFormatConverter(string resourceFilePath, string traceLogFilePath, string[] visualizeRuleFilePaths, Action<int, string> ConstructProgressReport)
 		{
@@ -143,7 +143,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					}
 				}
 			}
-
+            resData.Path = resourceFilePath;
 			return resData;
 		}
 		private VisualizeData getVisualizeData(string[] visualizeRuleFilePaths)
