@@ -57,8 +57,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		private float _fx;
 		private float _tx;
 		private int _lastX;
-		private Cursor HandHoldCursor { get { return new Cursor(Properties.Resources.handHold.Handle) { Tag = "handHold" }; } }
-		private Cursor HandCursor { get { return new Cursor(Properties.Resources.hand.Handle) { Tag = "hand" }; } }
+        private Cursor HandHoldCursor { get { return new Cursor(Properties.Resources.handHold.Handle) { Tag = "handHold" }; } }
+        private Cursor HandCursor { get { return new Cursor(Properties.Resources.hand.Handle) { Tag = "hand" }; } }
 		private TimeLine ViewingAreaTimeLine;
 		private Bitmap _macroVizData;
 
@@ -293,12 +293,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			if (_data == null)
 				return;
 
-			if (e.Button == MouseButtons.Left)
-			{
-				if(_cursorMode == CursorModes.Move)
-					Cursor = HandHoldCursor;
+            if (e.Button == MouseButtons.Left)
+            {
+                if (_cursorMode == CursorModes.Move)
+                    Cursor = HandHoldCursor;
 
-				_lastX = (int)_fx;
+                _lastX = (int)_fx;
 			}
 
 			base.OnMouseDown(e);
@@ -353,8 +353,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				}
 				else if (_cursorMode == CursorModes.Move)
 				{
-					int _x = _lastX + x - _mouseDownX - 5;
-					ViewingAreaTimeLine.MoveBySettingFromTime(ViewingAreaTimeLine.MinTime + Time.FromX(ViewingAreaTimeLine.MinTime, ViewingAreaTimeLine.MaxTime, _scale.Width, _x).Round(0));
+                    int _x = _lastX + x - _mouseDownX - 5;
+                    ViewingAreaTimeLine.MoveBySettingFromTime(ViewingAreaTimeLine.MinTime + Time.FromX(ViewingAreaTimeLine.MinTime, ViewingAreaTimeLine.MaxTime, _scale.Width, _x).Round(0));
 				}
 				else if (_cursorMode == CursorModes.Normal)
 				{
