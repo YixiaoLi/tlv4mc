@@ -124,13 +124,13 @@
 			"[${time}]$RES_NAME{TaskExceptionRoutine}.leave()",
 			"[${time}]$RES_NAME{TaskExceptionRoutine}.state=DORMANT",
 		],
-		"\[(?<time>\d+)\] applog str : ID (?<rid>[^: ]+) : (?<str>[^.]+)\.?"	:
+		"\[(?<time>\d+)\] applog str : ID (?<rid>[^: ]+) : (?<str>[^\.]+)\.?"	:
 			"[${time}]$RES_NAME{ApplogString(id==${rid})}.str=${str}",
-		"\[(?<time>\d+)\] applog strtask : TASK (?<tid>[^: ]+) : (?<str>[^.]+)\.?"	:
+		"\[(?<time>\d+)\] applog strtask : TASK (?<tid>[^: ]+) : (?<str>[^\.]+)\.?"	:
 			"[${time}]$RES_NAME{Task(id==${tid})}.applog_str=${str}",
-		"\[(?<time>\d+)\] applog state : ID (?<rid>[^: ]+) : (?<state>[0-9]+)\.?"	:
+		"\[(?<time>\d+)\] applog state : ID (?<rid>[^: ]+) : (?<state>\d+)\.?"	:
 			"[${time}]$RES_NAME{ApplogState(id==${rid})}.state=${state}",
-		"\[(?<time>\d+)\] applog statetask : TASK (?<tid>[^: ]+) : (?<state>[0-9]+)\.?"	:
+		"\[(?<time>\d+)\] applog statetask : TASK (?<tid>[^: ]+) : (?<state>\d+)\.?"	:
 			"[${time}]$RES_NAME{Task(id==${tid})}.applog_state=${state}"
 	}
 }

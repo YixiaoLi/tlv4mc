@@ -41,10 +41,24 @@
 					"stateLog":{
 						"DisplayName":"ユーザ定義状態",
 						"From":"${TARGET}.state",
-						"To":"${TARGET}.state",
+						"To":"${FROM_TARGET}.state",
 						"Figures":{
-							"${TARGET}.state==0":"applogStateShapes(ff0000)",
-							"${TARGET}.state==1":"applogStateShapes(00ff00)"
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.state}==0":
+								"applogStateShapes(ff0000)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.state}==1":
+								"applogStateShapes(00ff00)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.state}==2":
+								"applogStateShapes(0000ff)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.state}==3":
+								"applogStateShapes(000000)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.state}==4":
+								"applogStateShapes(ffff00)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.state}==5":
+								"applogStateShapes(00ffff)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.state}==6":
+								"applogStateShapes(ff8000)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.state}==7":
+								"applogStateShapes(ff00ff)"
 						}
 					}
 				}
@@ -56,10 +70,24 @@
 					"stateLogTask":{
 						"DisplayName":"ユーザ定義状態",
 						"From":"${TARGET}.applog_state",
-						"To":"${TARGET}.applog_state",
+						"To":"${FROM_TARGET}.applog_state",
 						"Figures":{
-							"${TARGET}.applog_state==0":"applogStateShapes(ff0000)",
-							"${TARGET}.applog_state==1":"applogStateShapes(00ff00)"
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.applog_state}==0":
+								"applogStateShapes(ff0000)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.applog_state}==1":
+								"applogStateShapes(00ff00)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.applog_state}==2":
+								"applogStateShapes(0000ff)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.applog_state}==3":
+								"applogStateShapes(000000)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.applog_state}==4":
+								"applogStateShapes(ffff00)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.applog_state}==5":
+								"applogStateShapes(00ffff)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.applog_state}==6":
+								"applogStateShapes(ff8000)",
+							"$ATTR{[${FROM_TIME}]${FROM_TARGET}.applog_state}==7":
+								"applogStateShapes(ff00ff)"
 						}
 					}
 				}

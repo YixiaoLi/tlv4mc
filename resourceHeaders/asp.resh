@@ -299,10 +299,17 @@
 				},
 				"applog_str":{
 					"VariableType"	:"String",
-					"DisplayName"	:"syslog",
+					"DisplayName"	:"文字列",
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:false,
 					"Default"	:""
+				},
+				"applog_state":{
+					"VariableType"	:"Number",
+					"DisplayName"	:"ユーザ定義状態",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false,
+					"Default"	:0
 				}
 			},
 			"Behaviors"	:{
