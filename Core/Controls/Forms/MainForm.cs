@@ -417,9 +417,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             if(ApplicationData.FileContext.Data != null)
             {
                 if (ApplicationData.FileContext.Path == string.Empty)
+                {
                     Text += "新規トレースログ";
+                    Text += "(" +
+                                Path.GetFileName(ApplicationData.FileContext.Data.TraceLogData.Path) +
+                                "と" +
+                                Path.GetFileName(ApplicationData.FileContext.Data.ResourceData.Path) +
+                             "を表示中)";
+                }
                 else
+                {
                     Text += Path.GetFileNameWithoutExtension(ApplicationData.FileContext.Path);
+                }
 
                 if (!ApplicationData.FileContext.IsSaved)
                     Text += " *";

@@ -58,6 +58,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public Time MaxTime { get; private set; }
 		public TraceLogList TraceLogs { get; private set; }
 		public LogDataBase LogDataBase { get; private set; }
+        public string Path { get; set; }
 
 		public TraceLogData(TraceLogList traceLogs, ResourceData resourceData)
 			:base()
