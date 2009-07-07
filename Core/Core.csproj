@@ -61,6 +61,7 @@
     <Compile Include="Base\INamedCollection.cs" />
     <Compile Include="Base\TimeLine.cs" />
     <Compile Include="Commands\AboutCommand.cs" />
+    <Compile Include="Commands\ReloadCommand.cs" />
     <Compile Include="Controls\Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>

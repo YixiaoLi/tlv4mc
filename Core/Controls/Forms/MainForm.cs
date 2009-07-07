@@ -78,10 +78,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region ApplicationDatasイベント設定
             ApplicationData.FileContext.PathChanged += (o, e) =>
 			{
-				invoke((MethodInvoker)(() => 
+                invoke((MethodInvoker)(() =>
                 {
                     textReflesh();
-                }));
+                    reloadToolStripButton.Enabled = ApplicationData.FileContext.Path == string.Empty;
+                }
+                ));
             };
             ApplicationData.FileContext.IsSavedChanged += (o, e) =>
             {
@@ -110,6 +112,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						saveSToolStripMenuItem.Enabled = false;
 						saveToolStripButton.Enabled = false;
 					}
+                    reloadToolStripButton.Enabled = ApplicationData.FileContext.Path == string.Empty;
                     textReflesh();
                 }));
             };
@@ -254,6 +257,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             saveToolStripButton.Click += (o, e) =>
             {
                 _commandManager.Do(new SaveCommand());
+            };
+            reloadToolStripButton.Click += (o, e) =>
+            {
+                _commandManager.Do(new ReloadCommand());
             };
 
             #endregion
