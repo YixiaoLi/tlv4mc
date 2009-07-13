@@ -162,23 +162,27 @@ task_logs.map do|log|
   end
 end
 
-# ------------------------------------------------------------
-# print
-# ------------------------------------------------------------
-max_load = loads.flatten.map{|x| x.load }.max
-
-shapes = []
-loads.each_with_index do|load,i|
-  load.zip(load.tail.map{|x| x.time})[0..-2].map {|a,b|
-    shapes << <<END
+def print_shapes(loads)
+  max_load = loads.flatten.map{|x| x.load }.max
+  first = true
+  
+  puts "["
+  loads.each_with_index do|load,i|
+    load.zip(load.tail.map{|x| x.time})[0..-2].map {|a,b|
+    if first then
+      first = false
+    else
+      puts ","
+    end
+    puts <<END
     {
       "From": "#{a.time}(10)",
       "To": "#{b}(10)",
       "Shape": {
         "Alpha": 100,
         "Area": [
-          "0,0",
-          "100%,#{a.load.to_f / max_load * 100}%"
+        "0,0",
+        "100%,#{a.load.to_f / max_load * 100}%"
         ],
         "Fill": "fffcbc0c",
         "Location": "0,0",
@@ -189,10 +193,10 @@ loads.each_with_index do|load,i|
           "Width": 1
         },
         "Points": [
-          "0,0",
-          "100%,0",
-          "100%,100%",
-          "0,100%"
+        "0,0",
+        "100%,0",
+        "100%,100%",
+        "0,100%"
         ],
         "Size": "100%,100%",
         "Type": "Rectangle"
@@ -200,7 +204,16 @@ loads.each_with_index do|load,i|
       "EventName": "CPU#{i+1}",
     }
 END
-}
+    }
+  end
+  puts "]"
 end
 
-puts "[#{shapes.flatten.join(",")}]"
+# ------------------------------------------------------------
+# print
+# ------------------------------------------------------------
+
+@cpus = loads 
+if __FILE__ == $0 then
+  print_shapes(loads)
+end

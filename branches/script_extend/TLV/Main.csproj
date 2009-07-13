@@ -129,6 +129,9 @@
 xcopy $(SolutionDir)convertRules $(TargetDir)convertRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
 if not exist $(TargetDir)resourceHeaders mkdir $(TargetDir)resourceHeaders
 xcopy $(SolutionDir)resourceHeaders $(TargetDir)resourceHeaders /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+if not exist $(TargetDir)visualizeScript mkdir $(TargetDir)visualizeScript
+xcopy $(SolutionDir)visualizeScript $(TargetDir)visualizeScript /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+
 if not exist $(TargetDir)visualizeRules mkdir $(TargetDir)visualizeRules
 xcopy $(SolutionDir)visualizeRules $(TargetDir)visualizeRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
 if not exist $(TargetDir)sampleFiles mkdir $(TargetDir)sampleFiles
