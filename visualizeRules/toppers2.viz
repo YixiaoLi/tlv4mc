@@ -5,7 +5,13 @@
 				"DisplayName":"CPU使用率",
                                 "Style": "Script",
                                 "FileName": "c:/cygwin/bin/ruby",
-                                "Arguments": "c:/cygwin/home/mzp/tmp/ruby/fmp.rb",
+                                "Arguments": "visualizeScript/fmp.rb"
+			},
+			"AVG":{
+				"DisplayName":"ロードアベレージ",
+                                "Style": "Script",
+                                "FileName": "c:/cygwin/bin/ruby",
+                                "Arguments": "visualizeScript/fmp_load_avg.rb"
 			}      
 
 		}

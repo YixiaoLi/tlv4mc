@@ -5,7 +5,7 @@
 				"DisplayName":"CPU使用率",
                                 "Style": "Script",
                                 "FileName": "c:/cygwin/bin/ruby",
-                                "Arguments": "c:/cygwin/home/mzp/tmp/ruby/cpu_load.rb",
+                                "Arguments": "vizualizeScript/fmp.rb"
 			}      
 
 		}

@@ -218,13 +218,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
             Process p = new Process();
             p.StartInfo = psi;
             string json= "";
-        /*    p.OutputDataReceived += (object sendingProcess, DataReceivedEventArgs outLine) =>
-            {
-                json += outLine.Data;
-            };*/
-
+   
             p.Start();
-            //p.BeginOutputReadLine();
             p.StandardInput.WriteLine(this.ResourceData.ToJson());
             p.StandardInput.WriteLine("---");
             foreach (TraceLog log in TraceLogData.TraceLogs)
@@ -240,14 +235,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 json += p.StandardOutput.ReadLine();
             }
 
-//            p.WaitForExit();
             if (p.ExitCode != 0)
             {
                 string error = "";
                 while (!p.StandardError.EndOfStream)
                 {
                     error += p.StandardError.ReadLine() + "\n";
-                }
+                } 
                 throw new Exception(error);
             }
             p.Close();
