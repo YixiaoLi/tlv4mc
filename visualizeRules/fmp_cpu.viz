@@ -1,11 +1,17 @@
 ﻿{
-	"toppers2":{
+	"fmp":{
 		"VisualizeRules":{
-			"Hoge":{
+			"CPU":{
 				"DisplayName":"CPU使用率",
                                 "Style": "Script",
                                 "FileName": "c:/cygwin/bin/ruby",
-                                "Arguments": "vizualizeScript/fmp.rb"
+                                "Arguments": "visualizeScript/fmp.rb"
+			},
+			"AVG":{
+				"DisplayName":"ロードアベレージ",
+                                "Style": "Script",
+                                "FileName": "c:/cygwin/bin/ruby",
+                                "Arguments": "visualizeScript/fmp_load_avg.rb"
 			}      
 
 		}
