@@ -71,7 +71,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			_log = Regex.Replace(log, @"\s","");
 
-			m = Regex.Match(_log, @"\[(?<time>[0-9a-zA-Z]+)\]");
+			m = Regex.Match(_log, @"\[(?<time>[0-9a-zA-Z]+(\.[0-9a-zA-Z]*)?)\]");
 			if (m.Success)
 				Time = m.Groups["time"].Value;
 			HasTime = m.Success;
