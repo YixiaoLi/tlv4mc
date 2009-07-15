@@ -186,7 +186,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else 
             {
-                return string.Format("{0:#,#}", Value);
+                return Value.ToString(Radix);
+//        return string.Format("{0:#,#}", Value);
             }
 		}
 
