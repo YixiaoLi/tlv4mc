@@ -426,11 +426,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 if (ApplicationData.FileContext.Path == string.Empty)
                 {
                     Text += "新規トレースログ";
-                    Text += "(" +
-                                Path.GetFileName(ApplicationData.FileContext.Data.TraceLogData.Path) +
-                                "と" +
-                                Path.GetFileName(ApplicationData.FileContext.Data.ResourceData.Path) +
-                             "を表示中)";
+
+                    if (ApplicationData.FileContext.Data.TraceLogData != null)
+                    {
+                        Text += "(" +
+                                    Path.GetFileName(ApplicationData.FileContext.Data.TraceLogData.Path) +
+                                    "と" +
+                                    Path.GetFileName(ApplicationData.FileContext.Data.ResourceData.Path) +
+                                 "を表示中)";
+                    }
                 }
                 else
                 {
@@ -443,6 +447,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 Text += " - ";
             }
             Text += ApplicationData.Name + " " + ApplicationData.Version;
+        }
+
+        private void reloadToolStripButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -118,8 +118,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				if (!to.IsEmpty)
 					ToTime = to;
 			}
-
-			ViewingAreaChanged(this, new GeneralChangedEventArgs<TimeLine>(old, this));
+            if (ViewingAreaChanged != null)
+            {
+                ViewingAreaChanged(this, new GeneralChangedEventArgs<TimeLine>(old, this));
+            }
 		}
 
 		public virtual void MoveBySettingToTime(Time time)

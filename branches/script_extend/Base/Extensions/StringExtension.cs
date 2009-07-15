@@ -85,6 +85,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 		public static decimal ToDecimal(this string value, int radix)
 		{
+            if (radix == 10)
+            {
+                value = value.Replace(",", "");
+            }
 			string k = value + "," + radix.ToString();
 
 			if (_toDecimalCache.ContainsKey(k))

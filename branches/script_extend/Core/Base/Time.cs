@@ -180,7 +180,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		public override string ToString()
 		{
-			return Value.ToString(Radix);
+            if (Radix != 10)
+            {
+                return Value.ToString(Radix);
+            }
+            else 
+            {
+                return string.Format("{0:#,#}", Value);
+            }
 		}
 
 		public float ToX(Time from, Time to, int width)

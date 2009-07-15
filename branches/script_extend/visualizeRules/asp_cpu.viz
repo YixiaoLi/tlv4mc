@@ -1,0 +1,13 @@
+﻿{
+	"asp":{
+		"VisualizeRules":{
+			"CPU":{
+				"DisplayName":"ロード",
+                                "Style": "Script",
+                                "FileName": "c:/cygwin/bin/ruby",
+                                "Arguments": "visualizeScript/asp.rb"
+			}
+
+		}
+	}
+}
