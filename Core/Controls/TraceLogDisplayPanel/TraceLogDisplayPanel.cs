@@ -835,7 +835,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         protected override void OnMouseDown(MouseEventArgs e)
         {
             this.Cursor = this.HandHoldCursor;
-            if (e.Button == MouseButtons.Left)
+            if (this._cursorMode == CursorModes.Normal && e.Button == MouseButtons.Left)
             {
                 this._mouseDown = true;
                 this._mouseDownX = e.X;
