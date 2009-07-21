@@ -1,11 +1,17 @@
 ﻿{
 	"asp":{
 		"VisualizeRules":{
-			"CPU":{
+			"load":{
 				"DisplayName":"ロード",
                                 "Style": "Script",
                                 "FileName": "c:/cygwin/bin/ruby",
                                 "Arguments": "visualizeScript/asp.rb"
+			},
+			"loadAverage":{
+				"DisplayName":"ロードアベレージ",
+                                "Style": "Script",
+                                "FileName": "c:/cygwin/bin/ruby",
+                                "Arguments": "visualizeScript/asp_load_avg.rb"
 			}
 
 		}
