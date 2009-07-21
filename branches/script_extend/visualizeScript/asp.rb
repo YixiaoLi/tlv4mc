@@ -113,12 +113,10 @@ task_logs.each do|log|
   states[log.name] = log.state
 end
 
-# ------------------------------------------------------------
-# print
-# ------------------------------------------------------------
-max_load = loads.map{|x| x.load }.max
+def print_shapes(loads)
+  max_load = loads.map{|x| x.load }.max
 
-shapes = loads.zip(loads.tail.map{|x| x.time})[0..-2].map {|a,b|
+  shapes = loads.zip(loads.tail.map{|x| x.time})[0..-2].map {|a,b|
   <<END
   {
     "From": "#{a.time}(10)",
@@ -146,9 +144,19 @@ shapes = loads.zip(loads.tail.map{|x| x.time})[0..-2].map {|a,b|
       "Size": "100%,100%",
       "Type": "Rectangle"
     },
-    "EventName": "CPU_LOAD_#{a.load}",
+    "EventName": "CPU_LOAD",
   }
 END
-}
+  }
+  puts "[#{shapes.join(",")}]"
+end
 
-puts "[#{shapes.join(",")}]"
+
+
+# ------------------------------------------------------------
+# print
+# ------------------------------------------------------------
+@loads = loads 
+if __FILE__ == $0 then
+  print_shapes(loads)
+end

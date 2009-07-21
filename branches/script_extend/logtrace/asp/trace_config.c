@@ -65,6 +65,7 @@ trace_get_tim_utime(void){
  *  トレースログバッファとそれにアクセスするためのポインタ
  */
 SYSLOG	trace_buffer[TCNT_TRACE_BUFFER];	/* トレースログバッファ */
+
 uint_t	trace_count;				/* トレースログバッファ中のログの数 */
 uint_t	trace_head;					/* 先頭のトレースログの格納位置 */
 uint_t	trace_tail;					/* 次のトレースログの格納位置 */
