@@ -5,7 +5,7 @@
 				"DisplayName":"ロード",
                                 "Style": "Script",
                                 "FileName": "c:/cygwin/bin/ruby",
-                                "Arguments": "visualizeScript/asp.rb"
+                                "Arguments": "visualizeScript/asp_load.rb"
 			},
 			"loadAverage":{
 				"DisplayName":"ロードアベレージ",
