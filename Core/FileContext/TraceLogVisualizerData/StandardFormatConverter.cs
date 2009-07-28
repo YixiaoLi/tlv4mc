@@ -217,6 +217,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             Process p = new Process();
             p.StartInfo = psi;
+            string AppPath = System.Windows.Forms.Application.StartupPath;
+            p.StartInfo.WorkingDirectory = AppPath;
+
             string json= "";
    
             p.Start();
