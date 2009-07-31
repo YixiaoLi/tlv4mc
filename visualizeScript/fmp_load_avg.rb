@@ -1,49 +1,38 @@
-require File.dirname(__FILE__)+'/fmp'
+$LOAD_PATH.push File.dirname(__FILE__)
+require 'cpu'
+require 'pp'
+require 'util'
 
-def get(loads,t)
-  loads.find{|load|
-    t < load.time.to_i
-  }
+def get(cpus,t)
+  cpus.map{|loads|
+    l = loads.find{|load|
+      t < load.time.to_i
+    }
+    l ? l.load : 0
+  }.reduce{|x,y| x+y }
 end
 
-def average(xs)
-  xs.reduce{|x,y|
-    x+y
-  }.to_f / xs.length
-end
+visualize_rule do|resource,logs|
+  PRECISION = 100_000
 
-def pack(xs)
-  if xs.size <= 1 then
-    xs
-  else
-    ys = pack xs[1..-1]
-    if ys.first.load == xs.first.load then
-      ys.first.time = xs.first.time
-      ys
-    else
-      [xs.first]+ys
-    end
+  cpus = FmpCPU.parse resource,logs
 
-  end
-end
-
-PRECISION = 10_000
-N = 3
-
-load_avgs = @cpus.map{|loads|
-  min = loads.first.time.to_i
-  max = loads.last.time.to_i
+  min = cpus.map{|loads| loads.first.time.to_i}.min
+  max = cpus.map{|loads| loads.last.time.to_i}.max
 
   avgs = []
-  min.step(max,PRECISION){|i|
-    xs = (0..N).map{|x|
-      l = get(loads,i+x*PRECISION)
-      if l then l.load else 0 end
-    }
-    avgs << CpuLoad.new(i,average(xs))
-  }
-  avgs
-}
-#load_avgs.map{|x| pp pack(x) }
-print_shapes load_avgs.map{|x| pack(x) }
+  prev = nil
+  min.step(max,PRECISION) do|i|
+    current = get(cpus,i)
+    if prev == nil then
+      avgs << AspCPU::Load.new(i,current)
+    else
+      avgs << AspCPU::Load.new(i,(current+prev)/2)
+    end
+    prev = current
+  end
 
+  puts AspCPU.to_shapes(avgs.uniq_by{|x,y|
+    x.load == y.load
+  })
+end
