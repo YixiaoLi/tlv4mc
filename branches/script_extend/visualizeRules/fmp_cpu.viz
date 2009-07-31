@@ -1,13 +1,13 @@
 ﻿{
 	"fmp":{
 		"VisualizeRules":{
-			"CPU":{
-				"DisplayName":"CPU使用率",
+			"load":{
+				"DisplayName":"ロード",
                                 "Style": "Script",
                                 "FileName": "c:/cygwin/bin/ruby",
-                                "Arguments": "visualizeScript/fmp.rb"
+                                "Arguments": "visualizeScript/fmp_load.rb"
 			},
-			"AVG":{
+			"loadAverage":{
 				"DisplayName":"ロードアベレージ",
                                 "Style": "Script",
                                 "FileName": "c:/cygwin/bin/ruby",

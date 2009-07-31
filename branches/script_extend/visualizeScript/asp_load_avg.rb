@@ -23,7 +23,7 @@ visualize_rule do|resource,logs|
     if prev == nil then
       avgs << AspCPU::Load.new(i,current)
     else
-      avgs << AspCPU::Load.new(i,(current+prev)/2)
+      avgs << AspCPU::Load.new(i,(current+prev).to_f/2)
     end
     prev = current
   end
@@ -32,4 +32,4 @@ visualize_rule do|resource,logs|
     x.load == y.load
   })
 end
-#print_shapes load_avgs.map{|x| pack(x) }
+
