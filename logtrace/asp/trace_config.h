@@ -91,6 +91,7 @@ extern TRACE	trace_buffer[];		/* トレースログバッファ */
 extern uint_t	trace_count;		/* トレースログバッファ中のログの数 */
 extern uint_t	trace_head;			/* 先頭のトレースログの格納位置 */
 extern uint_t	trace_tail;			/* 次のトレースログの格納位置 */
+extern uint_t	trace_lost;			/* 失われたトレースの数 */
 
 #endif /* TOPPERS_MACRO_ONLY */
 
@@ -232,8 +233,8 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 /*
  *  タスク例外処理ルーチン
  */
-#define LOG_TEX_ENTER(p_tcb, texptn) trace_2(LOG_TYPE_TEX|LOG_ENTER, p_tcb, texptn)
-#define LOG_TEX_LEAVE(p_tcb, texptn) trace_2(LOG_TYPE_TEX|LOG_LEAVE, p_tcb, texptn)
+#define LOG_TEX_ENTER(texptn) trace_1(LOG_TYPE_TEX|LOG_ENTER, texptn)
+#define LOG_TEX_LEAVE(texptn) trace_1(LOG_TYPE_TEX|LOG_LEAVE, texptn)
 
 /*
  *  タスクの状態変更
@@ -349,14 +350,14 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 /*
  *  セマフォ機能
  */
-//#define LOG_SIG_SEM_ENTER(semid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_SIG_SEM, semid)
-//#define LOG_SIG_SEM_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SIG_SEM, ercd)
+#define LOG_SIG_SEM_ENTER(semid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_SIG_SEM, semid)
+#define LOG_SIG_SEM_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SIG_SEM, ercd)
 
 #define LOG_ISIG_SEM_ENTER(semid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_ISIG_SEM, semid)
 #define LOG_ISIG_SEM_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_ISIG_SEM, ercd)
 
-//#define LOG_WAI_SEM_ENTER(semid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_WAI_SEM, semid)
-//#define LOG_WAI_SEM_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_WAI_SEM, ercd)
+#define LOG_WAI_SEM_ENTER(semid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_WAI_SEM, semid)
+#define LOG_WAI_SEM_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_WAI_SEM, ercd)
 
 #define LOG_POL_SEM_ENTER(semid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_POL_SEM, semid)
 #define LOG_POL_SEM_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_POL_SEM, ercd)
