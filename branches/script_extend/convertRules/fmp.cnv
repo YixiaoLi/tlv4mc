@@ -147,6 +147,14 @@
 		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: task (?<tskid>\d+) leave from tex (?<id>[^\.]+)\.?"	:[
 			"[${time}]$RES_NAME{TaskExceptionRoutine(prcIdX==${pid})}.leave()",
 			"[${time}]$RES_NAME{TaskExceptionRoutine(prcIdX==${pid})}.state=DORMANT",
-		]
-    	}
+		],
+		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: applog str : ID (?<rid>[^: ]+) : (?<str>[^\.]+)\.?"	:
+			"[${time}]$RES_NAME{ApplogString(id==${rid})}.str=${str}",
+		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: applog strtask : TASK (?<tid>[^: ]+) : (?<str>[^\.]+)\.?"	:
+			"[${time}]$RES_NAME{Task(id==${tid})}.applog_str=${str}",
+		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: applog state : ID (?<rid>[^: ]+) : (?<state>\d+)\.?"	:
+			"[${time}]$RES_NAME{ApplogState(id==${rid})}.state=${state}",
+		"\[(?<time>\d+)\]:\[(?<pid>\d+)\]: applog statetask : TASK (?<tid>[^: ]+) : (?<state>\d+)\.?"	:
+			"[${time}]$RES_NAME{Task(id==${tid})}.applog_state=${state}"
+    }
 }

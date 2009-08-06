@@ -296,6 +296,20 @@
 					"AllocationType":"Dynamic",
 					"CanGrouping"	:false,
 					"Default"	:"DORMANT"
+				},
+				"applog_str":{
+					"VariableType"	:"String",
+					"DisplayName"	:"文字列",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false,
+					"Default"	:""
+				},
+				"applog_state":{
+					"VariableType"	:"Number",
+					"DisplayName"	:"ユーザ定義状態",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false,
+					"Default"	:0
 				}
 			},
 			"Behaviors"	:{
@@ -356,6 +370,42 @@
 						"tskid":"Number"
 					}
                 		}
+			}
+		},
+		"ApplogString":{
+			"DisplayName":"アプリログ（文字列）",
+			"Attributes":{
+				"id":{
+					"VariableType"	:"String",
+					"DisplayName"	:"ID",
+					"AllocationType":"Static",
+					"CanGrouping"	:false
+				},
+				"str":{
+					"VariableType"	:"String",
+					"DisplayName"	:"文字列",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false,
+					"Default"	:""
+				}
+			}
+		},
+		"ApplogState":{
+			"DisplayName":"アプリログ（状態）",
+			"Attributes":{
+				"id":{
+					"VariableType"	:"String",
+					"DisplayName"	:"ID",
+					"AllocationType":"Static",
+					"CanGrouping"	:false
+				},
+				"state":{
+					"VariableType"	:"Number",
+					"DisplayName"	:"ユーザ定義状態",
+					"AllocationType":"Dynamic",
+					"CanGrouping"	:false,
+					"Default"		:0
+				}
 			}
 		}
 	}
