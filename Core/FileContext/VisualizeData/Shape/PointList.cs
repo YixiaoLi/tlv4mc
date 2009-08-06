@@ -45,7 +45,7 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-	public class PointList: Collection<Point>
+	public class PointList : GeneralJsonableCollection<Point,PointList>
 	{
 		public PointF[] ToPointF(Size offset, RectangleF rect)
 		{

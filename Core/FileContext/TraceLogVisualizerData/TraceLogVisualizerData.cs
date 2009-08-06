@@ -88,11 +88,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// 可視化データ
 		/// </summary>
 		public VisualizeData VisualizeData { get; set; }
-		/// <summary>
+        /// <summary>
 		/// 設定データ
-		/// </summary>
+        /// </summary>
 		public SettingData SettingData { get; set; }
 
+        /// <summary>
+       /// 図形データ
+        /// </summary>
+        public VisualizeShapeData VisualizeShapeData { get; set; }
+ 
 		/// <summary>
 		/// <c>CommonFormatTraceLog</c>のインスタンスを生成する
 		/// </summary>
@@ -105,26 +110,27 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         /// <param name="resourceData">共通形式のリソースデータ</param>
         /// <param name="traceLogData">共通形式のトレースログデータ</param>
-		public TraceLogVisualizerData(ResourceData resourceData, TraceLogData traceLogData, VisualizeData visualizeData, SettingData settingData)
+        public TraceLogVisualizerData(ResourceData resourceData, TraceLogData traceLogData, VisualizeData visualizeData, SettingData settingData, VisualizeShapeData shapesData)
         {
-			ResourceData = resourceData;
-			TraceLogData = traceLogData;
-			VisualizeData = visualizeData;
-			SettingData = settingData;
+            ResourceData = resourceData;
+            TraceLogData = traceLogData;
+            VisualizeData = visualizeData;
+            SettingData = settingData;
+            VisualizeShapeData = shapesData;
 
-			setVisualizeRuleToEvent();
+            setVisualizeRuleToEvent();
         }
 
-		private void setVisualizeRuleToEvent()
-		{
-			foreach (VisualizeRule rule in VisualizeData.VisualizeRules)
-			{
-				foreach (Event evnt in rule.Shapes)
-				{
-					evnt.SetVisualizeRuleName(rule.Name);
-				}
-			}
-		}
+        private void setVisualizeRuleToEvent()
+        {
+            foreach (VisualizeRule rule in VisualizeData.VisualizeRules)
+            {
+                foreach (Event evnt in rule.Shapes)
+                {
+                    evnt.SetVisualizeRuleName(rule.Name);
+                }
+            }
+        }		
 
         /// <summary>
         /// パスを指定してシリアライズ
@@ -147,7 +153,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension, TraceLogData.TraceLogs.ToJson());
 			File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.VisualizeRuleFileExtension, VisualizeData.ToJson());
 			File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.SettingFileExtension, SettingData.ToJson());
-
+           File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.VisualizeShapesFileExtension, VisualizeShapeData.ToJson());
 			zip.Compress(path, targetTmpDirPath);
 
 			Directory.Delete(targetTmpDirPath, true);
@@ -173,17 +179,20 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			string resFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.ResourceFileExtension)[0];
 			string logFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.TraceLogFileExtension)[0];
 			string vixFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.VisualizeRuleFileExtension)[0];
-			string settingFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.SettingFileExtension)[0];
+           string settingFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.SettingFileExtension)[0];
+           string visualizeShapesPath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.VisualizeShapesFileExtension)[0];
 
 			ResourceData res = ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(resFilePath));
 			TraceLogList log = ApplicationFactory.JsonSerializer.Deserialize<TraceLogList>(File.ReadAllText(logFilePath));
 			VisualizeData viz = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(File.ReadAllText(vixFilePath));
 			SettingData setting = ApplicationFactory.JsonSerializer.Deserialize<SettingData>(File.ReadAllText(settingFilePath));
+            VisualizeShapeData shapes = ApplicationFactory.JsonSerializer.Deserialize<VisualizeShapeData>(File.ReadAllText(visualizeShapesPath));
 			
 			ResourceData = res;
 			TraceLogData = new TraceLogData(log, res);
 			VisualizeData = viz;
 			SettingData = setting;
+            VisualizeShapeData = shapes; 
 			
 			setVisualizeRuleToEvent();
 

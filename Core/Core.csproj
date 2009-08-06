@@ -61,6 +61,7 @@
     <Compile Include="Base\INamedCollection.cs" />
     <Compile Include="Base\TimeLine.cs" />
     <Compile Include="Commands\AboutCommand.cs" />
+    <Compile Include="Commands\ReloadCommand.cs" />
     <Compile Include="Controls\Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +120,7 @@
     <Compile Include="FileContext\SettingData\TimeLineMacroViewerSetting.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogGenerator.cs" />
+    <Compile Include="FileContext\VisualizeShapeData\EventShapesGenerator.cs" />
     <Compile Include="FileContext\VisualizeData\Event.cs" />
     <Compile Include="FileContext\VisualizeData\EventType.cs" />
     <Compile Include="FileContext\VisualizeData\Figure.cs" />
@@ -146,8 +148,10 @@
     <Compile Include="FileContext\TraceLogData\TraceLogList.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\ShapeType.cs" />
     <Compile Include="FileContext\VisualizeData\Shape\VisualizeAreaUnit.cs" />
+    <Compile Include="FileContext\VisualizeShapeData\VisualizeShapeData.cs" />
     <Compile Include="JsonConverters\ArcConverter.cs" />
     <Compile Include="JsonConverters\ArgumentTypeConverter.cs" />
+    <Compile Include="JsonConverters\EventShapesConverter.cs" />
     <Compile Include="JsonConverters\FontFamilyConverter.cs" />
     <Compile Include="JsonConverters\GeneralConverter.cs" />
     <Compile Include="JsonConverters\GeneralNamedCollectionConverter.cs" />
@@ -211,6 +215,7 @@
     <Compile Include="JsonConverters\TimeLineConverter.cs" />
     <Compile Include="JsonConverters\TraceLogConverter.cs" />
     <Compile Include="JsonConverters\ObservableNamedCollectionConverter.cs" />
+    <Compile Include="JsonConverters\EventShapeConverter.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

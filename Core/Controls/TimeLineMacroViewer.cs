@@ -57,8 +57,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		private float _fx;
 		private float _tx;
 		private int _lastX;
-		private Cursor HandHoldCursor { get { return new Cursor(Properties.Resources.handHold.Handle) { Tag = "handHold" }; } }
-		private Cursor HandCursor { get { return new Cursor(Properties.Resources.hand.Handle) { Tag = "hand" }; } }
+        private Cursor HandHoldCursor { get { return new Cursor(Properties.Resources.handHold.Handle) { Tag = "handHold" }; } }
+        private Cursor HandCursor { get { return new Cursor(Properties.Resources.hand.Handle) { Tag = "hand" }; } }
 		private TimeLine ViewingAreaTimeLine;
 		private Bitmap _macroVizData;
 
@@ -75,8 +75,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			_scale.Location = new System.Drawing.Point(1,0);
 			_scale.Width = Width - 2;
 			_scale.Anchor = AnchorStyles.Left | AnchorStyles.Right| AnchorStyles.Top;
-
+            this.TimeLineX = 1;
 			ResumeLayout();
+
+//            TimeLine.ViewingAreaChanged += (o,e) => {               };
 		}
 
 		protected override void OnLoad(EventArgs e)
@@ -268,7 +270,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					g.FillRectangle(Brushes.White, new Rectangle(x, y, w, _rowHeight));
 
 					g.DrawRectangle(new System.Drawing.Pen(Color.FromKnownColor(KnownColor.DarkGray)), new Rectangle(x, y, w, _rowHeight));
-
+                   
 					tl.Draw(g, new Rectangle(x + 1, y + 1, w - 1, _rowHeight - 1));
 
 					i++;
@@ -293,12 +295,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			if (_data == null)
 				return;
 
-			if (e.Button == MouseButtons.Left)
-			{
-				if(_cursorMode == CursorModes.Move)
-					Cursor = HandHoldCursor;
+            if (e.Button == MouseButtons.Left)
+            {
+                if (_cursorMode == CursorModes.Move)
+                    Cursor = HandHoldCursor;
 
-				_lastX = (int)_fx;
+                _lastX = (int)_fx;
 			}
 
 			base.OnMouseDown(e);
@@ -353,8 +355,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				}
 				else if (_cursorMode == CursorModes.Move)
 				{
-					int _x = _lastX + x - _mouseDownX - 5;
-					ViewingAreaTimeLine.MoveBySettingFromTime(ViewingAreaTimeLine.MinTime + Time.FromX(ViewingAreaTimeLine.MinTime, ViewingAreaTimeLine.MaxTime, _scale.Width, _x).Round(0));
+                    int _x = _lastX + x - _mouseDownX - 5;
+                    ViewingAreaTimeLine.MoveBySettingFromTime(ViewingAreaTimeLine.MinTime + Time.FromX(ViewingAreaTimeLine.MinTime, ViewingAreaTimeLine.MaxTime, _scale.Width, _x).Round(0));
 				}
 				else if (_cursorMode == CursorModes.Normal)
 				{
@@ -414,42 +416,67 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 			base.OnMouseWheel(e);
+            bool isCtrl = (Control.ModifierKeys & Keys.Control) == Keys.Control;
+            bool isShift = (Control.ModifierKeys & Keys.Shift) == Keys.Shift;
+            if (isCtrl && isShift)
+            {
+                Time span = TimeLine.ViewingSpan / 2;
+                Time time = TimeLine.FromTime + span;
 
-			if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
-			{
-				Time span = TimeLine.ViewingSpan / 100;
+                decimal ratio = (e.Delta < 0)
+                    ? 1.5m
+                    : (e.Delta > 0)
+                    ? 0.75m
+                    : 1m;
+                
+                Time from = (time - span * ratio).Round(0);
+                Time to = (time + span * ratio).Round(0);
 
-				span = (e.Delta > 0)
-					? span * -1m
-					: span;
+                TimeLine.SetTime(from, to);
+                foreach (TimeLineVisualizer tlv in _list)
+                {
+                    tlv.TimeLine.SetTime(from, to);
+                }
+                _scale.TimeLine.SetTime(from, to);
+                updateViewingArea();
 
-				_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.SetTime
-					(
-					(_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.FromTime + span).Round(0),
-					(_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.ToTime + span).Round(0)
-					);
+                Refresh();
 
-				if (e.GetType() == typeof(ExMouseEventArgs))
-					((ExMouseEventArgs)e).Handled = true;
-			}
-			if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
-			{
-				Time span = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.ViewingSpan / 2;
+                if (e.GetType() == typeof(ExMouseEventArgs))
+                    ((ExMouseEventArgs)e).Handled = true;
+            }else if (isCtrl){
+                Time span = TimeLine.ViewingSpan / 100;
 
-				Time time = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.FromTime + span;
+                span = (e.Delta > 0)
+                    ? span * -1m
+                    : span;
+
+                _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.SetTime
+                    (
+                    (_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.FromTime + span).Round(0),
+                    (_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.ToTime + span).Round(0)
+                    );
+
+                if (e.GetType() == typeof(ExMouseEventArgs))
+                    ((ExMouseEventArgs)e).Handled = true;
+            }
+            else if (isShift)
+            {
+                Time span = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.ViewingSpan / 2;
+                Time time = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.FromTime + span;
 
 
-				decimal ratio = (e.Delta < 0)
-					? 1.5m
-					: (e.Delta > 0)
-					? 0.75m
-					: 1m;
+                decimal ratio = (e.Delta < 0)
+                    ? 1.5m
+                    : (e.Delta > 0)
+                    ? 0.75m
+                    : 1m;
 
-				_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.SetTime((time - span * ratio).Round(0), (time + span * ratio).Round(0));
+                _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.SetTime((time - span * ratio).Round(0), (time + span * ratio).Round(0));
 
-				if (e.GetType() == typeof(ExMouseEventArgs))
-					((ExMouseEventArgs)e).Handled = true;
-			}
+                if (e.GetType() == typeof(ExMouseEventArgs))
+                    ((ExMouseEventArgs)e).Handled = true;
+            }
 		}
 
 		protected override void OnMouseLeave(EventArgs e)

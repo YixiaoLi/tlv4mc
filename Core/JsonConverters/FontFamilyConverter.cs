@@ -53,7 +53,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		protected override void WriteJson(IJsonWriter writer, FontFamily obj)
 		{
-			writer.WriteValue(obj.ToString());
+			writer.WriteValue(obj.Name.ToString());
 		}
 	}
 }

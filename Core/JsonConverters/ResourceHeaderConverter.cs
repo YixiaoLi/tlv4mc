@@ -52,17 +52,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					foreach (ResourceType rt in resh)
 					{
 						w.WriteProperty(rt.Name);
-						w.WriteValue(rt, ApplicationFactory.JsonSerializer);
+                        w.WriteValue(rt, ApplicationFactory.JsonSerializer);
 					}
 				});
 		}
 
 		public override object ReadJson(IJsonReader reader)
 		{
-			if (reader.TokenType == JsonTokenType.StartObject)
+            if (reader.TokenType == JsonTokenType.StartObject)
 			{
 				GeneralNamedCollection<ResourceType> resTypes = new GeneralNamedCollection<ResourceType>();
-				while(reader.TokenType != JsonTokenType.EndObject)
+                while (reader.TokenType != JsonTokenType.EndObject)
 				{
 					if (reader.TokenType == JsonTokenType.PropertyName)
 					{
@@ -71,7 +71,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 						resType.Name = name;
 						resTypes.Add(resType);
 					}
-					reader.Read();
+                    reader.Read();
 				}
 
 				ResourceHeader resh = new ResourceHeader(resTypes);

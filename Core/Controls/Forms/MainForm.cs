@@ -78,10 +78,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region ApplicationDatasイベント設定
             ApplicationData.FileContext.PathChanged += (o, e) =>
 			{
-				invoke((MethodInvoker)(() => 
+                invoke((MethodInvoker)(() =>
                 {
                     textReflesh();
-                }));
+                    reloadToolStripButton.Enabled = ApplicationData.FileContext.Path == string.Empty;
+                }
+                ));
             };
             ApplicationData.FileContext.IsSavedChanged += (o, e) =>
             {
@@ -110,6 +112,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						saveSToolStripMenuItem.Enabled = false;
 						saveToolStripButton.Enabled = false;
 					}
+                    reloadToolStripButton.Enabled = ApplicationData.FileContext.Path == string.Empty;
                     textReflesh();
                 }));
             };
@@ -254,6 +257,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             saveToolStripButton.Click += (o, e) =>
             {
                 _commandManager.Do(new SaveCommand());
+            };
+            reloadToolStripButton.Click += (o, e) =>
+            {
+                _commandManager.Do(new ReloadCommand());
             };
 
             #endregion
@@ -417,9 +424,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             if(ApplicationData.FileContext.Data != null)
             {
                 if (ApplicationData.FileContext.Path == string.Empty)
+                {
                     Text += "新規トレースログ";
+
+                    if (ApplicationData.FileContext.Data.TraceLogData != null)
+                    {
+                        Text += "(" +
+                                    Path.GetFileName(ApplicationData.FileContext.Data.TraceLogData.Path) +
+                                    "と" +
+                                    Path.GetFileName(ApplicationData.FileContext.Data.ResourceData.Path) +
+                                 "を表示中)";
+                    }
+                }
                 else
+                {
                     Text += Path.GetFileNameWithoutExtension(ApplicationData.FileContext.Path);
+                }
 
                 if (!ApplicationData.FileContext.IsSaved)
                     Text += " *";
@@ -427,6 +447,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 Text += " - ";
             }
             Text += ApplicationData.Name + " " + ApplicationData.Version;
+        }
+
+        private void reloadToolStripButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

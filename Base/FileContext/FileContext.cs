@@ -106,6 +106,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
                     DataChanged(this, new GeneralEventArgs<T>(_data));
             }
         }
+
+        public bool IsFileSaved()
+        {
+            return this.Path == String.Empty;
+        }
+
         /// <summary>
         /// ファイルが最新の状態かどうか
         /// </summary>
