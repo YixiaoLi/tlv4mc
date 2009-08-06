@@ -46,7 +46,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public class ResourceData : IJsonable<ResourceData>
 	{
 		public string TimeScale { get; private set; }
-		public int TimeRadix { get; private set; }
+        public int TimeRadix { get; private set; }
+        public string Path { get; set; }
 		public List<string> ConvertRules { get; private set; }
 		public List<string> VisualizeRules { get; private set; }
 		public ResourceHeader ResourceHeaders { get; private set; }

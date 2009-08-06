@@ -207,7 +207,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 				if (i % (iw/2) == 0)
 				{
-					string tmStr = (_dflag ? t.Round(_carry) : t.Truncate()).ToString();
+
+                    string tmStr = this.tmString(t);
 
 					SizeF tmStrSz = g.MeasureString(tmStr, Font);
 
@@ -257,13 +258,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				drawCursorLabel(g, marker.Color, marker.Time, marker.Selected);
 			}
 		}
+        private string tmString(Time t) {
+            Time tm = (_dflag ? t.Round(_carry) : t.Truncate());
+            if (tm.Radix == 10)
+            {
+                return string.Format("{0:#,#}", tm.Value);
+            }
+            else
+            {
+                return tm.ToString();
+            }
 
+        }
 		private void drawCursorLabel(Graphics graphics, Color color, Time time, bool selected)
 		{
 			if (time.IsEmpty || TimeLine == null)
 				return;
 
-			string tmStr = (_dflag ? time.Round(_carry) : time.Truncate()).ToString();
+            string tmStr = this.tmString(time);
 			SizeF tmStrSz = graphics.MeasureString(tmStr, Font);
 
 			float x = time.ToX(TimeLine.FromTime, TimeLine.ToTime, Width);

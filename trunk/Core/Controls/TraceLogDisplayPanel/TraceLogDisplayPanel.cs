@@ -58,6 +58,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		private int _timeLineX = 0;
 		private int _timeLineWidth = 0;
 		private string _timeScale = string.Empty;
+        private Cursor HandHoldCursor { get { return new Cursor(Properties.Resources.handHold.Handle) { Tag = "handHold" }; } }
+        private Cursor HandCursor { get { return new Cursor(Properties.Resources.hand.Handle) { Tag = "hand" }; } }
+        private int _mouseDownX;
+        private bool _mouseDown;
+
 		public override int TimeLineX
 		{
 			get { return _timeLineX; }
@@ -187,7 +192,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			_timeLineMarkerManager.SelectedMarkerChanged += (o, _e) => { timeLineRedraw(); };
 
 			timeLineRedraw();
-
+            Cursor = this.HandCursor;
 		}
 
 		private void setNodes()
@@ -217,7 +222,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			// ノード名「リソース.Name」-「ルール.Name」-「イベント.Name」
 			foreach (VisualizeRule vizRule in _data.VisualizeData.VisualizeRules.Where<VisualizeRule>(v => v.IsBelongedTargetResourceType()))
 			{
-				foreach (Resource res in _data.ResourceData.Resources.Where<Resource>(r => r.Type == vizRule.Target))
+                foreach (Resource res in _data.ResourceData.Resources.Where<Resource>(r => r.Type == vizRule.Target))
 				{
 					if (!treeGridView.Nodes.ContainsKey(res.Name))
 					{
@@ -236,7 +241,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 					foreach (Event e in vizRule.Shapes)
 					{
-						TimeLineVisualizer _tlv = new TimeLineVisualizer(new TimeLineEvents(e, res));
+						TimeLineVisualizer _tlv = new TimeLineVisualizer(new TimeLineEvents(vizRule,e, res));
 						_list.Add(_tlv);
 						treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Add(e.Name, e.DisplayName, _tlv);
 						treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Nodes[e.Name].Visible = treeGridView.Nodes[res.Name].Nodes[vizRule.Name].Visible && _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.ContainsKey(vizRule.Name, e.Name) ? _data.SettingData.VisualizeRuleExplorerSetting.VisualizeRuleVisibility.GetValue(vizRule.Name, e.Name) : ApplicationData.Setting.DefaultVisualizeRuleVisible;
@@ -827,7 +832,35 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		}
 
-		public override void DrawCursor(Graphics graphics, Color color, Time time)
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            this.Cursor = this.HandHoldCursor;
+            if (this._cursorMode == CursorModes.Normal && e.Button == MouseButtons.Left)
+            {
+                this._mouseDown = true;
+                this._mouseDownX = e.X;
+            }
+            base.OnMouseDown(e);
+        }
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            this._mouseDown = false;
+            this.Cursor = this.HandCursor;
+            base.OnMouseUp(e);
+        }
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (this._mouseDown)
+            {
+                int x = this._mouseDownX - e.X;
+                TimeLine timeline = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine;
+                Time t = Time.FromX(timeline.FromTime, timeline.ToTime, this.TimeLineWidth, x);
+                timeline.MoveBySettingFromTime(t);
+            }
+            base.OnMouseMove(e);
+        }
+
+        public override void DrawCursor(Graphics graphics, Color color, Time time)
 		{
 			drawCursor(graphics, new Rectangle(Location.X + _timeLineX, Location.Y, _timeLineWidth, Height), color, time);
 		}

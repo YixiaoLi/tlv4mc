@@ -61,6 +61,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public string Target { get; set; }
 		public GeneralNamedCollection<Event> Shapes { get; set; }
 
+        public string Style { get; set; }
+        public string FileName { get; set; }
+        public string Arguments { get; set; }
+        public string Script { get; set; }
+
 		public bool IsBelongedTargetResourceType()
 		{
 			return Target != null;

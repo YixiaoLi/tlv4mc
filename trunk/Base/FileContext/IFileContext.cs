@@ -50,6 +50,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         bool IsSaved { get; }
         event EventHandler<NU.OJL.MPRTOS.TLV.Base.GeneralEventArgs<bool>> IsSavedChanged;
         void Open(string path);
+
         string Path { get; set; }
 		event EventHandler<NU.OJL.MPRTOS.TLV.Base.GeneralEventArgs<string>> PathChanged;
 		event EventHandler Saved;

@@ -48,7 +48,7 @@ using System.Collections.Generic;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Commands
 {
-    public class NewCommand : AbstractFileChangeCommand
+    public class ReloadCommand : AbstractFileChangeCommand
 	{
 		private OpenResourceFileAndTraceLogFileOpenForm _fileOpenDialog = new OpenResourceFileAndTraceLogFileOpenForm() { StartPosition = FormStartPosition.CenterParent};
 		private BackGroundWorkForm _convertBw = new BackGroundWorkForm() { Text = "共通形式トレースログへ変換中", StartPosition = FormStartPosition.CenterParent };
@@ -57,12 +57,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 		private string _resFilePath;
 		private string _logFilePath;
 
-		public NewCommand(string resFilePath, string logFilePath)
+		public ReloadCommand()
 		{
-			_resFilePath = resFilePath;
-			_logFilePath = logFilePath;
+            _resFilePath = ApplicationData.FileContext.Data.ResourceData.Path;
+            _logFilePath = ApplicationData.FileContext.Data.TraceLogData.Path;
 
-			Text = "リソースファイルとトレースログファイルを開く";
+			Text = "リソースファイルとトレースログファイルをリロード";
 
 			_setDataBw.DoWork += (_o, _e) =>
 			{
@@ -119,37 +119,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 			};
 		}
 
-        public NewCommand()
-			:this(null, null)
-        {
-
-
-        }
-
         protected override void action()
         {
-			if (_resFilePath == null || _logFilePath == null)
-			{
-				if (_resFilePath != null)
-				{
-					_fileOpenDialog.ResourceFilePath = _resFilePath;
-				}
-				if (_logFilePath != null)
-				{
-					_fileOpenDialog.TraceLogFilePath = _logFilePath;
-				}
-				if (_fileOpenDialog.ShowDialog() == DialogResult.OK)
-				{
-					_resFilePath = _fileOpenDialog.ResourceFilePath;
-					_logFilePath = _fileOpenDialog.TraceLogFilePath;
-
-					_convertBw.RunWorkerAsync();
-				}
-			}
-			else
-			{
-				_convertBw.RunWorkerAsync();
-			}
+            _convertBw.RunWorkerAsync();
         }
     }
 }
