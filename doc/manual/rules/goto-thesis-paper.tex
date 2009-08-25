@@ -1,0 +1,132 @@
+\documentclass[a4paper,12pt]{jreport}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{mymacros}
+\usepackage{here}
+\usepackage{morefloats}
+\textheight 9.0in
+\textwidth 6.0in
+\topmargin 0in
+\oddsidemargin .2in
+\evensidemargin .2in
+\title{
+{\LARGE\sffamily\gtfamily
+修\ \ 士\ \ 論\ \ 文\\
+}
+\vspace*{.6in}
+{\huge\sffamily\gtfamily
+OJLによるトレースログ可視化ツールの開発\\
+}
+\vfill\vfill\vfill
+}
+\author{
+\LARGE\sffamily\gtfamily
+350702101\ \ \ \ 後藤 隼弐\\
+}
+\date{
+\vfill
+\Large\sffamily\gtfamily
+名古屋大学 大学院情報科学研究科\\[.2in]
+情報システム学専攻\\[.2in]
+2009年1月
+\vfill
+}
+\renewcommand{\bibname}{参考文献}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+\pagestyle{empty}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 和文要旨
+%-------------------------------------------------------------------------
+\vspace*{-1in}
+\begin{center}
+\Large\sffamily\gtfamily OJLによるトレースログ可視化ツールの開発
+\end{center}
+\begin{flushright}
+\large\sffamily\gtfamily
+350702101\ \ \ \ 後藤 隼弐
+\end{flushright}
+\begin{center}
+\large\sffamily\gtfamily 要旨
+\end{center}
+{
+\setlength{\baselineskip}{0.9\normalbaselineskip}
+
+\input{src/abstract_jp.tex}
+}
+\newpage
+\mbox{}\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 英文要旨
+%-------------------------------------------------------------------------
+\vspace*{-1in}
+\begin{center}
+\Large\sffamily
+Development of Visualization Tool for Trace Log by OJL
+\end{center}
+\begin{flushright}
+\large\sffamily\gtfamily
+350702101\ \ \ \ Junji Goto
+\end{flushright}
+\begin{center}
+\large\sffamily Abstract
+\end{center}
+{
+\setlength{\baselineskip}{0.9\normalbaselineskip}
+
+\input{src/abstract_en.tex}
+}
+\newpage
+\mbox{}\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 中表紙
+%-------------------------------------------------------------------------
+\maketitle
+\clearpage
+\mbox{}\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 目次
+%-------------------------------------------------------------------------
+\pagestyle{plain} \pagenumbering{roman}
+\setcounter{page}{1}
+\tableofcontents
+\listoffigures
+\listoftables
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 本文
+%-------------------------------------------------------------------------
+\pagestyle{plain} \pagenumbering{arabic}
+\setcounter{page}{1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{src/chapter1.tex}
+\input{src/chapter2.tex}
+\input{src/chapter3.tex}
+\input{src/chapter4.tex}
+\input{src/chapter5.tex}
+\input{src/chapter6.tex}
+\input{src/thanks.tex}
+\input{src/bibliography.tex}
+\input{src/appendix.tex}
+\clearpage
+\mbox{}\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 背表紙
+%-------------------------------------------------------------------------
+\thispagestyle{empty}
+\oddsidemargin -4in
+\evensidemargin -4in
+\topmargin -.5in
+{
+\tate
+\Large\sffamily\gtfamily
+\begin{minipage}{9.5in}
+\begin{minipage}{6.0in}
+OJLによるトレースログ可視化ツールの開発
+\end{minipage}
+\hfill\hfill\hfill\hfill
+350702101
+\hfill
+後藤 隼弐
+\end{minipage}
+}
+\end{document}
