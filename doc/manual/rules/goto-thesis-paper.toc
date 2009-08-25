@@ -1,76 +1,28 @@
-\contentsline {chapter}{\numberline {第1章}はじめに}{1}
-\contentsline {section}{\numberline {1.1}開発背景}{1}
-\contentsline {section}{\numberline {1.2}既存のトレースログ可視化ツール}{2}
-\contentsline {subsection}{\numberline {1.2.1}組込みシステム向けデバッガソフトウェア}{2}
-\contentsline {subsection}{\numberline {1.2.2}組込みOS向けの統合開発環境}{2}
-\contentsline {subsection}{\numberline {1.2.3}Unix系OSのトレースログプロファイラ}{4}
-\contentsline {subsection}{\numberline {1.2.4}波形表示ツールの流用}{4}
-\contentsline {subsection}{\numberline {1.2.5}既存のトレースログ可視化ツールの問題点}{7}
-\contentsline {section}{\numberline {1.3}開発目的と内容}{8}
-\contentsline {section}{\numberline {1.4}論文の構成}{8}
-\contentsline {chapter}{\numberline {第2章}トレースログ可視化ツール TraceLogVisualizer の設計}{9}
-\contentsline {section}{\numberline {2.1}開発方針}{9}
-\contentsline {section}{\numberline {2.2}標準形式トレースログ}{9}
-\contentsline {subsection}{\numberline {2.2.1}トレースログの抽象化}{9}
-\contentsline {subsection}{\numberline {2.2.2}標準形式トレースログの定義}{12}
-\contentsline {subsection}{\numberline {2.2.3}標準形式トレースログの例}{13}
-\contentsline {section}{\numberline {2.3}可視化表示の仕組みの抽象化}{14}
-\contentsline {subsection}{\numberline {2.3.1}可視化表現}{14}
-\contentsline {subsubsection}{座標系}{14}
-\contentsline {subsubsection}{基本図形と図形，図形群}{14}
-\contentsline {subsection}{\numberline {2.3.2}図形とイベントの対応}{15}
-\contentsline {subsubsection}{開始イベント，終了イベント，イベント期間}{16}
-\contentsline {subsubsection}{可視化ルール}{16}
-\contentsline {chapter}{\numberline {第3章}トレースログ可視化ツール TraceLogVisualizer の実装}{18}
-\contentsline {section}{\numberline {3.1}TraceLogVisualizerの全体像}{18}
-\contentsline {subsection}{\numberline {3.1.1}Json}{18}
-\contentsline {section}{\numberline {3.2}標準形式への変換}{21}
-\contentsline {subsection}{\numberline {3.2.1}トレースログファイル}{23}
-\contentsline {subsection}{\numberline {3.2.2}リソースヘッダファイル}{24}
-\contentsline {subsection}{\numberline {3.2.3}リソースファイル}{26}
-\contentsline {subsection}{\numberline {3.2.4}変換ルールファイル}{28}
-\contentsline {subsubsection}{置換マクロ}{30}
-\contentsline {section}{\numberline {3.3}図形データの生成}{31}
-\contentsline {subsection}{\numberline {3.3.1}可視化ルールファイル}{32}
-\contentsline {subsubsection}{図形の定義}{32}
-\contentsline {subsubsection}{可視化ルールの定義}{37}
-\contentsline {section}{\numberline {3.4}TraceLogVisualizerのその他の機能}{40}
-\contentsline {subsection}{\numberline {3.4.1}マーカー}{40}
-\contentsline {subsection}{\numberline {3.4.2}可視化表示部の制御}{40}
-\contentsline {subsection}{\numberline {3.4.3}マクロ表示}{41}
-\contentsline {subsection}{\numberline {3.4.4}トレースログのテキスト表示}{41}
-\contentsline {subsection}{\numberline {3.4.5}可視化表示項目の表示非表示切り替え}{42}
-\contentsline {chapter}{\numberline {第4章}トレースログ可視化ツール TraceLogVisualizer の利用}{43}
-\contentsline {section}{\numberline {4.1}シングルコアプロセッサ用RTOSのトレースログの可視化}{43}
-\contentsline {subsection}{\numberline {4.1.1}可視化表示する項目の決定}{43}
-\contentsline {subsection}{\numberline {4.1.2}リソースヘッダファイルの記述}{44}
-\contentsline {subsection}{\numberline {4.1.3}変換ルールファイルの記述}{44}
-\contentsline {subsection}{\numberline {4.1.4}可視化ルールファイルの記述}{46}
-\contentsline {subsection}{\numberline {4.1.5}トレースログファイルとリソースファイルの生成}{48}
-\contentsline {subsection}{\numberline {4.1.6}実行結果}{49}
-\contentsline {section}{\numberline {4.2}マルチコアプロセッサ用RTOS対応への拡張}{49}
-\contentsline {subsection}{\numberline {4.2.1}可視化表示する項目の追加}{50}
-\contentsline {subsection}{\numberline {4.2.2}リソースヘッダファイルの修正}{51}
-\contentsline {subsection}{\numberline {4.2.3}変換ルールファイルの修正}{51}
-\contentsline {subsection}{\numberline {4.2.4}可視化ルールファイルの記述}{51}
-\contentsline {subsection}{\numberline {4.2.5}実行結果}{51}
-\contentsline {section}{\numberline {4.3}組込みコンポーネントシステムの可視化}{52}
-\contentsline {subsection}{\numberline {4.3.1}可視化表示する項目の決定}{53}
-\contentsline {subsection}{\numberline {4.3.2}リソースヘッダファイルの記述}{53}
-\contentsline {subsection}{\numberline {4.3.3}変換ルールファイルの記述}{54}
-\contentsline {subsection}{\numberline {4.3.4}可視化ルールファイルの記述}{54}
-\contentsline {subsection}{\numberline {4.3.5}実行結果}{55}
-\contentsline {chapter}{\numberline {第5章}開発プロセス}{64}
-\contentsline {section}{\numberline {5.1}OJL}{64}
-\contentsline {subsection}{\numberline {5.1.1}フェーズ分割}{64}
-\contentsline {subsubsection}{フェーズ1}{64}
-\contentsline {subsubsection}{フェーズ2}{65}
-\contentsline {subsubsection}{フェーズ3}{65}
-\contentsline {section}{\numberline {5.2}ユースケース駆動アジャイルソフトウェア開発}{66}
-\contentsline {subsection}{\numberline {5.2.1}プロジェクト管理}{67}
-\contentsline {subsection}{\numberline {5.2.2}設計}{68}
-\contentsline {subsection}{\numberline {5.2.3}テスト}{68}
-\contentsline {subsection}{\numberline {5.2.4}実装}{69}
-\contentsline {chapter}{\numberline {第6章}おわりに}{71}
-\contentsline {section}{\numberline {6.1}まとめ}{71}
-\contentsline {section}{\numberline {6.2}今後の課題と展望}{72}
+\contentsline {chapter}{\numberline {第1章}概要}{2}
+\contentsline {section}{\numberline {1.1}TraceLogVisualizerの全体像}{2}
+\contentsline {subsection}{\numberline {1.1.1}JSON}{2}
+\contentsline {chapter}{\numberline {第2章}変換ルール}{7}
+\contentsline {section}{\numberline {2.1}標準形式トレースログ}{7}
+\contentsline {subsection}{\numberline {2.1.1}トレースログの抽象化}{7}
+\contentsline {subsection}{\numberline {2.1.2}標準形式トレースログの定義}{10}
+\contentsline {subsection}{\numberline {2.1.3}標準形式トレースログの例}{11}
+\contentsline {section}{\numberline {2.2}標準形式への変換}{12}
+\contentsline {subsection}{\numberline {2.2.1}トレースログファイル}{14}
+\contentsline {subsection}{\numberline {2.2.2}リソースヘッダファイル}{14}
+\contentsline {subsection}{\numberline {2.2.3}リソースファイル}{18}
+\contentsline {subsection}{\numberline {2.2.4}変換ルールファイル(JSON形式)}{20}
+\contentsline {subsubsection}{置換マクロ}{21}
+\contentsline {subsection}{\numberline {2.2.5}変換ルールファイル(外部プロセス形式)}{23}
+\contentsline {chapter}{\numberline {第3章}可視化ルール}{24}
+\contentsline {section}{\numberline {3.1}可視化表示の仕組みの抽象化}{24}
+\contentsline {subsection}{\numberline {3.1.1}可視化表現}{24}
+\contentsline {subsubsection}{座標系}{24}
+\contentsline {subsubsection}{基本図形と図形，図形群}{25}
+\contentsline {subsection}{\numberline {3.1.2}図形とイベントの対応}{26}
+\contentsline {subsubsection}{開始イベント，終了イベント，イベント期間}{26}
+\contentsline {subsubsection}{可視化ルール}{26}
+\contentsline {section}{\numberline {3.2}図形データの生成}{27}
+\contentsline {subsection}{\numberline {3.2.1}可視化ルールファイル}{28}
+\contentsline {subsubsection}{図形の定義}{28}
+\contentsline {subsubsection}{可視化ルールの定義(JSON形式)}{33}
+\contentsline {subsection}{\numberline {3.2.2}可視化ルールファイル(外部プロセス形式)}{36}

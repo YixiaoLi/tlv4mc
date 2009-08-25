@@ -16,11 +16,12 @@ RM		= rm -f
 .tex.dvi:
 	$(LATEX) $<
 	$(LATEX) $<
+	$(LATEX) $<
 
 .dvi.pdf:
 	$(DVIPDFM) $<
 
-all: $(TARGET).pdf
+all: $(TARGET).dvi
 
 $(TARGET).dvi: $(EPS) $(TEX) $(TARGET).tex
 
