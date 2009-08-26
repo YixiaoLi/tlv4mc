@@ -1,4 +1,4 @@
-TARGET	= goto-thesis-paper
+TARGET	= rules-manual
 TEX		= $(shell ls src/*.tex)
 PRN		= $(shell ls img/*.prn)
 EPS		= $(PRN:%.prn=%.eps)
