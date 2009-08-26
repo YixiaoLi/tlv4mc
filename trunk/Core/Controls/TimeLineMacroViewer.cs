@@ -418,7 +418,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			base.OnMouseWheel(e);
             bool isCtrl = (Control.ModifierKeys & Keys.Control) == Keys.Control;
             bool isShift = (Control.ModifierKeys & Keys.Shift) == Keys.Shift;
-            if (isCtrl && isShift)
+            if (isShift)
             {
                 Time span = TimeLine.ViewingSpan / 2;
                 Time time = TimeLine.FromTime + span;
@@ -456,23 +456,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                     (_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.FromTime + span).Round(0),
                     (_data.SettingData.TraceLogDisplayPanelSetting.TimeLine.ToTime + span).Round(0)
                     );
-
-                if (e.GetType() == typeof(ExMouseEventArgs))
-                    ((ExMouseEventArgs)e).Handled = true;
-            }
-            else if (isShift)
-            {
-                Time span = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.ViewingSpan / 2;
-                Time time = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.FromTime + span;
-
-
-                decimal ratio = (e.Delta < 0)
-                    ? 1.5m
-                    : (e.Delta > 0)
-                    ? 0.75m
-                    : 1m;
-
-                _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.SetTime((time - span * ratio).Round(0), (time + span * ratio).Round(0));
 
                 if (e.GetType() == typeof(ExMouseEventArgs))
                     ((ExMouseEventArgs)e).Handled = true;
