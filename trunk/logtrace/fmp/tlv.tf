@@ -46,7 +46,7 @@ $JOINEACH inhno INH.ORDER_LIST ",\n"$
     $TAB$$TAB$$TAB$"Attributes":$NL$
     $TAB$$TAB$$TAB${$NL$
     $TAB$$TAB$$TAB$$TAB$"prcIdI" :$CLASS_AFFINITY_INI[INH.CLASS[inhno]]$,$NL$
-    $TAB$$TAB$$TAB$$TAB$"id"    :$+INH.INHNO[inhno]-(0x10000)*(CLASS_AFFINITY_INI[INH.CLASS[inhno]])$,$NL$
+    $TAB$$TAB$$TAB$$TAB$"id"    :$+INH.INHNO[inhno]-((0x10000)<<(CLASS_AFFINITY_INI[INH.CLASS[inhno]]-1))$,$NL$
     $TAB$$TAB$$TAB$$TAB$"state"    : "DORMANT"$NL$
     $TAB$$TAB$$TAB$}$NL$
     $TAB$$TAB$}
@@ -94,7 +94,7 @@ $JOINEACH excno EXC.ORDER_LIST ",\n"$
     $TAB$$TAB$$TAB$"Attributes":$NL$
     $TAB$$TAB$$TAB${$NL$
     $TAB$$TAB$$TAB$$TAB$"prcIdE" :$CLASS_AFFINITY_INI[EXC.CLASS[excno]]$,$NL$
-    $TAB$$TAB$$TAB$$TAB$"id"    :$+EXC.EXCNO[excno]-(0x10000)*(CLASS_AFFINITY_INI[EXC.CLASS[excno]])$,$NL$
+    $TAB$$TAB$$TAB$$TAB$"id"    :$+EXC.EXCNO[inhno]-(0x10000)*(CLASS_AFFINITY_INI[INH.CLASS[excno]])$,$NL$
     $TAB$$TAB$$TAB$$TAB$"state"    : "DORMANT"$NL$
     $TAB$$TAB$$TAB$}$NL$
     $TAB$$TAB$}
