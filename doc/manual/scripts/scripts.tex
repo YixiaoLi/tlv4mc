@@ -50,7 +50,7 @@ RubyやPerlなどの任意の言語で変換ルール・可視化ルールを記述できる機能です。
 
 \section{用語の定義/略語の説明}
 
-\begin{table}[h]
+\begin{table}[tb]
  \centering
  \caption{用語定義}
  \begin{tabular}{|p{8em}|p{25em}|} \hline
@@ -135,7 +135,7 @@ RubyやPerlなどの任意の言語で変換ルール・可視化ルールを記述できる機能です。
 \end{lstlisting} % $
 
 
-\begin{table}
+\begin{table}[hb]
 \centering
 \caption{追加された要素}\label{conv}
 \begin{tabular}{|c|l|}
@@ -237,7 +237,7 @@ script    & 一時ファイルの内容 \\
 }
 \end{lstlisting}
 
-\begin{table}
+\begin{table}[hb]
 \centering
 \caption{追加された要素}\label{viz}
 \begin{tabular}{|c|l|}
@@ -251,6 +251,10 @@ Script    & 一時ファイルの内容 \\
 \end{tabular}
 \end{table}
 
+\section{例: CPU利用率可視化表示}
+外部スクリプトを用いた可視化ルールは、\verb!visualizeRules/!ディレトリに
+\verb!asp_cpu.viz!、\verb!fmp_cpu.viz!として同梱されています。
 
-
+初期状態では無効化されています。ファイル中の\verb!"asp_"!を\verb!"asp"!に、
+\verb!"fmp_"!から\verb!"fmp"!に直すと、有効化されます。
 \end{document}
