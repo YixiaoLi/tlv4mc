@@ -68,9 +68,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				"RES_NAME", (args, resData, logData) =>
 				{
 					Resource[] i = logData.GetObject(args[0]).ToArray();
-					if(i.Length > 1)
-						throw new Exception("RES_NAME で 指定した条件のリソースは複数存在します。\n" + args[0]);
-					return i[0].Name;
+					if(i.Length != 1)
+                    {
+                        throw new ResNotFoundException(args[0]);
+                    }
+				    return i[0].Name;
 				}
 			},
 			{
@@ -79,8 +81,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					Resource[] i = logData.GetObject(args[0]).ToArray();
 					if(i.Length > 1)
 						throw new Exception("RES_NAME で 指定した条件のリソースは複数存在します。\n" + args[0]);
-
-					return i[0].DisplayName;
+                    else if(i.Length == 0)
+                        throw new ResNotFoundException(args[0]);
+                    else
+    					return i[0].DisplayName;
 				}
 			},
 			{
@@ -89,8 +93,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 					Resource[] i = logData.GetObject(args[0]).ToArray();
 					if(i.Length > 1)
 						throw new Exception("RES_NAME で 指定した条件のリソースは複数存在します。\n" + args[0]);
-
-					return i[0].Color.Value.ToHexString();
+                    else if(i.Length == 0)
+                        throw new ResNotFoundException(args[0]);
+                    else
+					    return i[0].Color.Value.ToHexString();
 				}
 			}
 		};
@@ -113,9 +119,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				{
 					value = Regex.Replace(value, Regex.Escape(m.Value), apply(m.Groups["func"].Value, m.Groups["args"].Value, resData, logData));
 				}
-				catch (Exception e)
+				catch (ConvertException e)
 				{
-					throw new Exception("リソース条件式が異常です。\n" + "\"" + value + "\"\n" + e.Message);
+                    e.rule = value;
+					throw e;
 				}
 			}
 			value = value.Replace("___START_BIG_BRACKET___", "\\{");

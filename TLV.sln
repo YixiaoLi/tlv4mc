@@ -33,7 +33,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{37F01460-E93
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "convertRules", "convertRules", "{45DF08F6-ADDF-4479-877B-4694CFB4E542}"
 	ProjectSection(SolutionItems) = preProject
-		convertRules\asp.cnv = convertRules\asp.cnv
 		convertRules\fmp.cnv = convertRules\fmp.cnv
 	EndProjectSection
 EndProject
