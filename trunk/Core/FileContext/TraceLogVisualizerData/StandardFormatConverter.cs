@@ -107,22 +107,22 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			if (_constructProgressReport != null)
 				_constructProgressReport(_progressFrom, message);
-			try
-			{
-				action();
-			}
-			catch (Exception _e)
-			{
+            try
+            {
+                action();
+            }
+            catch (ConvertException _e) {
+                throw _e;
+            }
+            catch (Exception _e)
+            {
                 foreach (System.Collections.DictionaryEntry de in _e.Data)
                 {
                     exceptionMessage += "\n" + de.Value;
                 }
-#if DEBUG
-                throw new Exception(exceptionMessage + "\n" + _e.Message + "\n" + _e.StackTrace);
-#else
-                throw new Exception(exceptionMessage + "\n" + _e.Message);
-#endif
-			}
+                throw _e;
+               // throw new Exception(exceptionMessage + "\n" + _e.Message);
+            }
 		}
 		private ResourceData getResourceData(string resourceFilePath)
 		{

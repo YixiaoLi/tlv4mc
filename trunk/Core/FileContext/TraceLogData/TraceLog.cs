@@ -106,7 +106,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				Arguments = m.Groups["args"].Value;
 
 			if (Behavior != null && Attribute != null)
-				throw new Exception("不正なトレースログです。");
+				throw new Exception("不正なトレースログです。\n" + _log);
 			else if (Behavior == null && Attribute != null)
 				Type = TraceLogType.AttributeChange;
 			else if (Behavior != null && Attribute == null)

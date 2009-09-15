@@ -113,7 +113,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else
             {
-                throw new Exception("一致する変換ルールが見つかりません。");
+                throw new Exception(target.ToString() + " に一致する変換ルールが見つかりません。");
             }
 		}
 
