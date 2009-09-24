@@ -257,4 +257,16 @@ Script    & 一時ファイルの内容 \\
 
 初期状態では無効化されています。ファイル中の\verb!"asp_"!を\verb!"asp"!に、
 \verb!"fmp_"!から\verb!"fmp"!に直すと、有効化されます。
+
+動作には，RubyとJSONライブラリ(http://flori.github.com/json/)が必要です．
+開発にはCygwin版のRuby 1.8.7を用いています．
+
+可視化項目は，以下の通りです．
+\begin{description}
+\item[ASP] CPU使用率(その時点で起動しているタスクの数)，平均使用率(使用率の平均)，割り込み回数の積算
+\item[FMP] CPU使用率，平均使用率
+\end{description}
+
+
+
 \end{document}
