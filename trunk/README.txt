@@ -1,7 +1,7 @@
 
-	TraceLogVisualizer(TLV)（Release 1.0rc1）
+	TraceLogVisualizer(TLV)（バージョン 1.1rc）
 
-					最終更新 : 2009年05月12日
+					最終更新 : 2009年10月1日
 
 ----------------------------------------------------------------------
  TraceLogVisualizer(TLV)
@@ -108,6 +108,7 @@ TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
 
 【ファイル構成】
 
+	CANGELOG.txt				変更点のリスト
 	README.txt					TLVの簡単な紹介
 	TraceLogVisualizer.exe		TLVの本体
 
