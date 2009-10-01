@@ -136,8 +136,13 @@ if not exist $(TargetDir)visualizeRules mkdir $(TargetDir)visualizeRules
 xcopy $(SolutionDir)visualizeRules $(TargetDir)visualizeRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
 if not exist $(TargetDir)sampleFiles mkdir $(TargetDir)sampleFiles
 xcopy $(SolutionDir)sampleFiles $(TargetDir)sampleFiles /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+
 if not exist $(TargetDir)doc mkdir $(Target)doc
 copy $(SolutionDir)doc\*.pdf $(TargetDir)doc
+copy $(SolutionDir)doc\applog_manual\*.pdf $(TargetDir)doc
+copy $(SolutionDir)doc\rules\*.pdf $(TargetDir)doc
+copy $(SolutionDir)doc\scripts\*.pdf $(TargetDir)doc
+
 if not exist $(TargetDir)logtrace mkdir $(Target)logtrace
 xcopy $(SolutionDir)logtrace $(TargetDir)logtrace /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
 
