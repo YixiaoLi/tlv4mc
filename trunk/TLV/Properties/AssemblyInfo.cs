@@ -44,9 +44,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("TraceLogVisualizer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Embedded and Real-Time Systems Laboratory, Graduate School of Information Science, Nagoya Univ., JAPAN")]
+[assembly: AssemblyCompany("Nagoya Univ., JAPAN")]
 [assembly: AssemblyProduct("TraceLogVisualizer")]
-[assembly: AssemblyCopyright("Copyright (C) 2008,2009 by Embedded and Real-Time Systems Laboratory")]
+[assembly: AssemblyCopyright("Copyright (C) 2008,2009 by Nagoya Univ., JAPAN")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -68,5 +68,5 @@ using System.Runtime.InteropServices;
 // すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を 
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.1.*")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
