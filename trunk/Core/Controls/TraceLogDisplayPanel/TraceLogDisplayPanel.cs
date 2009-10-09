@@ -525,7 +525,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		    else
 			{
-			    TimeLine.MoveBySettingFromTime((TimeLine.ViewableSpan * (decimal)hScrollBar.Value / (decimal)(hScrollBar.Maximum)).Truncate());
+                Time t = TimeLine.ViewableSpan * (decimal)hScrollBar.Value / (decimal)(hScrollBar.Maximum);
+                Time s = t.Truncate() + TimeLine.MinTime;
+                TimeLine.MoveBySettingFromTime(s);
 			}
 		};
 	    #endregion
@@ -749,7 +751,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 	protected void hScrollBarValueUpdate()
 	{
-	    decimal v = (TimeLine.FromTime.Truncate().Value * (decimal)(hScrollBar.Maximum) / TimeLine.ViewableSpan.Value);
+	    decimal v = ((TimeLine.FromTime - TimeLine.MinTime).Truncate().Value *
+           (decimal)(hScrollBar.Maximum) / TimeLine.ViewableSpan.Value);
 
 	    v = v > hScrollBar.Maximum ? hScrollBar.Maximum : v < hScrollBar.Minimum ? hScrollBar.Minimum : v;
 
