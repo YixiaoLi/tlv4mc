@@ -551,13 +551,34 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 		    if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
 			{
-			    hScrollBar.Value =
-			    (_e.Delta < 0)
-			    ? (((hScrollBar.Value + hScrollBar.SmallChange) < hScrollBar.Maximum - hScrollBar.LargeChange + 1) ? hScrollBar.Value + hScrollBar.SmallChange : hScrollBar.Maximum - hScrollBar.LargeChange + 1)
-			    : (_e.Delta > 0)
-			    ? (((hScrollBar.Value - hScrollBar.SmallChange) > hScrollBar.Minimum) ? hScrollBar.Value - hScrollBar.SmallChange : hScrollBar.Minimum)
-			    : hScrollBar.Value;
-
+                if (_e.Delta < 0)
+                {
+                    int next = hScrollBar.Value + hScrollBar.SmallChange;
+                    // overflowのことも考慮にいれる
+                    if(next < hScrollBar.Maximum - hScrollBar.LargeChange + 1 && next > 0)
+                    {
+                        hScrollBar.Value = next;
+                    }
+                    else
+                    {
+                        hScrollBar.Value = hScrollBar.Maximum - hScrollBar.LargeChange + 1;
+                    }
+                }
+                else if (_e.Delta > 0)
+                {
+                    int next = hScrollBar.Value - hScrollBar.SmallChange;
+                    if (next > hScrollBar.Minimum)
+                    {
+                        hScrollBar.Value = next;
+                    }
+                    else
+                    {
+                        hScrollBar.Value = hScrollBar.Minimum;
+                    }
+                }
+                else {
+                    hScrollBar.Value = hScrollBar.Value;
+                }
 			    if (_e.GetType() == typeof(ExMouseEventArgs))
 				((ExMouseEventArgs)_e).Handled = true;
 			}
