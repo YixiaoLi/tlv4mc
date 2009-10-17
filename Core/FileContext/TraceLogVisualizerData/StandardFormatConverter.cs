@@ -87,6 +87,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				() => { TraceLogData = getTraceLogData(traceLogFilePath); },
 				"トレースログデータを生成中",
 				"トレースログデータの生成に失敗しました。\nトレースログ変換ルールファイルの記述に誤りがある可能性があります。");
+            //時刻が全て同一の場合、0除算例外が発生するのでエラーチェック
+            if (TraceLogData.MaxTime == TraceLogData.MinTime)
+                throw new Exception("時刻が全て同一である不正なトレースログです。");
+
             progressUpdate(50);
             generateData(
                () => { VisualizeShapeData = getVisualizeShapeData(50,99); },
