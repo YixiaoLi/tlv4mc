@@ -525,9 +525,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		    else
 			{
-                Time t = TimeLine.ViewableSpan * (decimal)hScrollBar.Value / (decimal)(hScrollBar.Maximum);
-                Time s = t.Truncate() + TimeLine.MinTime;
-                TimeLine.MoveBySettingFromTime(s);
+                if (TimeLine!=null)
+                {
+                    Time t = TimeLine.ViewableSpan * (decimal)hScrollBar.Value / (decimal)(hScrollBar.Maximum);
+                    Time s = t.Truncate() + TimeLine.MinTime;
+                    TimeLine.MoveBySettingFromTime(s);
+                }
 			}
 		};
 	    #endregion

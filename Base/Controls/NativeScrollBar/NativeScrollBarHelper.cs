@@ -114,8 +114,13 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 						MethodInfo method = _control.GetType().GetMethod("OnMouseWheel", BindingFlags.Instance | BindingFlags.NonPublic);
 						ExMouseEventArgs e = new ExMouseEventArgs(MouseButtons.None, 0, 0, 0, d);
-						method.Invoke(_control, new object[] { e });
-
+                        try{
+						    method.Invoke(_control, new object[] { e });
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                        }
 						if (e.Handled)
 							return;
 
@@ -148,8 +153,15 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
 								MethodInfo method = _control.GetType().GetMethod("OnMouseWheel", BindingFlags.Instance | BindingFlags.NonPublic);
 								ExMouseEventArgs e = new ExMouseEventArgs(MouseButtons.None, 0, 0, 0, d);
-								method.Invoke(_control, new object[] { e });
-
+                                try
+                                {
+                                    method.Invoke(_control, new object[] { e });
+                                }
+                                catch (Exception ex)
+                                {
+                                    System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                                }
+                                
 								if (e.Handled)
 								    return;
 
