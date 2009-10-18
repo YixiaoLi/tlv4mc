@@ -64,6 +64,13 @@
 #endif /* TCNT_TRACE_BUFFER */
 
 /*
+ *  トレース時刻取得用ハードウェアの初期化
+ */
+#ifndef TRACE_HW_INIT
+#define TRACE_HW_INIT()
+#endif  /* TRACE_HW_INIT */
+
+/*
  *  トレース時刻の取得方法
  */
 #ifndef TRACE_GET_TIM
@@ -233,8 +240,8 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 /*
  *  タスク例外処理ルーチン
  */
-#define LOG_TEX_ENTER(texptn) trace_1(LOG_TYPE_TEX|LOG_ENTER, texptn)
-#define LOG_TEX_LEAVE(texptn) trace_1(LOG_TYPE_TEX|LOG_LEAVE, texptn)
+#define LOG_TEX_ENTER(p_tcb, texptn) trace_2(LOG_TYPE_TEX|LOG_ENTER, p_tcb, texptn)
+#define LOG_TEX_LEAVE(p_tcb, texptn) trace_2(LOG_TYPE_TEX|LOG_LEAVE, p_tcb, texptn)
 
 /*
  *  タスクの状態変更
@@ -518,8 +525,9 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 #define LOG_GET_TIM_ENTER(p_systim) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_GET_TIM, p_systim)
 #define LOG_GET_TIM_LEAVE(ercd, systim) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_GET_TIM, ercd, systim)
 
-#define LOG_GET_UTM_ENTER(p_sysutm) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_GET_UTM, p_sysutm)
-#define LOG_GET_UTM_LEAVE(ercd, sysutm) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_GET_UTM, ercd, sysutm)
+//ログ保存時にget_utmを使用するため，ログを有効にすると循環していしまうため無効に
+//#define LOG_GET_UTM_ENTER(p_sysutm) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_GET_UTM, p_sysutm)
+//#define LOG_GET_UTM_LEAVE(ercd, sysutm) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_GET_UTM, ercd, sysutm)
 
 
 /*

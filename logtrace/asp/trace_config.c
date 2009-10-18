@@ -82,6 +82,8 @@ trace_initialize(intptr_t exinf)
 	trace_count = 0U;
 	trace_head = trace_tail = 0U;
 	trace_mode = mode;
+
+	TRACE_HW_INIT();
 }     
 
 /*
