@@ -2028,11 +2028,11 @@ trace_print(TRACE *p_trace, void (*putc)(char_t))
 		tracemsg = "leave from exc handler %d.";
 		break;
 	case LOG_TYPE_TEX|LOG_ENTER:
-		traceinfo[0] = p_trace->loginfo[0];
+		traceinfo[0] = p_trace->loginfo[1];
 		tracemsg = "enter to tex %d.";
 		break;
 	case LOG_TYPE_TEX|LOG_LEAVE:
-		traceinfo[0] = p_trace->loginfo[0];
+		traceinfo[0] = p_trace->loginfo[1];
 		tracemsg = "leave from tex %d.";
 		break;
 	case LOG_TYPE_TSKSTAT:
