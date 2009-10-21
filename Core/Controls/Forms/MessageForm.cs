@@ -49,16 +49,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls.Forms
 {
     public partial class MessageForm : Form
     {
-        public MessageForm(string message)
+        public MessageForm(string message, string title)
         {
             InitializeComponent();
             StringReader reader = new StringReader(message);
             string line;
             List<string> lines = new List<string>();
+
             while ((line = reader.ReadLine()) != null)
                 lines.Add(line);
-            this.textBox.Lines = lines.ToArray();
-                
+            this.detail.Lines = lines.ToArray();
+            this.Text = title;
+            this.error.Text = title;
+
+            this.errroIcon.Image = SystemIcons.Error.ToBitmap();
+//            Graphics g = this.errroIcon.CreateGraphics();
+//            Rectangle rect = new Rectangle(0, 0, 64, 64);
+//            g.DrawIcon(SystemIcons.Error, rect);
             //this.textBox.Text = message;
         }
 
@@ -70,6 +77,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls.Forms
         private void button1_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void error_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

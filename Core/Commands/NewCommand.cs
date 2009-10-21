@@ -112,7 +112,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 				}
 				catch (Exception e)
 				{
-                    MessageForm mbox = new MessageForm("共通形式への変換に失敗しました。\n" + e.ToString());
+				    MessageForm mbox = new MessageForm(e.ToString(), "変換に失敗しました。");
                     mbox.ShowDialog();
 					//MessageBox.Show(e.ToString(), "共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					_e.Cancel = true;
