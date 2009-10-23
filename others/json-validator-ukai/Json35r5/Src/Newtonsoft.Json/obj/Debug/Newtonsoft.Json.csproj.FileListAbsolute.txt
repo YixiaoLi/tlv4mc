@@ -1,0 +1,6 @@
+C:\OJL\json-validator-ukai\Json35r5\Src\Newtonsoft.Json\bin\Debug\Newtonsoft.Json.xml
+C:\OJL\json-validator-ukai\Json35r5\Src\Newtonsoft.Json\bin\Debug\Newtonsoft.Json.dll
+C:\OJL\json-validator-ukai\Json35r5\Src\Newtonsoft.Json\bin\Debug\Newtonsoft.Json.pdb
+C:\OJL\json-validator-ukai\Json35r5\Src\Newtonsoft.Json\obj\Debug\ResolveAssemblyReference.cache
+C:\OJL\json-validator-ukai\Json35r5\Src\Newtonsoft.Json\obj\Debug\Newtonsoft.Json.dll
+C:\OJL\json-validator-ukai\Json35r5\Src\Newtonsoft.Json\obj\Debug\Newtonsoft.Json.pdb
