@@ -23,16 +23,14 @@ namespace JSON_Validator
             string JSON_input = sr.ReadToEnd();
             sr.Close();
 
-            bool valid = validate(my_schema, JSON_input);
-            if (valid == true)
+            if(validate(my_schema, JSON_input))
             {
-                Console.Write("Your schema is valid\n");
+                Console.Write("Your input data is valid\n");
             }
             else
             {
-                Console.Write("Your schema is invalid\n");
+                Console.Write("Your input data is invalid\n");
             }
-
         }
 
 
