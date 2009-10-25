@@ -1,5 +1,4 @@
 ﻿{
 	"name" : "James",
-	"hobbies": [".NET" , "Blogging", "Reading", "Xbox", "LOLCATS"] ,
-	"age" : 23,
+	"hobbies": [".NET" , "Blogging", "Reading", "Xbox", "LOLCATS"],
 }

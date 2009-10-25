@@ -37,9 +37,14 @@ namespace JSON_Validator
         static private bool validate(string my_schema, string json_input) {
             JsonSchema schema = JsonSchema.Parse(my_schema);
 
-            JObject my_task = JObject.Parse(json_input);
-
-            return  my_task.IsValid(schema);
+            try
+            {
+                JObject my_task = JObject.Parse(json_input);
+                return  my_task.IsValid(schema);
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+                return false;
+            }
 
         }
     }
