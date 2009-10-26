@@ -111,28 +111,52 @@
 				{
 					"Type":"Rectangle",
 					"Size":"100%,60%",
-					"Pen":{"Color":"${ARG0}","Width":1, "Alpha":255, "DashStyle":"Dash"},
-					"Fill":"${ARG0}",
+					"Pen":{"Color":"ff6666","Width":1, "Alpha":255, "DashStyle":"Dash"},
+					"Fill":"ff6666",
 					"Alpha":100
 				},
 				{
 					"Type":"Text",
 					"Size":"100%,60%",
 					"Font":{"Align":"TopLeft", "Size":7},
-					"Text":"${ARG1}"
+					"Text":"CPUロック状態"
+				},
+			],
+			"disdspShapes":[
+				{
+					"Type":"Rectangle",
+					"Size":"100%,50%",
+					"Pen":{"Color":"ff0000","Width":1, "Alpha":255, "DashStyle":"Dash"},
+					"Fill":"ff0000",
+					"Alpha":100
 				},
 				{
 					"Type":"Text",
-					"Size":"100%,60%",
-					"Font":{"Align":"BottomRight", "Size":7},
-					"Text":"return ${ARG2}"
-				}
+					"Size":"100%,50%",
+					"Font":{"Align":"TopLeft", "Size":7},
+					"Text":"ディスパッチ禁止状態"
+				},
+			],
+			"disintShapes":[
+				{
+					"Type":"Rectangle",
+					"Size":"100%,70%",
+					"Pen":{"Color":"ffcccc","Width":1, "Alpha":255, "DashStyle":"Dash"},
+					"Fill":"ffcccc",
+					"Alpha":100
+				    },
+				{
+					"Type":"Text",
+					"Size":"100%,70%",
+					"Font":{"Align":"TopLeft", "Size":7},
+					"Text":"割り込み禁止状態"
+				},
 			],
 			"handlerRunningShapes":[
 				{
 					"Type":"Rectangle",
 					"Size":"100%,80%",
-					"Pen":{"Color":"ff0000ff","Width":1},
+					"Pen":{"Color":"ff0000","Width":1},
 					"Fill":"660000ff"
 				}
 			],

@@ -56,20 +56,36 @@
 					}
 		        	}
 			},
-			"lockcpu":{
-				"DisplayName":"CPUロック",
+			"systemStatus":{
+				"DisplayName":"システム状態",
 				"Target":"Task",
 				"Shapes":{
-					"callSvcEvent":{
-						"DisplayName":"システムコール",
+					"CpuLockState":{
+						"DisplayName":"CPUロック状態",
 						"From":"Task.enterSVC(loc_cpu)",
 						"To":"${FROM_TARGET}.leaveSVC(unl_cpu)",
 						"Figures":[
-						    "cpulockShapes(ff0000,CPUロック開始,CPUロック解除)"
+						    "cpulockShapes(ff0000)"
+						]
+					},
+                    "DispatchDisableState":{
+						"DisplayName":"ディスパッチ禁止状態",
+						"From":"Task.enterSVC(dis_dsp)",
+						"To":"${FROM_TARGET}.leaveSVC(ena_dsp)",
+						"Figures":[
+						    "disdspShapes(00ff00)"
+						]
+					},
+                    "IntteruptDisableState":{
+						"DisplayName":"割り込み禁止状態",
+						"From":"Task.enterSVC(dis_int)",
+						"To":"${FROM_TARGET}.leaveSVC(ena_int)",
+						"Figures":[
+						    "disintShapes(0000ff)"
 						]
 					}
 				}
-		    	},
+	    	},
 			"interruptStateChange":{
 				"DisplayName":"状態遷移",
 				"Target":"InterruptHandler",
@@ -83,7 +99,7 @@
 						    "${FROM_VAL}==DORMANT"      :"handlerDormantShapes"
 						}
 					}
-		        	}
+	        	}
 			},
 			"interruptserviceroutineStateChange":{
 				"DisplayName":"状態遷移",
