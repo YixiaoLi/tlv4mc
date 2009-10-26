@@ -1,8 +1,0 @@
-C:\OJL\json-validator-ukai\JSON_Validator\JSON_Validator\bin\Debug\JSON_Validator.exe
-C:\OJL\json-validator-ukai\JSON_Validator\JSON_Validator\bin\Debug\JSON_Validator.pdb
-C:\OJL\json-validator-ukai\JSON_Validator\JSON_Validator\bin\Debug\Newtonsoft.Json.dll
-C:\OJL\json-validator-ukai\JSON_Validator\JSON_Validator\bin\Debug\Newtonsoft.Json.pdb
-C:\OJL\json-validator-ukai\JSON_Validator\JSON_Validator\bin\Debug\Newtonsoft.Json.xml
-C:\OJL\json-validator-ukai\JSON_Validator\JSON_Validator\obj\Debug\ResolveAssemblyReference.cache
-C:\OJL\json-validator-ukai\JSON_Validator\JSON_Validator\obj\Debug\JSON_Validator.exe
-C:\OJL\json-validator-ukai\JSON_Validator\JSON_Validator\obj\Debug\JSON_Validator.pdb
