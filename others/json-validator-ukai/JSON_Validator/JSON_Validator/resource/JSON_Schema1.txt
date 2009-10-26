@@ -3,8 +3,8 @@
    "type": "object",
    "properties":
    {    
-      "name": {"type":"string"},
-      "hobbies":
+      "Project": {"type":"string"},
+      "Ticket":
       {      
         "type": "array",
         "items": {"type":"string"}

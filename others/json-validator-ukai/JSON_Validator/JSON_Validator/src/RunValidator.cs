@@ -10,7 +10,7 @@ namespace JSON_Validator
 {
     class RunValidator
     {
-        enum Validation_Type
+        enum Result_Type
         {
             VALIDE,
             INVALIDE,
@@ -30,16 +30,16 @@ namespace JSON_Validator
             string JSON_input = sr.ReadToEnd();
             sr.Close();
 
-            Validation_Type result = validate(my_schema, JSON_input);
-            if( result == Validation_Type.VALIDE)
+            Result_Type result = validate(my_schema, JSON_input);
+            if( result == Result_Type.VALIDE)
             {
                 Console.Write("Your input data is valid\n");
             }
-            else if( result == Validation_Type.INVALIDE)
+            else if( result == Result_Type.INVALIDE)
             {
                 Console.Write("Your input data is invalid\n");
             }
-            else if (result == Validation_Type.WELL_FORMED)
+            else if (result == Result_Type.WELL_FORMED)
             {
                 Console.Write("Your input data is well-formed, but invalid\n");
             }
@@ -50,25 +50,24 @@ namespace JSON_Validator
         }
 
 
-        static private Validation_Type validate(string my_schema, string json_input) {
+        static private Result_Type validate(string my_schema, string json_input) {
             JsonSchema schema = JsonSchema.Parse(my_schema);
             JObject my_task;
            
             try
             {
-                //JSONファイルの
                 my_task = JObject.Parse(json_input);
                 if (my_task.IsValid(schema))
                 {
-                    return Validation_Type.VALIDE;
+                    return Result_Type.VALIDE;
                 }
                 else
                 {
-                    return Validation_Type.WELL_FORMED;
+                    return Result_Type.WELL_FORMED;
                 }
             }catch(Exception e){
                 Console.WriteLine(e.Message);
-                return Validation_Type.INVALIDE;
+                return Result_Type.INVALIDE;
             }
         }
     }
