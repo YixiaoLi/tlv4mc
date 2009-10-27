@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace JSON_Validator
 {
@@ -12,9 +13,9 @@ namespace JSON_Validator
     {
         enum Result_Type
         {
-            VALIDE,
-            INVALIDE,
-            WELL_FORMED
+            VALID,
+            INVALID,
+            Ill_FORMED
         }
 
         static void Main(string[] args)
@@ -31,17 +32,17 @@ namespace JSON_Validator
             sr.Close();
 
             Result_Type result = validate(my_schema, JSON_input);
-            if( result == Result_Type.VALIDE)
+            if( result == Result_Type.VALID)
             {
                 Console.Write("Your input data is valid\n");
             }
-            else if( result == Result_Type.INVALIDE)
+            else if( result == Result_Type.INVALID)
             {
                 Console.Write("Your input data is invalid\n");
             }
-            else if (result == Result_Type.WELL_FORMED)
+            else if (result == Result_Type.Ill_FORMED)
             {
-                Console.Write("Your input data is well-formed, but invalid\n");
+                Console.Write("Your input data is ill-formed\n");
             }
             else
             {
@@ -52,22 +53,22 @@ namespace JSON_Validator
 
         static private Result_Type validate(string my_schema, string json_input) {
             JsonSchema schema = JsonSchema.Parse(my_schema);
-            JObject my_task;
+            JObject jsonObj;
            
             try
             {
-                my_task = JObject.Parse(json_input);
-                if (my_task.IsValid(schema))
+                jsonObj = JObject.Parse(json_input);
+                if (jsonObj.IsValid(schema))
                 {
-                    return Result_Type.VALIDE;
+                    return Result_Type.VALID;
                 }
                 else
                 {
-                    return Result_Type.WELL_FORMED;
+                    return Result_Type.INVALID;
                 }
-            }catch(Exception e){
+            }catch(JsonReaderException e){
                 Console.WriteLine(e.Message);
-                return Result_Type.INVALIDE;
+                return Result_Type.Ill_FORMED;
             }
         }
     }
