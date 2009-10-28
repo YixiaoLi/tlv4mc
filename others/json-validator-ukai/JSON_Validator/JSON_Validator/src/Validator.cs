@@ -35,7 +35,7 @@ namespace JSON_Validator
 
         
         static private T open<T>(string  path, Func<StreamReader,T> f){
-             //定義したJSONスキーマの読込み
+
              StreamReader sr = new StreamReader(
                      path, Encoding.GetEncoding("Shift_JIS"));
                T res;
@@ -50,7 +50,7 @@ namespace JSON_Validator
                   return res;
         }
 
-        static public Result validatePath(string schemaPath, string jsonPath)
+        static public Result validateFile(string schemaPath, string jsonPath)
         {
             string schema = open(schemaPath, sr => { return sr.ReadToEnd(); });
             string json = open(jsonPath, sr => { return sr.ReadToEnd(); });

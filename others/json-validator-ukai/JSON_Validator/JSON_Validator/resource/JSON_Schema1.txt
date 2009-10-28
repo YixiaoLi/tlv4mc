@@ -1,6 +1,7 @@
 ﻿{  
    "description": "A person",
    "type": "object",
+	"additionalProperties":false,
    "properties":
    {    
       "Project": {"type":"string"},

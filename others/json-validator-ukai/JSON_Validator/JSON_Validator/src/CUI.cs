@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JSON_Validator.Validator;
+
 
 
 namespace JSON_Validator
@@ -16,7 +16,7 @@ namespace JSON_Validator
                 string my_schema = "../../resource/JSON_Schema1.txt";
                 string JSON_input = "../../resource/JSON_input1.txt";
 
-                Validator.Result result = Validator.validatePath(my_schema, JSON_input);
+                Validator.Result result = Validator.validateFile(my_schema, JSON_input);
                 switch (result.type)
                 {
                     case Validator.Result.Type.Valid:

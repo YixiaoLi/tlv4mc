@@ -1,5 +1,5 @@
 ﻿{
-	"roject" : "MPRTOS",
+	"Project" : "MPRTOS",
 	"Ticket": ["#143" , "#142", "#23"],
-	"name" : "ukai"88u98
+	"name" : "ukai"
 }
