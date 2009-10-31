@@ -23,8 +23,6 @@ namespace JSON_Validator
         // テキストボックスにファイルパスを入力するのみ
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            this.Activate();
-
             textBox1.Text = openFileDialog1.FileName;
         }
 
@@ -33,8 +31,6 @@ namespace JSON_Validator
         // テキストボックスにファイルパスを入力するのみ
         private void openFileDialog2_FileOk(object sender, CancelEventArgs e)
         {
-            this.Activate();
-
             textBox2.Text = openFileDialog2.FileName;
         }
 
