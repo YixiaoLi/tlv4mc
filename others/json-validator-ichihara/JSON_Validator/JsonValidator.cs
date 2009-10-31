@@ -11,13 +11,17 @@ namespace JSON_Validator
     class JsonValidator
     {
         readonly private string schema = null;   // JSON schema
-        readonly private string json = null;       // 検証するJSONファイル
+        readonly private string json = null;     // 検証するJSONファイル
+        public string Message { get; set; }      // 主にエラー時にJSON.NETから得られる情報
+
         public enum Status { Valid, Invalid, JsonError, SchemaError };
 
-        public JsonValidator(string schemaPath, string jsonPath)
+        public JsonValidator(string schema, string json)
         {
-            this.schema = File.ReadAllText(schemaPath);
-            this.json = File.ReadAllText(jsonPath);
+            // ファイルオープン時の例外をキャッチするため
+            // 引数をファイルパスから検証する文字列に変更
+            this.schema = schema;
+            this.json = json;
         }
 
 
@@ -55,6 +59,7 @@ namespace JSON_Validator
             }
             catch (JsonReaderException e)
             {
+                this.Message = e.Message;
                 Console.Error.WriteLine(e.StackTrace);
                 return null;
             }
@@ -71,6 +76,7 @@ namespace JSON_Validator
             catch (Exception e)
             {
              //   Console.Error.WriteLine(e.StackTrace);
+                this.Message = e.Message;
                 Console.Error.WriteLine(e.Message);
                 return null;
             }

@@ -28,35 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.button1 = new System.Windows.Forms.Button();
+            this.schemaFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.SchemaAddButton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.CheckButton = new System.Windows.Forms.Button();
+            this.JsonAddButton = new System.Windows.Forms.Button();
+            this.jsonFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
-            // openFileDialog1
+            // schemaFileDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            this.openFileDialog1.FilterIndex = 2;
-            this.openFileDialog1.Title = "Schema file selection";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
+            this.schemaFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            this.schemaFileDialog.FilterIndex = 2;
+            this.schemaFileDialog.Title = "Schema file selection";
+            this.schemaFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.schemaFileDialog_FileOk);
             // 
-            // button1
+            // SchemaAddButton
             // 
-            this.button1.Location = new System.Drawing.Point(205, 59);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "add";
-            this.button1.UseCompatibleTextRendering = true;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.SchemaAddButton.Location = new System.Drawing.Point(205, 59);
+            this.SchemaAddButton.Name = "SchemaAddButton";
+            this.SchemaAddButton.Size = new System.Drawing.Size(75, 23);
+            this.SchemaAddButton.TabIndex = 1;
+            this.SchemaAddButton.Text = "add";
+            this.SchemaAddButton.UseCompatibleTextRendering = true;
+            this.SchemaAddButton.UseVisualStyleBackColor = true;
+            this.SchemaAddButton.Click += new System.EventHandler(this.SchemaAddButton_Click);
             // 
             // textBox1
             // 
@@ -64,6 +63,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(174, 19);
             this.textBox1.TabIndex = 0;
+            this.textBox1.Text = "C:\\";
             // 
             // label1
             // 
@@ -89,48 +89,48 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(174, 19);
             this.textBox2.TabIndex = 2;
+            this.textBox2.Text = "C:\\";
             // 
-            // button3
+            // CheckButton
             // 
-            this.button3.Location = new System.Drawing.Point(111, 158);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "check";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.CheckButton.Location = new System.Drawing.Point(111, 158);
+            this.CheckButton.Name = "CheckButton";
+            this.CheckButton.Size = new System.Drawing.Size(75, 23);
+            this.CheckButton.TabIndex = 4;
+            this.CheckButton.Text = "check";
+            this.CheckButton.UseVisualStyleBackColor = true;
+            this.CheckButton.Click += new System.EventHandler(this.CheckButton_Click);
             // 
-            // button2
+            // JsonAddButton
             // 
-            this.button2.Location = new System.Drawing.Point(205, 112);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "add";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.JsonAddButton.Location = new System.Drawing.Point(205, 112);
+            this.JsonAddButton.Name = "JsonAddButton";
+            this.JsonAddButton.Size = new System.Drawing.Size(75, 23);
+            this.JsonAddButton.TabIndex = 3;
+            this.JsonAddButton.Text = "add";
+            this.JsonAddButton.UseVisualStyleBackColor = true;
+            this.JsonAddButton.Click += new System.EventHandler(this.JsonAddButton_Click);
             // 
-            // openFileDialog2
+            // jsonFileDialog
             // 
-            this.openFileDialog2.FileName = "openFileDialog2";
-            this.openFileDialog2.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            this.openFileDialog2.FilterIndex = 2;
-            this.openFileDialog2.Title = "JSON file selection";
-            this.openFileDialog2.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog2_FileOk);
+            this.jsonFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            this.jsonFileDialog.FilterIndex = 2;
+            this.jsonFileDialog.Title = "JSON file selection";
+            this.jsonFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.jsonFileDialog_FileOk);
             // 
             // ValidatorMainForm
             // 
-            this.AcceptButton = this.button3;
+            this.AcceptButton = this.CheckButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 266);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button3);
+            this.ClientSize = new System.Drawing.Size(292, 228);
+            this.Controls.Add(this.JsonAddButton);
+            this.Controls.Add(this.CheckButton);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.SchemaAddButton);
             this.Name = "ValidatorMainForm";
             this.Text = "JSON Validator - GUI ver";
             this.Load += new System.EventHandler(this.ValidatorMainForm_Load);
@@ -141,15 +141,15 @@
 
         #endregion
 
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.OpenFileDialog schemaFileDialog;
+        private System.Windows.Forms.Button SchemaAddButton;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.OpenFileDialog openFileDialog2;
+        private System.Windows.Forms.Button CheckButton;
+        private System.Windows.Forms.Button JsonAddButton;
+        private System.Windows.Forms.OpenFileDialog jsonFileDialog;
 
     }
 }

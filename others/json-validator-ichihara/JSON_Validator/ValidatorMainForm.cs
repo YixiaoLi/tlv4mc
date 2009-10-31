@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace JSON_Validator
 {
@@ -26,41 +27,53 @@ namespace JSON_Validator
             this.Activate();
         }
 
-        /* コントロールをダブルクリックして生成された文をそのまま使用 */
-        /* わかりやすいように名前を変えたほうが良い？　　　　　　　　 */
-
         // Shemaファイル入力ダイアログからの値入力
         // テキストボックスにファイルパスを入力するのみ
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void schemaFileDialog_FileOk(object sender, CancelEventArgs e)
         {
-            textBox1.Text = openFileDialog1.FileName;
+            textBox1.Text = schemaFileDialog.FileName;
         }
 
         // JSONファイル入力ダイアログからの値入力
         // テキストボックスにファイルパスを入力するのみ
-        private void openFileDialog2_FileOk(object sender, CancelEventArgs e)
+        private void jsonFileDialog_FileOk(object sender, CancelEventArgs e)
         {
-            textBox2.Text = openFileDialog2.FileName;
+            textBox2.Text = jsonFileDialog.FileName;
         }
 
         // Schemaファイル名をテキストボックスに入力する際に
         // ファイル入力ダイアログを使用する場合のダイアログ起動ボタン
-        private void button1_Click(object sender, EventArgs e)
+        private void SchemaAddButton_Click(object sender, EventArgs e)
         {
-            openFileDialog1.ShowDialog();
+            schemaFileDialog.ShowDialog();
         }
 
         // JSONファイル名をテキストボックスに入力する際に
         // ファイル入力ダイアログを使用する場合のダイアログ起動ボタン
-        private void button2_Click(object sender, EventArgs e)
+        private void JsonAddButton_Click(object sender, EventArgs e)
         {
-            openFileDialog2.ShowDialog();
+            jsonFileDialog.ShowDialog();
         }
 
         // Validate開始ボタン
-        private void button3_Click(object sender, EventArgs e)
+        private void CheckButton_Click(object sender, EventArgs e)
         {
-            JsonValidator validator = new JsonValidator(textBox1.Text, textBox2.Text);
+            string schema = null;  // Schemaファイルの中身
+            string json = null;    // JSONファイルの中身
+
+            try
+            {
+                schema = File.ReadAllText(textBox1.Text);
+                json = File.ReadAllText(textBox2.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(/*this,*/ex.Message, "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            JsonValidator validator = new JsonValidator(schema, json);
 
             switch (validator.Run())
             {
@@ -73,23 +86,16 @@ namespace JSON_Validator
                     break;
 
                 case Status.SchemaError:
-                    MessageBox.Show(/*this,*/"Can't parse JSON Schema.", "Error",
+                    MessageBox.Show(/*this,*/"Can't parse JSON Schema.\n" + validator.Message, "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
 
                 case Status.JsonError:
-                    MessageBox.Show(/*this,*/"Can't parse JSON.", "Error",
+                    MessageBox.Show(/*this,*/"Can't parse JSON.\n" + validator.Message, "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
             }
 
         }
-
-        [STAThread]
-        public static void Main()
-        {
-            Application.Run(new ValidatorMainForm());
-        }
-
     }
 }

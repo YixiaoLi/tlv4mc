@@ -66,6 +66,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Starter.cs" />
     <Compile Include="ValidatorMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
