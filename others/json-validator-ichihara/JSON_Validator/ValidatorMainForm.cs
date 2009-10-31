@@ -9,11 +9,21 @@ using System.Windows.Forms;
 
 namespace JSON_Validator
 {
+    // Validate開始ボタンでJsonValidator.Statusを使用する際
+    // 長すぎるためエイリアスを活用
+    using Status = JSON_Validator.JsonValidator.Status;
+
     public partial class ValidatorMainForm : Form
     {
         public ValidatorMainForm()
         {
             InitializeComponent();
+        }
+
+        // 起動と同時にフォームをアクティブにするため
+        private void ValidatorMainForm_Load(object sender, EventArgs e)
+        {
+            this.Activate();
         }
 
         /* コントロールをダブルクリックして生成された文をそのまま使用 */
@@ -25,7 +35,6 @@ namespace JSON_Validator
         {
             textBox1.Text = openFileDialog1.FileName;
         }
-
 
         // JSONファイル入力ダイアログからの値入力
         // テキストボックスにファイルパスを入力するのみ
@@ -53,6 +62,26 @@ namespace JSON_Validator
         {
             JsonValidator validator = new JsonValidator(textBox1.Text, textBox2.Text);
 
+            switch (validator.Run())
+            {
+                case Status.Valid:
+                    MessageBox.Show(/*this,*/"JSON is valid.", "Result");
+                    break;
+
+                case Status.Invalid:
+                    MessageBox.Show(/*this,*/"JSON is Invalid.", "Result");
+                    break;
+
+                case Status.SchemaError:
+                    MessageBox.Show(/*this,*/"Can't parse JSON Schema.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+
+                case Status.JsonError:
+                    MessageBox.Show(/*this,*/"Can't parse JSON.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+            }
 
         }
 
@@ -61,7 +90,6 @@ namespace JSON_Validator
         {
             Application.Run(new ValidatorMainForm());
         }
-
 
     }
 }
