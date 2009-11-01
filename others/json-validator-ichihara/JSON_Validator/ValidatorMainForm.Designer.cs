@@ -41,7 +41,7 @@
             // 
             // schemaFileDialog
             // 
-            this.schemaFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            this.schemaFileDialog.Filter = "JSON files (*.json)|*.json|txt files (*.txt)|*.txt|All files (*.*)|*.*";
             this.schemaFileDialog.FilterIndex = 2;
             this.schemaFileDialog.Title = "Schema file selection";
             this.schemaFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.schemaFileDialog_FileOk);
@@ -113,7 +113,7 @@
             // 
             // jsonFileDialog
             // 
-            this.jsonFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            this.jsonFileDialog.Filter = "JSON files (*.json)|*.json|txt files (*.txt)|*.txt|All files (*.*)|*.*";
             this.jsonFileDialog.FilterIndex = 2;
             this.jsonFileDialog.Title = "JSON file selection";
             this.jsonFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.jsonFileDialog_FileOk);
