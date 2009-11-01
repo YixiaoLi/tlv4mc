@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace JSON_Validator
 {
-    class Validator
+    public class Validator
     {
 
         public struct Result
@@ -33,6 +33,8 @@ namespace JSON_Validator
             }
         }
 
+        public Validator(){
+        }
         
         static private T open<T>(string  path, Func<StreamReader,T> f){
 
@@ -58,9 +60,9 @@ namespace JSON_Validator
         }
 
 
-        static public Result validate(string schemaContent, string json) {
+        static private Result validate(string schemaContent, string json) {
             JsonSchema schema = JsonSchema.Parse(schemaContent);
-           
+
             try
             {
                 JObject jsonObj = JObject.Parse(json);
@@ -72,8 +74,14 @@ namespace JSON_Validator
                 {
                     return new Result(Result.Type.Invalid);
                 }
-            }catch(JsonReaderException e){
-                 return new Result(Result.Type.IllFormed,e.Message);
+            }
+            catch (JsonReaderException e)
+            {
+                return new Result(Result.Type.IllFormed, e.Message);
+            }
+            catch (System.ArgumentException e)
+            {
+                return new Result(Result.Type.IllFormed, e.Message);
             }
         }
     }
