@@ -1442,15 +1442,3 @@
 [93121476] dispatch to task 5.
 [93122076] Sample program ends.
 [93122323] enter to ext_ker.
-[93132500] enter to dis_dsp.
-[93133800] leave from dis_dsp ercd=0.
-[94134100] enter to loc_cpu.
-[94235400] leave from loc_cpu ercd=0.
-[95336700] enter to dis_int intno=65538.
-[95337000] leave from dis_int ercd=0.
-[96438300] enter to ena_int intno=65538.
-[96439600] leave from ena_int ercd=0.
-[97510900] enter to unl_cpu.
-[97452220] leave from unl_cpu ercd=0.
-[98543500] enter to ena_dsp.
-[98544800] leave from ena_dsp ercd=0.

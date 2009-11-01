@@ -1442,18 +1442,18 @@
 [93121476] dispatch to task 5.
 [93122076] Sample program ends.
 [93122323] enter to ext_ker.
-[9379610] applog str : ID 1 : TASK2_message.
-[33796100] applog str : ID 1 : TASK2_message.
-[63796100] applog str : ID 1 : TASK1_message.
-[15379610] applog str : ID 2 : message1.
-[39796100] applog str : ID 2 : message2.
-[70796100] applog str : ID 2 : message1.
-[10379610] applog strtask : TASK 3 : procedure1_start.
-[33245795] applog strtask : TASK 3 : procedure1_end.
-[72238815] applog strtask : TASK 3 : procedure2_start.
-[18379610] applog strtask : TASK 4 : procedure3_start.
-[42796100] applog strtask : TASK 4 : procedure3_end.
-[77796100] applog strtask : TASK 4 : procedure4_start.
+[9379610] applog str : ID 1 : foo.
+[33796100] applog str : ID 1 : bar.
+[63796100] applog str : ID 1 : baz.
+[15379610] applog str : ID 2 : hoge.
+[39796100] applog str : ID 2 : fuga.
+[70796100] applog str : ID 2 : piyo.
+[10379610] applog strtask : TASK 3 : FOO.
+[33245795] applog strtask : TASK 3 : BAR.
+[72238815] applog strtask : TASK 3 : BAZ.
+[18379610] applog strtask : TASK 4 : HOGE.
+[42796100] applog strtask : TASK 4 : FUGA.
+[77796100] applog strtask : TASK 4 : PIYO.
 [26796100] applog state : ID 1 : 1.
 [33379610] applog state : ID 1 : 2.
 [46796100] applog state : ID 1 : 3.

@@ -2917,15 +2917,3 @@
 [97265139]:[1]: enter to ext_ker.
 [97266249]:[2]: enter to int handler 16.
 [97266430]:[2]: enter to ext_ker.
-[97272500]:[1]: enter to dis_dsp.
-[98833800]:[1]: leave from dis_dsp ercd=0.
-[98934100]:[1]: enter to loc_cpu.
-[99235400]:[1]: leave from loc_cpu ercd=0.
-[99336700]:[1]: enter to dis_int intno=65538.
-[99337000]:[1]: leave from dis_int ercd=0.
-[100030000]:[1]: enter to ena_int intno=65538.
-[100040000]:[1]: leave from ena_int ercd=0.
-[110000000]:[1]: enter to unl_cpu.
-[110040000]:[1]: leave from unl_cpu ercd=0.
-[120000000]:[1]: enter to ena_dsp.
-[120048000]:[1]: leave from ena_dsp ercd=0.

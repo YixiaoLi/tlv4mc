@@ -2917,18 +2917,18 @@
 [97265139]:[1]: enter to ext_ker.
 [97266249]:[2]: enter to int handler 16.
 [97266430]:[2]: enter to ext_ker.
-[10379610]:[1]: applog str : ID 1 : message1.
-[33796100]:[2]: applog str : ID 1 : message2.
-[63796100]:[1]: applog str : ID 1 : message3.
-[15379610]:[2]: applog str : ID 2 : message4.
-[39796100]:[1]: applog str : ID 2 : message5.
-[70796100]:[2]: applog str : ID 2 : message6.
-[10379610]:[1]: applog strtask : TASK 9 : procedure1_start.
-[36796100]:[1]: applog strtask : TASK 9 : procedure1_end.
-[69796100]:[1]: applog strtask : TASK 9 : procedure2_start.
-[18379610]:[1]: applog strtask : TASK 10 : procedure3_start.
-[42796100]:[1]: applog strtask : TASK 10 : procedure3_end.
-[77796100]:[1]: applog strtask : TASK 10 : procedure2_end.
+[10379610]:[1]: applog str : ID 1 : foo.
+[33796100]:[2]: applog str : ID 1 : bar.
+[63796100]:[1]: applog str : ID 1 : baz.
+[15379610]:[2]: applog str : ID 2 : hoge.
+[39796100]:[1]: applog str : ID 2 : fuga.
+[70796100]:[2]: applog str : ID 2 : piyo.
+[10379610]:[1]: applog strtask : TASK 9 : FOO.
+[36796100]:[1]: applog strtask : TASK 9 : BAR.
+[69796100]:[1]: applog strtask : TASK 9 : BAZ.
+[18379610]:[1]: applog strtask : TASK 10 : HOGE.
+[42796100]:[1]: applog strtask : TASK 10 : FUGA.
+[77796100]:[1]: applog strtask : TASK 10 : PIYO.
 [13796100]:[2]: applog state : ID 1 : 0.
 [26796100]:[1]: applog state : ID 1 : 1.
 [33379610]:[2]: applog state : ID 1 : 2.
