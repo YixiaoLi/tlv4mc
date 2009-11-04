@@ -48,16 +48,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUIValidator.cs">
+    <Compile Include="GUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUIValidator.Designer.cs">
-      <DependentUpon>GUIValidator.cs</DependentUpon>
+    <Compile Include="GUI.Designer.cs">
+      <DependentUpon>GUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="GUIValidator.resx">
-      <DependentUpon>GUIValidator.cs</DependentUpon>
+    <EmbeddedResource Include="GUI.resx">
+      <DependentUpon>GUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
