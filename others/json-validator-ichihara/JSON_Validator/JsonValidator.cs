@@ -31,6 +31,7 @@ namespace JSON_Validator
             JsonSchema schema = SchemaParse();
             JObject json = JsonParse();
 
+
             if (null == schema)
             {
                 return Status.SchemaError;
@@ -39,14 +40,24 @@ namespace JSON_Validator
             {
                 return Status.JsonError;
             }
-            else if (json.IsValid(schema))
-            {
-                return Status.Valid;
+
+            try
+            { 
+                if (json.IsValid(schema))
+                {
+                    return Status.Valid;
+                }
+                else
+                {
+                    return Status.Invalid;
+                }
             }
-            else
+            catch(Exception e)
             {
-                return Status.Invalid;
-            }
+                this.Message = e.Message;
+                Console.Error.WriteLine(e.StackTrace);
+                return Status.JsonError;     // 現在、Jsonにエラーを混入した場合のみ例外throw確認
+            }                                // schemaに関するものを確認次第対応
         }
 
         // JsonSchemaを設定してそのオブジェクトを返すメソッド
@@ -57,7 +68,7 @@ namespace JSON_Validator
             {
                 return JsonSchema.Parse(this.schema);  // JsonSchemaを設定 -> 細かいことは不明
             }
-            catch (JsonReaderException e)
+            catch (Exception e)
             {
                 this.Message = e.Message;
                 Console.Error.WriteLine(e.StackTrace);
