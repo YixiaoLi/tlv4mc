@@ -46,7 +46,7 @@ namespace GUI
         {
             try
             {
-                Validator.Result result = Validator.validateFile(jsonSchemaFileName,jsonFileName);
+                Validator.Result result = Validator.validateFile(jsonSchemaFileName, jsonFileName);
                 switch (result.type)
                 {
                     case Validator.Result.Type.Valid:
@@ -70,7 +70,6 @@ namespace GUI
             }
 
         }
-
 
     }
 }
