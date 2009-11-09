@@ -91,7 +91,7 @@
             this.versionLabel.Font = new System.Drawing.Font("MS UI Gothic", 12F);
             this.versionLabel.Location = new System.Drawing.Point(14, 47);
             this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(106, 16);
+            this.versionLabel.Size = new System.Drawing.Size(56, 16);
             this.versionLabel.TabIndex = 1;
             this.versionLabel.Text = "version";
             // 
@@ -111,7 +111,7 @@
             this.buildLabel.Font = new System.Drawing.Font("MS UI Gothic", 12F);
             this.buildLabel.Location = new System.Drawing.Point(14, 71);
             this.buildLabel.Name = "buildLabel";
-            this.buildLabel.Size = new System.Drawing.Size(81, 16);
+            this.buildLabel.Size = new System.Drawing.Size(38, 16);
             this.buildLabel.TabIndex = 3;
             this.buildLabel.Text = "build";
             // 
@@ -131,10 +131,10 @@
             this.copyrightLabel.Font = new System.Drawing.Font("MS UI Gothic", 12F);
             this.copyrightLabel.Location = new System.Drawing.Point(8, 103);
             this.copyrightLabel.Name = "copyrightLabel";
-            this.copyrightLabel.Size = new System.Drawing.Size(512, 32);
+            this.copyrightLabel.Size = new System.Drawing.Size(319, 16);
             this.copyrightLabel.TabIndex = 5;
-            this.copyrightLabel.Text = "Copyright (C) 2008,2009 by Embedded and Real-Time Systems Laboratory\r\n           " +
-                " Graduate School of Information Science, Nagoya Univ., JAPAN";
+            this.copyrightLabel.Text = "Copyright (C) 2008,2009 Nagoya Univ., JAPAN";
+            this.copyrightLabel.Click += new System.EventHandler(this.copyrightLabel_Click);
             // 
             // lineLabel
             // 
@@ -165,6 +165,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "TLVについて";
+            this.Load += new System.EventHandler(this.AboutForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.logoPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
