@@ -20,19 +20,6 @@ namespace GUI
             InitializeComponent();
         }
 
-        private void JSON_GUI_Validator_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void JSONFile_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void JSONSchemaFile_TextChanged(object sender, EventArgs e)
-        {
-        }
-
         private void JSONButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
@@ -53,10 +40,6 @@ namespace GUI
                 JSONSchemaFile.Text = jsonSchemaFileName;
             }
 
-        }
-
-        private void ResultReport_TextChanged(object sender, EventArgs e)
-        {
         }
 
         private void ValidateButton_Click(object sender, EventArgs e)

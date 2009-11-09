@@ -52,8 +52,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="resource\ConvetSchema.txt" />
     <Content Include="resource\JSON_input1.txt" />
     <Content Include="resource\JSON_Schema1.txt" />
+    <Content Include="resource\JSON_TLV.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Json35r5\Src\Newtonsoft.Json\Newtonsoft.Json.csproj">
