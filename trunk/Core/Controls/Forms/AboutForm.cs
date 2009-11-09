@@ -67,5 +67,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls.Forms
         {
 
         }
+
+        private void copyrightLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AboutForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
