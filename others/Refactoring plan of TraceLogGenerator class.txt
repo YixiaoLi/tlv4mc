@@ -1,0 +1,46 @@
+public class ConvertRuleReader{
+  /**
+   * 一致する一番すてきな変換ルールを返す
+   */
+    public static ConvertRule read(string traceLogFilePath, ResourceData resourceData){
+    }
+}
+
+public interface ConvertRule{
+  /**
+   * 実際に変換を行うメソッド
+   * これをいろんなクラスで実装して、どのルールを使うかの条件判定を排除
+   * 類似(see-also)：strategyパターン
+   */
+   TraceLog[] convert(string[] lines);
+}
+
+/**
+ * JSONを用いた旧ルールに対応する実装
+ */
+public class PlainOldConvertRule : ConvertRule{
+    private Dictionary<string, Json> data_;
+    TraceLog[] convert(string[] lines){
+        .....
+    }
+}
+
+/**
+ * スクリプト拡張に対応する実装
+ */
+public class ScriptConvertRule : ConvertRule{
+   ......
+}
+
+
+-----
+/**
+ * 利用例
+ * if文がなくてcoooooooolでしょ;-)
+ */
+var reader = new ConvertRuleReader(....);
+var rule = reader.read();
+return rule.Convert(logs);
+
+
+
