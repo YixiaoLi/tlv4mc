@@ -1,7 +1,7 @@
 
-	TraceLogVisualizer(TLV)（バージョン 1.1rc）
+	TraceLogVisualizer(TLV)（バージョン 1.1）
 
-					最終更新 : 2009年10月1日
+					最終更新 : 2009年11月16日
 
 ----------------------------------------------------------------------
  TraceLogVisualizer(TLV)
@@ -56,10 +56,10 @@ TLVの使用方法や変換ルール・可視化ルールに関するマニュ�
      TLVマニュアル
 
   ・TLV_convert_rules.pdf
-     TOPPERS/ASPカーネルのトレースログの標準形式トレースログへの変換ルール例
+     TOPPERS/ASPカーネルのトレースログの標準形式トレースログへの変換ルール例
 
   ・TLV_visualize_rules.pdf
-     TOPPERS/ASPカーネル標準トレースログの可視化変換ルール例
+     TOPPERS/ASPカーネル標準トレースログの可視化変換ルール例
 
 【サポートするログ形式】
 
@@ -94,17 +94,14 @@ TOPPERSライセンスに関するFAQが，以下のページにあります．
 
 【質問・バグレポート・意見等の送付先】
 
-TLVをより良いものにするためのご意見等を歓迎します．TLVに関する質問やバ
-グレポート，ご意見等は，TOPPERSプロジェクトの会員はTOPPERS開発者メーリ
-ングリスト（dev＠toppers.jp）宛に，その他の方はTOPPERSユーザーズメーリ
-ングリスト（users＠toppers.jp）宛にお願いします．もしくは，tlv＠
-nces.is.nagoya-u.ac.jp にお送り下さい．
+TLVをより良いものにするためのご意見等を歓迎します．
+TLVに関する質問やバグレポート，ご意見等は，
+tlv＠nces.is.nagoya-u.ac.jp 宛にお送り下さい．
 （＠は@に置き換えて下さい）
 
-TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
-説明があります．
+【公式サイト】
 
-	http://www.toppers.jp/community.html
+    http://www.toppers.jp/tlv.html
 
 【ファイル構成】
 
@@ -183,5 +180,8 @@ TOPPERSユーザーズメーリングリストへの登録方法については�
 【バージョン履歴】
 
 	2009年05月13日	Release	1.0rc1		TOPPERS会員向け早期リリース
+	2009年10月01日	Release	1.1rc		TOPPERS会員向け早期リリース
+	2009年10月26日	Release	1.1rc2		TOPPERS会員向け早期リリース
+	2009年11月16日	Release	1.1	    	一般向けリリース
 
 以上．
