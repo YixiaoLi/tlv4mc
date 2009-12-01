@@ -355,7 +355,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				else if (_cursorMode == CursorModes.Move)
 				{
                     int _x = _lastX + x - _mouseDownX - 5;
-                    ViewingAreaTimeLine.MoveBySettingFromTime(ViewingAreaTimeLine.MinTime + Time.FromX(ViewingAreaTimeLine.MinTime, ViewingAreaTimeLine.MaxTime, _scale.Width, _x).Round(0));
+                    ViewingAreaTimeLine.MoveBySettingFromTime(Time.FromX(ViewingAreaTimeLine.MinTime, ViewingAreaTimeLine.MaxTime, _scale.Width, _x).Round(0));
 				}
 				else if (_cursorMode == CursorModes.Normal)
 				{
