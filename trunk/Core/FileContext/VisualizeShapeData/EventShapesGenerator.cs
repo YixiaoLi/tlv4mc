@@ -367,7 +367,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     {
                         if (condition.Contains("${FROM_ARG"))
                             condition = applyARG("FROM_ARG", condition, ((BehaviorHappenLogData)from).Behavior.Arguments.ToString().Split(','));
-                        if (condition.Contains("${ARG"))
+                        if (condition.Contains("${ARG}"))
                             condition = applyARG("ARG", condition, ((BehaviorHappenLogData)from).Behavior.Arguments.ToString().Split(','));
                     }
                 }
