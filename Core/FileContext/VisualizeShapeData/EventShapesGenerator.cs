@@ -365,9 +365,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
                     if (from is BehaviorHappenLogData)
                     {
-                        if (condition.Contains("${FROM_ARG}"))
+                        if (condition.Contains("${FROM_ARG"))
                             condition = applyARG("FROM_ARG", condition, ((BehaviorHappenLogData)from).Behavior.Arguments.ToString().Split(','));
-                        if (condition.Contains("${ARG}"))
+                        if (condition.Contains("${ARG"))
                             condition = applyARG("ARG", condition, ((BehaviorHappenLogData)from).Behavior.Arguments.ToString().Split(','));
                     }
                 }
@@ -392,9 +392,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
                     if (to is BehaviorHappenLogData)
                     {
-                        if (condition.Contains("${TO_ARG}"))
+                        if (condition.Contains("${TO_ARG"))
                             condition = applyARG("TO_ARG", condition, ((BehaviorHappenLogData)to).Behavior.Arguments.ToString().Split(','));
-                        if (condition.Contains("${ARG}"))
+                        if (condition.Contains("${ARG"))
                             condition = applyARG("ARG", condition, ((BehaviorHappenLogData)to).Behavior.Arguments.ToString().Split(','));
                     }
                 }

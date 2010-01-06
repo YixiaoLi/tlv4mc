@@ -425,19 +425,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 				_dataSource.Sorting += (o, e) =>
 					{
-
 						this.Invoke(new MethodInvoker(() =>
-                        {
-                            dataGridView.Enabled = false;
+						{
 							ApplicationFactory.StatusManager.ShowProcessing(this.GetType().ToString() + ":sorting", "ソート中");
 						}));
 					};
 				_dataSource.Sorted += (o, e) =>
 					{
-
 						this.Invoke(new MethodInvoker(() =>
-                        {
-                            dataGridView.Enabled = true;
+						{
 							ApplicationFactory.StatusManager.HideProcessing(this.GetType().ToString() + ":sorting");
 							Refresh();
 						}));
