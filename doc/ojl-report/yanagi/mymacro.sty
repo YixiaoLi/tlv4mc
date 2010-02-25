@@ -1,0 +1,59 @@
+\usepackage[dviout]{color}
+\usepackage{listings}
+\usepackage{amsmath}
+
+\bibliographystyle{jipsj}
+\renewcommand{\lstlistingname}{リスト}
+\lstset{
+escapechar=\%,%
+columns=[l]{fullflexible}, % 文字をつめる
+tabsize={8},%
+basicstyle=\footnotesize,%
+classoffset=1,%
+frame=tRBl,framesep=5pt,%
+showstringspaces=false,%
+numbers=left,stepnumber=1,numberstyle=\footnotesize%
+}
+
+\newcommand{\figref}[1]{図~\ref{#1}}
+\newcommand{\tabref}[1]{表~\ref{#1}}
+\newcommand{\sref}[1]{\ref{#1}~節}
+
+\bibliographystyle{jipsj}
+\newcommand{\step}[1]{\textbf{#1} }
+\renewcommand{\lstlistingname}{リスト}
+\lstset{
+escapechar=\%,%
+columns=[l]{fullflexible}, % 文字をつめる
+tabsize={8},%
+basicstyle=\footnotesize,%
+classoffset=1,%
+frame=tRBl,framesep=5pt,%
+showstringspaces=false,%
+numbers=left,stepnumber=1,numberstyle=\footnotesize%
+}
+
+% ------------------------------------------------------------------------------------------------------------------------
+\newcommand{\tracelog}{\ensuremath{\mathtt{l}}}
+\newcommand{\event}{\ensuremath{\mathtt{e}}}
+\newcommand{\res}{\ensuremath{\mathtt{r}}}
+\newcommand{\todo}[1]{\underline{☆ #1}}
+
+\newcommand{\Log}{\ensuremath{\mathtt{L}}}
+\newcommand{\GoodLog}{\ensuremath{\mathtt{GL}}}
+\newcommand{\BadLog}{\ensuremath{\mathtt{BL}}}
+\newcommand{\gl}{\ensuremath{\tracelog_g}}
+\newcommand{\bl}{\ensuremath{\tracelog_b}}
+\newcommand{\Path}[1]{\ensuremath{\mathtt{path}(#1)}}
+\newcommand{\ch}{\ensuremath{\mathrm{Ch}}}
+
+\newcommand{\leom}{Lorem ipsum dolor sit amet, consectetur
+  adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+  exercitation ullamco laboris nisi ut aliquip ex ea commodo
+  consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+  esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+  cupidatat non proident, sunt in culpa qui officia deserunt mollit
+  anim id est laborum.}
+\newcommand{\URL}[1]{\href{#1}{#1}}
+\newcommand{\code}[1]{\texttt{#1}}

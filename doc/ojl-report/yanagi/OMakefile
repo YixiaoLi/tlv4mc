@@ -1,0 +1,12 @@
+.PHONY: clean
+LATEX = platex
+DVIPDFM = dvipdfmx
+DVIPDFMFLAGS = -d 5 -p a4
+BIBTEX = pbibtex
+
+LaTeXDocument(yanagi-ojl, yanagi-ojl intro tlv achievement applog profiling)
+
+.DEFAULT: yanagi-ojl.dvi yanagi-ojl.pdf
+#.DEFAULT: yanagi-ojl.dvi 
+clean:
+	rm -f *~ *.omc *.aux *.log *.fls *.toc *.dvi *.bbl *.blg *.bmc *.pbm

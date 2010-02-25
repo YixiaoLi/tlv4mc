@@ -1,0 +1,114 @@
+\documentclass[a4paper,12pt]{jarticle}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{mymacros}
+\usepackage{here}
+\usepackage{morefloats}
+\textheight 9.0in
+\textwidth 6.0in
+\topmargin 0in
+\oddsidemargin .2in
+\evensidemargin .2in
+
+\renewcommand{\baselinestretch}{1}
+\newcounter{mysection}
+\def\thesection{\large\arabic{section}}
+\newcommand{\mysection}[1]{\vspace{-2zh}\section{\large #1}\vspace{-0.5zh}}
+
+\begin{document}
+\pagestyle{empty}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 和文要旨
+%-------------------------------------------------------------------------
+\vspace*{-1in}
+\begin{center}
+\large\sffamily\gtfamily トレースログ可視化ツール(TLV)に対する\\
+アプリログ機能追加とプロファイリング
+\end{center}
+\begin{flushright}
+\large\sffamily\gtfamily
+350802254\ \ \ \ 柳澤 大祐（名古屋大学）
+\end{flushright}
+\begin{center}
+\large\sffamily\gtfamily 要旨
+\end{center}
+{
+\setlength{\baselineskip}{0.9\normalbaselineskip}
+
+
+%\mysection{はじめに}
+近年，組込みシステムの分野においてもマルチコアの導入が進んでいる．
+マルチコア環境では，ブレークポイントやステップ実行を用いた実行時のデバッグが困難である．
+そのため， RTOS等のトレースログを用いた実行後の解析によるデバッグが有用と考えられるが，サイズの大きなトレースログを直接開発者が扱うのは困難である．
+そこで本OJLでは，トレースログを可視化表示することで解析を容易にするTraceLogVisualizer(TLV)の開発を目的とする． 
+
+TLVは，各種RTOSやシミュレータ，エミュレータなどが出力するトレースログを図\ref{fig:tlv}のように可視化表示するツールである. 
+TLVは，形式が異なるトレースログを変換ルールに従い標準形式トレースログに変換し，その標準形式トレースログに対して可視化ルールを適用することによって可視化表示する．
+各ルールは開発者が自由に記述できるため，様々なトレースログや様々な可視化方法を扱うことが可能である．
+
+%これまでに，ツールの基本機能の実装は完了し，マルチコアRTOSを含む複数の形式のトレースログの可視化，可視化項目の選択や拡張が可能であることを確認した．
+%2009年度前期には，アプリケーションログ機能を実装した．
+%また2009年度後期には，高速化への第一歩として，プロファイリングを行った．
+
+\begin{figure}[b!]
+ \begin{minipage}{0.4\textwidth}
+  \begin{center}
+   \includegraphics[width=\textwidth]{pic/tlv.png}
+  \end{center}
+  \vspace{-2zh}
+  \caption{TLVスクリーンショット}
+  \label{fig:tlv}
+ \end{minipage}
+ \hspace{0.2\textwidth}
+ \begin{minipage}{0.4\textwidth}
+  \begin{center}
+   \includegraphics[width=\textwidth]{pic/applog.png}
+  \end{center}
+  \vspace{-2zh}
+  \caption{アプリケーションログ拡張}
+  \label{fig:applog}
+ \end{minipage}
+\end{figure}
+ 
+%\mysection{実施内容}
+開発は図\ref{fig:schedule}のスケジュールに従い実行した. 
+各フェーズにおいて，前のフェーズの作業内容を反映させたリリースを行った．
+これらリリースを通し，要求の収集を行った．
+%2008年度後期のフェーズ3では単体テスト・システムテストと，機能拡張のための要件抽出を行った．
+%2009年度前期のフェーズ4では要求の収集と整理，実装を行い，特にアプリケーションログ機能を実装した．
+%また，フェーズ3を反映したv1.0rcを公開した．
+%2009年度後期のフェーズ5ではアプリケーションの動作速度向上を目的として，プロファイリングを行った．
+%また，フェーズ4を反映したv1.1を公開した．
+
+\begin{figure}[b!]
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{pic/whole_schedule.png}
+  \end{center}
+  \vspace{-2zh}
+  \caption{全体スケジュール}
+  \label{fig:schedule}
+\end{figure}
+%\mysection{アプリケーションログ機能}
+これまでのTLVには，TOPPERSカーネルが標準で出力するログしか対応しないという問題があった．
+そこで，汎用的に使える可視化方法を提供することを目標とし，
+文字列やユーザ定義状態を図\ref{fig:applog}のように可視化できる機能を実装した．
+%そこで，汎用的に使える可視化方法を提供することでユーザの余分な工数を減らすこと，およびTLVの機能を強化することを目標とし，ユーザアプリケーションが出力するログを可視化できるアプリケーションログ機能を実装することとした．
+%今までに収集した要求のなかで，件数が多く，対応が比較的容易であるという観点から，次の4つの要求を選択した．
+%(1)変数値変化の可視化，(2)文字列出力の可視化，(3)ユーザ定義状態変化の可視化，(4)関数コールグラフ表示である．
+%そこで，これら要求を実現するために，TLVにおいて任意文字列の可視化および任意状態の可視化ができるように変換ルールおよび可視化ルールを拡張した．
+%
+%ユーザアプリケーション中に \textit{syslog(``applog str ID 1 : foo.'')}
+%のような記述を挿入することで，図\ref{fig:applog}のような可視化を得ることができる．
+
+%\mysection{プロファイリング}
+また，高速化の要求に対応するため，実際の変換処理でどこに時間がかかっているかをプロファイリングし，
+処理時間の短縮への寄与が大きい箇所を特定した．
+%
+%プロファイリングにはサンプリングとインストルメントの２通りの手法がある．
+%前者は，プログラムのスタックトップを定期的に確認することで，スタックトップに多く現れる処理が時間を消費していると判断する手法である．
+%後者は，処理の前後にストップウォッチを挿入し，実際の処理時間を測定する手法である．
+%
+%インストルメントによりプロファイリングを行った結果，
+%変換ルールとマッチするオブジェクトを検索する処理に多くの時間がかかっていることが判明した．
+
+}
+\end{document}

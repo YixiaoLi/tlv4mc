@@ -1,0 +1,24 @@
+.PHONY: clean all refresh
+LATEX = platex-utf8
+DVIPDFM = dvipdfmx
+DVIPDFMFLAGS = -p a4
+
+LaTeXDocument(document.pat, document.pat intro.pat actual.pat se.pat ref.pat conclusion.pat tlv.pat)
+LaTeXDocument(abstract.pat, abstract.pat)
+
+%.pat.tex: %.tex
+        sed 's/、/，/g;s/。/．/g' $< > $@
+
+.DEFAULT: all
+
+all: mizuno-ojl.pdf
+
+mizuno-ojl.pdf: document.pat.pdf
+	ln-or-cp $< $@
+
+refresh: document-a.pdf
+	killall Preview || true
+	system(open -g document-a.pdf)
+
+clean:
+	rm -f *.omc *.dvi *.aux *.log *~ *.fls *.pdf document-a.tex *.pat.tex

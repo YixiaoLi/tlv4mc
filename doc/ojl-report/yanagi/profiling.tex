@@ -1,0 +1,272 @@
+\chapter{プロファイリング}
+\label{profiling}
+\section{概要}
+\paragraph{目的}　\\
+TLVには，高速化をのぞむ要望が寄せられることが多い．
+ログの種類や長さに依存するものの，可視化表示が完了するまでに
+100分かかる事例も報告されている．
+しかしながら，高速化は難度の高い課題であるため，
+今まで着手することを見合わせていた．
+
+今回，高速化に集中的に取り組むことになり，
+その第一段階として，ボトルネックを調査するために，
+プロファイリングを行うこととなった．
+
+\subsection{プロファイラの選定}
+プロファイリングを実施するにあたって，プロファイラを選定する必要があった．
+プロファイラは数多く存在するが，その中から入手性などを考慮して
+以下の3つを選択肢とした．
+
+\begin{itemize}
+  \item NProf
+  \item CLRプロファイラ
+  \item Visual Studio 2008 Team Suite
+\end{itemize}
+
+\paragraph{NProf}　\\
+NProf \footnote{\url{http://code.google.com/p/nprof/}}
+は，.NET Frameworkに対応したオープンソースのプロファイラである．
+\figref{fig:nprof}がスクリーンショットである．
+オープンソースソフトウェアなので入手しやすいという利点がある．
+しかし，次の欠点から採用を見送った．
+
+\begin{itemize}
+  \item 機能が少ない．例えば，計算時間を割合でしか表示できない．
+  \item 利用者が多くなく，情報収集しづらい．
+  \item 開発が停止している．
+\end{itemize}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{pic/nprof.eps}
+  \end{center}
+  \caption{NProfのスクリーンショット}
+  \label{fig:nprof}
+\end{figure}
+
+
+\paragraph{CLRプロファイラ}　\\
+CLRプロファイラ
+\footnote{\url{http://msdn.microsoft.com/ja-jp/library/ms979205.aspx}}
+は，Microsoftが提供する.NET Framework用のプロファイラである．
+ヒープメモリの状態やガベージコレクションを計測することができる．
+\figref{fig:clr-profiler}がスクリーンショットである．
+
+無償で利用できるので入手しやすいが，
+メモリの状態表示が主で，関数の呼び出し回数などの時間に関する機能は
+あまり力が入っておらず，
+時間計測を目的とする今回の利用には向かないと判断した．
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{pic/clr_profiler.eps}
+  \end{center}
+  \caption{CLR プロファイラのスクリーンショット}
+  \label{fig:clr-profiler}
+\end{figure}
+
+\paragraph{Visual Studio 2008 Team Suite}　\\
+Visual Studio 2008 Team Suite
+\footnote{\url{http://msdn.microsoft.com/ja-jp/teamsystem/bb933734.aspx}}
+は，MicrosoftのVisual Studio 2008のバリエーションであり，
+Professionalの機能に加えて大規模開発向けのさまざまな機能が搭載されている．
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{pic/teamsuite.eps}
+  \end{center}
+  \caption{Visual Studio 2008 Team Suiteのスクリーンショット}
+  \label{fig:teamsuite}
+\end{figure}
+
+TLVの開発環境がMicrosoft Visual Studio 2008であり， 
+また欠点である入手性もMSDN AAにより解決できると判明したため，
+プロファイラとして Visual Studio 2008 Team Suite（以下Team Suite）
+を用いることとした．
+
+\subsection{プロファイリングの種別}
+Team Suiteのプロファイラには，サンプリングおよびインストルメントの2つの
+手法が存在する．
+
+サンプリングは，プログラムを一時停止し，その時コールスタック
+の一番上にあるメソッドを記録する．
+これを一定時間ごとに繰り返し，プログラムが終了したらこれらを集計する．
+これにより，もっとも多くスタックトップに現れたメソッドが
+もっとも多くの時間を消費していることが分かる．
+プログラムの実行速度低下はインストルメントに比べて小さいという利点があるが，
+処理時間の少ないメソッドが大量に呼ばれ，
+そこがボトルネックとなっている場合はそれを検出できない場合がある．
+
+インストルメントは，非常に小さいメソッドを除いた全てのメソッドの開始と終了に
+タイマを挿入し，プログラム終了後にこれらを集計する．
+これによりほぼ全メソッドの実行時間を測定することができるので，
+細かい違いが求められる際やサンプリングでは詳細が判明しない際に用いる．
+ただし，メソッドの開始および終了に挿入されるコードによるオーバーヘッドが
+かなり大きく，通常のプログラムに比べて10倍以上時間がかかる点，
+また収集されるデータが膨大なため，集計にかかる時間もかなり大きい点が
+欠点である．
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{pic/sampling.eps}
+  \end{center}
+  \caption{サンプリングでプロファイリングをしたスクリーンショット}
+  \label{fig:sampling}
+\end{figure}
+
+そこで，まずはサンプリングによりプロファイリングを試みた．
+その結果，mscoworks.dll，OLEAUT32.dllおよびCLRStubOrUnknownAddressといった
+システムコールとおぼしき項目が並び（\figref{fig:sampling}），
+TLVのどの処理が時間を要しているのかが判断しづらかった．
+以上より，
+インストルメントによりプロファイリングを行うこととした．
+
+\subsection{測定方法}
+今回の測定では，\figref{fig:tlv}にある標準形式変換を対象としている．
+もう一方の図形データ生成は対象としなかった．
+そのため，以下の手順でプロファイリングを行った．
+
+\begin{enumerate}
+  \item Team Suiteのウィザードにて初期設定を行った．この際，
+    方式をインストルメント，対象を実行ファイルとした．
+    実行ファイルは，Releaseビルドされたものを指定した．
+  \item Team Suiteにて，「プロファイルを一時停止して起動」ボタンから
+    TLVを起動．
+  \item TLVにて，新規作成ウィザードを起動し，asp\_short.resおよび
+    asp\_short.logを指定し，即座に変換処理が可能となるように準備した．
+  \item Team Suiteにて，「収集の再開」ボタンからプロファイラを実行させた．
+  \item TLVにて，新規作成ウィザードのOKボタンを押し，ログの処理を開始した．
+  \item 標準形式への変換処理が完了し，可視化処理へと移行した段階で
+    Team Suiteの「収集の一時停止」ボタンを押してプロファイラを停止させた．
+  \item 可視化処理が完了した段階でTLVを終了させた．
+  \item Team Suiteの集計処理が実行され，プロファイル結果が出力された．
+\end{enumerate}
+
+一時停止した状態で起動した理由は，
+GUIアプリケーションの場合，起動時からプロファイリングの情報収集をしていると
+実際に計測したい処理以外の部分が多く入ってしまうので，
+その影響を最小限にするためである．GUIアプリケーションの場合，
+起動時からプロファイリングの情報収集をしていると
+実際に計測したい処理以外の部分が多く入ってしまうためである．
+
+\section{プロファイリング結果}
+Team Suiteの「プロセス」ビューからアプリケーションの実行時間を調べたところ，
+175秒であった．
+一方，TLVの実行ファイルが消費したアプリケーション時間を
+「モジュール」ビューから調べたところ，49.7秒だった．
+アプリケーション時間とは，
+プロファイリングしたコードの直接実行にかかった時間である．
+システムコールの呼び出しにかかった時間や，
+他のスレッドの実行の待機時間は除外される．
+ここから，差し引き125.3秒はこれらのオーバーヘッドである．
+
+次に，「関数」ビューにて，「アプリケーション時間 \%（関数のみ）」の列を降順にソートし，時間時間の大きいものを調査した．
+「関数のみ」とは，その関数のみの実行時間であり，外部関数の呼び出しにかかった時間を含まないことを意味する．
+この結果次に列挙するクラスに含まれるメソッドの実行時間が大半を占め，残りはごく少数であることが分かった．
+
+\begin{itemize}
+  \item Core.TraceLogData
+  \item System.Linqパッケージ
+  \item System.Collectionsパッケージ
+  \item Core.Time
+  \item Core.LogData
+\end{itemize}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{pic/time-graph.eps}
+  \end{center}
+  \caption{アプリケーション時間に占める割合}
+  \label{fig:time-graph}
+\end{figure}
+
+これらのクラス群が占める実行時間をグラフにすると\figref{fig:time-graph}
+となる．
+グラフより，これら5群のみで全体の56\%を占めていることが分かる．
+特に，もっとも実行時間の長いCore.TraceLogDataクラスは18\%を占める．
+次節にて，クラス群ごとに詳細とそれにたいする改善案を述べる．
+
+\section{改善案}
+\subsection{Core.TraceLogData}
+TraceLogDataクラスを詳細にみると，\tabref{tab:tracelogdata}のようになる．
+上位の2メソッドで13.71\%を占める．
+これらメソッドはLINQ（後述）の検索条件を指定するラムダ式である．
+ラムダ式とは，特定の記法を用いることで匿名メソッドを簡単に記述できる
+記法である．
+これらラムダ式はそれぞれ短いのでこれ以上の短縮は不可能だが，
+ここでは一つのログを基準に，それより時刻が早いログを検索するために用いられている．
+改善案としては，LINQは線形探索を行う点に注目し，
+ログの格納にO(logn)のデータ構造を利用するというアプローチが考えられる．
+
+\begin{table}
+  \begin{center}
+  \caption{TraceLogDataクラスのプロファイル詳細結果}
+  \label{tab:tracelogdata}
+    \includegraphics[width=\textwidth]{pic/table-tracelogdata.eps}
+  \end{center}
+\end{table}
+
+\subsection{System.LinqおよびSystem.Collections}
+LINQ \footnote{http://msdn.microsoft.com/ja-jp/library/bb308959.aspx}
+とは，System.Collectionsに含まれる各種コレクションに対して，
+SQL文のような検索クエリを発行できる仕組みである．
+\tabref{tab:linq}をみると，最上位のメソッドが6.5\%の実行時間を
+占めていることが分かる．
+
+また，LINQをはじめ各所で用いられているSystem.Collectionsパッケージの結果は
+\tabref{tab:collections}に記述されている．
+これをみると，MoveNext()メソッドが5.88\%を占めている．
+
+これらより，LINQおよびCollectionsが使われている場所はいくつかあるが，
+これも先ほどと同様に効率のよいデータ構造を採用し，検索にかかる時間を
+低減することが有効だと考える．
+
+\begin{table}
+  \begin{center}
+  \caption{System.Linqパッケージのプロファイル詳細結果}
+  \label{tab:linq}
+    \includegraphics[width=\textwidth]{pic/table-linq.eps}
+  \end{center}
+\end{table}
+
+\begin{table}
+  \begin{center}
+  \caption{System.Collectionsパッケージのプロファイル詳細結果}
+  \label{tab:collections}
+    \includegraphics[width=\textwidth]{pic/table-collections.eps}
+  \end{center}
+\end{table}
+
+\subsection{Core.Time}
+Timeクラスの場合は，Time2つ同士の大小を比較するメソッドが9.47\%を占めている．\figref{tab:time}はTimeクラスの結果である．
+これらメソッドは大変小さなものなので，これ以上の高速化は望めない．
+しかし，呼び出し回数が600万回以上あるため，全体の一部を占めている．
+
+これの対策は，Timeクラスを利用しているクラスを突き止め，そのクラスで行われるTimeの呼び出しの回数を減らすことが挙げられる．
+
+\begin{table}
+  \begin{center}
+  \caption{Timeクラスのプロファイル詳細結果}
+  \label{tab:time}
+    \includegraphics[width=\textwidth]{pic/table-time.eps}
+  \end{center}
+\end{table}
+
+
+\subsection{Core.LogData}
+\figref{tab:logdata}はLogDataクラスの結果である．
+LogDataクラスは大変小さいクラスで，
+getter/setterしか存在しない．
+しかし，呼び出し回数が600万回以上あるため，全体の一部を占めている．
+
+これの対策は，Time同様にLogDataの呼び出し箇所を調べ，
+呼び出し回数を減らせるようなら減らすことが挙げられる．
+
+\begin{table}
+  \begin{center}
+  \caption{LogDataクラスのプロファイル詳細結果}
+  \label{tab:logdata}
+    \includegraphics[width=\textwidth]{pic/table-logdata.eps}
+  \end{center}
+\end{table}
+

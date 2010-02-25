@@ -1,0 +1,562 @@
+\chapter{アプリログ機能拡張}
+\label{applog}
+\section{概要}
+
+\paragraph{目的}　\\
+これまでに寄せられたTLVへの要望として、いわゆるprintfデバッグを行いたいというものがあった。
+これが可能となると、一般的なprintfデバッグによる出力をTLVのタイムライン上に表示させることによって、
+メッセージが出力されたときのタスク状態などが一目でわかるという利点がある。
+この要望を実現するものがアプリログ拡張である。
+また、関数の呼び出し関係や列挙型変数の値などを、タスク状態のように
+可視化したいという要望があったため、これに対してもアプリログ拡張で対応する。
+
+本拡張はTLVソースコードには触れず、リソースファイルやルールなどの記述のみで
+実現することとした。
+ソースコードに手を加えると、サブウィンドウやポップアップなどで情報を表示できるという利点があったが、
+拡張に時間がかかるという点と、
+TLVは変換ルール・可視化ルールによる汎用性・拡張性を特徴としているので、
+開発者自身がその効果を確認するという点が理由である。
+
+\paragraph{概要}　\\
+本拡張では、次の4種類の可視化方法を提供する。
+\begin{itemize}
+  \item 文字列の可視化
+    \begin{description}
+      \item[{\em タスク文字列可視化}] タスクに関連する出力を、
+        タスクの可視化行に重ねて表示
+      \item[{\em 文字列可視化}] 特定のタスクに関連しない出力を、
+        独立の行に可視化表示
+    \end{description}
+  \item ユーザ定義状態の可視化
+    \begin{description}
+      \item[{\em タスクユーザ定義状態}] タスクに関連するユーザ定義状態を、
+        タスクの可視化行に重ねて表示
+      \item[{\em ユーザ定義状態可視化}] 特定のタスクに関連しない出力を、
+        独立の行に可視化表示
+    \end{description}
+\end{itemize}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{pic/applog_string.eps}
+  \end{center}
+  \caption{文字列の可視化}
+  \label{fig:app_str}
+\end{figure}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{pic/applog_state.eps}
+  \end{center}
+  \caption{ユーザ定義状態の可視化}
+  \label{fig:app_state}
+\end{figure}
+
+文字列の可視化とは、\figref{fig:app_str}のように、指定時刻に
+指定文字列を表示するものである。
+これにより、ユーザはデバッグメッセージ、変数値を可視化できる。
+
+また、ユーザ定義状態の可視化とは、\figref{fig:app_state}のように、
+タスクやハンドラなどの状態とは別個の状態を表示するものである。
+ユーザは、それぞれのユーザ定義状態が何を意味するかをユーザ側で定義し、
+これを可視化できる。
+
+\paragraph{利用法}　\\
+本機能をユーザアプリケーションから利用する場合は、以下の手順で行う。
+
+\begin{enumerate}
+  \item リソースファイルに追記\\
+    {\em タスクに関連しない可視化のときのみ}行う。
+    新しく描画する行を追加するので、それに対応した記述を
+    こちらで用意したテンプレートからリソースファイルに追記し、
+    初期値や表示名などを記述する。
+
+  \item アプリケーションにログ出力関数の呼び出しを追加\\
+    TOPPERSカーネルの場合、ユーザアプリケーションからのログ出力は
+    syslog APIにより行う。この関数を用いて、本機能が受理するフォーマットで
+    ログを出力する。
+
+  \item アプリケーションを実行しログを取得\\
+    ログの取得方法は、実機やエミュレータごとに異なるので、ここでは触れない。
+
+  \item TLVにより可視化\\
+    生成したログおよび追記したリソースファイルをTLVに入力し、可視化する。
+\end{enumerate}
+
+\section{設計}
+\subsection{文字列可視化}
+\subsubsection{リソースファイル}
+\paragraph{タスクに関連しない出力}　\\
+タスクに関連しない出力を行う際は、ユーザはテンプレートに沿って
+リソースファイルに記述を追加しなければならない。
+文字列可視化は独立した行に描画する、すなわち一つのリソースを要求するためである。
+\figref{fig:str_template}がそのテンプレートである。
+ユーザは、{\it ROWNAME}をリソースファイルの他の項目名と重複しないよう
+決定し、
+{\it RID}を他の同種の記述と重複しないよう決定し、
+リソースファイルに追加する必要がある。
+また、{\it RID}で設定した値は、
+後にログ出力の呼び出しをユーザアプリケーションに追加する際に参照する。
+
+\begin{figure}[tb]
+  \begin{sscreen}
+      \begin{verbatim}"ROWNAME":{
+    "Type":"ApplogString",
+    "Attributes":{
+        "id":"RID",
+        "str":""
+    }
+}\end{verbatim}
+  \begin{description}
+    \item[\textit{ROWNAME}] 文字列可視化行の名前 \verb|[^"]+|
+    \item[\textit{RID}] 文字列可視化行のID \verb|[^":]+|
+  \end{description}
+\end{sscreen}
+  \caption{文字列可視化用テンプレート}
+  \label{fig:str_template}
+\end{figure}
+
+\paragraph{タスクに関連する出力}　\\
+タスクに関連する出力の際は、前述のようにリソースファイルへの
+追記は必要ない。
+これは、全体が参照するリソースヘッダファイルに、
+\figref{fig:str_header}の定義がされているためである。
+この定義により、リソースファイルへの追記なしにタスクに関する出力を受け付ける。
+
+\begin{figure}[tb]
+  \begin{sscreen}
+      \begin{verbatim}"Task":{
+    "DisplayName" :"タスク",
+    "Attributes" :{
+        "id":{
+            ...
+        },
+        ...
+        "applog_str":{
+           "VariableType"  :"String",
+           "DisplayName"   :"文字列",
+           "AllocationType":"Dynamic",
+           "CanGrouping"   :false,
+           "Default"   :""
+        },
+        ...
+    }
+}\end{verbatim}
+\end{sscreen}
+  \caption{タスク文字列可視化用リソースヘッダ内記述}
+  \label{fig:str_header}
+\end{figure}
+
+\subsubsection{トレースログ形式}
+アプリケーションログ機能が認識できるログを出力する方法は2通りある。
+ひとつが、TOPPERSカーネルのsyslog関数を呼ぶ方法である。
+もうひとつが、本スクリプト拡張で用意するAPIを利用する方法である。
+関数の引数に出力したい内容を指定して呼び出して利用する。
+
+\figref{fig:fmt_str}はタスクに関連しない可視化の書式である。
+{\it RID}は先にリソースファイルで定義した値を参照する。
+{\it STR}には出力したい文字列を設定する。
+\figref{fig:fmt_strtsk}がタスクに関連する可視化の書式である。
+{\it TID}は関連するタスクのIDである。リソースファイルを参照し、
+関連づけたいタスクの{\it id}属性の値を指定する。
+また、ユーザアプリケーションでログを出力すると、
+{\bf 出力ログ形式}に記述してある形式に従う。
+
+
+\begin{figure}
+  \begin{sscreen}
+    \begin{description}
+      \item[{\bf syslog}] syslog("applog str : ID \%s : \%s.",\textit{RID},\textit{STR});
+      \item[{\bf API}] void applog\_str(const char *\textit{RID}, const char *\textit{STR})
+      \item[{\bf 出力ログ形式}] \verb|[| \textit{TIME} \verb|]| applog str : ID \textit{RID} : \textit{STR}. 
+    \end{description}
+    \begin{quote}
+      \begin{description}
+        \item[\textit{TIME}] 時刻 \verb|[0-9a-zA-Z]+|
+        \item[\textit{RID}] 表示行ID \verb|[^.:"]+|
+        \item[\textit{STR}] 出力文字列 \verb|[^.]*|
+      \end{description}
+    \end{quote}
+  \end{sscreen}
+  \caption{文字列可視化の書式}
+  \label{fig:fmt_str}
+\end{figure}
+
+\begin{figure}
+  \begin{sscreen}
+    \begin{description}
+      \item[{\bf syslog}]
+        syslog("applog strtask : TASK \%d : \%s.",\textit{tid},\textit{str});
+      \item[{\bf API}] 
+        void applog\_strtask(const int \textit{tid}, const char *\textit{str})
+      \item[{\bf 出力ログ形式}] 
+        \verb|[| \textit{time} \verb|]| applog strtask : TASK \textit{tid} : \textit{str}. 
+    \end{description}
+    \begin{quote}
+      \begin{description}
+        \item[\textit{time}] 時刻 \verb|[0-9a-zA-Z]+|
+        \item[\textit{tid}] タスクID \verb|[0-9]+|
+        \item[\textit{str}] 出力文字列 \verb|[^.]*|
+      \end{description}
+    \end{quote}
+  \end{sscreen}
+  \caption{タスク文字列可視化の書式}
+  \label{fig:fmt_strtsk}
+\end{figure}
+
+
+
+\subsubsection{利用シナリオ}
+タスクとは関係ない文字列可視化の具体例を示す。
+想定として、TOPPERS/ASPカーネル向けのユーザアプリケーションから
+``hoge''というメッセージを出力することを想定する。
+
+\begin{enumerate}
+  \item リソースファイルへの追記\\
+    /sampleFiles/asp/asp\_short.res 末尾に、\figref{fig:str_scenario_res}の
+    ように記述を追加する。
+  \item ユーザアプリケーションへのログ出力関数の呼び出しを追加\\
+    アプリケーションへ、 \figref{fig:str_scenario_log}のような記述を追加する。
+  \item アプリケーションを実行して、ログを取得する。その結果、
+    \verb|[123456789] applog str : ID 1 : hoge.|のような行を含む
+    ログが出力される。
+  \item TLVへ(1)で追記したリソースファイルと(3)で取得したログを入力し、
+    \figref{fig:app_str}のような可視化表示を得る。
+\end{enumerate}
+
+\begin{figure}[tb]
+  \begin{sscreen}
+    \begin{verbatim}
+    "TASK_TEX":{
+      ...
+    },
+    "APP_LOG":{
+      "Type":"ApplogString",
+      "Attributes":
+      {
+        "id":"1"
+      }
+    }
+  }
+}\end{verbatim}
+\end{sscreen}
+  \caption{リソースファイル追加内容}
+  \label{fig:str_scenario_res}
+\end{figure}
+
+\begin{figure}[tb]
+  \begin{sscreen}
+    \begin{verbatim}int rid = 1;
+char* str = "hoge";
+syslog("applog str : ID %d : %s.", rid, str);
+\end{verbatim}
+\end{sscreen}
+  \caption{syslog関数呼び出し}
+  \label{fig:str_scenario_log}
+\end{figure}
+
+また、タスクに関する文字列可視化の際は、次の作業を行うだけで、
+\figref{fig:strtsk}のような可視化表示が得られる。
+\begin{enumerate}
+  \item ユーザアプリケーションにログ出力コードを追加
+  \item アプリケーションを実行してログ取得
+  \item TLVへ入力して可視化表示を得る
+\end{enumerate}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\textwidth]{pic/applog_strtsk.eps}
+  \end{center}
+  \caption{タスク文字列の可視化}
+  \label{fig:strtsk}
+\end{figure}
+
+
+\subsection{ユーザ定義状態可視化}
+TLVは、最大8個のユーザ定義状態が可視化できる方法を提供する。
+ユーザは、各自でどの状態が何を意味するか決定し、
+アプリケーションにログ出力コードを埋め込む。
+
+利用の手順は文字列可視化と同様である。
+タスクに関係しない可視化では、リソースファイルの追加が必要な点も同様である。
+
+\subsubsection{リソースファイル}
+\paragraph{タスクに関連しない出力}　\\
+\figref{fig:state_template}はタスクに関連しない可視化を行う際に
+追加が必要な記述である。
+{\it ROWNAME}および{\it RID}は文字列可視化の時と同じ意味であり、
+{\it SID}は、初期状態のIDである。
+
+\begin{figure}[tb]
+  \begin{sscreen}
+      \begin{verbatim}"ROWNAME":{
+    "Type":"ApplogState",
+    "Attributes":{
+        "id":"RID",
+        "state":SID
+    }
+}\end{verbatim}
+  \begin{description}
+    \item[\textit{ROWNAME}] 文字列可視化行の名前 \verb|[^"]+|
+    \item[\textit{RID}] ユーザ定義状態可視化行のID \verb|[^"]+|
+    \item[\textit{SID}] 初期状態 \verb|[0-9]+|
+  \end{description}
+\end{sscreen}
+  \caption{ユーザ定義状態可視化用テンプレート}
+  \label{fig:state_template}
+\end{figure}
+
+\paragraph{タスクに関連する出力}　\\
+文字列可視化同様、タスクに関する出力の場合にはリソースファイルへの
+追記は不要である。
+これは、リソースヘッダ内の\figref{fig:state_header}の記述による。
+
+\begin{figure}[tb]
+  \begin{sscreen}
+      \begin{verbatim}"Task":{
+    "DisplayName" :"タスク",
+    "Attributes" :{
+        "id":{
+            ...
+        },
+        ...
+        "applog_state":{
+            "VariableType"  :"Number",
+            "DisplayName"   :"ユーザ定義状態",
+            "AllocationType":"Dynamic",
+            "CanGrouping"   :false,
+            "Default"       :0
+        },
+        ...
+    }
+}\end{verbatim}
+\end{sscreen}
+  \caption{タスクユーザ定義状態可視化用リソースヘッダ内記述}
+  \label{fig:state_header}
+\end{figure}
+
+\subsubsection{トレースログ形式}
+\figref{fig:fmt_state}はタスクに関連しない、\figref{fig:fmt_statetsk}は
+タスクに関連する可視化のためのトレースログの形式である。
+
+\begin{figure}
+  \begin{sscreen}
+    \begin{description}
+      \item[{\bf syslog}]
+  syslog("applog state id \%s \%d.",\textit{RID},\textit{SID});
+      \item[{\bf API}] 
+  void applog\_stt(const char *\textit{RID}, const int \textit{SID})
+      \item[{\bf 出力ログ形式}] 
+  \verb|[| \textit{TIME} \verb|]| applog state id \textit{RID} \textit{SID}. 
+    \end{description}
+    \begin{quote}
+      \begin{description}
+        \item[\textit{TIME}] 時刻 \verb|[0-9a-zA-Z]+|
+        \item[\textit{RID}] 表示行ID \verb|[^\. ]+|
+        \item[\textit{SID}] 状態 \verb|[0-9]+|
+      \end{description}
+    \end{quote}
+  \end{sscreen}
+  \caption{ユーザ定義状態可視化の書式}
+  \label{fig:fmt_state}
+\end{figure}
+
+\begin{figure}
+  \begin{sscreen}
+    \begin{description}
+      \item[{\bf syslog}]
+  syslog("applog state task \%d \%d.",\textit{TID},\textit{SID});
+      \item[{\bf API}] 
+  void applog\_stttsk(const int \textit{TID}, const int \textit{SID})
+      \item[{\bf 出力ログ形式}] 
+  \verb|[| \textit{TIME} \verb|]| applog state task \textit{TID} \textit{SID}. 
+    \end{description}
+    \begin{quote}
+      \begin{description}
+        \item[\textit{TIME}] 時刻 \verb|[0-9a-zA-Z]+|
+        \item[\textit{TID}] タスクID \verb|[0-9]+|
+        \item[\textit{SID}] 状態 \verb|[0-9]+|
+      \end{description}
+    \end{quote}
+  \end{sscreen}
+  \caption{タスクユーザ定義状態可視化の書式}
+  \label{fig:fmt_statetsk}
+\end{figure}
+
+
+\section{実装}
+実装方針は、先に述べたようにルール類のみに手を加えるというものであるため、
+まずはリソースファイル/リソースヘッダファイルへの記述を追加した。
+リソースファイルは、\figref{fig:str_template}および
+\figref{fig:state_template}として、使用前にユーザがリソースファイルへ
+追記するためのテンプレートを用意した。
+また、リソースヘッダファイルは、\figref{fig:str_header}および
+\figref{fig:state_header}として、拡張した。
+
+次に変換ルールを実装した。
+\figref{fig:app_cnvrule}はTOPPERS/ASPカーネル用に実装した変換ルールである。
+JSONで記述されており、\verb|"入力されたトレースログに適用する正規表現" : "変換後の標準形式トレースログ"|という書式で書かれている。
+図中には4組のルールが記述されており、
+このそれぞれが4種類のアプリログ可視化方法に対応する。
+また、\verb|(?<time>\d+)|という記法を用いると、
+正規表現\verb|\d+|にマッチした文字列を\verb|${time}|で取得することができる。
+\verb|$RES_NAME{ApplogString(id==${rid})}|は、
+リソースヘッダファイルにて定義されるリソースの型が\verb|ApplogString|であり、
+条件\verb|id==${rid}|を満たすリソースの名前へと置換される。
+これにより、例えば\verb|[123456] applog str : ID 2 : message1.|という
+トレースログが、\verb|[123456]APP_LOG2.str=message1|という
+標準形式トレースログへと変換される。
+
+\begin{figure}[tb]
+  \begin{sscreen}
+    \begin{verbatim}      ...
+    ],
+    "\[(?<time>\d+)\] applog str : ID (?<rid>[^: ]+) : (?<str>[^\.]+)\.?"  :
+      "[${time}]$RES_NAME{ApplogString(id==${rid})}.str=${str}",
+    "\[(?<time>\d+)\] applog strtask : TASK (?<tid>[^: ]+) : (?<str>[^\.]+)\.?"  :
+      "[${time}]$RES_NAME{Task(id==${tid})}.applog_str=${str}",
+    "\[(?<time>\d+)\] applog state : ID (?<rid>[^: ]+) : (?<state>\d+)\.?"  :
+      "[${time}]$RES_NAME{ApplogState(id==${rid})}.state=${state}",
+    "\[(?<time>\d+)\] applog statetask : TASK (?<tid>[^: ]+) : (?<state>\d+)\.?"  :
+      "[${time}]$RES_NAME{Task(id==${tid})}.applog_state=${state}"
+  }\end{verbatim}
+    \end{sscreen}
+  \caption{TOPPERS/ASPカーネル向け変換ルール}
+  \label{fig:app_cnvrule}
+\end{figure}
+
+次は可視化ルールである。
+\figref{fig:app_vizshape}は
+TOPPERSカーネル向け可視化ルールの図形定義部分である。
+図形は、\verb|SHAPENAME(arg0, arg1, ...)|という形で参照され、
+その引数が\verb|${ARG0}|などの部分を置換するという特徴を持つ。
+この図形定義は文字列可視化用の{\it applogStateShapes}と
+ユーザ定義状態用の{\it applogStateShapes}から構成される。
+{\it applogStateShapes}は2つの図形から構成されており、
+1つめの図形では引数で受け取った文字列を画面上に配置し、
+2つめの図形では時刻の位置に矢印マークを配置する。
+{\it applogStateShapes}は、引数で与えられた色をもつ長方形を配置する。
+
+\figref{fig:app_vizrule}はTOPPERSカーネル向け可視化ルールの
+図形配置部分である。
+%
+{\it applogString}は文字列可視化に対応し、{\it ApplogString}リソースの
+{\it str}属性が更新されたとき、先に定義した{\it applogStringShapes}に
+引数として{\it str}を渡しつつ配置する。
+%
+{\it applogStringTask}はタスク文字列可視化に対応し、{\it Task}リソースの
+{\it applog\_str}属性が更新されたとき、{\it applogStringShapes}に
+引数として{\it applog\_str}を渡しつつ配置する。
+%
+{\it applogState}はユーザ定義状態可視化に対応し、{\it ApplogState}リソースの
+{\it state}属性が更新されたところから次の更新までの範囲に
+{\it applogStateShapes}を配置し、その引数を
+{\it state}の値（範囲[0,7]）に応じた色とする。
+%
+{\it applogStateTask}はタスクユーザ定義状態可視化に対応し、
+{\it Task}リソースの{\it applog\_state}属性が
+更新されたところから次の更新までの範囲に
+{\it applogStateShapes}を配置し、その引数に応じた色を指定する。
+
+\begin{figure}[tb]
+  \begin{sscreen}
+    \begin{verbatim}  ...
+],
+"applogStringShapes":[
+  {
+    "Type":"Text",
+    "Size":"100%,100%",
+    "Font":{
+      "Align":"TopLeft",
+      "Size":7
+    },
+    "Text":"${ARG0}"
+  },
+  {
+    "Type":"Arrow",
+    "Points":["0,80%","0,0"],
+    "Pen":{"Color":"ff000000","Width":1}
+  }
+],
+"applogStateShapes":[
+  {
+    "Type":"Rectangle",
+    "Location":"0,0",
+    "Size":"100%,100%",
+    "Pen":{"Color":"${ARG0}","Width":1,"Alpha":255},
+    "Fill":"${ARG0}",
+    "Alpha":100
+  }
+]\end{verbatim}
+    \end{sscreen}
+  \caption{TOPPERSカーネル向け可視化ルール（図形定義）}
+  \label{fig:app_vizshape}
+\end{figure}
+
+
+\begin{figure}[tb]
+  \begin{sscreen}
+    \begin{verbatim}  ...
+},
+"applogString":{
+  "DisplayName":"アプリログ（文字列）",
+  "Target":"ApplogString",
+  "Shapes":{
+    "strLog":{
+      "DisplayName":"文字列",
+      "When":"${TARGET}.str",
+      "Figures":"applogStringShapes(${VAL})"
+    }
+  }
+},
+"applogStringTask":{
+  "DisplayName":"アプリログ（文字列）",
+  "Target":"Task",
+  "Shapes":{
+    "strLogTask":{
+      "DisplayName":"タスク文字列",
+      "When":"${TARGET}.applog_str",
+      "Figures":"applogStringShapes(${VAL})"
+    }
+  }
+},
+"applogState":{
+  "DisplayName":"アプリログ（状態）",
+  "Target":"ApplogState",
+  "Shapes":{
+    "stateLog":{
+      "DisplayName":"ユーザ定義状態",
+      "From":"${TARGET}.state",
+      "To":"${TARGET}.state",
+      "Figures":{
+        "${FROM_VAL}==0":
+          "applogStateShapes(ff0000)",
+        ...
+        "${FROM_VAL}==7":
+          "applogStateShapes(ff00ff)"
+      }
+    }
+  }
+},
+"applogStateTask":{
+  "DisplayName":"アプリログ（状態）",
+  "Target":"Task",
+  "Shapes":{
+    "stateLogTask":{
+      "DisplayName":"ユーザ定義状態",
+      "From":"${TARGET}.applog_state",
+      "To":"${TARGET}.applog_state",
+      "Figures":{
+        "${FROM_VAL}==0":
+          "applogStateShapes(ff0000)",
+        ...
+        "${FROM_VAL}==7":
+          "applogStateShapes(ff00ff)"
+      }
+    }
+  }
+}\end{verbatim}
+    \end{sscreen}
+  \caption{TOPPERSカーネル向け可視化ルール（図形配置）}
+  \label{fig:app_vizrule}
+\end{figure}

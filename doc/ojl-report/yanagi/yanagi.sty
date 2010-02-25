@@ -1,0 +1,35 @@
+\usepackage{color}
+\usepackage{listings}
+
+\renewcommand{\lstlistingname}{ƒŠƒXƒg}
+\lstset{
+escapechar=\%,%
+columns=[l]{fullflexible}, % •¶š‚ğ‚Â‚ß‚é
+tabsize={8},%
+basicstyle=\footnotesize,%
+classoffset=1,%
+frame=tRBl,framesep=5pt,%
+showstringspaces=false,%
+numbers=left,stepnumber=1,numberstyle=\footnotesize%
+}
+
+\def\figref#1{\figurename ~ \ref{#1}}
+\def\tabref#1{\tablename ~ \ref{#1}}
+\def\eqref#1{®(\ref{#1})}
+
+
+\newcommand{\fixme}[1]{\colorbox{red}{FIXME: #1}}
+\newcommand{\todo}[1]{\colorbox{yellow}{TODO: #1}}
+\newcommand{\myparagraph}[1]{\paragraph{#1}@\\}
+
+\newenvironment{sscreen}
+{
+\begin{quote}
+\begin{screen}
+\small
+\def\baselinestretch{.75}
+}
+{
+\end{screen}
+\end{quote}
+}

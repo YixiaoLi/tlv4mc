@@ -1,0 +1,148 @@
+\chapter{実績}
+\section{開発プロセス}
+TLVは，OJL(On the Job Learning)の開発テーマとして開発された．OJLとは，
+企業で行われているソフトウェア開発プロジェクトを教材とする実践教育であ
+り，製品レベルの実システムの開発を通じて創造的な思考力を身につけるとと
+もに，単なる例題にとどまらない現実の開発作業を担うことにより，納期，予
+算といった実社会の制約を踏まえたソフトウェア開発の実際について学ぶこと
+を目的としている．
+
+TLVはプロジェクトベースで開発が行われ，本年度は企業出身者1名と教員1名が
+プロジェクトマネージャを務め，筆者含む学生4名が開発実務を行った．進捗の
+報告は，週に1度のミーティングと週報の提出により行った．
+
+\subsection{フェーズ分割}
+TLVの開発は複数フェーズに分割して行われている．フェーズ1,2,3は主に後藤
+ら\cite{goto}によって実施された．本報告書ではフェーズ3以降について述べる．
+
+各フェーズの内容は次に述べる通りである．
+
+\subsubsection{フェーズ1,2,3}
+2007年5月～2008年3月までに，一期生によって実施され，TLVの主要機能
+の実装が行われた\cite{goto}．
+
+\subsubsection{フェーズ3}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{input/schedule3.eps}
+\caption{フェーズ3のスケジュール}\label{fig:sch3}
+\end{figure}
+
+\paragraph{期間} 2008年度後期
+
+\paragraph{実施内容}
+\begin{itemize}
+\item 新規に参加したため，前提となるC\#,TOPPERSの学習を行なった．
+\item TLV各クラスに対する単体テスト，システムテストを実行した．
+\item CPUごとのタスク表示機能を実装した．
+\item リリース作業を担当した．
+\end{itemize}
+
+\paragraph{スケジュール}
+\figref{fig:sch3}のように，
+10月始めから11月中旬にかけて前提となる知識の学習を行ない，
+11月中旬から1月末にかけてTLVに対するテストを行ない，
+1月末から2月中旬にかけてCPUごとのタスク表示機能を実装した．
+
+\paragraph{成果}
+単体テストは328個のメソッドのうち162個のメソッドに対して単体テストを作
+成した．システムテストでは不具合を発見できなかった．
+機能追加と並行してテストを実施したため，仕様が安定せず効率が悪かった．
+
+また，3月25日にTOPPERS会員に向けに1.0rcをリリースし，要求の収集を行なった．
+1.0rcのリリースによって20件のユーザインタフェー
+スの改良案，追加の機能要求，可視化表現項目などの要求が得られた．
+
+\subsubsection{フェーズ4}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{input/schedule4.eps}
+\caption{フェーズ4のスケジュール}\label{fig:sch4}
+\end{figure}
+
+\paragraph{期間} 2009年度前期
+
+\paragraph{実施内容}
+\begin{itemize}
+\item 第\ref{applog}章で述べるアプリケーションログ機能追加を行なった．
+\item 前フェーズで収集した要求のうち，TLVの使いやすさを向上させる要求を実装した．
+\item TLVの仕様変更に伴い，前フェーズで実装したCPUごとのタスク表示機能が正常に動作しなくなっていたため，再実装した．
+\item エラーメッセージをより詳細化した．
+\item リリース作業を担当し，リリースに伴う作業を自動化した
+\end{itemize}
+
+\paragraph{スケジュール} \figref{fig:sch4}のように，
+4月中旬から5月上旬にかけて，
+CPUごとのタスク表示機能再実装を行った．
+また，その後は7月上旬までアプリケーションログ機能を実装し，
+その後は7月下旬までエラーメッセージの改良を行った．
+
+\paragraph{成果}
+第\ref{applog}章で述べる機能を追加した.
+27件の要望チケットを完了した．
+
+5月13日に，TOPPERS会員に対して，
+フェーズ3までの内容をまとめた
+TLV 1.0をリリースした．
+
+\subsubsection{フェーズ5}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{input/schedule5.eps}
+\caption{フェーズ5のスケジュール}\label{fig:sch5}
+\end{figure}
+
+\paragraph{期間} 2009年度後期
+
+\paragraph{実施内容}
+\begin{itemize}
+  \item バージョン1.1をリリースした．
+\item 第\ref{profiling}章で述べるようにプロファイリングを行った．
+\item 新たに三期生が参加したため，課題を与えるなどの指導を行なった．
+\end{itemize}
+
+\paragraph{スケジュール} \figref{fig:sch5}のように，
+10月上旬にTLV1.1リリース作業を行った．
+10月下旬から12月中旬にかけて，プロファイリングによる測定，
+改善案の作成を行った．
+
+\paragraph{成果物}
+第\ref{profiling}章で述べるプロファイリング結果をまとめた．
+また，TOPPERS会員
+に対してRC版をリリースし，その後一般向けにTLV1.1をリリースした．
+
+\begin{description}
+\item[TLV 1.1rc1] 10月1日にTOPPERS会員に対して公開．
+\item[TLV 1.1rc2] rc1の不具合を修正し，10月26日にTOPPERS会員に対して公開．
+\item[TLV 1.1] 11月9日に一般向けに公開．
+\end{description}
+
+\section{チケット消化率}
+累積チケット数の推移をグラフにまとめると
+\figref{fig:ticket}のようになる．
+横軸が期間，縦軸が件数であり，青線が累積件数を，
+赤線が累積終了件数を表している．
+この図より，TLVプロジェクトでは一般的な要求曲線を描いており，
+プロジェクトは発展段階にあるととらえることができる．
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\textwidth]{pic/ticket.eps}
+\caption{チケット消化率}\label{fig:ticket}
+\end{figure}
+
+\section{発表実績}
+平成21年度 情報処理学会 第139回 システムLSI設計技術(SLDM)研究会において
+発表\cite{ipsj}を行ない，情報処理学会山下記念研究賞/学生奨励賞を受賞した．
+
+Embedded Technology 2009(ET2009)
+\footnote{\url{http://www.jasa.or.jp/et/}}
+において，ブース出展及びTLVの一般公開に
+ついてプレス発表を行なった．
+
+\section{活用事例}
+名古屋大学大学院情報科学研究科付属組込みシステム研究センター(NCES)
+\footnote{\url{http://www.nces.is.nagoya-u.ac.jp/}}内の
+7件のプロジェクトのうち，2件のプロジェクトによって利用されている．
+また，同NCESのコンソーシアム型共同研究によっても利用されている．
+
