@@ -71,7 +71,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			else
 			{
 				Value = 0m;
-				Radix = 10;
+				Radix = 0;
 			}
 		}
 
