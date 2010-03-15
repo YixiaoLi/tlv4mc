@@ -1,12 +1,12 @@
 
-	TraceLogVisualizer(TLV)（バージョン 1.1）
+	TraceLogVisualizer(TLV)（バージョン 1.1.1）
 
-					最終更新 : 2009年11月16日
+					最終更新 : 2010年3月16日
 
 ----------------------------------------------------------------------
  TraceLogVisualizer(TLV)
 
- Copyright (C) 2008-2009 Nagoya University, JAPAN
+ Copyright (C) 2008-2010 Nagoya University, JAPAN
  
  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
