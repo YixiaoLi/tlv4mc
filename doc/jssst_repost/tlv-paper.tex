@@ -147,12 +147,29 @@ achieve general versatility and expandability, and how we achieved them.
 があり，これまでに幾つかのツールが開発されている．具体的には，組込みシス
 テム向けデバッガソフトウェアや統合開発環境の一部
 \cite{PARTNER-JET,watchpoint,QNXMomentics,eBinder}やUnix系OSのトレースロ
-グプロファイラ\cite{LTTV,Chime}などが存在する．しかしながら，これら既存
-のツールは，特定の環境(OSやデバッグハードウェア)を対象としているため，可
-視化対象となるトレースログの形式が固定されている．そのため，他の環境が出
-力するトレースログを可視化することができず，汎用性に乏しいという問題があ
-る．また，可視化表示する項目やその表現方法が固定である場合が多く，拡張性
-に乏しいという問題もある．
+グプロファイラ\cite{LTTV,Chime}などが存在する．
+
+
+これら既存のツールは，特定の環境(OSやデバッグハードウェア)を対象としてい
+るため，可視化対象となるトレースログの形式が固定されている．
+%
+そのため，FMPカーネルの様な可視化ツールが用意されていない環境のトレー
+スログの可視化に，これらの既存ツールを用いることができず，汎用性に乏し
+いという問題がある．
+%
+また，可視化表示する項目やその表現方法が固定である場合が多く，拡張性に
+乏しいという問題もある．例えば，OSをサポートしている可視化ツールは，タ
+スクやセマフォといったOSのオブジェクトの状態を可視化すること可能である．
+%
+OS上で動作するアプリケーションの開発時には，これらの情報に加えて，アプリ
+ケーションの状態（モード・進捗状況）や重要な変数の値といったアプリケーシ
+ョン固有の情報を可視化したい場合がある．
+%
+可視化したい情報やその表現方法は，アプリケーション毎に異なるため，可視化
+ツールで一般的にサポートすることは困難であり，何らかの拡張機能が必要とな
+る．
+
+
 
 そこで我々は，これらの問題を解決し，汎用性と拡張性を備えたトレースログ可
 視化ツールを開発することを目的とし，TraceLogVisualizer(TLV)を開発した．
@@ -929,44 +946,6 @@ TLVのユーザーインタフェースについて解説する．図\ref{fig:aspTLVscreenShot}
 に，ASPカーネルが出力したトレースログを，TLVを用いて可視化表示した結果を
 示す．
 
-\begin{figure*}[tb]
-\begin{center}
-%\scalebox{0.7}{\includegraphics{img/aspTLVscreenShot_1_1.eps}}
-\scalebox{0.7}{\includegraphics{img/aspTLVscreenShot_1_1_1.eps}}
-\caption{TOPPERS/ASPカーネルのトレースログの可視化表示}
-%\ecaption{A screenshot of TLV visualizing a trace log dumped by TOPPERS/ASP}
-\label{fig:aspTLVscreenShot}
-\end{center}
-\end{figure*}
-
-\begin{figure}[tb]
-\begin{center}
-\scalebox{0.6}{\includegraphics{img/aspTLVscreenShot_pri.eps}}
-\caption{タスクの優先度でグループ化されたツリービュー形式の表示}
-\label{fig:aspTLVscreenShot_pri}
-\end{center}
-\end{figure}
-
-
-\begin{figure*}[tb]
-\begin{center}
-\scalebox{0.7}{\includegraphics{img/tecsTLVscreenShot.eps}}
-\caption{ソフトウェアコンポーネント（TECS）のトレースログの可視化表示}
-%\ecaption{A screenshot of TLV visualizing a trace log dumped by TECS}
-\label{fig:tecsTLVscreenShot}
-\end{center}
-\end{figure*}
-
-\begin{figure*}[tb]
-\begin{center}
-\scalebox{0.7}{\includegraphics{img/fmpTLVscreenShot_1_1.eps}}
-\caption{マルチプロセッサ対応RTOS(TOPPERS/FMPカーネル)のトレースログの
- 可視化表示}
-%\ecaption{A screenshot of TLV visualizing a trace log dumped by TOPPERS/FMP}
-\label{fig:fmpTLVscreenShot}
-\end{center}
-\end{figure*}
-
 
 \subsection{可視化表示部の制御}
 
@@ -1047,6 +1026,44 @@ ASPカーネルの場合は，タスクの優先度がグループ化可能と指定されており，図
 \ref{fig:aspTLVscreenShot_pri}に示すように，リソースウィンドウで，優先度
 でグループ化されたツリービュー形式の表示が選択可能である．
 
+\begin{figure*}[tb]
+\begin{center}
+%\scalebox{0.7}{\includegraphics{img/aspTLVscreenShot_1_1.eps}}
+\scalebox{0.7}{\includegraphics{img/aspTLVscreenShot_1_1_1.eps}}
+\caption{TOPPERS/ASPカーネルのトレースログの可視化表示}
+%\ecaption{A screenshot of TLV visualizing a trace log dumped by TOPPERS/ASP}
+\label{fig:aspTLVscreenShot}
+\end{center}
+
+\end{figure*}
+\begin{figure}[tb]
+\begin{center}
+\scalebox{0.6}{\includegraphics{img/aspTLVscreenShot_pri.eps}}
+\caption{タスクの優先度でグループ化されたツリービュー形式の表示}
+\label{fig:aspTLVscreenShot_pri}
+\end{center}
+\end{figure}
+
+
+\begin{figure*}[tb]
+\begin{center}
+\scalebox{0.7}{\includegraphics{img/tecsTLVscreenShot.eps}}
+\caption{ソフトウェアコンポーネント（TECS）のトレースログの可視化表示}
+%\ecaption{A screenshot of TLV visualizing a trace log dumped by TECS}
+\label{fig:tecsTLVscreenShot}
+\end{center}
+\end{figure*}
+
+\begin{figure*}[tb]
+\begin{center}
+\scalebox{0.7}{\includegraphics{img/fmpTLVscreenShot_1_1.eps}}
+\caption{マルチプロセッサ対応RTOS(TOPPERS/FMPカーネル)のトレースログの
+ 可視化表示}
+%\ecaption{A screenshot of TLV visualizing a trace log dumped by TOPPERS/FMP}
+\label{fig:fmpTLVscreenShot}
+\end{center}
+\end{figure*}
+
 
 
 \section{評価}
@@ -1056,6 +1073,8 @@ ASPカーネルの場合は，タスクの優先度がグループ化可能と指定されており，図
 トウェアコンポーネント(TECS)\cite{TECS}のトレースログを可視化する．次に，
 拡張性の評価として，ASPカーネルをマルチプロセッサ拡張したFMPカーネルの可
 視化をASPカーネル用のファイルをベースに拡張して可視化表示する．
+
+また，既存ツールと比較した場合の，TLVの制約や課題について述べる．
 
 \subsection{ASPカーネルの可視化表示}
 
@@ -1145,6 +1164,29 @@ TECSのトレースログを可視化表示する項目として，セルの呼び出し関係を採用し
 ルはASPカーネル用のファイルに対する追加ルールとなっている．以上により，
 拡張性が確認できた．
 
+\subsection{TLVの制約と課題}
+
+TLVは独立したプログラムあるため，デバッガソフトウェアや統合開発環境に組
+み込まれた可視化ツール（以下，統合可視化ツール）と比較して，ユーザー操作
+の煩雑性，処理速度，機能的な制約がある．
+
+ユーザー操作の煩雑性に関しては，統合可視化ツールの場合は，ツール内でメニ
+ュー等で可視化を選択すると，自動的に可視化が可能である．一方，TLVの場合
+は，一旦トレースログをを保存してから，TLVを起動して，読み込ませる必要が
+ある．また，トレースログと共にアプリケーション毎にリソースファイルが必要
+となるが，リソースファイルを自動的に生成するしくみを用意できない場合は，
+ユーザーが手作業で用意する必要がある．
+
+処理速度に関しては，統合可視化ツールでは，ログの形式や可視化項目を固定化
+しているのに対して，TLVでは，変換ルールによる標準形式変換や可視化ルール
+による図形データ生成が必要であるため，TLVの方が可視化までの時間は長くな
+ってしまう．
+
+機能的な制約としては，統合可視化ツールには，プロセッサやシミュレータを停
+止してその時点までのトレースログを可視化した後，処理を再開して得られたト
+レースログを追加で可視化することが可能なものがある．一方，現状のTLVでは，
+トレースログを可視化表示している状態で，続きのトレースログを新たに読み込
+ませて可視化表示することはできない．
 
 
 \section{おわりに}
