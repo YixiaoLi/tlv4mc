@@ -144,38 +144,38 @@ achieve general versatility and expandability, and how we achieved them.
 \end{EBNFFileWithExample}
 
 トレースログの解析を支援する方法として，ツールによるトレースログの可視化
-があり，これまでに幾つかのツールが開発されている．具体的には，組込みシス
-テム向けデバッガソフトウェアや統合開発環境の一部
-\cite{PARTNER-JET,watchpoint,QNXMomentics,eBinder}やUnix系OSのトレースロ
-グプロファイラ\cite{LTTV,Chime}などが存在する．
+がある．並列プログラムのトレースログの可視化に関する研究として，Jave，
+MPI，OpenMP等の可視化に関する研究やツールが開発されている
+\cite{JAVA,PARAVER,VAMPIR,JUMPSHOT,OpenMP,PAJE}．一方，RTOSを含むOSのト
+レースログの可視化に関しては，組込みシステム向けデバッガソフトウェアや統
+合開発環境の一部\cite{PARTNER-JET,watchpoint,QNXMomentics,eBinder}やUnix
+系OSのトレースログプロファイラ\cite{LTTV,Chime}などが存在する．
 
-
-これら既存のツールは，特定の環境(OSやデバッグハードウェア)を対象としてい
-るため，可視化対象となるトレースログの形式が固定されている．
+これらOSのトレースログの可視化のツールは，特定の環境(OSやデバッグハード
+ウェア)を対象としているため，可視化対象となるトレースログの形式が固定さ
+れている．
 %
 そのため，FMPカーネルの様な可視化ツールが用意されていない環境のトレー
 スログの可視化に，これらの既存ツールを用いることができず，汎用性に乏し
 いという問題がある．
 %
-また，可視化表示する項目やその表現方法が固定である場合が多く，拡張性に
-乏しいという問題もある．例えば，OSをサポートしている可視化ツールは，タ
-スクやセマフォといったOSのオブジェクトの状態を可視化すること可能である．
-%
-OS上で動作するアプリケーションの開発時には，これらの情報に加えて，アプリ
-ケーションの状態（モード・進捗状況）や重要な変数の値といったアプリケーシ
-ョン固有の情報を可視化したい場合がある．
+また，可視化表示する項目やその表現方法が固定である場合が多く，拡張性に乏
+しいという問題もある．例えば，OSをサポートしている可視化ツールは，タスク
+やセマフォといったOSのオブジェクトの状態を可視化すること可能であるが，OS
+上で動作するアプリケーションの開発時には，これらの情報に加えて，アプリケ
+ーションの状態（モード・進捗状況）や重要な変数の値といったアプリケーショ
+ン固有の情報を可視化したい場合がある．
 %
 可視化したい情報やその表現方法は，アプリケーション毎に異なるため，可視化
 ツールで一般的にサポートすることは困難であり，何らかの拡張機能が必要とな
 る．
 
-
-
-そこで我々は，これらの問題を解決し，汎用性と拡張性を備えたトレースログ可
-視化ツールを開発することを目的とし，TraceLogVisualizer(TLV)を開発した．
-TLVは，「OJL による最先端技術適応能力を持つIT人材育成拠点の形成」
-\cite{OJL_URL}\cite{OJL_PAPER}のOJL(On the Job Learning)の開発テーマとし
-て開発し，オープンソースソフトウェアとして公開している\cite{TLV}．
+そこで我々は，これらの問題を解決し，汎用性と拡張性を備えた，OSのトレース
+ログの可視化を主たる目的としたトレースログ可視化ツールを開発することを目
+的とし，TraceLogVisualizer(TLV)を開発した．TLVは，「OJL による最先端技術
+適応能力を持つIT人材育成拠点の形成」\cite{OJL_URL}\cite{OJL_PAPER}の
+OJL(On the Job Learning)の開発テーマとして開発し，オープンソースソフトウ
+ェアとして公開している\cite{TLV}．
 
 開発にあたり，我々は，まず，TLV内部でトレースログを一般的に扱えるよう，
 トレースログを一般化した標準形式を定めた．さらに，任意の形式のトレースロ
@@ -197,11 +197,16 @@ TLVは，「OJL による最先端技術適応能力を持つIT人材育成拠点の形成」
 
 \section{既存のトレースログ可視化ツールと問題点}
 
+RTOSを含むOSのトレースログを対象とした，既存のトレースログ可視化表示ツー
+ルとその問題点について述べる．また，標準化されたトレースログの形式とツー
+ルのOSのトレースログの可視化への流用について述べる．
+
 \subsection{既存のトレースログ可視化ツール}
 
-\label{sec:previous}既存のトレースログ可視化表示ツールとしては，組込みシ
-ステム向けデバッガソフトウェアや統合開発環境の一部，Unix系OSの可視化ツー
-ル，VCD形式の可視化ツールなどがある．
+\label{sec:previous}OSのトレースログを対象としたトレースログ可視化表示ツ
+ールとしては，組込みシステム向けデバッガソフトウェアや統合開発環境の一部，
+Unix系OSの可視化ツールなどがある．また，標準化されたトレースログ形式とし
+てVCD形式やPaj\`{e}形式がある．
 
 組込みシステム向けデバッガソフトウェアには，トレースログを可視化する機能
 を持つものがある．PARTNER\cite{PARTNER-JET}はイベントトラッカー，
@@ -249,9 +254,14 @@ Solarisの実行トレースを取得するDtrace\cite{Dtrace}には，Chime\cite{Chime}
 %回路設計用論理シミュレータの実行ログを波形で表示するソフトウェアのことを
 %指す．
 
-また，デジタル回路設計用論理シミュレータ用に，VCD(Value Change Dump)形式
-というオープンなトレースログの形式が存在する．VCD形式を可視化するツール
-として，GTKWaveが存在する．
+デジタル回路設計用論理シミュレータ用に，VCD(Value Change Dump)形式という
+オープンなトレースログの形式が存在する．VCD形式を可視化するツールとして，
+GTKWaveが存在する．
+
+また，主に並列プログラム用に，Paj\`{e} 形式というトレースログの形式が提
+案されている．Paj\`{e} 形式は，トレースログ中でプロセスの状態や可視化時
+に表示する色を指定することが可能である．Paj\`{e} 形式を可視化するツールとして，
+Visual Trace Explorer\cite{VITES}が存在する．
 
 \subsection{既存のトレースログ可視化ツールの問題点}
 
@@ -274,10 +284,23 @@ VCD形式はデジタル回路設計用の形式であるため，表示能力に乏しく，複雑な可
 \end{center}
 \end{figure}
 
+Paj\`{e} 形式では，VCD形式と比較すると表現能力は高いが，状態の定義と状態
+毎の色指定程度の自由度しかないため，同様に複雑な可視化表現は不可能である．
+PthreadプログラムのトレースログをVisual Trace Explorerで可視化表示した例
+を図\ref{fig:VITE}に示す．
 
-扱うトレースログの形式を制限しないためには，VCD形式のようにトレースログ
-可視化ツール用に標準化されたトレースログ形式を定める必要がある．しかしな
-がら，現状，公表されているものではそのようなものは確認できていない．
+\begin{figure}[tb]
+\begin{center}
+\scalebox{0.35}{\includegraphics{img/VITE.eps}}
+\caption{Visual Trace ExplorerによるPthreadプログラムのトレースログ可視化}
+\label{fig:VITE}
+\end{center}
+\end{figure}
+
+扱うトレースログの形式を制限しないためには，VCD形式やPaj\`{e} 形式のよう
+にOSを対象としたトレースログ可視化ツール用に標準化されたトレースログ形式
+を定める必要がある．しかしながら，現状，公表されているものではそのような
+ものは確認できていない．
 
 2点目の問題として，既存のトレースログ可視化ツールは，可視化表示の項目や
 形式が，提供されているものに限られているということが挙げられる．可視化表
@@ -726,8 +749,8 @@ JavaScript(ECMAScript)と呼ばれるスクリプト言語のオブジェクト表記法をベー
 
 \subsection{リソースヘッダファイル}
 
-リソースヘッダファイルには，可視化対象の環境のリソースタイプの定義を記
-述する．リソースタイプの定義には，リソースタイプの名前，表示名，属性，
+リソースヘッダファイルには，可視化対象の環境(OS等)のリソースタイプの定義
+を記述する．リソースタイプの定義には，リソースタイプの名前，表示名，属性，
 振る舞いを記述する．
 
 図\ref{resourceHeaderFile}に，ASPカーネルのリソースタイプ\verb|Task|を定
@@ -1034,11 +1057,11 @@ ASPカーネルの場合は，タスクの優先度がグループ化可能と指定されており，図
 %\ecaption{A screenshot of TLV visualizing a trace log dumped by TOPPERS/ASP}
 \label{fig:aspTLVscreenShot}
 \end{center}
-
 \end{figure*}
-\begin{figure}[tb]
+%
+\begin{figure}[ht]
 \begin{center}
-\scalebox{0.6}{\includegraphics{img/aspTLVscreenShot_pri.eps}}
+\scalebox{0.5}{\includegraphics{img/aspTLVscreenShot_pri.eps}}
 \caption{タスクの優先度でグループ化されたツリービュー形式の表示}
 \label{fig:aspTLVscreenShot_pri}
 \end{center}
@@ -1074,7 +1097,7 @@ ASPカーネルの場合は，タスクの優先度がグループ化可能と指定されており，図
 拡張性の評価として，ASPカーネルをマルチプロセッサ拡張したFMPカーネルの可
 視化をASPカーネル用のファイルをベースに拡張して可視化表示する．
 
-また，既存ツールと比較した場合の，TLVの制約や課題について述べる．
+また，既存ツールと比較した，TLVの制約や課題について述べる．
 
 \subsection{ASPカーネルの可視化表示}
 
@@ -1167,26 +1190,26 @@ TECSのトレースログを可視化表示する項目として，セルの呼び出し関係を採用し
 \subsection{TLVの制約と課題}
 
 TLVは独立したプログラムあるため，デバッガソフトウェアや統合開発環境に組
-み込まれた可視化ツール（以下，統合可視化ツール）と比較して，ユーザー操作
-の煩雑性，処理速度，機能的な制約がある．
+み込まれた可視化ツール（以下，統合可視化ツール）と比較すると，ユーザー操
+作の煩雑性，処理速度，機能面での制約や課題がある．
 
-ユーザー操作の煩雑性に関しては，統合可視化ツールの場合は，ツール内でメニ
-ュー等で可視化を選択すると，自動的に可視化が可能である．一方，TLVの場合
-は，一旦トレースログをを保存してから，TLVを起動して，読み込ませる必要が
-ある．また，トレースログと共にアプリケーション毎にリソースファイルが必要
-となるが，リソースファイルを自動的に生成するしくみを用意できない場合は，
-ユーザーが手作業で用意する必要がある．
+ユーザー操作の煩雑性に関しては，統合可視化ツールの場合は，デバッガソフト
+ウェアや統合開発環境のメニュー等で可視化を選択すると，自動的に可視化が可
+能である．一方，TLVの場合は，一旦トレースログを保存してから，TLVを起動し
+て，読み込ませる必要がある．また，トレースログと共にアプリケーション毎に
+リソースファイルが必要となるが，リソースファイルを自動的に生成できない場
+合は，ユーザーが手作業で用意する必要がある．
 
-処理速度に関しては，統合可視化ツールでは，ログの形式や可視化項目を固定化
-しているのに対して，TLVでは，変換ルールによる標準形式変換や可視化ルール
-による図形データ生成が必要であるため，TLVの方が可視化までの時間は長くな
-ってしまう．
+処理速度に関しては，統合可視化ツールはログの形式や可視化項目を固定化して
+いるのに対して，TLVでは，ログの形式や可視化項目の自由度をもたせるため，
+変換ルールによる標準形式変換や可視化ルールによる図形データ生成が必要であ
+るため，TLVの方が可視化に要する時間が長くなることが考えられる．
 
-機能的な制約としては，統合可視化ツールには，プロセッサやシミュレータを停
-止してその時点までのトレースログを可視化した後，処理を再開して得られたト
-レースログを追加で可視化することが可能なものがある．一方，現状のTLVでは，
-トレースログを可視化表示している状態で，続きのトレースログを新たに読み込
-ませて可視化表示することはできない．
+機能面としては，統合可視化ツールには，プロセッサやシミュレータを停止して
+その時点までのトレースログを可視化した後，処理を再開して得られたトレース
+ログを追加して可視化することが可能なものがある．一方，現状のTLVでは，ト
+レースログを可視化表示している状態で，続きのトレースログを新たに読み込ま
+せて追加で可視化表示することはできない．
 
 
 \section{おわりに}
@@ -1220,6 +1243,42 @@ On the Job Learning: 産学連携による新しいソフトウェア工学教育手法,
 TOPPERS/FMP kernel，\\
 http://www.toppers.jp/fmp-kernel.html.
 
+\bibitem{JAVA}
+Gestwicki, P. and Jayaraman, B.: Methodology and architecture of JIVE, 
+In: Proceedings of the 2005 ACM symposium on Soft-ware Visualization 
+(SoftVis’05), pp.95--104, 2005.
+
+\bibitem{PARAVER}
+Pillet, V., Labrata, J., Cortes, T. and Girona, S.: 
+PARAVER: A tool to visualise and analyze paral-
+lel code, In Proceedings of WoTUG-18: Transputer and
+occam Developments, IOS Press, vol. 44, pp.17--31, 1995.
+
+\bibitem{VAMPIR}
+Nagel,W. E., Arnold, A., Weber,M., and Solchenbach, K.: VAMPIR
+Visualization and Analysis of MPI Resources, Supercomputer 63, 
+vol. 12, no. 1, pp. 69--80, 1996. 
+
+\bibitem{JUMPSHOT}
+Zaki,O., Lusk, E., Gropp,W., and Swider, D.
+: Toward Scalable Performance Visualization with Jumpshot,
+High-Performance Computing Applications, vol. 13, no. 2, pp.277--288, 1999. 
+
+\bibitem{OpenMP}
+上嶋明, 小畑正貴, 金田悠紀夫 : Omni OpenMPコンパイラ用並列プログラム可視
+化ツール(プログラミングモデル・ツール),情報処理学会論文誌, コンピューテ
+ィングシステム 46(SIG\_12(ACS\_11)), pp.205--213, 2005.
+
+\bibitem{PAJE}
+Chassin de Kergommeaux, J. , de Oliveira Stein, B. and Bernard P.E. : Paj\`{e} , 
+an interactive visualization tool for tuning multi-threaded parallel 
+applications,  Parallel Computing, 26(10), pp.1253--1274, 2000.
+
+\bibitem{VITES}
+Visual Trace Explorer \\
+http://vite.gforge.inria.fr/.
+
+
 \bibitem{PARTNER-JET}
 JTAG ICE PARTNER-Jet，\\
 http://www.kmckk.co.jp/jet/.
@@ -1238,8 +1297,8 @@ http://www.esol.co.jp/embedded/ebinder.html.
 
 \bibitem{LTTng}
 
-Mathieu Desnoyers and Michel Dagenais.: The lttng tracer : A low impact 
-performance and behavior monitor for gnu/linux. In OLS (Ottawa Linux 
+Mathieu Desnoyers and Michel Dagenais, "The lttng tracer : A low impact 
+performance and behavior monitor for gnu/linux," In OLS (Ottawa Linux 
 Symposium) 2006, pp.209--224, 2006.
 
 \bibitem{LTTV}
@@ -1248,8 +1307,8 @@ and Binary Reverse Engineering in Linux," CodeBreakers Journal Article,
 vol.4, no.1, 2007.
 
 \bibitem{Dtrace}
-R. McDougall, J. Mauro, and B. Gregg.: Solaris(TM) Performance and Tools: 
-DTrace and MDB Techniques for Solaris 10 and OpenSolaris. Pearson 
+R. McDougall, J. Mauro, and B. Gregg., "Solaris(TM) Performance and Tools: 
+DTrace and MDB Techniques for Solaris 10 and OpenSolaris," Pearson 
 Professional, 2006.
 
 \bibitem{Chime}
