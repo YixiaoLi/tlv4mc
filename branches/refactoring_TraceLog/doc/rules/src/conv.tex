@@ -1,46 +1,46 @@
-\section{標準形式トレースログ}
+\section{�W���`���g���[�X���O}
 
-本節では，標準形式トレースログを定義するために行ったトレースログの抽象化と，標準形式トレースログの定義について述べる．
+�{�߂ł́C�W���`���g���[�X���O���`���邽�߂ɍs�����g���[�X���O�̒��ۉ��ƁC�W���`���g���[�X���O�̒�`�ɂ��ďq�ׂ�D
 
-\subsection{トレースログの抽象化}
+\subsection{�g���[�X���O�̒��ۉ�}
 
-標準形式トレースログを提案するにあたり，トレースログの抽象化を行った．
+�W���`���g���[�X���O���Ă���ɂ�����C�g���[�X���O�̒��ۉ����s�����D
 
-はじめに，トレースログを，時系列にイベントを記録したものと考えた．
-次に，イベントとはイベント発生源の属性の変化，イベント発生源の振る舞いと考えた．
-ここで，イベント発生源をリソースと呼称し，固有の識別子をもつものとする．
-つまり，リソースとは，イベントの発生源であり，名前を持ち，固有の属性をもつものと考えることができる．
+�͂��߂ɁC�g���[�X���O���C���n��ɃC�x���g���L�^�������̂ƍl�����D
+���ɁC�C�x���g�Ƃ̓C�x���g�������̑����̕ω��C�C�x���g�������̐U�镑���ƍl�����D
+�����ŁC�C�x���g�����������\�[�X�ƌď̂��C�ŗL�̎��ʎq�������̂Ƃ���D
+�܂�C���\�[�X�Ƃ́C�C�x���g�̔������ł���C���O�������C�ŗL�̑����������̂ƍl���邱�Ƃ��ł���D
 
-リソースは型により属性，振る舞いを特徴付けられる．
-ここでリソースの型をリソースタイプと呼称する．
+���\�[�X�͌^�ɂ�葮���C�U�镑��������t������D
+�����Ń��\�[�X�̌^�����\�[�X�^�C�v�ƌď̂���D
 
-属性は，リソースが固有にもつ文字列，数値，真偽値で表されるスカラーデータとし，振る舞いはリソースの行為であるとする．
+�����́C���\�[�X���ŗL�ɂ�������C���l�C�^�U�l�ŕ\�����X�J���[�f�[�^�Ƃ��C�U�镑���̓��\�[�X�̍s�ׂł���Ƃ���D
 
-リソースタイプとリソースの関係は，オブジェクト指向におけるクラスとオブジェクトの関係に類似しており，属性と振る舞いはメンバ変数とメソッドに類似している．
-ただし，振る舞いはリソースのなんらかの行為を表現しており，メソッドの，メンバ変数を操作するための関数や手続きを表す概念とは異なる．
+���\�[�X�^�C�v�ƃ��\�[�X�̊֌W�́C�I�u�W�F�N�g�w���ɂ�����N���X�ƃI�u�W�F�N�g�̊֌W�ɗގ����Ă���C�����ƐU�镑���̓����o�ϐ��ƃ��\�b�h�ɗގ����Ă���D
+�������C�U�镑���̓��\�[�X�̂Ȃ�炩�̍s�ׂ�\�����Ă���C���\�b�h�́C�����o�ϐ��𑀍삷�邽�߂̊֐���葱����\���T�O�Ƃ͈قȂ�D
 
-主に，振る舞いは，属性の変化を伴わないイベントを表現するために用いる．
-振る舞いは任意の数のスカラーデータを引数として受け取ることができ，これは，図形描画の際の条件，あるいは描画材料として用いられることを想定している．
+��ɁC�U�镑���́C�����̕ω��𔺂�Ȃ��C�x���g��\�����邽�߂ɗp����D
+�U�镑���͔C�ӂ̐��̃X�J���[�f�[�^�������Ƃ��Ď󂯎�邱�Ƃ��ł��C����́C�}�`�`��̍ۂ̏����C���邢�͕`��ޗ��Ƃ��ėp�����邱�Ƃ�z�肵�Ă���D
 
-図\ref{fig:resourceTypeSample}と図\ref{fig:resourceSample}に，リソースタイプとリソースを図で表現した例を示す．
-さらに，図\ref{fig:resourceTypeSampleByTask}に，RTOS(Real-time operating system)におけるタスクの概念をリソースタイプとして表現した例を，図\ref{fig:resourceSampleByTask}に，リソースタイプTaskのリソースの例としてMainTaskを示す．
+�}\ref{fig:resourceTypeSample}�Ɛ}\ref{fig:resourceSample}�ɁC���\�[�X�^�C�v�ƃ��\�[�X��}�ŕ\��������������D
+����ɁC�}\ref{fig:resourceTypeSampleByTask}�ɁCRTOS(Real-time operating system)�ɂ�����^�X�N�̊T�O�����\�[�X�^�C�v�Ƃ��ĕ\����������C�}\ref{fig:resourceSampleByTask}�ɁC���\�[�X�^�C�vTask�̃��\�[�X�̗�Ƃ���MainTask�������D
 
-トレースログの抽象化を以下にまとめる．
+�g���[�X���O�̒��ۉ����ȉ��ɂ܂Ƃ߂�D
 
 \begin{description}
-\item[トレースログ] \mbox{} \\
-時系列にイベントを記録したもの．
-\item[イベント] \mbox{} \\
-リソースの属性の値の変化，リソースの振る舞い．
-\item[リソース] \mbox{} \\
-イベントの発生源．固有の名前，属性をもつ．
-\item[リソースタイプ] \mbox{} \\
-リソースの型．リソースの属性，振る舞いを特徴付ける．
-\item[属性] \mbox{} \\
-リソースが固有にもつ情報．文字列，数値，真偽値のいずれかで表現されるスカラーデータで表される．
-\item[振る舞い] \mbox{} \\
-リソースの行為．主に属性の値の変化を伴わない行為をイベントとして記録するために用いることを想定している．
-振る舞いは任意の数のスカラーデータを引数として受け取ることができる．
+\item[�g���[�X���O] \mbox{} \\
+���n��ɃC�x���g���L�^�������́D
+\item[�C�x���g] \mbox{} \\
+���\�[�X�̑����̒l�̕ω��C���\�[�X�̐U�镑���D
+\item[���\�[�X] \mbox{} \\
+�C�x���g�̔������D�ŗL�̖��O�C���������D
+\item[���\�[�X�^�C�v] \mbox{} \\
+���\�[�X�̌^�D���\�[�X�̑����C�U�镑��������t����D
+\item[����] \mbox{} \\
+���\�[�X���ŗL�ɂ����D������C���l�C�^�U�l�̂����ꂩ�ŕ\�������X�J���[�f�[�^�ŕ\�����D
+\item[�U�镑��] \mbox{} \\
+���\�[�X�̍s�ׁD��ɑ����̒l�̕ω��𔺂�Ȃ��s�ׂ��C�x���g�Ƃ��ċL�^���邽�߂ɗp���邱�Ƃ�z�肵�Ă���D
+�U�镑���͔C�ӂ̐��̃X�J���[�f�[�^�������Ƃ��Ď󂯎�邱�Ƃ��ł���D
 \end{description}
 
 \begin{figure}[p]
@@ -48,14 +48,14 @@
 \begin{minipage}{0.5\hsize}
 \begin{center}
 \includegraphics[scale=0.5]{img/resourceTypeSample.eps}
-\caption{リソースタイプ}
+\caption{���\�[�X�^�C�v}
 \label{fig:resourceTypeSample}
 \end{center}
 \end{minipage}
 \begin{minipage}{0.5\hsize}
 \begin{center}
 \includegraphics[scale=0.5]{img/resourceSample.eps}
-\caption{リソース}
+\caption{���\�[�X}
 \label{fig:resourceSample}
 \end{center}
 \end{minipage}
@@ -67,7 +67,7 @@
 \begin{minipage}{0.35\hsize}
 \begin{center}
 \includegraphics[scale=0.5]{img/resourceTypeSampleByTask.eps}
-\caption{タスクをリソースタイプTaskとして表現した例}
+\caption{�^�X�N�����\�[�X�^�C�vTask�Ƃ��ĕ\��������}
 \label{fig:resourceTypeSampleByTask}
 \end{center}
 \end{minipage}
@@ -77,7 +77,7 @@
 \begin{minipage}{0.3\hsize}
 \begin{center}
 \includegraphics[scale=0.5]{img/resourceSampleByTask.eps}
-\caption{リソースタイプTaskのリソースMainTaskの例}
+\caption{���\�[�X�^�C�vTask�̃��\�[�XMainTask�̗�}
 \label{fig:resourceSampleByTask}
 \end{center}
 \end{minipage}
@@ -86,43 +86,43 @@
 
 \clearpage
 
-\subsection{標準形式トレースログの定義}
+\subsection{�W���`���g���[�X���O�̒�`}
 
-本小節では，前小節で抽象化したトレースログを，標準形式トレースログとして形式化する．
-標準形式トレースログの定義は，EBNF(Extended Backus Naur Form)および終端記号として正規表現を用いて行う．
-正規表現はスラッシュ記号({\tt /})で挟むものとする．
+�{���߂ł́C�O���߂Œ��ۉ������g���[�X���O���C�W���`���g���[�X���O�Ƃ��Č`��������D
+�W���`���g���[�X���O�̒�`�́CEBNF(Extended Backus Naur Form)����яI�[�L���Ƃ��Đ��K�\����p���čs���D
+���K�\���̓X���b�V���L��({\tt /})�ŋ��ނ��̂Ƃ���D
 
-前小節によれば，トレースログは，時系列にイベントを記録したものであるので，１つのログには時刻とイベントが含まれるべきである．
-トレースログが記録されたファイルのデータを\verb|TraceLog|，\verb|TraceLog|を改行記号で区切った１行を\verb|TraceLogLine|とすると，これらは次のEBNFで表現される．
+�O���߂ɂ��΁C�g���[�X���O�́C���n��ɃC�x���g���L�^�������̂ł���̂ŁC�P�̃��O�ɂ͎����ƃC�x���g���܂܂��ׂ��ł���D
+�g���[�X���O���L�^���ꂽ�t�@�C���̃f�[�^��\verb|TraceLog|�C\verb|TraceLog|�����s�L���ŋ�؂����P�s��\verb|TraceLogLine|�Ƃ���ƁC�����͎���EBNF�ŕ\�������D
 
 \begin{EBNF}
 TraceLog = { TraceLogLine,"\n" };
 TraceLogLine = "[",Time,"]",Event;
 \end{EBNF}
 
-\verb|TraceLogLine|は"\verb|[|","\verb|]|"で時刻を囲み，その後ろにイベントを記述するものとする．
+\verb|TraceLogLine|��"\verb|[|","\verb|]|"�Ŏ������͂݁C���̌��ɃC�x���g���L�q������̂Ƃ���D
 
-時刻は\verb|Time|として定義され，次に示すように数値とアルファベットで構成するものとする．
+������\verb|Time|�Ƃ��Ē�`����C���Ɏ����悤�ɐ��l�ƃA���t�@�x�b�g�ō\��������̂Ƃ���D
 
 \begin{EBNF}
 Time = /[0-9a-Z]+/;
 \end{EBNF}
 
-アルファベットが含まれるのは，10進数以外の時刻を表現できるようにするためである．
-これは，時刻の単位として「秒」以外のもの，たとえば「実行命令数」などを表現できるように考慮したためである．
-この定義から，時刻には，2進数から36進数までを指定できることがわかる．
+�A���t�@�x�b�g���܂܂��̂́C10�i���ȊO�̎�����\���ł���悤�ɂ��邽�߂ł���D
+����́C�����̒P�ʂƂ��āu�b�v�ȊO�̂��́C���Ƃ��΁u���s���ߐ��v�Ȃǂ�\���ł���悤�ɍl���������߂ł���D
+���̒�`����C�����ɂ́C2�i������36�i���܂ł��w��ł��邱�Ƃ��킩��D
 
-前小節にて，イベントを，リソースの属性の値の変化，リソースの振る舞いと抽象化した．
-そのため，イベントを次のように定義した．
+�O���߂ɂāC�C�x���g���C���\�[�X�̑����̒l�̕ω��C���\�[�X�̐U�镑���ƒ��ۉ������D
+���̂��߁C�C�x���g�����̂悤�ɒ�`�����D
 
 \begin{EBNF}
 Event = Resource,".",(AttributeChange|BehaviorHappen);
 \end{EBNF}
 
-{\tt Resource}はリソースを表し，{\tt AttributeChange}は属性の値の変化イベント，{\tt BehaviorHappen}は振る舞いイベントを表す．
-リソースはリソース名による直接指定，あるいはリソースタイプ名と属性条件による条件指定の2通りの指定方法を用意した．
+{\tt Resource}�̓��\�[�X��\���C{\tt AttributeChange}�͑����̒l�̕ω��C�x���g�C{\tt BehaviorHappen}�͐U�镑���C�x���g��\���D
+���\�[�X�̓��\�[�X���ɂ�钼�ڎw��C���邢�̓��\�[�X�^�C�v���Ƒ��������ɂ������w���2�ʂ�̎w����@��p�ӂ����D
 
-リソースの定義を次に示す．
+���\�[�X�̒�`�����Ɏ����D
 
 \begin{EBNF}
 Resource = ResourceName
@@ -132,9 +132,9 @@ ResourceTypeName = Name;
 Name = /[0-9a-Z_]+/;
 \end{EBNF}
 
-リソースとリソースタイプの名前は数値とアルファベット，アンダーバーで構成されるとした．
-{\tt AttributeCondition}は属性条件指定記述である．
-これは次のように定義する．
+���\�[�X�ƃ��\�[�X�^�C�v�̖��O�͐��l�ƃA���t�@�x�b�g�C�A���_�[�o�[�ō\�������Ƃ����D
+{\tt AttributeCondition}�͑��������w��L�q�ł���D
+����͎��̂悤�ɒ�`����D
 
 \begin{EBNF}
 AttributeCondition = BooleanExpression;
@@ -148,17 +148,17 @@ LogicalOpe = "&&"|"||";
 ComparisonOpe = "=="|"!="|"<"|">"|"<="|">=";
 \end{EBNF}
 
-属性条件指定は，論理式で表され，命題として属性の値の条件式を，等価演算子や比較演算子を用いて記述できるとした．
+���������w��́C�_�����ŕ\����C����Ƃ��đ����̒l�̏��������C�������Z�q���r���Z�q��p���ċL�q�ł���Ƃ����D
 
-{\tt AttributeName}はリソース属性の名前であり，リソース名やリソースタイプ名と同様に，次のように定義する．
+{\tt AttributeName}�̓��\�[�X�����̖��O�ł���C���\�[�X���⃊�\�[�X�^�C�v���Ɠ��l�ɁC���̂悤�ɒ�`����D
 
 \begin{EBNF}
 AttributeName = Name;
 \end{EBNF}
 
-イベントの定義にて，\verb|AttributeChange|は属性の値の変化を，\verb|BehaviorHappen|は振る舞いを表現しているとした．
-これらは，リソースとドット"\verb|.|"でつなげることでそのリソース固有のものであることを示す．
-リソースの属性の値の変化と振る舞いは次のように定義した．
+�C�x���g�̒�`�ɂāC\verb|AttributeChange|�͑����̒l�̕ω����C\verb|BehaviorHappen|�͐U�镑����\�����Ă���Ƃ����D
+�����́C���\�[�X�ƃh�b�g"\verb|.|"�łȂ��邱�Ƃł��̃��\�[�X�ŗL�̂��̂ł��邱�Ƃ������D
+���\�[�X�̑����̒l�̕ω��ƐU�镑���͎��̂悤�ɒ�`�����D
 
 \begin{EBNF}
 AttributeChange = AttributeName,"=",Value;
@@ -169,45 +169,45 @@ Arguments = [{Argument,[","]}];
 Argument = /[^"\\]*/;
 \end{EBNF}
 
-属性の変化イベントは，属性名と変化後の値を代入演算子でつなぐことで記述し，振る舞いイベントは，振る舞い名に続けてカンマで区切った引数を括弧"{\tt ()}"で囲み記述するとした．
+�����̕ω��C�x���g�́C�������ƕω���̒l�������Z�q�łȂ����ƂŋL�q���C�U�镑���C�x���g�́C�U�镑�����ɑ����ăJ���}�ŋ�؂�������������"{\tt ()}"�ň͂݋L�q����Ƃ����D
 
 
-\subsection{標準形式トレースログの例}
+\subsection{�W���`���g���[�X���O�̗�}
 
-前小節の定義を元に記述した，標準形式トレースログの例を表\ref{standartFormatTraceLogSample}に示す．
+�O���߂̒�`�����ɋL�q�����C�W���`���g���[�X���O�̗��\\ref{standartFormatTraceLogSample}�Ɏ����D
 
-\begin{File}{標準形式トレースログの例}{standartFormatTraceLogSample}
+\begin{File}{�W���`���g���[�X���O�̗�}{standartFormatTraceLogSample}
 [2403010]MAIN_TASK.leaveSVC(ena_tex,ercd=0)
 [4496099]MAIN_TASK.state=READY
 [4496802]TASK(state==RUNNING).state=READY
 \end{File}
 
-1行目がリソースの振る舞いイベントであり，2行目，3行目が属性の値の変化イベントである．
-1行目の振る舞いイベントには引数が指定されている．
+1�s�ڂ����\�[�X�̐U�镑���C�x���g�ł���C2�s�ځC3�s�ڂ������̒l�̕ω��C�x���g�ł���D
+1�s�ڂ̐U�镑���C�x���g�ɂ͈������w�肳��Ă���D
 
-1行目，2行目はリソースを名前で直接指定しているが，3行目はリソースタイプと属性の条件によってリソースを特定している．
+1�s�ځC2�s�ڂ̓��\�[�X�𖼑O�Œ��ڎw�肵�Ă��邪�C3�s�ڂ̓��\�[�X�^�C�v�Ƒ����̏����ɂ���ă��\�[�X����肵�Ă���D
 
 
-\section{標準形式への変換}
+\section{�W���`���ւ̕ϊ�}
 
-標準形式トレースログへの変換は，トレースログファイルを先頭から行単位で読み込み，変換ルールファイルで定義される置換ルールに従い標準形式トレースログに置換していくことで行われる．変換ルールファイルの詳細は\ref{subsec:cnvFile}小節で説明する．
+�W���`���g���[�X���O�ւ̕ϊ��́C�g���[�X���O�t�@�C����擪����s�P�ʂœǂݍ��݁C�ϊ����[���t�@�C���Œ�`�����u�����[���ɏ]���W���`���g���[�X���O�ɒu�����Ă������Ƃōs����D�ϊ����[���t�@�C���̏ڍׂ�\ref{subsec:cnvFile}���߂Ő�������D
 
-１つの置換ルールに対して複数の標準形式トレースログを出力可能である．
-しかし，所望の標準形式トレースログに変換する際，トレースログファイルの情報だけでは足りない場合がある．
-例として，TOPPERS/ASPカーネル\cite{TOPPERS}というRTOSのトレースログを標準形式トレースログに変換することを考えてみる．
-TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示す．
+�P�̒u�����[���ɑ΂��ĕ����̕W���`���g���[�X���O���o�͉\�ł���D
+�������C���]�̕W���`���g���[�X���O�ɕϊ�����ہC�g���[�X���O�t�@�C���̏�񂾂��ł͑���Ȃ��ꍇ������D
+��Ƃ��āCTOPPERS/ASP�J�[�l��\cite{TOPPERS}�Ƃ���RTOS�̃g���[�X���O��W���`���g���[�X���O�ɕϊ����邱�Ƃ��l���Ă݂�D
+TOPPERS/ASP�J�[�l���̃g���[�X���O�̗��\\ref{aspLogSample}�Ɏ����D
 
-\begin{File}{変換元となるTOPPERS/ASPカーネルのトレースログの例}{aspLogSample}
+\begin{File}{�ϊ����ƂȂ�TOPPERS/ASP�J�[�l���̃g���[�X���O�̗�}{aspLogSample}
 [1000]task 1 becomes RUNNABLE
 [1005]dispatch to task 1.
 [1100]task 1 becomes WAITING
 \end{File}
 
-表\ref{aspLogSample}のトレースログの内容を簡単に説明すると，時刻1000にタスクIDが1のタスクの状態がRUNNABLEになり，時刻1005に同タスクがディスパッチされ，時刻1100に同タスクの状態がWAITINGになったことを示している．
-この場合，標準形式トレースログは表\ref{aspStandartLogSample}のように出力されることが要求される．
-なお，説明のため簡略化しており，実際の変換結果とは異なる．
+�\\ref{aspLogSample}�̃g���[�X���O�̓��e���ȒP�ɐ�������ƁC����1000�Ƀ^�X�NID��1�̃^�X�N�̏�Ԃ�RUNNABLE�ɂȂ�C����1005�ɓ��^�X�N���f�B�X�p�b�`����C����1100�ɓ��^�X�N�̏�Ԃ�WAITING�ɂȂ������Ƃ������Ă���D
+���̏ꍇ�C�W���`���g���[�X���O�͕\\ref{aspStandartLogSample}�̂悤�ɏo�͂���邱�Ƃ��v�������D
+�Ȃ��C�����̂��ߊȗ������Ă���C���ۂ̕ϊ����ʂƂ͈قȂ�D
 
-\begin{File}{表\ref{aspLogSample}を標準形式トレースログで表現した例}{aspStandartLogSample}
+\begin{File}{�\\ref{aspLogSample}��W���`���g���[�X���O�ŕ\��������}{aspStandartLogSample}
 [1000]Task(id==1).activate()
 [1000]Task(id==1).state = READY
 [1005]Task(state==RUNNING).state=READY
@@ -215,42 +215,42 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 [1100]Task(id==1).state = WAITING
 \end{File}
 
-表\ref{aspLogSample}で示す元のトレースログが3行なのに対し，表\ref{aspStandartLogSample}で示す要求される標準形式トレースログは５行となっている．
-これは，表\ref{aspStandartLogSample}の1行目と3行目が状況により追加されるからである．
-表\ref{aspStandartLogSample}の1行目は，表\ref{aspLogSample}の1行目に対応しており，起動(\verb|activate()|)というタスクの振る舞いを可視化したいという要求があるため追加される必要がある．
-また，表\ref{aspStandartLogSample}の3行目は，表\ref{aspLogSample}の2行目に対応しており，すでに起動しているタスクが横取りされて状態がREADYになる，という情報が元のトレースログに存在しないため，追加される必要がある．
+�\\ref{aspLogSample}�Ŏ������̃g���[�X���O��3�s�Ȃ̂ɑ΂��C�\\ref{aspStandartLogSample}�Ŏ����v�������W���`���g���[�X���O�͂T�s�ƂȂ��Ă���D
+����́C�\\ref{aspStandartLogSample}��1�s�ڂ�3�s�ڂ��󋵂ɂ��ǉ�����邩��ł���D
+�\\ref{aspStandartLogSample}��1�s�ڂ́C�\\ref{aspLogSample}��1�s�ڂɑΉ����Ă���C�N��(\verb|activate()|)�Ƃ����^�X�N�̐U�镑���������������Ƃ����v�������邽�ߒǉ������K�v������D
+�܂��C�\\ref{aspStandartLogSample}��3�s�ڂ́C�\\ref{aspLogSample}��2�s�ڂɑΉ����Ă���C���łɋN�����Ă���^�X�N������肳��ď�Ԃ�READY�ɂȂ�C�Ƃ�����񂪌��̃g���[�X���O�ɑ��݂��Ȃ����߁C�ǉ������K�v������D
 
-しかしながら，これら標準形式トレースログの追加が必要になるのは一定の条件下のみである．
-表\ref{aspStandartLogSample}の1行目は，タスクIDが1のタスクの状態が，時刻1000未満のときにDORMANTである場合だけである．
-これは，起動という状態遷移を行うのが状態がDORMANTからREADYに遷移するときだけであり，状態がREADYになっただけでは起動であるのかどうか判断できないためである．
-また，表\ref{aspStandartLogSample}の3行目が必要なときは，時刻1005のときに状態がRUNNINGのタスクが存在する場合だけである．
+�������Ȃ���C�����W���`���g���[�X���O�̒ǉ����K�v�ɂȂ�͈̂��̏������݂̂ł���D
+�\\ref{aspStandartLogSample}��1�s�ڂ́C�^�X�NID��1�̃^�X�N�̏�Ԃ��C����1000�����̂Ƃ���DORMANT�ł���ꍇ�����ł���D
+����́C�N���Ƃ�����ԑJ�ڂ��s���̂���Ԃ�DORMANT����READY�ɑJ�ڂ���Ƃ������ł���C��Ԃ�READY�ɂȂ��������ł͋N���ł���̂��ǂ������f�ł��Ȃ����߂ł���D
+�܂��C�\\ref{aspStandartLogSample}��3�s�ڂ��K�v�ȂƂ��́C����1005�̂Ƃ��ɏ�Ԃ�RUNNING�̃^�X�N�����݂���ꍇ�����ł���D
 
-このように，リソース属性の遷移に伴うイベントや，元のトレースログに欠落している情報を補うイベントなど，元のトレースログの情報だけでは判断できないイベントを出力するには，特定時刻における特定リソースの有無やその数，特定リソースの属性の値などの条件で出力を制御できる必要がある．
-そのため，TLVの変換ルールでは，置換する条件の指定と，条件指定の際に用いる情報を置換マクロを用いて取得できる仕組みを提供した．
-具体的な記述例は\ref{subsec:cnvFile}小節で述べる．
+���̂悤�ɁC���\�[�X�����̑J�ڂɔ����C�x���g��C���̃g���[�X���O�Ɍ������Ă������₤�C�x���g�ȂǁC���̃g���[�X���O�̏�񂾂��ł͔��f�ł��Ȃ��C�x���g���o�͂���ɂ́C���莞���ɂ�������胊�\�[�X�̗L���₻�̐��C���胊�\�[�X�̑����̒l�Ȃǂ̏����ŏo�͂𐧌�ł���K�v������D
+���̂��߁CTLV�̕ϊ����[���ł́C�u����������̎w��ƁC�����w��̍ۂɗp�������u���}�N����p���Ď擾�ł���d�g�݂�񋟂����D
+��̓I�ȋL�q���\ref{subsec:cnvFile}���߂ŏq�ׂ�D
 
-標準形式トレースログに含まれるリソースは，リソースファイルで定義されていなければならない．
-リソースファイルには，各リソースについて，その名前とリソースタイプ，必要であれば各属性の初期値を定義する．
-リソースファイルの詳細については\ref{subsec:resFile}小節で述べる．
-また，その際に使用されるリソースタイプはリソースヘッダファイルで定義されていなければならない．
-リソースヘッダファイルには各リソースタイプについて，その名前と属性，振る舞いの定義を記述する．
-リソースヘッダファイルの詳細については\ref{subsec:reshFile}小節で述べる．
+�W���`���g���[�X���O�Ɋ܂܂�郊�\�[�X�́C���\�[�X�t�@�C���Œ�`����Ă��Ȃ���΂Ȃ�Ȃ��D
+���\�[�X�t�@�C���ɂ́C�e���\�[�X�ɂ��āC���̖��O�ƃ��\�[�X�^�C�v�C�K�v�ł���Ίe�����̏����l���`����D
+���\�[�X�t�@�C���̏ڍׂɂ��Ă�\ref{subsec:resFile}���߂ŏq�ׂ�D
+�܂��C���̍ۂɎg�p����郊�\�[�X�^�C�v�̓��\�[�X�w�b�_�t�@�C���Œ�`����Ă��Ȃ���΂Ȃ�Ȃ��D
+���\�[�X�w�b�_�t�@�C���ɂ͊e���\�[�X�^�C�v�ɂ��āC���̖��O�Ƒ����C�U�镑���̒�`���L�q����D
+���\�[�X�w�b�_�t�@�C���̏ڍׂɂ��Ă�\ref{subsec:reshFile}���߂ŏq�ׂ�D
 
-リソースヘッダ，変換ルール，可視化ルールは可視化するターゲット毎に用意する．
-その際のターゲットはリソースファイルに記述する．
+���\�[�X�w�b�_�C�ϊ����[���C�������[���͉�������^�[�Q�b�g���ɗp�ӂ���D
+���̍ۂ̃^�[�Q�b�g�̓��\�[�X�t�@�C���ɋL�q����D
 
 \clearpage
-\subsection{トレースログファイル}
+\subsection{�g���[�X���O�t�@�C��}
 
-標準形式トレースログに変換する元となるトレースログは，トレースログファイルとして読み込む．
-トレースログファイルはテキストファイルであり，行単位でトレースログが記述されていなければならない．
-これ以外のシンタックス，セマンティクスに関する制限はない．
+�W���`���g���[�X���O�ɕϊ����錳�ƂȂ�g���[�X���O�́C�g���[�X���O�t�@�C���Ƃ��ēǂݍ��ށD
+�g���[�X���O�t�@�C���̓e�L�X�g�t�@�C���ł���C�s�P�ʂŃg���[�X���O���L�q����Ă��Ȃ���΂Ȃ�Ȃ��D
+����ȊO�̃V���^�b�N�X�C�Z�}���e�B�N�X�Ɋւ��鐧���͂Ȃ��D
 
-任意のトレースログファイルを標準形式トレースログに変換するには，ターゲットとなるトレースログの形式毎に変換ルールファイルを用意する必要がある．
+�C�ӂ̃g���[�X���O�t�@�C����W���`���g���[�X���O�ɕϊ�����ɂ́C�^�[�Q�b�g�ƂȂ�g���[�X���O�̌`�����ɕϊ����[���t�@�C����p�ӂ���K�v������D
 
-表\ref{aspTraceLog}に，RTOSであるTOPPERS/ASPカーネルのトレースログの例を示す．
+�\\ref{aspTraceLog}�ɁCRTOS�ł���TOPPERS/ASP�J�[�l���̃g���[�X���O�̗�������D
 
-\begin{File}{TOPPERS/ASPカーネルのトレースログの例}{aspTraceLog}
+\begin{File}{TOPPERS/ASP�J�[�l���̃g���[�X���O�̗�}{aspTraceLog}
 [11005239]: task 4 becomes RUNNABLE.
 [11005778]: dispatch from task 2.
 [11005954]: dispatch to task 4.
@@ -265,26 +265,26 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 [11008832]: leave to sns_ctx state=0.
 \end{File}
 
-\subsection{リソースヘッダファイル}
+\subsection{���\�[�X�w�b�_�t�@�C��}
 \label{subsec:reshFile}
 
-リソースヘッダファイルにはリソースタイプの定義を記述する．
-リソースタイプの定義には，リソースタイプの名前，表示名，リソースタイプがもつ属性，振る舞いを記述する．
+���\�[�X�w�b�_�t�@�C���ɂ̓��\�[�X�^�C�v�̒�`���L�q����D
+���\�[�X�^�C�v�̒�`�ɂ́C���\�[�X�^�C�v�̖��O�C�\�����C���\�[�X�^�C�v���������C�U�镑�����L�q����D
 
-リソースヘッダは可視化するターゲット毎にリソースタイプを定義することができる．
-つまり，タスクを表すリソースタイプ\verb|Task|を定義する際に，ターゲットとなるRTOS毎に属性の内容を変えたい場合，RTOS毎にリソースタイプ\verb|Task|を定義することができる．
+���\�[�X�w�b�_�͉�������^�[�Q�b�g���Ƀ��\�[�X�^�C�v���`���邱�Ƃ��ł���D
+�܂�C�^�X�N��\�����\�[�X�^�C�v\verb|Task|���`����ۂɁC�^�[�Q�b�g�ƂȂ�RTOS���ɑ����̓��e��ς������ꍇ�CRTOS���Ƀ��\�[�X�^�C�v\verb|Task|���`���邱�Ƃ��ł���D
 
-表\ref{resourceHeaderSample}に，ターゲット\verb|asp|のリソースタイプ\verb|Task|を定義したリソースヘッダファイルの例を示す．
-リソースヘッダファイルは，1つのオブジェクトで構成され，各メンバにターゲット毎のリソースタイプの定義を記述する．
-メンバ名にターゲット名を記述し，値としてそのターゲットに属する複数のリソースタイプを定義したオブジェクトを記述する．
-そのオブジェクトには，メンバ名にリソースタイプ名を，値にリソースタイプを定義したオブジェクトを記述する．
-以下に，リソースタイプを定義するオブジェクトのメンバの説明と値について説明する．
+�\\ref{resourceHeaderSample}�ɁC�^�[�Q�b�g\verb|asp|�̃��\�[�X�^�C�v\verb|Task|���`�������\�[�X�w�b�_�t�@�C���̗�������D
+���\�[�X�w�b�_�t�@�C���́C1�̃I�u�W�F�N�g�ō\������C�e�����o�Ƀ^�[�Q�b�g���̃��\�[�X�^�C�v�̒�`���L�q����D
+�����o���Ƀ^�[�Q�b�g�����L�q���C�l�Ƃ��Ă��̃^�[�Q�b�g�ɑ����镡���̃��\�[�X�^�C�v���`�����I�u�W�F�N�g���L�q����D
+���̃I�u�W�F�N�g�ɂ́C�����o���Ƀ��\�[�X�^�C�v�����C�l�Ƀ��\�[�X�^�C�v���`�����I�u�W�F�N�g���L�q����D
+�ȉ��ɁC���\�[�X�^�C�v���`����I�u�W�F�N�g�̃����o�̐����ƒl�ɂ��Đ�������D
 
-\begin{File}{リソースヘッダファイルの例}{resourceHeaderSample}
+\begin{File}{���\�[�X�w�b�_�t�@�C���̗�}{resourceHeaderSample}
 {
   "asp":{
     "Task":{
-      "DisplayName":"タスク",
+      "DisplayName":"�^�X�N",
       "Attributes":{
         "id":{
           "VariableType":"Number",
@@ -294,31 +294,31 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
         },
         "atr":{
           "VariableType":"String",
-          "DisplayName":"属性",
+          "DisplayName":"����",
           "AllocationType":"Static",
           "CanGrouping":false
         },
-        /* 省略 */
+        /* �ȗ� */
         "state":{
           "VariableType":"String",
-          "DisplayName":"状態",
+          "DisplayName":"���",
           "AllocationType":"Dynamic",
           "CanGrouping":false,
           "Default":"DORMANT"
         }
       },
       "Behaviors":{
-        "preempt":{"DisplayName":"プリエンプト"},
-        "dispatch":{"DisplayName":"ディスパッチ"},
-        "activate":{"DisplayName":"起動"},
-        "exit":{"DisplayName":"終了"},
-        /* 省略 */
+        "preempt":{"DisplayName":"�v���G���v�g"},
+        "dispatch":{"DisplayName":"�f�B�X�p�b�`"},
+        "activate":{"DisplayName":"�N��"},
+        "exit":{"DisplayName":"�I��"},
+        /* �ȗ� */
         "enterSVC":{
-          "DisplayName":"サービスコールに入る",
+          "DisplayName":"�T�[�r�X�R�[���ɓ���",
           "Arguments":{"name":"String","args":"String"}
         },
         "leaveSVC":{
-          "DisplayName":"サービスコールから出る",
+          "DisplayName":"�T�[�r�X�R�[������o��",
           "Arguments":{"name":"String","args":"String"}
         }
       }
@@ -332,16 +332,16 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 \item[\texttt{DisplayName}] \mbox{}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] リソースタイプの表示名．主にGUI表示の際に用いられる
-    \item[値] 文字列
+    \item[����] ���\�[�X�^�C�v�̕\�����D���GUI�\���̍ۂɗp������
+    \item[�l] ������
     \end{description}
 }
 \clearpage
 \item[\texttt{Attributes}] \mbox{}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 属性の定義
-    \item[値] オブジェクト．メンバ名に属性名，値に属性の定義をオブジェクトで記述する．その際のオブジェクトのメンバの説明は以下の通りである．
+    \item[����] �����̒�`
+    \item[�l] �I�u�W�F�N�g�D�����o���ɑ������C�l�ɑ����̒�`���I�u�W�F�N�g�ŋL�q����D���̍ۂ̃I�u�W�F�N�g�̃����o�̐����͈ȉ��̒ʂ�ł���D
     
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
@@ -349,29 +349,29 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
             \item[\texttt{VariableType}] \mbox{}
             \vspace{-0.25zw}
                 \begin{description}
-                \item[説明] 属性値の型
-                \item[値] 文字列(\verb|"Number"|：数値，\verb|"Boolean"|：真偽値，\verb|"String"|：文字列のいずれか)
+                \item[����] �����l�̌^
+                \item[�l] ������(\verb|"Number"|�F���l�C\verb|"Boolean"|�F�^�U�l�C\verb|"String"|�F������̂����ꂩ)
                 \end{description}
             }{\nopagebreak
             \item[\texttt{DisplayName}] \mbox{}
             \vspace{-0.25zw}
                 \begin{description}
-                \item[説明] 属性の表示名．主にGUI表示の際に用いられる
-                \item[値] 文字列
+                \item[����] �����̕\�����D���GUI�\���̍ۂɗp������
+                \item[�l] ������
                 \end{description}
             }{\nopagebreak
             \item[\texttt{AllocationType}] \mbox{}
             \vspace{-0.25zw}
                 \begin{description}
-                \item[説明] 属性の値が動的か静的かの指定．ここで動的とは，属性値変更イベントが発生すること指し，静的とは発生しないことを指す．
-                \item[値] 文字列(\verb|"Static"|，\verb|"Dynamic"|のいずれか)
+                \item[����] �����̒l�����I���ÓI���̎w��D�����œ��I�Ƃ́C�����l�ύX�C�x���g���������邱�Ǝw���C�ÓI�Ƃ͔������Ȃ����Ƃ��w���D
+                \item[�l] ������(\verb|"Static"|�C\verb|"Dynamic"|�̂����ꂩ)
                 \end{description}
             }{\nopagebreak
             \item[\texttt{CanGrouping}] \mbox{}
             \vspace{-0.25zw}
                 \begin{description}
-                \item[説明] リソースをグループ化できるかどうか．ここで\verb|true|を指定された場合，GUIでリソースの一覧を表示する際に初期値でグループ化され表示することができる．
-                \item[値] 真偽値
+                \item[����] ���\�[�X���O���[�v���ł��邩�ǂ����D������\verb|true|���w�肳�ꂽ�ꍇ�CGUI�Ń��\�[�X�̈ꗗ��\������ۂɏ����l�ŃO���[�v������\�����邱�Ƃ��ł���D
+                \item[�l] �^�U�l
                 \end{description}
             }
             \end{description}
@@ -379,8 +379,8 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 \item[\texttt{Behaviors}] \mbox{}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 振る舞いの定義
-    \item[値] オブジェクト．メンバ名に振る舞い名，値に振る舞いの定義をオブジェクトで記述する．その際のオブジェクトのメンバの説明は以下の通りである．
+    \item[����] �U�镑���̒�`
+    \item[�l] �I�u�W�F�N�g�D�����o���ɐU�镑�����C�l�ɐU�镑���̒�`���I�u�W�F�N�g�ŋL�q����D���̍ۂ̃I�u�W�F�N�g�̃����o�̐����͈ȉ��̒ʂ�ł���D
     
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
@@ -388,15 +388,15 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
             \item[\texttt{DisplayName}] \mbox{}
             \vspace{-0.25zw}
                 \begin{description}
-                \item[説明] 振る舞いの表示名．主にGUI表示の際に用いられる
-                \item[値] 文字列
+                \item[����] �U�镑���̕\�����D���GUI�\���̍ۂɗp������
+                \item[�l] ������
                 \end{description}
             }{\nopagebreak
             \item[\texttt{Arguments}] \mbox{}
             \vspace{-0.25zw}
                 \begin{description}
-                \item[説明] 振る舞いの引数
-                \item[値] オブジェクト．メンバ名に引数名，値に引数の型を記述する．
+                \item[����] �U�镑���̈���
+                \item[�l] �I�u�W�F�N�g�D�����o���Ɉ������C�l�Ɉ����̌^���L�q����D
                 \end{description}
             }
             \end{description}
@@ -404,18 +404,18 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 \end{description}
 
 \clearpage
-\subsection{リソースファイル}
+\subsection{���\�[�X�t�@�C��}
 \label{subsec:resFile}
 
-リソースファイルには，主に，標準形式トレースログに登場するリソースの定義を記述する．
-他にも，時間の単位や時間の基数，適用する変換ルール，リソースヘッダ，可視化ルールを定義する．
-リソースの定義には，名前とリソースタイプ，必要があれば属性の初期値を記述する．
+���\�[�X�t�@�C���ɂ́C��ɁC�W���`���g���[�X���O�ɓo�ꂷ�郊�\�[�X�̒�`���L�q����D
+���ɂ��C���Ԃ̒P�ʂ⎞�Ԃ̊�C�K�p����ϊ����[���C���\�[�X�w�b�_�C�������[�����`����D
+���\�[�X�̒�`�ɂ́C���O�ƃ��\�[�X�^�C�v�C�K�v������Α����̏����l���L�q����D
 
-表\ref{resourceSample}にリソースファイルの例を示す．
-リソースファイルは1つのオブジェクトで構成され，\verb|TimeScale|，\verb|TimeRadix|，\verb|ConvertRules|，\verb|VisualizeRules|，\verb|ResourceHeaders|，\verb|Resources|の6つのメンバを持つ．
-以下にそれぞれのメンバについて説明する．
+�\\ref{resourceSample}�Ƀ��\�[�X�t�@�C���̗�������D
+���\�[�X�t�@�C����1�̃I�u�W�F�N�g�ō\������C\verb|TimeScale|�C\verb|TimeRadix|�C\verb|ConvertRules|�C\verb|VisualizeRules|�C\verb|ResourceHeaders|�C\verb|Resources|��6�̃����o�����D
+�ȉ��ɂ��ꂼ��̃����o�ɂ��Đ�������D
 
-\begin{FileHere}{リソースファイルの例}{resourceSample}
+\begin{FileHere}{���\�[�X�t�@�C���̗�}{resourceSample}
 {
   "TimeScale" :"us",
   "TimeRadix" :10,
@@ -458,44 +458,44 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 \item[\texttt{TimeScale}] \mbox{}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 時間の単位
-    \item[値] 文字列
+    \item[����] ���Ԃ̒P��
+    \item[�l] ������
     \end{description}
 }{\nopagebreak
 \item[\texttt{TimeRadix}] \mbox{}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 時間の基数
-    \item[値] 数値
+    \item[����] ���Ԃ̊
+    \item[�l] ���l
     \end{description}
 }{\nopagebreak
 \item[\texttt{ConvertRules}] \mbox{}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 適用する変換ルールのターゲット．複数のターゲットを指定可能
-    \item[値] 文字列の配列
+    \item[����] �K�p����ϊ����[���̃^�[�Q�b�g�D�����̃^�[�Q�b�g���w��\
+    \item[�l] ������̔z��
     \end{description}
 }
 {\nopagebreak
 \item[\texttt{VisualizeRules}] \mbox{}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 適用する可視化ルール．複数のターゲットを指定可能
-    \item[値] 文字列の配列
+    \item[����] �K�p����������[���D�����̃^�[�Q�b�g���w��\
+    \item[�l] ������̔z��
     \end{description}
 }{\nopagebreak
 \item[\texttt{ResourceHeaders}] \mbox{}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] \verb|Resources|で定義されるリソースのリソースタイプを定義しているターゲット．複数のターゲットを指定可能
-    \item[値] 文字列の配列
+    \item[����] \verb|Resources|�Œ�`����郊�\�[�X�̃��\�[�X�^�C�v���`���Ă���^�[�Q�b�g�D�����̃^�[�Q�b�g���w��\
+    \item[�l] ������̔z��
     \end{description}
 }
 \item[\texttt{Resources}] \mbox{}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] リソースを定義
-    \item[値] オブジェクト．メンバ名にリソースの名前，値にリソースの定義をオブジェクトで記述．値として与えるオブジェクトで使えるメンバは以下のとおりである．
+    \item[����] ���\�[�X���`
+    \item[�l] �I�u�W�F�N�g�D�����o���Ƀ��\�[�X�̖��O�C�l�Ƀ��\�[�X�̒�`���I�u�W�F�N�g�ŋL�q�D�l�Ƃ��ė^����I�u�W�F�N�g�Ŏg���郁���o�͈ȉ��̂Ƃ���ł���D
     
         \begin{description}
         {\nopagebreak
@@ -503,41 +503,41 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 必須項目である．リソースタイプ名を記述
-            \item[値] 文字列
+            \item[����] �K�{���ڂł���D���\�[�X�^�C�v�����L�q
+            \item[�l] ������
             \end{description}
         }{\nopagebreak
         \item[\texttt{Color}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] リソース固有の色を指定．可視化表示の際に用いられる
-            \item[値] 文字列．RGBを各8bitで表現したものを16進法表記で記述
+            \item[����] ���\�[�X�ŗL�̐F���w��D�����\���̍ۂɗp������
+            \item[�l] ������DRGB���e8bit�ŕ\���������̂�16�i�@�\�L�ŋL�q
             \end{description}
         }{\nopagebreak
         \item[\texttt{Attributes}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 属性の初期値．指定できる属性はリソースタイプで定義されているものに限る
-            \item[値] オブジェクト．メンバ名に属性名，値に属性の初期値を記述
+            \item[����] �����̏����l�D�w��ł��鑮���̓��\�[�X�^�C�v�Œ�`����Ă�����̂Ɍ���
+            \item[�l] �I�u�W�F�N�g�D�����o���ɑ������C�l�ɑ����̏����l���L�q
             \end{description}
         }
         \end{description}
     \end{description}
 \end{description}
 
-\subsection{変換ルールファイル(JSON形式)}
+\subsection{�ϊ����[���t�@�C��(JSON�`��)}
 \label{subsec:cnvFile}
 
-変換ルールファイルには，ターゲットとなるトレースログを標準形式トレースログに変換するためのルールが記述される．
-表\ref{convertRuleFileSample}に，変換ルールファイルの例を示す．
+�ϊ����[���t�@�C���ɂ́C�^�[�Q�b�g�ƂȂ�g���[�X���O��W���`���g���[�X���O�ɕϊ����邽�߂̃��[�����L�q�����D
+�\\ref{convertRuleFileSample}�ɁC�ϊ����[���t�@�C���̗�������D
 
 \begin{table}[h]
 {\scriptsize
 \begin{quote}
 \bkcounttrue
-\caption{変換ルールファイルの例}
+\caption{�ϊ����[���t�@�C���̗�}
 \label{convertRuleFileSample}
 \begin{breakbox}
 \setlength{\baselineskip}{0.8\normalbaselineskip}
@@ -579,29 +579,29 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 }
 \end{table}
 
-変換ルールファイルは，1つのオブジェクトで構成され，各メンバにターゲット毎の変換ルールを記述する．
-メンバ名にターゲット名を記述し，値としてそのターゲットが出力するトレースログを標準形式へ変換するためのルールをオブジェクトとして記述する．
-そのオブジェクトのメンバ名には，標準形式へ変換される対象となるトレースログを正規表現を用いて記述し，値には出力する標準形式トレースログを記述する．
-この際，値を文字列として記述すれば1行を，文字列の配列として記述すれば複数行を出力することができる．
-また，値としてオブジェクトを記述することで，そのメンバ名に出力する条件を記述し，値に出力する標準形式トレースログを記述すれば，条件が真のときのみ出力するように定義できる．
-また，このときの配列やオブジェクトはネストして記述することができる．
+�ϊ����[���t�@�C���́C1�̃I�u�W�F�N�g�ō\������C�e�����o�Ƀ^�[�Q�b�g���̕ϊ����[�����L�q����D
+�����o���Ƀ^�[�Q�b�g�����L�q���C�l�Ƃ��Ă��̃^�[�Q�b�g���o�͂���g���[�X���O��W���`���֕ϊ����邽�߂̃��[�����I�u�W�F�N�g�Ƃ��ċL�q����D
+���̃I�u�W�F�N�g�̃����o���ɂ́C�W���`���֕ϊ������ΏۂƂȂ�g���[�X���O�𐳋K�\����p���ċL�q���C�l�ɂ͏o�͂���W���`���g���[�X���O���L�q����D
+���̍ہC�l�𕶎���Ƃ��ċL�q�����1�s���C������̔z��Ƃ��ċL�q����Ε����s���o�͂��邱�Ƃ��ł���D
+�܂��C�l�Ƃ��ăI�u�W�F�N�g���L�q���邱�ƂŁC���̃����o���ɏo�͂���������L�q���C�l�ɏo�͂���W���`���g���[�X���O���L�q����΁C�������^�̂Ƃ��̂ݏo�͂���悤�ɒ�`�ł���D
+�܂��C���̂Ƃ��̔z���I�u�W�F�N�g�̓l�X�g���ċL�q���邱�Ƃ��ł���D
 
-表\ref{convertRuleFileSample}の例を用いて具体的な説明を行う．
-3行目，13行目，22行目，26行目が検索するトレースログの正規表現である．
-これらの正規表現に一致するトレースログが見つかったとき，対応する値の標準形式トレースログが出力される．
-3行目，13行目の正規表現に一致した場合は，標準形式トレースログが配列として与えられていて，複数の標準形式トレースログを出力する可能性がある．
-3行目の正規表現に一致した場合は，10行目，11行目は必ず出力され，6行目，7行目の標準形式トレースログは5行目の条件が真の場合に出力される．
-13行目の正規表現に一致した場合は，18行目は必ず出力され，16行目，18行目の標準形式トレースログはそれぞれ15行目，17行目の条件が真の場合に出力される．
-22行目，26行目の正規表現に一致した場合は，標準形式トレースログがオブジェクトとして与えられていて，それぞれ23行目，27行目の条件が真の場合のみ標準形式トレースログを出力する．
+�\\ref{convertRuleFileSample}�̗��p���ċ�̓I�Ȑ������s���D
+3�s�ځC13�s�ځC22�s�ځC26�s�ڂ���������g���[�X���O�̐��K�\���ł���D
+�����̐��K�\���Ɉ�v����g���[�X���O�����������Ƃ��C�Ή�����l�̕W���`���g���[�X���O���o�͂����D
+3�s�ځC13�s�ڂ̐��K�\���Ɉ�v�����ꍇ�́C�W���`���g���[�X���O���z��Ƃ��ė^�����Ă��āC�����̕W���`���g���[�X���O���o�͂���\��������D
+3�s�ڂ̐��K�\���Ɉ�v�����ꍇ�́C10�s�ځC11�s�ڂ͕K���o�͂���C6�s�ځC7�s�ڂ̕W���`���g���[�X���O��5�s�ڂ̏������^�̏ꍇ�ɏo�͂����D
+13�s�ڂ̐��K�\���Ɉ�v�����ꍇ�́C18�s�ڂ͕K���o�͂���C16�s�ځC18�s�ڂ̕W���`���g���[�X���O�͂��ꂼ��15�s�ځC17�s�ڂ̏������^�̏ꍇ�ɏo�͂����D
+22�s�ځC26�s�ڂ̐��K�\���Ɉ�v�����ꍇ�́C�W���`���g���[�X���O���I�u�W�F�N�g�Ƃ��ė^�����Ă��āC���ꂼ��23�s�ځC27�s�ڂ̏������^�̏ꍇ�̂ݕW���`���g���[�X���O���o�͂���D
 
-検索するトレースログの正規表現において，名前付きグループ化構成体を用いると，入力文字列中の部分文字列をキャプチャすることができ，標準形式トレースログの出力や条件判定の際に使用できるようになる．名前付きグループ化構成体は"\texttt{(?<}\textit{name}\texttt{>}\textit{regexp}\texttt{)}"と記述する．このとき，\textit{regexp}で表現される正規表現にマッチする部分文字列が\textit{name}をキーとしてキャプチャされる．キャプチャされた文字列は，キーを用いて"\verb|${|\textit{name}\verb|}|"と記述することで呼び出せる．
-また，名前付きでないグループ化構成体"\texttt{(}\textit{regexp}\texttt{)}"を用いることもでき，その際は"\texttt{\$}\textit{n}"で呼び出せる．\textit{regexp}に一致した部分文字列に1から順に番号がつけられ，これを呼び出す際の番号\textit{n}として用いる．
+��������g���[�X���O�̐��K�\���ɂ����āC���O�t���O���[�v���\���̂�p����ƁC���͕����񒆂̕�����������L���v�`�����邱�Ƃ��ł��C�W���`���g���[�X���O�̏o�͂��������̍ۂɎg�p�ł���悤�ɂȂ�D���O�t���O���[�v���\���̂�"\texttt{(?<}\textit{name}\texttt{>}\textit{regexp}\texttt{)}"�ƋL�q����D���̂Ƃ��C\textit{regexp}�ŕ\������鐳�K�\���Ƀ}�b�`���镔��������\textit{name}���L�[�Ƃ��ăL���v�`�������D�L���v�`�����ꂽ������́C�L�[��p����"\verb|${|\textit{name}\verb|}|"�ƋL�q���邱�ƂŌĂяo����D
+�܂��C���O�t���łȂ��O���[�v���\����"\texttt{(}\textit{regexp}\texttt{)}"��p���邱�Ƃ��ł��C���̍ۂ�"\texttt{\$}\textit{n}"�ŌĂяo����D\textit{regexp}�Ɉ�v���������������1���珇�ɔԍ��������C������Ăяo���ۂ̔ԍ�\textit{n}�Ƃ��ėp����D
 
-\subsubsection{置換マクロ}
-標準形式トレースログをオブジェクトとして記述することで出力を条件で制御できることを上記で述べたが，条件判定の際に置換マクロを用いることで特定リソースの有無や数，属性の値を得ることができる．
-また，置換マクロは，条件判定のときだけでなく，出力する標準形式トレースログの記述にも用いることができる．
-置換マクロは"\verb|$|{\it name}\verb|{|{\it common-tracelog-syntax}\verb|}|"という形式で記述する．{\it name}は置換マクロ名であり，{\it common-tracelog-syntax}は標準形式トレースログの文字列である．{\it common-tracelog-syntax}にはリソースや属性が指定され，時刻の指定も可能である．
-利用できる置換マクロは以下の通りである．
+\subsubsection{�u���}�N��}
+�W���`���g���[�X���O���I�u�W�F�N�g�Ƃ��ċL�q���邱�Ƃŏo�͂������Ő���ł��邱�Ƃ���L�ŏq�ׂ����C��������̍ۂɒu���}�N����p���邱�Ƃœ��胊�\�[�X�̗L���␔�C�����̒l�𓾂邱�Ƃ��ł���D
+�܂��C�u���}�N���́C��������̂Ƃ������łȂ��C�o�͂���W���`���g���[�X���O�̋L�q�ɂ��p���邱�Ƃ��ł���D
+�u���}�N����"\verb|$|{\it name}\verb|{|{\it common-tracelog-syntax}\verb|}|"�Ƃ����`���ŋL�q����D{\it name}�͒u���}�N�����ł���C{\it common-tracelog-syntax}�͕W���`���g���[�X���O�̕�����ł���D{\it common-tracelog-syntax}�ɂ̓��\�[�X�⑮�����w�肳��C�����̎w����\�ł���D
+���p�ł���u���}�N���͈ȉ��̒ʂ�ł���D
 
 \vspace{1zw}
 {\nopagebreak
@@ -609,17 +609,17 @@ TOPPERS/ASPカーネルのトレースログの例を表\ref{aspLogSample}に示
 \verb|$EXIST{|\textit{resource}\verb|}|
 \vspace{-0.75zw}
 \begin{quote}
-指定されたリソース{\it resource}が存在すれば{\tt true}，存在しなければ{\tt false}に置換される．
-リソースがリソース名ではなく，リソースタイプと属性の条件で記述されることを想定している．
+�w�肳�ꂽ���\�[�X{\it resource}�����݂����{\tt true}�C���݂��Ȃ����{\tt false}�ɒu�������D
+���\�[�X�����\�[�X���ł͂Ȃ��C���\�[�X�^�C�v�Ƒ����̏����ŋL�q����邱�Ƃ�z�肵�Ă���D
 
 \begin{description}
-\item[例] 時刻1000に属性{\tt state}の値が{\tt RUNNING}であるリソースタイプ{\tt Task}のリソースが存在する場合
+\item[��] ����1000�ɑ���{\tt state}�̒l��{\tt RUNNING}�ł��郊�\�[�X�^�C�v{\tt Task}�̃��\�[�X�����݂���ꍇ
 
-\hspace*{-1zw}入力\vspace{-1.75zw}
+\hspace*{-1zw}����\vspace{-1.75zw}
 \begin{EBNF}
 $EXIST{[1000]Task(state==RUNNING)}
 \end{EBNF}
-\hspace*{-1zw}出力\vspace{-1.75zw}
+\hspace*{-1zw}�o��\vspace{-1.75zw}
 \begin{EBNF}
 true
 \end{EBNF}
@@ -632,17 +632,17 @@ true
 \verb|$COUNT{|\textit{resource}\verb|}|
 \vspace{-0.75zw}
 \begin{quote}
-指定されたリソース{\it resource}の数に置換される．
-リソースがリソース名ではなく，リソースタイプと属性の条件で記述されることを想定している．
+�w�肳�ꂽ���\�[�X{\it resource}�̐��ɒu�������D
+���\�[�X�����\�[�X���ł͂Ȃ��C���\�[�X�^�C�v�Ƒ����̏����ŋL�q����邱�Ƃ�z�肵�Ă���D
 
 \begin{description}
-\item[例] 時刻1000に属性{\tt state}の値が{\tt WAITING}であるリソースタイプ{\tt Task}のリソースが3つ存在する場合
+\item[��] ����1000�ɑ���{\tt state}�̒l��{\tt WAITING}�ł��郊�\�[�X�^�C�v{\tt Task}�̃��\�[�X��3���݂���ꍇ
 
-\hspace*{-1zw}入力\vspace{-1.75zw}
+\hspace*{-1zw}����\vspace{-1.75zw}
 \begin{EBNF}
 $COUNT{[1000]Task(state==WAITING)}
 \end{EBNF}
-\hspace*{-1zw}出力\vspace{-1.75zw}
+\hspace*{-1zw}�o��\vspace{-1.75zw}
 \begin{EBNF}
 3
 \end{EBNF}
@@ -655,18 +655,18 @@ $COUNT{[1000]Task(state==WAITING)}
 \verb|$ATTR{|\textit{attribute}\verb|}|
 \vspace{-0.75zw}
 \begin{quote}
-指定された属性{\it attribute}の値に置換される．
-リソースをリソースタイプと属性の条件で記述する場合は，条件に一致するリソースが1つになるようにしなければならない．
+�w�肳�ꂽ����{\it attribute}�̒l�ɒu�������D
+���\�[�X�����\�[�X�^�C�v�Ƒ����̏����ŋL�q����ꍇ�́C�����Ɉ�v���郊�\�[�X��1�ɂȂ�悤�ɂ��Ȃ���΂Ȃ�Ȃ��D
 
 \vspace{-1zw}
 \begin{description}
-\item[例] 時刻1000にリソース{\tt MAIN\_TASK}の属性{\tt state}の値が{\tt WAITING}である場合
+\item[��] ����1000�Ƀ��\�[�X{\tt MAIN\_TASK}�̑���{\tt state}�̒l��{\tt WAITING}�ł���ꍇ
 
-\hspace*{-1zw}入力\vspace{-1.75zw}
+\hspace*{-1zw}����\vspace{-1.75zw}
 \begin{EBNF}
 $ATTR{[1000]MAIN_TASK.state}
 \end{EBNF}
-\hspace*{-1zw}出力\vspace{-1.75zw}
+\hspace*{-1zw}�o��\vspace{-1.75zw}
 \begin{EBNF}
 WAITING
 \end{EBNF}
@@ -679,17 +679,17 @@ WAITING
 \verb|$RES_NAME{|\textit{resource}\verb|}|
 \vspace{-0.5zw}
 \begin{quote}
-指定されたリソース{\it resource}の名前に置換される．
-リソースをリソースタイプと属性の条件で記述する場合は，条件に一致するリソースが1つになるようにしなければならない．
+�w�肳�ꂽ���\�[�X{\it resource}�̖��O�ɒu�������D
+���\�[�X�����\�[�X�^�C�v�Ƒ����̏����ŋL�q����ꍇ�́C�����Ɉ�v���郊�\�[�X��1�ɂȂ�悤�ɂ��Ȃ���΂Ȃ�Ȃ��D
 
 \begin{description}
-\item[例] 属性{\tt id}の値が{\tt 1}であるリソースタイプ{\tt Task}のリソースの名前がMAIN\_TASKのとき
+\item[��] ����{\tt id}�̒l��{\tt 1}�ł��郊�\�[�X�^�C�v{\tt Task}�̃��\�[�X�̖��O��MAIN\_TASK�̂Ƃ�
 
-\hspace*{-1zw}入力\vspace{-1.75zw}
+\hspace*{-1zw}����\vspace{-1.75zw}
 \begin{EBNF}
 $RES_NAME{Task(id==1)}
 \end{EBNF}
-\hspace*{-1zw}出力\vspace{-1.75zw}
+\hspace*{-1zw}�o��\vspace{-1.75zw}
 \begin{EBNF}
 MAIN_TASK
 \end{EBNF}
@@ -702,20 +702,20 @@ MAIN_TASK
 \verb|$RES_DISPLAYNAME{|\textit{resource}\verb|}|
 \vspace{-0.5zw}
 \begin{quote}
-指定されたリソース{\it resource}の表示名に置換される．
-リソースの表示名はリソースファイルで定義される．
-リソースをリソースタイプと属性の条件で記述する場合は，条件に一致するリソースが1つになるようにしなければならない．
+�w�肳�ꂽ���\�[�X{\it resource}�̕\�����ɒu�������D
+���\�[�X�̕\�����̓��\�[�X�t�@�C���Œ�`�����D
+���\�[�X�����\�[�X�^�C�v�Ƒ����̏����ŋL�q����ꍇ�́C�����Ɉ�v���郊�\�[�X��1�ɂȂ�悤�ɂ��Ȃ���΂Ȃ�Ȃ��D
 
 \begin{description}
-\item[例] 属性{\tt id}の値が{\tt 1}であるリソースタイプ{\tt Task}のリソースの表示名が"メインタスク"のとき
+\item[��] ����{\tt id}�̒l��{\tt 1}�ł��郊�\�[�X�^�C�v{\tt Task}�̃��\�[�X�̕\������"���C���^�X�N"�̂Ƃ�
 
-\hspace*{-1zw}入力\vspace{-1.75zw}
+\hspace*{-1zw}����\vspace{-1.75zw}
 \begin{EBNF}
 $RES_DISPLAYNAME{Task(id==1)}
 \end{EBNF}
-\hspace*{-1zw}出力\vspace{-1.75zw}
+\hspace*{-1zw}�o��\vspace{-1.75zw}
 \begin{EBNF}
-メインタスク
+���C���^�X�N
 \end{EBNF}
 \end{description}
 
@@ -726,18 +726,18 @@ $RES_DISPLAYNAME{Task(id==1)}
 \verb|$RES_COLOR{|\textit{resource}\verb|}|
 \vspace{-0.5zw}
 \begin{quote}
-指定されたリソース{\it resource}の色に置換される．
-リソースの色はリソースファイルで定義される．
-リソースをリソースタイプと属性の条件で記述する場合は，条件に一致するリソースが1つになるようにしなければならない．
+�w�肳�ꂽ���\�[�X{\it resource}�̐F�ɒu�������D
+���\�[�X�̐F�̓��\�[�X�t�@�C���Œ�`�����D
+���\�[�X�����\�[�X�^�C�v�Ƒ����̏����ŋL�q����ꍇ�́C�����Ɉ�v���郊�\�[�X��1�ɂȂ�悤�ɂ��Ȃ���΂Ȃ�Ȃ��D
 
 \begin{description}
-\item[例] 属性{\tt id}の値が{\tt 1}であるリソースタイプ{\tt Task}のリソースの色が赤(ff0000)のとき
+\item[��] ����{\tt id}�̒l��{\tt 1}�ł��郊�\�[�X�^�C�v{\tt Task}�̃��\�[�X�̐F����(ff0000)�̂Ƃ�
 
-\hspace*{-1zw}入力\vspace{-1.75zw}
+\hspace*{-1zw}����\vspace{-1.75zw}
 \begin{EBNF}
 $RES_COLOR{Task(id==1)}
 \end{EBNF}
-\hspace*{-1zw}出力\vspace{-1.75zw}
+\hspace*{-1zw}�o��\vspace{-1.75zw}
 \begin{EBNF}
 ff0000
 \end{EBNF}
@@ -746,6 +746,6 @@ ff0000
 \end{quote}
 }
 
-\subsection{変換ルールファイル(外部プロセス形式)}
-ターゲットとなるトレースログを標準形式トレースログに変換するため外部プロセスも用いることも可能である．
-外部プロセスを指定する方法は，別途「スクリプト拡張マニュアル」において説明する．
+\subsection{�ϊ����[���t�@�C��(�O���v���Z�X�`��)}
+�^�[�Q�b�g�ƂȂ�g���[�X���O��W���`���g���[�X���O�ɕϊ����邽�ߊO���v���Z�X���p���邱�Ƃ��\�ł���D
+�O���v���Z�X���w�肷����@�́C�ʓr�u�X�N���v�g�g���}�j���A���v�ɂ����Đ�������D

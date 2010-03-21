@@ -1,29 +1,29 @@
 
-\section{TraceLogVisualizerの全体像}
+\section{TraceLogVisualizer�̑S�̑�}
 
-TLVの主機能は，2つの主たるプロセスと6種の外部ファイルによって実現される．
-図\ref{fig:tlv}にTLVの全体像を示す．
+TLV�̎�@�\�́C2�̎傽��v���Z�X��6��̊O���t�@�C���ɂ���Ď��������D
+�}\ref{fig:tlv}��TLV�̑S�̑��������D
 
-2つの主たるプロセスとは，標準形式への変換と，図形データの生成である．
-標準形式への変換は，任意の形式をもつトレースログを標準形式トレースログに変換する処理である．
-この処理には，外部ファイルとして変換元のトレースログファイル，リソースを定義したリソースファイル，リソースタイプを定義したリソースヘッダファイル，標準形式トレースログへの変換ルールを定義した変換ルールファイルが読み込まれる．
+2�̎傽��v���Z�X�Ƃ́C�W���`���ւ̕ϊ��ƁC�}�`�f�[�^�̐����ł���D
+�W���`���ւ̕ϊ��́C�C�ӂ̌`�������g���[�X���O��W���`���g���[�X���O�ɕϊ����鏈���ł���D
+���̏����ɂ́C�O���t�@�C���Ƃ��ĕϊ����̃g���[�X���O�t�@�C���C���\�[�X���`�������\�[�X�t�@�C���C���\�[�X�^�C�v���`�������\�[�X�w�b�_�t�@�C���C�W���`���g���[�X���O�ւ̕ϊ����[�����`�����ϊ����[���t�@�C�����ǂݍ��܂��D
 
-また，図形データの生成は，変換した標準形式トレースログに対して可視化ルールを適用し図形データを生成する処理である．
-この処理には外部ファイルとして可視化ルールファイルが読み込まれる．
-可視化ルールファイルとは図形と可視化ルールの定義を記述したファイルである．
+�܂��C�}�`�f�[�^�̐����́C�ϊ������W���`���g���[�X���O�ɑ΂��ĉ������[����K�p���}�`�f�[�^�𐶐����鏈���ł���D
+���̏����ɂ͊O���t�@�C���Ƃ��ĉ������[���t�@�C�����ǂݍ��܂��D
+�������[���t�@�C���Ƃ͐}�`�Ɖ������[���̒�`���L�q�����t�@�C���ł���D
 
-TLVは，トレースログとリソースファイルを読み込み，トレースログの対象に対応したリソースヘッダファイル，変換ルールファイルの定義に従い，標準形式トレースログを生成する．
-生成された標準形式トレースログに可視化ルールファイルで定義される可視化ルールを適用し図形データを生成した後，画面に表示する．
+TLV�́C�g���[�X���O�ƃ��\�[�X�t�@�C����ǂݍ��݁C�g���[�X���O�̑ΏۂɑΉ��������\�[�X�w�b�_�t�@�C���C�ϊ����[���t�@�C���̒�`�ɏ]���C�W���`���g���[�X���O�𐶐�����D
+�������ꂽ�W���`���g���[�X���O�ɉ������[���t�@�C���Œ�`�����������[����K�p���}�`�f�[�^�𐶐�������C��ʂɕ\������D
 
-生成された標準形式トレースログと図形データは，TLVデータとしてまとめられ可視化表示の元データとして用いられる．
-TLVデータはTLVファイルとして外部ファイルに保存することが可能であり，TLVファイルを読み込むことで，標準形式変換と図形データ生成の処理を行わなくても可視化表示できるようになる．
+�������ꂽ�W���`���g���[�X���O�Ɛ}�`�f�[�^�́CTLV�f�[�^�Ƃ��Ă܂Ƃ߂������\���̌��f�[�^�Ƃ��ėp������D
+TLV�f�[�^��TLV�t�@�C���Ƃ��ĊO���t�@�C���ɕۑ����邱�Ƃ��\�ł���CTLV�t�@�C����ǂݍ��ނ��ƂŁC�W���`���ϊ��Ɛ}�`�f�[�^�����̏������s��Ȃ��Ă������\���ł���悤�ɂȂ�D
 
-図\ref{fig:TLVscreenshot}に，TLVのスクリーンショットを示す．
+�}\ref{fig:TLVscreenshot}�ɁCTLV�̃X�N���[���V���b�g�������D
 
 \begin{figure}[!t]
 \begin{center}
 \includegraphics[scale=0.7]{img/tlv.eps}
-\caption{TLVの全体像}
+\caption{TLV�̑S�̑�}
 \label{fig:tlv}
 \end{center}
 \end{figure}
@@ -31,67 +31,67 @@ TLVデータはTLVファイルとして外部ファイルに保存すること�
 \begin{figure}[!t]
 \begin{center}
 \includegraphics[scale=0.7]{img/TLVscreenshot.eps}
-\caption{TLVのスクリーンショット}
+\caption{TLV�̃X�N���[���V���b�g}
 \label{fig:TLVscreenshot}
 \end{center}
 \end{figure}
 
 \subsection{JSON}
 
-リソースファイル，リソースヘッダファイル，変換ルールファイル，可視化ルールファイルは，JSON(JavaScript Object Notation)\cite{JSON}と呼ばれるデータ記述言語を用いて記述する．
+���\�[�X�t�@�C���C���\�[�X�w�b�_�t�@�C���C�ϊ����[���t�@�C���C�������[���t�@�C���́CJSON(JavaScript Object Notation)\cite{JSON}�ƌĂ΂��f�[�^�L�q�����p���ċL�q����D
 
-JSONは，主にウェブブラウザなどで使用されるECMA-262，revision 3準拠のJavaScript（ECMAScript）と呼ばれるスクリプト言語のオブジェクト表記法をベースとしており，RFC 4627としてで仕様が規定されている．
-JSONはUnicodeのテキストデータで構成され，バイナリデータを扱うことはできない．
-また，JSONではシンタックスのみの規定がなされ，セマンティクスは規定されていない．
+JSON�́C��ɃE�F�u�u���E�U�ȂǂŎg�p�����ECMA-262�Crevision 3������JavaScript�iECMAScript�j�ƌĂ΂��X�N���v�g����̃I�u�W�F�N�g�\�L�@���x�[�X�Ƃ��Ă���CRFC 4627�Ƃ��ĂŎd�l���K�肳��Ă���D
+JSON��Unicode�̃e�L�X�g�f�[�^�ō\������C�o�C�i���f�[�^���������Ƃ͂ł��Ȃ��D
+�܂��CJSON�ł̓V���^�b�N�X�݂̂̋K�肪�Ȃ���C�Z�}���e�B�N�X�͋K�肳��Ă��Ȃ��D
 
-JSONの特徴は，シンタックスが単純であることである．
-これは，人間にとっても読み書きし易く，コンピュータにとっても解析し易いことを意味する．
-また，複数のプログラミング言語でJSONファイルを扱うライブラリが実装されており，異なる言語間のデータ受け渡しに最適である．
-JSONが利用可能なプログラミング言語としては，ActionScript, C, C++, C\#, ColdFusion, Common Lisp, Curl, D言語, Delphi, E, Erlang, Haskell, Java, JavaScript (ECMAScript), Lisp, Lua, ML, Objective CAML, Perl, PHP, Python, Rebol, Ruby, Scala, Squeakなどがある．
+JSON�̓����́C�V���^�b�N�X���P���ł��邱�Ƃł���D
+����́C�l�ԂɂƂ��Ă��ǂݏ������Ղ��C�R���s���[�^�ɂƂ��Ă���͂��Ղ����Ƃ��Ӗ�����D
+�܂��C�����̃v���O���~���O�����JSON�t�@�C�����������C�u��������������Ă���C�قȂ錾��Ԃ̃f�[�^�󂯓n���ɍœK�ł���D
+JSON�����p�\�ȃv���O���~���O����Ƃ��ẮCActionScript, C, C++, C\#, ColdFusion, Common Lisp, Curl, D����, Delphi, E, Erlang, Haskell, Java, JavaScript (ECMAScript), Lisp, Lua, ML, Objective CAML, Perl, PHP, Python, Rebol, Ruby, Scala, Squeak�Ȃǂ�����D
 
-TLVの各ファイルのフォーマットにJSONを採用した理由はこれらの特徴による．
-シンタックスが単純であることにより，ユーザの記述コスト，習得コストを低減させることができ，また，複数のプログラミング言語でパース可能であることによりファイルに可搬性を持たせることができるからである．
+TLV�̊e�t�@�C���̃t�H�[�}�b�g��JSON���̗p�������R�͂����̓����ɂ��D
+�V���^�b�N�X���P���ł��邱�Ƃɂ��C���[�U�̋L�q�R�X�g�C�K���R�X�g��ጸ�����邱�Ƃ��ł��C�܂��C�����̃v���O���~���O����Ńp�[�X�\�ł��邱�Ƃɂ��t�@�C���ɉ������������邱�Ƃ��ł��邩��ł���D
 
-JSONで表現するデータ型は以下のとおりであり，これらを組み合わせることでデータを記述する．
+JSON�ŕ\������f�[�^�^�͈ȉ��̂Ƃ���ł���C������g�ݍ��킹�邱�ƂŃf�[�^���L�q����D
 \begin{itemize}
 \setlength{\itemsep}{0.5\itemsep}
-\item 数値(整数，浮動小数点)
-\item 文字列(Unicode)
-\item 真偽値(true，false)
-\item 配列(順序付きリスト)
-\item オブジェクト(ディクショナリ，ハッシュテーブル)
+\item ���l(�����C���������_)
+\item ������(Unicode)
+\item �^�U�l(true�Cfalse)
+\item �z��(�����t�����X�g)
+\item �I�u�W�F�N�g(�f�B�N�V���i���C�n�b�V���e�[�u��)
 \item null
 \end{itemize}
 
-JSONの文法をEBNFと正規表現を用いて説明する．
+JSON�̕��@��EBNF�Ɛ��K�\����p���Đ�������D
 
-JSONは，次に示すようにオブジェクトか配列で構成される．
+JSON�́C���Ɏ����悤�ɃI�u�W�F�N�g���z��ō\�������D
 
 \begin{EBNF}
 JSONText = Object | Array;
 \end{EBNF}
 
-オブジェクトは複数のメンバをカンマで区切り，中括弧で囲んで表現する．
-メンバは名前と値で構成され，名前のあとにはセミコロンが付く．
-メンバの名前は値であり，データ型は文字列である．
-オブジェクトの定義を次に示す．
+�I�u�W�F�N�g�͕����̃����o���J���}�ŋ�؂�C�����ʂň͂�ŕ\������D
+�����o�͖��O�ƒl�ō\������C���O�̂��Ƃɂ̓Z�~�R�������t���D
+�����o�̖��O�͒l�ł���C�f�[�^�^�͕�����ł���D
+�I�u�W�F�N�g�̒�`�����Ɏ����D
 
 \begin{EBNF}
 Object = "{",Member,[{",",Member}],"}";
 Member = String,":",Value;
 \end{EBNF}
 
-配列は複数の値を持つ順序付きリストであり，値をコンマで区切り，角括弧で囲んで表現する．
-次に配列の定義を示す．
+�z��͕����̒l���������t�����X�g�ł���C�l���R���}�ŋ�؂�C�p���ʂň͂�ŕ\������D
+���ɔz��̒�`�������D
 
 \begin{EBNF}
 Array = "[",Value,[{",",Value}],"]";
 \end{EBNF}
 
-値は，文字列，数値，オブジェクト，配列，真偽値，nullのいずれかである．
-文字列はダブルクオーテーションで囲まれたUnicode列である．
-数値は10進法表記であり，指数表記も可能である．
-値の定義を次に示す．
+�l�́C������C���l�C�I�u�W�F�N�g�C�z��C�^�U�l�Cnull�̂����ꂩ�ł���D
+������̓_�u���N�I�[�e�[�V�����ň͂܂ꂽUnicode��ł���D
+���l��10�i�@�\�L�ł���C�w���\�L���\�ł���D
+�l�̒�`�����Ɏ����D
 
 \begin{EBNF}
 Value = String|Number|Object|Array|Boolean|"null";
@@ -103,9 +103,9 @@ Digit = /[0-9]+/;
 Digit1-9 = /[1-9]/;
 \end{EBNF}
 
-表\ref{JSONObject}にJSONにおけるオブジェクトを定義した例を示す．
+�\\ref{JSONObject}��JSON�ɂ�����I�u�W�F�N�g���`������������D
 
-\begin{FileToPage}{JSONにおけるオブジェクトを定義した例}{JSONObject}
+\begin{FileToPage}{JSON�ɂ�����I�u�W�F�N�g���`������}{JSONObject}
 {
   "Image":{
     "Width":  800,
@@ -121,9 +121,9 @@ Digit1-9 = /[1-9]/;
 }
 \end{FileToPage}
 
-表\ref{JSONArray}にJSONにおける配列を定義した例を示す．
+�\\ref{JSONArray}��JSON�ɂ�����z����`������������D
 
-\begin{FileToPage}{JSONにおける配列を定義した例}{JSONArray}
+\begin{FileToPage}{JSON�ɂ�����z����`������}{JSONArray}
 [
   {
     "City":      "SAN FRANCISCO",
