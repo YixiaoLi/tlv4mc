@@ -151,13 +151,12 @@ MPI，OpenMP等の可視化に関する研究やツールが開発されている
 合開発環境の一部\cite{PARTNER-JET,watchpoint,QNXMomentics,eBinder}やUnix
 系OSのトレースログプロファイラ\cite{LTTV,Chime}などが存在する．
 
-これらOSのトレースログの可視化のツールは，特定の環境(OSやデバッグハード
-ウェア)を対象としているため，可視化対象となるトレースログの形式が固定さ
-れている．
+これらOSのトレースログの可視化のツールは，特定の環境(OS等)を対象としてい
+るため，可視化対象となるトレースログの形式が固定されている．
 %
-そのため，FMPカーネルの様な可視化ツールが用意されていない環境のトレー
-スログの可視化に，これらの既存ツールを用いることができず，汎用性に乏し
-いという問題がある．
+そのため，FMPカーネルの様な可視化ツールが用意されていないOSのトレースロ
+グの可視化に，これらの既存ツールを用いることができず，汎用性に乏しいとい
+う問題がある．
 %
 また，可視化表示する項目やその表現方法が固定である場合が多く，拡張性に乏
 しいという問題もある．例えば，OSをサポートしている可視化ツールは，タスク
@@ -198,8 +197,9 @@ OJL(On the Job Learning)の開発テーマとして開発し，オープンソースソフトウ
 \section{既存のトレースログ可視化ツールと問題点}
 
 RTOSを含むOSのトレースログを対象とした，既存のトレースログ可視化表示ツー
-ルとその問題点について述べる．また，標準化されたトレースログの形式とツー
-ルのOSのトレースログの可視化への流用について述べる．
+ルとその問題点について述べる．また，ハードウェアや並列プログラムミングを
+対象としたトレースログの形式及びそのツールのOSのトレースログの可視化への
+流用について述べる．
 
 \subsection{既存のトレースログ可視化ツール}
 
@@ -208,10 +208,10 @@ RTOSを含むOSのトレースログを対象とした，既存のトレースログ可視化表示ツー
 Unix系OSの可視化ツールなどがある．また，標準化されたトレースログ形式とし
 てVCD形式やPaj\`{e}形式がある．
 
-組込みシステム向けデバッガソフトウェアには，トレースログを可視化する機能
-を持つものがある．PARTNER\cite{PARTNER-JET}はイベントトラッカー，
-WatchPoint\cite{watchpoint}はOSアナライザというトレースログを可視化する
-機能を提供している．
+組込みシステム向けデバッガソフトウェアには，OSのトレースログを可視化する
+機能を持つものがある．PARTNER\cite{PARTNER-JET}はイベントトラッカー，
+WatchPoint\cite{watchpoint}はOSアナライザというOSのトレースログを可視化
+する機能を提供している．
 %
 %これら組込みシステム向けデバッガソフトウェアの一機能としての可視化ツール
 %は，その性質からターゲットとなるOSやプロセッサが限定される．これは，組込
@@ -284,15 +284,15 @@ VCD形式はデジタル回路設計用の形式であるため，表示能力に乏しく，複雑な可
 \end{center}
 \end{figure}
 
-Paj\`{e} 形式では，VCD形式と比較すると表現能力は高いが，状態の定義と状態
-毎の色指定程度の自由度しかないため，同様に複雑な可視化表現は不可能である．
-PthreadプログラムのトレースログをVisual Trace Explorerで可視化表示した例
-を図\ref{fig:VITE}に示す．
+PthreadプログラムのトレースログをPaj\`{e} 形式で生成し，Visual Trace 
+Explorerで可視化表示した例を図\ref{fig:VITE}に示す．Paj\`{e} 形式は，VCD
+形式と比較すると表現能力は高いが，状態の定義と状態毎の色指定程度の自由度
+しかないため，複雑な可視化表現は不可能である．
 
 \begin{figure}[tb]
 \begin{center}
 \scalebox{0.35}{\includegraphics{img/VITE.eps}}
-\caption{Visual Trace ExplorerによるPthreadプログラムのトレースログ可視化}
+\caption{Visual Trace ExplorerによるPthreadプログラムのトレースログの可視化}
 \label{fig:VITE}
 \end{center}
 \end{figure}
@@ -304,8 +304,8 @@ PthreadプログラムのトレースログをVisual Trace Explorerで可視化表示した例
 
 2点目の問題として，既存のトレースログ可視化ツールは，可視化表示の項目や
 形式が，提供されているものに限られているということが挙げられる．可視化表
-示の項目を追加，変更したり，可視化表現をカスタマイズする機能を持つツール
-は確認できていない．
+示の項目を追加，変更したり，可視化表現をカスタマイズする機能を持つOSのト
+レースログを対象としたツールは確認できていない．
 
 
 \section{要件と実現方針}
@@ -434,9 +434,9 @@ IDが1のタスクの状態が実行状態となったという情報が暗に含まれている．ASPカ
 ラーデータとし，振る舞いは，リソースの行為であるとする．それぞれは固有の
 識別子として名前をもつ．
 %
-リソースタイプは，可視化対象の環境（OSやシミュレータ）毎に定義され，リソ
-ースはアプリケーション（応用）毎に，そのアプリケーションが動作する環境で
-定義されたリソースタイプを型として定義される．
+リソースタイプは，可視化対象の環境（OSプロセッサシミュレータなど）毎に定
+義され，リソースはアプリケーション（応用）毎に，そのアプリケーションが動
+作する環境で定義されたリソースタイプを型として定義される．
 
 例として，RTOSが出力する，「TASK1という名前のタスクの状態が実行状態に遷
 移した」という情報のトレースログを，一般化した方法で考えてみる．この場合，
@@ -508,7 +508,7 @@ JavaやC++などのオブジェクト指向言語における，メンバ変数への代入と，メソ
 
 図\ref{fig:log_ASP}のASPカーネルトレースログを標準形式とした例を図
 \ref{standartFormatTraceLogSample}に示す．タスクのリソースタイプの名前は
-{\tt Task}であり，タスクIDが1のタスクはTASK1という名前のリソースとする
+{\tt Task}，タスクIDが1のタスクはTASK1という名前のリソースとする
 \footnote{図\ref{standartFormatTraceLogSample}標準形式は変換ルールによる
 変換結果ではなく，標準形式の説明のための人手による変換結果である．}．
 
@@ -520,10 +520,10 @@ act\_tsk}と{\tt tskid=1}を引数として発生したことを表現している．2～4行目
 している．
 %
 2行目と4行目はリソースを名前で直接指定している．一方，1行目と3行目はリソ
-ースタイプの名前(Task)と属性の条件(state==RUNNING)によってリソースを指定
-しており，それぞれ，その時点でリソースタイプの名前が{\tt Task}のリソース
-のうち，属性のタスク状態({\tt state})が実行状態であるリソースを指定して
-いる．
+ースタイプの名前({\tt Task})と属性の条件({\tt state==RUNNING})によってリ
+ソースを指定しており，それぞれ，その時点でリソースタイプの名前が{\tt 
+Task}のリソースのうち，属性のタスク状態({\tt state})が実行状態であるリソ
+ースを指定している．
 
 \begin{EBNFFile}{図\ref{fig:log_ASP}のASPカーネルのトレースログの標準形
  式による表現}{standartFormatTraceLogSample}{A sample of a standard format trace log}
@@ -572,6 +572,14 @@ act\_tsk}と{\tt tskid=1}を引数として発生したことを表現している．2～4行目
 な処理を洗い出す．そして，ユーザが，どの処理に，どのようなパラメータを指
 定すればよいかを判断する．
 
+\begin{figure}[tb]
+\begin{center}
+\scalebox{0.4}{\includegraphics{img/visualizing.eps}}
+\caption{抽象的な可視化表示の仕組み}
+\label{visualizing}
+\end{center}
+\end{figure}
+
 \subsubsection{可視化表示の抽象化}
 
 トレースログ可視化ツールにおいて，可視化表示とは，可視化表示項目毎に要求
@@ -594,13 +602,6 @@ act\_tsk}と{\tt tskid=1}を引数として発生したことを表現している．2～4行目
 座標系と呼称する．単位時間あたりに，何ピクセル数でワールド座標系をデバイ
 ス座標系に割り当てるかという処理が，表示上の拡大，縮小の処理となる．
 
-\begin{figure}[tb]
-\begin{center}
-\scalebox{0.45}{\includegraphics{img/visualizing.eps}}
-\caption{抽象的な可視化表示の仕組み}
-\label{visualizing}
-\end{center}
-\end{figure}
 
 以上の可視化表示の仕組みの抽象化から，ユーザが任意の可視化表示項目を実現
 するために，汎用的な可視化表示の仕組みに対して与える指示としては，どのよ
@@ -749,9 +750,9 @@ JavaScript(ECMAScript)と呼ばれるスクリプト言語のオブジェクト表記法をベー
 
 \subsection{リソースヘッダファイル}
 
-リソースヘッダファイルには，可視化対象の環境(OS等)のリソースタイプの定義
-を記述する．リソースタイプの定義には，リソースタイプの名前，表示名，属性，
-振る舞いを記述する．
+リソースヘッダファイルには，可視化対象の環境のリソースタイプの定義を記述
+する．リソースタイプの定義には，リソースタイプの名前，表示名，属性，振る
+舞いを記述する．
 
 図\ref{resourceHeaderFile}に，ASPカーネルのリソースタイプ\verb|Task|を定
 義したリソースヘッダファイルの例を示す．属性(Attribute)としては，タスクID
@@ -805,11 +806,11 @@ JavaScript(ECMAScript)と呼ばれるスクリプト言語のオブジェクト表記法をベー
 変換ルールファイル，リソースヘッダファイル，可視化ルールファイルを定義す
 る．リソースの定義には，名前とリソースタイプ，属性の初期値を記述する．
 
-ASPカーネルのリソースファイルの例を図\ref{resourceFile}に示す．図
-\ref{resourceHeaderFile}のリソースヘッダファイルを適用するよう指定してい
-る．リソースとしては，リソースタイプ\verb|Task|の\verb|TASK1|を定義して，
-属性の初期値を指定している．\verb|TASK1|は，タスクIDが1であり，初期状態
-が休止状態(DORMANT)である．
+ASPカーネル上で動作するアプリケーションのリソースファイルの例を図
+\ref{resourceFile}に示す．図\ref{resourceHeaderFile}のリソースヘッダファ
+イルを適用するよう指定している．リソースとしては，リソースタイプ
+\verb|Task|の\verb|TASK1|を定義して，属性の初期値を指定している．
+\verb|TASK1|は，タスクIDが1であり，初期状態が休止状態(DORMANT)である．
 
 \begin{EBNFFile}{ASPカーネル上で動作するアプリケーションのリソースファイルの一部}{resourceFile}{A sample of a resource file}
  1 "TimeScale" :"us", "TimeRadix" :10,  /* 時刻の単位と基数 */
@@ -888,17 +889,17 @@ resource}の有無を判定している．ここでは，実行状態のタスクが存在するかチ
 
 標準形式変換は，トレースログファイルを先頭から行単位で読み込み，変換ルー
 ルファイルで定義される置換ルールに従い標準形式のトレースログに置換するこ
-とで行われる．図\ref{fig:log_ASP_STD}に図\ref{fig:log_ASP}とトレースログ
+とで行われる．図\ref{fig:log_ASP_STD}に図\ref{fig:log_ASP}のトレースログ
 を図\ref{convertRuleFile}の変換ルールを用いて標準形式のトレースログに変
 換した例を示す．
 
-なお，図\ref{fig:log_ASP}と異なり，タスクの指定を，``TASK1''という文字列
-使わず，リソースタイプTaskのタスクIDの属性の条件でTASK1を指定している
-(Task(id==1))．直接文字列を生成したい場合は，変換ルールで\$RES\_NAMEの置
-換マクロを用いればよい．
+なお，図\ref{standartFormatTraceLogSample}と異なり，タスクの指定を，
+``TASK1''という文字列使わず，リソースタイプ{\tt Task}のタスクIDの属性の
+条件({\tt Task(id==1)})でTASK1を指定している．直接文字列を生成したい場
+合は，変換ルールで{\tt \$RES\_NAME}の置換マクロを用いればよい．
 %
-具体的には，図\ref{standartFormatTraceLogSample}の4行目や7行目を
-Task(id==\$\{id\})を\$RES\_NAME\{\}で囲む．
+具体的には，図\ref{standartFormatTraceLogSample}の4行目と7行目にある
+{\tt Task(id==\$\{id\})}を{\tt \$RES\_NAME\{\}}で囲む．
 
 \begin{EBNFFile}{図\ref{fig:log_ASP}のトレースログの図\ref{convertRuleFile}の変換ルー
  ルによる標準形式への変換結果}{fig:log_ASP_STD}{aspStandartLogSample}
@@ -1047,7 +1048,7 @@ TLVでは，可視化表示する項目を可視化ルールにより変更，追加することができ
 
 ASPカーネルの場合は，タスクの優先度がグループ化可能と指定されており，図
 \ref{fig:aspTLVscreenShot_pri}に示すように，リソースウィンドウで，優先度
-でグループ化されたツリービュー形式の表示が選択可能である．
+の初期値でグループ化されたツリービュー形式の表示が選択可能である．
 
 \begin{figure*}[tb]
 \begin{center}
@@ -1061,31 +1062,12 @@ ASPカーネルの場合は，タスクの優先度がグループ化可能と指定されており，図
 %
 \begin{figure}[ht]
 \begin{center}
-\scalebox{0.5}{\includegraphics{img/aspTLVscreenShot_pri.eps}}
-\caption{タスクの優先度でグループ化されたツリービュー形式の表示}
+\scalebox{0.4}{\includegraphics{img/aspTLVscreenShot_pri.eps}}
+\caption{タスクの優先度の初期値でグループ化されたツリービュー形式の表示}
 \label{fig:aspTLVscreenShot_pri}
 \end{center}
 \end{figure}
 
-
-\begin{figure*}[tb]
-\begin{center}
-\scalebox{0.7}{\includegraphics{img/tecsTLVscreenShot.eps}}
-\caption{ソフトウェアコンポーネント（TECS）のトレースログの可視化表示}
-%\ecaption{A screenshot of TLV visualizing a trace log dumped by TECS}
-\label{fig:tecsTLVscreenShot}
-\end{center}
-\end{figure*}
-
-\begin{figure*}[tb]
-\begin{center}
-\scalebox{0.7}{\includegraphics{img/fmpTLVscreenShot_1_1.eps}}
-\caption{マルチプロセッサ対応RTOS(TOPPERS/FMPカーネル)のトレースログの
- 可視化表示}
-%\ecaption{A screenshot of TLV visualizing a trace log dumped by TOPPERS/FMP}
-\label{fig:fmpTLVscreenShot}
-\end{center}
-\end{figure*}
 
 
 
@@ -1097,7 +1079,8 @@ ASPカーネルの場合は，タスクの優先度がグループ化可能と指定されており，図
 拡張性の評価として，ASPカーネルをマルチプロセッサ拡張したFMPカーネルの可
 視化をASPカーネル用のファイルをベースに拡張して可視化表示する．
 
-また，既存ツールと比較した，TLVの制約や課題について述べる．
+また，TLVは多くの既存のツールと異なり，デバッガソフトウェアや統合開発環
+境とは独立したプログラムである．そのために生じる制約や課題について述べる．
 
 \subsection{ASPカーネルの可視化表示}
 
@@ -1116,6 +1099,7 @@ TASK1が実行状態MAIN\_TASKが実行可能状態に遷移し，TASK1にディスパッチして
 
 %標準形式への変換処理に要した時間は，トレースログファイルが353行の場合で
 %約2秒であった．
+
 
 \subsection{ソフトウェアコンポーネント(TECS)の可視化表示}
 
@@ -1162,6 +1146,25 @@ TECSのトレースログを可視化表示する項目として，セルの呼び出し関係を採用し
 換ルールファイルは15行であり，可視化ルールファイルは可視化ルールが39行，
 図形定義が49行であった．また，リソースヘッダファイルは47行であった．
 
+\begin{figure*}[tb]
+\begin{center}
+\scalebox{0.7}{\includegraphics{img/tecsTLVscreenShot.eps}}
+\caption{ソフトウェアコンポーネント（TECS）のトレースログの可視化表示}
+%\ecaption{A screenshot of TLV visualizing a trace log dumped by TECS}
+\label{fig:tecsTLVscreenShot}
+\end{center}
+\end{figure*}
+
+\begin{figure*}[tb]
+\begin{center}
+\scalebox{0.7}{\includegraphics{img/fmpTLVscreenShot_1_1.eps}}
+\caption{マルチプロセッサ対応RTOS(TOPPERS/FMPカーネル)のトレースログの
+ 可視化表示}
+%\ecaption{A screenshot of TLV visualizing a trace log dumped by TOPPERS/FMP}
+\label{fig:fmpTLVscreenShot}
+\end{center}
+\end{figure*}
+
 
 \subsection{FMPカーネルの可視化表示}
 
@@ -1184,8 +1187,8 @@ TECSのトレースログを可視化表示する項目として，セルの呼び出し関係を採用し
 
 変換ルールファイルは160行，可視化ルールファイルは可視化ルールが250行，図
 形定義が30行，リソースヘッダファイルは439行となった．可視化ルールファイ
-ルはASPカーネル用のファイルに対する追加ルールとなっている．以上により，
-拡張性が確認できた．
+ルはASPカーネル用の可視化ルールファイルに対する追加ルールとなっている．
+以上により，拡張性が確認できた．
 
 \subsection{TLVの制約と課題}
 
