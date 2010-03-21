@@ -1,36 +1,36 @@
-\section{可視化表示の仕組みの抽象化}
+\section{�����\���̎d�g�݂̒��ۉ�}
 
-前章では，トレースログを一般化し，標準形式トレースログとして定義した．
-TLVの可視化表示の仕組みは，この標準形式トレースログに依存するように設計されている．
-本節では，可視化表現と可視化表現とトレースログの対応を抽象化について述べる．
+�O�͂ł́C�g���[�X���O����ʉ����C�W���`���g���[�X���O�Ƃ��Ē�`�����D
+TLV�̉����\���̎d�g�݂́C���̕W���`���g���[�X���O�Ɉˑ�����悤�ɐ݌v����Ă���D
+�{�߂ł́C�����\���Ɖ����\���ƃg���[�X���O�̑Ή��𒊏ۉ��ɂ��ďq�ׂ�D
 
-\subsection{可視化表現}
+\subsection{�����\��}
 \label{subsec:visualization}
 
-TLVにおいて，トレースログの可視化表現は，x軸を時系列とした2次元直交座標系における図形の描画であるとした．
-本小節では，座標系と図形について詳述する．
+TLV�ɂ����āC�g���[�X���O�̉����\���́Cx�������n��Ƃ���2�����������W�n�ɂ�����}�`�̕`��ł���Ƃ����D
+�{���߂ł́C���W�n�Ɛ}�`�ɂ��ďڏq����D
 
-\subsubsection{座標系}
+\subsubsection{���W�n}
 
-図形を定義する座標系と，表示する座標系は分離して考えるとする．
-これにより，図形を表示環境から独立して定義することが可能になる．
-図形を定義する座標系をローカル座標系，表示する座標系をデバイス座標系と呼称する．
+�}�`���`������W�n�ƁC�\��������W�n�͕������čl����Ƃ���D
+����ɂ��C�}�`��\��������Ɨ����Ē�`���邱�Ƃ��\�ɂȂ�D
+�}�`���`������W�n�����[�J�����W�n�C�\��������W�n���f�o�C�X���W�n�ƌď̂���D
 
-また，TLVでは，高さと時間を次元に持つ，ワールド座標系という座標系を導入した．
-ローカル座標系で定義された図形は，はじめに，ワールド座標系における，図形を表示すべき時間の領域にマッピングされ，これを表示環境に依存するデバイス座標系にマッピングすることで表示する．
-これにより，図形の表示領域を，抽象度の高い時刻で指定することが可能になる．
-ここで，ローカル座標系からワールド座標系へのマッピングをワールド変換と呼称する．
-また，表示する時間の領域を表示期間と呼称する．
-表示期間は開始時刻と終了時刻で表される時刻のペアである．
+�܂��CTLV�ł́C�����Ǝ��Ԃ������Ɏ��C���[���h���W�n�Ƃ������W�n�𓱓������D
+���[�J�����W�n�Œ�`���ꂽ�}�`�́C�͂��߂ɁC���[���h���W�n�ɂ�����C�}�`��\�����ׂ����Ԃ̗̈�Ƀ}�b�s���O����C�����\�����Ɉˑ�����f�o�C�X���W�n�Ƀ}�b�s���O���邱�Ƃŕ\������D
+����ɂ��C�}�`�̕\���̈���C���ۓx�̍��������Ŏw�肷�邱�Ƃ��\�ɂȂ�D
+�����ŁC���[�J�����W�n���烏�[���h���W�n�ւ̃}�b�s���O�����[���h�ϊ��ƌď̂���D
+�܂��C�\�����鎞�Ԃ̗̈��\�����Ԃƌď̂���D
+�\�����Ԃ͊J�n�����ƏI�������ŕ\����鎞���̃y�A�ł���D
 
-ローカル座標系において，図形の大きさと位置を定義する際は，pixel単位による絶対指定か，ワールド座標系へのマッピング領域に対する割合を\%で指定する相対指定かのいずれかを用いる．
+���[�J�����W�n�ɂ����āC�}�`�̑傫���ƈʒu���`����ۂ́Cpixel�P�ʂɂ���Ύw�肩�C���[���h���W�n�ւ̃}�b�s���O�̈�ɑ΂��銄����\%�Ŏw�肷�鑊�Ύw�肩�̂����ꂩ��p����D
 
-図\ref{fig:coordinate}に座標系の例を，図\ref{fig:worldTransform}にワールド変換の例を示す．
+�}\ref{fig:coordinate}�ɍ��W�n�̗���C�}\ref{fig:worldTransform}�Ƀ��[���h�ϊ��̗�������D
 
 \begin{figure}[tb]
 \begin{center}
 \includegraphics[scale=0.75]{img/coordinate.eps}
-\caption{座標系}
+\caption{���W�n}
 \label{fig:coordinate}
 \end{center}
 \end{figure}
@@ -38,93 +38,93 @@ TLVにおいて，トレースログの可視化表現は，x軸を時系列と�
 \begin{figure}[tb]
 \begin{center}
 \includegraphics[scale=0.75]{img/worldTransform.eps}
-\caption{ワールド変換}
+\caption{���[���h�ϊ�}
 \label{fig:worldTransform}
 \end{center}
 \end{figure}
 
-\subsubsection{基本図形と図形，図形群}
-可視化表現は，複数の図形を組み合わせることで実現する．
-この際，基本となる図形の単位を基本図形と呼称する．
+\subsubsection{��{�}�`�Ɛ}�`�C�}�`�Q}
+�����\���́C�����̐}�`��g�ݍ��킹�邱�ƂŎ�������D
+���̍ہC��{�ƂȂ�}�`�̒P�ʂ���{�}�`�ƌď̂���D
 
-基本図形として扱える形状は楕円，多角形，四角形，線分，矢印，扇形，文字列の7種類とする．
-基本図形は，形状や大きさ，位置，塗りつぶしの色，線の色，線種，透明度などの属性を指定して定義する．
+��{�}�`�Ƃ��Ĉ�����`��͑ȉ~�C���p�`�C�l�p�`�C�����C���C��`�C�������7��ނƂ���D
+��{�}�`�́C�`���傫���C�ʒu�C�h��Ԃ��̐F�C���̐F�C����C�����x�Ȃǂ̑������w�肵�Ē�`����D
 
-複数の基本図形を仮想的にz軸方向に階層的に重ねたものを，単に図形と呼称し，可視化表現の最小単位とする．
-図形は，構成する基本図形を順序付きで指定し，名前をつけて定義する．
-図形は名前を用いて参照することができ，その際に引数を与えることができるとする．
-この際，引数は，図形を構成する基本図形の，任意の属性に割り当てることを想定している．
+�����̊�{�}�`�����z�I��z�������ɊK�w�I�ɏd�˂����̂��C�P�ɐ}�`�ƌď̂��C�����\���̍ŏ��P�ʂƂ���D
+�}�`�́C�\�������{�}�`�������t���Ŏw�肵�C���O�����Ē�`����D
+�}�`�͖��O��p���ĎQ�Ƃ��邱�Ƃ��ł��C���̍ۂɈ�����^���邱�Ƃ��ł���Ƃ���D
+���̍ہC�����́C�}�`���\�������{�}�`�́C�C�ӂ̑����Ɋ��蓖�Ă邱�Ƃ�z�肵�Ă���D
 
-複数の図形を仮想的にz軸方向に階層的に重ねたものを図形群と呼称する．
-図\ref{fig:shapes}に図形と図形群の例を示す．
+�����̐}�`�����z�I��z�������ɊK�w�I�ɏd�˂����̂�}�`�Q�ƌď̂���D
+�}\ref{fig:shapes}�ɐ}�`�Ɛ}�`�Q�̗�������D
 
 \begin{figure}[tb]
 \begin{center}
 \includegraphics[scale=0.75]{img/shapes.eps}
-\caption{図形と図形群}
+\caption{�}�`�Ɛ}�`�Q}
 \label{fig:shapes}
 \end{center}
 \end{figure}
 
-\subsection{図形とイベントの対応}
+\subsection{�}�`�ƃC�x���g�̑Ή�}
 
-本小節では，前小節で述べた可視化表現とトレースログのイベントをどのように対応付けるのかを述べる．
+�{���߂ł́C�O���߂ŏq�ׂ������\���ƃg���[�X���O�̃C�x���g���ǂ̂悤�ɑΉ��t����̂����q�ׂ�D
 
-\subsubsection{開始イベント，終了イベント，イベント期間}
-前小節において，可視化表現は，図形をワールド変換を経て表示期間にマッピングすることであることを説明した．
-ここで，表示期間の開始時刻，終了時刻を，イベントを用いて指定するとする．
-つまり，指定されたイベントが発生する時刻をトレースログより抽出することにより表示期間を決定する．
-このようにして，トレースログのイベントと可視化表現を対応付ける．
-ここで，開始時刻に対応するイベントを開始イベント，終了時刻に対応するイベントを終了イベントと呼称し，表示期間をイベントで表現したものをイベント期間と呼称する．
+\subsubsection{�J�n�C�x���g�C�I���C�x���g�C�C�x���g����}
+�O���߂ɂ����āC�����\���́C�}�`�����[���h�ϊ����o�ĕ\�����ԂɃ}�b�s���O���邱�Ƃł��邱�Ƃ���������D
+�����ŁC�\�����Ԃ̊J�n�����C�I���������C�C�x���g��p���Ďw�肷��Ƃ���D
+�܂�C�w�肳�ꂽ�C�x���g���������鎞�����g���[�X���O��蒊�o���邱�Ƃɂ��\�����Ԃ����肷��D
+���̂悤�ɂ��āC�g���[�X���O�̃C�x���g�Ɖ����\����Ή��t����D
+�����ŁC�J�n�����ɑΉ�����C�x���g���J�n�C�x���g�C�I�������ɑΉ�����C�x���g���I���C�x���g�ƌď̂��C�\�����Ԃ��C�x���g�ŕ\���������̂��C�x���g���Ԃƌď̂���D
 
-\subsubsection{可視化ルール}
-図形群と，そのマッピング対象であるイベント期間を構成要素としてもつ構造体を，可視化ルールと呼称する．
-図\ref{fig:timeShape}に，標準形式トレースログを用いてイベント期間を定義した可視化ルールの例を示す．
+\subsubsection{�������[��}
+�}�`�Q�ƁC���̃}�b�s���O�Ώۂł���C�x���g���Ԃ��\���v�f�Ƃ��Ă��\���̂��C�������[���ƌď̂���D
+�}\ref{fig:timeShape}�ɁC�W���`���g���[�X���O��p���ăC�x���g���Ԃ��`�����������[���̗�������D
 \begin{figure}[tb]
 \begin{center}
 \includegraphics[scale=0.9]{img/timeShape.eps}
-\caption{可視化ルール}
+\caption{�������[��}
 \label{fig:timeShape}
 \end{center}
 \end{figure}
-図\ref{fig:timeShape}において，runningShapeを，位置がローカル座標の原点，大きさがワールド座標系のマッピング領域に対して横幅100\%，縦幅80\%の長方形で色が緑色の図形とする．
-この図形を，開始イベント\verb|MAIN_TASK.state=RUNNING|，終了イベント\verb|MAIN_TASK.state|となるイベント期間で表示するよう定義したものが可視化ルールtaskBecomeRunningである．
-開始イベント\verb|MAIN_TASK.state=RUNNING|は，リソース\verb|MAIN_TASK|の属性\verb|state|の値が\verb|RUNNING|になったことを表し，終了イベント\verb|MAIN_TASK.state|は，リソース\verb|MAIN_TASK|の属性\verb|state|の値が単に変わったことを表している．
+�}\ref{fig:timeShape}�ɂ����āCrunningShape���C�ʒu�����[�J�����W�̌��_�C�傫�������[���h���W�n�̃}�b�s���O�̈�ɑ΂��ĉ���100\%�C�c��80\%�̒����`�ŐF���ΐF�̐}�`�Ƃ���D
+���̐}�`���C�J�n�C�x���g\verb|MAIN_TASK.state=RUNNING|�C�I���C�x���g\verb|MAIN_TASK.state|�ƂȂ�C�x���g���Ԃŕ\������悤��`�������̂��������[��taskBecomeRunning�ł���D
+�J�n�C�x���g\verb|MAIN_TASK.state=RUNNING|�́C���\�[�X\verb|MAIN_TASK|�̑���\verb|state|�̒l��\verb|RUNNING|�ɂȂ������Ƃ�\���C�I���C�x���g\verb|MAIN_TASK.state|�́C���\�[�X\verb|MAIN_TASK|�̑���\verb|state|�̒l���P�ɕς�������Ƃ�\���Ă���D
 
-taskBecomeRunningを，表\ref{eventTime}に示すトレースログからイベントを抽出して表示期間の時刻を決定し，図形のワールド変換を行った結果が図\ref{fig:timeShape}の右下に示すものである．
+taskBecomeRunning���C�\\ref{eventTime}�Ɏ����g���[�X���O����C�x���g�𒊏o���ĕ\�����Ԃ̎��������肵�C�}�`�̃��[���h�ϊ����s�������ʂ��}\ref{fig:timeShape}�̉E���Ɏ������̂ł���D
 
-\begin{File}{イベント期間を抽出するトレースログ}{eventTime}
+\begin{File}{�C�x���g���Ԃ𒊏o����g���[�X���O}{eventTime}
 [1000]MAIN_TASK.state=RUNNING
 [1100]MAIN_TASK.state=WAITING
 \end{File}
 
-\section{図形データの生成}
+\section{�}�`�f�[�^�̐���}
 
-標準形式変換プロセスを経て得られた標準形式トレースログは，可視化ルールを適用され図形データを生成する．
-ここで，図形データとは，ワールド変換が行われた全図形のデータを指す．
-可視化ルールは可視化ルールファイルとして与えられ，適用する可視化ルールはリソースファイルに記述する．
+�W���`���ϊ��v���Z�X���o�ē���ꂽ�W���`���g���[�X���O�́C�������[����K�p����}�`�f�[�^�𐶐�����D
+�����ŁC�}�`�f�[�^�Ƃ́C���[���h�ϊ����s��ꂽ�S�}�`�̃f�[�^���w���D
+�������[���͉������[���t�@�C���Ƃ��ė^�����C�K�p����������[���̓��\�[�X�t�@�C���ɋL�q����D
 
-図形データの生成方法は，標準形式トレースログを一行ずつ可視化ルールのイベント期間と一致するか判断し，一致した場合にその可視化ルールの表示期間をワールド変換先の領域として採用しワールド変換することで行われる．
+�}�`�f�[�^�̐������@�́C�W���`���g���[�X���O����s���������[���̃C�x���g���Ԃƈ�v���邩���f���C��v�����ꍇ�ɂ��̉������[���̕\�����Ԃ����[���h�ϊ���̗̈�Ƃ��č̗p�����[���h�ϊ����邱�Ƃōs����D
 
-\subsection{可視化ルールファイル}
+\subsection{�������[���t�@�C��}
 \label{visualizeRuleSection}
-可視化ルールファイルには，可視化ルールと，図形の定義を記述する．
-可視化ルールファイルは，1つのオブジェクトで構成され，オブジェクトのメンバにターゲット毎の変換ルールを記述する．
-メンバ名にターゲット名を記述し，値としてオブジェクトを与え，そのオブジェクトに可視化ルールと図形の定義を記述する．
+�������[���t�@�C���ɂ́C�������[���ƁC�}�`�̒�`���L�q����D
+�������[���t�@�C���́C1�̃I�u�W�F�N�g�ō\������C�I�u�W�F�N�g�̃����o�Ƀ^�[�Q�b�g���̕ϊ����[�����L�q����D
+�����o���Ƀ^�[�Q�b�g�����L�q���C�l�Ƃ��ăI�u�W�F�N�g��^���C���̃I�u�W�F�N�g�ɉ������[���Ɛ}�`�̒�`���L�q����D
 
-\subsubsection{図形の定義}
+\subsubsection{�}�`�̒�`}
 
-図形の定義は，\ref{subsec:visualization}小節にて述べた抽象化した図形を形式化したものである．
+�}�`�̒�`�́C\ref{subsec:visualization}���߂ɂďq�ׂ����ۉ������}�`���`�����������̂ł���D
 
-図形の定義は{\tt Shapes}というメンバ名の値にオブジェクトとして記述する．
-このオブジェクトのメンバ名には図形の名前を記述する．
-そして，その値に図形の定義を基本図形の定義の配列として与える．
+�}�`�̒�`��{\tt Shapes}�Ƃ��������o���̒l�ɃI�u�W�F�N�g�Ƃ��ċL�q����D
+���̃I�u�W�F�N�g�̃����o���ɂ͐}�`�̖��O���L�q����D
+�����āC���̒l�ɐ}�`�̒�`����{�}�`�̒�`�̔z��Ƃ��ė^����D
 
-表\ref{shapeSample}に{\tt toppers}をターゲットとする図形を定義した例を示す．
-例では，{\tt runningShapes}と{\tt readyShapes}，{\tt svcShapes}の3つの図形を定義している．
-{\tt runningShapes}と{\tt readyShapes}は1つの基本図形で構成され，{\tt svcShapes}は3つの基本図形から構成される．
+�\\ref{shapeSample}��{\tt toppers}���^�[�Q�b�g�Ƃ���}�`���`������������D
+��ł́C{\tt runningShapes}��{\tt readyShapes}�C{\tt svcShapes}��3�̐}�`���`���Ă���D
+{\tt runningShapes}��{\tt readyShapes}��1�̊�{�}�`�ō\������C{\tt svcShapes}��3�̊�{�}�`����\�������D
 
-\begin{File}{可視化ルールファイルで図形を定義した例}{shapeSample}
+\begin{File}{�������[���t�@�C���Ő}�`���`������}{shapeSample}
 {
   "toppers":{
     "Shapes":{
@@ -169,8 +169,8 @@ taskBecomeRunningを，表\ref{eventTime}に示すトレースログからイベ
 }
 \end{File}
 
-基本図形の定義に用いるメンバは，基本図形の形状により異なる．
-すべての形状に共通なメンバの説明を以下に示す．
+��{�}�`�̒�`�ɗp���郁���o�́C��{�}�`�̌`��ɂ��قȂ�D
+���ׂĂ̌`��ɋ��ʂȃ����o�̐������ȉ��Ɏ����D
 
 \begin{description}
 {\nopagebreak
@@ -178,24 +178,24 @@ taskBecomeRunningを，表\ref{eventTime}に示すトレースログからイベ
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 図形の形状．必須である．
-    \item[値] 文字列（"{\tt Rectangle}"：長方形，"{\tt Line}"：線分，"{\tt Arrow}"：矢印，"{\tt Polygon}"：多角形，"{\tt Pie}"：扇形，"{\tt Ellipse}"：楕円形，"{\tt Text}"：文字列のいずれか）
+    \item[����] �}�`�̌`��D�K�{�ł���D
+    \item[�l] ������i"{\tt Rectangle}"�F�����`�C"{\tt Line}"�F�����C"{\tt Arrow}"�F���C"{\tt Polygon}"�F���p�`�C"{\tt Pie}"�F��`�C"{\tt Ellipse}"�F�ȉ~�`�C"{\tt Text}"�F������̂����ꂩ�j
     \end{description}
 }{\nopagebreak
 \item[\texttt{Size}] \mbox{}
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 図形のサイズ．省略した場合，値は"\verb|100%,100%|"となる
-    \item[値] サイズ指定形式の文字列
+    \item[����] �}�`�̃T�C�Y�D�ȗ������ꍇ�C�l��"\verb|100%,100%|"�ƂȂ�
+    \item[�l] �T�C�Y�w��`���̕�����
     \end{description}
 }{\samepage
 \item[\texttt{Location}] \mbox{}
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 図形の位置．省略した場合，値は"\verb|0,0|"となる
-    \item[値] 位置指定形式の文字列
+    \item[����] �}�`�̈ʒu�D�ȗ������ꍇ�C�l��"\verb|0,0|"�ƂȂ�
+    \item[�l] �ʒu�w��`���̕�����
     \end{description}
 }
 \clearpage
@@ -204,21 +204,21 @@ taskBecomeRunningを，表\ref{eventTime}に示すトレースログからイベ
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 図形の表示領域．サイズと位置を同時に指定する．省略した場合は，サイズに{\tt Size}の値が，位置に{\tt Location}の値が設定される．
-    \item[値] 文字列2つの配列．1つ目の要素は位置指定形式，2つ目の要素はサイズ指定形式を記述する
+    \item[����] �}�`�̕\���̈�D�T�C�Y�ƈʒu�𓯎��Ɏw�肷��D�ȗ������ꍇ�́C�T�C�Y��{\tt Size}�̒l���C�ʒu��{\tt Location}�̒l���ݒ肳���D
+    \item[�l] ������2�̔z��D1�ڂ̗v�f�͈ʒu�w��`���C2�ڂ̗v�f�̓T�C�Y�w��`�����L�q����
     \end{description}
 }{\nopagebreak
 \item[\texttt{Offset}] \mbox{}
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 図形のオフセット．省略した場合，値は"\verb|0,0|"となる
-    \item[値] 位置指定形式の文字列
+    \item[����] �}�`�̃I�t�Z�b�g�D�ȗ������ꍇ�C�l��"\verb|0,0|"�ƂȂ�
+    \item[�l] �ʒu�w��`���̕�����
     \end{description}
 }
 \end{description}
 
-図形のサイズを指定する形式として，サイズ指定形式（{\tt ShapeSize}）を次のように定めた．
+�}�`�̃T�C�Y���w�肷��`���Ƃ��āC�T�C�Y�w��`���i{\tt ShapeSize}�j�����̂悤�ɒ�߂��D
 
 \begin{EBNF}
 ShapeSize = Width,",",Height
@@ -226,12 +226,12 @@ Width = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
 Height = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
 \end{EBNF}
 
-\ref{subsec:visualization}小節において，図形の大きさの指定方法として，絶対指定と相対指定の2つの方法を用いることができるとした．
-これらは{\tt px}と{\tt \%}という単位を用いることで指定する．
-{\tt px}が絶対指定であり，{\tt \%}が相対指定である．
-単位を省略した場合は絶対指定されたものとして解釈される．
+\ref{subsec:visualization}���߂ɂ����āC�}�`�̑傫���̎w����@�Ƃ��āC��Ύw��Ƒ��Ύw���2�̕��@��p���邱�Ƃ��ł���Ƃ����D
+������{\tt px}��{\tt \%}�Ƃ����P�ʂ�p���邱�ƂŎw�肷��D
+{\tt px}����Ύw��ł���C{\tt \%}�����Ύw��ł���D
+�P�ʂ��ȗ������ꍇ�͐�Ύw�肳�ꂽ���̂Ƃ��ĉ��߂����D
 
-また，図形の位置を指定する形式として，位置指定形式({\tt ShapeLocation})を次のように定めた．
+�܂��C�}�`�̈ʒu���w�肷��`���Ƃ��āC�ʒu�w��`��({\tt ShapeLocation})�����̂悤�ɒ�߂��D
 
 \begin{EBNF}
 ShapeLocation = X,",",Y
@@ -240,26 +240,26 @@ Y = ("t"|"m"|"b"),"(",Value,")"|Value;
 Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
 \end{EBNF}
 
-図形の位置も，サイズと同じように絶対指定と相対指定の両方で指定することができる．
-また，指定する際に基準とする位置を"{\it base}\verb|(|{\it value}\verb|)|"として指定できるようにした．
-この指定を基準指定と呼ぶ．
-ここで，{\it base}は，{\tt X}の指定の場合，{\tt l}か{\tt c}か{\tt r}であり，それぞれ領域の左端，横方向の中央，右端を指す．
-また，{\tt Y}の指定の場合は，{\tt t}か{\tt m}か{\tt b}であり，それぞれ領域の上端，縦方向の中央，下端を指す．
+�}�`�̈ʒu���C�T�C�Y�Ɠ����悤�ɐ�Ύw��Ƒ��Ύw��̗����Ŏw�肷�邱�Ƃ��ł���D
+�܂��C�w�肷��ۂɊ�Ƃ���ʒu��"{\it base}\verb|(|{\it value}\verb|)|"�Ƃ��Ďw��ł���悤�ɂ����D
+���̎w�����w��ƌĂԁD
+�����ŁC{\it base}�́C{\tt X}�̎w��̏ꍇ�C{\tt l}��{\tt c}��{\tt r}�ł���C���ꂼ��̈�̍��[�C�������̒����C�E�[���w���D
+�܂��C{\tt Y}�̎w��̏ꍇ�́C{\tt t}��{\tt m}��{\tt b}�ł���C���ꂼ��̈�̏�[�C�c�����̒����C���[���w���D
 
-相対指定の際に基準指定することにより，同じ位置を様々な記述方法を用いて指定できる．
-例えば，{\tt l(100\%)}と{\tt r(0\%)}，{\tt c(50\%)}は領域の右端を指定し，{\tt l(50\%)}と{\tt r(-50\%)}，{\tt c(0\%)}は領域の横方向の中央を指す．
-同じように{\tt b(100\%)}と{\tt t(0\%)}，{\tt m(50\%)}は下端を指定し，{\tt b(50\%)}と{\tt t(-50\%)}，{\tt m(50\%)}は縦方向の中央を指す．
+���Ύw��̍ۂɊ�w�肷�邱�Ƃɂ��C�����ʒu��l�X�ȋL�q���@��p���Ďw��ł���D
+�Ⴆ�΁C{\tt l(100\%)}��{\tt r(0\%)}�C{\tt c(50\%)}�͗̈�̉E�[���w�肵�C{\tt l(50\%)}��{\tt r(-50\%)}�C{\tt c(0\%)}�͗̈�̉������̒������w���D
+�����悤��{\tt b(100\%)}��{\tt t(0\%)}�C{\tt m(50\%)}�͉��[���w�肵�C{\tt b(50\%)}��{\tt t(-50\%)}�C{\tt m(50\%)}�͏c�����̒������w���D
 
-基準指定は，原点を基準とした指定しか行えない絶対指定のために導入した．
-基準指定が行えない場合，"右端から5ピクセル"という指定ができなくなってしまう．
-これは，図形をデバイス座標系へマッピングしない限り，図形の大きさをピクセル単位で知ることができないからである．
-基準指定を行えば"右端から5ピクセル"という指定は{\tt r(5px)}と記述することで行える．
+��w��́C���_����Ƃ����w�肵���s���Ȃ���Ύw��̂��߂ɓ��������D
+��w�肪�s���Ȃ��ꍇ�C"�E�[����5�s�N�Z��"�Ƃ����w�肪�ł��Ȃ��Ȃ��Ă��܂��D
+����́C�}�`���f�o�C�X���W�n�փ}�b�s���O���Ȃ�����C�}�`�̑傫�����s�N�Z���P�ʂŒm�邱�Ƃ��ł��Ȃ�����ł���D
+��w����s����"�E�[����5�s�N�Z��"�Ƃ����w���{\tt r(5px)}�ƋL�q���邱�Ƃōs����D
 
-図形の位置とサイズは描画領域を表し，この描画領域に内接するように図形が描画される．
-楕円形や扇形はこの描画領域の中心を円の中心として描かれる．
+�}�`�̈ʒu�ƃT�C�Y�͕`��̈��\���C���̕`��̈�ɓ��ڂ���悤�ɐ}�`���`�悳���D
+�ȉ~�`���`�͂��̕`��̈�̒��S���~�̒��S�Ƃ��ĕ`�����D
 
-図の形状が線分({\tt Line})，矢印({\tt Arrow})のときは始点と終点，多角形({\tt Polygon})は各頂点を{\tt Points}というメンバを用い座標を指定する．
-{\tt Points}の説明を以下に述べる．
+�}�̌`�󂪐���({\tt Line})�C���({\tt Arrow})�̂Ƃ��͎n�_�ƏI�_�C���p�`({\tt Polygon})�͊e���_��{\tt Points}�Ƃ��������o��p�����W���w�肷��D
+{\tt Points}�̐������ȉ��ɏq�ׂ�D
 
 \begin{description}
 {\nopagebreak
@@ -267,14 +267,14 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 線分({\tt Line})，矢印({\tt Arrow})は始点と終点，多角形({\tt Polygon})は各頂点を指定する．これらの形状の時は必須である
-    \item[値] 位置指定形式の文字列の配列
+    \item[����] ����({\tt Line})�C���({\tt Arrow})�͎n�_�ƏI�_�C���p�`({\tt Polygon})�͊e���_���w�肷��D�����̌`��̎��͕K�{�ł���
+    \item[�l] �ʒu�w��`���̕�����̔z��
     \end{description}
 }
 \end{description}
 
-図の形状が扇形({\tt Pie})のとき，扇形の開始角度，開口角度を{\tt Arc}というメンバを用いて定義する．
-{\tt Arc}の説明を以下に述べる．
+�}�̌`�󂪐�`({\tt Pie})�̂Ƃ��C��`�̊J�n�p�x�C�J���p�x��{\tt Arc}�Ƃ��������o��p���Ē�`����D
+{\tt Arc}�̐������ȉ��ɏq�ׂ�D
 
 \begin{description}
 {\nopagebreak
@@ -282,14 +282,14 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 扇形の開始角度，開口角度を指定する．省略した場合は"{\tt 0,90}"となる
-    \item[値] 数値2つの配列．1つ目の要素が開始角度，2つ目の要素が開口角度である
+    \item[����] ��`�̊J�n�p�x�C�J���p�x���w�肷��D�ȗ������ꍇ��"{\tt 0,90}"�ƂȂ�
+    \item[�l] ���l2�̔z��D1�ڂ̗v�f���J�n�p�x�C2�ڂ̗v�f���J���p�x�ł���
     \end{description}
 }
 \end{description}
 
-図の形状が文字列({\tt Text})の場合，{\tt Text}というメンバで描画する文字列を，{\tt Font}でフォントの設定を指定できる．
-{\tt Text}の説明を以下に述べる．
+�}�̌`�󂪕�����({\tt Text})�̏ꍇ�C{\tt Text}�Ƃ��������o�ŕ`�悷�镶������C{\tt Font}�Ńt�H���g�̐ݒ���w��ł���D
+{\tt Text}�̐������ȉ��ɏq�ׂ�D
 
 \begin{description}
 {\nopagebreak
@@ -297,16 +297,16 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 描画する文字列を指定する．省略した場合は文字列を描画しない
-    \item[値] 文字列．
+    \item[����] �`�悷�镶������w�肷��D�ȗ������ꍇ�͕������`�悵�Ȃ�
+    \item[�l] ������D
     \end{description}
 }
 \item[\texttt{Font}] \mbox{}
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 描画する文字列の色，透明度，フォント，サイズ，スタイル，領域内での位置を指定する．
-    \item[値] オブジェクト．オブジェクトのメンバとして以下が使える
+    \item[����] �`�悷�镶����̐F�C�����x�C�t�H���g�C�T�C�Y�C�X�^�C���C�̈���ł̈ʒu���w�肷��D
+    \item[�l] �I�u�W�F�N�g�D�I�u�W�F�N�g�̃����o�Ƃ��Ĉȉ����g����
 
         \begin{description}
         {\nopagebreak
@@ -314,8 +314,8 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 文字列の色．省略した場合，"{\tt 000000}"となる
-            \item[値] 文字列．ARGBあるいはRGBを各8bitで表現したものを16進法表記で記述する．Aは透明度である．
+            \item[����] ������̐F�D�ȗ������ꍇ�C"{\tt 000000}"�ƂȂ�
+            \item[�l] ������DARGB���邢��RGB���e8bit�ŕ\���������̂�16�i�@�\�L�ŋL�q����DA�͓����x�ł���D
             \end{description}
         }
         \vspace{-0.5zw}
@@ -324,8 +324,8 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 文字のフォントを指定する．省略した場合，システムでSansSerifとして設定してあるフォント名になる
-            \item[値] 文字列．システムにインストールされているフォント名でなければならない．
+            \item[����] �����̃t�H���g���w�肷��D�ȗ������ꍇ�C�V�X�e����SansSerif�Ƃ��Đݒ肵�Ă���t�H���g���ɂȂ�
+            \item[�l] ������D�V�X�e���ɃC���X�g�[������Ă���t�H���g���łȂ���΂Ȃ�Ȃ��D
             \end{description}
         }
         \vspace{-0.5zw}
@@ -334,40 +334,40 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 文字列のスタイルを指定する．
-            \item[値] 文字列．{\tt "Bold"}：太字，{\tt "Italic"}：斜体，{\tt "Regular"}：標準，{\tt "Strikeout"}：中央線付き，{\tt "Underline"}：下線付きのいずれか
+            \item[����] ������̃X�^�C�����w�肷��D
+            \item[�l] ������D{\tt "Bold"}�F�����C{\tt "Italic"}�F�ΆC{\tt "Regular"}�F�W���C{\tt "Strikeout"}�F�������t���C{\tt "Underline"}�F�����t���̂����ꂩ
             \end{description}
         }{\nopagebreak
         \item[\texttt{Alpha}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 文字列の透明度．省略した場合，255になる
-            \item[値] 数値．0～255の値
+            \item[����] ������̓����x�D�ȗ������ꍇ�C255�ɂȂ�
+            \item[�l] ���l�D0�`255�̒l
             \end{description}
         }{\nopagebreak
         \item[\texttt{Size}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 文字列のサイズ
-            \item[値] 数値．単位はポイントである
+            \item[����] ������̃T�C�Y
+            \item[�l] ���l�D�P�ʂ̓|�C���g�ł���
             \end{description}
         }{\nopagebreak
         \item[\texttt{Align}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 文字列の領域内での位置
-            \item[値] 文字列．{\tt "BottomCenter"}：下端中央，{\tt "BottomLeft"}：下端左寄せ，{\tt "BottomRight"}：下端右寄せ，{\tt "MiddleCenter"}：中段中央，{\tt "MiddleLeft"}：中段左寄せ，{\tt "MiddleRight"}：中段右寄せ，{\tt "TopCenter"}：上端中央，{\tt "TopLeft"}：上端左寄せ，{\tt "TopRight"}：上端右寄せのいずれか
+            \item[����] ������̗̈���ł̈ʒu
+            \item[�l] ������D{\tt "BottomCenter"}�F���[�����C{\tt "BottomLeft"}�F���[���񂹁C{\tt "BottomRight"}�F���[�E�񂹁C{\tt "MiddleCenter"}�F���i�����C{\tt "MiddleLeft"}�F���i���񂹁C{\tt "MiddleRight"}�F���i�E�񂹁C{\tt "TopCenter"}�F��[�����C{\tt "TopLeft"}�F��[���񂹁C{\tt "TopRight"}�F��[�E�񂹂̂����ꂩ
             \end{description}
         }
         \end{description}
     \end{description}
 \end{description}
 
-図の形状が文字列({\tt Text})以外の場合，{\tt Fill}というメンバで塗りつぶしの色，{\tt Alpha}で塗りつぶしの透明度，{\tt Pen}で図形の縁取り線を指定できる．
-これらの説明を以下に述べる．
+�}�̌`�󂪕�����({\tt Text})�ȊO�̏ꍇ�C{\tt Fill}�Ƃ��������o�œh��Ԃ��̐F�C{\tt Alpha}�œh��Ԃ��̓����x�C{\tt Pen}�Ő}�`�̉��������w��ł���D
+�����̐������ȉ��ɏq�ׂ�D
 
 \begin{description}
 {\nopagebreak
@@ -375,8 +375,8 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 塗りつぶしの色．省略した場合，"{\tt ffffff}"となる
-    \item[値] 文字列．ARGBまたはRGBを各8bitで表現したものを16進法表記で記述する．Aは透明度である．
+    \item[����] �h��Ԃ��̐F�D�ȗ������ꍇ�C"{\tt ffffff}"�ƂȂ�
+    \item[�l] ������DARGB�܂���RGB���e8bit�ŕ\���������̂�16�i�@�\�L�ŋL�q����DA�͓����x�ł���D
     \end{description}
 }
 \vspace{-1zw}
@@ -385,8 +385,8 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 塗りつぶしの色の透明度．省略した場合，255となる
-    \item[値] 数値．0～255の値
+    \item[����] �h��Ԃ��̐F�̓����x�D�ȗ������ꍇ�C255�ƂȂ�
+    \item[�l] ���l�D0�`255�̒l
     \end{description}
 }
 \vspace{-1zw}
@@ -394,8 +394,8 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 縁取り線を指定する．
-    \item[値] オブジェクト．オブジェクトのメンバとして以下が使える
+    \item[����] ���������w�肷��D
+    \item[�l] �I�u�W�F�N�g�D�I�u�W�F�N�g�̃����o�Ƃ��Ĉȉ����g����
 
         \begin{description}
         {\samepage
@@ -403,24 +403,24 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 線の色．省略した場合，"{\tt 000000}"となる
-            \item[値] 文字列．ARGBあるいはRGBを各8bitで表現したものを16進法表記で記述する．Aは透明度である
+            \item[����] ���̐F�D�ȗ������ꍇ�C"{\tt 000000}"�ƂȂ�
+            \item[�l] ������DARGB���邢��RGB���e8bit�ŕ\���������̂�16�i�@�\�L�ŋL�q����DA�͓����x�ł���
             \end{description}
         }{\nopagebreak
         \item[\texttt{Alpha}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 線の透明度．省略した場合，255になる
-            \item[値] 数値．0～255の値
+            \item[����] ���̓����x�D�ȗ������ꍇ�C255�ɂȂ�
+            \item[�l] ���l�D0�`255�̒l
             \end{description}
         }{\nopagebreak
         \item[\texttt{Width}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 線の幅．省略した場合は，1となる
-            \item[値] 数値
+            \item[����] ���̕��D�ȗ������ꍇ�́C1�ƂȂ�
+            \item[�l] ���l
             \end{description}
         }
         \clearpage
@@ -429,40 +429,40 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 線種の指定．省略した場合，"{\tt Solid}"となる
-            \item[値] 文字列．{\tt "Dash"}：ダッシュ，{\tt "DashDot"}：ダッシュとドットの繰り返し，{\tt "DashDotDot"}：ダッシュと 2 つのドットの繰り返し，{\tt "Dot"}：ドット，{\tt "Solid"}：実線，のいずれか
+            \item[����] ����̎w��D�ȗ������ꍇ�C"{\tt Solid}"�ƂȂ�
+            \item[�l] ������D{\tt "Dash"}�F�_�b�V���C{\tt "DashDot"}�F�_�b�V���ƃh�b�g�̌J��Ԃ��C{\tt "DashDotDot"}�F�_�b�V���� 2 �̃h�b�g�̌J��Ԃ��C{\tt "Dot"}�F�h�b�g�C{\tt "Solid"}�F�����C�̂����ꂩ
             \end{description}
         }
         \end{description}
     \end{description}
 \end{description}
 
-\ref{subsec:visualization}小節において，図形を参照する際に引数を与えることができ，任意の属性に引数の値を割り当てることができると述べた．
-そのため，与えられた引数は，"{\tt ARG}{\it n}"で参照できることとした．
+\ref{subsec:visualization}���߂ɂ����āC�}�`���Q�Ƃ���ۂɈ�����^���邱�Ƃ��ł��C�C�ӂ̑����Ɉ����̒l�����蓖�Ă邱�Ƃ��ł���Əq�ׂ��D
+���̂��߁C�^����ꂽ�����́C"{\tt ARG}{\it n}"�ŎQ�Ƃł��邱�ƂƂ����D
 
-表\ref{shapeSample}において，図形{\tt svcShapes}は3つの基本図形(四角形，文字列，文字列)で構成されており，四角形の{\tt Pen}の{\tt Color}と{\tt Fill}が"\verb|${ARG0}|"，文字列のそれぞれの{\tt Text}が"\verb|${ARG1}|"，"\verb|${ARG2}|"となっている．
-これは，図形{\tt svcShapes}が3つの引数をもつことを示している．
-たとえば，可視化ルールにおいて図形{\tt svcShapes}を参照する場合は，\verb|svcShapes(ff0000,act_tsk,ercd=0)|のように記述する．
-この場合，1つ目の引数として"{\tt ff0000}"，2つ目の引数として"{\tt act\_tsk}"，3つ目の引数として"{\tt ercd=0}"を与えており，それぞれが．\verb|${ARG0}|，\verb|${ARG1}|，\verb|${ARG2}|と置き換えられる．
-引数をとらない図形を参照する場合は，図形の名前のみで参照できる．
+�\\ref{shapeSample}�ɂ����āC�}�`{\tt svcShapes}��3�̊�{�}�`(�l�p�`�C������C������)�ō\������Ă���C�l�p�`��{\tt Pen}��{\tt Color}��{\tt Fill}��"\verb|${ARG0}|"�C������̂��ꂼ���{\tt Text}��"\verb|${ARG1}|"�C"\verb|${ARG2}|"�ƂȂ��Ă���D
+����́C�}�`{\tt svcShapes}��3�̈����������Ƃ������Ă���D
+���Ƃ��΁C�������[���ɂ����Đ}�`{\tt svcShapes}���Q�Ƃ���ꍇ�́C\verb|svcShapes(ff0000,act_tsk,ercd=0)|�̂悤�ɋL�q����D
+���̏ꍇ�C1�ڂ̈����Ƃ���"{\tt ff0000}"�C2�ڂ̈����Ƃ���"{\tt act\_tsk}"�C3�ڂ̈����Ƃ���"{\tt ercd=0}"��^���Ă���C���ꂼ�ꂪ�D\verb|${ARG0}|�C\verb|${ARG1}|�C\verb|${ARG2}|�ƒu����������D
+�������Ƃ�Ȃ��}�`���Q�Ƃ���ꍇ�́C�}�`�̖��O�݂̂ŎQ�Ƃł���D
 
-このように，図形に引数を与えることで，図形の属性を外部から指定できるようになり，属性違いのために組み合わせ毎に図形を多量に定義しなければならないような状況を避けることができる．
+���̂悤�ɁC�}�`�Ɉ�����^���邱�ƂŁC�}�`�̑������O������w��ł���悤�ɂȂ�C�����Ⴂ�̂��߂ɑg�ݍ��킹���ɐ}�`�𑽗ʂɒ�`���Ȃ���΂Ȃ�Ȃ��悤�ȏ󋵂�����邱�Ƃ��ł���D
 
-\subsubsection{可視化ルールの定義(JSON形式)}
-可視化ルールの定義は，\ref{subsec:visualization}小節にて述べた可視化ルールを形式化したものである．
+\subsubsection{�������[���̒�`(JSON�`��)}
+�������[���̒�`�́C\ref{subsec:visualization}���߂ɂďq�ׂ��������[�����`�����������̂ł���D
 
-可視化ルールの定義は{\tt VisualizeRules}というメンバ名の値にオブジェクトとして記述する．
-このオブジェクトのメンバ名には可視化ルールの名前を記述する．
-そして，その値に可視化ルールの定義を記述する．
+�������[���̒�`��{\tt VisualizeRules}�Ƃ��������o���̒l�ɃI�u�W�F�N�g�Ƃ��ċL�q����D
+���̃I�u�W�F�N�g�̃����o���ɂ͉������[���̖��O���L�q����D
+�����āC���̒l�ɉ������[���̒�`���L�q����D
 
-表\ref{visualizeRuleSample}に{\tt toppers}をターゲットとする可視化ルールを定義した例を示す．
-例では，{\tt taskStateChange}と{\tt callSvc}の2つの可視化ルールを定義している．
+�\\ref{visualizeRuleSample}��{\tt toppers}���^�[�Q�b�g�Ƃ���������[�����`������������D
+��ł́C{\tt taskStateChange}��{\tt callSvc}��2�̉������[�����`���Ă���D
 
 {\begin{table}[p]
 \begin{flushleft}
 \footnotesize
 \bkcounttrue
-\caption{可視化ルールファイルで可視化ルールを定義した例}
+\caption{�������[���t�@�C���ŉ������[�����`������}
 \label{visualizeRuleSample}
 \begin{breakbox}
 \setlength{\baselineskip}{\normalbaselineskip}
@@ -471,11 +471,11 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
   "toppers":{
     "VisualizeRules":{
       "taskStateChange":{
-        "DisplayName":"状態遷移",
+        "DisplayName":"��ԑJ��",
         "Target":"Task",
         "Shapes":{
           "stateChangeEvent":{
-            "DisplayName":"状態",
+            "DisplayName":"���",
             "From":"${TARGET}.state",
             "To"  :"${TARGET}.state",
             "Figures":{
@@ -484,18 +484,18 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
             }
           },
           "activateHappenEvent":{
-            "DisplayName":"起動",
+            "DisplayName":"�N��",
             "When"   :"${TARGET}.activate()",
             "Figures":"activateShapes"
           }
         }
       },
       "callSvc":{
-        "DisplayName":"システムコール",
+        "DisplayName":"�V�X�e���R�[��",
         "Target":"Task",
         "Shapes":{
           "callSvcEvent":{
-            "DisplayName":"システムコール",
+            "DisplayName":"�V�X�e���R�[��",
             "From":"${TARGET}.enterSVC()",
             "To"  :"${TARGET}.leaveSVC(${FROM_ARG0})",
             "Figures":{
@@ -515,8 +515,8 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
 \end{flushleft}
 \end{table}}
 
-可視化ルールの定義に用いるメンバは{\tt DisplayName}，{\tt Target}，{\tt Shapes}である．
-これらについて，以下に詳述する．
+�������[���̒�`�ɗp���郁���o��{\tt DisplayName}�C{\tt Target}�C{\tt Shapes}�ł���D
+�����ɂ��āC�ȉ��ɏڏq����D
 
 \begin{description}
 {\nopagebreak
@@ -524,16 +524,16 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 可視化ルールの表示名．省略した場合は可視化ルールの名前になる
-    \item[値] 文字列
+    \item[����] �������[���̕\�����D�ȗ������ꍇ�͉������[���̖��O�ɂȂ�
+    \item[�l] ������
     \end{description}
 }{\nopagebreak
 \item[\texttt{Target}] \mbox{}
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 可視化ルールを適用するリソースタイプ
-    \item[値] 文字列
+    \item[����] �������[����K�p���郊�\�[�X�^�C�v
+    \item[�l] ������
     \end{description}
 }
 \clearpage
@@ -542,8 +542,8 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
     \vspace{-1zw}
     \begin{description}
     \setlength{\itemsep}{-1.5\itemsep}
-    \item[説明] 図形群の定義を記述する
-    \item[値] オブジェクト．メンバ名に図形群の名前，メンバの値として図形群の定義をオブジェクトとして与える．その際，以下のメンバが使える
+    \item[����] �}�`�Q�̒�`���L�q����
+    \item[�l] �I�u�W�F�N�g�D�����o���ɐ}�`�Q�̖��O�C�����o�̒l�Ƃ��Đ}�`�Q�̒�`���I�u�W�F�N�g�Ƃ��ė^����D���̍ہC�ȉ��̃����o���g����
 
         \begin{description}
         {\samepage
@@ -551,40 +551,40 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 図形群の表示名．省略した場合は図形群の名前になる
-            \item[値] 文字列
+            \item[����] �}�`�Q�̕\�����D�ȗ������ꍇ�͐}�`�Q�̖��O�ɂȂ�
+            \item[�l] ������
             \end{description}
         }{\nopagebreak
         \item[\texttt{From}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 図形群を構成する図形のワールド変換に適用される開始イベント
-            \item[値] イベント指定形式文字列
+            \item[����] �}�`�Q���\������}�`�̃��[���h�ϊ��ɓK�p�����J�n�C�x���g
+            \item[�l] �C�x���g�w��`��������
             \end{description}
         }{\nopagebreak
         \item[\texttt{To}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 図形群を構成する図形のワールド変換に適用される終了イベント
-            \item[値] 標準形式トレースログの形式の文字列
+            \item[����] �}�`�Q���\������}�`�̃��[���h�ϊ��ɓK�p�����I���C�x���g
+            \item[�l] �W���`���g���[�X���O�̌`���̕�����
             \end{description}
         }{\nopagebreak
         \item[\texttt{When}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 図形群を構成する図形のワールド変換に適用されるイベント．開始時刻と終了時刻が同じ場合に用いる
-            \item[値] イベント指定形式文字列
+            \item[����] �}�`�Q���\������}�`�̃��[���h�ϊ��ɓK�p�����C�x���g�D�J�n�����ƏI�������������ꍇ�ɗp����
+            \item[�l] �C�x���g�w��`��������
             \end{description}
         }{\nopagebreak
         \item[\texttt{Figures}]  \mbox{}
             \vspace{-0.25zw}
             \begin{description}
             \setlength{\itemsep}{-1.5\itemsep}
-            \item[説明] 図形群を構成する図形の定義
-            \item[値] 文字列，配列，オブジェクトのいずれか．文字列の場合は図形の参照，オブジェクトの場合はメンバ名に条件，値に図形の参照を記述する．配列の要素には，これら文字列かオブジェクトを記述できる．オブジェクトと配列はネストして記述することができる．
+            \item[����] �}�`�Q���\������}�`�̒�`
+            \item[�l] ������C�z��C�I�u�W�F�N�g�̂����ꂩ�D������̏ꍇ�͐}�`�̎Q�ƁC�I�u�W�F�N�g�̏ꍇ�̓����o���ɏ����C�l�ɐ}�`�̎Q�Ƃ��L�q����D�z��̗v�f�ɂ́C����當���񂩃I�u�W�F�N�g���L�q�ł���D�I�u�W�F�N�g�Ɣz��̓l�X�g���ċL�q���邱�Ƃ��ł���D
             \end{description}
         }
         \end{description}
@@ -593,27 +593,27 @@ Value = /-?([1-9][0-9]*)?[0-9](\.[0-9]*)?(%|px)?/
 }
 \end{description}
 
-可視化ルールのイベント期間の指定には，イベント期間として適用するトレースログを，条件として必要な情報を標準形式トレースログの形式で記述する．
-たとえば，リソースの属性が変わったときをイベント期間に指定したいときは，標準形式トレースログの形式で属性名まで記述すればよい．
-また，属性の値が特定の値に変わったときをイベント期間に指定したいときは，標準形式トレースログの形式で値まで記述すればよい．
-リソースの振る舞いをイベント期間として指定したい場合は，標準形式トレースログの形式で振る舞い名と"{\tt ()}"を記述すればよく，特定の引数をとるときに条件を絞りたいときはその引数を"{\tt ()}"内に記述すればよい．
+�������[���̃C�x���g���Ԃ̎w��ɂ́C�C�x���g���ԂƂ��ēK�p����g���[�X���O���C�����Ƃ��ĕK�v�ȏ���W���`���g���[�X���O�̌`���ŋL�q����D
+���Ƃ��΁C���\�[�X�̑������ς�����Ƃ����C�x���g���ԂɎw�肵�����Ƃ��́C�W���`���g���[�X���O�̌`���ő������܂ŋL�q����΂悢�D
+�܂��C�����̒l������̒l�ɕς�����Ƃ����C�x���g���ԂɎw�肵�����Ƃ��́C�W���`���g���[�X���O�̌`���Œl�܂ŋL�q����΂悢�D
+���\�[�X�̐U�镑�����C�x���g���ԂƂ��Ďw�肵�����ꍇ�́C�W���`���g���[�X���O�̌`���ŐU�镑������"{\tt ()}"���L�q����΂悭�C����̈������Ƃ�Ƃ��ɏ������i�肽���Ƃ��͂��̈�����"{\tt ()}"���ɋL�q����΂悢�D
 
-イベント期間の指定でリソースを指定する際，{\tt Target}指定がしてある場合は，\verb|${TARGET}|という置換マクロで，リソースファイルで定義したリソースタイプ{\tt Target}の各リソースの名前に適時置換することができる．
+�C�x���g���Ԃ̎w��Ń��\�[�X���w�肷��ہC{\tt Target}�w�肪���Ă���ꍇ�́C\verb|${TARGET}|�Ƃ����u���}�N���ŁC���\�[�X�t�@�C���Œ�`�������\�[�X�^�C�v{\tt Target}�̊e���\�[�X�̖��O�ɓK���u�����邱�Ƃ��ł���D
 
-表\ref{visualizeRuleSample}の{\tt taskStateChange}を例に説明する．
-{\tt Target}には{\tt Task}が指定してある．
-このとき，リソースファイルにリソースタイプ{\tt Task}のリソースとして{\tt Task1}，{\tt Task2}，{\tt Task3}が定義してある場合は，{\tt From}と{\tt To}の\verb|${TARGET}|はこれらのリソース名に置換され，{\tt Task1.state}，{\tt Task2.state}，{\tt Task3.state}となる．
+�\\ref{visualizeRuleSample}��{\tt taskStateChange}���ɐ�������D
+{\tt Target}�ɂ�{\tt Task}���w�肵�Ă���D
+���̂Ƃ��C���\�[�X�t�@�C���Ƀ��\�[�X�^�C�v{\tt Task}�̃��\�[�X�Ƃ���{\tt Task1}�C{\tt Task2}�C{\tt Task3}����`���Ă���ꍇ�́C{\tt From}��{\tt To}��\verb|${TARGET}|�͂����̃��\�[�X���ɒu������C{\tt Task1.state}�C{\tt Task2.state}�C{\tt Task3.state}�ƂȂ�D
 
-{\tt Target}指定がないとき，{\tt To}を指定する際に{\tt From}で一致したトレースログのリソースを指定したい場合は，置換マクロ\verb|${FROM_TARGET}|を記述すればよい．
-また，{\tt From}で属性値の変化イベントを指定したとき，{\tt From}で一致したトレースログの属性の値を{\tt To}で指定したいときは置換マクロ\verb|${FROM_VAL}|を記述すればよい．
-同じように，{\tt From}で振る舞いの発生イベントを指定したとき，{\tt From}で一致したトレースログの振る舞いの引数を{\tt To}で指定したいときは置換マクロ\verb|${FROM_ARG|{\it n}\verb|}|を記述すればよい．
-{\it n}には何番目の引数かを0からで記述する．
+{\tt Target}�w�肪�Ȃ��Ƃ��C{\tt To}���w�肷��ۂ�{\tt From}�ň�v�����g���[�X���O�̃��\�[�X���w�肵�����ꍇ�́C�u���}�N��\verb|${FROM_TARGET}|���L�q����΂悢�D
+�܂��C{\tt From}�ő����l�̕ω��C�x���g���w�肵���Ƃ��C{\tt From}�ň�v�����g���[�X���O�̑����̒l��{\tt To}�Ŏw�肵�����Ƃ��͒u���}�N��\verb|${FROM_VAL}|���L�q����΂悢�D
+�����悤�ɁC{\tt From}�ŐU�镑���̔����C�x���g���w�肵���Ƃ��C{\tt From}�ň�v�����g���[�X���O�̐U�镑���̈�����{\tt To}�Ŏw�肵�����Ƃ��͒u���}�N��\verb|${FROM_ARG|{\it n}\verb|}|���L�q����΂悢�D
+{\it n}�ɂ͉��Ԗڂ̈�������0����ŋL�q����D
 
-これらの置換マクロは図形の参照を記述する際にも利用できる．
-{\tt To}で一致したトレースログの属性値変化の値は\verb|${TO_VAL}|，振る舞いの引数は\verb|${TO_ARG|{\it n}\verb|}|という置換マクロで指定できる．
-また，{\tt Target}指定がないときに{\tt To}で一致したトレースログのリソースを指定したいときは置換マクロ\verb|${TO_TARGET}|を用いればよい．
-イベント期間指定が{\tt When}のときは，一致したトレースログのリソースを\verb|${TARGET}|，属性の値を\verb|${VAL}|，振る舞いの引数を\verb|${ARG|{\it n}\verb|}|で指定する．
+�����̒u���}�N���͐}�`�̎Q�Ƃ��L�q����ۂɂ����p�ł���D
+{\tt To}�ň�v�����g���[�X���O�̑����l�ω��̒l��\verb|${TO_VAL}|�C�U�镑���̈�����\verb|${TO_ARG|{\it n}\verb|}|�Ƃ����u���}�N���Ŏw��ł���D
+�܂��C{\tt Target}�w�肪�Ȃ��Ƃ���{\tt To}�ň�v�����g���[�X���O�̃��\�[�X���w�肵�����Ƃ��͒u���}�N��\verb|${TO_TARGET}|��p����΂悢�D
+�C�x���g���Ԏw�肪{\tt When}�̂Ƃ��́C��v�����g���[�X���O�̃��\�[�X��\verb|${TARGET}|�C�����̒l��\verb|${VAL}|�C�U�镑���̈�����\verb|${ARG|{\it n}\verb|}|�Ŏw�肷��D
 
-\subsection{可視化ルールファイル(外部プロセス形式)}
-標準形式トレースログに図形に変換するため外部プロセスも用いることも可能である．
-外部プロセスを指定する方法は，別途「スクリプト拡張マニュアル」において説明する．
+\subsection{�������[���t�@�C��(�O���v���Z�X�`��)}
+�W���`���g���[�X���O�ɐ}�`�ɕϊ����邽�ߊO���v���Z�X���p���邱�Ƃ��\�ł���D
+�O���v���Z�X���w�肷����@�́C�ʓr�u�X�N���v�g�g���}�j���A���v�ɂ����Đ�������D
