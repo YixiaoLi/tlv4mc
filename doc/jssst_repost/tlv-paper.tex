@@ -259,9 +259,9 @@ Solarisの実行トレースを取得するDtrace\cite{Dtrace}には，Chime\cite{Chime}
 GTKWaveが存在する．
 
 また，主に並列プログラム用に，Paj\`{e} 形式というトレースログの形式が提
-案されている．Paj\`{e} 形式は，トレースログ中でプロセスの状態や可視化時
-に表示する色を指定することが可能である．Paj\`{e} 形式を可視化するツールとして，
-Visual Trace Explorer\cite{VITES}が存在する．
+案されている．Paj\`{e} 形式は，トレースログ中でプロセスの状態定義や可視
+化時に表示する色を指定することが可能である．Paj\`{e} 形式を可視化するツ
+ールとして，Visual Trace Explorer\cite{VITES}が存在する．
 
 \subsection{既存のトレースログ可視化ツールの問題点}
 
@@ -270,11 +270,11 @@ Visual Trace Explorer\cite{VITES}が存在する．
 単体で存在しているわけではなく，開発環境やトレースログを出力するソフトウ
 ェアの一部として提供されているためである．
 
-一方，任意の形式のトレースログをVCD形式に変換することにより，GTKWave等の
-VCDに対応した可視化ツールを利用できる．図\ref{fig:GTKWave}に，RTOSのトレ
-ースログをVCD形式に変換して，GTKWaveで可視化したスクリーンショットを示す．
-VCD形式はデジタル回路設計用の形式であるため，表示能力に乏しく，複雑な可
-視化表現は不可能である．
+一方，任意の形式のトレースログをVCD形式やPaj\`{e} 形式に変換することによ
+り，これらのトレースログ形式に対応した可視化ツールを利用できる．図
+\ref{fig:GTKWave}に，RTOSのトレースログをVCD形式に変換して，GTKWaveで可
+視化したスクリーンショットを示す．VCD形式はデジタル回路設計用の形式であ
+るため，表示能力に乏しく，複雑な可視化表現は不可能である．
 
 \begin{figure}[tb]
 \begin{center}
@@ -284,8 +284,8 @@ VCD形式はデジタル回路設計用の形式であるため，表示能力に乏しく，複雑な可
 \end{center}
 \end{figure}
 
-PthreadプログラムのトレースログをPaj\`{e} 形式で生成し，Visual Trace 
-Explorerで可視化表示した例を図\ref{fig:VITE}に示す．Paj\`{e} 形式は，VCD
+図\ref{fig:VITE}に，PthreadプログラムのトレースログをPaj\`{e} 形式で生成
+し，Visual Trace Explorerで可視化表示した例を示す．Paj\`{e} 形式は，VCD
 形式と比較すると表現能力は高いが，状態の定義と状態毎の色指定程度の自由度
 しかないため，複雑な可視化表現は不可能である．
 
@@ -507,10 +507,11 @@ JavaやC++などのオブジェクト指向言語における，メンバ変数への代入と，メソ
 \label{sub:standartFormat_exp}
 
 図\ref{fig:log_ASP}のASPカーネルトレースログを標準形式とした例を図
-\ref{standartFormatTraceLogSample}に示す．タスクのリソースタイプの名前は
-{\tt Task}，タスクIDが1のタスクはTASK1という名前のリソースとする
-\footnote{図\ref{standartFormatTraceLogSample}標準形式は変換ルールによる
-変換結果ではなく，標準形式の説明のための人手による変換結果である．}．
+\ref{standartFormatTraceLogSample}に示す\footnote{図
+\ref{standartFormatTraceLogSample}の標準形式は変換ルールによる変換結果で
+はなく，標準形式の説明のための人手による変換結果である．}．タスクのリソ
+ースタイプの名前は{\tt Task}，タスクIDが1のタスクはTASK1という名前のリソ
+ースとする．
 
 1行目が振る舞いのイベントであり，2～4行目が属性の値の変化イベントである．
 %
@@ -564,6 +565,15 @@ Task}のリソースのうち，属性のタスク状態({\tt state})が実行状態であるリソ
 れば，そのタスクの状態が実行可能状態となったことを標準形式のトレースログ
 として生成する．
 
+\begin{figure}[tb]
+\begin{center}
+\scalebox{0.4}{\includegraphics{img/visualizing.eps}}
+\caption{抽象的な可視化表示の仕組み}
+\label{visualizing}
+\end{center}
+\end{figure}
+
+
 \subsection{可視化表示の仕組み}
 \label{sub:visualize_rule}
 
@@ -572,13 +582,6 @@ Task}のリソースのうち，属性のタスク状態({\tt state})が実行状態であるリソ
 な処理を洗い出す．そして，ユーザが，どの処理に，どのようなパラメータを指
 定すればよいかを判断する．
 
-\begin{figure}[tb]
-\begin{center}
-\scalebox{0.4}{\includegraphics{img/visualizing.eps}}
-\caption{抽象的な可視化表示の仕組み}
-\label{visualizing}
-\end{center}
-\end{figure}
 
 \subsubsection{可視化表示の抽象化}
 
@@ -898,8 +901,8 @@ resource}の有無を判定している．ここでは，実行状態のタスクが存在するかチ
 条件({\tt Task(id==1)})でTASK1を指定している．直接文字列を生成したい場
 合は，変換ルールで{\tt \$RES\_NAME}の置換マクロを用いればよい．
 %
-具体的には，図\ref{standartFormatTraceLogSample}の4行目と7行目にある
-{\tt Task(id==\$\{id\})}を{\tt \$RES\_NAME\{\}}で囲む．
+具体的には，図\ref{standartFormatTraceLogSample}の7行目にある{\tt 
+Task(id==\$\{id\})}を{\tt \$RES\_NAME\{\}}で囲む．
 
 \begin{EBNFFile}{図\ref{fig:log_ASP}のトレースログの図\ref{convertRuleFile}の変換ルー
  ルによる標準形式への変換結果}{fig:log_ASP_STD}{aspStandartLogSample}
@@ -924,8 +927,8 @@ resource}の有無を判定している．ここでは，実行状態のタスクが存在するかチ
 開始イベント({\tt From})と終了イベント({\tt To})として，タスクの属性であ
 るタスクの状態の値の変更イベントを用いることを指定している．そして，{\tt 
 Figures}で，ワールド座標系に割り当てる図形を指定している．このルールでは，
-変更後の属性の値（タスクの状態）によって可視化方法を着替えており，実行状
-態の場合は，{\tt runningShapes}を用いる．
+変更後の属性の値（タスクの状態）によって可視化方法を切り替えており，実行
+状態の場合は，{\tt runningShapes}を用いる．
 
 \begin{EBNFFile}{ASPカーネルの可視化ルールファイルの一部}{visualizeRuleFile}{A sample of a visualize-rule file}
  1 "toppers":{
@@ -970,6 +973,16 @@ TLVのユーザーインタフェースについて解説する．図\ref{fig:aspTLVscreenShot}
 に，ASPカーネルが出力したトレースログを，TLVを用いて可視化表示した結果を
 示す．
 
+\begin{figure*}[tb]
+\begin{center}
+%\scalebox{0.7}{\includegraphics{img/aspTLVscreenShot_1_1.eps}}
+\scalebox{0.7}{\includegraphics{img/aspTLVscreenShot_1_1_1.eps}}
+\caption{TOPPERS/ASPカーネルのトレースログの可視化表示}
+%\ecaption{A screenshot of TLV visualizing a trace log dumped by TOPPERS/ASP}
+\label{fig:aspTLVscreenShot}
+\end{center}
+\end{figure*}
+
 
 \subsection{可視化表示部の制御}
 
@@ -1007,6 +1020,14 @@ TLVのユーザーインタフェースについて解説する．図\ref{fig:aspTLVscreenShot}
 %各種操作に利用される．マーカーは階層構造で管理し，階層ごとに表示の切り替
 %え，マーカー間時間の表示などを行うことができる．
 
+%
+\begin{figure}[tb]
+\begin{center}
+\scalebox{0.45}{\includegraphics{img/aspTLVscreenShot_pri.eps}}
+\caption{タスクの優先度の初期値でグループ化されたツリービュー形式の表示}
+\label{fig:aspTLVscreenShot_pri}
+\end{center}
+\end{figure}
 
 \subsection{マクロ表示}
 
@@ -1021,6 +1042,7 @@ TLVのユーザーインタフェースについて解説する．図\ref{fig:aspTLVscreenShot}
 
 マクロビューアでは可視化表示部と同じように，キーボード，マウスにより拡大
 縮小，移動の制御を行うことができる．
+
 
 \subsubsection{トレースログのテキスト表示}
 
@@ -1043,32 +1065,12 @@ TLVでは，可視化表示する項目を可視化ルールにより変更，追加することができ
 
 リソースウィンドウではリソースファイルで定義されたリソースを，リソースタ
 イプやグループ化可能な属性毎にツリービュー形式で表示しており，チェックの
-有無でリソース毎に表示の切り替えを行える．同じように，可視化ルールウィン
-ドウでは，可視化ルールごとに表示の切り替えを行える．
+有無でリソース毎に表示の切り替えを行える．ASPカーネルの場合は，タスクの
+優先度がグループ化可能と指定されており，図\ref{fig:aspTLVscreenShot_pri}
+に示すように，リソースウィンドウで，優先度の初期値でグループ化されたツリ
+ービュー形式の表示が選択可能である．
 
-ASPカーネルの場合は，タスクの優先度がグループ化可能と指定されており，図
-\ref{fig:aspTLVscreenShot_pri}に示すように，リソースウィンドウで，優先度
-の初期値でグループ化されたツリービュー形式の表示が選択可能である．
-
-\begin{figure*}[tb]
-\begin{center}
-%\scalebox{0.7}{\includegraphics{img/aspTLVscreenShot_1_1.eps}}
-\scalebox{0.7}{\includegraphics{img/aspTLVscreenShot_1_1_1.eps}}
-\caption{TOPPERS/ASPカーネルのトレースログの可視化表示}
-%\ecaption{A screenshot of TLV visualizing a trace log dumped by TOPPERS/ASP}
-\label{fig:aspTLVscreenShot}
-\end{center}
-\end{figure*}
-%
-\begin{figure}[ht]
-\begin{center}
-\scalebox{0.4}{\includegraphics{img/aspTLVscreenShot_pri.eps}}
-\caption{タスクの優先度の初期値でグループ化されたツリービュー形式の表示}
-\label{fig:aspTLVscreenShot_pri}
-\end{center}
-\end{figure}
-
-
+可視化ルールウィンドウでは，可視化ルールごとに表示の切り替えを行える．
 
 
 \section{評価}
@@ -1081,6 +1083,27 @@ ASPカーネルの場合は，タスクの優先度がグループ化可能と指定されており，図
 
 また，TLVは多くの既存のツールと異なり，デバッガソフトウェアや統合開発環
 境とは独立したプログラムである．そのために生じる制約や課題について述べる．
+
+
+\begin{figure*}[tb]
+\begin{center}
+\scalebox{0.7}{\includegraphics{img/tecsTLVscreenShot.eps}}
+\caption{ソフトウェアコンポーネント（TECS）のトレースログの可視化表示}
+%\ecaption{A screenshot of TLV visualizing a trace log dumped by TECS}
+\label{fig:tecsTLVscreenShot}
+\end{center}
+\end{figure*}
+
+\begin{figure*}[tb]
+\begin{center}
+\scalebox{0.7}{\includegraphics{img/fmpTLVscreenShot_1_1.eps}}
+\caption{マルチプロセッサ対応RTOS(TOPPERS/FMPカーネル)のトレースログの
+ 可視化表示}
+%\ecaption{A screenshot of TLV visualizing a trace log dumped by TOPPERS/FMP}
+\label{fig:fmpTLVscreenShot}
+\end{center}
+\end{figure*}
+
 
 \subsection{ASPカーネルの可視化表示}
 
@@ -1124,7 +1147,7 @@ TECSのトレースログを可視化表示する項目として，セルの呼び出し関係を採用し
 ...}{\tt )}が呼び出し先からのリターンを表している．
 
 
-\begin{figure}[tb]
+\begin{figure}[htb]
 \begin{quote}
 %\bkcounttrue
 \begin{breakbox}
@@ -1146,24 +1169,6 @@ TECSのトレースログを可視化表示する項目として，セルの呼び出し関係を採用し
 換ルールファイルは15行であり，可視化ルールファイルは可視化ルールが39行，
 図形定義が49行であった．また，リソースヘッダファイルは47行であった．
 
-\begin{figure*}[tb]
-\begin{center}
-\scalebox{0.7}{\includegraphics{img/tecsTLVscreenShot.eps}}
-\caption{ソフトウェアコンポーネント（TECS）のトレースログの可視化表示}
-%\ecaption{A screenshot of TLV visualizing a trace log dumped by TECS}
-\label{fig:tecsTLVscreenShot}
-\end{center}
-\end{figure*}
-
-\begin{figure*}[tb]
-\begin{center}
-\scalebox{0.7}{\includegraphics{img/fmpTLVscreenShot_1_1.eps}}
-\caption{マルチプロセッサ対応RTOS(TOPPERS/FMPカーネル)のトレースログの
- 可視化表示}
-%\ecaption{A screenshot of TLV visualizing a trace log dumped by TOPPERS/FMP}
-\label{fig:fmpTLVscreenShot}
-\end{center}
-\end{figure*}
 
 
 \subsection{FMPカーネルの可視化表示}
@@ -1196,23 +1201,24 @@ TLVは独立したプログラムあるため，デバッガソフトウェアや統合開発環境に組
 み込まれた可視化ツール（以下，統合可視化ツール）と比較すると，ユーザー操
 作の煩雑性，処理速度，機能面での制約や課題がある．
 
-ユーザー操作の煩雑性に関しては，統合可視化ツールの場合は，デバッガソフト
-ウェアや統合開発環境のメニュー等で可視化を選択すると，自動的に可視化が可
-能である．一方，TLVの場合は，一旦トレースログを保存してから，TLVを起動し
-て，読み込ませる必要がある．また，トレースログと共にアプリケーション毎に
-リソースファイルが必要となるが，リソースファイルを自動的に生成できない場
-合は，ユーザーが手作業で用意する必要がある．
+ユーザー操作の煩雑性に関しては，統合可視化ツールの場合は，一般的にデバッ
+ガソフトウェアや統合開発環境のメニュー等で可視化を選択するだけで，自動的
+に可視化が可能である．一方，TLVの場合は，一旦トレースログをトレースログ
+ファイルに保存してから，TLVを起動して，読み込ませる必要がある．また，ト
+レースログファイルと共にアプリケーション毎にリソースファイルが必要となる
+が，リソースファイルを自動的に生成できない場合は，ユーザーが手作業で用意
+する必要がある．
 
 処理速度に関しては，統合可視化ツールはログの形式や可視化項目を固定化して
-いるのに対して，TLVでは，ログの形式や可視化項目の自由度をもたせるため，
-変換ルールによる標準形式変換や可視化ルールによる図形データ生成が必要であ
-るため，TLVの方が可視化に要する時間が長くなることが考えられる．
+いるのに対して，TLVでは，トレースログの形式や可視化項目の自由度をもたせ
+るため，変換ルールによる標準形式変換や可視化ルールによる図形データ生成が
+必要であるため，TLVの方が可視化に要する時間が長くなると考えられる．
 
 機能面としては，統合可視化ツールには，プロセッサやシミュレータを停止して
 その時点までのトレースログを可視化した後，処理を再開して得られたトレース
-ログを追加して可視化することが可能なものがある．一方，現状のTLVでは，ト
-レースログを可視化表示している状態で，続きのトレースログを新たに読み込ま
-せて追加で可視化表示することはできない．
+ログを追加して可視化することが可能なものがある．一方，現状のTLVでは，あ
+るトレースログファイルを可視化表示している状態で，続きのトレースログを新
+たに読み込ませて追加して可視化表示することはできない．
 
 
 \section{おわりに}
