@@ -191,7 +191,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             var time = Many1(AlphaNum);
 
             time.TimeValue = _stack.Peek().result.ToString();
-            return (ITraceLogParser)(ITraceLogParser)time.End();
+            return (ITraceLogParser)time.End();
         }
 
         public ITraceLogParser Event()
