@@ -119,9 +119,6 @@
     <Compile Include="ObservableDictionary.cs" />
     <Compile Include="ObservableMultiKeyDictionary.cs" />
     <Compile Include="Pair.cs" />
-    <Compile Include="ParserCombinators\CharParsers.cs" />
-    <Compile Include="ParserCombinators\ParserCombinators.cs" />
-    <Compile Include="ParserCombinators\Stream.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
