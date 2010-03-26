@@ -126,7 +126,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             get
             {
-                return _arguments.Length > 0 ? _arguments.ToString() : null;
+                // ""(空白文字列)がありえるため、_behaviorの有無に依存する
+                return _behavior.Length > 0 ? _arguments.ToString() : null;
             }
             set
             {
@@ -159,13 +160,28 @@ namespace NU.OJL.MPRTOS.TLV.Core
             base._nullObject = (INullObjectOfParser)this._nullObject;
         }
 
-        public override void Parse(char[] input)
+
+        public void Init(char[] input)
         {
-            // 初期化
             _input.Write(input);
+
+            _time.Length = 0;
+            _object.Length = 0;
+            _objectName.Length = 0;
+            _objectType.Length = 0;
+            _behavior.Length = 0;
+            _attribute.Length = 0;
+            _value.Length = 0;
+            _arguments.Length = 0;
             HasTimeValue = false;
             HasObjectNameValue = false;
             HasObjectTypeValue = false;
+        }
+
+        public override void Parse(char[] input)
+        {
+            // 初期化
+            Init(input);
 
             // パース開始
             Line();
@@ -214,7 +230,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             object_.ObjectValue = _stack.Peek().result.ToString();
 
-            // HasObjectTypeValueは、ObjectTypeName()により必ずセットされるため
+            // HasObjectTypeValueは、ObjectTypeName()が真でも、ほかで失敗すれば偽である。
             object_.HasObjectTypeValue = false;
             return (ITraceLogParser)object_.End();
         }
@@ -363,7 +379,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
-            var attributeOrBehavior = AttributeChange().OR().BehaviorHappen();
+            // 注意：順番を変えないでください(次の理由が当てはまらなくなった場合のみ変えてください)。
+            // ＜理由＞
+            // AttributeChange()は、"="がないものも通るため、AttributeName()が真であればAttributeChange()も真である。
+            // (なので、現状は常に真扱い)
+            // BehaviorHappen()は、"("")"が必要なので、真偽どちらもありうる。
+            var attributeOrBehavior = BehaviorHappen().OR().AttributeChange();
+
+            // BehaviorValueは、BehaviorName()が真でも、ほかで失敗すればNullである。
+            attributeOrBehavior.BehaviorValue = null;
 
             return (ITraceLogParser)attributeOrBehavior.End();
         }
@@ -374,7 +398,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             var attributeCange = AttributeName().Char('=').Value();
 
-            return (ITraceLogParser)attributeCange.End();
+            attributeCange.End();
+
+            // "="がないログ形式も通るため、AttributeName()が真であればAttributeChange()も真である。
+            // なので、現状は常に真扱い。
+            return this;
         }
 
         public ITraceLogParser BehaviorHappen()
@@ -461,7 +489,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return this;
+                return _nullObject;
             }
             else if ( _input.Peek() == c)
             {
@@ -479,7 +507,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return this;
+                return _nullObject;
             }
 
             var c = _input.Peek();
@@ -499,7 +527,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return this;
+                return _nullObject;
             }
 
             var c = _input.Peek();
@@ -519,7 +547,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return this;
+                return _nullObject;
             }
 
             var c = _input.Peek();
@@ -542,7 +570,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return this;
+                return _nullObject;
             }
             else if (_input.Peek() != c)
             {
@@ -559,7 +587,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return this;
+                return _nullObject;
             }
 
             var c = _input.Peek();
@@ -578,7 +606,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return this;
+                return _nullObject;
             }
 
             var c = _input.Peek();
@@ -598,7 +626,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return this;
+                return _nullObject;
             }
 
             var c = _input.Peek();
@@ -617,7 +645,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return this;
+                return _nullObject;
             }
 
             if (_input.IsEmpty())
