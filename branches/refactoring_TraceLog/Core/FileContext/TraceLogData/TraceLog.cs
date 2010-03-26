@@ -64,46 +64,25 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		private string _log;
 
+        private static TraceLogParser _parser = new TraceLogParser();
+
 		public TraceLog(string log)
 		{
-			Match m;
-
 			_log = Regex.Replace(log, @"\s","");
 
-			m = Regex.Match(_log, @"\[(?<time>[0-9a-zA-Z]+(\.[0-9a-zA-Z]*)?)\]");
-			if (m.Success)
-				Time = m.Groups["time"].Value;
-			HasTime = m.Success;
+            _parser.Parse(_log);
 
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?(?<object>[^\[\]\(\)\.]+(\([^\)]+\))?)(\.[^\s]+)?$");
-			if (m.Success)
-				Object = m.Groups["object"].Value;
-
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?(?<objectName>[^\[\]\(\)\.]+)(\.[^\s]+)?$");
-			if (m.Success)
-				ObjectName = m.Groups["objectName"].Value;
-			HasObjectName = m.Success;
-
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?(?<objectType>[^\[\]\(\)\.]+)\([^\)]+\)(\.[^\s]+)?$");
-			if (m.Success)
-				ObjectType = m.Groups["objectType"].Value;
-			HasObjectType = m.Success;
-
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?[^\[\]\(\)\.]+(\([^\)]+\))?\.(?<behavior>[^\(\s]+)\([^\)]*\)$");
-			if (m.Success)
-				Behavior = m.Groups["behavior"].Value;
-
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?[^\[\]\(\)\.]+(\([^\)]+\))?\.(?<attribute>[^=!<>\(\)]+)([=!<>].*)?$");
-			if (m.Success)
-				Attribute = m.Groups["attribute"].Value;
-
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?[^\[\]\(\)\.]+(\([^\)]+\))?\.[^=!<>\(\s]+(>=|>|<|<=|==|!=|=)(?<value>[^\s$]+)$");
-			if (m.Success)
-				Value = m.Groups["value"].Value;
-
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?[^\[\]\(\)\.]+(\([^\)]+\))?\.[^=!<>\(\s]+\((?<args>[^\)]*)\)$");
-			if (m.Success)
-				Arguments = m.Groups["args"].Value;
+            Time          = _parser.TimeValue;
+            Object        = _parser.ObjectValue;
+            ObjectName    = _parser.ObjectNameValue;
+            ObjectType    = _parser.ObjectTypeValue;
+            Behavior      = _parser.BehaviorValue;
+            Attribute     = _parser.AttributeValue;
+            Value         = _parser.ValueValue;
+            Arguments     = _parser.ArgumentsValue;
+            HasTime       = _parser.HasTimeValue;
+            HasObjectName = _parser.HasObjectNameValue;
+            HasObjectType = _parser.HasObjectTypeValue;
 
 			if (Behavior != null && Attribute != null)
 				throw new Exception("不正なトレースログです。\n" + _log);
