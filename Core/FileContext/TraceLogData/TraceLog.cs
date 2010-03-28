@@ -91,7 +91,22 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			else if (Behavior != null && Attribute == null)
 				Type = TraceLogType.BehaviorHappen;
 
-
+            using (StreamWriter w = new StreamWriter(@"mydebug/myparser_result.txt",true))
+            {
+                w.WriteLine(_log);
+                w.WriteLine(Time);
+                w.WriteLine(Object);
+                w.WriteLine(ObjectName);
+                w.WriteLine(ObjectType);
+                w.WriteLine(Behavior);
+                w.WriteLine(Attribute);
+                w.WriteLine(Value);
+                w.WriteLine(Arguments);
+                w.WriteLine(HasTime);
+                w.WriteLine(HasObjectName);
+                w.WriteLine(HasObjectType);
+                w.WriteLine(Type);
+            }
 		}
 
 		public static implicit operator string(TraceLog stdlog)

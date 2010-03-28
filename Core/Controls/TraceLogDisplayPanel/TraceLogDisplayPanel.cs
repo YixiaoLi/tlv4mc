@@ -282,7 +282,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 	    #region treeGridView初期化
 		treeGridView.AddColumn(new TreeGridViewColumn() { Name = "resourceName", HeaderText = "リソース" });
-	    //treeGridView.AddColumn(new DataGridViewTextBoxColumn() { Name = "behaviorHappen", HeaderText = "値" });
+	    //treeGridView.AddColumn(new DataGridViewTextBoxColumn() { Name = "value", HeaderText = "値" });
 	    treeGridView.AddColumn(new TimeLineColumn() { Name = "timeLine", HeaderText = "タイムライン", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
 
 	    treeGridView.DataGridView.ColumnHeadersVisible = false;
