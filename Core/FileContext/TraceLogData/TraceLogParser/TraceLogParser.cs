@@ -204,7 +204,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
-            var time = Many1(AlphaNum).Many(() => Char('.')).Many(AlphaNum);
+            var time = Many(()=>Char('-')).Many1(AlphaNum).Many(() => Char('.')).Many(AlphaNum);
 
             time.TimeValue = _stack.Peek().result.ToString();
             return (ITraceLogParser)time.End();
