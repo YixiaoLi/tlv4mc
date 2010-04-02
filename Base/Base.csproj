@@ -101,6 +101,10 @@
     <Compile Include="FileContext\IFileContextData.cs" />
     <Compile Include="FileContext\FilePathUndefinedException.cs" />
     <Compile Include="FileContext\ISerializable.cs" />
+    <Compile Include="MonadicParserCombinators\CharParsers.cs" />
+    <Compile Include="MonadicParserCombinators\ParserCombinatorExtensions.cs" />
+    <Compile Include="MonadicParserCombinators\ParserCombinatorsMonad.cs" />
+    <Compile Include="MonadicParserCombinators\ParseResult.cs" />
     <Compile Include="GeneralEventArgs.cs" />
     <Compile Include="CommandManager\GeneralCommand.cs" />
     <Compile Include="CommandManager\ICommand.cs" />
@@ -116,6 +120,7 @@
     <Compile Include="Json\JsonValueType.cs" />
     <Compile Include="Controls\NativeScrollBar\NativeScrollBar.cs" />
     <Compile Include="KeyedObserabledList.cs" />
+    <Compile Include="MonadicParserCombinators\Parsers.cs" />
     <Compile Include="ObservableDictionary.cs" />
     <Compile Include="ObservableMultiKeyDictionary.cs" />
     <Compile Include="Pair.cs" />
