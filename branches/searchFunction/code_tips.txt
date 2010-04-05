@@ -1,0 +1,73 @@
+＊＊　ＴＬＶのＧＵＩコード　＊＊
+
+  ●TLVメニューバー周り
+  　Core/Controls/MainForm.cs の L.167あたりからコード記述開始
+    特に難しい内容はないので、どのメニューがどのコードで実現さ
+    れているかを示すだけにとどめる。
+
+    ■ファイル周りのＧＵＩ
+
+    　新規作成関係（ファイル→新規作成）
+    　・Core/Controls/Forms/OpenResourceFileAndTraceLogFileOpenForms.cs
+      ・Core/Commands/newCommand.cs
+      
+    ■編集周りのＧＵＩ
+    
+    ■表示周りのＧＵＩ
+    
+    ■ヘルプ周りのＧＵＩ
+      ・Core/Controls/Forms/AboutForm について
+      　- TLVのメニューバー上にあるヘルプから呼び出せるフォーム
+      　- 呼び出しもとは Core/Commands/AboutCommands.cs
+
+
+      ・Core/Commands/AboutCommand.cs について
+        - AboutForm を呼び出すためのプログラム
+        - 呼び出しもとは Core/Controls/Forms/MainForms.cs
+
+  ●TraceLogDispalyPanel 周り（図形が表示される部分）
+   Core/Controls/TraceLogDisplayPanel
+       ・TimeLineCell.cs でリソースとその状態（図形）を表示するコードを記述している
+    　　Paintメソッドが描画を担当
+         引数　Graphics graphics,
+               Rectangle clipbounds,
+               Rectangle cellBounds,
+               int       rawIndex,
+               DataGridViewElementStates cellState,
+               object value,  ←重要
+               　この中に、リソースとのそのイベントが全部保存されている。
+               　おそらくレベル0検索機能の実現のカギ
+               object formattedValue,
+               string errorText,
+               DataGridViewCellStyle cellStyle,
+               DataGridViewAdvancedBorderStyle advancedBorderStyle,
+               DataGridViewPaintParts paintParts,
+
+
+               TraceLogDisplayPanel.cs, TreeGridViewNodes.cs, TimeLineControl.cs
+               あたりでTraceLogDisplayPanel の描写を行っている。
+
+　　・タイムラインをクリックしたときに画面とマーカーが動くのは TraceLogDisplayPanel ?336 の OnMouseMove()
+
+    ・右クリックでマーカーを追加できるが、その処理はTraceLogDisplayPanel ?898  DrawMarker
+    ・マーカー線を表示するのは TraceLogDisplayPanel  ?893 DrawCursor
+      マーカーと線は別々に描画されているらしい
+　　　検索時刻を見つけたら、その時刻をもとにマーカーとマーカー線を表示し、かつ線が画面中央にくる
+　　　ようにジャンプすればよさそう
+
+　●マクロビューア
+　　最終的にマクロビューアを描画するのは
+    Core/Controls/TimeLine/TimeLineControl.cs　    ?222 の Draw() 
+
+●コード中に頻出するイベントハンドラとラムダ式の組み合わせについては以下のページを参考にするとよい？　　
+　http://msdn.microsoft.com/ja-jp/events/dd283153.aspx
+
+　イベントハンドラとデリゲートについてもう少し詳しく知りたいのなら以下のページがよさそう
+　　http://ufcpp.net/study/csharp/sp_event.html#ex
+
+
+●検索機能実現にあたって
+　・ジャンプ機能は時刻のみを参照して実現する予定
+　・どんなデータを使用して指定のタスクの可視化ルールが適用された時刻を探すのか
+　　標準トレースログファイルと可視化ルールを対応付けて探す？
+　　それとも図形描画の際に中間データを保持しておき、検索実行時にこれに対してサーチをかける？
