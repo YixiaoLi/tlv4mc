@@ -16,7 +16,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
     {
         public Parser<TInput, TValue> Succeed<TValue>(TValue value)
         {
-            return input => new ParserResult<TInput, TValue>(value, input);
+            return input => new ParseResult<TInput, TValue>(value, input);
         }
 
         public Parser<TInput, TValue[]> Rep<TValue>(Parser<TInput, TValue> parser)
