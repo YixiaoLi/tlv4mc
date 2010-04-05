@@ -26,5 +26,14 @@ namespace NU.OJL.MPRTOS.TLV.Base
             return from c in AnyChar where pred(c) select c;
         }
 
+        public Parser<TInput, char> OtherThan(char ch)
+        {
+            return from c in AnyChar where c != ch select c;
+        }
+
+        public Parser<TInput, char> OtherThan(Predicate<char> pred)
+        {
+            return from c in AnyChar where !pred(c) select c;
+        }
     }
 }
