@@ -35,7 +35,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             {
                 var res = parser(input);
                 if (res == null) return null;
-                return new Result<TInput, TValue2>(selector(res.Value), res.Rest);
+                return new ParserResult<TInput, TValue2>(selector(res.Value), res.Rest);
             };
         }
         
@@ -51,7 +51,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
                 var val = res.Value;
                 var res2 = selector(val)(res.Rest);
                 if (res2 == null) return null;
-                return new Result<TInput, TValue2>(projector(val, res2.Value), res2.Rest);
+                return new ParserResult<TInput, TValue2>(projector(val, res2.Value), res2.Rest);
             };
         }
 
