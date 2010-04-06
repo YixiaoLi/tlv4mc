@@ -136,7 +136,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
         }
 
-
+        // TimeValue、ObjectNameValue、ObjectTypeValueのsetにてtrueにしている
         public bool HasTimeValue { get; set; }
         public bool HasObjectNameValue { get; set; }
         public bool HasObjectTypeValue { get; set; }
@@ -475,7 +475,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
         }
 
 
-
+        /// <summary>
+        /// パーサ間のORをとる。
+        /// ORの前までにパースが失敗した場合、ORの後のパーサで再度パースを試みる。
+        /// ORの前までのパーサでパースできた場合、ORの後のパーサは無視する。
+        /// </summary>
+        /// <returns>これ以前のパースに成功：NullObject</returns>
         public ITraceLogParser OR()
         {
             base._nullObject.Success = true;

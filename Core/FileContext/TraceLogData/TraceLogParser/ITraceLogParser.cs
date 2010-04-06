@@ -43,6 +43,30 @@ namespace NU.OJL.MPRTOS.TLV.Core
         ITraceLogParser BehaviorName();
         ITraceLogParser Arguments();
 
+        #region パーサコンビネータ
+        /// <summary>
+        /// 引数で与えられたパーサ(メソッド)を複数回適用する。
+        /// 正規表現の"*"に相当する。
+        /// </summary>
+        /// <param name="f">パーサ(メソッド)</param>
+        /// <returns>this</returns>
+        ITraceLogParser Many(Func<ITraceLogParser> f);
+        /// <summary>
+        /// 引数で与えられたパーサ(メソッド)を1回以上適用する。
+        /// 正規表現の"+"に相当する。
+        /// </summary>
+        /// <param name="f">パーサ(メソッド)</param>
+        /// <returns>成功：this, 失敗：NullObject</returns>
+        ITraceLogParser Many1(Func<ITraceLogParser> f);
+        /// <summary>
+        /// パーサ間のORをとる。
+        /// ORの前までにパースが失敗した場合、ORの後のパーサで再度パースを試みる。
+        /// ORの前までのパーサでパースできた場合、ORの後のパーサは無視する。
+        /// </summary>
+        /// <returns>これ以前のパースに成功：NullObject, これ以前のパースに失敗：TraceLogParser</returns>
+        ITraceLogParser OR();
+        #endregion
+        
         #region 文字パーサ
         /// <summary>
         /// 指定の一文字をパースする
@@ -66,15 +90,34 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <returns>成功：this, 失敗：NullObject</returns>
         ITraceLogParser AlphaNum();
 
+        /// <summary>
+        /// 指定した文字以外の文字をパースする
+        /// </summary>
+        /// <param name="c">除外したい文字</param>
+        /// <returns>成功：this, 失敗：NullObject</returns>
         ITraceLogParser AnyCharOtherThan(char c);
+        /// <summary>
+        /// 指定した文字以外の文字をパースする
+        /// </summary>
+        /// <param name="c1">除外したい文字</param>
+        /// <param name="c2">除外したい文字</param>
+        /// <returns>成功：this, 失敗：NullObject</returns>
         ITraceLogParser AnyCharOtherThan(char c1, char c2);
+        /// <summary>
+        /// 指定した文字以外の文字をパースする
+        /// </summary>
+        /// <param name="c1">除外したい文字</param>
+        /// <param name="c2">除外したい文字</param>
+        /// <param name="c3">除外したい文字</param>
+        /// <returns>成功：this, 失敗：NullObject</returns>
         ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3);
+        /// <summary>
+        /// 指定した文字以外の文字をパースする
+        /// </summary>
+        /// <param name="clist">除外したい文字を集めた配列</param>
+        /// <returns>成功：this, 失敗：NullObject</returns>
+        ITraceLogParser AnyCharOtherThan(char[] clist);
         #endregion
-
-        #region パーサコンビネータ
-        ITraceLogParser Many(Func<ITraceLogParser> f);
-        ITraceLogParser Many1(Func<ITraceLogParser> f);
-        ITraceLogParser OR();
-        #endregion
+               
     }
 }
