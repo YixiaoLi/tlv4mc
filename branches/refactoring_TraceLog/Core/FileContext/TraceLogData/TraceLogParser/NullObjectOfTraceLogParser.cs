@@ -252,6 +252,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             return this;
         }
+
+        public ITraceLogParser AnyCharOtherThan(char[] clist)
+        {
+            return this;
+        }
         #endregion
 
 
