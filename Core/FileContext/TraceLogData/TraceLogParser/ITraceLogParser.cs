@@ -20,6 +20,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
         bool HasObjectNameValue { set; }
         bool HasObjectTypeValue { set; }
 
+        #region TraceLogのパーサ
+        // 各メソッド名は /doc/rule-manual.pdf の「2.1.2標準形式ログの定義」に従う。
         ITraceLogParser Line();
         ITraceLogParser Time();
         ITraceLogParser Event();
@@ -42,6 +44,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         ITraceLogParser BehaviorHappen();
         ITraceLogParser BehaviorName();
         ITraceLogParser Arguments();
+        #endregion
 
         #region パーサコンビネータ
         /// <summary>

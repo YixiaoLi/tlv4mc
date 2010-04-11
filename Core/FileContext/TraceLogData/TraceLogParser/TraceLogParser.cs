@@ -18,8 +18,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
         private StringBuilder _arguments  = new StringBuilder();
 
 
-        private ITraceLogParser _nullObject;
-
         #region プロパティ
         public string TimeValue
         {
@@ -156,11 +154,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public TraceLogParser() 
             : base(50)
         {
-            this._nullObject = new NullObjectOfTraceLogParser(this);
-            base._nullObject = (INullObjectOfParser)this._nullObject;
+            base._nullObject = new NullObjectOfTraceLogParser(this);
         }
 
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        /// <param name="input">パース対象</param>
         public void Init(char[] input)
         {
             _input.Write(input);
@@ -180,7 +181,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
         public override void Parse(char[] input)
         {
-            // 初期化
             Init(input);
 
             // パース開始
@@ -386,11 +386,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
             // 注意：順番を変えないでください(次の理由が当てはまらなくなった場合のみ変えてください)。
             // ＜理由＞
             // AttributeChange()は、"="がないものも通るため、AttributeName()が真であればAttributeChange()も真である。
-            // (なので、現状は常に真扱い)
-            // BehaviorHappen()は、"("")"が必要なので、真偽どちらもありうる。
+            // (なので、現状のAttributeChange()は常に真扱い)
+            // BehaviorHappen()は、"(" ")"が必要なので、真偽どちらもありうる。
             var attributeOrBehavior = BehaviorHappen().OR().AttributeChange();
 
             // BehaviorValueは、BehaviorName()が真でも、ほかで失敗すればNullである。
+            // また、attributeOrBehaviorがthisであるのは、BehaviorHappen()が偽である場合である。
             attributeOrBehavior.BehaviorValue = null;
 
             return (ITraceLogParser)attributeOrBehavior.End();
@@ -470,7 +471,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (f() is NullObjectOfTraceLogParser)
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
             else
             {
@@ -488,7 +489,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public ITraceLogParser OR()
         {
             base._nullObject.Success = true;
-            return _nullObject;
+            return (ITraceLogParser)_nullObject;
         }
         #endregion
 
@@ -498,7 +499,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
             else if ( _input.Peek() == c)
             {
@@ -507,7 +508,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
         }
 
@@ -516,7 +517,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
 
             var c = _input.Peek();
@@ -527,7 +528,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
         }
 
@@ -536,7 +537,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
 
             var c = _input.Peek();
@@ -547,7 +548,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
         }
 
@@ -556,7 +557,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
 
             var c = _input.Peek();
@@ -568,7 +569,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
         }
 
@@ -579,7 +580,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
             else if (_input.Peek() != c)
             {
@@ -588,7 +589,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
         }
 
@@ -596,7 +597,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
 
             var c = _input.Peek();
@@ -607,7 +608,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
         }
 
@@ -615,7 +616,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
 
             var c = _input.Peek();
@@ -626,7 +627,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
         }
 
@@ -635,7 +636,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
 
             var c = _input.Peek();
@@ -646,7 +647,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
         }
 
@@ -654,19 +655,19 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (_input.IsEmpty())
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
 
             if (_input.IsEmpty())
             {
-                return _nullObject;
+                return (ITraceLogParser)_nullObject;
             }
 
             var c = _input.Peek();
 
             foreach( char n in clist )
             {
-                if( n == c ) return _nullObject;
+                if( n == c ) return (ITraceLogParser)_nullObject;
             }
 
             Append(_input.Read());

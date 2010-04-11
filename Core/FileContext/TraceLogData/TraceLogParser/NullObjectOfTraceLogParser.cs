@@ -18,10 +18,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 
         #region コンストラクタ
-        public NullObjectOfTraceLogParser()
-        {
-            throw new Exception("パーサをセットせずに利用できません。");
-        }
+        protected NullObjectOfTraceLogParser() {}
 
         public NullObjectOfTraceLogParser(TraceLogParser parser)
         {
@@ -107,6 +104,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return this;
         }
 
+        // "[Time]"がないログもパースするために、_parse側のEvent()を実行している
         public ITraceLogParser Event()
         {
             return _parser.Event();
@@ -280,7 +278,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else
             {
-
                 _parser.Reset();
                 return _parser;
             }

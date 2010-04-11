@@ -10,7 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <summary>
         /// パース対象
         /// </summary>
-        protected Stream<char> _input = new Stream<char>();
+        protected InputStreamForParser<char> _input = new InputStreamForParser<char>();
 
 
         /// <summary>
@@ -32,15 +32,18 @@ namespace NU.OJL.MPRTOS.TLV.Core
         protected INullObjectOfParser _nullObject;
 
 
-
+        #region コンストラクタ
         protected Parser() { }
 
-
-
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="num">スタックの大きさ</param>
         protected Parser(int num)
         {
-            _stack = new StackForParser(num);
+            this._stack = new StackForParser(num);
         }
+        #endregion
 
 
         /// <summary>
@@ -57,8 +60,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 
         /// <summary>
-        /// パーサ(メソッド)の最初の処理。
-        /// NullObjectとつなぐインタフェースのために便宜上public
+        /// パーサ(メソッド)の最初の処理。End()と対で使用。
         /// </summary>
         public void Begin()
         {
@@ -68,9 +70,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 
         /// <summary>
-        /// パーサ(メソッド)の最後の処理。
-        /// NullObjectとつなぐインタフェースのために便宜上public
+        /// パーサ(メソッド)の最後の処理。Begin()と対で使用。
         /// </summary>
+        /// <returns>this</returns>
         public IParser End()
         {
             Append(_stack.Pop().Result);
@@ -80,7 +82,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 
         /// <summary>
-        /// スタックの先頭の文字列領域に文字・文字列を付け加える
+        /// スタックの先頭の文字列領域に文字・文字列を付け加える。
         /// </summary>
         /// <param name="o">付け加えたい文字・文字列の情報が入ったもの</param>
         protected void Append(Object o)
@@ -92,7 +94,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <summary>
         /// スタックの先頭領域にある文字列の要素を全て削除し、
         /// Beginでセットしたところまでインデックスを戻す。
-        /// NullObjectで使用するため便宜上public
         /// </summary>
         public void Reset()
         {
