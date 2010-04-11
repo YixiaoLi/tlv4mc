@@ -12,7 +12,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         public class Memory
         {
+            /// <summary>
+            /// ある段階でのパース結果
+            /// </summary>
             public StringBuilder Result{get;set;}
+
+            /// <summary>
+            /// ある段階での文字位置
+            /// </summary>
             public int InputIndex{get;set;}
             public Memory()
             {
@@ -40,17 +47,34 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
         }
 
+        /// <summary>
+        /// スタックの最上位要素を取得する。
+        /// </summary>
+        /// <returns>スタックの最上位要素のMemory</returns>
         public Memory Peek()
         {
             return _memory[_index];
         }
 
 
+        /// <summary>
+        /// スタックのPop処理。
+        /// <para>　</para>
+        /// <para>例外：IndexOutOfRangeException</para>
+        /// </summary>
+        /// <returns>スタックの最上位要素のMemory</returns>
         public Memory Pop()
         {
             return _memory[_index--];
         }
 
+
+        /// <summary>
+        /// スタックのPush処理。
+        /// <para>　</para>
+        /// <para>例外：IndexOutOfRangeException</para>
+        /// </summary>
+        /// <param name="index">InputStreamForParser._indexを想定している</param>
         public void Push(int index)
         {
             ++_index;
@@ -58,15 +82,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
             _memory[_index].InputIndex = index;
         }
 
-        public bool IsFull()
-        {
-            return _index >= MAX - 1;
-        }
 
-
-        public bool IsEmpty()
-        {
-            return _index == 0;
-        }
+        // スタックのオーバフロー、アンダーフローが起きることを想定していないため、
+        // IndexOutOfRangeExceptionのthrowによって検出するようにしている。
+        //public bool IsEmpty()
+        //{
+        //    return _index == 0;
+        //}
     }
 }

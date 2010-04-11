@@ -10,6 +10,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// </summary>
     public interface IParser
     {
+        /// <summary>
+        /// パース後の処理。Begin()と対で使います。
+        /// </summary>
+        /// <returns></returns>
         IParser End();
     }
 }
