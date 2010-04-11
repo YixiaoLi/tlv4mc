@@ -7,14 +7,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
     public class StackForParser
     {
+        /// <summary>
+        /// スタック配列にて扱うデータ
+        /// </summary>
         public class Memory
         {
-            public StringBuilder result;
-            public int inputIndex;
+            public StringBuilder Result{get;set;}
+            public int InputIndex{get;set;}
             public Memory()
             {
-                this.result = new StringBuilder();
-                this.inputIndex = 0;
+                this.Result = new StringBuilder();
+                this.InputIndex = 0;
             }
         }
 
@@ -51,8 +54,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public void Push(int index)
         {
             ++_index;
-            _memory[_index].result.Length = 0;
-            _memory[_index].inputIndex = index;
+            _memory[_index].Result.Length = 0;
+            _memory[_index].InputIndex = index;
         }
 
         public bool IsFull()
