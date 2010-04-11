@@ -7,30 +7,30 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
     public class Stream<T> where T : struct
     {
-        private T[] xs;
-        private int index;
+        private T[] _xs;
+        private int _index;
 
         public Stream() {
-            this.xs = null;
-            this.index = 0;
+            this._xs = null;
+            this._index = 0;
         }
 
         public void Write(T[] xs)
         {
-            this.xs = xs;
-            this.index = 0;
+            this._xs = xs;
+            this._index = 0;
         }
 
         public int Save() {
-            return this.index;
+            return this._index;
         }
         public void Restore(int s) {
-            this.index = s;
+            this._index = s;
         }
 
         
         public T Read() {
-            return this.xs[this.index++];
+            return this._xs[this._index++];
         }
 
         public T? Peek() {
@@ -40,12 +40,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else 
             {
-                return this.xs[this.index];
+                return this._xs[this._index];
             }
         }
 
         public bool IsEmpty() {
-            return this.index >= this.xs.Length; 
+            return this._index >= this._xs.Length; 
         }
     }
 }
