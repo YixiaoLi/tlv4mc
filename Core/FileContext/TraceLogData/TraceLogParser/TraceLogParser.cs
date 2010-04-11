@@ -204,9 +204,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
-            var time = Many(()=>Char('-')).Many1(AlphaNum).Many(() => Char('.')).Many(AlphaNum);
+            var time = Many1(AlphaNum).Many(() => Char('.')).Many(AlphaNum);
+                       
+            time.TimeValue = _stack.Peek().Result.ToString();
+            
+            // マイナス値であったときも正しいが、Timeとして保持しないため吐き捨てておく
+            time = time.OR().Char('-').Many1(AlphaNum).Many(() => Char('.')).Many(AlphaNum);
 
-            time.TimeValue = _stack.Peek().result.ToString();
             return (ITraceLogParser)time.End();
         }
 
@@ -228,7 +232,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 .OR().
                 ObjectName();
 
-            object_.ObjectValue = _stack.Peek().result.ToString();
+            object_.ObjectValue = _stack.Peek().Result.ToString();
 
             // HasObjectTypeValueは、ObjectTypeName()が真でも、ほかで失敗すれば偽である。
             object_.HasObjectTypeValue = false;
@@ -241,7 +245,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             var name = Many1(() => AnyCharOtherThan('(', ')', '.'));
 
-            name.ObjectNameValue = _stack.Peek().result.ToString();
+            name.ObjectNameValue = _stack.Peek().Result.ToString();
             return (ITraceLogParser)name.End();
         }
 
@@ -251,7 +255,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             var typeName = Many1(() => AnyCharOtherThan('(', ')', '.'));
 
-            typeName.ObjectTypeValue = _stack.Peek().result.ToString();
+            typeName.ObjectTypeValue = _stack.Peek().Result.ToString();
             return (ITraceLogParser)typeName.End();
         }
 
@@ -337,7 +341,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             var attributeName = Many1(() => AnyCharOtherThan('!', '=', '<', '>'));
 
-            attributeName.AttributeValue = _stack.Peek().result.ToString();
+            attributeName.AttributeValue = _stack.Peek().Result.ToString();
             return (ITraceLogParser)attributeName.End();
         }
 
@@ -371,7 +375,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             var value = Many1(() => AnyCharOtherThan(' '));
 
-            value.ValueValue = _stack.Peek().result.ToString();
+            value.ValueValue = _stack.Peek().Result.ToString();
             return (ITraceLogParser)value.End();
         }
 
@@ -420,7 +424,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             var behaviorName = Many1(() => AnyCharOtherThan('('));
 
-            behaviorName.BehaviorValue = _stack.Peek().result.ToString();
+            behaviorName.BehaviorValue = _stack.Peek().Result.ToString();
             return (ITraceLogParser)behaviorName.End();
         }
 
@@ -431,7 +435,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             var arguments = Many(() => AnyCharOtherThan(')'));
 
-            arguments.ArgumentsValue = _stack.Peek().result.ToString();
+            arguments.ArgumentsValue = _stack.Peek().Result.ToString();
             return (ITraceLogParser)arguments.End();
         }
 

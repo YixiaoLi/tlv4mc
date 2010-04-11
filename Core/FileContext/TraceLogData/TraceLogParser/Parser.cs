@@ -73,7 +73,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         public IParser End()
         {
-            Append(_stack.Pop().result);
+            Append(_stack.Pop().Result);
             _nullObject.Success = false;
             return this;
         }
@@ -85,7 +85,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <param name="o">付け加えたい文字・文字列の情報が入ったもの</param>
         protected void Append(Object o)
         {
-            _stack.Peek().result.Append(o);
+            _stack.Peek().Result.Append(o);
         }
 
 
@@ -96,8 +96,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         public void Reset()
         {
-            _stack.Peek().result.Length = 0;
-            _input.Restore( _stack.Peek().inputIndex);
+            _stack.Peek().Result.Length = 0;
+            _input.Restore( _stack.Peek().InputIndex);
         }
     }
 }
