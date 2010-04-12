@@ -6,7 +6,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-    public class NullObjectOfTraceLogParser : IParser, ITraceLogParser, INullObjectOfParser
+    public class NullObjectOfTraceLogParser : ITraceLogParser, INullObjectOfParser
     {
         protected TraceLogParser _parser;
 
