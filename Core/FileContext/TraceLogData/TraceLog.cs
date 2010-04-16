@@ -64,46 +64,25 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 		private string _log;
 
+        private TraceLogParserFromString _parser = new TraceLogParserFromString();
+
 		public TraceLog(string log)
 		{
-			Match m;
-
 			_log = Regex.Replace(log, @"\s","");
 
-			m = Regex.Match(_log, @"\[(?<time>[0-9a-zA-Z]+(\.[0-9a-zA-Z]*)?)\]");
-			if (m.Success)
-				Time = m.Groups["time"].Value;
-			HasTime = m.Success;
+            TraceLogParseResult result = _parser.Parse(_log);
 
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?(?<object>[^\[\]\(\)\.]+(\([^\)]+\))?)(\.[^\s]+)?$");
-			if (m.Success)
-				Object = m.Groups["object"].Value;
-
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?(?<objectName>[^\[\]\(\)\.]+)(\.[^\s]+)?$");
-			if (m.Success)
-				ObjectName = m.Groups["objectName"].Value;
-			HasObjectName = m.Success;
-
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?(?<objectType>[^\[\]\(\)\.]+)\([^\)]+\)(\.[^\s]+)?$");
-			if (m.Success)
-				ObjectType = m.Groups["objectType"].Value;
-			HasObjectType = m.Success;
-
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?[^\[\]\(\)\.]+(\([^\)]+\))?\.(?<behavior>[^\(\s]+)\([^\)]*\)$");
-			if (m.Success)
-				Behavior = m.Groups["behavior"].Value;
-
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?[^\[\]\(\)\.]+(\([^\)]+\))?\.(?<attribute>[^=!<>\(\)]+)([=!<>].*)?$");
-			if (m.Success)
-				Attribute = m.Groups["attribute"].Value;
-
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?[^\[\]\(\)\.]+(\([^\)]+\))?\.[^=!<>\(\s]+(>=|>|<|<=|==|!=|=)(?<value>[^\s$]+)$");
-			if (m.Success)
-				Value = m.Groups["value"].Value;
-
-			m = Regex.Match(_log, @"^(\[[^\]]+\])?[^\[\]\(\)\.]+(\([^\)]+\))?\.[^=!<>\(\s]+\((?<args>[^\)]*)\)$");
-			if (m.Success)
-				Arguments = m.Groups["args"].Value;
+            Time = result.Time;
+            Object = result.Object;
+            ObjectName = result.ObjectName;
+            ObjectType = result.ObjectType;
+            Behavior = result.Behavior;
+            Attribute = result.Attribute;
+            Value = result.Value;
+            Arguments = result.Arguments;
+            HasTime = result.HasTime;
+            HasObjectName = result.HasObjectName;
+            HasObjectType = result.HasObjectType;
 
 			if (Behavior != null && Attribute != null)
 				throw new Exception("不正なトレースログです。\n" + _log);
@@ -112,7 +91,22 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			else if (Behavior != null && Attribute == null)
 				Type = TraceLogType.BehaviorHappen;
 
-
+            /*using (StreamWriter w = new StreamWriter(@"mydebug/myparser2_result.txt", true))
+            {
+                w.WriteLine(_log);
+                w.WriteLine(Time);
+                w.WriteLine(Object);
+                w.WriteLine(ObjectName);
+                w.WriteLine(ObjectType);
+                w.WriteLine(Behavior);
+                w.WriteLine(Attribute);
+                w.WriteLine(Value);
+                w.WriteLine(Arguments);
+                w.WriteLine(HasTime);
+                w.WriteLine(HasObjectName);
+                w.WriteLine(HasObjectType);
+                w.WriteLine(Type);
+            }*/
 		}
 
 		public static implicit operator string(TraceLog stdlog)
