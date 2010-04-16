@@ -130,6 +130,7 @@
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\TraceLogParser.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\TraceLogParseResult.cs" />
+    <Compile Include="FileContext\TraceLogData\TraceLogParser\TraceLogParserFromString.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogGenerator.cs" />
     <Compile Include="FileContext\VisualizeShapeData\EventShapesGenerator.cs" />
     <Compile Include="FileContext\VisualizeData\Event.cs" />

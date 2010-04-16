@@ -33,7 +33,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
 
         public Parser<TInput, char> OtherThan(Predicate<char> pred)
         {
-            return from c in AnyChar where !pred(c) select c;
+            return from c in AnyChar where pred(c) == false select c;
         }
     }
 }
