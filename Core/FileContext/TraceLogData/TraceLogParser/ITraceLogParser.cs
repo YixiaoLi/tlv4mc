@@ -44,6 +44,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
         ITraceLogParser BehaviorHappen();
         ITraceLogParser BehaviorName();
         ITraceLogParser Arguments();
+        ITraceLogParser Argument();
+        ITraceLogParser NextArgument();
         #endregion
 
         #region パーサコンビネータ
@@ -52,14 +54,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// 正規表現の"*"に相当する。
         /// </summary>
         /// <param name="f">パーサ(メソッド)</param>
-        /// <returns>this</returns>
+        /// <returns>TraceLogParser</returns>
         ITraceLogParser Many(Func<ITraceLogParser> f);
         /// <summary>
         /// 引数で与えられたパーサ(メソッド)を1回以上適用する。
         /// 正規表現の"+"に相当する。
         /// </summary>
         /// <param name="f">パーサ(メソッド)</param>
-        /// <returns>成功：this, 失敗：NullObject</returns>
+        /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
         ITraceLogParser Many1(Func<ITraceLogParser> f);
         /// <summary>
         /// パーサ間のORをとる。
@@ -75,36 +77,36 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// 指定の一文字をパースする
         /// </summary>
         /// <param name="c">パースしたい文字</param>
-        /// <returns>成功：this, 失敗：NullObject</returns>
+        /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
         ITraceLogParser Char(char c);
         /// <summary>
         /// アルファベットをパースする
         /// </summary>
-        /// <returns>成功：this, 失敗：NullObject</returns>
+        /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
         ITraceLogParser Alpha();
         /// <summary>
         /// 数字をパースする
         /// </summary>
-        /// <returns>成功：this, 失敗：NullObject</returns>
+        /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
         ITraceLogParser Num();
         /// <summary>
         /// アルファベットと数字をパースする
         /// </summary>
-        /// <returns>成功：this, 失敗：NullObject</returns>
+        /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
         ITraceLogParser AlphaNum();
 
         /// <summary>
         /// 指定した文字以外の文字をパースする
         /// </summary>
         /// <param name="c">除外したい文字</param>
-        /// <returns>成功：this, 失敗：NullObject</returns>
+        /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
         ITraceLogParser AnyCharOtherThan(char c);
         /// <summary>
         /// 指定した文字以外の文字をパースする
         /// </summary>
         /// <param name="c1">除外したい文字</param>
         /// <param name="c2">除外したい文字</param>
-        /// <returns>成功：this, 失敗：NullObject</returns>
+        /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
         ITraceLogParser AnyCharOtherThan(char c1, char c2);
         /// <summary>
         /// 指定した文字以外の文字をパースする
@@ -112,14 +114,20 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <param name="c1">除外したい文字</param>
         /// <param name="c2">除外したい文字</param>
         /// <param name="c3">除外したい文字</param>
-        /// <returns>成功：this, 失敗：NullObject</returns>
+        /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
         ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3);
         /// <summary>
         /// 指定した文字以外の文字をパースする
         /// </summary>
         /// <param name="clist">除外したい文字を集めた配列</param>
-        /// <returns>成功：this, 失敗：NullObject</returns>
+        /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
         ITraceLogParser AnyCharOtherThan(char[] clist);
+        /// <summary>
+        /// 空文字列をパースするεを表す。
+        /// なのでスペースなどをパースするものではない。
+        /// </summary>
+        /// <returns>TraceLogParser</returns>
+        ITraceLogParser Epsilon();
         #endregion
                
     }
