@@ -274,9 +274,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
             Begin();
 
             var booleanExpression =
-                ComparisonExpression().NextBooleanExpression()
-                .OR().
                 Boolean().NextBooleanExpression()
+                .OR().
+                ComparisonExpression().NextBooleanExpression()
                 .OR().
                 Char('(').BooleanExpression().Char(')').NextBooleanExpression();
 
