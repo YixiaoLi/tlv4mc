@@ -205,7 +205,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return this;
         }
 
-       
+        public ITraceLogParser Argument()
+        {
+            return this;
+        }
+
+        public ITraceLogParser NextArgument()
+        {
+            return this;
+        }
         #endregion
 
 
@@ -252,6 +260,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
         }
 
         public ITraceLogParser AnyCharOtherThan(char[] clist)
+        {
+            return this;
+        }
+
+        public ITraceLogParser Epsilon()
         {
             return this;
         }

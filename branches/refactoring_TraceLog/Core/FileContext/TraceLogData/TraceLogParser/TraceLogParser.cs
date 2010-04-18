@@ -144,6 +144,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         #region 定数
 
         private readonly char[] NON_OBJECTTYPENAME_CHAR = new char[]{'(', ')', '.', '!', '=', '<', '>'};
+        private readonly char[] NON_ATTRIBUTENAME_CHAR = new char[] { '!', '=', '<', '>', '(', ')' };
 
         #endregion
 
@@ -286,7 +287,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
-            var booleanExpression = LogicalOpe().BooleanExpression().NextBooleanExpression();
+            var booleanExpression = LogicalOpe().BooleanExpression().NextBooleanExpression()
+                                    .OR().
+                                    Epsilon();
 
             booleanExpression.End();
 
@@ -321,8 +324,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
-            var attributeName = Many1(() => AnyCharOtherThan('!', '=', '<', '>'));
-
+            var attributeName = Many1(() => AnyCharOtherThan(NON_ATTRIBUTENAME_CHAR));
+            
             return (ITraceLogParser)attributeName.End();
         }
 
@@ -330,7 +333,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
-            var value = Many1(() => AnyCharOtherThan('(', ')', '&', '|'));
+            var value = Many(() => AnyCharOtherThan('(', ')', '&', '|')).
+                        Char('(').Many(Value_ComparisonExpression).Char(')').
+                        Many(Value_ComparisonExpression)
+                        .OR().         // ここまでで例えば ...(..(..)..)().. といったカッコのネストをパース可能
+                        Many1(() => AnyCharOtherThan('(', ')', '&', '|'));
 
             return (ITraceLogParser)value.End();
         }
@@ -434,10 +441,36 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
-            var arguments = Many(() => AnyCharOtherThan(')'));
+            var arguments = Argument().NextArgument();
 
             arguments.ArgumentsValue = _stack.Peek().Result.ToString();
             return (ITraceLogParser)arguments.End();
+        }
+
+        public ITraceLogParser NextArgument()
+        {
+            Begin();
+
+            var nextArgument = Char(',').Argument().NextArgument()
+                           .OR().
+                           Epsilon();
+
+            return (ITraceLogParser)nextArgument.End();
+        }
+
+        // カッコのネストを正しくパースするために必要
+        public ITraceLogParser Argument()
+        {
+            Begin();
+
+            var argument = Many(() => AnyCharOtherThan('(', ')', ',')).
+                           Char('(').Argument().Char(')').
+                           Argument()
+                           .OR().    // ここまでで例えば ...(..(..)..)().. といったカッコのネストをパース可能
+                           Many(() => AnyCharOtherThan('(', ')', ','));
+
+            return (ITraceLogParser)argument.End();
+                           
         }
 
         #endregion
@@ -658,11 +691,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 return (ITraceLogParser)_nullObject;
             }
 
-            if (_input.IsEmpty())
-            {
-                return (ITraceLogParser)_nullObject;
-            }
-
             var c = _input.Peek();
 
             foreach( char n in clist )
@@ -671,6 +699,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
 
             Append(_input.Read());
+            return this;
+        }
+
+        public ITraceLogParser Epsilon()
+        {
             return this;
         }
         #endregion
