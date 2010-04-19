@@ -430,7 +430,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
-            var behaviorName = Many1(() => AnyCharOtherThan('('));
+            var behaviorName = Many1(() => AnyCharOtherThan('(', '='));
 
             behaviorName.BehaviorValue = _stack.Peek().Result.ToString();
             return (ITraceLogParser)behaviorName.End();
