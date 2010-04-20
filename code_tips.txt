@@ -1,44 +1,42 @@
-’¡ö’¡ö’¡¡’£Ô’£Ì’£Ö’¤Î’£Ç’£Õ’£É’¥³’¡¼’¥É’¡¡’¡ö’¡ö
+––@‚s‚k‚u‚Ì‚f‚t‚hƒR[ƒh@––
 
-’¡¡’¡üMainForm.cs ’¤Ç’£Ô’£Ì’£Ö’¤Î’½é’´ü’²è’ÌÌ’¤¬’·Á’À®’¤µ’¤ì’¤Æ’¤¤’¤ë
-’¡¡’¡¡
-  ’¡üTLV’¥á’¥Ë’¥å’¡¼’¥Ð’¡¼’¼þ’¤ê
-  ’¡¡Core/Controls/MainForm.cs ’¤Î L.167’¤¢’¤¿’¤ê’¤«’¤é’¥³’¡¼’¥É’µ­’½Ò’³«’»Ï
-    ’ÆÃ’¤Ë’Æñ’¤·’¤¤’Æâ’ÍÆ’¤Ï’¤Ê’¤¤’¤Î’¤Ç’¡¢’¤É’¤Î’¥á’¥Ë’¥å’¡¼’¤¬’¤É’¤Î’¥³’¡¼’¥É’¤Ç’¼Â’¸½’¤µ
-    ’¤ì’¤Æ’¤¤’¤ë’¤«’¤ò’¼¨’¤¹’¤À’¤±’¤Ë’¤È’¤É’¤á’¤ë’¡£
+  œTLVƒƒjƒ…[ƒo[Žü‚è
+  @Core/Controls/MainForm.cs ‚Ì L.167‚ ‚½‚è‚©‚çƒR[ƒh‹LqŠJŽn
+    “Á‚É“ï‚µ‚¢“à—e‚Í‚È‚¢‚Ì‚ÅA‚Ç‚Ìƒƒjƒ…[‚ª‚Ç‚ÌƒR[ƒh‚ÅŽÀŒ»‚³
+    ‚ê‚Ä‚¢‚é‚©‚ðŽ¦‚·‚¾‚¯‚É‚Æ‚Ç‚ß‚éB
 
-    ’¢£’¡Ö’¥Õ’¥¡’¥¤’¥ë’¡×’´Ø’Ï¢’¤Î’£Ç’£Õ’£É
+    ¡ƒtƒ@ƒCƒ‹Žü‚è‚Ì‚f‚t‚h
 
-    ’¡¡’¿·’µ¬’ºî’À®’´Ø’·¸’¡Ê’¥Õ’¥¡’¥¤’¥ë’¢ª’¿·’µ¬’ºî’À®’¡Ë
-    ’¡¡’¡¦Core/Controls/Forms/OpenResourceFileAndTraceLogFileOpenForms.cs
-      ’¡¦Core/Commands/newCommand.cs
+    @V‹Kì¬ŠÖŒWiƒtƒ@ƒCƒ‹¨V‹Kì¬j
+    @ECore/Controls/Forms/OpenResourceFileAndTraceLogFileOpenForms.cs
+      ECore/Commands/newCommand.cs
       
-    ’¢£’¡Ö’ÊÔ’½¸’¡×’´Ø’Ï¢’¤Î’£Ç’£Õ’£É
+    ¡•ÒWŽü‚è‚Ì‚f‚t‚h
     
-    ’¢£’¡Ö’É½’¼¨’¡×’´Ø’Ï¢’¤Î’£Ç’£Õ’£É
+    ¡•\Ž¦Žü‚è‚Ì‚f‚t‚h
     
-    ’¢£’¡Ö’¥Ø’¥ë’¥×’¡×’´Ø’Ï¢’¤Î’£Ç’£Õ’£É
-      ’¡¦Core/Controls/Forms/AboutForm ’¤Ë’¤Ä’¤¤’¤Æ
-      ’¡¡- TLV’¤Î’¥á’¥Ë’¥å’¡¼’¥Ð’¡¼’¾å’¤Ë’¤¢’¤ë’¥Ø’¥ë’¥×’¤«’¤é’¸Æ’¤Ó’½Ð’¤»’¤ë’¥Õ’¥©’¡¼’¥à
-      ’¡¡- ’¸Æ’¤Ó’½Ð’¤·’¤â’¤È’¤Ï Core/Commands/AboutCommands.cs
+    ¡ƒwƒ‹ƒvŽü‚è‚Ì‚f‚t‚h
+      ECore/Controls/Forms/AboutForm ‚É‚Â‚¢‚Ä
+      @- TLV‚Ìƒƒjƒ…[ƒo[ã‚É‚ ‚éƒwƒ‹ƒv‚©‚çŒÄ‚Ño‚¹‚éƒtƒH[ƒ€
+      @- ŒÄ‚Ño‚µ‚à‚Æ‚Í Core/Commands/AboutCommands.cs
 
 
-      ’¡¦Core/Commands/AboutCommand.cs ’¤Ë’¤Ä’¤¤’¤Æ
-        - AboutForm ’¤ò’¸Æ’¤Ó’½Ð’¤¹’¤¿’¤á’¤Î’¥×’¥í’¥°’¥é’¥à
-        - ’¸Æ’¤Ó’½Ð’¤·’¤â’¤È’¤Ï Core/Controls/Forms/MainForms.cs
+      ECore/Commands/AboutCommand.cs ‚É‚Â‚¢‚Ä
+        - AboutForm ‚ðŒÄ‚Ño‚·‚½‚ß‚ÌƒvƒƒOƒ‰ƒ€
+        - ŒÄ‚Ño‚µ‚à‚Æ‚Í Core/Controls/Forms/MainForms.cs
 
-  ’¡üTraceLogDispalyPanel ’´Ø’Ï¢’¡Ê’¿Þ’·Á’¤¬’É½’¼¨’¤µ’¤ì’¤ë’Éô’Ê¬’¡Ë
+  œTraceLogDispalyPanel Žü‚èi}Œ`‚ª•\Ž¦‚³‚ê‚é•”•ªj
    Core/Controls/TraceLogDisplayPanel
-       ’¡¦TimeLineCell.cs ’¤Ç’¥ê’¥½’¡¼’¥¹’¤È’¤½’¤Î’¾õ’ÂÖ’¡Ê’¿Þ’·Á’¡Ë’¤ò’É½’¼¨’¤¹’¤ë’¥³’¡¼’¥É’¤ò’µ­’½Ò’¤·’¤Æ’¤¤’¤ë
-    ’¡¡’¡¡Paint’¥á’¥½’¥Ã’¥É’¤¬’ÉÁ’²è’¤ò’Ã´’Åö
-         ’°ú’¿ô’¡¡Graphics graphics,
+       ETimeLineCell.cs ‚ÅƒŠƒ\[ƒX‚Æ‚»‚Ìó‘Ôi}Œ`j‚ð•\Ž¦‚·‚éƒR[ƒh‚ð‹Lq‚µ‚Ä‚¢‚é
+    @@Paintƒƒ\ƒbƒh‚ª•`‰æ‚ð’S“–
+         ˆø”@Graphics graphics,
                Rectangle clipbounds,
                Rectangle cellBounds,
                int       rawIndex,
                DataGridViewElementStates cellState,
-               object value,  ’¢«’½Å’Í×
-               ’¡¡’¤³’¤Î’Ãæ’¤Ë’¡¢’¥ê’¥½’¡¼’¥¹’¤È’¤Î’¤½’¤Î’¥¤’¥Ù’¥ó’¥È’¤¬’Á´’Éô’ÊÝ’Â¸’¤µ’¤ì’¤Æ’¤¤’¤ë’¡£
-               ’¡¡’¤ª’¤½’¤é’¤¯’¥ì’¥Ù’¥ë0’¸¡’º÷’µ¡’Ç½’¤Î’¼Â’¸½’¤Î’¥«’¥®
+               object value,  ©d—v
+               @‚±‚Ì’†‚ÉAƒŠƒ\[ƒX‚Æ‚Ì‚»‚ÌƒCƒxƒ“ƒg‚ª‘S•”•Û‘¶‚³‚ê‚Ä‚¢‚éB
+               @‚¨‚»‚ç‚­ƒŒƒxƒ‹0ŒŸõ‹@”\‚ÌŽÀŒ»‚ÌƒJƒM
                object formattedValue,
                string errorText,
                DataGridViewCellStyle cellStyle,
@@ -47,31 +45,29 @@
 
 
                TraceLogDisplayPanel.cs, TreeGridViewNodes.cs, TimeLineControl.cs
-               ’¤¢’¤¿’¤ê’¤ÇTraceLogDisplayPanel ’¤Î’ÉÁ’¼Ì’¤ò’¹Ô’¤Ã’¤Æ’¤¤’¤ë’¡£
+               ‚ ‚½‚è‚ÅTraceLogDisplayPanel ‚Ì•`ŽÊ‚ðs‚Á‚Ä‚¢‚éB
 
-    ’¡¦TLV ’¤Ï TimeLineCell’¤ò’·Ñ’¾µ’¤·’¤¿ TimeLineColumn ’¤ò’¼ç’¤Ë’»È’ÍÑ’¤·’¤Æ’¤¤’¤ë
+@@Eƒ^ƒCƒ€ƒ‰ƒCƒ“‚ðƒNƒŠƒbƒN‚µ‚½‚Æ‚«‚É‰æ–Ê‚Æƒ}[ƒJ[‚ª“®‚­‚Ì‚Í TraceLogDisplayPanel ?336 ‚Ì OnMouseMove()
 
-’¡¡’¡¡’¡¦’¥¿’¥¤’¥à’¥é’¥¤’¥ó’¤ò’¥¯’¥ê’¥Ã’¥¯’¤·’¤¿’¤È’¤­’¤Ë’²è’ÌÌ’¤È’¥Þ’¡¼’¥«’¡¼’¤¬’Æ°’¤¯’Éô’Ê¬ TraceLogDisplayPanel 336’¹Ô ’¤Î OnMouseMove() ’¤¬’´É’Íý’¤·’¤Æ’¤¤’¤ë’¤è’¤¦’¤Ç’¤¢’¤ë
+    E‰EƒNƒŠƒbƒN‚Åƒ}[ƒJ[‚ð’Ç‰Á‚Å‚«‚é‚ªA‚»‚Ìˆ—‚ÍTraceLogDisplayPanel ?898  DrawMarker
+    Eƒ}[ƒJ[ü‚ð•\Ž¦‚·‚é‚Ì‚Í TraceLogDisplayPanel  ?893 DrawCursor
+      ƒ}[ƒJ[‚Æü‚Í•ÊX‚É•`‰æ‚³‚ê‚Ä‚¢‚é‚ç‚µ‚¢
+@@@ŒŸõŽž‚ðŒ©‚Â‚¯‚½‚çA‚»‚ÌŽž‚ð‚à‚Æ‚Éƒ}[ƒJ[‚Æƒ}[ƒJ[ü‚ð•\Ž¦‚µA‚©‚Âü‚ª‰æ–Ê’†‰›‚É‚­‚é
+@@@‚æ‚¤‚ÉƒWƒƒƒ“ƒv‚·‚ê‚Î‚æ‚³‚»‚¤
 
-    ’¡¦’±¦’¥¯’¥ê’¥Ã’¥¯’¤Ç’¥Þ’¡¼’¥«’¡¼’¤ò’ÄÉ’²Ã’¤Ç’¤­’¤ë’¤¬’¡¢’¤½’¤Î’½è’Íý’¤ÏTraceLogDisplayPanel 898’¹Ô  DrawMarker
-    ’¡¦’¥Þ’¡¼’¥«’¡¼’Àþ’¤ò’É½’¼¨’¤¹’¤ë’¤Î’¤Ï TraceLogDisplayPanel  ?893 DrawCursor
-      ’¥Þ’¡¼’¥«’¡¼’¤È’Àþ’¤Ï’ÊÌ’¡¹’¤Ë’ÉÁ’²è’¤µ’¤ì’¤Æ’¤¤’¤ë’¤é’¤·’¤¤
-’¡¡’¡¡’¡¡’¸¡’º÷’»þ’¹ï’¤ò’¸«’¤Ä’¤±’¤¿’¤é’¡¢’¤½’¤Î’»þ’¹ï’¤ò’¤â’¤È’¤Ë’¥Þ’¡¼’¥«’¡¼’¤È’¥Þ’¡¼’¥«’¡¼’Àþ’¤ò’É½’¼¨’¤·’¡¢’¤«’¤Ä’Àþ’¤¬’²è’ÌÌ’Ãæ’±û’¤Ë’¤¯’¤ë
-’¡¡’¡¡’¡¡’¤è’¤¦’¤Ë’¥¸’¥ã’¥ó’¥×’¤¹’¤ì’¤Ð’¤è’¤µ’¤½’¤¦
+@œƒ}ƒNƒƒrƒ…[ƒA
+@@ÅI“I‚Éƒ}ƒNƒƒrƒ…[ƒA‚ð•`‰æ‚·‚é‚Ì‚Í
+    Core/Controls/TimeLine/TimeLineControl.cs@    ?222 ‚Ì Draw() 
 
-’¡¡’¡ü’¥Þ’¥¯’¥í’¥Ó’¥å’¡¼’¥¢
-’¡¡’¡¡’ºÇ’½ª’Åª’¤Ë’¥Þ’¥¯’¥í’¥Ó’¥å’¡¼’¥¢’¤ò’ÉÁ’²è’¤¹’¤ë’¤Î’¤Ï
-    Core/Controls/TimeLine/TimeLineControl.cs’¡¡    ’¹Ô222 ’¤Î Draw() 
+œƒR[ƒh’†‚É•po‚·‚éƒCƒxƒ“ƒgƒnƒ“ƒhƒ‰‚Æƒ‰ƒ€ƒ_Ž®‚Ì‘g‚Ý‡‚í‚¹‚É‚Â‚¢‚Ä‚ÍˆÈ‰º‚Ìƒy[ƒW‚ðŽQl‚É‚·‚é‚Æ‚æ‚¢H@@
+@http://msdn.microsoft.com/ja-jp/events/dd283153.aspx
 
-’¡ü’¥³’¡¼’¥É’Ãæ’¤Ë’ÉÑ’½Ð’¤¹’¤ë’¥¤’¥Ù’¥ó’¥È’¥Ï’¥ó’¥É’¥é’¤È’¥é’¥à’¥À’¼°’¤Î’ÁÈ’¤ß’¹ç’¤ï’¤»’¤Ë’¤Ä’¤¤’¤Æ’¤Ï’°Ê’²¼’¤Î’¥Ú’¡¼’¥¸’¤ò’»²’¹Í’¤Ë’¤¹’¤ë’¤È’¤è’¤¤’¡©’¡¡’¡¡
-’¡¡http://msdn.microsoft.com/ja-jp/events/dd283153.aspx
-
-’¡¡’¥¤’¥Ù’¥ó’¥È’¥Ï’¥ó’¥É’¥é’¤È’¥Ç’¥ê’¥²’¡¼’¥È’¤Ë’¤Ä’¤¤’¤Æ’¤â’¤¦’¾¯’¤·’¾Ü’¤·’¤¯’ÃÎ’¤ê’¤¿’¤¤’¤Î’¤Ê’¤é’°Ê’²¼’¤Î’¥Ú’¡¼’¥¸’¤¬’¤è’¤µ’¤½’¤¦
-’¡¡’¡¡http://ufcpp.net/study/csharp/sp_event.html#ex
+@ƒCƒxƒ“ƒgƒnƒ“ƒhƒ‰‚ÆƒfƒŠƒQ[ƒg‚É‚Â‚¢‚Ä‚à‚¤­‚µÚ‚µ‚­’m‚è‚½‚¢‚Ì‚È‚çˆÈ‰º‚Ìƒy[ƒW‚ª‚æ‚³‚»‚¤
+@@http://ufcpp.net/study/csharp/sp_event.html#ex
 
 
-’¡ü’¸¡’º÷’µ¡’Ç½’¼Â’¸½’¤Ë’¤¢’¤¿’¤Ã’¤Æ
-’¡¡’¡¦’¥¸’¥ã’¥ó’¥×’µ¡’Ç½’¤Ï’»þ’¹ï’¤Î’¤ß’¤ò’»²’¾È’¤·’¤Æ’¼Â’¸½’¤¹’¤ë’Í½’Äê
-’¡¡’¡¦’¤É’¤ó’¤Ê’¥Ç’¡¼’¥¿’¤ò’»È’ÍÑ’¤·’¤Æ’»Ø’Äê’¤Î’¥¿’¥¹’¥¯’¤Î’²Ä’»ë’²½’¥ë’¡¼’¥ë’¤¬’Å¬’ÍÑ’¤µ’¤ì’¤¿’»þ’¹ï’¤ò’Ãµ’¤¹’¤Î’¤«
-’¡¡’¡¡’É¸’½à’¥È’¥ì’¡¼’¥¹’¥í’¥°’¥Õ’¥¡’¥¤’¥ë’¤È’²Ä’»ë’²½’¥ë’¡¼’¥ë’¤ò’ÂÐ’±þ’ÉÕ’¤±’¤Æ’Ãµ’¤¹’¡©
-’¡¡’¡¡’¤½’¤ì’¤È’¤â’¿Þ’·Á’ÉÁ’²è’¤Î’ºÝ’¤Ë’Ãæ’´Ö’¥Ç’¡¼’¥¿’¤ò’ÊÝ’»ý’¤·’¤Æ’¤ª’¤­’¡¢’¸¡’º÷’¼Â’¹Ô’»þ’¤Ë’¤³’¤ì’¤Ë’ÂÐ’¤·’¤Æ’¥µ’¡¼’¥Á’¤ò’¤«’¤±’¤ë’¡©
+œŒŸõ‹@”\ŽÀŒ»‚É‚ ‚½‚Á‚Ä
+@EƒWƒƒƒ“ƒv‹@”\‚ÍŽž‚Ì‚Ý‚ðŽQÆ‚µ‚ÄŽÀŒ»‚·‚é—\’è
+@E‚Ç‚ñ‚Èƒf[ƒ^‚ðŽg—p‚µ‚ÄŽw’è‚Ìƒ^ƒXƒN‚Ì‰ÂŽ‹‰»ƒ‹[ƒ‹‚ª“K—p‚³‚ê‚½Žž‚ð’T‚·‚Ì‚©
+@@•W€ƒgƒŒ[ƒXƒƒOƒtƒ@ƒCƒ‹‚Æ‰ÂŽ‹‰»ƒ‹[ƒ‹‚ð‘Î‰ž•t‚¯‚Ä’T‚·H
+@@‚»‚ê‚Æ‚à}Œ`•`‰æ‚ÌÛ‚É’†ŠÔƒf[ƒ^‚ð•ÛŽ‚µ‚Ä‚¨‚«AŒŸõŽÀsŽž‚É‚±‚ê‚É‘Î‚µ‚ÄƒT[ƒ`‚ð‚©‚¯‚éH

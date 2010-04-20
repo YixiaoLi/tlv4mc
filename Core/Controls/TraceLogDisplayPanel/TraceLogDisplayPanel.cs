@@ -897,5 +897,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	{
 	    drawMarker(g, new Rectangle(Location.X + _timeLineX, Location.Y, _timeLineWidth, Height), marker);
 	}
+
+    private void searchBackwardButton_Click(object sender, EventArgs e)
+    {
+        Graphics g = this.CreateGraphics();
+    }
+
+    private void searchForwardButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void treeGridView_Click(object sender, EventArgs e)
+    {
+
+    }
+
     }
 }
