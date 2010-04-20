@@ -229,6 +229,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             {
                 _commandManager.Do(new AboutCommand());
             };
+            captureToolStripeButton.Click += (o, e) =>
+            {
+                _commandManager.Do(new CaptureCommand(this.Bounds));
+            };
 
             #endregion
 
@@ -452,5 +456,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
 
         }
+
+        
     }
 }

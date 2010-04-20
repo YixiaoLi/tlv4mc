@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7C37CBB0-B554-4268-8A92-D78714219A41}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -65,6 +65,7 @@
     <Compile Include="Base\TimeLine.cs" />
     <Compile Include="Commands\AboutCommand.cs" />
     <Compile Include="Commands\ReloadCommand.cs" />
+    <Compile Include="Commands\CaptureCommand.cs" />
     <Compile Include="Controls\Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -376,5 +377,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\zoomSelect.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BackwardArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ForwardArrow.png" />
   </ItemGroup>
 </Project>
