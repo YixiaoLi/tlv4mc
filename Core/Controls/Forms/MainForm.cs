@@ -146,6 +146,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region サブウィンドウ管理初期化
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
 			_windowManager.MainPanel = new TraceLogDisplayPanel();
+            
 			SubWindow[] sws = new[]
             {
                 new SubWindow("macroViewer", new TimeLineMacroViewer(){ Text = "マクロビューア" }, DockState.DockBottom) { Text = "マクロビューア" },
@@ -231,7 +232,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             };
             captureToolStripeButton.Click += (o, e) =>
             {
-                _commandManager.Do(new CaptureCommand(this.Bounds));
+                // TraceLogDisplayPanel の現在位置を取得し、スクリーン上の絶対位置に変換したうえでスクリーンショットを撮る
+                Rectangle MainPanelRectangle = _windowManager.MainPanel.RectangleToScreen(_windowManager.MainPanel.ClientRectangle);
+                _commandManager.Do(new CaptureCommand(MainPanelRectangle));
             };
 
             #endregion
