@@ -90,6 +90,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
             _stack.Peek().Result.Append(o);
         }
 
+        /// <summary>
+        /// パース結果を得る
+        /// </summary>
+        /// <returns>パース結果</returns>
+        protected string Result()
+        {
+            return _stack.Peek().Result.ToString();
+        }
+
 
         /// <summary>
         /// スタックの先頭領域にある文字列の要素を全て削除し、
