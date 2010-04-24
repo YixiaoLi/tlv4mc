@@ -109,5 +109,303 @@ namespace NU.OJL.MPRTOS.TLV.Core
             _stack.Peek().Result.Length = 0;
             _input.Restore( _stack.Peek().InputIndex);
         }
+
+
+
+        #region 各種基本パーサ
+        /*
+         * ここにある各種基本パーサ(パースメソッド)へ、
+         * サブクラスは同名のメソッドにて委譲します。
+         * そうすることで、実質、サブクラスの型にキャストが可能となり、
+         * 保守性の高い汎用性を実現しています。
+         */
+
+        #region パーサコンビネータ
+        /// <summary>
+        /// 引数で与えられたパーサ(メソッド)を複数回適用する。
+        /// 正規表現の"*"に相当する。
+        /// </summary>
+        /// <typeparam name="TParser">サブクラス(パーサクラス)の型</typeparam>
+        /// <param name="f">パーサ(メソッド)</param>
+        /// <returns>this</returns>
+        protected IParser Many<TParser>(Func<TParser> f)
+        {
+            // パーサfでパースできないものが来るまでループ
+            while (true)
+            {
+                if (f() is NullObjectOfTraceLogParser) break;
+            }
+
+            return this;
+        }
+
+
+        /// <summary>
+        /// 引数で与えられたパーサ(メソッド)を1回以上適用する。
+        /// 正規表現の"+"に相当する。
+        /// </summary>
+        /// <typeparam name="TParser">サブクラス(パーサクラス)の型</typeparam>
+        /// <param name="f">パーサ(メソッド)</param>
+        /// <returns>成功：this、失敗：NullObject</returns>
+        protected IParser Many1<TParser>(Func<TParser> f)
+        {
+            if (f() is NullObjectOfTraceLogParser)
+            {
+                return (IParser)_nullObject;
+            }
+            else
+            {
+                return Many(f);
+            }
+        }
+
+
+        /// <summary>
+        /// パーサ間のORをとる。
+        /// ORの前までにパースが失敗した場合、ORの後のパーサで再度パースを試みる。
+        /// ORの前までのパーサでパースできた場合、ORの後のパーサは無視する。
+        /// </summary>
+        /// <returns>これ以前のパースに成功：NullObject</returns>
+        protected IParser OR()
+        {
+            _nullObject.Success = true;
+            return (IParser)_nullObject;
+        }
+        #endregion
+
+
+        #region 文字パーサ
+
+        /// <summary>
+        /// 指定の一文字をパースする
+        /// </summary>
+        /// <param name="c">パースしたい文字</param>
+        /// <returns>成功：this, 失敗：NullObject</returns>
+        protected IParser Char(char c)
+        {
+            if (_input.IsEmpty())
+            {
+                return (IParser)_nullObject;
+            }
+            else if (_input.Peek() == c)
+            {
+                Append(_input.Read());
+                return this;
+            }
+            else
+            {
+                return (IParser)_nullObject;
+            }
+        }
+
+        /// <summary>
+        /// アルファベットをパースする
+        /// </summary>
+        /// <returns>成功：this, 失敗：NullObject</returns>
+        protected IParser Alpha()
+        {
+            if (_input.IsEmpty())
+            {
+                return (IParser)_nullObject;
+            }
+
+            var c = _input.Peek();
+            if ((('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z')))
+            {
+                Append(_input.Read());
+                return this;
+            }
+            else
+            {
+                return (IParser)_nullObject;
+            }
+        }
+
+        /// <summary>
+        /// 数字をパースする
+        /// </summary>
+        /// <returns>成功：this, 失敗：NullObject</returns>
+        protected IParser Num()
+        {
+            if (_input.IsEmpty())
+            {
+                return (IParser)_nullObject;
+            }
+
+            var c = _input.Peek();
+            if (('0' <= c && c <= '9'))
+            {
+                Append(_input.Read());
+                return this;
+            }
+            else
+            {
+                return (IParser)_nullObject;
+            }
+        }
+
+        /// <summary>
+        /// アルファベットと数字をパースする
+        /// </summary>
+        /// <returns>成功：this, 失敗：NullObject</returns>
+        protected IParser AlphaNum()
+        {
+            if (_input.IsEmpty())
+            {
+                return (IParser)_nullObject;
+            }
+
+            var c = _input.Peek();
+            if ((('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z')
+                || ('0' <= c && c <= '9')))
+            {
+                Append(_input.Read());
+                return this;
+            }
+            else
+            {
+                return (IParser)_nullObject;
+            }
+        }
+
+
+        #region AnyCharOtherThanメソッド
+
+        /// <summary>
+        /// 指定した文字以外の文字をパースする
+        /// </summary>
+        /// <param name="c">除外したい文字</param>
+        /// <returns>成功：this, 失敗：NullObject</returns>
+        protected IParser AnyCharOtherThan(char c)
+        {
+            if (_input.IsEmpty())
+            {
+                return (IParser)_nullObject;
+            }
+            else if (_input.Peek() != c)
+            {
+                Append(_input.Read());
+                return this;
+            }
+            else
+            {
+                return (IParser)_nullObject;
+            }
+        }
+
+        /// <summary>
+        /// 指定した文字以外の文字をパースする
+        /// </summary>
+        /// <param name="c1">除外したい文字</param>
+        /// <param name="c2">除外したい文字</param>
+        /// <returns>成功：this, 失敗：NullObject</returns>
+        protected IParser AnyCharOtherThan(char c1, char c2)
+        {
+            if (_input.IsEmpty())
+            {
+                return (IParser)_nullObject;
+            }
+
+            var c = _input.Peek();
+            if (((c != c1) && (c != c2)))
+            {
+                Append(_input.Read());
+                return this;
+            }
+            else
+            {
+                return (IParser)_nullObject;
+            }
+        }
+
+        /// <summary>
+        /// 指定した文字以外の文字をパースする
+        /// </summary>
+        /// <param name="c1">除外したい文字</param>
+        /// <param name="c2">除外したい文字</param>
+        /// <param name="c3">除外したい文字</param>
+        /// <returns>成功：this, 失敗：NullObject</returns>
+        protected IParser AnyCharOtherThan(char c1, char c2, char c3)
+        {
+            if (_input.IsEmpty())
+            {
+                return (IParser)_nullObject;
+            }
+
+            var c = _input.Peek();
+            if (((c != c1) && (c != c2) && (c != c3)))
+            {
+                Append(_input.Read());
+                return this;
+            }
+            else
+            {
+                return (IParser)_nullObject;
+            }
+        }
+
+        /// <summary>
+        /// 指定した文字以外の文字をパースする
+        /// </summary>
+        /// <param name="c1">除外したい文字</param>
+        /// <param name="c2">除外したい文字</param>
+        /// <param name="c3">除外したい文字</param>
+        /// <param name="c4">除外したい文字</param>
+        /// <returns>成功：this, 失敗：NullObject</returns>
+        protected IParser AnyCharOtherThan(char c1, char c2, char c3, char c4)
+        {
+            if (_input.IsEmpty())
+            {
+                return (IParser)_nullObject;
+            }
+
+            var c = _input.Peek();
+            if (((c != c1) && (c != c2) && (c != c3) && (c != c4)))
+            {
+                Append(_input.Read());
+                return this;
+            }
+            else
+            {
+                return (IParser)_nullObject;
+            }
+        }
+
+        /// <summary>
+        /// 指定した文字以外の文字をパースする
+        /// </summary>
+        /// <param name="clist">除外したい文字を集めた配列</param>
+        /// <returns>成功：this, 失敗：NullObject</returns>
+        protected IParser AnyCharOtherThan(char[] clist)
+        {
+            if (_input.IsEmpty())
+            {
+                return (IParser)_nullObject;
+            }
+
+            var c = _input.Peek();
+
+            foreach (char n in clist)
+            {
+                if (n == c) return (IParser)_nullObject;
+            }
+
+            Append(_input.Read());
+            return this;
+        }
+
+        /// <summary>
+        /// 空文字列をパースするεを表す。
+        /// なのでスペースなどをパースするものではない。
+        /// </summary>
+        /// <returns>this</returns>
+        protected IParser Epsilon()
+        {
+            return this;
+        }
+        #endregion
+        #endregion
+
+        #endregion
     }
 }

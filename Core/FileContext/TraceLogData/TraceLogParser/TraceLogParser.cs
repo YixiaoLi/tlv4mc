@@ -8,14 +8,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
     public class TraceLogParser : Parser, ITraceLogParser
     {
-        private StringBuilder _time       = new StringBuilder();
-        private StringBuilder _object     = new StringBuilder();
+        private StringBuilder _time = new StringBuilder();
+        private StringBuilder _object = new StringBuilder();
         private StringBuilder _objectName = new StringBuilder();
         private StringBuilder _objectType = new StringBuilder();
-        private StringBuilder _behavior   = new StringBuilder();
-        private StringBuilder _attribute  = new StringBuilder();
-        private StringBuilder _value      = new StringBuilder();
-        private StringBuilder _arguments  = new StringBuilder();
+        private StringBuilder _behavior = new StringBuilder();
+        private StringBuilder _attribute = new StringBuilder();
+        private StringBuilder _value = new StringBuilder();
+        private StringBuilder _arguments = new StringBuilder();
 
 
         #region プロパティ
@@ -23,7 +23,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             get
             {
-                return HasTimeValue ? _time.ToString() : null; 
+                return HasTimeValue ? _time.ToString() : null;
             }
             set
             {
@@ -38,7 +38,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             get
             {
-                return _object.Length > 0 ? _object.ToString() : null;   
+                return _object.Length > 0 ? _object.ToString() : null;
             }
             set
             {
@@ -52,7 +52,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             get
             {
-                return HasObjectNameValue ? _objectName.ToString() : null;   
+                return HasObjectNameValue ? _objectName.ToString() : null;
             }
             set
             {
@@ -67,7 +67,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             get
             {
-                return HasObjectTypeValue ? _objectType.ToString() : null;   
+                return HasObjectTypeValue ? _objectType.ToString() : null;
             }
             set
             {
@@ -143,7 +143,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
         #region 定数
 
-        private readonly char[] NON_OBJECTTYPENAME_CHAR = new char[]{'(', ')', '.', '!', '=', '<', '>'};
+        private readonly char[] NON_OBJECTTYPENAME_CHAR = new char[] { '(', ')', '.', '!', '=', '<', '>' };
         private readonly char[] NON_ATTRIBUTENAME_CHAR = new char[] { '!', '=', '<', '>', '(', ')' };
 
         #endregion
@@ -152,7 +152,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public TraceLogParser() 
+        public TraceLogParser()
             : base(50)
         {
             base._nullObject = new NullObjectOfTraceLogParser(this);
@@ -206,9 +206,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
             Begin();
 
             var time = Many1(AlphaNum).Many(() => Char('.')).Many(AlphaNum);
-                       
+
             time.TimeValue = Result();
-            
+
             // マイナス値であったときも正しいが、Timeとして保持しないため吐き捨てておく
             time = time.OR().Char('-').Many1(AlphaNum).Many(() => Char('.')).Many(AlphaNum);
 
@@ -228,6 +228,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
+            // ObjectTypeNameとObjectNameの順番を変更しないでください
             var object_ =
                 ObjectTypeName().Char('(').AttributeCondition().Char(')')
                 .OR().
@@ -312,7 +313,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
-            var comparisonExpression = 
+            var comparisonExpression =
                 AttributeName_ComparisonExpression().
                 ComparisonOpe().
                 Value_ComparisonExpression();
@@ -325,7 +326,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             Begin();
 
             var attributeName = Many1(() => AnyCharOtherThan(NON_ATTRIBUTENAME_CHAR));
-            
+
             return (ITraceLogParser)attributeName.End();
         }
 
@@ -380,6 +381,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
+            // v1.1.2現在、Valueが一番最後の要素であるため、実質全ての文字をパースしています
             var value = Many1(() => AnyCharOtherThan(' '));
 
             value.ValueValue = Result();
@@ -458,7 +460,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return (ITraceLogParser)nextArgument.End();
         }
 
-        // カッコのネストを正しくパースするために必要
         public ITraceLogParser Argument()
         {
             Begin();
@@ -470,10 +471,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
                            Many(() => AnyCharOtherThan('(', ')', ','));
 
             return (ITraceLogParser)argument.End();
-                           
+
         }
 
         #endregion
+
+
+
+        // 以降、スーパークラス(Parserクラス)への委譲
 
         #region パーサコンビネータ
         /// <summary>
@@ -484,13 +489,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <returns>this</returns>
         public ITraceLogParser Many(Func<ITraceLogParser> f)
         {
-            // パーサfでパースできないものが来るまでループ
-            while (true)
-            {
-                if (f() is NullObjectOfTraceLogParser) break;
-            }
-
-            return this;
+            return (ITraceLogParser)base.Many<ITraceLogParser>(f);
         }
 
 
@@ -502,14 +501,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <returns>成功：this、失敗：NullObject</returns>
         public ITraceLogParser Many1(Func<ITraceLogParser> f)
         {
-            if (f() is NullObjectOfTraceLogParser)
-            {
-                return (ITraceLogParser)_nullObject;
-            }
-            else
-            {
-                return Many(f);
-            }
+            return (ITraceLogParser)base.Many1<ITraceLogParser>(f);
         }
 
 
@@ -519,192 +511,76 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// ORの前までのパーサでパースできた場合、ORの後のパーサは無視する。
         /// </summary>
         /// <returns>これ以前のパースに成功：NullObject</returns>
-        public ITraceLogParser OR()
+        public new ITraceLogParser OR()
         {
-            base._nullObject.Success = true;
-            return (ITraceLogParser)_nullObject;
+            return (ITraceLogParser)base.OR();
         }
         #endregion
 
 
         #region 文字パーサ
-        public ITraceLogParser Char(char c)
+        public new ITraceLogParser Char(char c)
         {
-            if (_input.IsEmpty())
-            {
-                return (ITraceLogParser)_nullObject;
-            }
-            else if ( _input.Peek() == c)
-            {
-                Append(_input.Read());
-                return this;
-            }
-            else
-            {
-                return (ITraceLogParser)_nullObject;
-            }
+            return (ITraceLogParser)base.Char(c);
+
         }
 
 
-        public ITraceLogParser Alpha()
+        public new ITraceLogParser Alpha()
         {
-            if (_input.IsEmpty())
-            {
-                return (ITraceLogParser)_nullObject;
-            }
-
-            var c = _input.Peek();
-            if ((('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z')))
-            {
-                Append(_input.Read());
-                return this;
-            }
-            else
-            {
-                return (ITraceLogParser)_nullObject;
-            }
+            return (ITraceLogParser)base.Alpha();
         }
 
 
-        public ITraceLogParser Num()
+        public new ITraceLogParser Num()
         {
-            if (_input.IsEmpty())
-            {
-                return (ITraceLogParser)_nullObject;
-            }
 
-            var c = _input.Peek();
-            if (('0' <= c && c <= '9'))
-            {
-                Append(_input.Read());
-                return this;
-            }
-            else
-            {
-                return (ITraceLogParser)_nullObject;
-            }
+            return (ITraceLogParser)base.Num();
+
         }
 
 
-        public ITraceLogParser AlphaNum()
+        public new ITraceLogParser AlphaNum()
         {
-            if (_input.IsEmpty())
-            {
-                return (ITraceLogParser)_nullObject;
-            }
 
-            var c = _input.Peek();
-            if ((('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z')
-                || ('0' <= c && c <= '9')))
-            {
-                Append(_input.Read());
-                return this;
-            }
-            else
-            {
-                return (ITraceLogParser)_nullObject;
-            }
+            return (ITraceLogParser)base.AlphaNum();
+
         }
 
 
         #region AnyCharOtherThanメソッド
 
-        public ITraceLogParser AnyCharOtherThan(char c)
+        public new ITraceLogParser AnyCharOtherThan(char c)
         {
-            if (_input.IsEmpty())
-            {
-                return (ITraceLogParser)_nullObject;
-            }
-            else if (_input.Peek() != c)
-            {
-                Append(_input.Read());
-                return this;
-            }
-            else
-            {
-                return (ITraceLogParser)_nullObject;
-            }
+
+            return (ITraceLogParser)base.AnyCharOtherThan(c);
+
         }
 
-        public ITraceLogParser AnyCharOtherThan(char c1, char c2)
+        public new ITraceLogParser AnyCharOtherThan(char c1, char c2)
         {
-            if (_input.IsEmpty())
-            {
-                return (ITraceLogParser)_nullObject;
-            }
-
-            var c = _input.Peek();
-            if (((c != c1) && (c != c2)))
-            {
-                Append(_input.Read());
-                return this;
-            }
-            else
-            {
-                return (ITraceLogParser)_nullObject;
-            }
+            return (ITraceLogParser)base.AnyCharOtherThan(c1, c2);
         }
 
-        public ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3)
+        public new ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3)
         {
-            if (_input.IsEmpty())
-            {
-                return (ITraceLogParser)_nullObject;
-            }
-
-            var c = _input.Peek();
-            if (((c != c1) && (c != c2) && (c != c3)))
-            {
-                Append(_input.Read());
-                return this;
-            }
-            else
-            {
-                return (ITraceLogParser)_nullObject;
-            }
+            return (ITraceLogParser)base.AnyCharOtherThan(c1, c2, c3);
         }
 
 
-        public ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3, char c4)
+        public new ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3, char c4)
         {
-            if (_input.IsEmpty())
-            {
-                return (ITraceLogParser)_nullObject;
-            }
-
-            var c = _input.Peek();
-            if (((c != c1) && (c != c2) && (c != c3) && (c != c4)))
-            {
-                Append(_input.Read());
-                return this;
-            }
-            else
-            {
-                return (ITraceLogParser)_nullObject;
-            }
+            return (ITraceLogParser)base.AnyCharOtherThan(c1, c2, c3, c4);
         }
 
-        public ITraceLogParser AnyCharOtherThan(char[] clist)
+        public new ITraceLogParser AnyCharOtherThan(char[] clist)
         {
-            if (_input.IsEmpty())
-            {
-                return (ITraceLogParser)_nullObject;
-            }
-
-            var c = _input.Peek();
-
-            foreach( char n in clist )
-            {
-                if( n == c ) return (ITraceLogParser)_nullObject;
-            }
-
-            Append(_input.Read());
-            return this;
+            return (ITraceLogParser)base.AnyCharOtherThan(clist);
         }
 
-        public ITraceLogParser Epsilon()
+        public new ITraceLogParser Epsilon()
         {
-            return this;
+            return (ITraceLogParser)base.Epsilon();
         }
         #endregion
         #endregion

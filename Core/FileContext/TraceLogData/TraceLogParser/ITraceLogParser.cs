@@ -20,7 +20,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         bool HasObjectNameValue { set; }
         bool HasObjectTypeValue { set; }
 
-        #region TraceLogのパーサ
+        #region TraceLogのパーサ(パースメソッド)
         // 各メソッド名は /doc/rule-manual.pdf の「2.1.2標準形式ログの定義」に従う。
         ITraceLogParser Line();
         ITraceLogParser Time();
@@ -116,6 +116,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <param name="c3">除外したい文字</param>
         /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
         ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3);
+        /// <summary>
+        /// 指定した文字以外の文字をパースする
+        /// </summary>
+        /// <param name="c1">除外したい文字</param>
+        /// <param name="c2">除外したい文字</param>
+        /// <param name="c3">除外したい文字</param>
+        /// <param name="c4">除外したい文字</param>
+        /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
+        ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3, char c4);
         /// <summary>
         /// 指定した文字以外の文字をパースする
         /// </summary>
