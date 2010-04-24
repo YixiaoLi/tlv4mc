@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NU.OJL.MPRTOS.TLV.Core
+namespace NU.OJL.MPRTOS.TLV.Base
 {
     public abstract class Parser : IParser
     {
@@ -133,7 +133,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             // パーサfでパースできないものが来るまでループ
             while (true)
             {
-                if (f() is NullObjectOfTraceLogParser) break;
+                if (f() is INullObjectOfParser) break;
             }
 
             return this;
@@ -149,7 +149,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <returns>成功：this、失敗：NullObject</returns>
         protected IParser Many1<TParser>(Func<TParser> f)
         {
-            if (f() is NullObjectOfTraceLogParser)
+            if (f() is INullObjectOfParser)
             {
                 return (IParser)_nullObject;
             }
