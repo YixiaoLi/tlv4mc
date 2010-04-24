@@ -379,6 +379,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             base.OnDragDrop(drgevent);
             if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
             {
+
                 string[] s = ((string[])(drgevent.Data.GetData(DataFormats.FileDrop)));
 
 				if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.StandardFormatTraceLogFileExtension))
@@ -397,9 +398,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					string resFilePath = Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension) ? s[0] : s[1];
 					string logFilePath = Path.GetExtension(s[1]).Contains(Properties.Resources.TraceLogFileExtension) ? s[1] : s[0];
-
-					_commandManager.Do(new NewCommand(resFilePath, logFilePath));
+                    _commandManager.Do(new NewCommand(resFilePath, logFilePath));
 				}
+
             }
         }
 

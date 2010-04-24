@@ -86,7 +86,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		/// </summary>
 		public static ApplicationBlackBoard BlackBoard
 		{
-			get { return _blackBoard; }
+            get { return _blackBoard; }
 		}
 
 		public static StatusManager StatusManager

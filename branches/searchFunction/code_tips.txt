@@ -1,5 +1,22 @@
 ＊＊　ＴＬＶのＧＵＩコード　＊＊
 
+　　MainForm.cs が画面構成の主軸となる
+　　　MainForm の中で  
+　　　　1. タイムライン画面を構成する　　  TraceLogDisplayPanel
+        2. マクロビューア画面を構成する　　TimeLineMacroViewer
+        3. ログ表示画面を構成する　　　　　TraceLogViewer
+        4. リソース画面を構成する　　　　　ResourceExplorer
+        5. 可視化ルール画面を構成する　　　VisualizeRuleExplorer
+     のコントロールが管理されている
+
+　　 ※実際は MainForm の中で WindowManager が作成されており、このマネージャが
+ 　　　すべてのウィンドウのコントロールを管理している 。その中でも TraceLogDisplayPanel
+       がメインのウィンドウコントロールとなる
+
+　　 ※ TraceLogDisplayPanel と TimeLineMacroViewer は TimeLineControl を継承
+
+
+
   ●TLVメニューバー周り
   　Core/Controls/MainForm.cs の L.167あたりからコード記述開始
     特に難しい内容はないので、どのメニューがどのコードで実現さ
@@ -25,7 +42,7 @@
         - AboutForm を呼び出すためのプログラム
         - 呼び出しもとは Core/Controls/Forms/MainForms.cs
 
-  ●TraceLogDispalyPanel 周り（図形が表示される部分）
+  ●TraceLogDispalyPanel 周り（タイムラインが表示される部分）
    Core/Controls/TraceLogDisplayPanel
        ・TimeLineCell.cs でリソースとその状態（図形）を表示するコードを記述している
     　　Paintメソッドが描画を担当

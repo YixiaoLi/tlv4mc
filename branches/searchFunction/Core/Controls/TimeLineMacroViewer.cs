@@ -83,7 +83,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
-
+            ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) => { Refresh(); };
 			SizeChanged += (o, _e) => { updateViewingArea(); };
 
 			EventHandler showStatus = (o, _e) =>
@@ -110,6 +110,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			MouseLeave += hideStatus;
 		}
 
+     
 		public override void SetData(TraceLogVisualizerData data)
 		{
 			base.SetData(data);
@@ -119,8 +120,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				ViewingAreaTimeLine = _data.SettingData.TraceLogDisplayPanelSetting.TimeLine;
 
 
-				Time from = ViewingAreaTimeLine.FromTime.Truncate();
-				Time to = ViewingAreaTimeLine.ToTime.Truncate();
+				 Time from = ViewingAreaTimeLine.FromTime.Truncate();
+				 Time to = ViewingAreaTimeLine.ToTime.Truncate();
 
 				if (!_scale.LocalTimeLineMarkers.ContainsKey("___fromMarker"))
 					_scale.LocalTimeLineMarkers.Add(new TimeLineMarker("___fromMarker", _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor, from));
