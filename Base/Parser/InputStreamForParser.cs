@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NU.OJL.MPRTOS.TLV.Core
+namespace NU.OJL.MPRTOS.TLV.Base
 {
     /// <summary>
     /// パース対象を扱う。

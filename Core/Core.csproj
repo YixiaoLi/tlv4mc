@@ -128,13 +128,8 @@
     <Compile Include="FileContext\SettingData\TraceLogViewerSetting.cs" />
     <Compile Include="FileContext\SettingData\TimeLineMacroViewerSetting.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
-    <Compile Include="FileContext\TraceLogData\TraceLogParser\InputStreamForParser.cs" />
-    <Compile Include="FileContext\TraceLogData\TraceLogParser\INullObjectForParser.cs" />
-    <Compile Include="FileContext\TraceLogData\TraceLogParser\IParser.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\ITraceLogParser.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\NullObjectOfTraceLogParser.cs" />
-    <Compile Include="FileContext\TraceLogData\TraceLogParser\Parser.cs" />
-    <Compile Include="FileContext\TraceLogData\TraceLogParser\StackForParser.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\TraceLogParser.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogGenerator.cs" />
     <Compile Include="FileContext\VisualizeShapeData\EventShapesGenerator.cs" />
