@@ -61,7 +61,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	private Cursor HandCursor { get { return new Cursor(Properties.Resources.hand.Handle) { Tag = "hand" }; } }
 	private int _mouseDownX;
 	private bool _mouseDown;
+    Time From;
+    Time To;
 
+    
 	public override int TimeLineX
 	{
 	    get { return _timeLineX; }
@@ -69,7 +72,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 		    if (_timeLineX != value)
 			{
-			    _timeLineX = value;
+
+                // ToolStripeに検索バーを追加したことで、タイムライン上のレイアウトが崩れた
+                // _timeLineX  の値を少しでも変更すればレイアウト崩れが直るため、応急処置
+                // として -1 しておいた。直る理由は現在究明中
+
+                //_timeLineX = value;
+                _timeLineX = value - 1;
 
 			    topTimeLineScale.Location = new System.Drawing.Point(_timeLineX, topTimeLineScale.Location.Y);
 			    bottomTimeLineScale.Location = new System.Drawing.Point(_timeLineX, bottomTimeLineScale.Location.Y);
@@ -114,7 +123,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		hScrollBar.Maximum = int.MaxValue;
 		hScrollBar.Value = hScrollBar.Minimum;
 		viewingAreaToolStrip.Enabled = false;
-
+        
 		imageList.Images.Add("visualize", Properties.Resources.visualize);
 		imageList.Images.Add("resource", Properties.Resources.resource);
 		imageList.Images.Add("bhr2bhr", Properties.Resources.bhr2bhr);
@@ -154,7 +163,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 	    _timeScale = _data.ResourceData.TimeScale;
 	    timePerSclaeUnitLabel.Text = _timeScale + "/目盛り";
-
+        
 	    if(!_data.SettingData.TraceLogDisplayPanelSetting.TimePerScaleMark.IsEmpty)
 		timePerSclaeLabel.Text = _data.SettingData.TraceLogDisplayPanelSetting.TimePerScaleMark.ToString();
 	    autoResizeRowHeightToolStripButton.Checked = _data.SettingData.TraceLogDisplayPanelSetting.AutoResizeRowHeight;
@@ -165,7 +174,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	    viewingTimeRangeFromScaleLabel.Text = _timeScale;
 	    viewingTimeRangeToScaleLabel.Text = _timeScale;
 	    viewableSpanTextBox.Visible = true;
-	    viewableSpanTextBox.Text = TimeLine.MinTime.ToString() + " 〜 " + TimeLine.MaxTime.ToString() + " " + _timeScale;
+        viewableSpanTextBox.Text = TimeLine.MinTime.ToString() + " 〜 " + TimeLine.MaxTime.ToString() + " " + _timeScale;
 	    viewableSpanTextBox.Width = TextRenderer.MeasureText(viewableSpanTextBox.Text, viewableSpanTextBox.Font).Width;
 	    viewingAreaToolStrip.Enabled = true;
 
@@ -279,7 +288,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	{
 	    base.OnLoad(e);
 	    this.ApplyNativeScroll();
-
+        ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) => { Refresh(); };
+       
 	    #region treeGridView初期化
 		treeGridView.AddColumn(new TreeGridViewColumn() { Name = "resourceName", HeaderText = "リソース" });
 	    //treeGridView.AddColumn(new DataGridViewTextBoxColumn() { Name = "value", HeaderText = "値" });
@@ -319,7 +329,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 		    Rectangle rect = new Rectangle(_timeLineX - 1, _e.ClipRectangle.Y, _timeLineWidth, _e.ClipRectangle.Width);
 		    if (_data != null)
-			DrawCursor(_e.Graphics, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, ApplicationFactory.BlackBoard.CursorTime);
+                DrawCursor(_e.Graphics, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, ApplicationFactory.BlackBoard.CursorTime);
 		    if (_data != null && _data.SettingData != null)
 			{
 			    foreach(TimeLineMarker tlm in _globalTimeLineMarkers)
@@ -648,6 +658,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			bottomTimeLineScale.Visible = true;
 		    if (!hScrollBar.Visible)
 			hScrollBar.Visible = true;
+
 		}
 
 	    if (allRowHeight > MaxHeight)
@@ -905,7 +916,39 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void searchForwardButton_Click(object sender, EventArgs e)
     {
+        string jumpTime = "10000000";
+        decimal start = decimal.Parse(TimeLine.MinTime.ToString());
+        decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
+        Time time = new Time(jumpTime , 10);
 
+        string add;
+        
+        
+        decimal relatedLocation = (decimal.Parse(jumpTime) - start ) / (end - start);
+        double jumpLocation = (double)hScrollBar.Maximum * (double)relatedLocation;
+
+        if ((int)jumpLocation != 0)
+        {
+            hScrollBar.Value = (int)jumpLocation -1000000;
+        }
+        else
+        {
+            hScrollBar.Value = 1;
+        }
+
+        
+        ApplicationFactory.BlackBoard.CursorTime = time;
+        
+
+
+        /*
+          Graphics g = this.CreateGraphics();
+          Time time = new Time("10000000",10);
+          DrawCursor(g, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, time);
+          Time fromTime = new Time("10000000",10);
+          Time toTime = new Time("20000000",10);
+         _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.SetTime(fromTime,toTime);
+        */
     }
 
     private void treeGridView_Click(object sender, EventArgs e)

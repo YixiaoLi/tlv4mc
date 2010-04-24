@@ -52,17 +52,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				nowValue = newValue;
                 if (changedEvent != null)
                 {
-                    if (sender.GetType() != typeof(ApplicationBlackBoard))
-                    {
-                        if (((ApplicationBlackBoard)sender).SelectedTimeRangeChanged != null)
-                        {
-                            changedEvent(sender, new GeneralChangedEventArgs<T>(old, nowValue));
-                        }
-                    }
-                    else
-                    {
-                        changedEvent(sender, new GeneralChangedEventArgs<T>(old, nowValue));
-                    }
+                   changedEvent(sender, new GeneralChangedEventArgs<T>(old, nowValue));
                 }
 			}
 		}

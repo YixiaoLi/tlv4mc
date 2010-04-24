@@ -231,6 +231,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 								break;
 						}
 
+                        //タイムライン上のメモリの描画
 						g.DrawString(tmStr, Font, new SolidBrush(Color.White), new RectangleF(tx, y, tmStrSz.Width, tmStrSz.Height), _stringFormat);
 					}
 				}
@@ -244,6 +245,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			if (DisplayCursorTime)
 			{
+                //カーソル図形自体の描画
 				drawCursorLabel(graphics, color, time, false);
 			}
 		}
@@ -254,6 +256,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			if (DisplayCursorTime)
 			{
+                //マクロビューアの方のマーカーの時間を描画
 				drawCursorLabel(g, marker.Color, marker.Time, marker.Selected);
 			}
 		}
@@ -330,6 +333,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				graphics.DrawPolygon(pen, points);
 			}
 
+            //カーソルの中に表示される時間の描画
 			graphics.DrawString(tmStr, Font, Brushes.Black, x - (tmStrSz.Width / 2), y);
 		}
 	}
