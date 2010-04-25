@@ -1,0 +1,6 @@
+BooleanExpression = Boolean, NextBooleanExpression
+				  | ComparisonExpression, NextBooleanExpression
+				  | "(", BooleanExpression, ")", NextBooleanExpression
+
+NextBooleanExpression = LogicalOpe, BooleanExpression, NextBooleanExpression
+					  | Null 
