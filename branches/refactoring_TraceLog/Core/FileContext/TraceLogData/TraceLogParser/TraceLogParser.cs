@@ -33,7 +33,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
         }
 
-
+		//　ObjectTypeName側が成功した場合、NullObjectのプロパティを介して設定
         public string ObjectValue
         {
             get

@@ -69,7 +69,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// ORの前までのパーサでパースできた場合、ORの後のパーサは無視する。
         /// </summary>
         /// <returns>これ以前のパースに成功：NullObject, これ以前のパースに失敗：TraceLogParser</returns>
-        ITraceLogParser OR();
+        new ITraceLogParser OR();
         #endregion
         
         #region 文字パーサ
@@ -78,36 +78,36 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         /// <param name="c">パースしたい文字</param>
         /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
-        ITraceLogParser Char(char c);
+        new ITraceLogParser Char(char c);
         /// <summary>
         /// アルファベットをパースする
         /// </summary>
         /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
-        ITraceLogParser Alpha();
+        new ITraceLogParser Alpha();
         /// <summary>
         /// 数字をパースする
         /// </summary>
         /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
-        ITraceLogParser Num();
+        new ITraceLogParser Num();
         /// <summary>
         /// アルファベットと数字をパースする
         /// </summary>
         /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
-        ITraceLogParser AlphaNum();
+        new ITraceLogParser AlphaNum();
 
         /// <summary>
         /// 指定した文字以外の文字をパースする
         /// </summary>
         /// <param name="c">除外したい文字</param>
         /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
-        ITraceLogParser AnyCharOtherThan(char c);
+        new ITraceLogParser AnyCharOtherThan(char c);
         /// <summary>
         /// 指定した文字以外の文字をパースする
         /// </summary>
         /// <param name="c1">除外したい文字</param>
         /// <param name="c2">除外したい文字</param>
         /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
-        ITraceLogParser AnyCharOtherThan(char c1, char c2);
+        new ITraceLogParser AnyCharOtherThan(char c1, char c2);
         /// <summary>
         /// 指定した文字以外の文字をパースする
         /// </summary>
@@ -115,7 +115,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <param name="c2">除外したい文字</param>
         /// <param name="c3">除外したい文字</param>
         /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
-        ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3);
+        new ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3);
         /// <summary>
         /// 指定した文字以外の文字をパースする
         /// </summary>
@@ -124,19 +124,19 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <param name="c3">除外したい文字</param>
         /// <param name="c4">除外したい文字</param>
         /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
-        ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3, char c4);
+        new ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3, char c4);
         /// <summary>
         /// 指定した文字以外の文字をパースする
         /// </summary>
         /// <param name="clist">除外したい文字を集めた配列</param>
         /// <returns>成功：TraceLogParser, 失敗：NullObject</returns>
-        ITraceLogParser AnyCharOtherThan(char[] clist);
+        new ITraceLogParser AnyCharOtherThan(char[] clist);
         /// <summary>
         /// 空文字列をパースするεを表す。
         /// なのでスペースなどをパースするものではない。
         /// </summary>
         /// <returns>TraceLogParser</returns>
-        ITraceLogParser Epsilon();
+        new ITraceLogParser Epsilon();
         #endregion
                
     }

@@ -29,7 +29,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <summary>
         /// パース失敗時を示すオブジェクト。NullObjectパターン。
         /// </summary>
-        protected INullObjectOfParser _nullObject;
+        protected NullObjectOfParser _nullObject;
 
 
         #region コンストラクタ
@@ -117,7 +117,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
          * ここにある各種基本パーサ(パースメソッド)へ、
          * サブクラスは同名のメソッドにて委譲します。
          * そうすることで、実質、サブクラスの型にキャストが可能となり、
-         * 保守性の高い汎用性を実現しています。
+         * 高い保守性を実現しています。
          */
 
         #region パーサコンビネータ
@@ -128,12 +128,12 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <typeparam name="TParser">サブクラス(パーサクラス)の型</typeparam>
         /// <param name="f">パーサ(メソッド)</param>
         /// <returns>this</returns>
-        protected IParser Many<TParser>(Func<TParser> f)
+        public IParser Many<TParser>(Func<TParser> f)
         {
             // パーサfでパースできないものが来るまでループ
             while (true)
             {
-                if (f() is INullObjectOfParser) break;
+                if (f() is NullObjectOfParser) break;
             }
 
             return this;
@@ -147,11 +147,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <typeparam name="TParser">サブクラス(パーサクラス)の型</typeparam>
         /// <param name="f">パーサ(メソッド)</param>
         /// <returns>成功：this、失敗：NullObject</returns>
-        protected IParser Many1<TParser>(Func<TParser> f)
+        public IParser Many1<TParser>(Func<TParser> f)
         {
-            if (f() is INullObjectOfParser)
+            if (f() is NullObjectOfParser)
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
             else
             {
@@ -166,10 +166,10 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// ORの前までのパーサでパースできた場合、ORの後のパーサは無視する。
         /// </summary>
         /// <returns>これ以前のパースに成功：NullObject</returns>
-        protected IParser OR()
+        public IParser OR()
         {
             _nullObject.Success = true;
-            return (IParser)_nullObject;
+            return _nullObject;
         }
         #endregion
 
@@ -181,11 +181,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// </summary>
         /// <param name="c">パースしたい文字</param>
         /// <returns>成功：this, 失敗：NullObject</returns>
-        protected IParser Char(char c)
+        public IParser Char(char c)
         {
             if (_input.IsEmpty())
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
             else if (_input.Peek() == c)
             {
@@ -194,7 +194,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             }
             else
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
         }
 
@@ -202,11 +202,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// アルファベットをパースする
         /// </summary>
         /// <returns>成功：this, 失敗：NullObject</returns>
-        protected IParser Alpha()
+        public IParser Alpha()
         {
             if (_input.IsEmpty())
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
 
             var c = _input.Peek();
@@ -217,7 +217,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             }
             else
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
         }
 
@@ -225,11 +225,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// 数字をパースする
         /// </summary>
         /// <returns>成功：this, 失敗：NullObject</returns>
-        protected IParser Num()
+        public IParser Num()
         {
             if (_input.IsEmpty())
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
 
             var c = _input.Peek();
@@ -240,7 +240,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             }
             else
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
         }
 
@@ -248,11 +248,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// アルファベットと数字をパースする
         /// </summary>
         /// <returns>成功：this, 失敗：NullObject</returns>
-        protected IParser AlphaNum()
+        public IParser AlphaNum()
         {
             if (_input.IsEmpty())
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
 
             var c = _input.Peek();
@@ -264,7 +264,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             }
             else
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
         }
 
@@ -276,11 +276,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// </summary>
         /// <param name="c">除外したい文字</param>
         /// <returns>成功：this, 失敗：NullObject</returns>
-        protected IParser AnyCharOtherThan(char c)
+        public IParser AnyCharOtherThan(char c)
         {
             if (_input.IsEmpty())
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
             else if (_input.Peek() != c)
             {
@@ -289,7 +289,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             }
             else
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
         }
 
@@ -299,11 +299,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <param name="c1">除外したい文字</param>
         /// <param name="c2">除外したい文字</param>
         /// <returns>成功：this, 失敗：NullObject</returns>
-        protected IParser AnyCharOtherThan(char c1, char c2)
+        public IParser AnyCharOtherThan(char c1, char c2)
         {
             if (_input.IsEmpty())
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
 
             var c = _input.Peek();
@@ -314,7 +314,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             }
             else
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
         }
 
@@ -325,11 +325,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <param name="c2">除外したい文字</param>
         /// <param name="c3">除外したい文字</param>
         /// <returns>成功：this, 失敗：NullObject</returns>
-        protected IParser AnyCharOtherThan(char c1, char c2, char c3)
+        public IParser AnyCharOtherThan(char c1, char c2, char c3)
         {
             if (_input.IsEmpty())
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
 
             var c = _input.Peek();
@@ -340,7 +340,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             }
             else
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
         }
 
@@ -352,11 +352,11 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <param name="c3">除外したい文字</param>
         /// <param name="c4">除外したい文字</param>
         /// <returns>成功：this, 失敗：NullObject</returns>
-        protected IParser AnyCharOtherThan(char c1, char c2, char c3, char c4)
+        public IParser AnyCharOtherThan(char c1, char c2, char c3, char c4)
         {
             if (_input.IsEmpty())
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
 
             var c = _input.Peek();
@@ -367,7 +367,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
             }
             else
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
         }
 
@@ -376,18 +376,18 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// </summary>
         /// <param name="clist">除外したい文字を集めた配列</param>
         /// <returns>成功：this, 失敗：NullObject</returns>
-        protected IParser AnyCharOtherThan(char[] clist)
+        public IParser AnyCharOtherThan(char[] clist)
         {
             if (_input.IsEmpty())
             {
-                return (IParser)_nullObject;
+                return _nullObject;
             }
 
             var c = _input.Peek();
 
             foreach (char n in clist)
             {
-                if (n == c) return (IParser)_nullObject;
+                if (n == c) return _nullObject;
             }
 
             Append(_input.Read());
@@ -399,7 +399,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// なのでスペースなどをパースするものではない。
         /// </summary>
         /// <returns>this</returns>
-        protected IParser Epsilon()
+        public IParser Epsilon()
         {
             return this;
         }
