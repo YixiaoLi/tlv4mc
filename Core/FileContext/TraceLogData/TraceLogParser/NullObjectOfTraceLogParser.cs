@@ -6,23 +6,14 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
-    public class NullObjectOfTraceLogParser : ITraceLogParser, INullObjectOfParser
+    public class NullObjectOfTraceLogParser : NullObjectOfParser, ITraceLogParser
     {
-        protected TraceLogParser _parser;
-
-        /// <summary>
-        /// 既にパースが成功しているかどうか。
-        /// 具体的には、ParserCombinatorsクラスのORメソッドを通った場合true。
-        /// </summary>
-        public bool Success{ get; set; }
-
-
         #region コンストラクタ
         protected NullObjectOfTraceLogParser() {}
 
         public NullObjectOfTraceLogParser(TraceLogParser parser)
         {
-            _parser = parser;
+            base._parser = parser;
         }
         #endregion
               
@@ -35,13 +26,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
             set{ /* 何もしない */ }
         }
 
+		// ObjectTypeName側のパースに成功した場合、こちらを実行することになる
         public string ObjectValue
         {
             set
             {
                 if (Success)
                 {
-                    _parser.ObjectValue = value;
+                    ((ITraceLogParser) _parser).ObjectValue = value;
                 }
             }
         }
@@ -91,7 +83,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             set { /* 何もしない */ }
         }
 
-#endregion
+        #endregion
 
 
         public ITraceLogParser Line()
@@ -107,7 +99,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         // "[Time]"がないログもパースするために、_parse側のEvent()を実行している
         public ITraceLogParser Event()
         {
-            return _parser.Event();
+            return ((ITraceLogParser)_parser).Event();
         }
 
         public ITraceLogParser OBject()
@@ -217,54 +209,56 @@ namespace NU.OJL.MPRTOS.TLV.Core
         #endregion
 
 
+
+        // 以降、thisを返すのみのものは、速度の問題によりスーパークラスに委譲せず、再定義している。
         #region 文字パーサ メンバ
 
-        public ITraceLogParser Char(char c)
+        public new ITraceLogParser Char(char c)
         {
             return this;
         }
 
-        public ITraceLogParser Alpha()
+        public new ITraceLogParser Alpha()
         {
             return this;
         }
 
-        public ITraceLogParser Num()
+        public new ITraceLogParser Num()
         {
             return this;
         }
 
-        public ITraceLogParser AlphaNum()
+        public new ITraceLogParser AlphaNum()
         {
             return this;
         }
 
-        public ITraceLogParser AnyCharOtherThan(char c)
+        public new ITraceLogParser AnyCharOtherThan(char c)
         {
             return this;
         }
 
-        public ITraceLogParser AnyCharOtherThan(char c1, char c2)
+        public new ITraceLogParser AnyCharOtherThan(char c1, char c2)
         {
             return this;
         }
 
-        public ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3)
+        public new ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3)
         {
             return this;
         }
 
-        public ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3, char c4)
+        public new ITraceLogParser AnyCharOtherThan(char c1, char c2, char c3, char c4)
         {
             return this;
         }
 
-        public ITraceLogParser AnyCharOtherThan(char[] clist)
+        public new ITraceLogParser AnyCharOtherThan(char[] clist)
         {
             return this;
         }
 
-        public ITraceLogParser Epsilon()
+        public new ITraceLogParser Epsilon()
         {
             return this;
         }
@@ -283,38 +277,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return this;
         }
 
-        public ITraceLogParser OR()
+        public new ITraceLogParser OR()
         {
-            if (Success)
-            {
-                return this;
-            }
-            else
-            {
-                _parser.Reset();
-                return _parser;
-            }
+            return (ITraceLogParser)base.OR();
         }
         
         #endregion
 
 
-        #region IParser メンバ
 
-        public IParser End()
-        {
-            if (Success)
-            {
-                return _parser.End();
-            }
-            else
-            {
-                _parser.Reset();
-                _parser.End();
-                return this;
-            }
-        }
-
-        #endregion
     }
 }

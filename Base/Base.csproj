@@ -120,8 +120,8 @@
     <Compile Include="ObservableMultiKeyDictionary.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Parser\InputStreamForParser.cs" />
-    <Compile Include="Parser\INullObjectForParser.cs" />
     <Compile Include="Parser\IParser.cs" />
+    <Compile Include="Parser\NullObjectForParser.cs" />
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="Parser\StackForParser.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
