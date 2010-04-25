@@ -1,0 +1,184 @@
+\documentclass[a4j]{jsarticle}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{listings}
+\newcommand{\figref}[1]{図\ref{#1}}
+
+\lstset{language=C,%
+        basicstyle=\footnotesize,%
+        commentstyle=\textit,%
+        classoffset=1,%
+        keywordstyle=\bfseries,%
+	frame=tRBl,framesep=5pt,%
+	showstringspaces=false,%
+        numbers=left,stepnumber=1,numberstyle=\footnotesize%
+	}%
+
+
+\title{組込みRTOS向けアプリケーション開発支援ツール\\
+TLV（トレース ログ ヴィジュアライザー）\\
+フェーズ5 リファクタリング仕様書}
+\begin{document}
+\maketitle
+\titlepage
+
+\section*{改訂履歴}
+\begin{table}[h]
+ \centering
+ \begin{tabular}{|c|c|c|c|} \hline
+  版番& 日付&    更新内容& 更新者\\ \hline\hline
+  1.0 & 10/4/23& 新規作成& 市原大輔\\ \hline
+ \end{tabular}
+\end{table}
+\clearpage
+
+\tableofcontents
+\clearpage
+
+\section{はじめに}
+\subsection{本書の目的}
+本書の目的は、文部科学省先導的ITスペシャリスト育成推進プログラム「OJLに
+  よる最先端技術適応能力を持つIT人材育成拠点の形成」プロジェクトにおけ
+る、OJL科目ソフトウェア工学実践研究の研究テーマである「組込みRTOS向けア
+  プリケーション開発支援ツールの開発」に対して、その開発するソフトウェ
+アに対する設計を記述することである。
+
+本書は特に、フェーズ5におけるリファクタリング作業に関する記述を行う。
+
+\subsection{本書の適用範囲}
+本書は、組込みMPRTOS向けアプリケーション開発支援ツールの開発プロジェク
+ト（以下本プロジェクト）のフェーズ5におけるリファクタリング作業に関する
+記述を行う。
+
+\subsection{用語の定義/略語の説明}
+
+\begin{table}[h]
+ \centering
+ \caption{用語定義}
+ \begin{tabular}{|p{8em}|p{36em}|} \hline
+  用語・略語& 定義・説明\\ \hline \hline
+  TLV& Trace Log Visualizer\\ \hline
+  MPRTOS& マルチプロセッサ対応リアルタイムオペレーティングシステム\\
+  \hline
+  トレースログファイル&
+      RTOSのトレースログ機能を用いて出力したトレースログや、
+      シミュレータなどが出力するトレースログをファイルにしたもの\\
+  \hline
+  標準形式トレースログファイル&
+      本ソフトウェアが扱うことの出来る形式をもつトレースログファイル。
+      各種トレースログファイルは、この共通形式トレースログファイルに
+      変換することにより本ソフトウェアで扱うことが出来るようになる。 \\
+  \hline
+  変換ルール  &
+  トレースログファイルを標準形式トレースログファイルに変換する際に用いられるルール。
+  \\
+  \hline
+  可視化ルール  &
+  標準形式トレースログファイルを可視化する際に用いられるルール。
+  \\
+  \hline
+  TLVファイル &
+      本ソフトウェアが中間形式として用いるファイル。
+      前述の標準形式トレースログファイルは、このTLVファイルの一部である。 \\
+  \hline
+  \\
+  \hline
+  EBNF &
+      Extended Backus?Naur Formの略。 \\
+  \hline
+
+ \end{tabular}
+\end{table}
+
+\subsection{概要}
+本書では、組込みMPRTOS向けアプリケーション開発支援ツールの
+ソフトウェアの仕様を記述する。
+本書は特に、フェーズ5におけるリファクタリング作業に関する記述を行う。
+
+
+\section{概要説明}
+\subsection{リファクタリングを実施する理由}
+現状のTLVでは、標準形式トレースログのパースにおいて、\ref{rex}のような
+複雑な正規表現を計8回適用している。このような複雑な正規表現は、可読性が低く保守が難しいため、
+リファクタリングを実施した。
+
+リファクタリング後のTLVは、標準形式トレースログのパースを専用のパーサに任せる。
+パーサは、TLV変換ルール・可視化ルールマニュアル(rule-maual.pdf)の「2.1.2標準形式トレースログの定義」
+にあるEBNFのように記述することで、構文を直感的に理解できる。
+また、重複したコードおよび生成規則変更時の変更箇所も減らすことができるため、保守性も向上する。
+
+
+\begin{lstlisting}[caption=リファクタリング前のパースコード例,label=rex]
+m = Regex.Match(_log, @"^(\[[^\]]+\])?(?<objectType>[^\[\]\(\)\.]+)\([^\)]+\)(\.[^\s]+)?$");
+	if (m.Success)
+		ObjectType = m.Groups["objectType"].Value;
+	HasObjectType = m.Success;
+\end{lstlisting}
+
+\begin{lstlisting}[caption=リファクタリング後のパースコード例,label=refacted]
+public ITraceLogParser OBject()
+{
+	Begin();
+
+	var object_ =
+		ObjectTypeName().Char('(').AttributeCondition().Char(')')
+		.OR().
+		ObjectName();
+
+	object_.ObjectValue = Result();
+
+	object_.HasObjectTypeValue = false;
+	return (ITraceLogParser)object_.End();
+}
+\end{lstlisting}
+
+
+
+\subsection{リファクタリングを実施する対象}
+リファクタリング対象は、\verb!TraceLog!クラス、特にそのコンストラクタである。
+
+標準形式トレースログをパースするときにパーサを用いるように、\verb!TraceLog!コンストラクタを変更する。
+
+\section{変更内容}
+\subsection{クラス構成}
+\verb!TraceLog!クラスがパースを委譲する標準形式トレースログ用のパーサを追加する。
+今回の変更に伴う影響範囲は、\verb!TraceLog!クラス以外に存在しない。
+
+% \begin{figure}
+% \centering
+% \includegraphics{conv1.png}
+% \caption{リファクタリング後のクラス構成}\label{class}
+% \end{figure}
+
+
+\subsection{処理の流れ}
+リファクタリング前の処理の流れは、図\ref{before}のように、
+\verb!TraceLog!コンストラクタにて正規表現を用いたパースを行っている。
+
+リファクタリング後の処理の流れは、図\ref{after}のように、
+\verb!TraceLog!コンストラクタでパーサクラスのメソッドを呼び、
+パーサクラスにて標準形式トレースログのパースを行う。
+パースが終了したら、パーサクラスから結果を受け取り、各値を設定する。
+
+% \begin{figure}
+% \centering
+% \includegraphics{conv1.png}
+% \caption{リファクタリング前の標準ログ変換処理}\label{before}
+% \end{figure}
+
+% \begin{figure}
+% \centering
+% \includegraphics{draw1.png}
+% \caption{リファクタリング前の可視化処理}\label{after}
+% \end{figure}
+
+
+\subsection{パーサの構成}
+パーサは、コードでEBNFを表現し、直感的に理解できるようにする。
+例として、HaskellのパーサコンビネータライブラリParsecを参考にした次のURLにあるものが挙げられる。
+
+\begin{verbatim}
+LukeH's WebLog : Monadic Parser Combinators using C# 3.0
+http://blogs.msdn.com/lukeh/archive/2007/08/19/monadic-parser-combinators-using-c-3-0.aspx
+\end{verbatim}
+
+\end{document}
