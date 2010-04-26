@@ -16,12 +16,19 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <returns></returns>
         IParser End();
 
+
         #region 各種基本パーサ
         /*
          * ここにある各種基本パーサ(パースメソッド)へ、
          * サブクラスは同名のメソッドにて委譲します。
          * そうすることで、実質、サブクラスの型にキャストが可能となり、
          * 高い保守性を実現しています。
+         * 
+         * 実際は、この部分はこのインタフェースに記述しなくても動作します。
+         * ＜記述した意図＞
+         * 下位インタフェースにて戻り値の型を変更して最低限再定義してほ
+         * しいものを示すために設けました。
+         * 
          */
 
         #region パーサコンビネータ
@@ -32,7 +39,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <typeparam name="TParser">サブクラス(パーサクラス)の型</typeparam>
         /// <param name="f">パーサ(メソッド)</param>
         /// <returns>this</returns>
-        IParser Many<TParser>(Func<TParser> f);
+        IParser Many<TParser>(Func<TParser> f);   // 下位インタフェースでは、非ジェネリクスで定義して可読性を向上させて下さい
         /// <summary>
         /// 引数で与えられたパーサ(メソッド)を1回以上適用する。
         /// 正規表現の"+"に相当する。
@@ -40,7 +47,7 @@ namespace NU.OJL.MPRTOS.TLV.Base
         /// <typeparam name="TParser">サブクラス(パーサクラス)の型</typeparam>
         /// <param name="f">パーサ(メソッド)</param>
         /// <returns>成功：this、失敗：NullObject</returns>
-        IParser Many1<TParser>(Func<TParser> f);
+        IParser Many1<TParser>(Func<TParser> f);   // 下位インタフェースでは、非ジェネリクスで定義して可読性を向上させて下さい
         /// <summary>
         /// パーサ間のORをとる。
         /// ORの前までにパースが失敗した場合、ORの後のパーサで再度パースを試みる。
