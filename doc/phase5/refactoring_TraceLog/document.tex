@@ -1,6 +1,7 @@
 \documentclass[a4j]{jsarticle}
 \usepackage[dvipdfmx]{graphicx}
 \usepackage{listings}
+\usepackage{here}
 \newcommand{\figref}[1]{図\ref{#1}}
 
 \lstset{language=C,%
@@ -138,16 +139,18 @@ public ITraceLogParser OBject()
 
 標準形式トレースログをパースするときにパーサを用いるように、\verb!TraceLog!コンストラクタを変更する。
 
+
+\newpage
 \section{変更内容}
 \subsection{クラス構成}
 \verb!TraceLog!クラスがパースを委譲する標準形式トレースログ用のパーサを追加する。
 今回の変更に伴う影響範囲は、\verb!TraceLog!クラス以外に存在しない。
 
-% \begin{figure}
-% \centering
-% \includegraphics{conv1.png}
-% \caption{リファクタリング後のクラス構成}\label{class}
-% \end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\hsize,bb=0 0 660 500]{class.png}
+\caption{リファクタリング後のクラス構成}\label{class}
+\end{figure}
 
 
 \subsection{処理の流れ}
@@ -159,17 +162,17 @@ public ITraceLogParser OBject()
 パーサクラスにて標準形式トレースログのパースを行う。
 パースが終了したら、パーサクラスから結果を受け取り、各値を設定する。
 
-% \begin{figure}
-% \centering
-% \includegraphics{conv1.png}
-% \caption{リファクタリング前の標準ログ変換処理}\label{before}
-% \end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\hsize,bb=0 0 660 512]{before.png}
+\caption{リファクタリング前の標準ログ変換処理}\label{before}
+\end{figure}
 
-% \begin{figure}
-% \centering
-% \includegraphics{draw1.png}
-% \caption{リファクタリング前の可視化処理}\label{after}
-% \end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\hsize,bb=0 0 660 500]{after.png}
+\caption{リファクタリング後の標準ログ変換処理}\label{after}
+\end{figure}
 
 
 \subsection{パーサの構成}
