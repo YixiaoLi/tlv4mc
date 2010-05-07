@@ -93,10 +93,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.rowHeightToolStripTextNumericUpDown = new NU.OJL.MPRTOS.TLV.Base.Controls.ToolStripTextNumericUpDown();
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.searchToolStrip = new System.Windows.Forms.ToolStrip();
             this.searchLabelName = new System.Windows.Forms.ToolStripLabel();
-            this.TargetResourceName = new System.Windows.Forms.ToolStripComboBox();
-            this.TargetRuleName = new System.Windows.Forms.ToolStripComboBox();
+            this.TargetResourceNameForm = new System.Windows.Forms.ToolStripComboBox();
+            this.TargetRuleNameForm = new System.Windows.Forms.ToolStripComboBox();
+            this.TargetSubRuleName = new System.Windows.Forms.ToolStripComboBox();
+            this.TargetFigureName = new System.Windows.Forms.ToolStripComboBox();
             this.searchBackwardButton = new System.Windows.Forms.ToolStripButton();
             this.searchForwardButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
@@ -105,7 +107,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripContainer.SuspendLayout();
             this.informationToolStrip.SuspendLayout();
             this.viewingAreaToolStrip.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.searchToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageList
@@ -147,7 +149,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             // toolStripContainer.TopToolStripPanel
             // 
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.viewingAreaToolStrip);
-            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.searchToolStrip);
             // 
             // informationToolStrip
             // 
@@ -411,19 +413,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripLabel5.Size = new System.Drawing.Size(17, 22);
             this.toolStripLabel5.Text = "px";
             // 
-            // toolStrip1
+            // searchToolStrip
             // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.searchToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.searchToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.searchLabelName,
-            this.TargetResourceName,
-            this.TargetRuleName,
+            this.TargetResourceNameForm,
+            this.TargetRuleNameForm,
+            this.TargetSubRuleName,
+            this.TargetFigureName,
             this.searchBackwardButton,
             this.searchForwardButton});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 25);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(339, 25);
-            this.toolStrip1.TabIndex = 2;
+            this.searchToolStrip.Location = new System.Drawing.Point(3, 25);
+            this.searchToolStrip.Name = "searchToolStrip";
+            this.searchToolStrip.Size = new System.Drawing.Size(532, 25);
+            this.searchToolStrip.TabIndex = 2;
             // 
             // searchLabelName
             // 
@@ -431,17 +435,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.searchLabelName.Size = new System.Drawing.Size(35, 22);
             this.searchLabelName.Text = "検索：";
             // 
-            // TargetResourceName
+            // TargetResourceNameForm
             // 
-            this.TargetResourceName.Name = "TargetResourceName";
-            this.TargetResourceName.Size = new System.Drawing.Size(121, 25);
-            this.TargetResourceName.Text = "検索対象リソース名";
+            this.TargetResourceNameForm.Name = "TargetResourceNameForm";
+            this.TargetResourceNameForm.Size = new System.Drawing.Size(100, 25);
+            this.TargetResourceNameForm.Text = "TASK1";
             // 
-            // TargetRuleName
+            // TargetRuleNameForm
             // 
-            this.TargetRuleName.Name = "TargetRuleName";
-            this.TargetRuleName.Size = new System.Drawing.Size(121, 25);
-            this.TargetRuleName.Text = "検索対象ルール名";
+            this.TargetRuleNameForm.Name = "TargetRuleNameForm";
+            this.TargetRuleNameForm.Size = new System.Drawing.Size(100, 25);
+            this.TargetRuleNameForm.Text = "taskStateChange";
+            // 
+            // TargetSubRuleName
+            // 
+            this.TargetSubRuleName.Name = "TargetSubRuleName";
+            this.TargetSubRuleName.Size = new System.Drawing.Size(100, 25);
+            this.TargetSubRuleName.Text = "stateChangeEvent";
+            // 
+            // TargetFigureName
+            // 
+            this.TargetFigureName.Name = "TargetFigureName";
+            this.TargetFigureName.Size = new System.Drawing.Size(100, 25);
+            this.TargetFigureName.Text = "runningShapes";
             // 
             // searchBackwardButton
             // 
@@ -481,8 +497,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.informationToolStrip.PerformLayout();
             this.viewingAreaToolStrip.ResumeLayout(false);
             this.viewingAreaToolStrip.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.searchToolStrip.ResumeLayout(false);
+            this.searchToolStrip.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -516,12 +532,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		private NU.OJL.MPRTOS.TLV.Base.Controls.ToolStripTextNumericUpDown rowHeightToolStripTextNumericUpDown;
 		private System.Windows.Forms.ToolStripLabel toolStripLabel5;
 		private System.Windows.Forms.ToolStripButton autoResizeRowHeightToolStripButton;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip searchToolStrip;
         private System.Windows.Forms.ToolStripLabel searchLabelName;
-        private System.Windows.Forms.ToolStripComboBox TargetResourceName;
-        private System.Windows.Forms.ToolStripComboBox TargetRuleName;
+        private System.Windows.Forms.ToolStripComboBox TargetResourceNameForm;
+        private System.Windows.Forms.ToolStripComboBox TargetRuleNameForm;
         private System.Windows.Forms.ToolStripButton searchBackwardButton;
         private System.Windows.Forms.ToolStripButton searchForwardButton;
+        private System.Windows.Forms.ToolStripComboBox TargetSubRuleName;
+        private System.Windows.Forms.ToolStripComboBox TargetFigureName;
 
 
 	}
