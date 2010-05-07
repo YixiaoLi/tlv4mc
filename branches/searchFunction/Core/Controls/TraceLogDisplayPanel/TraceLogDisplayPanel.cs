@@ -123,6 +123,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		hScrollBar.Maximum = int.MaxValue;
 		hScrollBar.Value = hScrollBar.Minimum;
 		viewingAreaToolStrip.Enabled = false;
+        searchToolStrip.Enabled = false;
         
 		imageList.Images.Add("visualize", Properties.Resources.visualize);
 		imageList.Images.Add("resource", Properties.Resources.resource);
@@ -177,7 +178,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         viewableSpanTextBox.Text = TimeLine.MinTime.ToString() + " 〜 " + TimeLine.MaxTime.ToString() + " " + _timeScale;
 	    viewableSpanTextBox.Width = TextRenderer.MeasureText(viewableSpanTextBox.Text, viewableSpanTextBox.Font).Width;
 	    viewingAreaToolStrip.Enabled = true;
-
+        searchToolStrip.Enabled = true;
 	    setNodes();
 
 	    foreach (TimeLineVisualizer tlv in _list)
@@ -916,44 +917,100 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void searchForwardButton_Click(object sender, EventArgs e)
     {
-        string jumpTime = "10000000";
+        string jumpTime = searchTime();
+
+
         decimal start = decimal.Parse(TimeLine.MinTime.ToString());
         decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
-        Time time = new Time(jumpTime , 10);
 
-        string add;
-        
-        
+
+        //スクロールバーの移動位置の計算
         decimal relatedLocation = (decimal.Parse(jumpTime) - start ) / (end - start);
         double jumpLocation = (double)hScrollBar.Maximum * (double)relatedLocation;
 
-        if ((int)jumpLocation != 0)
+        //カーソルが画面の真ん中に来るようにスクロールバーの位置を調整
+        if ((int)jumpLocation > 10000)
         {
-            hScrollBar.Value = (int)jumpLocation -1000000;
+            hScrollBar.Value = (int)jumpLocation - 1000000;
+        }
+        else if ((int)jumpLocation > 0 && (int)jumpLocation <= 10000)
+        {
+            hScrollBar.Value = (int)jumpLocation + 1;
         }
         else
         {
             hScrollBar.Value = 1;
         }
 
-        
+
+        Time time = new Time(jumpTime, 10);
+
+        //カーソルを移動
         ApplicationFactory.BlackBoard.CursorTime = time;
         
-
-
-        /*
-          Graphics g = this.CreateGraphics();
-          Time time = new Time("10000000",10);
-          DrawCursor(g, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, time);
-          Time fromTime = new Time("10000000",10);
-          Time toTime = new Time("20000000",10);
-         _data.SettingData.TraceLogDisplayPanelSetting.TimeLine.SetTime(fromTime,toTime);
-        */
     }
 
+    private string searchTime()
+    {
+        //検索フォームに入力されたリソース名、ルール名、サブルール名、図形名の取得
+        //これらの名前に対応するデータがあるかどうかをチェックする機構を後に実装する必要あり
+        string targetResourceName = this.TargetResourceNameForm.Text;
+        string targetRuleName = this.TargetRuleNameForm.Text;
+        string targetSubRuleName = this.TargetSubRuleName.Text;
+        string targetFigureName = this.TargetFigureName.Text;
+
+        string normTime = null; //検索基準時刻
+        string searchTime = null;       
+
+
+        if (normTime == null)//時刻指定がなされていない場合
+        {
+            //検索基準時刻を現在のカーソル時刻に設定
+            normTime = ApplicationFactory.BlackBoard.CursorTime.Value.ToString();
+        }
+        decimal decimalTargetTime = Decimal.Parse(normTime);
+        
+        //対象タスクに対して対象ルールが適用された際のデータセットを取得
+        EventShapes ruleApplyingData = this._data.VisualizeShapeData.RuleResourceShapes[targetRuleName + ":" + targetResourceName];
+
+        if (ruleApplyingData != null) //ここから始まる if文のネストは後に修正する必要あり
+        {
+            //対象ルールの中で、対象サブルールが適用された際のデータセットを取得
+            List<EventShape> subRuleApplyingData = ruleApplyingData.List[targetRuleName + ":" + targetSubRuleName];
+            if (subRuleApplyingData != null)
+            {
+                for (int i = 0; i < subRuleApplyingData.Count; i++)
+                {
+                    EventShape shape = subRuleApplyingData[i];
+                    if (shape.From.Value > decimalTargetTime)
+                    {
+                        searchTime = shape.From.Value.ToString();
+                        break;
+                    }
+
+                  if( i == subRuleApplyingData.Count - 1)
+                  {
+                      searchTime = normTime;
+                      System.Windows.Forms.MessageBox.Show("現在時刻が最終です");
+                  }
+                }
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("指定されたサブルールが存在しません");
+            }
+        }
+        else
+        {
+            System.Windows.Forms.MessageBox.Show("指定されたルールかリソースが存在しません");
+        }
+
+        return searchTime;
+    }
+    
     private void treeGridView_Click(object sender, EventArgs e)
     {
-
+        //今は何もなし
     }
 
     }
