@@ -995,7 +995,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                     if (i == subRuleApplyingData.Count - 1)
                     {
                         searchTime = normTime;
-                        System.Windows.Forms.MessageBox.Show("これ以上後ろには条件に一致する時刻はありません");
+                        System.Windows.Forms.MessageBox.Show("検索の終わりです");
                     }
                 }
             }
@@ -1050,7 +1050,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                     if (i == 0)
                     {
                         searchTime = normTime;
-                        System.Windows.Forms.MessageBox.Show("これ以上前には条件に一致する時刻はありません");
+                        System.Windows.Forms.MessageBox.Show("検索の終わりです");
                     }
                 }
             }

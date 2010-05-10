@@ -101,6 +101,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.TargetFigureName = new System.Windows.Forms.ToolStripComboBox();
             this.searchBackwardButton = new System.Windows.Forms.ToolStripButton();
             this.searchForwardButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -422,11 +427,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.TargetRuleNameForm,
             this.TargetSubRuleName,
             this.TargetFigureName,
+            this.toolStripSeparator6,
             this.searchBackwardButton,
-            this.searchForwardButton});
+            this.toolStripSeparator4,
+            this.searchForwardButton,
+            this.toolStripSeparator5,
+            this.toolStripLabel6,
+            this.toolStripButton1});
             this.searchToolStrip.Location = new System.Drawing.Point(3, 25);
             this.searchToolStrip.Name = "searchToolStrip";
-            this.searchToolStrip.Size = new System.Drawing.Size(556, 25);
+            this.searchToolStrip.Size = new System.Drawing.Size(650, 25);
             this.searchToolStrip.TabIndex = 2;
             // 
             // searchLabelName
@@ -478,6 +488,36 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.searchForwardButton.Size = new System.Drawing.Size(23, 22);
             this.searchForwardButton.Text = "次を検索";
             this.searchForwardButton.Click += new System.EventHandler(this.searchForwardButton_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "詳細検索";
+            // 
+            // toolStripLabel6
+            // 
+            this.toolStripLabel6.Name = "toolStripLabel6";
+            this.toolStripLabel6.Size = new System.Drawing.Size(53, 22);
+            this.toolStripLabel6.Text = "詳細検索";
             // 
             // TraceLogDisplayPanel
             // 
@@ -540,6 +580,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private System.Windows.Forms.ToolStripButton searchForwardButton;
         private System.Windows.Forms.ToolStripComboBox TargetSubRuleName;
         private System.Windows.Forms.ToolStripComboBox TargetFigureName;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel6;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
 
 
 	}
