@@ -426,14 +426,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.searchForwardButton});
             this.searchToolStrip.Location = new System.Drawing.Point(3, 25);
             this.searchToolStrip.Name = "searchToolStrip";
-            this.searchToolStrip.Size = new System.Drawing.Size(532, 25);
+            this.searchToolStrip.Size = new System.Drawing.Size(556, 25);
             this.searchToolStrip.TabIndex = 2;
             // 
             // searchLabelName
             // 
             this.searchLabelName.Name = "searchLabelName";
-            this.searchLabelName.Size = new System.Drawing.Size(35, 22);
-            this.searchLabelName.Text = "検索：";
+            this.searchLabelName.Size = new System.Drawing.Size(59, 22);
+            this.searchLabelName.Text = "簡易検索：";
             // 
             // TargetResourceNameForm
             // 
