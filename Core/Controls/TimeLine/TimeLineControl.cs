@@ -57,6 +57,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			MarkerMode
 		}
 
+      
 		protected int _lastMouseMoveX;
 		protected int _mouseDownX = -1;
 		protected CursorModes _cursorMode = CursorModes.Normal;
@@ -97,10 +98,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		// カーソルマーカーをマウスの動きに合わせて変化させるかどうか
 		public virtual bool CursorTimeTracked { get; set; }
-		
+
+	
 		// カーソルマーカーを描画するかどうか
 		public virtual bool CursorTimeDrawed { get; set; }
-		
+
+
 		public virtual bool SelectedTimeRangeTracked { get; set; }
 		public virtual TimeLine TimeLine { get; set; }
 		public virtual GeneralNamedCollection<TimeLineMarker> LocalTimeLineMarkers { get; private set; }
@@ -111,7 +114,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			DoubleBuffered = true;
 			CursorTimeTracked = true;
 			CursorTimeDrawed = true;
-			SelectedTimeRangeTracked = true;
+   			SelectedTimeRangeTracked = true;
 			LocalTimeLineMarkers = new GeneralNamedCollection<TimeLineMarker>();
 			InitializeComponent();
 			_addMarkerContextToolStripItem = new ToolStripMenuItem("ここにマーカーを追加する");
@@ -157,9 +160,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			this.ApplyNativeScroll();
 
-			ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) => { Refresh(); };
+            // ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) => { Refresh(); };
 
-			ApplicationData.FileContext.DataChanged += (o, _e) =>
+            ApplicationData.FileContext.DataChanged += (o, _e) =>
 			{
 				Invoke((MethodInvoker)(() =>
 				{
@@ -174,6 +177,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				}));
 			};
 		}
+
 
 		public virtual void SetData(TraceLogVisualizerData data)
 		{
@@ -193,7 +197,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				else
 					ContextMenuStrip = _markerSelectedContextMenuStrip;
 
-				Refresh();
+                Refresh();
 			};
 
 			_timeLineMarkerManager.Markers.CollectionChanged += (o, e) =>
@@ -322,10 +326,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			}
 
-			if (CursorTimeTracked)
-			{
-				ApplicationFactory.BlackBoard.CursorTime = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x);
-			}
+            if (CursorTimeTracked)
+            {
+                ApplicationFactory.BlackBoard.CursorTime = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x);
+            }
 
 			_lastMouseMoveX = x;
 		}
@@ -362,7 +366,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					}
 				}
 
-				Refresh();
+                Refresh();
 			}
 		}
 

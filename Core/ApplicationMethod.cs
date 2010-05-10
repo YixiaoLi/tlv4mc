@@ -50,8 +50,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			{
 				T old = nowValue;
 				nowValue = newValue;
-				if (changedEvent != null)
-					changedEvent(sender, new GeneralChangedEventArgs<T>(old, nowValue));
+                if (changedEvent != null)
+                {
+                   changedEvent(sender, new GeneralChangedEventArgs<T>(old, nowValue));
+                }
 			}
 		}
 	}

@@ -45,7 +45,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	public class ApplicationBlackBoard
 	{
 		public EventHandler<GeneralChangedEventArgs<Time>> CursorTimeChanged;
-		public EventHandler<GeneralChangedEventArgs<Pair<Time,Time>>> SelectedTimeRangeChanged;
+        public EventHandler<GeneralChangedEventArgs<Pair<Time, Time>>> SelectedTimeRangeChanged;
 
 		private Time _cursorTime;
 		public Time CursorTime { get { return _cursorTime; } set { ApplicationMethod.SetValue<Time>(ref _cursorTime, value, CursorTimeChanged, this); } }
