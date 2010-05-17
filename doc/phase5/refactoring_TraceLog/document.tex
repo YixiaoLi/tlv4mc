@@ -97,11 +97,10 @@ TLV（トレース ログ ヴィジュアライザー）\\
 ソフトウェアの仕様を記述する。
 本書は特に、フェーズ5におけるリファクタリング作業に関する記述を行う。
 
-\part{リファクタリング仕様書}
-\section{概要説明}
-\subsection{リファクタリングを実施する理由}
-現状の\verb!TraceLog!クラス(クラス概要は\ref{sec:tl}参照)では、標準形式トレースログのパースにおいて、Listing\ref{rex}のような
-複雑な正規表現を計8回適用している。これは、Objectなどの要素1つにつき1行の正規表現で
+\part{リファクタリング概要}
+\section{実施理由}
+現状の\verb!TraceLog!クラス(クラス概要は\ref{sec:tl}参照)では、標準形式トレースログのパースにおいて、
+Listing\ref{rex}のような複雑な正規表現を計8回適用している。これは、Objectなどの要素1つにつき1行の正規表現で
 取得するためである。こうすることで、TimeやValue等の有無に関わらず
 \footnote{可視化ルールファイルには、Timeがない、Valueがない、AttributeNameがない等といった
 不完全な標準形式トレースログが記述されている。}
@@ -129,59 +128,15 @@ m = Regex.Match(_log, @"^(\[[^\]]+\])?(?<objectType>[^\[\]\(\)\.]+)\([^\)]+\)(\.
 \end{lstlisting}
 
 \begin{lstlisting}[caption=リファクタリング後に表現したいコード例,label=refacted]
-public abstract class MiniMLParsers<TInput> : CharParsers<TInput>{
-    public MiniMLParsers() {
-        Whitespace = Rep(Char(' ').OR(Char('\t').OR(Char('\n')).OR(Char('\r'))));
-        WsChr =  chr => Whitespace.AND(Char(chr));
-        Id =     from w in Whitespace
-                 from c in Char(char.IsLetter)
-                 from cs in Rep(Char(char.IsLetterOrDigit))
-                 select cs.Aggregate(c.ToString(),(acc,ch) => acc+ch);
-        Ident =  from s in Id where s != "let" && s != "in" select s;
-        LetId =  from s in Id where s == "let" select s;
-        InId =   from s in Id where s == "in" select s;
-        Term1 = (from x in Ident 
-                 select (Term)new VarTerm(x))
-                .OR(
-                (from u1 in WsChr('(') 
-                 from t in Term 
-                 from u2 in WsChr(')') 
-                 select t));
-        Term =  (from u1 in WsChr('\\')
-                 from x in Ident
-                 from u2 in WsChr('.')
-                 from t in Term
-                 select (Term)new LambdaTerm(x,t))
-                .OR(
-                (from letid in LetId
-                 from x in Ident
-                 from u1 in WsChr('=')
-                 from t in Term
-                 from inid in InId
-                 from c in Term
-                 select (Term)new LetTerm(x,t,c)))
-                .OR(
-                (from t in Term1
-                 from ts in Rep(Term1)
-                 select (Term)new AppTerm(t,ts)));
-        All =    from t in Term from u in WsChr(';') select t;
-    }
-   
-    public Parser<TInput, char[]> Whitespace;
-    public Func<char, Parser<TInput, char>> WsChr;
-    public Parser<TInput, string> Id;
-    public Parser<TInput, string> Ident;
-    public Parser<TInput, string> LetId;
-    public Parser<TInput, string> InId;
-    public Parser<TInput, Term> Term;
-    public Parser<TInput, Term> Term1;
-    public Parser<TInput, Term> All;
-}
+var object_ = 
+	ObjectTypeName().Char('(').AttributeCondition().Char(')')
+	.OR().
+	ObjectName();
 \end{lstlisting}
 
 
 
-\subsection{リファクタリングを実施する対象}\label{sec:tl}
+\section{対象}\label{sec:tl}
 リファクタリング対象は、\verb!TraceLog!クラス、特にそのコンストラクタである。
 この\verb!TraceLog!クラスは、標準形式トレースログを構成するトークンを保持し、
 標準形式トレースログを用いた処理(可視化表示など)を容易にする。
@@ -254,9 +209,8 @@ http://blogs.msdn.com/lukeh/archive/2007/08/19/monadic-parser-combinators-using-
 
 
 \newpage
-\part{リファクタリング報告書}
-\section{概要}
-本書は、Phase5で行ったリファクタリングにより変更・追加された箇所、および、
+\part{詳細仕様}
+本章は、Phase5で行ったリファクタリングにより変更・追加された箇所、および、
 リファクタリング後のシーケンスを説明し、今回採用しなかった手法との比較や今回の実装の採用理由を記述する。
 
 
@@ -318,21 +272,64 @@ public ITraceLogParser ObjectTypeName()
 パーサ・コンビネータとは、パーサとパーサを組み合わせることのできるコンビネータを指す。
 具体的には、Manyメソッド、Many1メソッド、ORメソッドが挙げられる。
 これにより、EBNFの表現やLL(k)文法のパージングを可能にしている。
-しかしながら、左再帰性の除去が必要である。
+しかしながら、LL(k)文法を扱うため左再帰性の除去が必要である。
 
 \subsubsection{NullObjectパターン}
+インタフェースを実装しているが、何もしないクラスを用いるデザインパターン。
+多態性を利用したもので、Nullかどうかを判別するコードを排除でき、処理の流れが明確になる。
+今回、これを用いることでEBNFのような記述を実現している。
+解析メソッドは、パーサクラスもしくはパーサクラス用のNullObjectを返すことで次の解析メソッドを実行するかを決定する。
+すると、if分をはさまずにメソッドチェーンのみで生成規則を表現できるようになる。
 
+他に、Nullによる問題(意図しないNull参照による例外発生など)を防止できるというメリットもある。
 
-\subsection{主要メソッドの説明}
+\subsection{基本メソッドの説明}\label{sec:ms}
 \subsubsection{Beginメソッド}
+解析メソッドの処理で最初に実行されるメソッド。
+
+現在は、スタックへのパース結果およびポインタ
+\footnote{解析しようとしている文字の位置を示すもの。}
+の保存領域確保を行っている。
+
 \subsubsection{Endメソッド}
+解析メソッドの処理で最後に実行されるメソッド。
+基本的に、パースを実行、つまり、生成規則を表すメソッドチェーンを実行して得られた戻り値
+(パーサオブジェクトまたはNullObject)から呼ばれる。
+
+現在は、スタックのポップ、直前のスタックにあるパース結果との結合、NullObjectのステータス初期化を行っている。
+パーサクラスかNullObjectクラスかで動作が変わる。
+
 \subsubsection{Resultメソッド}
+パースを実行して得られた文字列を返すメソッド。
+
 \subsubsection{ORメソッド}
+EBNFの記号\verb!"|"!を表すメソッド。生成規則を表すメソッドチェーンで使用する。
+
+このメソッドより前の生成規則に当てはまらなかった場合、このメソッド内でバックトラッキングして、
+次の生成規則の適用を試みる。
+
 \subsubsection{Manyメソッド}
+EBNFの記号\verb!"*"!を表すメソッド。生成規則を表すメソッドチェーンで使用する。
+
+引数に与えられた解析メソッドを0回以上適用させる。
+
 \subsubsection{Many1メソッド}
+EBNFの記号\verb!"+"!を表すメソッド。生成規則を表すメソッドチェーンで使用する。
+
+引数に与えられた解析メソッドを1回以上適用させる。
+
 
 \section{クラス設計}
 リファクタリング後のクラス図を図\ref{class}に示す。
+\verb!TraceLog!クラス以外のクラス群が、前章の図\ref{aclass}にあるサブシステムに相当する。
+
+パーサは、基本的な機能を備えたクラスとパース対象に特化したクラスにわけることで、
+基本的な機能を備えたクラスの再利用ができるようになっている。
+そのため、それに該当するParserクラスおよびNullObjectForParserクラスを
+継承する派生クラスを定義し、ITraceLogParserクラスのような特化したインタフェースを定義してそれぞれの
+派生クラスが実装することで、様々なパーサが作成可能である。
+
+次に、図\ref{class}にある各クラスの簡単な説明をする。
 
 \begin{figure}[H]
 \centering
@@ -340,18 +337,62 @@ public ITraceLogParser ObjectTypeName()
 \caption{リファクタリング後のクラス構成}\label{class}
 \end{figure}
 
-\subsection{Parserクラス}
-\subsection{StackForParserクラス}
-\subsection{InputStreamForParserクラス}
-\subsection{NullObjectForParserクラス}
-\subsection{TraceLogParserクラス}
-\subsection{NullObjectOfTraceLogParserクラス}
-\subsection{IParserクラス}
-\subsection{ITraceLogParserクラス}
+\subsection{既設クラス}
+\subsubsection{TraceLogクラス}
+標準形式トレースログをコード上で扱うためのクラス。
 
+今回、そのコンストラクタをリファクタリングし、可読性の向上を行った。
+また、新たに\verb!TraceLogParser!オブジェクトを保持する静的フィールドを追加した。
+
+\subsection{新設クラス}
+\subsubsection{Parserクラス}
+パーサを実現するための基本的な機能を備えたクラス。
+
+これを継承し、解析メソッドを記述することで専用のパーサを作成する。
+\ref{sec:ms}に示したメソッドの他に、アルファベットや数字の解析メソッドも有する。
+
+\subsubsection{StackForParserクラス}
+\verb!Parser!クラスが利用する専用スタック。
+
+パーサが今までのパース結果やポインタを退避させるのに用い、できるだけ効率よく管理するために用意した。
+
+\subsubsection{InputStreamForParserクラス}
+パース対象を格納し、管理するクラス。
+
+ポインタの制御やポインタの示す文字の提供などを行う。
+\verb!.NET Framework!の標準ライブラリである\verb!StringReader!クラスは、
+Readメソッドで文字を消費してしまって復元が難しいため、専用のクラスを用意した。
+
+\subsubsection{NullObjectForParserクラス}
+\verb!Parser!クラスのNullObjectを実現するための基本的な機能を備えたクラス。
+
+これを継承し、解析メソッドを含むインタフェースを実装することで、専用のパーサ用NullObjectを作成する。
+
+
+\subsubsection{TraceLogParserクラス}
+標準形式トレースログ用のパーサクラス。
+
+標準形式トレースログをパースするための解析メソッドや結果を取得するためのプロパティがある。
+
+\subsubsection{NullObjectOfTraceLogParserクラス}
+標準形式トレースログ用のパーサクラス用のNullObjectクラス。
+
+メソッドは基本的に何もしないが、効率やアルゴリズム上の理由などで処理を行う場合がある。
+ただし、NullObjectとしては異例なため、そのような場合は保守性が低下する恐れがある。
+
+\subsubsection{IParserクラス}
+\verb!Parser!クラスと\verb!NullObjectForParser!クラスを結ぶインタフェース。
+
+これにより、メソッドチェーンによるEBNFのような表現を実現している。
+
+\subsubsection{ITraceLogParserクラス}
+\verb!TraceLogParser!クラスと\verb!NullObjectOfTraceLogParser!クラスを結ぶインタフェース。
+
+これにより、メソッドチェーンによるEBNFのような表現を実現している。
 
 \section{シーケンス}
 
+\part{評価}
 \section{他手法との比較}
 \subsection{性能比較}
 
