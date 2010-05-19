@@ -85,6 +85,7 @@
     <Compile Include="Controls\ResourceExplorer.Designer.cs">
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Search\SimpleSearch.cs" />
     <Compile Include="Controls\TimeLineMacroViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
