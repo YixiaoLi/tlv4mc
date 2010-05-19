@@ -83,7 +83,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
-            ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) => { Refresh(); };
+
 			SizeChanged += (o, _e) => { updateViewingArea(); };
 
 			EventHandler showStatus = (o, _e) =>
@@ -267,10 +267,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					int x = _scale.Location.X - 1;
 					int w = _scale.Width + 1;
 
+                    //マクロビューア内の背景を白く塗りつぶすための処理
 					g.FillRectangle(Brushes.White, new Rectangle(x, y, w, _rowHeight));
 
+                    //マクロビューア内の行線を引く処理
 					g.DrawRectangle(new System.Drawing.Pen(Color.FromKnownColor(KnownColor.DarkGray)), new Rectangle(x, y, w, _rowHeight));
                    
+                    //マクロビューア内のタイムラインを描画する処理
 					tl.Draw(g, new Rectangle(x + 1, y + 1, w - 1, _rowHeight - 1));
 
 					i++;
@@ -284,8 +287,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			RectangleF r = new RectangleF(_fx, rect.Y + 1, _tx - _fx < 0 ? 1 : _tx - _fx, rect.Height - 2);
 
+            //マクロビューア内の指定領域を透過色で塗りつぶす処理
 			graphics.FillRectangle(new SolidBrush(Color.FromArgb(50, _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor)), r);
-			graphics.DrawRectangle(new Pen() { Color = Color.FromArgb(100, _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor), Width = 1.0f }, r.X, r.Y, r.Width, r.Height);
+
+            //マクロビューア内の指定領域の両端にカーソルを引く処理
+            graphics.DrawRectangle(new Pen() { Color = Color.FromArgb(100, _data.SettingData.TimeLineMacroViewerSetting.SelectedAreaColor), Width = 1.0f }, r.X, r.Y, r.Width, r.Height);
 
 		}
 

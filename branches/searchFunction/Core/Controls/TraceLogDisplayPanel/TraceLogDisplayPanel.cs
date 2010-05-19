@@ -177,8 +177,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	    viewableSpanTextBox.Visible = true;
         viewableSpanTextBox.Text = TimeLine.MinTime.ToString() + " 〜 " + TimeLine.MaxTime.ToString() + " " + _timeScale;
 	    viewableSpanTextBox.Width = TextRenderer.MeasureText(viewableSpanTextBox.Text, viewableSpanTextBox.Font).Width;
-	    viewingAreaToolStrip.Enabled = true;
-        searchToolStrip.Enabled = true;
+        viewingAreaToolStrip.Enabled = true;
 	    setNodes();
 
 	    foreach (TimeLineVisualizer tlv in _list)
@@ -201,7 +200,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	    _timeLineMarkerManager.SelectedMarkerChanged += (o, _e) => { timeLineRedraw(); };
 
 	    timeLineRedraw();
-            Cursor = this.HandCursor;
+        Cursor = this.HandCursor;
+
+        searchToolStrip.Enabled = true;
+
+        TargetResourceForm.SelectedIndexChanged += (o, _e) => { makeRuleForm(); };
+        TargetRuleForm.SelectedIndexChanged += (o, _e) => { makeEventForm(); };
+        TargetEventForm.SelectedIndexChanged += (o, _e) => { makeDetailEventForm(); };
+
 	}
 
 	private void setNodes()
@@ -962,10 +968,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     {
         //検索フォームに入力されたリソース名、ルール名、サブルール名、図形名の取得
         //これらの名前に対応するデータがあるかどうかをチェックする機構を後に実装する必要あり
-        string targetResourceName = this.TargetResourceNameForm.Text;
-        string targetRuleName = this.TargetRuleNameForm.Text;
-        string targetSubRuleName = this.TargetSubRuleName.Text;
-        string targetFigureName = this.TargetFigureName.Text;
+        string targetResourceName = this.TargetResourceForm.Text;
+        string targetRuleName = this.TargetRuleForm.Text;
+        string targetSubRuleName = this.TargetEventForm.Text;
+        string targetFigureName = this.TargetDetailEventForm.Text;
+
 
         string normTime = ApplicationFactory.BlackBoard.CursorTime.Value.ToString();//検索基準時刻
             if (normTime == null) normTime = TimeLine.MinTime.ToString(); 
@@ -1017,10 +1024,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     {
         //検索フォームに入力されたリソース名、ルール名、サブルール名、図形名の取得
         //これらの名前に対応するデータがあるかどうかをチェックする機構を後に実装する必要あり
-        string targetResourceName = this.TargetResourceNameForm.Text;
-        string targetRuleName = this.TargetRuleNameForm.Text;
-        string targetSubRuleName = this.TargetSubRuleName.Text;
-        string targetFigureName = this.TargetFigureName.Text;
+        string targetResourceName = this.TargetResourceForm.Text;
+        string targetRuleName = this.TargetRuleForm.Text;
+        string targetSubRuleName = this.TargetEventForm.Text;
+        string targetFigureName = this.TargetDetailEventForm.Text;
 
         string normTime = ApplicationFactory.BlackBoard.CursorTime.Value.ToString(); //検索基準時刻
           if(normTime == null)  normTime = TimeLine.MinTime.ToString();
@@ -1068,10 +1075,35 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     }
 
 
-    
+    private void makeRuleForm()
+    {
+        TargetRuleForm.Visible = true;
+        TargetRuleForm.Items.Add("taskStateChange");
+        TargetRuleForm.Items.Add("callSvc");
+    }
+
+    private void makeEventForm()
+    {
+        TargetEventForm.Visible = true;
+        TargetEventForm.Items.Add("stateChangeEvent");
+        TargetEventForm.Items.Add("activateHappenEvent");
+    }
+
+    private void makeDetailEventForm()
+    {
+        TargetDetailEventForm.Visible = true;
+        TargetDetailEventForm.Items.Add("RUNNING");
+        TargetDetailEventForm.Items.Add("RUNNABLE");
+    }
+
     private void treeGridView_Click(object sender, EventArgs e)
     {
         //今は何もなし
+    }
+
+    private void TargetResourceForm_Click(object sender, EventArgs e)
+    {
+        //MessageBox.Show("test");
     }
 
     }
