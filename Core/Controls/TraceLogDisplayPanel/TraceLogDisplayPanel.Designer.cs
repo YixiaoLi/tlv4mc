@@ -436,7 +436,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripButton1});
             this.searchToolStrip.Location = new System.Drawing.Point(3, 25);
             this.searchToolStrip.Name = "searchToolStrip";
-            this.searchToolStrip.Size = new System.Drawing.Size(313, 25);
+            this.searchToolStrip.Size = new System.Drawing.Size(650, 25);
             this.searchToolStrip.TabIndex = 2;
             // 
             // searchLabelName
@@ -447,36 +447,38 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             // 
             // TargetResourceForm
             // 
-            this.TargetResourceForm.Items.AddRange(new object[] {
-            "LOGTASK",
-            "TASK1",
-            "TASK2",
-            "TASK3",
-            "MAINTASK"});
+            this.TargetResourceForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TargetResourceForm.DropDownWidth = 150;
             this.TargetResourceForm.Name = "TargetResourceForm";
             this.TargetResourceForm.Size = new System.Drawing.Size(100, 25);
-            this.TargetResourceForm.Text = "リソース名";
+            this.TargetResourceForm.ToolTipText = "リソースの指定";
             this.TargetResourceForm.Click += new System.EventHandler(this.TargetResourceForm_Click);
             // 
             // TargetRuleForm
             // 
+            this.TargetRuleForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TargetRuleForm.DropDownWidth = 150;
             this.TargetRuleForm.Name = "TargetRuleForm";
             this.TargetRuleForm.Size = new System.Drawing.Size(100, 25);
-            this.TargetRuleForm.Text = "ルール名";
+            this.TargetRuleForm.ToolTipText = "ルールの指定";
             this.TargetRuleForm.Visible = false;
             // 
             // TargetEventForm
             // 
+            this.TargetEventForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TargetEventForm.DropDownWidth = 150;
             this.TargetEventForm.Name = "TargetEventForm";
             this.TargetEventForm.Size = new System.Drawing.Size(100, 25);
-            this.TargetEventForm.Text = "イベント名";
+            this.TargetEventForm.ToolTipText = "イベントの指定";
             this.TargetEventForm.Visible = false;
             // 
             // TargetDetailEventForm
             // 
+            this.TargetDetailEventForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TargetDetailEventForm.DropDownWidth = 150;
             this.TargetDetailEventForm.Name = "TargetDetailEventForm";
             this.TargetDetailEventForm.Size = new System.Drawing.Size(100, 25);
-            this.TargetDetailEventForm.Text = "イベント詳細";
+            this.TargetDetailEventForm.ToolTipText = "イベント詳細の指定";
             this.TargetDetailEventForm.Visible = false;
             // 
             // toolStripSeparator6
@@ -487,6 +489,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             // searchBackwardButton
             // 
             this.searchBackwardButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.searchBackwardButton.Enabled = false;
             this.searchBackwardButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.BackwardArrow;
             this.searchBackwardButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.searchBackwardButton.Name = "searchBackwardButton";
@@ -502,6 +505,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             // searchForwardButton
             // 
             this.searchForwardButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.searchForwardButton.Enabled = false;
             this.searchForwardButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.ForwardArrow;
             this.searchForwardButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.searchForwardButton.Name = "searchForwardButton";

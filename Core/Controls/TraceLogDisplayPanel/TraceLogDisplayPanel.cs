@@ -47,6 +47,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Base.Controls;
 using NU.OJL.MPRTOS.TLV.Third;
 using System.Collections;
+using NU.OJL.MPRTOS.TLV.Core.Controls.Search;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
@@ -61,8 +62,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	private Cursor HandCursor { get { return new Cursor(Properties.Resources.hand.Handle) { Tag = "hand" }; } }
 	private int _mouseDownX;
 	private bool _mouseDown;
-    Time From;
-    Time To;
+
+   //簡易検索に必要な変数群
+    private string _resourceType = null;
+    private string _ruleName = null;
+    private string _EventName = null;
+
 
     
 	public override int TimeLineX
@@ -204,10 +209,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         searchToolStrip.Enabled = true;
 
+        makeResourceForm();
         TargetResourceForm.SelectedIndexChanged += (o, _e) => { makeRuleForm(); };
         TargetRuleForm.SelectedIndexChanged += (o, _e) => { makeEventForm(); };
         TargetEventForm.SelectedIndexChanged += (o, _e) => { makeDetailEventForm(); };
-
 	}
 
 	private void setNodes()
@@ -933,7 +938,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             scrollLocation = start;
         }
 
-        hScrollBar.Value = (int)scrollLocation;
+        SimpleSearch search = new SimpleSearch();
+        search.moveScrollBar(hScrollBar, (int)scrollLocation);
+        //hScrollBar.Value = (int)scrollLocation;
 
         //カーソルを移動
         ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), 10);
@@ -1074,23 +1081,79 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         return searchTime;
     }
 
+    //リソース指定コンボボックスのアイテムをセット
+    private void makeResourceForm()
+    {
+        GeneralNamedCollection<Resource> resData = this._data.ResourceData.Resources;
 
+        foreach (Resource res in resData)
+        {
+            this.TargetResourceForm.Items.Add(res.Name);
+        }
+    }
+
+    //ルール指定コンボボックスのアイテムをセット
     private void makeRuleForm()
     {
         TargetRuleForm.Visible = true;
-        TargetRuleForm.Items.Add("taskStateChange");
-        TargetRuleForm.Items.Add("callSvc");
+        if (TargetEventForm.Visible == true)
+        {
+            TargetEventForm.Visible = false;
+            TargetDetailEventForm.Visible = false;
+        }
+
+        //選ばれているリソースの種類を調べる
+        _resourceType = _data.ResourceData.Resources[(string)TargetResourceForm.SelectedItem].Type;
+        GeneralNamedCollection<VisualizeRule> visRules = _data.VisualizeData.VisualizeRules;
+
+        foreach(VisualizeRule rule in visRules)
+        {
+            if (rule.Target == null  || rule.Target.Equals(_resourceType))
+            {
+                TargetRuleForm.Items.Add(rule.DisplayName);
+            }
+        }
     }
 
+    //イベント指定コンボボックスのアイテムをセット
     private void makeEventForm()
     {
         TargetEventForm.Visible = true;
-        TargetEventForm.Items.Add("stateChangeEvent");
-        TargetEventForm.Items.Add("activateHappenEvent");
+        if (TargetDetailEventForm.Visible == true)
+        {
+            TargetDetailEventForm.Visible = false;
+        }
+
+        //選択されているルール名を調べる（選択されているのはDisplayNameであるので、ルール名に変換する必要があるため）
+        foreach(VisualizeRule visRule in _data.VisualizeData.VisualizeRules)
+        {
+            if( visRule == null)
+            {
+                if (_resourceType == null)
+                {
+                    _ruleName = visRule.Name;
+                }
+            }
+            else if ( visRule.Target.Equals(_resourceType) && visRule.DisplayName.Equals(TargetRuleForm.SelectedItem))
+            {
+                _ruleName = visRule.Name;
+            }
+        }
+
+
+        GeneralNamedCollection<Event> eventShapes = _data.VisualizeData.VisualizeRules[_ruleName].Shapes;
+        foreach(Event e in eventShapes)
+        {
+            TargetEventForm.Items.Add(e.DisplayName);
+        }
     }
 
+    //イベント詳細指定コンボボックスのアイテムをセット
     private void makeDetailEventForm()
     {
+        this.searchForwardButton.Enabled = true;
+        this.searchBackwardButton.Enabled = true; //検索ボタンを有効にする
+
         TargetDetailEventForm.Visible = true;
         TargetDetailEventForm.Items.Add("RUNNING");
         TargetDetailEventForm.Items.Add("RUNNABLE");
