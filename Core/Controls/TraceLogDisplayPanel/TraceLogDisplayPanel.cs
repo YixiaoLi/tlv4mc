@@ -66,7 +66,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
    //簡易検索に必要な変数群
     private string _resourceType = null;
     private string _ruleName = null;
-    private string _EventName = null;
+    private string _eventName = null;
 
 
     
@@ -939,7 +939,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         }
 
         //カーソルを移動
-        ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), 10);
+        ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
 
     }
 
@@ -963,7 +963,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         hScrollBar.Value = (int)scrollLocation;
 
         //カーソルを移動
-        ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), 10); 
+        ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix); 
     }
 
 
@@ -985,24 +985,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         decimal decimalTargetTime = Decimal.Parse(normTime);
 
         //対象タスクに対して対象ルールが適用された際のデータセットを取得
-        EventShapes ruleApplyingData = this._data.VisualizeShapeData.RuleResourceShapes[targetRuleName + ":" + targetResourceName];
+        EventShapes ruleApplyingData = this._data.VisualizeShapeData.RuleResourceShapes[_ruleName + ":" + targetResourceName];
 
         if (ruleApplyingData != null) //以下のif文のネストは後に修正する必要あり
         {
-            //対象ルールの中で、対象サブルールが適用された際のデータセットを取得
-            List<EventShape> subRuleApplyingData = ruleApplyingData.List[targetRuleName + ":" + targetSubRuleName];
-            if (subRuleApplyingData != null)
+            //対象ルールの中で、対象イベントが適用された際のデータセットを取得
+            List<EventShape> eventApplyingData = ruleApplyingData.List[_ruleName + ":" + _eventName];
+            if (eventApplyingData != null)
             {
-                for (int i = 0; i < subRuleApplyingData.Count; i++)
+                for (int i = 0; i < eventApplyingData.Count; i++)
                 {
-                    EventShape shape = subRuleApplyingData[i];
+                    EventShape shape = eventApplyingData[i];
                     if (shape.From.Value > decimalTargetTime)
                     {
                         searchTime = shape.From.Value.ToString();
                         break;
                     }
 
-                    if (i == subRuleApplyingData.Count - 1)
+                    if (i == eventApplyingData.Count - 1)
                     {
                         searchTime = normTime;
                         System.Windows.Forms.MessageBox.Show("検索の終わりです");
@@ -1040,17 +1040,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         decimal decimalTargetTime = Decimal.Parse(normTime);
 
         //対象タスクに対して対象ルールが適用された際のデータセットを取得
-        EventShapes ruleApplyingData = this._data.VisualizeShapeData.RuleResourceShapes[targetRuleName + ":" + targetResourceName];
+        EventShapes ruleApplyingData = this._data.VisualizeShapeData.RuleResourceShapes[_ruleName + ":" + targetResourceName];
 
         if (ruleApplyingData != null) //以下のif文のネストは後に修正する必要あり
         {
             //対象ルールの中で、対象サブルールが適用された際のデータセットを取得
-            List<EventShape> subRuleApplyingData = ruleApplyingData.List[targetRuleName + ":" + targetSubRuleName];
-            if (subRuleApplyingData != null)
+            List<EventShape> eventApplyingData = ruleApplyingData.List[_ruleName + ":" + _eventName];
+            if (eventApplyingData != null)
             {
-                for (int i = subRuleApplyingData.Count - 1; i >= 0; i--)
+                for (int i = eventApplyingData.Count - 1; i >= 0; i--)
                 {
-                    EventShape shape = subRuleApplyingData[i];
+                    EventShape shape = eventApplyingData[i];
                     if (shape.From.Value < decimalTargetTime)
                     {
                         searchTime = shape.From.Value.ToString();
@@ -1086,16 +1086,39 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             this.TargetResourceForm.Items.Add(res.Name);
         }
+
+        if (TargetRuleForm.Visible == true)
+        {
+            TargetRuleForm.Items.Clear();
+            TargetEventForm.Items.Clear();
+            TargetDetailEventForm.Items.Clear();
+
+            _ruleName = null;
+            _eventName = null;
+
+            TargetRuleForm.Visible = false;
+            TargetEventForm.Visible = false;
+            TargetDetailEventForm.Visible = false;
+        }
     }
 
     //ルール指定コンボボックスのアイテムをセット
     private void makeRuleForm()
     {
-        TargetRuleForm.Visible = true;
-        if (TargetEventForm.Visible == true)
+        if (TargetRuleForm.Visible == true)
         {
+            TargetRuleForm.Items.Clear();
+            TargetEventForm.Items.Clear();
+            TargetDetailEventForm.Items.Clear();
+
+            _eventName = null;
+
             TargetEventForm.Visible = false;
             TargetDetailEventForm.Visible = false;
+        }
+        else
+        {
+            TargetRuleForm.Visible = true;
         }
 
         //選ばれているリソースの種類を調べる
@@ -1114,13 +1137,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     //イベント指定コンボボックスのアイテムをセット
     private void makeEventForm()
     {
-        TargetEventForm.Visible = true;
-        if (TargetDetailEventForm.Visible == true)
+        if (TargetEventForm.Visible == true)
         {
+            TargetEventForm.Items.Clear();
+            TargetDetailEventForm.Items.Clear();
             TargetDetailEventForm.Visible = false;
         }
+        else
+        {
+            TargetEventForm.Visible = true;
+        }
 
-        //選択されているルール名を調べる（選択されているのはDisplayNameであるので、ルール名に変換する必要があるため）
+        //選択されているルール名を調べる（DisplayNameではない名称　：例 taskStateChange）
         foreach(VisualizeRule visRule in _data.VisualizeData.VisualizeRules)
         {
             if( visRule.Target == null)
@@ -1128,11 +1156,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 if (_resourceType == null)
                 {
                     _ruleName = visRule.Name;
+                    break;
                 }
             }
             else if ( visRule.Target.Equals(_resourceType) && visRule.DisplayName.Equals(TargetRuleForm.SelectedItem))
             {
                 _ruleName = visRule.Name;
+                break;
             }
         }
 
@@ -1147,13 +1177,48 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     //イベント詳細指定コンボボックスのアイテムをセット
     private void makeDetailEventForm()
     {
+        if (TargetDetailEventForm.Visible == true)
+        {
+            TargetDetailEventForm.Items.Clear();
+        }
+        else
+        {
+            TargetDetailEventForm.Visible = true;
+        }
+
+        //選択されているイベント名を調べる（DisplayName ではない名称　例： stateChangeEvent ）
+        foreach ( Event ev in _data.VisualizeData.VisualizeRules[_ruleName].Shapes)
+        {
+            if (ev.DisplayName.Equals(TargetEventForm.SelectedItem))
+            {
+                _eventName = ev.Name;
+                break;
+            }
+        }
+
+        //指定されたイベントが持つ RUNNABLE, RUNNING といった状態を切り出す
+        Event e = _data.VisualizeData.VisualizeRules[_ruleName].Shapes[_eventName];
+        foreach(Figure fg in e.Figures) // いつも要素は一つしかないが、とりあえず foreach で回しておく（どんなときに複数の要素を持つかは要調査）
+        {
+            if (fg.Figures == null) //選択されたイベントにイベント詳細が存在しない場合（イベントが決まれば図形が一意に決まる場合）
+            {
+                TargetDetailEventForm.Visible = false;
+            }
+            else
+            {
+                foreach (Figure fg2 in fg.Figures)
+                {                                                   // 処理の意図を以下に例示
+                    String[] conditions = fg2.Condition.Split('='); // "($FROM_VAL)", "","RUNNING"
+                    TargetDetailEventForm.Items.Add(conditions[2]); // "RUNNING"をイベント詳細のコンボボックスへセット
+                }
+            }
+            
+        }
+
         this.searchForwardButton.Enabled = true;
         this.searchBackwardButton.Enabled = true; //検索ボタンを有効にする
-
-        TargetDetailEventForm.Visible = true;
-        TargetDetailEventForm.Items.Add("RUNNING");
-        TargetDetailEventForm.Items.Add("RUNNABLE");
     }
+
 
     private void treeGridView_Click(object sender, EventArgs e)
     {

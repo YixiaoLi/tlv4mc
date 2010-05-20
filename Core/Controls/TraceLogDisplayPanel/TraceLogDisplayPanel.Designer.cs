@@ -436,7 +436,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripButton1});
             this.searchToolStrip.Location = new System.Drawing.Point(3, 25);
             this.searchToolStrip.Name = "searchToolStrip";
-            this.searchToolStrip.Size = new System.Drawing.Size(650, 25);
+            this.searchToolStrip.Size = new System.Drawing.Size(313, 25);
             this.searchToolStrip.TabIndex = 2;
             // 
             // searchLabelName
