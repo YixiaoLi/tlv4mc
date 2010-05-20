@@ -1123,7 +1123,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         //選択されているルール名を調べる（選択されているのはDisplayNameであるので、ルール名に変換する必要があるため）
         foreach(VisualizeRule visRule in _data.VisualizeData.VisualizeRules)
         {
-            if( visRule == null)
+            if( visRule.Target == null)
             {
                 if (_resourceType == null)
                 {
