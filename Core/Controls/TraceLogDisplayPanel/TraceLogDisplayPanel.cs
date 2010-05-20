@@ -47,7 +47,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Base.Controls;
 using NU.OJL.MPRTOS.TLV.Third;
 using System.Collections;
-using NU.OJL.MPRTOS.TLV.Core.Controls.Search;
+
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
@@ -937,10 +937,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             scrollLocation = start;
         }
-
-        SimpleSearch search = new SimpleSearch();
-        search.moveScrollBar(hScrollBar, (int)scrollLocation);
-        //hScrollBar.Value = (int)scrollLocation;
 
         //カーソルを移動
         ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), 10);
