@@ -923,47 +923,64 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void searchForwardButton_Click(object sender, EventArgs e)
     {
-        decimal jumpTime = decimal.Parse(searchTimeToForward());
-        decimal start = decimal.Parse(TimeLine.MinTime.ToString());
-        decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
-
-        if (jumpTime < start) jumpTime = start;
-
-        //スクロールバーの移動位置の計算
-        decimal offset = (Decimal.Parse(viewingTimeRangeToTextBox.Text) - (Decimal.Parse(viewingTimeRangeFromTextBox.Text))) / 2; //補正値の計算
-        decimal relatedLocation = (jumpTime - start - offset) / (end - start);    //移動する場所がスクロール領域の何割目かを計算
-        decimal scrollLocation = (int)((double)hScrollBar.Maximum * ((double)relatedLocation));  //移動場所 = スクロール領域の広さ × 割合
-        if (scrollLocation < 0)
+        string jumpTimeString = searchTimeToForward();
+        if (jumpTimeString != null)
         {
-            scrollLocation = start;
+            decimal jumpTime = decimal.Parse(jumpTimeString);
+            decimal start = decimal.Parse(TimeLine.MinTime.ToString());
+            decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
+
+            if (jumpTime < start) jumpTime = start;
+
+            //スクロールバーの移動位置の計算
+            decimal offset = (Decimal.Parse(viewingTimeRangeToTextBox.Text) - (Decimal.Parse(viewingTimeRangeFromTextBox.Text))) / 2; //補正値の計算
+            decimal relatedLocation = (jumpTime - start - offset) / (end - start);    //移動する場所がスクロール領域の何割目かを計算
+            decimal scrollLocation = (int)((double)hScrollBar.Maximum * ((double)relatedLocation));  //移動場所 = スクロール領域の広さ × 割合
+            if (scrollLocation < 0)
+            {
+                scrollLocation = start;
+            }
+
+            hScrollBar.Value = (int)scrollLocation;
+
+            //カーソルを移動
+            ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
         }
-
-        //カーソルを移動
-        ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
-
+        else
+        {
+            System.Windows.Forms.MessageBox.Show("検索の終わりです");
+        }
     }
 
     private void searchBackwardButton_Click(object sender, EventArgs e)
     {
-        decimal jumpTime = decimal.Parse(searchTimeToBackward());
-        decimal start = decimal.Parse(TimeLine.MinTime.ToString());
-        decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
-
-        if (jumpTime < start) jumpTime = start;
-
-        //スクロールバーの移動位置の計算
-        decimal offset = (Decimal.Parse(viewingTimeRangeToTextBox.Text) - (Decimal.Parse(viewingTimeRangeFromTextBox.Text))) / 2; //補正値の計算
-        decimal relatedLocation = (jumpTime - start - offset ) / (end - start);  //移動する場所がスクロール領域の何割目かを計算
-        decimal scrollLocation = (int)((double)hScrollBar.Maximum * ((double)relatedLocation)); //移動場所 = スクロール領域の広さ × 割合
-        if (scrollLocation < 0)
+        string jumpTimeString = searchTimeToBackward();
+        if (jumpTimeString != null)
         {
-            scrollLocation = start;
+            decimal jumpTime = decimal.Parse(jumpTimeString);
+            decimal start = decimal.Parse(TimeLine.MinTime.ToString());
+            decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
+
+            if (jumpTime < start) jumpTime = start;
+
+            //スクロールバーの移動位置の計算
+            decimal offset = (Decimal.Parse(viewingTimeRangeToTextBox.Text) - (Decimal.Parse(viewingTimeRangeFromTextBox.Text))) / 2; //補正値の計算
+            decimal relatedLocation = (jumpTime - start - offset) / (end - start);  //移動する場所がスクロール領域の何割目かを計算
+            decimal scrollLocation = (int)((double)hScrollBar.Maximum * ((double)relatedLocation)); //移動場所 = スクロール領域の広さ × 割合
+            if (scrollLocation < 0)
+            {
+                scrollLocation = start;
+            }
+
+            hScrollBar.Value = (int)scrollLocation;
+
+            //カーソルを移動
+            ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
         }
-
-        hScrollBar.Value = (int)scrollLocation;
-
-        //カーソルを移動
-        ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix); 
+        else
+        {
+            System.Windows.Forms.MessageBox.Show("検索の終わりです");
+        }
     }
 
 
@@ -971,10 +988,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     {
         //検索フォームに入力されたリソース名、ルール名、サブルール名、図形名の取得
         //これらの名前に対応するデータがあるかどうかをチェックする機構を後に実装する必要あり
-        string targetResourceName = this.TargetResourceForm.Text;
-        string targetRuleName = this.TargetRuleForm.Text;
-        string targetSubRuleName = this.TargetEventForm.Text;
-        string targetFigureName = this.TargetDetailEventForm.Text;
+        string targetResourceName = TargetResourceForm.Text;
+        string targetRuleName = TargetRuleForm.Text;
+        string targetSubRuleName = TargetEventForm.Text;
+        string targetFigureName = TargetDetailEventForm.Text;
 
 
         string normTime = ApplicationFactory.BlackBoard.CursorTime.Value.ToString();//検索基準時刻
@@ -985,38 +1002,36 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         decimal decimalTargetTime = Decimal.Parse(normTime);
 
         //対象タスクに対して対象ルールが適用された際のデータセットを取得
-        EventShapes ruleApplyingData = this._data.VisualizeShapeData.RuleResourceShapes[_ruleName + ":" + targetResourceName];
-
-        if (ruleApplyingData != null) //以下のif文のネストは後に修正する必要あり
+        EventShapes ruleApplyingData = null;
+        List<EventShape> eventApplyingData = null;
+        if (_data.VisualizeShapeData.RuleResourceShapes.ContainsKey(_ruleName + ":" + TargetResourceForm.SelectedItem))
         {
-            //対象ルールの中で、対象イベントが適用された際のデータセットを取得
-            List<EventShape> eventApplyingData = ruleApplyingData.List[_ruleName + ":" + _eventName];
-            if (eventApplyingData != null)
-            {
-                for (int i = 0; i < eventApplyingData.Count; i++)
-                {
-                    EventShape shape = eventApplyingData[i];
-                    if (shape.From.Value > decimalTargetTime)
-                    {
-                        searchTime = shape.From.Value.ToString();
-                        break;
-                    }
+            ruleApplyingData = _data.VisualizeShapeData.RuleResourceShapes[_ruleName + ":" + targetResourceName];
 
-                    if (i == eventApplyingData.Count - 1)
-                    {
-                        searchTime = normTime;
-                        System.Windows.Forms.MessageBox.Show("検索の終わりです");
-                    }
-                }
-            }
-            else
+            if (ruleApplyingData.List.ContainsKey(_ruleName + ":" + _eventName))
             {
-                System.Windows.Forms.MessageBox.Show("指定されたサブルールが存在しません");
+                //対象ルールの中で、対象イベントが適用された際のデータセットを取得
+                eventApplyingData = ruleApplyingData.List[_ruleName + ":" + _eventName];
             }
         }
-        else
+     
+
+        if (ruleApplyingData != null && eventApplyingData != null) //以下のif文のネストは後に修正する必要あり
         {
-            System.Windows.Forms.MessageBox.Show("指定されたルールかリソースが存在しません");
+            for (int i = 0; i < eventApplyingData.Count; i++)
+            {
+                EventShape shape = eventApplyingData[i];
+                if (shape.From.Value > decimalTargetTime)
+                {
+                    searchTime = shape.From.Value.ToString();
+                    break;
+                }
+
+                if (i == eventApplyingData.Count - 1)
+                {
+                    searchTime = null;
+                }
+            }
         }
 
         return searchTime;
@@ -1027,10 +1042,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     {
         //検索フォームに入力されたリソース名、ルール名、サブルール名、図形名の取得
         //これらの名前に対応するデータがあるかどうかをチェックする機構を後に実装する必要あり
-        string targetResourceName = this.TargetResourceForm.Text;
-        string targetRuleName = this.TargetRuleForm.Text;
-        string targetSubRuleName = this.TargetEventForm.Text;
-        string targetFigureName = this.TargetDetailEventForm.Text;
+        string targetResourceName = TargetResourceForm.Text;
+        string targetRuleName = TargetRuleForm.Text;
+        string targetSubRuleName = TargetEventForm.Text;
+        string targetFigureName = TargetDetailEventForm.Text;
 
         string normTime = ApplicationFactory.BlackBoard.CursorTime.Value.ToString(); //検索基準時刻
           if(normTime == null)  normTime = TimeLine.MinTime.ToString();
@@ -1039,41 +1054,39 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         decimal decimalTargetTime = Decimal.Parse(normTime);
 
+
         //対象タスクに対して対象ルールが適用された際のデータセットを取得
-        EventShapes ruleApplyingData = this._data.VisualizeShapeData.RuleResourceShapes[_ruleName + ":" + targetResourceName];
-
-        if (ruleApplyingData != null) //以下のif文のネストは後に修正する必要あり
+        EventShapes ruleApplyingData = null;
+        List<EventShape> eventApplyingData = null;
+        if (_data.VisualizeShapeData.RuleResourceShapes.ContainsKey(_ruleName + ":" + TargetResourceForm.SelectedItem))
         {
-            //対象ルールの中で、対象サブルールが適用された際のデータセットを取得
-            List<EventShape> eventApplyingData = ruleApplyingData.List[_ruleName + ":" + _eventName];
-            if (eventApplyingData != null)
-            {
-                for (int i = eventApplyingData.Count - 1; i >= 0; i--)
-                {
-                    EventShape shape = eventApplyingData[i];
-                    if (shape.From.Value < decimalTargetTime)
-                    {
-                        searchTime = shape.From.Value.ToString();
-                        break;
-                    }
+            ruleApplyingData = _data.VisualizeShapeData.RuleResourceShapes[_ruleName + ":" + targetResourceName];
 
-                    if (i == 0)
-                    {
-                        searchTime = normTime;
-                        System.Windows.Forms.MessageBox.Show("検索の終わりです");
-                    }
+            if (ruleApplyingData.List.ContainsKey(_ruleName + ":" + _eventName))
+            {
+                //対象ルールの中で、対象イベントが適用された際のデータセットを取得
+                eventApplyingData = ruleApplyingData.List[_ruleName + ":" + _eventName];
+            }
+
+        }
+
+        if (ruleApplyingData != null && eventApplyingData != null) //以下のif文のネストは後に修正する必要あり
+        {
+            for (int i = eventApplyingData.Count - 1; i >= 0; i--)
+            {
+                EventShape shape = eventApplyingData[i];
+                if (shape.From.Value < decimalTargetTime)
+                {
+                    searchTime = shape.From.Value.ToString();
+                    break;
+                }
+
+                if (i == 0)
+                {
+                    searchTime = null;
                 }
             }
-            else
-            {
-                System.Windows.Forms.MessageBox.Show("指定されたサブルールが存在しません");
-            }
         }
-        else
-        {
-            System.Windows.Forms.MessageBox.Show("指定されたルールかリソースが存在しません");
-        }
-
         return searchTime;
     }
 
@@ -1153,11 +1166,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             if( visRule.Target == null)
             {
-                if (_resourceType == null)
-                {
-                    _ruleName = visRule.Name;
-                    break;
-                }
+              _ruleName = visRule.Name;
             }
             else if ( visRule.Target.Equals(_resourceType) && visRule.DisplayName.Equals(TargetRuleForm.SelectedItem))
             {
