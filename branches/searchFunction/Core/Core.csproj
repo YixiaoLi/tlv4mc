@@ -236,6 +236,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Search\TraceLogSearcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
