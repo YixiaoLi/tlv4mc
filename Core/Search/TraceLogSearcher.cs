@@ -53,7 +53,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 }
             }
 
-            if (ruleAppliedData != null && eventAppliedData != null)
+            if (ruleAppliedData != null && eventAppliedData != null && _targetEventDetail == null)
             {
                 foreach (EventShape shape in eventAppliedData)
                 {
@@ -63,6 +63,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                         break;
                     }
                 }
+            }
+            else if (ruleAppliedData != null && eventAppliedData != null && _targetEventDetail != null)
+            {
+                foreach (EventShape shape in eventAppliedData)
+                {
+                    if ( shape.EventDetail  != null )
+                    {
+                        if( shape.EventDetail.Equals(_targetEventDetail) && (shape.From.Value > _currentTime ))
+                        searchTime = shape.From.Value;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                //エラー処理
             }
 
             return searchTime;

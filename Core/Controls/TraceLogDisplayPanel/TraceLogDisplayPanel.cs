@@ -47,6 +47,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Base.Controls;
 using NU.OJL.MPRTOS.TLV.Third;
 using System.Collections;
+using NU.OJL.MPRTOS.TLV.Core.Search;
 
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
@@ -63,10 +64,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	private int _mouseDownX;
 	private bool _mouseDown;
 
+   //簡易検索用のオブジェクト
+    private TraceLogSearcher _traceLogSearcher = new TraceLogSearcher();
+        
    //簡易検索に必要な変数群
     private string _resourceType = null;
     private string _ruleName = null;
     private string _eventName = null;
+    private string _eventDetail = null;
 
 
     
@@ -210,9 +215,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         searchToolStrip.Enabled = true;
 
         makeResourceForm();
-        TargetResourceForm.SelectedIndexChanged += (o, _e) => { makeRuleForm(); };
-        TargetRuleForm.SelectedIndexChanged += (o, _e) => { makeEventForm(); };
-        TargetEventForm.SelectedIndexChanged += (o, _e) => { makeDetailEventForm(); };
+        targetResourceForm.SelectedIndexChanged += (o, _e) => { makeRuleForm(); };
+        targetRuleForm.SelectedIndexChanged += (o, _e) => { makeEventForm(); };
+        targetEventForm.SelectedIndexChanged += (o, _e) => { makeDetailEventForm(); };
 	}
 
 	private void setNodes()
@@ -923,28 +928,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void searchForwardButton_Click(object sender, EventArgs e)
     {
-        string jumpTimeString = searchTimeToForward();
-        if (jumpTimeString != null)
+        _traceLogSearcher.setSerchData((string)targetResourceForm.SelectedItem, _ruleName, _eventName, (string)targetEventDetailForm.SelectedItem,  //
+                                              _data.VisualizeShapeData, ApplicationFactory.BlackBoard.CursorTime.Value);
+
+        decimal jumpTime = _traceLogSearcher.searchForward();
+        if (jumpTime != -1)
         {
-            decimal jumpTime = decimal.Parse(jumpTimeString);
+
             decimal start = decimal.Parse(TimeLine.MinTime.ToString());
             decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
-
             if (jumpTime < start) jumpTime = start;
 
-            //スクロールバーの移動位置の計算
-            decimal offset = (Decimal.Parse(viewingTimeRangeToTextBox.Text) - (Decimal.Parse(viewingTimeRangeFromTextBox.Text))) / 2; //補正値の計算
-            decimal relatedLocation = (jumpTime - start - offset) / (end - start);    //移動する場所がスクロール領域の何割目かを計算
-            decimal scrollLocation = (int)((double)hScrollBar.Maximum * ((double)relatedLocation));  //移動場所 = スクロール領域の広さ × 割合
-            if (scrollLocation < 0)
-            {
-                scrollLocation = start;
-            }
-
-            hScrollBar.Value = (int)scrollLocation;
-
-            //カーソルを移動
+            //カーソル、スクロールバーを移動
             ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
+            moveScrollBar(jumpTime);
         }
         else
         {
@@ -954,28 +951,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void searchBackwardButton_Click(object sender, EventArgs e)
     {
-        string jumpTimeString = searchTimeToBackward();
-        if (jumpTimeString != null)
+        _traceLogSearcher.setSerchData((string)targetResourceForm.SelectedItem, _ruleName, _eventName, (string)targetEventDetailForm.SelectedItem,  //
+                                              _data.VisualizeShapeData, ApplicationFactory.BlackBoard.CursorTime.Value);
+
+        decimal jumpTime = _traceLogSearcher.searchBackward();
+        if (jumpTime != -1)
         {
-            decimal jumpTime = decimal.Parse(jumpTimeString);
             decimal start = decimal.Parse(TimeLine.MinTime.ToString());
             decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
-
             if (jumpTime < start) jumpTime = start;
 
-            //スクロールバーの移動位置の計算
-            decimal offset = (Decimal.Parse(viewingTimeRangeToTextBox.Text) - (Decimal.Parse(viewingTimeRangeFromTextBox.Text))) / 2; //補正値の計算
-            decimal relatedLocation = (jumpTime - start - offset) / (end - start);  //移動する場所がスクロール領域の何割目かを計算
-            decimal scrollLocation = (int)((double)hScrollBar.Maximum * ((double)relatedLocation)); //移動場所 = スクロール領域の広さ × 割合
-            if (scrollLocation < 0)
-            {
-                scrollLocation = start;
-            }
-
-            hScrollBar.Value = (int)scrollLocation;
-
-            //カーソルを移動
-            ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
+           //カーソル、スクロールバーを移動
+           ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
+           moveScrollBar(jumpTime);
         }
         else
         {
@@ -983,112 +971,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         }
     }
 
-
-    private string searchTimeToForward()
+    private void moveScrollBar(decimal jumpTime)
     {
-        //検索フォームに入力されたリソース名、ルール名、サブルール名、図形名の取得
-        //これらの名前に対応するデータがあるかどうかをチェックする機構を後に実装する必要あり
-        string targetResourceName = TargetResourceForm.Text;
-        string targetRuleName = TargetRuleForm.Text;
-        string targetSubRuleName = TargetEventForm.Text;
-        string targetFigureName = TargetDetailEventForm.Text;
+        decimal start = decimal.Parse(TimeLine.MinTime.ToString());
+        decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
 
-
-        string normTime = ApplicationFactory.BlackBoard.CursorTime.Value.ToString();//検索基準時刻
-            if (normTime == null) normTime = TimeLine.MinTime.ToString(); 
-
-        string searchTime = null;
-
-        decimal decimalTargetTime = Decimal.Parse(normTime);
-
-        //対象タスクに対して対象ルールが適用された際のデータセットを取得
-        EventShapes ruleApplyingData = null;
-        List<EventShape> eventApplyingData = null;
-        if (_data.VisualizeShapeData.RuleResourceShapes.ContainsKey(_ruleName + ":" + TargetResourceForm.SelectedItem))
+        //スクロールバーの移動位置の計算
+        decimal offset = (Decimal.Parse(viewingTimeRangeToTextBox.Text) - (Decimal.Parse(viewingTimeRangeFromTextBox.Text))) / 2; //補正値の計算
+        decimal relatedLocation = (jumpTime - start - offset) / (end - start);  //移動する場所がスクロール領域の何割目かを計算
+        decimal scrollLocation = (int)((double)hScrollBar.Maximum * ((double)relatedLocation)); //移動場所 = スクロール領域の広さ × 割合
+        if (scrollLocation < 0)
         {
-            ruleApplyingData = _data.VisualizeShapeData.RuleResourceShapes[_ruleName + ":" + targetResourceName];
-
-            if (ruleApplyingData.List.ContainsKey(_ruleName + ":" + _eventName))
-            {
-                //対象ルールの中で、対象イベントが適用された際のデータセットを取得
-                eventApplyingData = ruleApplyingData.List[_ruleName + ":" + _eventName];
-            }
-        }
-     
-
-        if (ruleApplyingData != null && eventApplyingData != null) //以下のif文のネストは後に修正する必要あり
-        {
-            for (int i = 0; i < eventApplyingData.Count; i++)
-            {
-                EventShape shape = eventApplyingData[i];
-                if (shape.From.Value > decimalTargetTime)
-                {
-                    searchTime = shape.From.Value.ToString();
-                    break;
-                }
-
-                if (i == eventApplyingData.Count - 1)
-                {
-                    searchTime = null;
-                }
-            }
+            scrollLocation = start;
         }
 
-        return searchTime;
+        hScrollBar.Value = (int)scrollLocation;
     }
 
-
-    private string searchTimeToBackward()
-    {
-        //検索フォームに入力されたリソース名、ルール名、サブルール名、図形名の取得
-        //これらの名前に対応するデータがあるかどうかをチェックする機構を後に実装する必要あり
-        string targetResourceName = TargetResourceForm.Text;
-        string targetRuleName = TargetRuleForm.Text;
-        string targetSubRuleName = TargetEventForm.Text;
-        string targetFigureName = TargetDetailEventForm.Text;
-
-        string normTime = ApplicationFactory.BlackBoard.CursorTime.Value.ToString(); //検索基準時刻
-          if(normTime == null)  normTime = TimeLine.MinTime.ToString();
-
-        string searchTime = null;
-
-        decimal decimalTargetTime = Decimal.Parse(normTime);
-
-
-        //対象タスクに対して対象ルールが適用された際のデータセットを取得
-        EventShapes ruleApplyingData = null;
-        List<EventShape> eventApplyingData = null;
-        if (_data.VisualizeShapeData.RuleResourceShapes.ContainsKey(_ruleName + ":" + TargetResourceForm.SelectedItem))
-        {
-            ruleApplyingData = _data.VisualizeShapeData.RuleResourceShapes[_ruleName + ":" + targetResourceName];
-
-            if (ruleApplyingData.List.ContainsKey(_ruleName + ":" + _eventName))
-            {
-                //対象ルールの中で、対象イベントが適用された際のデータセットを取得
-                eventApplyingData = ruleApplyingData.List[_ruleName + ":" + _eventName];
-            }
-
-        }
-
-        if (ruleApplyingData != null && eventApplyingData != null) //以下のif文のネストは後に修正する必要あり
-        {
-            for (int i = eventApplyingData.Count - 1; i >= 0; i--)
-            {
-                EventShape shape = eventApplyingData[i];
-                if (shape.From.Value < decimalTargetTime)
-                {
-                    searchTime = shape.From.Value.ToString();
-                    break;
-                }
-
-                if (i == 0)
-                {
-                    searchTime = null;
-                }
-            }
-        }
-        return searchTime;
-    }
+    
 
     //リソース指定コンボボックスのアイテムをセット
     private void makeResourceForm()
@@ -1097,52 +997,54 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         foreach (Resource res in resData)
         {
-            this.TargetResourceForm.Items.Add(res.Name);
+            this.targetResourceForm.Items.Add(res.Name);
         }
 
-        if (TargetRuleForm.Visible == true)
+        if (targetRuleForm.Visible == true)
         {
-            TargetRuleForm.Items.Clear();
-            TargetEventForm.Items.Clear();
-            TargetDetailEventForm.Items.Clear();
+            targetRuleForm.Items.Clear();
+            targetEventForm.Items.Clear();
+            targetEventDetailForm.Items.Clear();
 
             _ruleName = null;
             _eventName = null;
 
-            TargetRuleForm.Visible = false;
-            TargetEventForm.Visible = false;
-            TargetDetailEventForm.Visible = false;
+            targetRuleForm.Visible = false;
+            targetEventForm.Visible = false;
+            targetEventDetailForm.Visible = false;
         }
     }
 
-    //ルール指定コンボボックスのアイテムをセット
+    //リソースが選択されたときにルール指定コンボボックスのアイテムをセットする
     private void makeRuleForm()
     {
-        if (TargetRuleForm.Visible == true)
+        if (targetRuleForm.Visible == true)
         {
-            TargetRuleForm.Items.Clear();
-            TargetEventForm.Items.Clear();
-            TargetDetailEventForm.Items.Clear();
+            targetRuleForm.Items.Clear();
+            targetEventForm.Items.Clear();
+            targetEventDetailForm.Items.Clear();
 
             _eventName = null;
 
-            TargetEventForm.Visible = false;
-            TargetDetailEventForm.Visible = false;
+            targetEventForm.Visible = false;
+            targetEventDetailForm.Visible = false;
+            searchForwardButton.Enabled = false;
+            searchBackwardButton.Enabled = false;
         }
         else
         {
-            TargetRuleForm.Visible = true;
+            targetRuleForm.Visible = true;
         }
 
         //選ばれているリソースの種類を調べる
-        _resourceType = _data.ResourceData.Resources[(string)TargetResourceForm.SelectedItem].Type;
+        _resourceType = _data.ResourceData.Resources[(string)targetResourceForm.SelectedItem].Type;
         GeneralNamedCollection<VisualizeRule> visRules = _data.VisualizeData.VisualizeRules;
 
         foreach(VisualizeRule rule in visRules)
         {
             if (rule.Target == null  || rule.Target.Equals(_resourceType))
             {
-                TargetRuleForm.Items.Add(rule.DisplayName);
+                targetRuleForm.Items.Add(rule.DisplayName);
             }
         }
     }
@@ -1150,25 +1052,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     //イベント指定コンボボックスのアイテムをセット
     private void makeEventForm()
     {
-        if (TargetEventForm.Visible == true)
+        if (targetEventForm.Visible == true)
         {
-            TargetEventForm.Items.Clear();
-            TargetDetailEventForm.Items.Clear();
-            TargetDetailEventForm.Visible = false;
+            targetEventForm.Items.Clear();
+            targetEventDetailForm.Items.Clear();
+            targetEventDetailForm.Visible = false;
+            searchForwardButton.Enabled = false;
+            searchBackwardButton.Enabled = false;
         }
         else
         {
-            TargetEventForm.Visible = true;
+            targetEventForm.Visible = true;
         }
 
-        //選択されているルール名を調べる（DisplayNameではない名称　：例 taskStateChange）
+        //選択されているルール名を調べる（DisplayNameではない方の名称　：例 taskStateChange）
         foreach(VisualizeRule visRule in _data.VisualizeData.VisualizeRules)
         {
             if( visRule.Target == null)
             {
               _ruleName = visRule.Name;
             }
-            else if ( visRule.Target.Equals(_resourceType) && visRule.DisplayName.Equals(TargetRuleForm.SelectedItem))
+            else if ( visRule.Target.Equals(_resourceType) && visRule.DisplayName.Equals(targetRuleForm.SelectedItem))
             {
                 _ruleName = visRule.Name;
                 break;
@@ -1179,26 +1083,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         GeneralNamedCollection<Event> eventShapes = _data.VisualizeData.VisualizeRules[_ruleName].Shapes;
         foreach(Event e in eventShapes)
         {
-            TargetEventForm.Items.Add(e.DisplayName);
+            targetEventForm.Items.Add(e.DisplayName);
         }
     }
 
     //イベント詳細指定コンボボックスのアイテムをセット
     private void makeDetailEventForm()
     {
-        if (TargetDetailEventForm.Visible == true)
+        if (targetEventDetailForm.Visible == true)
         {
-            TargetDetailEventForm.Items.Clear();
+            targetEventDetailForm.Items.Clear();
         }
         else
         {
-            TargetDetailEventForm.Visible = true;
+            targetEventDetailForm.Visible = true;
         }
 
-        //選択されているイベント名を調べる（DisplayName ではない名称　例： stateChangeEvent ）
+        //選択されているイベント名を調べる（DisplayName ではない方の名称　例： stateChangeEvent ）
         foreach ( Event ev in _data.VisualizeData.VisualizeRules[_ruleName].Shapes)
         {
-            if (ev.DisplayName.Equals(TargetEventForm.SelectedItem))
+            if (ev.DisplayName.Equals(targetEventForm.SelectedItem))
             {
                 _eventName = ev.Name;
                 break;
@@ -1209,16 +1113,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         Event e = _data.VisualizeData.VisualizeRules[_ruleName].Shapes[_eventName];
         foreach(Figure fg in e.Figures) // いつも要素は一つしかないが、とりあえず foreach で回しておく（どんなときに複数の要素を持つかは要調査）
         {
-            if (fg.Figures == null) //選択されたイベントにイベント詳細が存在しない場合（イベントが決まれば図形が一意に決まる場合）
+            if (fg.Figures == null) //選択されたイベントにイベント詳細が存在しない場合
             {
-                TargetDetailEventForm.Visible = false;
+                targetEventDetailForm.Visible = false;
             }
             else
             {
                 foreach (Figure fg2 in fg.Figures)
                 {                                                   // 処理の意図を以下に例示
-                    String[] conditions = fg2.Condition.Split('='); // "($FROM_VAL)", "","RUNNING"
-                    TargetDetailEventForm.Items.Add(conditions[2]); // "RUNNING"をイベント詳細のコンボボックスへセット
+                    String[] conditions = fg2.Condition.Split('='); // "($FROM_VAL)==RUNNING"  ⇒ "($FROM_VAL)", "","RUNNING"
+                    targetEventDetailForm.Items.Add(conditions[2]); // "RUNNING"をイベント詳細のコンボボックスへセット
                 }
             }
             

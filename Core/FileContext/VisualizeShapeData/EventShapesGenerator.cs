@@ -329,7 +329,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             s.SetDefaultValue();
                             s.ChackValidate();
 
-                            _drawShapes.Add(new EventShape(fromTime, toTime, s, evnt));
+                            if(evnt.From != null)
+                            {
+                                _drawShapes.Add(new EventShape(fromTime, toTime, s, evnt, evnt.From.Value));
+                            }else
+                            {
+                                _drawShapes.Add(new EventShape(fromTime, toTime, s, evnt, null));
+                            }
+
                         }
                     }
                 }
