@@ -96,10 +96,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return this;
         }
 
-        // "[Time]"がないログもパースするために、_parse側のEvent()を実行している
         public ITraceLogParser Event()
         {
-            return ((ITraceLogParser)_parser).Event();
+            return this;
         }
 
         public ITraceLogParser OBject()
