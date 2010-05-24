@@ -27,9 +27,7 @@ TLV（トレース ログ ヴィジュアライザー）\\
  \centering
  \begin{tabular}{|c|c|c|c|} \hline
   版番& 日付&    更新内容& 更新者\\ \hline\hline
-  1.0 & 10/4/23& 新規作成& 市原大輔\\ \hline
-  1.1 & 10/5/11& \shortstack{リファクタリング後の例変更。説明の具体化・明確化。\\
-  クラス図の変更・追加。リファクタリング報告書追加。}& 市原大輔\\ \hline
+%  1.0 & 10/4/23& 新規作成& 市原大輔\\ \hline
  \end{tabular}
 \end{table}
 \clearpage
@@ -83,10 +81,11 @@ TLV（トレース ログ ヴィジュアライザー）\\
       本ソフトウェアが中間形式として用いるファイル。
       前述の標準形式トレースログファイルは、このTLVファイルの一部である。 \\
   \hline
-  \\
-  \hline
   EBNF &
       Extended Backus?Naur Formの略。 \\
+  \hline
+　　Parsec &
+  関数型言語Haskellのパーサ・コンビネータライブラリ。\\
   \hline
 
  \end{tabular}
@@ -193,19 +192,12 @@ var object_ =
 % \end{figure}
 
 
-\subsection{パーサの構成}
+\subsection{パーサの構成}\label{sec:parsec}
 パーサの実装は、コードでEBNFを表現し、直感的に理解できるようにする。
 
-例として、HaskellのパーサコンビネータライブラリParsecを参考にした次のURLにあるものが挙げられる
-(コードの一部はListing\ref{refacted}参照)。
-あくまで例であり、このコードを使用するか、自作など他の実装方法を用いるかは、
+例として、HaskellのパーサコンビネータライブラリParsecを参考にしたパーサ\cite{parsec}が挙げられる。
+このコードを使用するか、自作など他の実装方法を用いるかは、
 デバッグの容易さ、実装のしやすさ、可読性、実行速度などの要素により決定する。
-
-
-\begin{verbatim}
-LukeH's WebLog : Monadic Parser Combinators using C# 3.0
-http://blogs.msdn.com/lukeh/archive/2007/08/19/monadic-parser-combinators-using-c-3-0.aspx
-\end{verbatim}
 
 
 \newpage
@@ -272,7 +264,7 @@ public ITraceLogParser ObjectTypeName()
 パーサ・コンビネータとは、パーサとパーサを組み合わせることのできるコンビネータを指す。
 具体的には、Manyメソッド、Many1メソッド、ORメソッドが挙げられる。
 これにより、EBNFの表現やLL(k)文法のパージングを可能にしている。
-しかしながら、LL(k)文法を扱うため左再帰性の除去が必要である。
+しかしながら、LL(k)文法を扱うため生成規則から左再帰性の除去が必要である。
 
 \subsubsection{NullObjectパターン}
 インタフェースを実装しているが、何もしないクラスを用いるデザインパターン。
@@ -288,7 +280,7 @@ public ITraceLogParser ObjectTypeName()
 解析メソッドの処理で最初に実行されるメソッド。
 
 現在は、スタックへのパース結果およびポインタ
-\footnote{解析しようとしている文字の位置を示すもの。}
+\footnote{パージング中の文字列の、解析の現在位置(文字)を示すもの。}
 の保存領域確保を行っている。
 
 \subsubsection{Endメソッド}
@@ -351,6 +343,9 @@ EBNFの記号\verb!"+"!を表すメソッド。生成規則を表すメソッドチェーンで使用する。
 
 これを継承し、解析メソッドを記述することで専用のパーサを作成する。
 \ref{sec:ms}に示したメソッドの他に、アルファベットや数字の解析メソッドも有する。
+これらのメソッドは、単純に継承しただけでは戻り値の型が合わず、使用できない。
+よって、派生クラスに、処理を\verb!Parser!クラスに委譲し、その結果を使用するインタフェース型にキャストして\verb!return!する
+同名(もしくは、それとわかる名前)のメソッドを用意して使用する。
 
 \subsubsection{StackForParserクラス}
 \verb!Parser!クラスが利用する専用スタック。
@@ -375,7 +370,7 @@ Readメソッドで文字を消費してしまって復元が難しいため、専用のクラスを用意した。
 
 標準形式トレースログをパースするための解析メソッドや結果を取得するためのプロパティがある。
 
-\subsubsection{NullObjectOfTraceLogParserクラス}
+\subsubsection{NullObjectOfTraceLogParserクラス}\label{sec:nullobj}
 標準形式トレースログ用のパーサクラス用のNullObjectクラス。
 
 メソッドは基本的に何もしないが、効率やアルゴリズム上の理由などで処理を行う場合がある。
@@ -392,11 +387,122 @@ Readメソッドで文字を消費してしまって復元が難しいため、専用のクラスを用意した。
 これにより、メソッドチェーンによるEBNFのような表現を実現している。
 
 \section{シーケンス}
+例として、\verb!" [.]Task.state=="RUNNING" "!という誤ったログをパースする
+シーケンスを、途中までだが、図\ref{sequence}に示す。解析メソッドの適用に成功すれば次の解析メソッドを試み、
+失敗すれば以降の解析メソッドはNullObjectのものを呼ぶことでパーサの解析メソッドを適用しないようになっている。
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\hsize,bb=0 0 660 679]{sequence.png}
+\caption{パージング時のシーケンス例(途中まで)}\label{sequence}
+\end{figure}
+
+また、失敗した状態でORメソッドが呼ばれるとバックトラックし、ORメソッド以降の解析メソッドにより再度パースが行われる。
+その他の状態で呼ばれた時のORメソッドの処理を図\ref{orsequence}に示す。
+3つ目の場合は、例えば\verb!hoge().OR().fuga().OR().piyo()!という生成規則があった場合、
+\verb!hoge()!が成功した時の\verb!fuga()!と\verb!piyo()!の間にある\verb!OR()!の挙動を
+示している。
+
+また、\verb!Reset()!がバックトラッキングの役割を果たしている。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\hsize,bb=0 0 660 518]{orsequence.png}
+\caption{各状態でのORメソッドの処理}\label{orsequence}
+\end{figure}
+
+
+\newpage
 \part{評価}
+本章は、\ref{sec:parsec}で紹介した\cite{parsec}を用いたパーサ(以降、C\#版Parsec)、前章で紹介したパーサ(以降、自作パーサ)を比較し、
+前章のパーサを選択した理由を記述する。
+また、それら二つのパーサおよび従来のパース方法で性能比較を示す。
+
 \section{他手法との比較}
+\subsection{可読性}
+まず、C\#版Parsecのコードを次に示す。
+このパーサは、HaskellのParsecを模したコードになっており、例えばListing\ref{haskellcode}のように置き換えることができる。
+すなわち、\ref{codeparsec}では、\verb!in!より右の解析メソッドを上から順に見たものが生成規則を表している。
+しかしながら、この記述は、コード上でクエリ式を記述できるLINQを利用しているため、
+初見では理解しにくいということが現在の開発メンバとのレビューで出てきた。また、
+「右の解析メソッドを上から順に見たものが生成規則を表している」ことがわかったとしても、
+\verb!select!が何をするのか、何が記述されているのかが理解しにくい。
+そのため、Haskell経験者であればよいとは思われるが、そうでない者にとっては可読性が従来のものより低くなってしまう
+可能性がある。
+
+自作パーサは、生成規則を表す解析メソッドのチェーンがEBNFに近いため、自作パーサの方が可読性が高いというレビュー結果
+が得られた。
+
+\begin{lstlisting}[caption=\cite{parsec}を用いたパーサのコード例,label=codeparsec]
+OBject = (from otn in ObjectTypeName
+          from u1 in Char('(')
+		  from ac in AttributeCondition
+		  from u2 in Char(')')
+		  select Base(otn).Append(u1).Append(ac).Append(u2).ToString())
+		 .OR(
+		 (from on in ObjectName
+		  select Base(on).ToString()));
+		  
+// Baseメソッドは、引数に基づいてStringBuilderクラスを新規作成して返すメソッド
+// StringBuilderクラスに関しては、.NET Framework ライブラリを参照
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Listing\ref{codeparsec}をHaskellに置き換えたコード例,label=haskellcode]
+OBject = do{ otn <- objectTypeName
+           ; u1 <- char '('
+		   ; ac <- attributeCondition
+		   ; u2 <- char ')'
+		   ; return otn ++ u1 ++ ac ++ u2
+           }		   
+		 <|>
+		 do{ on <- objectName
+		   ; return on
+		   }
+\end{lstlisting}
+
+\subsection{保守性}
+C\#版Parsecのクラス構造は、機能ごとによく分割・整理されており、また、文字列以外にも対応できるように
+設計されているため汎用性が高い。
+このC\#版Parsecおよびパーサを変更するには、Parsecの実装に関する知識が必要になる。
+それに伴い、Haskellの知識が必要になる場合がある。
+よって、チューニングまで行おうとすると、事前知識がなければ学習コストがかかってしまう。
+
+自作パーサは、文字列のパージングに特化したものであり、文字列化できないもののパージングはほぼ不可能に近い。
+しかしながら、TLVで用いる場合、文字列以外は現状では考えられないため、あまり問題にならない。
+変更の際のコストに関しては、自作パーサでも、NullObjectとの連携や解析メソッドのチェーンの理解に学習コストがかかる。
+
+\subsection{デバッグの容易性}
+C\#版Parsecは、かなりの割合をデリゲートが占める。そのため、デバッガによるステップ実行では、どのデリゲートが
+適用されているのかがわかりづらく、結果、処理の流れが把握しづらいため難しい。また、流れ自体も実装と関わっているため
+やはりParsecなどの知識が必要となる。
+
+自作パーサは、コードを見るよりもデバッガによるステップ実行を行った方が分かりやすい。
+特に、取得したいパース結果の格納時の、次のコードの※1、2である。
+
+\begin{lstlisting}
+var object_ =
+	ObjectTypeName().Char('(').AttributeCondition().Char(')')
+	.OR().
+	ObjectName();
+
+object_.ObjectValue = Result();    // ※1
+
+// HasObjectTypeValueは、ObjectTypeName()が真でも、ほかで失敗すれば偽である。
+object_.HasObjectTypeValue = false;  // ※2
+\end{lstlisting}
+
+例えばこの2行は、\verb!object_!が何を指すのかを推測して理解・記述する必要がある。
+デバッガによるステップ実行を行うことで、\verb!object_!が明確となり、処理が間違っていないか確認できる。
+また、C\#版Parsecのようにデリゲートを多用しておらず、使用していてもシンプルなシーケンスであるため、
+どのメソッドまたはデリゲートを適用させているのかがC\#版Parsecより把握しやすい。
+
 \subsection{性能比較}
 
 
-
+\begin{thebibliography}{9}
+\bibitem{parsec}
+LukeH's WebLog : Monadic Parser Combinators using C\# 3.0,\\
+URL:\\
+http://blogs.msdn.com/lukeh/archive/2007/08/19/monadic-parser-combinators-using-c-3-0.aspx
+\end{thebibliography}
 \end{document}
