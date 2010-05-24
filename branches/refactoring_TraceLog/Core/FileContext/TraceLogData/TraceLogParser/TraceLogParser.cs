@@ -195,7 +195,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
-            var line = Char('[').Time().Char(']').Event();
+            var line = Char('[').Time().Char(']').Event()
+                       .OR().
+                       Event();  // 不完全な標準形式トレースログだが、可視化ルール等に記述されているため必要
 
             line.End();
             return this;
