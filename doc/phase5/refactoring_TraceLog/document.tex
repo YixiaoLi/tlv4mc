@@ -433,7 +433,7 @@ Readƒƒ\ƒbƒh‚Å•¶š‚ğÁ”ï‚µ‚Ä‚µ‚Ü‚Á‚Ä•œŒ³‚ª“ï‚µ‚¢‚½‚ßAê—p‚ÌƒNƒ‰ƒX‚ğ—pˆÓ‚µ‚½B
 ©ìƒp[ƒT‚ÍA¶¬‹K‘¥‚ğ•\‚·‰ğÍƒƒ\ƒbƒh‚Ìƒ`ƒF[ƒ“‚ªEBNF‚É‹ß‚¢‚½‚ßA©ìƒp[ƒT‚Ì•û‚ª‰Â“Ç«‚ª‚‚¢‚Æ‚¢‚¤ƒŒƒrƒ…[Œ‹‰Ê
 ‚ª“¾‚ç‚ê‚½B
 
-\begin{lstlisting}[caption=\cite{parsec}‚ğ—p‚¢‚½ƒp[ƒT‚ÌƒR[ƒh—á,label=codeparsec]
+\begin{lstlisting}[caption=C\#”ÅParsec‚ÌƒR[ƒh—á,label=codeparsec]
 OBject = (from otn in ObjectTypeName
           from u1 in Char('(')
 		  from ac in AttributeCondition
@@ -452,11 +452,11 @@ OBject = do{ otn <- objectTypeName
            ; u1 <- char '('
 		   ; ac <- attributeCondition
 		   ; u2 <- char ')'
-		   ; return otn ++ u1 ++ ac ++ u2
+		   ; return@$ otn ++ u1 ++ ac ++ u2
            }		   
 		 <|>
 		 do{ on <- objectName
-		   ; return on
+		   ; return $ on
 		   }
 \end{lstlisting}
 
@@ -470,6 +470,27 @@ C\#”ÅParsec‚ÌƒNƒ‰ƒX\‘¢‚ÍA‹@”\‚²‚Æ‚É‚æ‚­•ªŠ„E®—‚³‚ê‚Ä‚¨‚èA‚Ü‚½A•¶š—ñˆÈŠO‚
 ©ìƒp[ƒT‚ÍA•¶š—ñ‚Ìƒp[ƒWƒ“ƒO‚É“Á‰»‚µ‚½‚à‚Ì‚Å‚ ‚èA•¶š—ñ‰»‚Å‚«‚È‚¢‚à‚Ì‚Ìƒp[ƒWƒ“ƒO‚Í‚Ù‚Ú•s‰Â”\‚É‹ß‚¢B
 ‚µ‚©‚µ‚È‚ª‚çATLV‚Å—p‚¢‚éê‡A•¶š—ñˆÈŠO‚ÍŒ»ó‚Å‚Íl‚¦‚ç‚ê‚È‚¢‚½‚ßA‚ ‚Ü‚è–â‘è‚É‚È‚ç‚È‚¢B
 •ÏX‚ÌÛ‚ÌƒRƒXƒg‚ÉŠÖ‚µ‚Ä‚ÍA©ìƒp[ƒT‚Å‚àANullObject‚Æ‚Ì˜AŒg‚â‰ğÍƒƒ\ƒbƒh‚Ìƒ`ƒF[ƒ“‚Ì—‰ğ‚ÉŠwKƒRƒXƒg‚ª‚©‚©‚éB
+
+Ÿ‚ÉA¶¬‹K‘¥‚Ì•ÏX‚É‚Â‚¢‚Ä‚ğl‚¦‚éB
+‚±‚ê‚É‚Â‚¢‚Ä‚ÍA—¼•û‚Æ‚àEBNF‚ğ•\Œ»‚µ‚½‚à‚Ì‚Å‚ ‚é‚½‚ßAŠî–{“I‚Èè‡‚â“Á’¥‚Í“¯‚¶‚Å‚ ‚éB
+‹Lq•ÏX‚·‚×‚«‰ÓŠ‚ÍA–Ú“I‚Ì¶¬‹K‘¥‚ğ•\Œ»‚µ‚Ä‚¢‚é‰ÓŠ‚ğ‚İ‚ê‚Î‚æ‚¢‚Ì‚ÅA
+]—ˆ‚Ì•û–@‚æ‚è•ÏX‰ÓŠ‚ğ”­Œ©‚µ‚â‚·‚­A•ÏX‰ÓŠ‚ÌŒÂ”‚àíŒ¸‚Å‚«‚éB
+•ÏX‚É‚ÍA¶¬‹K‘¥‚Ì’Ç‰ÁAíœ‚ª‚ ‚é
+\footnote{“ü‚ê‘Ö‚¦‚ÍA’Ç‰ÁEíœ‚ğ‘g‚İ‡‚í‚¹‚½‚à‚Ì‚Æl‚¦‚ç‚ê‚é‚½‚ßœŠO}
+‚Ì‚ÅA‚±‚Ì‡˜‚ÉŒ©‚Ä‚¢‚­B
+‚Ü‚¸’Ç‰Á‚É‚ÍAŸ‚Ìè‡‚ğ“¥‚ŞB
+\begin{enumerate}
+\item V‹K‚Ì¶¬‹K‘¥‚É‚µ‚½‚ª‚Á‚Ä‰ğÍƒƒ\ƒbƒh‚ğì¬‚·‚é
+\item V‹K‚Ì‰ğÍƒƒ\ƒbƒh‚ğŠù‘¶‚Ì¶¬‹K‘¥‚É‘}“ü‚·‚é
+\item C\#”ÅParsec‚Ìê‡FV‹K‚Ì‰ğÍƒƒ\ƒbƒh‚ğ‘}“ü‚µ‚½Šù‘¶‚Ì¶¬‹K‘¥‚Ìselect‹å‚ğ‘‚«Š·‚¦‚é
+\end{enumerate}
+íœ‚É‚ÍAŸ‚Ìè‡‚ğ“¥‚ŞB
+\begin{enumerate}
+\item Šù‘¶‚Ì¶¬‹K‘¥‚©‚ç–Ú“I‚Ì‰ğÍƒƒ\ƒbƒh‚ğíœ‚·‚é
+\item C\#”ÅParsec‚Ìê‡F‰ğÍƒƒ\ƒbƒh‚ğíœ‚µ‚½¶¬‹K‘¥‚Ìselect‹å‚ğ‘‚«Š·‚¦‚éB
+\end{enumerate}
+ˆÈã‚Ì‚æ‚¤‚ÉAC\#”ÅParsec‚Ìê‡‚ÍA©ìƒp[ƒT‚æ‚è‘½‚­‹Lq‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚¢ê‡‚ª‚ ‚é‚Ì‚ÅA
+•ÏX‰ÓŠ”‚Å‚¢‚¦‚ÎA©ìƒp[ƒT‚Ì•û‚ª—D‚ê‚éê‡‚ª‚ ‚éB
 
 \subsection{ƒfƒoƒbƒO‚Ì—eˆÕ«}
 C\#”ÅParsec‚ÍA‚©‚È‚è‚ÌŠ„‡‚ğƒfƒŠƒQ[ƒg‚ªè‚ß‚éB‚»‚Ì‚½‚ßAƒfƒoƒbƒK‚É‚æ‚éƒXƒeƒbƒvÀs‚Å‚ÍA‚Ç‚ÌƒfƒŠƒQ[ƒg‚ª
@@ -494,9 +515,67 @@ object_.HasObjectTypeValue = false;  // ¦2
 —á‚¦‚Î‚±‚Ì2s‚ÍA\verb!object_!‚ª‰½‚ğw‚·‚Ì‚©‚ğ„‘ª‚µ‚Ä—‰ğE‹Lq‚·‚é•K—v‚ª‚ ‚éB
 ƒfƒoƒbƒK‚É‚æ‚éƒXƒeƒbƒvÀs‚ğs‚¤‚±‚Æ‚ÅA\verb!object_!‚ª–¾Šm‚Æ‚È‚èAˆ—‚ªŠÔˆá‚Á‚Ä‚¢‚È‚¢‚©Šm”F‚Å‚«‚éB
 ‚Ü‚½AC\#”ÅParsec‚Ì‚æ‚¤‚ÉƒfƒŠƒQ[ƒg‚ğ‘½—p‚µ‚Ä‚¨‚ç‚¸Ag—p‚µ‚Ä‚¢‚Ä‚àƒVƒ“ƒvƒ‹‚ÈƒV[ƒPƒ“ƒX‚Å‚ ‚é‚½‚ßA
-‚Ç‚Ìƒƒ\ƒbƒh‚Ü‚½‚ÍƒfƒŠƒQ[ƒg‚ğ“K—p‚³‚¹‚Ä‚¢‚é‚Ì‚©‚ªC\#”ÅParsec‚æ‚è”cˆ¬‚µ‚â‚·‚¢B
+‚Ç‚Ìƒƒ\ƒbƒh‚Ü‚½‚ÍƒfƒŠƒQ[ƒg‚ğ“K—p‚³‚¹‚Ä‚¢‚é‚Ì‚©‚ªC\#”ÅParsec‚æ‚èƒV[ƒPƒ“ƒX‚ğ”cˆ¬‚µ‚â‚·‚¢B
 
 \subsection{«”\”äŠr}
+\subsubsection{ˆ—‘¬“x}
+Šeè–@ŠÔ‚Åˆ—‘¬“x‚Ìˆá‚¢‚ªo‚é‚©‚ğ’²¸‚µ‚½B
+TLV‚ÍAƒ†[ƒU‚©‚ç‚‘¬‰»‚Ì—v‹‚ğ’¸‚¢‚Ä‚¢‚é‚½‚ßAˆ—‘¬“x‚ªƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO‚É‚æ‚è’˜‚µ‚­’á‰º‚·‚é‚±‚Æ‚Í–]‚Ü‚µ‚­‚È‚­A
+‹t‚ÉƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO‚É‚æ‚è‚‘¬‰»‚·‚é‚±‚Æ‚ª–]‚Ü‚µ‚¢B
+
+ˆÈ‰º‚Ì•û–@‚Ås‚Á‚½B
+\begin{description}
+\item[—p‚¢‚é‚à‚Ì] Šeƒp[ƒT‚ğÀ‘•‚µ‚½TLV(Œv3‚Â)AƒXƒgƒbƒvƒEƒHƒbƒ`
+\item[Œv‘ªŠJn] uV‹Kì¬ƒEƒBƒU[ƒhv‚ÌuOKvƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½ó‘Ô‚©‚ç—£‚µ‚½‚Æ‚«
+\item[Œv‘ªI—¹] u‰Šú‰»’†v‚Æ‚¢‚¤‘‹‚ÉØ‚è‘Ö‚í‚Á‚½‚Æ‚«
+\item[Œv‘ª‡˜] ©ìƒp[ƒT3‰ñ¨C\#”ÅParsec3‰ñ¨]—ˆ3‰ñ
+\end{description} 
+
+À{ŠÂ‹«‚ÍŸ‚Ì’Ê‚èB
+\begin{description}
+\item[OS] Windows 7 Professional@x64
+\item[CPU] Core2Duo E8400(3.0GHz)
+\item[ƒƒ‚ƒŠ] DDR2-800@1GBx2+2GBx2
+\end{description} 
+
+Œ‹‰Ê‚ğ•\\ref{tb:result}‚É¦‚·B
+
+\begin{table}[H]
+ \centering
+ \caption{—pŒê’è‹`}@\label{tb:result}
+ \begin{tabular}{|p|p|p|p|} \hline
+            & 1‰ñ–Ú  & 2‰ñ–Ú  & 3‰ñ–Ú\\ \hline \hline
+  ©ìƒp[ƒT    & 2•ª32•b&@2•ª24•b&@2•ª25•b \\ \hline
+@@C\#”ÅParsec& 2•ª40•b&@2•ª40•b&@2•ª40•b  \\ \hline
+@@]—ˆè–@     & 2•ª30•b&@2•ª29•b&@2•ª26•b
+  \hline
+ \end{tabular}
+\end{table}
+
+‡ˆÊ‚Í©ìƒp[ƒTA]—ˆè–@AC\#”ÅParsec‚Ì‡‚Å‚ ‚Á‚½B
+©ìƒp[ƒT‚ÍAŠî–{“I‚É•¶š—ñ‚ğ‚»‚Ì‚Ü‚Üˆµ‚¤‚Ì‚Å‚Í‚È‚­•¶š‚É•ª‰ğ‚µ‚Äˆ—‚µ‚Ä‚¢‚é‚½‚ßA
+•¶š—ñ‚ğ‘ÎÛ‚Æ‚·‚é³‹K•\Œ»‚ğg—p‚·‚é]—ˆè–@‚æ‚è‘¬‚­‚È‚Á‚½‚Æl‚¦‚ç‚ê‚éB
+C\#”ÅParsec‚ª‚±‚Ì‚æ‚¤‚ÈŒ‹‰Ê‚É‚È‚Á‚½——R‚ÍAŸ‚Ì‚à‚Ì‚ªl‚¦‚ç‚ê‚éB
+\begin{itemize}
+
+\end{itemize}
+
+
+\subsubsection{‰ğÍ”\—Í}
+¶¬‹K‘¥‚Ì•\Œ»—Í‚ÍA‚Ç‚Ì•û–@‚àˆá‚¢‚ªŒ©‚ç‚ê‚È‚¢B‚µ‚©‚µ‚È‚ª‚çA]—ˆ‚Ì•û–@‚Åg—p‚³‚ê‚Ä‚¢‚½³‹K•\Œ»‚Å‚ÍA
+Š‡ŒÊ‚ÌƒlƒXƒg‚ğ³Šm‚Éƒp[ƒX‚·‚é
+\footnote
+{
+.NET Framework‚Ì³‹K•\Œ»‚ÍA’Êí‚Ì‚à‚Ì‚æ‚è_“î‚©‚Â‹­—Í‚É‚Å‚«‚Ä‚¨‚èA
+‰E‚©‚ç¶‚Ö‚Ìˆê’vˆ—‚âÄ‹A‚ğ—˜—p‚µ‚½ƒ}ƒbƒ`ƒ“ƒO‚ª‰Â”\\cite{msdn}B
+}
+‚Ì‚ÉAŒ»óˆÈã‚É•¡G‚È³‹K•\Œ»‚Æ‚È‚Á‚Ä‚µ‚Ü‚¤
+\footnote{]—ˆ‚Ì•û–@‚Å‚ÍAŠ‡ŒÊ‚ÌƒlƒXƒg‚ğƒp[ƒX‚Å‚«‚È‚¢B‚Ü‚½AŠ‡ŒÊ‚ÌƒlƒXƒg‚É}B
+‚½‚Æ‚¦‚ÎAŸ‚ÌƒR[ƒh‚Í\verb!<,>!‚ÌƒlƒXƒg‚ğ³‚µ‚­ƒp[ƒX‚·‚é³‹K•\Œ»(Ú×‚Í\cite{msdncode}QÆ)‚¾‚ªA
+‚±‚ê‚ğŒ»ó‚Ì³‹K•\Œ»ã‚ÌŠ‡ŒÊ‚ÌƒlƒXƒg‚ª‹N‚±‚è‚¤‚é‰ÓŠ‚É‘}“ü‚·‚é‚±‚Æ‚É‚È‚éB
+\begin{lstlisting}
+^[^<>]*(((?'Open'<)[^<>]*)+((?'Close-Open'>)[^<>]*)+)*(?(Open)(?!))$"
+\end{lstlisting}
 
 
 \begin{thebibliography}{9}
@@ -504,5 +583,13 @@ object_.HasObjectTypeValue = false;  // ¦2
 LukeH's WebLog : Monadic Parser Combinators using C\# 3.0,\\
 URL:\\
 http://blogs.msdn.com/lukeh/archive/2007/08/19/monadic-parser-combinators-using-c-3-0.aspx
+\bibitem{msdn}
+.NET Framework ‚Ì³‹K•\Œ»,\\
+URL:http://msdn.microsoft.com/ja-jp/library/hs600312(v=VS.80).aspx
+\bibitem{msdncode}
+ƒOƒ‹[ƒv‰»\¬‘Ì,\\
+URL:\\
+http://msdn.microsoft.com/ja-jp/library/bs2twtah%28VS.80%29.aspx#BalancingGroupDefinitionExample
+
 \end{thebibliography}
 \end{document}
