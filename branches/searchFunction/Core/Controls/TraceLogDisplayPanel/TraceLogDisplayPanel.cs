@@ -65,7 +65,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	private bool _mouseDown;
 
    //簡易検索用のオブジェクト
-    private TraceLogSearcher _traceLogSearcher = new TraceLogSearcher();
+    private SimpleSearch _traceLogSearcher = new SimpleSearch();
         
    //簡易検索に必要な変数群
     private string _resourceType = null;
