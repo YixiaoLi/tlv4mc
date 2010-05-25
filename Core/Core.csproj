@@ -237,6 +237,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Search\TraceLogSearcher.cs" />
+    <Compile Include="Search\SimpleSearch.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
