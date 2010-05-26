@@ -982,7 +982,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         decimal scrollLocation = (int)((double)hScrollBar.Maximum * ((double)relatedLocation)); //移動場所 = スクロール領域の広さ × 割合
         if (scrollLocation < 0)
         {
-            scrollLocation = start;
+            scrollLocation = hScrollBar.Minimum;
         }
 
         hScrollBar.Value = (int)scrollLocation;
