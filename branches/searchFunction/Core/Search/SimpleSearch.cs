@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
-    class SimpleSearch
+    class SimpleSearch : TraceLogSearcher
     {
         private string _targetResource;
         private string _targetRule;
@@ -24,7 +24,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _currentTime = 0;
         }
 
-        public void setSerchData(string resource, string rule, string ev, string detail, VisualizeShapeData visShapeData, decimal time)
+        public void setSearchData(string resource, string rule, string ev, string detail, VisualizeShapeData visShapeData, decimal time)
         {
             _targetResource = resource;
             _targetRule = rule;
@@ -123,9 +123,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             return searchTime;
         }
 
-        public string[] searchWhole()
+        public decimal[] searchWhole()
         {
-            List<string> searchTime = null;
+            List<decimal> searchTime = null;
 
             //対象タスクに対して対象ルールが適用された際のデータセットを取得
             EventShapes ruleAppliedData = null;
@@ -145,11 +145,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 foreach (EventShape shape in eventAppliedData)
                 {
-                    searchTime.Add(shape.From.Value.ToString());
+                    searchTime.Add(shape.From.Value);
                 }
             }
 
-            return searchTime.ToArray<string>();
+            return searchTime.ToArray<decimal>();
         }
      }
 }

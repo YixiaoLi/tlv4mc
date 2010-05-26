@@ -928,7 +928,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void searchForwardButton_Click(object sender, EventArgs e)
     {
-        _traceLogSearcher.setSerchData((string)targetResourceForm.SelectedItem, _ruleName, _eventName, (string)targetEventDetailForm.SelectedItem,  //
+        _traceLogSearcher.setSearchData((string)targetResourceForm.SelectedItem, _ruleName, _eventName, (string)targetEventDetailForm.SelectedItem,  //
                                               _data.VisualizeShapeData, ApplicationFactory.BlackBoard.CursorTime.Value);
 
         decimal jumpTime = _traceLogSearcher.searchForward();
@@ -951,7 +951,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void searchBackwardButton_Click(object sender, EventArgs e)
     {
-        _traceLogSearcher.setSerchData((string)targetResourceForm.SelectedItem, _ruleName, _eventName, (string)targetEventDetailForm.SelectedItem,  //
+        _traceLogSearcher.setSearchData((string)targetResourceForm.SelectedItem, _ruleName, _eventName, (string)targetEventDetailForm.SelectedItem,  //
                                               _data.VisualizeShapeData, ApplicationFactory.BlackBoard.CursorTime.Value);
 
         decimal jumpTime = _traceLogSearcher.searchBackward();
