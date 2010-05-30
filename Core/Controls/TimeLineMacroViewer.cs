@@ -60,6 +60,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private Cursor HandCursor { get { return new Cursor(Properties.Resources.hand.Handle) { Tag = "hand" }; } }
 		private TimeLine ViewingAreaTimeLine;
 		private Bitmap _macroVizData;
+        private int fileLoadingFlag = 0;
 
 		public TimeLineMacroViewer()
 		{
@@ -114,6 +115,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		public override void SetData(TraceLogVisualizerData data)
 		{
 			base.SetData(data);
+            fileLoadingFlag = 1;
 
 			Thread th = new Thread(new ThreadStart(() =>
 			{

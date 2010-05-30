@@ -73,6 +73,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     private string _eventName = null;
     private string _eventDetail = null;
 
+    private int fileLoadingFlag = 0;
 
     
 	public override int TimeLineX
@@ -149,6 +150,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	public override void SetData(TraceLogVisualizerData data)
 	{
 	    base.SetData(data);
+        fileLoadingFlag = 1;
 
 	    viewingTimeRangeFromTextBox.Radix = _data.ResourceData.TimeRadix;
 	    viewingTimeRangeToTextBox.Radix = _data.ResourceData.TimeRadix;
@@ -305,8 +307,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	{
 	    base.OnLoad(e);
 	    this.ApplyNativeScroll();
-        ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) => { Refresh(); };
-       
+
+
+
 	    #region treeGridView初期化
 		treeGridView.AddColumn(new TreeGridViewColumn() { Name = "resourceName", HeaderText = "リソース" });
 	    //treeGridView.AddColumn(new DataGridViewTextBoxColumn() { Name = "value", HeaderText = "値" });
@@ -954,6 +957,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         _traceLogSearcher.setSearchData((string)targetResourceForm.SelectedItem, _ruleName, _eventName, (string)targetEventDetailForm.SelectedItem,  //
                                               _data.VisualizeShapeData, ApplicationFactory.BlackBoard.CursorTime.Value);
 
+        decimal[] searchTimes = _traceLogSearcher.searchWhole();
+        for (int i = 0; i < searchTimes.Count(); i++ )
+        {
+            ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(new Time(searchTimes[i].ToString(),_timeRadix));
+        }
+        Refresh();
+        /*
         decimal jumpTime = _traceLogSearcher.searchBackward();
         if (jumpTime != -1)
         {
@@ -968,7 +978,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         else
         {
             System.Windows.Forms.MessageBox.Show("検索の終わりです");
-        }
+        }*/
     }
 
     private void moveScrollBar(decimal jumpTime)
