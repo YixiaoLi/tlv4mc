@@ -954,16 +954,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void searchBackwardButton_Click(object sender, EventArgs e)
     {
-        _traceLogSearcher.setSearchData((string)targetResourceForm.SelectedItem, _ruleName, _eventName, (string)targetEventDetailForm.SelectedItem,  //
-                                              _data.VisualizeShapeData, ApplicationFactory.BlackBoard.CursorTime.Value);
-
-        decimal[] searchTimes = _traceLogSearcher.searchWhole();
-        for (int i = 0; i < searchTimes.Count(); i++ )
-        {
-            ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(new Time(searchTimes[i].ToString(),_timeRadix));
-        }
-        Refresh();
-        /*
         decimal jumpTime = _traceLogSearcher.searchBackward();
         if (jumpTime != -1)
         {
@@ -978,8 +968,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         else
         {
             System.Windows.Forms.MessageBox.Show("検索の終わりです");
-        }*/
+        }
     }
+
+    private void searchWholeButton_Click(object sender, EventArgs e)
+    {
+        _traceLogSearcher.setSearchData((string)targetResourceForm.SelectedItem, _ruleName, _eventName, (string)targetEventDetailForm.SelectedItem,  //
+                                              _data.VisualizeShapeData, ApplicationFactory.BlackBoard.CursorTime.Value);
+
+        decimal[] searchTimes = _traceLogSearcher.searchWhole();
+        for (int i = 0; i < searchTimes.Count(); i++)
+        {
+            ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(new Time(searchTimes[i].ToString(), _timeRadix));
+        }
+        Refresh();
+    }
+
 
     private void moveScrollBar(decimal jumpTime)
     {
@@ -1152,6 +1156,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     {
         //MessageBox.Show("test");
     }
+
+    private void markerDellButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
 
     }
 }
