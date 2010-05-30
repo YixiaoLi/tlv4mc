@@ -57,7 +57,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			MarkerMode
 		}
 
-      
+        
 		protected int _lastMouseMoveX;
 		protected int _mouseDownX = -1;
 		protected CursorModes _cursorMode = CursorModes.Normal;
@@ -108,7 +108,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		public virtual TimeLine TimeLine { get; set; }
 		public virtual GeneralNamedCollection<TimeLineMarker> LocalTimeLineMarkers { get; private set; }
 
-		public TimeLineControl()
+       		public TimeLineControl()
 		{
 			ResizeRedraw = true;
 			DoubleBuffered = true;
@@ -146,7 +146,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		protected void addMarkerContextToolStripItemClick(object sender, EventArgs e)
 		{
-			ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(ApplicationFactory.BlackBoard.CursorTime);
+            ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(ApplicationFactory.BlackBoard.CursorTime);
 		}
 
 		protected void delMarkerContextToolStripItemClick(object sender, EventArgs e)
@@ -239,7 +239,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					DrawMarker(e.Graphics, tlm);
 				}
-
+                
 			}
 		}
 
