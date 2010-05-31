@@ -257,7 +257,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
-            var event_ = OBject().Char('.').AttributeOrBehavior();
+            var event_ = OBject().Char('.').AttributeOrBehavior()
+                         .OR().
+                         OBject();  // 不完全な標準形式トレースログだが、可視化ルール等に記述されていたり、マクロ適用時に使用するため必要
 
             return (ITraceLogParser)event_.End();
         }
