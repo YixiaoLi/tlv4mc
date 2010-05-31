@@ -980,7 +980,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         Refresh();
     }
 
-    private void deleateAllMarker_Click(object sender, EvenntArgs e)
+    private void deleateAllMarker_Click(object sender, EventArgs e)
     {
         foreach (TimeLineMarker tm in ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.Markers)
         {
@@ -1153,12 +1153,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         this.searchBackwardButton.Enabled = true; //検索ボタンを有効にする
     }
 
-
-    private void treeGridView_Click(object sender, EventArgs e)
-    {
-        //今は何もなし
-    }
-
     private void TargetResourceForm_Click(object sender, EventArgs e)
     {
         //MessageBox.Show("test");
@@ -1167,6 +1161,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     private void markerDellButton_Click(object sender, EventArgs e)
     {
 
+    }
+
+    private void detailSearchButton_Click_1(object sender, EventArgs e)
+    {
+        //ブレークポイント用の意味のない式
+        int i = 0;
     }
 
   
