@@ -68,11 +68,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 foreach (EventShape shape in eventAppliedData)
                 {
-                    if ( shape.EventDetail  != null )
+                    if (  shape.From.Value > _currentTime  &&  shape.EventDetail  != null )
                     {
-                        if( shape.EventDetail.Equals(_targetEventDetail) && (shape.From.Value > _currentTime ))
-                        searchTime = shape.From.Value;
-                        break;
+                        if (shape.EventDetail.Equals(_targetEventDetail))
+                        {
+                            searchTime = shape.From.Value;
+                            break;
+                        }
                     }
                 }
             }
@@ -100,39 +102,34 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 {
                     //対象ルールの中で、対象イベントが適用された際のデータセットを取得
                     eventAppliedData = ruleAppliedData.List[_targetRule + ":" + _targetEvent];
-
-                    // foreach 文で後進検索を書くために 対象イベントのリストを逆転させる
-                    eventAppliedData.Reverse();
                 }
             }
 
 
             if (ruleAppliedData != null && eventAppliedData != null && _targetEventDetail == null)
             {
-                foreach (EventShape shape in eventAppliedData)
+                for (int i = eventAppliedData.Count; i < 0; i--)
                 {
-                    if (shape.From.Value > _currentTime)
+                    if (eventAppliedData[i].From.Value < _currentTime)
                     {
-                        searchTime = shape.From.Value;
+                        searchTime = eventAppliedData[i].From.Value;
                         break;
                     }
                 }
-                // 検索が終了したので時系列を戻す
-                eventAppliedData.Reverse();
             }
             else if (ruleAppliedData != null && eventAppliedData != null && _targetEventDetail != null)
             {
-                foreach (EventShape shape in eventAppliedData)
+                for (int i = eventAppliedData.Count; i < 0; i--)
                 {
-                    if (shape.EventDetail != null)
+                    if (eventAppliedData[i].From.Value < _currentTime &&  eventAppliedData[i].EventDetail != null)
                     {
-                        if (shape.EventDetail.Equals(_targetEventDetail) && (shape.From.Value > _currentTime))
-                            searchTime = shape.From.Value;
-                        break;
+                        if (eventAppliedData[i].EventDetail.Equals(_targetEventDetail))
+                        {
+                            searchTime = eventAppliedData[i].From.Value;
+                            break;
+                        }
                     }
                 }
-                // 検索が終了したので時系列を戻す
-                eventAppliedData.Reverse();
             }
             else
             {
