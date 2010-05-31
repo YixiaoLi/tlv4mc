@@ -73,9 +73,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     private string _eventName = null;
     private string _eventDetail = null;
 
-    private int fileLoadingFlag = 0;
-
-    
 	public override int TimeLineX
 	{
 	    get { return _timeLineX; }
@@ -150,8 +147,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	public override void SetData(TraceLogVisualizerData data)
 	{
 	    base.SetData(data);
-        fileLoadingFlag = 1;
-
 	    viewingTimeRangeFromTextBox.Radix = _data.ResourceData.TimeRadix;
 	    viewingTimeRangeToTextBox.Radix = _data.ResourceData.TimeRadix;
 
@@ -307,8 +302,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	{
 	    base.OnLoad(e);
 	    this.ApplyNativeScroll();
-
-
 
 	    #region treeGridView初期化
 		treeGridView.AddColumn(new TreeGridViewColumn() { Name = "resourceName", HeaderText = "リソース" });
@@ -954,6 +947,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void searchBackwardButton_Click(object sender, EventArgs e)
     {
+        _traceLogSearcher.setSearchData((string)targetResourceForm.SelectedItem, _ruleName, _eventName, (string)targetEventDetailForm.SelectedItem,  //
+                                       _data.VisualizeShapeData, ApplicationFactory.BlackBoard.CursorTime.Value);
+
         decimal jumpTime = _traceLogSearcher.searchBackward();
         if (jumpTime != -1)
         {
@@ -983,6 +979,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         }
         Refresh();
     }
+
+    private void deleateAllMarker_Click(object sender, EvenntArgs e)
+    {
+        foreach (TimeLineMarker tm in ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.Markers)
+        {
+            ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.DeleteMarker(tm.Name);
+        }
+
+        Refresh();
+    }
+
 
 
     private void moveScrollBar(decimal jumpTime)
@@ -1162,6 +1169,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     }
 
+  
 
     }
 }
