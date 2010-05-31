@@ -157,12 +157,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 }
             }
 
-            if (ruleAppliedData != null && eventAppliedData != null)
+            if (ruleAppliedData != null && eventAppliedData != null && _targetEventDetail == null)
             {
                 foreach (EventShape shape in eventAppliedData)
                 {
                     searchTime.Add(shape.From.Value);
                 }
+            }
+            else if (ruleAppliedData != null && eventAppliedData != null && _targetEventDetail != null)
+            {
+                foreach (EventShape shape in eventAppliedData)
+                {
+                    if (shape.EventDetail.Equals(_targetEventDetail))
+                    {
+                        searchTime.Add(shape.From.Value);
+                    }
+                }
+
+            }
+            else
+            {
+                //エラー処理
             }
 
             return searchTime.ToArray<decimal>();

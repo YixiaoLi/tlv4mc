@@ -110,6 +110,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.detailSearchButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -169,10 +170,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripSeparator2,
             this.toolStripLabel2,
             this.viewableSpanTextBox,
+            this.toolStripSeparator10,
             this.deleateAllMarker});
             this.informationToolStrip.Location = new System.Drawing.Point(3, 0);
             this.informationToolStrip.Name = "informationToolStrip";
-            this.informationToolStrip.Size = new System.Drawing.Size(167, 25);
+            this.informationToolStrip.Size = new System.Drawing.Size(173, 25);
             this.informationToolStrip.TabIndex = 2;
             // 
             // timePerSclaeLabel
@@ -454,7 +456,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.detailSearchButton});
             this.searchToolStrip.Location = new System.Drawing.Point(3, 25);
             this.searchToolStrip.Name = "searchToolStrip";
-            this.searchToolStrip.Size = new System.Drawing.Size(638, 25);
+            this.searchToolStrip.Size = new System.Drawing.Size(301, 25);
             this.searchToolStrip.TabIndex = 2;
             // 
             // searchLabelName
@@ -544,6 +546,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             // searchWholeButton
             // 
             this.searchWholeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.searchWholeButton.Enabled = false;
             this.searchWholeButton.Image = ((System.Drawing.Image)(resources.GetObject("searchWholeButton.Image")));
             this.searchWholeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.searchWholeButton.Name = "searchWholeButton";
@@ -570,6 +573,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.detailSearchButton.Size = new System.Drawing.Size(23, 22);
             this.detailSearchButton.Text = "toolStripButton1";
             this.detailSearchButton.Click += new System.EventHandler(this.detailSearchButton_Click_1);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
             // 
             // TraceLogDisplayPanel
             // 
@@ -641,6 +649,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripButton deleateAllMarker;
         private System.Windows.Forms.ToolStripButton detailSearchButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
 
 
 	}

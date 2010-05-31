@@ -1150,7 +1150,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         }
 
         this.searchForwardButton.Enabled = true;
-        this.searchBackwardButton.Enabled = true; //検索ボタンを有効にする
+        this.searchBackwardButton.Enabled = true;
+        this.searchWholeButton.Enabled = true;    //各検索ボタンを有効にする
     }
 
     private void TargetResourceForm_Click(object sender, EventArgs e)
