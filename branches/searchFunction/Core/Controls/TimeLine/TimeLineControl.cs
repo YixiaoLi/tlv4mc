@@ -160,7 +160,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			this.ApplyNativeScroll();
 
-            ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) => { Refresh(); };
+            ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) =>
+             {
+                 try
+                 {
+                     Refresh();
+                 }
+                 catch (Exception ex)
+                 {
+                     MessageBox.Show(ex.Message);
+                 }
+             };
 
             ApplicationData.FileContext.DataChanged += (o, _e) =>
 			{
