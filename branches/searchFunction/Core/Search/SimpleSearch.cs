@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
@@ -11,7 +12,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private string _targetRule;
         private string _targetEvent;
         private string _targetEventDetail;
-        private VisualizeShapeData _visShapeData;
+        private List<VisualizeLog> _visLogs;
         private decimal _currentTime;
 
         public SimpleSearch()
@@ -20,17 +21,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _targetRule = null;
             _targetEvent = null;
             _targetEventDetail = null;
-            _visShapeData = null;
+            _visLogs = null;
             _currentTime = 0;
         }
 
-        public void setSearchData(string resource, string rule, string ev, string detail, VisualizeShapeData visShapeData, decimal time)
+        public void setSearchData(string resource, string rule, string ev, string detail, List<VisualizeLog> log, decimal time)
         {
             _targetResource = resource;
             _targetRule = rule;
             _targetEvent = ev;
             _targetEventDetail = detail;
-            _visShapeData = visShapeData;
+            _visLogs = log;
             _currentTime = time;
         }
 
@@ -38,51 +39,46 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public decimal searchForward()
         {
             decimal searchTime = -1;
-            
-            //対象タスクに対して対象ルールが適用された際のデータセットを取得
-            EventShapes ruleAppliedData = null;
-            List<EventShape> eventAppliedData = null;
-            if (_visShapeData.RuleResourceShapes.ContainsKey(_targetRule + ":" + _targetResource))
-            {
-                ruleAppliedData = _visShapeData.RuleResourceShapes[_targetRule + ":" + _targetResource];
 
-                if (ruleAppliedData.List.ContainsKey(_targetRule + ":" + _targetEvent))
-                {
-                    //対象ルールの中で、対象イベントが適用された際のデータセットを取得
-                    eventAppliedData = ruleAppliedData.List[_targetRule + ":" + _targetEvent];
-                }
-            }
-
-            if (ruleAppliedData != null && eventAppliedData != null && _targetEventDetail == null)
+            foreach (VisualizeLog visLog in _visLogs)
             {
-                foreach (EventShape shape in eventAppliedData)
+                if (visLog.resourceName.Equals(_targetResource)) //リソース名の一致を確認
                 {
-                    if (shape.From.Value > _currentTime)
+                    if(visLog.ruleName.Equals(_targetRule))  //ルール名の一致を確認
                     {
-                        searchTime = shape.From.Value;
-                        break;
-                    }
-                }
-            }
-            else if (ruleAppliedData != null && eventAppliedData != null && _targetEventDetail != null)
-            {
-                foreach (EventShape shape in eventAppliedData)
-                {
-                    if (  shape.From.Value > _currentTime  &&  shape.EventDetail  != null )
-                    {
-                        if (shape.EventDetail.Equals(_targetEventDetail))
+                        if (visLog.evntName.Equals(_targetEvent)) //イベント名の一致を確認
                         {
-                            searchTime = shape.From.Value;
-                            break;
+                            if (_targetEventDetail != null)  // イベント詳細が指定されているかを確認
+                            {
+                                if (visLog.evntDetail.Equals(_targetEventDetail))  //イベント詳細の一致を確認
+                                {
+                                    if (_currentTime < visLog.fromTime)
+                                    {
+                                        searchTime = visLog.fromTime;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (_currentTime > visLog.fromTime)
+                                {
+                                    searchTime = visLog.fromTime;
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // "*"を想定
                         }
                     }
                 }
+                else
+                {
+                    // "*"を想定
+                }
             }
-            else
-            {
-                //エラー処理
-            }
-
             return searchTime;
         }
 
@@ -91,49 +87,46 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         {
             decimal searchTime = -1;
 
-            //対象タスクに対して対象ルールが適用された際のデータセットを取得
-            EventShapes ruleAppliedData = null;
-            List<EventShape> eventAppliedData = null;
-            if (_visShapeData.RuleResourceShapes.ContainsKey(_targetRule + ":" + _targetResource))
+            for(int i = _visLogs.Count -1  ; i>0; i--)
             {
-                ruleAppliedData = _visShapeData.RuleResourceShapes[_targetRule + ":" + _targetResource];
-
-                if (ruleAppliedData.List.ContainsKey(_targetRule + ":" + _targetEvent))
+                VisualizeLog visLog  = _visLogs[i];
+                if (visLog.resourceName.Equals(_targetResource)) //リソース名の一致を確認
                 {
-                    //対象ルールの中で、対象イベントが適用された際のデータセットを取得
-                    eventAppliedData = ruleAppliedData.List[_targetRule + ":" + _targetEvent];
-                }
-            }
-
-
-            if (ruleAppliedData != null && eventAppliedData != null && _targetEventDetail == null)
-            {
-                for (int i = eventAppliedData.Count; i < 0; i--)
-                {
-                    if (eventAppliedData[i].From.Value < _currentTime)
+                    if (visLog.ruleName.Equals(_targetRule))  //ルール名の一致を確認
                     {
-                        searchTime = eventAppliedData[i].From.Value;
-                        break;
-                    }
-                }
-            }
-            else if (ruleAppliedData != null && eventAppliedData != null && _targetEventDetail != null)
-            {
-                for (int i = eventAppliedData.Count; i < 0; i--)
-                {
-                    if (eventAppliedData[i].From.Value < _currentTime &&  eventAppliedData[i].EventDetail != null)
-                    {
-                        if (eventAppliedData[i].EventDetail.Equals(_targetEventDetail))
+                        if (visLog.evntName.Equals(_targetEvent)) //イベント名の一致を確認
                         {
-                            searchTime = eventAppliedData[i].From.Value;
-                            break;
+                            if (_targetEventDetail != null)  // イベント詳細が指定されているかを確認
+                            {
+                                if (visLog.evntDetail.Equals(_targetEventDetail))  //イベント詳細の一致を確認
+                                {
+                                    if (_currentTime > visLog.fromTime)
+                                    {
+                                        searchTime = visLog.fromTime;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (_currentTime > visLog.fromTime)
+                                {
+                                    searchTime = visLog.fromTime;
+                                    break;
+                                }
+                            }
                         }
+                        else
+                        {
+                            // "*"を想定
+                        }
+
                     }
                 }
-            }
-            else
-            {
-                //エラー処理
+                else
+                {
+                    // "*"を想定
+                }
             }
             return searchTime;
         }
@@ -143,41 +136,38 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         {
             List<decimal> searchTime = new List<decimal>();
 
-            //対象タスクに対して対象ルールが適用された際のデータセットを取得
-            EventShapes ruleAppliedData = null;
-            List<EventShape> eventAppliedData = null;
-            if (_visShapeData.RuleResourceShapes.ContainsKey(_targetRule + ":" + _targetResource))
+            foreach (VisualizeLog visLog in _visLogs)
             {
-                ruleAppliedData = _visShapeData.RuleResourceShapes[_targetRule + ":" + _targetResource];
-
-                if (ruleAppliedData.List.ContainsKey(_targetRule + ":" + _targetEvent))
+                if (visLog.resourceName.Equals(_targetResource)) //リソース名の一致を確認
                 {
-                    //対象ルールの中で、対象イベントが適用された際のデータセットを取得
-                    eventAppliedData = ruleAppliedData.List[_targetRule + ":" + _targetEvent];
-                }
-            }
-
-            if (ruleAppliedData != null && eventAppliedData != null && _targetEventDetail == null)
-            {
-                foreach (EventShape shape in eventAppliedData)
-                {
-                    searchTime.Add(shape.From.Value);
-                }
-            }
-            else if (ruleAppliedData != null && eventAppliedData != null && _targetEventDetail != null)
-            {
-                foreach (EventShape shape in eventAppliedData)
-                {
-                    if (shape.EventDetail.Equals(_targetEventDetail))
+                    if (visLog.ruleName.Equals(_targetRule))  //ルール名の一致を確認
                     {
-                        searchTime.Add(shape.From.Value);
+                        if (visLog.evntName.Equals(_targetEvent)) //イベント名の一致を確認
+                        {
+                            if (_targetEventDetail != null)  // イベント詳細が指定されているかを確認
+                            {
+                                if (visLog.evntDetail.Equals(_targetEventDetail))  //イベント詳細の一致を確認
+                                {
+                                    searchTime.Add(visLog.fromTime);
+                                }
+                            }
+                            else
+                            {
+                                searchTime.Add(visLog.fromTime);
+                            }
+
+                        }
+                        else
+                        {
+                            // "*"を想定
+                        }
+
                     }
                 }
-
-            }
-            else
-            {
-                //エラー処理
+                else
+                {
+                    // "*"を想定
+                }
             }
 
             return searchTime.ToArray<decimal>();
