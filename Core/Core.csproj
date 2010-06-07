@@ -130,6 +130,7 @@
     <Compile Include="FileContext\SettingData\TimeLineMacroViewerSetting.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogGenerator.cs" />
+    <Compile Include="FileContext\VisualizeData\VisualizeLog.cs" />
     <Compile Include="FileContext\VisualizeShapeData\EventShapesGenerator.cs" />
     <Compile Include="FileContext\VisualizeData\Event.cs" />
     <Compile Include="FileContext\VisualizeData\EventType.cs" />

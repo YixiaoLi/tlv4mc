@@ -48,6 +48,7 @@ using NU.OJL.MPRTOS.TLV.Base.Controls;
 using NU.OJL.MPRTOS.TLV.Third;
 using System.Collections;
 using NU.OJL.MPRTOS.TLV.Core.Search;
+using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
 
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
@@ -72,6 +73,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     private string _ruleName = null;
     private string _eventName = null;
     private string _eventDetail = null;
+
+   //時系列順に並んだ図形データ
+    private List<VisualizeLog> _timeSortedLog = null;
 
 	public override int TimeLineX
 	{
@@ -215,7 +219,52 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         targetResourceForm.SelectedIndexChanged += (o, _e) => { makeRuleForm(); };
         targetRuleForm.SelectedIndexChanged += (o, _e) => { makeEventForm(); };
         targetEventForm.SelectedIndexChanged += (o, _e) => { makeDetailEventForm(); };
-	}
+
+        //時系列順に並んだ可視化データの作成
+        //ループがかなり深いので、ログの数が多くなると処理が非常に遅くなる可能性あり
+        //リスト中の適切な位置に一つ一つデータを挿入していくことで、全部のデータを格納し終わった
+        //段階でソートが完了させている。ただ、速度のことを考えると、最初は時系列を無視して格納し
+        //最後にクイックソートを使って整列させた方がいいかもしれない。　要検討
+          _timeSortedLog = new List<VisualizeLog>();
+          foreach(KeyValuePair<string,EventShapes> evntShapesList in this._data.VisualizeShapeData.RuleResourceShapes)
+          {
+              string[] ruleAndResName = evntShapesList.Key.Split(':'); //例えば"taskStateChange:LOGTASK"を切り分ける
+              string resName = ruleAndResName[1];
+              string ruleName = ruleAndResName[0];
+              foreach (KeyValuePair<string, System.Collections.Generic.List<EventShape>> evntShapeList in evntShapesList.Value.List)
+              {
+                  string[] evntAndRuleName = evntShapeList.Key.Split(':');  // 例えば"taskStateChange:stateChangeEvent"を切り分ける
+                  string evntName = evntAndRuleName[1];
+                  foreach(EventShape evntShape in evntShapeList.Value)
+                  {
+                      //　evntShape を_timeSortedLog へ挿入すべき場所（インデックス）を探して格納する
+                      if (_timeSortedLog.Count == 0)
+                      {
+                          _timeSortedLog.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                      }
+                      else
+                      {
+                          for (int i = 0; i < _timeSortedLog.Count; i++)
+                          {
+                              VisualizeLog addedLog = _timeSortedLog[i];
+                              if (evntShape.From.Value <= addedLog.fromTime)
+                              {
+                                  _timeSortedLog.Insert(i, new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                                  break;
+                              }
+                              else
+                              {
+                                  if (i == _timeSortedLog.Count - 1)
+                                  {
+                                      _timeSortedLog.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+    }
 
 	private void setNodes()
 	{
@@ -925,7 +974,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     private void searchForwardButton_Click(object sender, EventArgs e)
     {
         _traceLogSearcher.setSearchData((string)targetResourceForm.SelectedItem, _ruleName, _eventName, (string)targetEventDetailForm.SelectedItem,  //
-                                              _data.VisualizeShapeData, ApplicationFactory.BlackBoard.CursorTime.Value);
+                                              _timeSortedLog, ApplicationFactory.BlackBoard.CursorTime.Value);
 
         decimal jumpTime = _traceLogSearcher.searchForward();
         if (jumpTime != -1)
@@ -948,7 +997,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     private void searchBackwardButton_Click(object sender, EventArgs e)
     {
         _traceLogSearcher.setSearchData((string)targetResourceForm.SelectedItem, _ruleName, _eventName, (string)targetEventDetailForm.SelectedItem,  //
-                                       _data.VisualizeShapeData, ApplicationFactory.BlackBoard.CursorTime.Value);
+                                       _timeSortedLog, ApplicationFactory.BlackBoard.CursorTime.Value);
 
         decimal jumpTime = _traceLogSearcher.searchBackward();
         if (jumpTime != -1)
@@ -970,7 +1019,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     private void searchWholeButton_Click(object sender, EventArgs e)
     {
         _traceLogSearcher.setSearchData((string)targetResourceForm.SelectedItem, _ruleName, _eventName, (string)targetEventDetailForm.SelectedItem,  //
-                                              _data.VisualizeShapeData, ApplicationFactory.BlackBoard.CursorTime.Value);
+                                              _timeSortedLog, ApplicationFactory.BlackBoard.CursorTime.Value);
 
         decimal[] searchTimes = _traceLogSearcher.searchWhole();
         for (int i = 0; i < searchTimes.Count(); i++)
@@ -1015,10 +1064,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     private void makeResourceForm()
     {
         GeneralNamedCollection<Resource> resData = this._data.ResourceData.Resources;
+        targetResourceForm.Items.Add("*");
 
         foreach (Resource res in resData)
         {
-            this.targetResourceForm.Items.Add(res.Name);
+           targetResourceForm.Items.Add(res.Name);
         }
 
         if (targetRuleForm.Visible == true)
@@ -1057,15 +1107,25 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             targetRuleForm.Visible = true;
         }
 
-        //選ばれているリソースの種類を調べる
-        _resourceType = _data.ResourceData.Resources[(string)targetResourceForm.SelectedItem].Type;
-        GeneralNamedCollection<VisualizeRule> visRules = _data.VisualizeData.VisualizeRules;
 
-        foreach(VisualizeRule rule in visRules)
+        if (targetResourceForm.SelectedItem.Equals("*"))
         {
-            if (rule.Target == null  || rule.Target.Equals(_resourceType))
+            targetRuleForm.Items.Add("*");
+            //すべてのルールをコンボボックスのアイテムに追加
+        }
+        else
+        {
+            //選ばれているリソースの種類を調べる
+            _resourceType = _data.ResourceData.Resources[(string)targetResourceForm.SelectedItem].Type;
+            GeneralNamedCollection<VisualizeRule> visRules = _data.VisualizeData.VisualizeRules;
+            targetRuleForm.Items.Add("*");
+
+            foreach (VisualizeRule rule in visRules)
             {
-                targetRuleForm.Items.Add(rule.DisplayName);
+                if (rule.Target == null || rule.Target.Equals(_resourceType))
+                {
+                    targetRuleForm.Items.Add(rule.DisplayName);
+                }
             }
         }
     }
