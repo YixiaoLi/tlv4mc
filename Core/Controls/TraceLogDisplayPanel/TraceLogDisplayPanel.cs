@@ -1065,7 +1065,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     private void makeResourceForm()
     {
         GeneralNamedCollection<Resource> resData = this._data.ResourceData.Resources;
-        targetResourceForm.Items.Add("*");
 
         foreach (Resource res in resData)
         {
@@ -1109,26 +1108,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         }
 
 
-        if (targetResourceForm.SelectedItem.Equals("*"))
-        {
-            targetRuleForm.Items.Add("*");
-            //すべてのルールをコンボボックスのアイテムに追加
-        }
-        else
-        {
-            //選ばれているリソースの種類を調べる
-            _resourceType = _data.ResourceData.Resources[(string)targetResourceForm.SelectedItem].Type;
-            GeneralNamedCollection<VisualizeRule> visRules = _data.VisualizeData.VisualizeRules;
-            targetRuleForm.Items.Add("*");
+        //選ばれているリソースの種類を調べる
+        _resourceType = _data.ResourceData.Resources[(string)targetResourceForm.SelectedItem].Type;
+        GeneralNamedCollection<VisualizeRule> visRules = _data.VisualizeData.VisualizeRules;
 
-            foreach (VisualizeRule rule in visRules)
+        foreach (VisualizeRule rule in visRules)
+        {
+            if (rule.Target == null || rule.Target.Equals(_resourceType))
             {
-                if (rule.Target == null || rule.Target.Equals(_resourceType))
-                {
-                    targetRuleForm.Items.Add(rule.DisplayName);
-                }
+                targetRuleForm.Items.Add(rule.DisplayName);
             }
         }
+        
+
+        this.searchForwardButton.Enabled = true;
+        this.searchBackwardButton.Enabled = true;
+        this.searchWholeButton.Enabled = true;    //各検索ボタンを有効にする
     }
 
     //イベント指定コンボボックスのアイテムをセット
@@ -1210,9 +1205,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             
         }
 
-        this.searchForwardButton.Enabled = true;
-        this.searchBackwardButton.Enabled = true;
-        this.searchWholeButton.Enabled = true;    //各検索ボタンを有効にする
+      
     }
 
     private void TargetResourceForm_Click(object sender, EventArgs e)
@@ -1227,8 +1220,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void detailSearchButton_Click_1(object sender, EventArgs e)
     {
-        //ブレークポイント用の意味のない式
-        int i = 0;
+
     }
 
   
