@@ -14,6 +14,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private string _targetEventDetail;
         private List<VisualizeLog> _visLogs;
         private decimal _currentTime;
+        
+        enum SearchType{
+            Forward,
+            Backward,
+            Whole
+        }
 
         public SimpleSearch()
         {
@@ -42,43 +48,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             foreach (VisualizeLog visLog in _visLogs)
             {
-                if (visLog.resourceName.Equals(_targetResource)) //リソース名の一致を確認
+                if (checkSearchCondition(SearchType.Forward, visLog))
                 {
-                    if(visLog.ruleName.Equals(_targetRule))  //ルール名の一致を確認
-                    {
-                        if (visLog.evntName.Equals(_targetEvent)) //イベント名の一致を確認
-                        {
-                            if (_targetEventDetail != null)  // イベント詳細が指定されているかを確認
-                            {
-                                if (visLog.evntDetail.Equals(_targetEventDetail))  //イベント詳細の一致を確認
-                                {
-                                    if (_currentTime < visLog.fromTime)
-                                    {
-                                        searchTime = visLog.fromTime;
-                                        break;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (_currentTime < visLog.fromTime)
-                                {
-                                    searchTime = visLog.fromTime;
-                                    break;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            // "*"を想定
-                        }
-                    }
-                }
-                else
-                {
-                    // "*"を想定
+                    searchTime = visLog.fromTime;
+                    break;
                 }
             }
+
             return searchTime;
         }
 
@@ -89,43 +65,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             for(int i = _visLogs.Count -1  ; i>0; i--)
             {
-                VisualizeLog visLog  = _visLogs[i];
-                if (visLog.resourceName.Equals(_targetResource)) //リソース名の一致を確認
+                VisualizeLog visLog = _visLogs[i];
+                if (checkSearchCondition(SearchType.Backward, visLog))
                 {
-                    if (visLog.ruleName.Equals(_targetRule))  //ルール名の一致を確認
-                    {
-                        if (visLog.evntName.Equals(_targetEvent)) //イベント名の一致を確認
-                        {
-                            if (_targetEventDetail != null)  // イベント詳細が指定されているかを確認
-                            {
-                                if (visLog.evntDetail.Equals(_targetEventDetail))  //イベント詳細の一致を確認
-                                {
-                                    if (_currentTime > visLog.fromTime)
-                                    {
-                                        searchTime = visLog.fromTime;
-                                        break;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (_currentTime > visLog.fromTime)
-                                {
-                                    searchTime = visLog.fromTime;
-                                    break;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            // "*"を想定
-                        }
-
-                    }
-                }
-                else
-                {
-                    // "*"を想定
+                    searchTime = visLog.fromTime;
+                    break;
                 }
             }
             return searchTime;
@@ -138,71 +82,59 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             foreach (VisualizeLog visLog in _visLogs)
             {
-                if (visLog.resourceName.Equals(_targetResource)) //リソース名の一致を確認
+                if (checkSearchCondition(SearchType.Whole, visLog))
                 {
-                    if (visLog.ruleName.Equals(_targetRule))  //ルール名の一致を確認
-                    {
-                        if (visLog.evntName.Equals(_targetEvent)) //イベント名の一致を確認
-                        {
-                            if (_targetEventDetail != null)  // イベント詳細が指定されているかを確認
-                            {
-                                if (visLog.evntDetail.Equals(_targetEventDetail))  //イベント詳細の一致を確認
-                                {
-                                    searchTime.Add(visLog.fromTime);
-                                }
-                            }
-                            else
-                            {
-                                searchTime.Add(visLog.fromTime);
-                            }
-
-                        }
-                        else
-                        {
-                            // "*"を想定
-                        }
-
-                    }
-                }
-                else
-                {
-                    // "*"を想定
+                    searchTime.Add(visLog.fromTime);
                 }
             }
 
             return searchTime.ToArray<decimal>();
         }
 
-        private Boolean checkSearchCondition(int operation, VisualizeLog visLog)
+
+        private Boolean checkSearchCondition(SearchType operation, VisualizeLog visLog)
         {
-            Boolean result = false;
-            if (visLog.resourceName.Equals(_targetResource)) //リソース名の一致を確認
+            if (!visLog.resourceName.Equals(_targetResource)) //リソース名の一致を確認
+                return false;
+
+            if (_targetRule != null)
             {
-                if (_targetRule != null && visLog.ruleName.Equals(_targetRule))  //ルール名の一致を確認
-                {
-                    if (_targetEvent != null && visLog.evntName.Equals(_targetEvent)) //イベント名の一致を確認
-                    {
-                        if (_targetEventDetail != null)  // イベント詳細が指定されているかを確認
-                        {
-                            if (_targetEventDetail != null && visLog.evntDetail.Equals(_targetEventDetail))  //イベント詳細の一致を確認
-                            {
-                                if (_currentTime < visLog.fromTime)
-                                {
-                                    // searchTime = visLog.fromTime;
-                                    // break;
-                                    result = true;
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    result = true;
-                }
+               if(!visLog.ruleName.Equals(_targetRule))  //ルール名の一致を確認
+                  return false;
             }
 
-            return result;
+            if(_targetEvent != null)
+            {
+               if(!visLog.evntName.Equals(_targetEvent)) //イベント名の一致を確認
+                  return false;
+            }
+
+            if(_targetEventDetail != null)  // イベント詳細が指定されているかを確認
+            {
+                if (!visLog.evntDetail.Equals(_targetEventDetail))  //イベント詳細の一致を確認
+                    return false;
+            }
+
+
+            if(operation == SearchType.Forward)
+            {
+                if (_currentTime < visLog.fromTime){  return true;}
+                else{ return false;}
+            }
+            else if(operation == SearchType.Backward)
+            {
+                if (_currentTime > visLog.fromTime){  return true;}
+                else{ return false;}
+            }
+            else if (operation == SearchType.Whole)
+            {
+                if (_currentTime < visLog.fromTime) { return true; }
+                else { return false; }
+            }
+            else
+            {
+                return false;
+            }
         }
      }
 }
