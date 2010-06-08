@@ -1022,9 +1022,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                                               _timeSortedLog, ApplicationFactory.BlackBoard.CursorTime.Value);
 
         decimal[] searchTimes = _traceLogSearcher.searchWhole();
+        Color color = ApplicationFactory.ColorFactory.RamdomColor();
         for (int i = 0; i < searchTimes.Count(); i++)
         {
-            ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(new Time(searchTimes[i].ToString(), _timeRadix));
+            ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(color, new Time(searchTimes[i].ToString(), _timeRadix));
         }
         Refresh();
     }
