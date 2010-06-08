@@ -61,7 +61,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                             }
                             else
                             {
-                                if (_currentTime > visLog.fromTime)
+                                if (_currentTime < visLog.fromTime)
                                 {
                                     searchTime = visLog.fromTime;
                                     break;
@@ -171,6 +171,38 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
 
             return searchTime.ToArray<decimal>();
+        }
+
+        private Boolean checkSearchCondition(int operation, VisualizeLog visLog)
+        {
+            Boolean result = false;
+            if (visLog.resourceName.Equals(_targetResource)) //リソース名の一致を確認
+            {
+                if (_targetRule != null && visLog.ruleName.Equals(_targetRule))  //ルール名の一致を確認
+                {
+                    if (_targetEvent != null && visLog.evntName.Equals(_targetEvent)) //イベント名の一致を確認
+                    {
+                        if (_targetEventDetail != null)  // イベント詳細が指定されているかを確認
+                        {
+                            if (_targetEventDetail != null && visLog.evntDetail.Equals(_targetEventDetail))  //イベント詳細の一致を確認
+                            {
+                                if (_currentTime < visLog.fromTime)
+                                {
+                                    // searchTime = visLog.fromTime;
+                                    // break;
+                                    result = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    result = true;
+                }
+            }
+
+            return result;
         }
      }
 }
