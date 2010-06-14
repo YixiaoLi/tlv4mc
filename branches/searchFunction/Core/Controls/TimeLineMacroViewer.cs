@@ -87,7 +87,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			SizeChanged += (o, _e) => { updateViewingArea(); };
 
-			EventHandler showStatus = (o, _e) =>
+            EventHandler showStatus = (o, _e) =>
 			{
 				if (_data == null)
 					return;

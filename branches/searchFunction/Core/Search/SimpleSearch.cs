@@ -128,8 +128,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
             else if (operation == SearchType.Whole)
             {
-                if (_currentTime < visLog.fromTime) { return true; }
-                else { return false; }
+                return true; //全体検索は全時刻を返すため、現在時刻との比較はいらない
             }
             else
             {

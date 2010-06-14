@@ -238,7 +238,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 
 		}
-
+        
 		public override void DrawCursor(Graphics graphics, Color color, Time time)
 		{
 			base.DrawCursor(graphics, color, time);

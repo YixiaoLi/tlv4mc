@@ -160,18 +160,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			this.ApplyNativeScroll();
 
-            ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) =>
-             {
-                 try
-                 {
-                     Refresh();
-                 }
-                 catch (Exception ex)
-                 {
-                     MessageBox.Show(ex.Message);
-                 }
-             };
-
+             /*ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) =>
+              {
+                  try
+                  {
+                      Invalidate();
+                  }
+                  catch (Exception ex)
+                  {
+                      MessageBox.Show(ex.Message);
+                  }
+              };*/
+            
             ApplicationData.FileContext.DataChanged += (o, _e) =>
 			{
 				Invoke((MethodInvoker)(() =>
@@ -217,12 +217,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				};
 		}
 
+
 		public virtual void Draw(Graphics g, Rectangle rect)
 		{
-
+            // TimeLineScale で override されている
 		}
 
-		public virtual void ClearData()
+
+        public virtual void ClearData()
 		{
 			_timeRadix = 10;
 			TimeLine = null;
@@ -230,28 +232,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			_timeLineMarkerManager = null;
 		}
 
-		protected override void OnPaint(PaintEventArgs e)
-		{
-			base.OnPaint(e);
-			Draw(e.Graphics, e.ClipRectangle);
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            Draw(e.Graphics, e.ClipRectangle); //時刻目盛部分の描画
 
-			if (_data != null)
-			{
 
-				DrawCursor(e.Graphics, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, ApplicationFactory.BlackBoard.CursorTime);
+            if (_data != null)
+            {
+                DrawCursor(e.Graphics, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, ApplicationFactory.BlackBoard.CursorTime);
 
-				foreach (TimeLineMarker tlm in LocalTimeLineMarkers)
-				{
-					DrawCursor(e.Graphics, tlm.Color, tlm.Time);
-				}
+                foreach (TimeLineMarker tlm in LocalTimeLineMarkers)
+                {
+                    DrawCursor(e.Graphics, tlm.Color, tlm.Time);
+                }
 
-				foreach (TimeLineMarker tlm in _globalTimeLineMarkers)
-				{
-					DrawMarker(e.Graphics, tlm);
-				}
-                
-			}
-		}
+                foreach (TimeLineMarker tlm in _globalTimeLineMarkers)
+                {
+                    DrawMarker(e.Graphics, tlm);
+                }
+            }
+        }
 
 		public virtual void DrawCursor(Graphics g, Color color, Time time)
 		{
@@ -262,12 +263,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			if (CursorTimeDrawed && !ApplicationFactory.BlackBoard.CursorTime.IsEmpty && TimeLine != null)
 			{
-				float x = time.ToX(TimeLine.FromTime, TimeLine.ToTime, rect.Width);
+                float x = time.ToX(TimeLine.FromTime, TimeLine.ToTime, rect.Width);
+                if (rect.X + x > Width)
+                {
+                    return;
+                }
+                g.DrawLine(new System.Drawing.Pen(Color.FromArgb(200, color)), rect.X + x, rect.Y, rect.X + x, rect.Height);
 
-				if (rect.X + x > Width)
-					return;
-
-				g.DrawLine(new System.Drawing.Pen(Color.FromArgb(200, color)), rect.X + x, rect.Y, rect.X + x, rect.Height);
 			}
 		}
 
