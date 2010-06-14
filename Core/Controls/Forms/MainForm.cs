@@ -145,7 +145,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             #region サブウィンドウ管理初期化
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
-			_windowManager.MainPanel = new TraceLogDisplayPanel();
+            _windowManager.MainPanel = new TraceLogDisplayPanel();
             
 			SubWindow[] sws = new[]
             {
@@ -356,7 +356,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         protected override void OnDragEnter(DragEventArgs drgevent)
         {
             base.OnDragEnter(drgevent);
-
             string[] s = ((string[])(drgevent.Data.GetData(DataFormats.FileDrop)));
 
             if((

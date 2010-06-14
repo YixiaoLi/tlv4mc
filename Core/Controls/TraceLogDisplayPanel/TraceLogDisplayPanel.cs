@@ -98,6 +98,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		}
 	}
+
 	public override int TimeLineWidth
 	{
 	    get { return _timeLineWidth; }
@@ -113,6 +114,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		}
 	}
+
 	public int MaxHeight
 	{
 	    get
@@ -150,9 +152,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 	public override void SetData(TraceLogVisualizerData data)
 	{
+
 	    base.SetData(data);
 	    viewingTimeRangeFromTextBox.Radix = _data.ResourceData.TimeRadix;
 	    viewingTimeRangeToTextBox.Radix = _data.ResourceData.TimeRadix;
+
 
 	    if (_data.SettingData.TraceLogDisplayPanelSetting.TimeLine == null)
 		_data.SettingData.TraceLogDisplayPanelSetting.TimeLine = new TimeLine(_data.TraceLogData.MinTime, _data.TraceLogData.MaxTime);
@@ -221,49 +225,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         targetEventForm.SelectedIndexChanged += (o, _e) => { makeDetailEventForm(); };
 
         //時系列順に並んだ可視化データの作成
+        
         //ループがかなり深いので、ログの数が多くなると処理が非常に遅くなる可能性あり
         //リスト中の適切な位置に一つ一つデータを挿入していくことで、全部のデータを格納し終わった
         //段階でソートが完了させている。ただ、速度のことを考えると、最初は時系列を無視して格納し
         //最後にクイックソートを使って整列させた方がいいかもしれない。　要検討
-          _timeSortedLog = new List<VisualizeLog>();
-          foreach(KeyValuePair<string,EventShapes> evntShapesList in this._data.VisualizeShapeData.RuleResourceShapes)
-          {
-              string[] ruleAndResName = evntShapesList.Key.Split(':'); //例えば"taskStateChange:LOGTASK"を切り分ける
-              string resName = ruleAndResName[1];
-              string ruleName = ruleAndResName[0];
-              foreach (KeyValuePair<string, System.Collections.Generic.List<EventShape>> evntShapeList in evntShapesList.Value.List)
-              {
-                  string[] evntAndRuleName = evntShapeList.Key.Split(':');  // 例えば"taskStateChange:stateChangeEvent"を切り分ける
-                  string evntName = evntAndRuleName[1];
-                  foreach(EventShape evntShape in evntShapeList.Value)
-                  {
-                      //　evntShape を_timeSortedLog へ挿入すべき場所（インデックス）を探して格納する
-                      if (_timeSortedLog.Count == 0)
-                      {
-                          _timeSortedLog.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
-                      }
-                      else
-                      {
-                          for (int i = 0; i < _timeSortedLog.Count; i++)
-                          {
-                              VisualizeLog addedLog = _timeSortedLog[i];
-                              if (evntShape.From.Value <= addedLog.fromTime)
-                              {
-                                  _timeSortedLog.Insert(i, new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
-                                  break;
-                              }
-                              else
-                              {
-                                  if (i == _timeSortedLog.Count - 1)
-                                  {
-                                      _timeSortedLog.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
-                                  }
-                              }
-                          }
-                      }
-                  }
-              }
-          }
+        makeTimeSortedLog();
     }
 
 	private void setNodes()
@@ -344,15 +311,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	    hScrollBar.Value = hScrollBar.Minimum;
 	    _hScrollUpdateFlag = true;
 	    _list.Clear();
-	    treeGridView.Clear();
+        treeGridView.Clear();
 	}
+   
 
 	protected override void OnLoad(EventArgs e)
 	{
 	    base.OnLoad(e);
 	    this.ApplyNativeScroll();
 
-	    #region treeGridView初期化
+        #region treeGridView初期化
 		treeGridView.AddColumn(new TreeGridViewColumn() { Name = "resourceName", HeaderText = "リソース" });
 	    //treeGridView.AddColumn(new DataGridViewTextBoxColumn() { Name = "value", HeaderText = "値" });
 	    treeGridView.AddColumn(new TimeLineColumn() { Name = "timeLine", HeaderText = "タイムライン", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
@@ -1134,8 +1102,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             targetEventForm.Items.Clear();
             targetEventDetailForm.Items.Clear();
             targetEventDetailForm.Visible = false;
-            searchForwardButton.Enabled = false;
-            searchBackwardButton.Enabled = false;
         }
         else
         {
@@ -1208,6 +1174,49 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
       
     }
 
+    private void makeTimeSortedLog()
+    {
+        _timeSortedLog = new List<VisualizeLog>();
+        foreach (KeyValuePair<string, EventShapes> evntShapesList in this._data.VisualizeShapeData.RuleResourceShapes)
+        {
+            string[] ruleAndResName = evntShapesList.Key.Split(':'); //例えば"taskStateChange:LOGTASK"を切り分ける
+            string resName = ruleAndResName[1];
+            string ruleName = ruleAndResName[0];
+            foreach (KeyValuePair<string, System.Collections.Generic.List<EventShape>> evntShapeList in evntShapesList.Value.List)
+            {
+                string[] evntAndRuleName = evntShapeList.Key.Split(':');  // 例えば"taskStateChange:stateChangeEvent"を切り分ける
+                string evntName = evntAndRuleName[1];
+                foreach (EventShape evntShape in evntShapeList.Value)
+                {
+                    //　evntShape を_timeSortedLog へ挿入すべき場所（インデックス）を探して格納する
+                    if (_timeSortedLog.Count == 0)
+                    {
+                        _timeSortedLog.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                    }
+                    else
+                    {
+                        for (int i = 0; i < _timeSortedLog.Count; i++)
+                        {
+                            VisualizeLog addedLog = _timeSortedLog[i];
+                            if (evntShape.From.Value <= addedLog.fromTime)
+                            {
+                                _timeSortedLog.Insert(i, new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                                break;
+                            }
+                            else
+                            {
+                                if (i == _timeSortedLog.Count - 1)
+                                {
+                                    _timeSortedLog.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private void TargetResourceForm_Click(object sender, EventArgs e)
     {
         //MessageBox.Show("test");
@@ -1222,8 +1231,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     {
 
     }
-
-  
 
     }
 }

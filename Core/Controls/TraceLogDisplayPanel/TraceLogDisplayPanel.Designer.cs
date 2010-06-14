@@ -75,6 +75,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.viewableSpanTextBox = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.deleateAllMarker = new System.Windows.Forms.ToolStripButton();
             this.bottomTimeLineScale = new NU.OJL.MPRTOS.TLV.Core.Controls.TimeLineScale();
             this.topTimeLineScale = new NU.OJL.MPRTOS.TLV.Core.Controls.TimeLineScale();
@@ -110,7 +111,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.detailSearchButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -203,6 +203,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             // 
             this.viewableSpanTextBox.Name = "viewableSpanTextBox";
             this.viewableSpanTextBox.Size = new System.Drawing.Size(0, 22);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
             // 
             // deleateAllMarker
             // 
@@ -573,11 +578,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.detailSearchButton.Size = new System.Drawing.Size(23, 22);
             this.detailSearchButton.Text = "toolStripButton1";
             this.detailSearchButton.Click += new System.EventHandler(this.detailSearchButton_Click_1);
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
             // 
             // TraceLogDisplayPanel
             // 
