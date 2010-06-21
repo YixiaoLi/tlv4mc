@@ -312,6 +312,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	    _hScrollUpdateFlag = true;
 	    _list.Clear();
         treeGridView.Clear();
+        searchConboBoxClear();
 	}
    
 
@@ -1170,8 +1171,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             }
             
         }
+    }
 
-      
+    private void searchConboBoxClear()
+    {
+        targetResourceForm.Items.Clear();
+        targetRuleForm.Items.Clear();
+        targetEventForm.Items.Clear();
+        targetEventDetailForm.Items.Clear();
     }
 
     private void makeTimeSortedLog()
