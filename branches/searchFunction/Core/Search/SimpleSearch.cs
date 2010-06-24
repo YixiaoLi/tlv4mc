@@ -21,23 +21,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             Whole
         }
 
-        public SimpleSearch()
+        public SimpleSearch(List<VisualizeLog> visLogs)
         {
             _targetResource = null;
             _targetRule = null;
             _targetEvent = null;
             _targetEventDetail = null;
-            _visLogs = null;
+            _visLogs = visLogs;
             _currentTime = 0;
         }
 
-        public void setSearchData(string resource, string rule, string ev, string detail, List<VisualizeLog> log, decimal time)
+        public void setSearchData(string resource, string rule, string ev, string detail, decimal time)
         {
             _targetResource = resource;
             _targetRule = rule;
             _targetEvent = ev;
             _targetEventDetail = detail;
-            _visLogs = log;
             _currentTime = time;
         }
 
