@@ -1040,7 +1040,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         foreach (Resource res in resData)
         {
-           targetResourceForm.Items.Add(res.Name);
+            if(!res.Name.Equals("CurrentContext"))
+                targetResourceForm.Items.Add(res.Name);
         }
 
         if (targetRuleForm.Visible == true)
@@ -1089,7 +1090,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         foreach (VisualizeRule rule in visRules)
         {
-            if (rule.Target == null || rule.Target.Equals(_resourceType))
+            if (rule.Target != null && rule.Target.Equals(_resourceType))
             {
                 targetRuleForm.Items.Add(rule.DisplayName);
             }
@@ -1121,15 +1122,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         //選択されているルール名を調べる（DisplayNameではない方の名称　：例 taskStateChange）
         foreach(VisualizeRule visRule in _data.VisualizeData.VisualizeRules)
         {
-            if( visRule.Target == null)
-            {
-              _ruleName = visRule.Name;
-            }
-            else if ( visRule.Target.Equals(_resourceType) && visRule.DisplayName.Equals(targetRuleForm.SelectedItem))
-            {
+
+              if( visRule.Target == null) // ルールのターゲットは CurrentContext
+              {
                 _ruleName = visRule.Name;
-                break;
-            }
+              }
+              else if ( visRule.Target.Equals(_resourceType) && visRule.DisplayName.Equals(targetRuleForm.SelectedItem))
+              {
+                  _ruleName = visRule.Name;
+                  break;
+              }
         }
 
         GeneralNamedCollection<Event> eventShapes = _data.VisualizeData.VisualizeRules[_ruleName].Shapes;
