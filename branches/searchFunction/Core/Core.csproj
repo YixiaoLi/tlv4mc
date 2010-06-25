@@ -387,4 +387,7 @@
   <ItemGroup>
     <None Include="Resources\ForwardArrow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\SearchWhole.PNG" />
+  </ItemGroup>
 </Project>

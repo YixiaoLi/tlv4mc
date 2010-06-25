@@ -110,7 +110,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.searchWholeButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.detailSearchButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -457,11 +456,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripSeparator7,
             this.searchWholeButton,
             this.toolStripSeparator8,
-            this.toolStripSeparator9,
-            this.detailSearchButton});
+            this.toolStripSeparator9});
             this.searchToolStrip.Location = new System.Drawing.Point(3, 25);
             this.searchToolStrip.Name = "searchToolStrip";
-            this.searchToolStrip.Size = new System.Drawing.Size(301, 25);
+            this.searchToolStrip.Size = new System.Drawing.Size(615, 25);
             this.searchToolStrip.TabIndex = 2;
             // 
             // searchLabelName
@@ -569,16 +567,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripSeparator9.Name = "toolStripSeparator9";
             this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
             // 
-            // detailSearchButton
-            // 
-            this.detailSearchButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.detailSearchButton.Image = ((System.Drawing.Image)(resources.GetObject("detailSearchButton.Image")));
-            this.detailSearchButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.detailSearchButton.Name = "detailSearchButton";
-            this.detailSearchButton.Size = new System.Drawing.Size(23, 22);
-            this.detailSearchButton.Text = "toolStripButton1";
-            this.detailSearchButton.Click += new System.EventHandler(this.detailSearchButton_Click_1);
-            // 
             // TraceLogDisplayPanel
             // 
             this.Controls.Add(this.toolStripContainer);
@@ -648,7 +636,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripButton deleateAllMarker;
-        private System.Windows.Forms.ToolStripButton detailSearchButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
 
 
