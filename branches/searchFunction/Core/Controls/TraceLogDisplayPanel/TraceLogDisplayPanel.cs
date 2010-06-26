@@ -156,11 +156,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 	public override void SetData(TraceLogVisualizerData data)
 	{
-
 	    base.SetData(data);
 	    viewingTimeRangeFromTextBox.Radix = _data.ResourceData.TimeRadix;
 	    viewingTimeRangeToTextBox.Radix = _data.ResourceData.TimeRadix;
-
 
 	    if (_data.SettingData.TraceLogDisplayPanelSetting.TimeLine == null)
 		_data.SettingData.TraceLogDisplayPanelSetting.TimeLine = new TimeLine(_data.TraceLogData.MinTime, _data.TraceLogData.MaxTime);
@@ -949,11 +947,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     private void searchForwardButton_Click(object sender, EventArgs e)
     {
         _traceLogSearcher.setSearchData(_resourceName, _ruleName, _eventName, _eventDetail, ApplicationFactory.BlackBoard.CursorTime.Value);
-
+        int t = ApplicationFactory.BlackBoard.dragFlag;
         decimal jumpTime = _traceLogSearcher.searchForward();
         if (jumpTime != -1)
         {
-
             decimal start = decimal.Parse(TimeLine.MinTime.ToString());
             decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
             if (jumpTime < start) jumpTime = start;

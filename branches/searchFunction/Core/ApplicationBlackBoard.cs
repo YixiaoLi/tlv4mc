@@ -52,6 +52,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		private Pair<Time, Time> _selectedTimeRange;
 		public Pair<Time, Time> SelectedTimeRange { get { return _selectedTimeRange; } set { ApplicationMethod.SetValue<Pair<Time, Time>>(ref _selectedTimeRange, value, SelectedTimeRangeChanged, this); } }
 
+        public int dragFlag = 0;
+
 		public ApplicationBlackBoard()
 		{
 			_cursorTime = Time.Empty;
