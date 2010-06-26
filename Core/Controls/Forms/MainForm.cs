@@ -146,7 +146,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region サブウィンドウ管理初期化
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
             _windowManager.MainPanel = new TraceLogDisplayPanel();
-            
+
 			SubWindow[] sws = new[]
             {
                 new SubWindow("macroViewer", new TimeLineMacroViewer(){ Text = "マクロビューア" }, DockState.DockBottom) { Text = "マクロビューア" },
@@ -356,6 +356,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         protected override void OnDragEnter(DragEventArgs drgevent)
         {
             base.OnDragEnter(drgevent);
+            ApplicationFactory.BlackBoard.dragFlag = 1;
             string[] s = ((string[])(drgevent.Data.GetData(DataFormats.FileDrop)));
 
             if((
@@ -376,6 +377,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         protected override void OnDragDrop(DragEventArgs drgevent)
         {
             base.OnDragDrop(drgevent);
+
             if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
             {
 
@@ -401,6 +403,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				}
 
             }
+            ApplicationFactory.BlackBoard.dragFlag = 0;
         }
 
         private void settingLoad()

@@ -108,7 +108,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		public virtual TimeLine TimeLine { get; set; }
 		public virtual GeneralNamedCollection<TimeLineMarker> LocalTimeLineMarkers { get; private set; }
 
-       		public TimeLineControl()
+  		public TimeLineControl()
 		{
 			ResizeRedraw = true;
 			DoubleBuffered = true;
@@ -158,34 +158,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			base.OnLoad(e);
 
-			this.ApplyNativeScroll();
+            this.ApplyNativeScroll();
 
-             ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) =>
-              {
-                  try
-                  {
-                      Refresh();
-                  }
-                  catch (Exception ex)
-                  {
-                      MessageBox.Show(ex.Message);
-                  }
-              };
+            ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) =>
+            {
+                if (ApplicationFactory.BlackBoard.dragFlag == 0) { Refresh(); }
+            };
             
             ApplicationData.FileContext.DataChanged += (o, _e) =>
 			{
-				Invoke((MethodInvoker)(() =>
-				{
-					if (ApplicationData.FileContext.Data == null)
-					{
-						ClearData();
-					}
-					else
-					{
-						SetData(ApplicationData.FileContext.Data);
-					}
-				}));
-			};
+                Invoke((MethodInvoker)(() =>
+                {
+                    if (ApplicationData.FileContext.Data == null)
+                    {
+                        ClearData();
+                    }
+                    else
+                    {
+                        SetData(ApplicationData.FileContext.Data);
+                    }
+                }));
+            };
 		}
 
 
