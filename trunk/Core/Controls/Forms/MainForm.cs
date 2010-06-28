@@ -145,7 +145,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             #region サブウィンドウ管理初期化
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
-			_windowManager.MainPanel = new TraceLogDisplayPanel();
+            _windowManager.MainPanel = new TraceLogDisplayPanel();
+
 			SubWindow[] sws = new[]
             {
                 new SubWindow("macroViewer", new TimeLineMacroViewer(){ Text = "マクロビューア" }, DockState.DockBottom) { Text = "マクロビューア" },
@@ -228,6 +229,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             aboutAToolStripMenuItem.Click += (o, e) =>
             {
                 _commandManager.Do(new AboutCommand());
+            };
+            captureToolStripeButton.Click += (o, e) =>
+            {
+                // TraceLogDisplayPanel の現在位置を取得し、スクリーン上の絶対位置に変換したうえでスクリーンショットを撮る
+                Rectangle MainPanelRectangle = _windowManager.MainPanel.RectangleToScreen(_windowManager.MainPanel.ClientRectangle);
+                _commandManager.Do(new CaptureCommand(MainPanelRectangle));
             };
 
             #endregion
@@ -349,7 +356,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         protected override void OnDragEnter(DragEventArgs drgevent)
         {
             base.OnDragEnter(drgevent);
-
+            ApplicationFactory.BlackBoard.dragFlag = 1;
             string[] s = ((string[])(drgevent.Data.GetData(DataFormats.FileDrop)));
 
             if((
@@ -370,8 +377,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         protected override void OnDragDrop(DragEventArgs drgevent)
         {
             base.OnDragDrop(drgevent);
+
             if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
             {
+
                 string[] s = ((string[])(drgevent.Data.GetData(DataFormats.FileDrop)));
 
 				if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.StandardFormatTraceLogFileExtension))
@@ -390,10 +399,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				{
 					string resFilePath = Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension) ? s[0] : s[1];
 					string logFilePath = Path.GetExtension(s[1]).Contains(Properties.Resources.TraceLogFileExtension) ? s[1] : s[0];
-
-					_commandManager.Do(new NewCommand(resFilePath, logFilePath));
+                    _commandManager.Do(new NewCommand(resFilePath, logFilePath));
 				}
+
             }
+            ApplicationFactory.BlackBoard.dragFlag = 0;
         }
 
         private void settingLoad()
@@ -452,5 +462,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
 
         }
+
+        
     }
 }

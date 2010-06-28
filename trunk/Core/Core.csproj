@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7C37CBB0-B554-4268-8A92-D78714219A41}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -64,6 +64,7 @@
     <Compile Include="Base\INamedCollection.cs" />
     <Compile Include="Base\TimeLine.cs" />
     <Compile Include="Commands\AboutCommand.cs" />
+    <Compile Include="Commands\CaptureCommand.cs" />
     <Compile Include="Commands\ReloadCommand.cs" />
     <Compile Include="Controls\Forms\AboutForm.cs">
       <SubType>Form</SubType>
@@ -129,6 +130,7 @@
     <Compile Include="FileContext\SettingData\TimeLineMacroViewerSetting.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogGenerator.cs" />
+    <Compile Include="FileContext\VisualizeData\VisualizeLog.cs" />
     <Compile Include="FileContext\VisualizeShapeData\EventShapesGenerator.cs" />
     <Compile Include="FileContext\VisualizeData\Event.cs" />
     <Compile Include="FileContext\VisualizeData\EventType.cs" />
@@ -235,6 +237,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Search\SimpleSearch.cs" />
+    <Compile Include="Search\TraceLogSearcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -376,5 +380,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\zoomSelect.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\BackwardArrow.png" />
+    <None Include="Resources\BackwardArrow1.png" />
+    <Content Include="Resources\Eraser.PNG" />
+    <None Include="Resources\Eraser1.PNG" />
+    <Content Include="Resources\ForwardArrow.png" />
+    <None Include="Resources\ForwardArrow1.png" />
+    <Content Include="Resources\SearchWhole.PNG" />
+    <None Include="Resources\SearchWhole1.PNG" />
   </ItemGroup>
 </Project>

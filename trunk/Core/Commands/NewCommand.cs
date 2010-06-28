@@ -61,7 +61,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 		{
 			_resFilePath = resFilePath;
 			_logFilePath = logFilePath;
-
 			Text = "リソースファイルとトレースログファイルを開く";
 
 			_setDataBw.DoWork += (_o, _e) =>
