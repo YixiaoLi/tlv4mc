@@ -1,7 +1,7 @@
 
-	TraceLogVisualizer(TLV)（バージョン 1.1.1）
+	TraceLogVisualizer(TLV)（バージョン 1.2）
 
-					最終更新 : 2010年4月23日
+					最終更新 : 2010年6月28日
 
 ----------------------------------------------------------------------
  TraceLogVisualizer(TLV)
