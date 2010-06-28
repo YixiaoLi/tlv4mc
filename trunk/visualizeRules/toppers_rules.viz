@@ -49,12 +49,9 @@
 						"DisplayName":"システムコール",
 						"From":"${TARGET}.enterSVC()",
 						"To":"${TARGET}.leaveSVC(${FROM_ARG0})",
-						"Figures":[
-						    {"${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk":"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"},
-						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk":"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
-						]
-					}
-		        	}
+						"Figures":"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"		
+             		}
+		       	}
 			},
 			"systemStatus":{
 				"DisplayName":"システム状態",
@@ -184,12 +181,7 @@
 						"DisplayName":"システムコール",
 						"From":"${TARGET}.enterSVC()",
 						"To":"${TARGET}.leaveSVC(${FROM_ARG0})",
-						"Figures":[
-						    {"${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk"
-							:"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"},
-						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk"
-							:"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
-						]
+						"Figures":"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"
 					}
 				}
 			},
@@ -201,12 +193,7 @@
 						"DisplayName":"システムコール",
 						"From":"${TARGET}.enterSVC()",
 						"To":"${TARGET}.leaveSVC(${FROM_ARG0})",
-						"Figures":[
-						    {"${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk"
-							:"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"},
-						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk"
-							:"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
-						]
+						"Figures":"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"
 					}
 				}
 			},
@@ -218,12 +205,7 @@
 						"DisplayName":"システムコール",
 						"From":"${TARGET}.enterSVC()",
 						"To":"${TARGET}.leaveSVC(${FROM_ARG0})",
-						"Figures":[
-						    {"${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk"
-							:"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"},
-						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk"
-							:"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
-						]
+						"Figures":"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"
 					}
 				}
 			},
@@ -235,12 +217,7 @@
 						"DisplayName":"システムコール",
 						"From":"${TARGET}.enterSVC()",
 						"To":"${TARGET}.leaveSVC(${FROM_ARG0})",
-						"Figures":[
-						    {"${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk"
-							:"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"},
-						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk"
-							:"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
-						]
+						"Figures":"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"
 					}
 				}
 			},
@@ -252,12 +229,7 @@
 						"DisplayName":"システムコール",
 						"From":"${TARGET}.enterSVC()",
 						"To":"${TARGET}.leaveSVC(${FROM_ARG0})",
-						"Figures":[
-						    {"${FROM_ARG0}==slp_tsk||${FROM_ARG0}==dly_tsk"
-							:"svcShapes(ff0000,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"},
-						    {"${FROM_ARG0}!=slp_tsk&&${FROM_ARG0}!=dly_tsk"
-							:"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"}
-						]
+						"Figures":"svcShapes(ffff00,${FROM_ARG0}(${FROM_ARG1}),${TO_ARG1})"
 					}
 				}
 			},
