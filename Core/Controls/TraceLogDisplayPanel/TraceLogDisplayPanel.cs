@@ -47,6 +47,9 @@ using NU.OJL.MPRTOS.TLV.Base;
 using NU.OJL.MPRTOS.TLV.Base.Controls;
 using NU.OJL.MPRTOS.TLV.Third;
 using System.Collections;
+using NU.OJL.MPRTOS.TLV.Core.Search;
+using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
+
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
@@ -62,6 +65,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	private int _mouseDownX;
 	private bool _mouseDown;
 
+   //簡易検索用のオブジェクト
+    private SimpleSearch _traceLogSearcher = null;
+        
+   //簡易検索に必要な変数群
+    private string _resourceType = null;
+    private string _resourceName = null; // リソース名納用。リソース名は入力フォームのテキストがもともと英名となっているため
+                                         // この変数は冗長であるが、_ruleName と _eventName と同じレベルで扱うために作成
+
+    private string _ruleName = null;     // 検索ルールの英名格納用
+    private string _eventName = null;    // 検索イベントの英名格納用
+    private string _eventDetail = null;  // _resourceName と同様の理由で作成
+                                        
+
+   //時系列順に並んだ図形データ
+    private List<VisualizeLog> _timeSortedLog = null;
+
 	public override int TimeLineX
 	{
 	    get { return _timeLineX; }
@@ -69,7 +88,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 		    if (_timeLineX != value)
 			{
-			    _timeLineX = value;
+
+                // ToolStripeに検索バーを追加したことで、タイムライン上のレイアウトが崩れた
+                // _timeLineX  の値を少しでも変更すればレイアウト崩れが直るため、応急処置
+                // として +1 しておいた。直る理由は現在究明中
+
+                //_timeLineX = value;
+                _timeLineX = value +1;
 
 			    topTimeLineScale.Location = new System.Drawing.Point(_timeLineX, topTimeLineScale.Location.Y);
 			    bottomTimeLineScale.Location = new System.Drawing.Point(_timeLineX, bottomTimeLineScale.Location.Y);
@@ -77,6 +102,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		}
 	}
+
 	public override int TimeLineWidth
 	{
 	    get { return _timeLineWidth; }
@@ -92,6 +118,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		}
 	}
+
 	public int MaxHeight
 	{
 	    get
@@ -114,7 +141,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		hScrollBar.Maximum = int.MaxValue;
 		hScrollBar.Value = hScrollBar.Minimum;
 		viewingAreaToolStrip.Enabled = false;
-
+        searchToolStrip.Enabled = false;
+        
 		imageList.Images.Add("visualize", Properties.Resources.visualize);
 		imageList.Images.Add("resource", Properties.Resources.resource);
 		imageList.Images.Add("bhr2bhr", Properties.Resources.bhr2bhr);
@@ -129,7 +157,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	public override void SetData(TraceLogVisualizerData data)
 	{
 	    base.SetData(data);
-
 	    viewingTimeRangeFromTextBox.Radix = _data.ResourceData.TimeRadix;
 	    viewingTimeRangeToTextBox.Radix = _data.ResourceData.TimeRadix;
 
@@ -154,7 +181,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 	    _timeScale = _data.ResourceData.TimeScale;
 	    timePerSclaeUnitLabel.Text = _timeScale + "/目盛り";
-
+        
 	    if(!_data.SettingData.TraceLogDisplayPanelSetting.TimePerScaleMark.IsEmpty)
 		timePerSclaeLabel.Text = _data.SettingData.TraceLogDisplayPanelSetting.TimePerScaleMark.ToString();
 	    autoResizeRowHeightToolStripButton.Checked = _data.SettingData.TraceLogDisplayPanelSetting.AutoResizeRowHeight;
@@ -165,10 +192,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	    viewingTimeRangeFromScaleLabel.Text = _timeScale;
 	    viewingTimeRangeToScaleLabel.Text = _timeScale;
 	    viewableSpanTextBox.Visible = true;
-	    viewableSpanTextBox.Text = TimeLine.MinTime.ToString() + " 〜 " + TimeLine.MaxTime.ToString() + " " + _timeScale;
+        viewableSpanTextBox.Text = TimeLine.MinTime.ToString() + " 〜 " + TimeLine.MaxTime.ToString() + " " + _timeScale;
 	    viewableSpanTextBox.Width = TextRenderer.MeasureText(viewableSpanTextBox.Text, viewableSpanTextBox.Font).Width;
-	    viewingAreaToolStrip.Enabled = true;
-
+        viewingAreaToolStrip.Enabled = true;
 	    setNodes();
 
 	    foreach (TimeLineVisualizer tlv in _list)
@@ -191,8 +217,25 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	    _timeLineMarkerManager.SelectedMarkerChanged += (o, _e) => { timeLineRedraw(); };
 
 	    timeLineRedraw();
-            Cursor = this.HandCursor;
-	}
+        Cursor = this.HandCursor;
+
+        searchToolStrip.Enabled = true;
+
+        makeResourceForm();
+        targetResourceForm.SelectedIndexChanged += (o, _e) => { _resourceName = (string)targetResourceForm.SelectedItem;  makeRuleForm(); };
+        targetRuleForm.SelectedIndexChanged += (o, _e) => { makeEventForm(); };
+        targetEventForm.SelectedIndexChanged += (o, _e) => { makeDetailEventForm(); };
+        targetEventDetailForm.SelectedIndexChanged += (o, _e) => { _eventDetail = (string)targetEventDetailForm.SelectedItem; };
+
+        //時系列順に並んだ可視化データの作成
+        
+        //ループがかなり深いので、ログの数が多くなると処理が非常に遅くなる可能性あり
+        //リスト中の適切な位置に一つ一つデータを挿入していくことで、全部のデータを格納し終わった
+        //段階でソートが完了させている。ただ、速度のことを考えると、最初は時系列を無視して格納し
+        //最後にクイックソートを使って整列させた方がいいかもしれない。　要検討
+        makeTimeSortedLog();
+        _traceLogSearcher = new SimpleSearch(_timeSortedLog);
+    }
 
 	private void setNodes()
 	{
@@ -272,15 +315,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	    hScrollBar.Value = hScrollBar.Minimum;
 	    _hScrollUpdateFlag = true;
 	    _list.Clear();
-	    treeGridView.Clear();
+        treeGridView.Clear();
+        searchConboBoxClear();
 	}
+   
 
 	protected override void OnLoad(EventArgs e)
 	{
 	    base.OnLoad(e);
 	    this.ApplyNativeScroll();
 
-	    #region treeGridView初期化
+        #region treeGridView初期化
 		treeGridView.AddColumn(new TreeGridViewColumn() { Name = "resourceName", HeaderText = "リソース" });
 	    //treeGridView.AddColumn(new DataGridViewTextBoxColumn() { Name = "value", HeaderText = "値" });
 	    treeGridView.AddColumn(new TimeLineColumn() { Name = "timeLine", HeaderText = "タイムライン", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
@@ -319,7 +364,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 		    Rectangle rect = new Rectangle(_timeLineX - 1, _e.ClipRectangle.Y, _timeLineWidth, _e.ClipRectangle.Width);
 		    if (_data != null)
-			DrawCursor(_e.Graphics, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, ApplicationFactory.BlackBoard.CursorTime);
+                DrawCursor(_e.Graphics, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, ApplicationFactory.BlackBoard.CursorTime);
 		    if (_data != null && _data.SettingData != null)
 			{
 			    foreach(TimeLineMarker tlm in _globalTimeLineMarkers)
@@ -648,6 +693,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			bottomTimeLineScale.Visible = true;
 		    if (!hScrollBar.Visible)
 			hScrollBar.Visible = true;
+
 		}
 
 	    if (allRowHeight > MaxHeight)
@@ -897,5 +943,316 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	{
 	    drawMarker(g, new Rectangle(Location.X + _timeLineX, Location.Y, _timeLineWidth, Height), marker);
 	}
+
+    private void searchForwardButton_Click(object sender, EventArgs e)
+    {
+        _traceLogSearcher.setSearchData(_resourceName, _ruleName, _eventName, _eventDetail, ApplicationFactory.BlackBoard.CursorTime.Value);
+        int t = ApplicationFactory.BlackBoard.dragFlag;
+        decimal jumpTime = _traceLogSearcher.searchForward();
+        if (jumpTime != -1)
+        {
+            decimal start = decimal.Parse(TimeLine.MinTime.ToString());
+            decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
+            if (jumpTime < start) jumpTime = start;
+
+            //カーソル、スクロールバーを移動
+            ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
+            moveScrollBar(jumpTime);
+        }
+        else
+        {
+            System.Windows.Forms.MessageBox.Show("検索の終わりです");
+        }
+    }
+
+    private void searchBackwardButton_Click(object sender, EventArgs e)
+    {
+        _traceLogSearcher.setSearchData(_resourceName, _ruleName, _eventName, _eventDetail, ApplicationFactory.BlackBoard.CursorTime.Value);
+
+        decimal jumpTime = _traceLogSearcher.searchBackward();
+        if (jumpTime != -1)
+        {
+            decimal start = decimal.Parse(TimeLine.MinTime.ToString());
+            decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
+            if (jumpTime < start) jumpTime = start;
+
+           //カーソル、スクロールバーを移動
+           ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
+           moveScrollBar(jumpTime);
+        }
+        else
+        {
+            System.Windows.Forms.MessageBox.Show("検索の終わりです");
+        }
+    }
+
+    private void searchWholeButton_Click(object sender, EventArgs e)
+    {
+        _traceLogSearcher.setSearchData(_resourceName, _ruleName, _eventName, _eventDetail, ApplicationFactory.BlackBoard.CursorTime.Value);
+
+        decimal[] searchTimes = _traceLogSearcher.searchWhole();
+        Color color = ApplicationFactory.ColorFactory.RamdomColor();
+        for (int i = 0; i < searchTimes.Count(); i++)
+        {
+            ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(color, new Time(searchTimes[i].ToString(), _timeRadix));
+        }
+        Refresh();
+    }
+
+    private void deleateAllMarker_Click(object sender, EventArgs e)
+    {
+        foreach (TimeLineMarker tm in ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.Markers)
+        {
+            ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.DeleteMarker(tm.Name);
+        }
+
+        Refresh();
+    }
+
+
+
+    private void moveScrollBar(decimal jumpTime)
+    {
+        decimal start = decimal.Parse(TimeLine.MinTime.ToString());
+        decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
+
+        //スクロールバーの移動位置の計算
+        decimal offset = (Decimal.Parse(viewingTimeRangeToTextBox.Text) - (Decimal.Parse(viewingTimeRangeFromTextBox.Text))) / 2; //補正値の計算
+        decimal relatedLocation = (jumpTime - start - offset) / (end - start);  //移動する場所がスクロール領域の何割目かを計算
+        decimal scrollLocation = (int)((double)hScrollBar.Maximum * ((double)relatedLocation)); //移動場所 = スクロール領域の広さ × 割合
+        if (scrollLocation < 0)
+        {
+            scrollLocation = hScrollBar.Minimum;
+        }
+
+        hScrollBar.Value = (int)scrollLocation;
+    }
+
+    
+
+    //リソース指定コンボボックスのアイテムをセット
+    private void makeResourceForm()
+    {
+        GeneralNamedCollection<Resource> resData = this._data.ResourceData.Resources;
+
+        foreach (Resource res in resData)
+        {
+            if(!res.Name.Equals("CurrentContext"))
+                targetResourceForm.Items.Add(res.Name);
+        }
+
+        if (targetRuleForm.Visible == true)
+        {
+            targetRuleForm.Items.Clear();
+            targetEventForm.Items.Clear();
+            targetEventDetailForm.Items.Clear();
+
+            _ruleName = null;
+            _eventName = null;
+            _eventDetail = null;
+
+            targetRuleForm.Visible = false;
+            targetEventForm.Visible = false;
+            targetEventDetailForm.Visible = false;
+        }
+    }
+
+    //リソースが選択されたときにルール指定コンボボックスのアイテムをセットする
+    private void makeRuleForm()
+    {
+        if (targetRuleForm.Visible == true)
+        {
+            targetRuleForm.Items.Clear();
+            targetEventForm.Items.Clear();
+            targetEventDetailForm.Items.Clear();
+
+            _ruleName = null;
+            _eventName = null;
+            _eventDetail = null;
+
+            targetEventForm.Visible = false;
+            targetEventDetailForm.Visible = false;
+            searchForwardButton.Enabled = false;
+            searchBackwardButton.Enabled = false;
+        }
+        else
+        {
+            targetRuleForm.Visible = true;
+        }
+
+
+        //選ばれているリソースの種類を調べる
+        _resourceType = _data.ResourceData.Resources[(string)targetResourceForm.SelectedItem].Type;
+        GeneralNamedCollection<VisualizeRule> visRules = _data.VisualizeData.VisualizeRules;
+
+        foreach (VisualizeRule rule in visRules)
+        {
+            if (rule.Target != null && rule.Target.Equals(_resourceType))
+            {
+                targetRuleForm.Items.Add(rule.DisplayName);
+            }
+        }
+        
+
+        this.searchForwardButton.Enabled = true;
+        this.searchBackwardButton.Enabled = true;
+        this.searchWholeButton.Enabled = true;    //各検索ボタンを有効にする
+    }
+
+    //イベント指定コンボボックスのアイテムをセット
+    private void makeEventForm()
+    {
+        if (targetEventForm.Visible == true)
+        {
+            targetEventForm.Items.Clear();
+            targetEventDetailForm.Items.Clear();
+            targetEventDetailForm.Visible = false;
+
+            _eventName = null;
+            _eventDetail = null;
+        }
+        else
+        {
+            targetEventForm.Visible = true;
+        }
+
+        //選択されているルール名を調べる（DisplayNameではない方の名称　：例 taskStateChange）
+        foreach(VisualizeRule visRule in _data.VisualizeData.VisualizeRules)
+        {
+
+              if( visRule.Target == null) // ルールのターゲットは CurrentContext
+              {
+                _ruleName = visRule.Name;
+              }
+              else if ( visRule.Target.Equals(_resourceType) && visRule.DisplayName.Equals(targetRuleForm.SelectedItem))
+              {
+                  _ruleName = visRule.Name;
+                  break;
+              }
+        }
+
+        GeneralNamedCollection<Event> eventShapes = _data.VisualizeData.VisualizeRules[_ruleName].Shapes;
+        foreach(Event e in eventShapes)
+        {
+            targetEventForm.Items.Add(e.DisplayName);
+        }
+    }
+
+
+    //イベント詳細指定コンボボックスのアイテムをセット
+    private void makeDetailEventForm()
+    {
+        if (targetEventDetailForm.Visible == true)
+        {
+            targetEventDetailForm.Items.Clear();
+            _eventDetail = null;
+    
+        }
+        else
+        {
+            targetEventDetailForm.Visible = true;
+        }
+
+        //選択されているイベント名を調べる（DisplayName ではない方の名称　例： stateChangeEvent ）
+        foreach ( Event ev in _data.VisualizeData.VisualizeRules[_ruleName].Shapes)
+        {
+            if (ev.DisplayName.Equals(targetEventForm.SelectedItem))
+            {
+                _eventName = ev.Name;
+                break;
+            }
+        }
+
+        //指定されたイベントが持つ RUNNABLE, RUNNING といった状態を切り出す
+        Event e = _data.VisualizeData.VisualizeRules[_ruleName].Shapes[_eventName];
+        foreach(Figure fg in e.Figures) // いつも要素は一つしかないが、とりあえず foreach で回しておく（どんなときに複数の要素を持つかは要調査）
+        {
+            if (fg.Figures == null) //選択されたイベントにイベント詳細が存在しない場合
+            {
+                targetEventDetailForm.Visible = false;
+            }
+            else
+            {
+                foreach (Figure fg2 in fg.Figures)
+                {                                                   // 処理の意図を以下に例示
+                    String[] conditions = fg2.Condition.Split('='); // "($FROM_VAL)==RUNNING"  ⇒ "($FROM_VAL)", "","RUNNING"
+                    targetEventDetailForm.Items.Add(conditions[2]); // "RUNNING"をイベント詳細のコンボボックスへセット
+                }
+            }
+            
+        }
+    }
+
+    private void searchConboBoxClear()
+    {
+        targetResourceForm.Items.Clear();
+        targetRuleForm.Items.Clear();
+        targetEventForm.Items.Clear();
+        targetEventDetailForm.Items.Clear();
+
+        targetResourceForm.Text = null;
+        targetRuleForm.Text = null;
+        targetEventForm.Text = null;
+        targetEventDetailForm.Text = null;
+    }
+
+    private void makeTimeSortedLog()
+    {
+        _timeSortedLog = new List<VisualizeLog>();
+        foreach (KeyValuePair<string, EventShapes> evntShapesList in this._data.VisualizeShapeData.RuleResourceShapes)
+        {
+            string[] ruleAndResName = evntShapesList.Key.Split(':'); //例えば"taskStateChange:LOGTASK"を切り分ける
+            string resName = ruleAndResName[1];
+            string ruleName = ruleAndResName[0];
+            foreach (KeyValuePair<string, System.Collections.Generic.List<EventShape>> evntShapeList in evntShapesList.Value.List)
+            {
+                string[] evntAndRuleName = evntShapeList.Key.Split(':');  // 例えば"taskStateChange:stateChangeEvent"を切り分ける
+                string evntName = evntAndRuleName[1];
+                foreach (EventShape evntShape in evntShapeList.Value)
+                {
+                    //　evntShape を_timeSortedLog へ挿入すべき場所（インデックス）を探して格納する
+                    if (_timeSortedLog.Count == 0)
+                    {
+                        _timeSortedLog.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                    }
+                    else
+                    {
+                        for (int i = 0; i < _timeSortedLog.Count; i++)
+                        {
+                            VisualizeLog addedLog = _timeSortedLog[i];
+                            if (evntShape.From.Value <= addedLog.fromTime)
+                            {
+                                _timeSortedLog.Insert(i, new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                                break;
+                            }
+                            else
+                            {
+                                if (i == _timeSortedLog.Count - 1)
+                                {
+                                    _timeSortedLog.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void TargetResourceForm_Click(object sender, EventArgs e)
+    {
+        //MessageBox.Show("test");
+    }
+
+    private void markerDellButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void detailSearchButton_Click_1(object sender, EventArgs e)
+    {
+
+    }
+
     }
 }

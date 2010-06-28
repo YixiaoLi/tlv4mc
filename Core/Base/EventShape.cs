@@ -47,14 +47,26 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		public Time To { get; set; }
 		public Shape Shape { get; set; }
 		public Event Event { get; set; }
+        public string EventDetail { get; set; }
 
-		public EventShape(Time from, Time to, Shape shape, Event evnt)
-		{
-			From = from;
-			To = to;
-			Shape = shape;
+        public EventShape(Time from, Time to, Shape shape, Event evnt)
+        {
+            From = from;
+            To = to;
+            Shape = shape;
 
-			Event = evnt;
-		}
-	}
+            Event = evnt;
+        }
+
+        public EventShape(Time from, Time to, Shape shape, Event evnt, string eventDetail)
+        {
+            From = from;
+            To = to;
+            Shape = shape;
+
+            Event = evnt;
+            EventDetail = eventDetail;
+        }
+
+    }
 }
