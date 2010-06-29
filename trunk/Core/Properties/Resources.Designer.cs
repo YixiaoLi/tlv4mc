@@ -168,6 +168,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ForwardArrow1 {
+            get {
+                object obj = ResourceManager.GetObject("ForwardArrow1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Icon hand {
             get {
                 object obj = ResourceManager.GetObject("hand", resourceCulture);

@@ -66,6 +66,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
             Dictionary<string, Json> oldRule = new Dictionary<string, Json>();
             Json newRule = null;
+            StreamWriter writer = new StreamWriter("testOutput.txt");
 
 			string[] target = _resourceData.ConvertRules.ToArray();
 
@@ -73,7 +74,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			// トレースログ変換ファイルを開きJsonValueでデシリアライズ
 			// ファイルが複数ある場合を想定している
 			foreach (string s in convertRulePaths)
-			{
+            {
 				Json json = new Json().Parse(File.ReadAllText(s));
 				foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
 				{
@@ -94,11 +95,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePairEnumerator())
                             {
                                 oldRule.Add(_j.Key, _j.Value);
+                                writer.WriteLine(_j.Key);
                             }
                         }
 					}
 				}
 			}
+            writer.Close();
+
             if (newRule != null && oldRule.Count > 0)
             {
                 throw new Exception("新形式変換ルールと旧形式変換ルールは混在させることはできません");

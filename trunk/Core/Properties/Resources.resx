@@ -118,8 +118,17 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="bhr2atr" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bhr2atr.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="zoomerOut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zoomerOut.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ResourceHeaderFileExtension" xml:space="preserve">
+    <value>resh</value>
+  </data>
+  <data name="DefaultVisualizeRulesDirectoryName" xml:space="preserve">
+    <value>visualizeRules</value>
+  </data>
+  <data name="ResourceFileExtension" xml:space="preserve">
+    <value>res</value>
   </data>
   <data name="warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\warning.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -127,8 +136,8 @@
   <data name="resources" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\resources.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="zoomerIn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\zoomerIn.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SearchWhole" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SearchWhole.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="resource" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\resource.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -142,11 +151,14 @@
   <data name="bhr2bhr" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bhr2bhr.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="VisualizeRuleFileExtension" xml:space="preserve">
-    <value>viz</value>
-  </data>
   <data name="zoomer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zoomer.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ForwardArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ForwardArrow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Eraser" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Eraser.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="handHold" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\handHold.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -160,11 +172,8 @@
   <data name="hand" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\hand.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="zoomerOut" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\zoomerOut.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="behavior" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\behavior.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TraceLogFileExtension" xml:space="preserve">
+    <value>log</value>
   </data>
   <data name="visualize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\visualize.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -172,11 +181,11 @@
   <data name="DefaultConvertRulesDirectoryName" xml:space="preserve">
     <value>convertRules</value>
   </data>
-  <data name="ResourceHeaderFileExtension" xml:space="preserve">
-    <value>resh</value>
+  <data name="VisualizeRuleFileExtension" xml:space="preserve">
+    <value>viz</value>
   </data>
-  <data name="attribute" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\attribute.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="zoomerIn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zoomerIn.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="zoomSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zoomSelect.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -184,11 +193,14 @@
   <data name="DefaultTemporaryDirectoryName" xml:space="preserve">
     <value>TraceLogVisualizer</value>
   </data>
+  <data name="BackwardArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackwardArrow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="VisualizeShapesFileExtension" xml:space="preserve">
     <value>shp</value>
   </data>
-  <data name="ResourceFileExtension" xml:space="preserve">
-    <value>res</value>
+  <data name="behavior" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\behavior.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SettingFileExtension" xml:space="preserve">
     <value>setting</value>
@@ -196,22 +208,13 @@
   <data name="StandardFormatTraceLogFileExtension" xml:space="preserve">
     <value>tlv</value>
   </data>
-  <data name="TraceLogFileExtension" xml:space="preserve">
-    <value>log</value>
+  <data name="bhr2atr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bhr2atr.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DefaultVisualizeRulesDirectoryName" xml:space="preserve">
-    <value>visualizeRules</value>
+  <data name="attribute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\attribute.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ForwardArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ForwardArrow1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Eraser" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Eraser1.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SearchWhole" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SearchWhole1.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BackwardArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BackwardArrow1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ForwardArrow1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ForwardArrow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
