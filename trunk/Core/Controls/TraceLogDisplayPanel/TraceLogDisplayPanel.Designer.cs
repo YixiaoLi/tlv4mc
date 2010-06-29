@@ -104,12 +104,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.searchBackwardButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.searchForwardButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.searchWholeButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -451,15 +448,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripSeparator6,
             this.searchBackwardButton,
             this.toolStripSeparator4,
-            this.toolStripSeparator5,
             this.searchForwardButton,
             this.toolStripSeparator7,
-            this.searchWholeButton,
-            this.toolStripSeparator8,
-            this.toolStripSeparator9});
+            this.searchWholeButton});
             this.searchToolStrip.Location = new System.Drawing.Point(3, 25);
             this.searchToolStrip.Name = "searchToolStrip";
-            this.searchToolStrip.Size = new System.Drawing.Size(615, 25);
+            this.searchToolStrip.Size = new System.Drawing.Size(597, 25);
             this.searchToolStrip.TabIndex = 2;
             // 
             // searchLabelName
@@ -525,11 +519,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
-            // 
             // searchForwardButton
             // 
             this.searchForwardButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -556,16 +545,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.searchWholeButton.Size = new System.Drawing.Size(23, 22);
             this.searchWholeButton.Text = "全体検索";
             this.searchWholeButton.Click += new System.EventHandler(this.searchWholeButton_Click);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
             // 
             // TraceLogDisplayPanel
             // 
@@ -630,11 +609,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private System.Windows.Forms.ToolStripComboBox targetEventDetailForm;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton searchWholeButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripButton deleateAllMarker;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
 
