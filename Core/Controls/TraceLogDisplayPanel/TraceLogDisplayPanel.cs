@@ -996,7 +996,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(color, new Time(searchTimes[i].ToString(), _timeRadix));
         }
-        Refresh();
+
+        //２つのマクロビューア両方の再描画を促すために、ApplicationFactory.BlackBoard.CursorTimeの値を一瞬だけ変化させる
+        Time tmp1 = ApplicationFactory.BlackBoard.CursorTime;  //現在時刻
+        Time tmp2 = new Time((tmp1.Value - 1).ToString(), _timeRadix);//ダミー時刻
+        ApplicationFactory.BlackBoard.CursorTime = tmp2;
+        ApplicationFactory.BlackBoard.CursorTime = tmp1;
     }
 
     private void deleateAllMarker_Click(object sender, EventArgs e)
@@ -1006,7 +1011,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.DeleteMarker(tm.Name);
         }
 
-        Refresh();
+        //２つのマクロビューア両方の再描画を促すために、ApplicationFactory.BlackBoard.CursorTimeの値を一瞬だけ変化させる
+        Time tmp1 = ApplicationFactory.BlackBoard.CursorTime;  //現在時刻
+        Time tmp2 = new Time((tmp1.Value - 1).ToString(), _timeRadix);//ダミー時刻
+        ApplicationFactory.BlackBoard.CursorTime = tmp2;
+        ApplicationFactory.BlackBoard.CursorTime = tmp1;
     }
 
 
