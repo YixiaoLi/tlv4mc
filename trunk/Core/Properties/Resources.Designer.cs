@@ -228,6 +228,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap SearchWhole1 {
+            get {
+                object obj = ResourceManager.GetObject("SearchWhole1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   setting に類似しているローカライズされた文字列を検索します。
         /// </summary>

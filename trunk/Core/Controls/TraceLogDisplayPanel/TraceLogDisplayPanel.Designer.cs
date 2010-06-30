@@ -539,7 +539,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             // 
             this.searchWholeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.searchWholeButton.Enabled = false;
-            this.searchWholeButton.Image = ((System.Drawing.Image)(resources.GetObject("searchWholeButton.Image")));
+            this.searchWholeButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.SearchWhole;
             this.searchWholeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.searchWholeButton.Name = "searchWholeButton";
             this.searchWholeButton.Size = new System.Drawing.Size(23, 22);
