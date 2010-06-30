@@ -70,12 +70,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         
    //簡易検索に必要な変数群
     private string _resourceType = null;
-    private string _resourceName = null; // リソース名納用。リソース名は入力フォームのテキストがもともと英名となっているため
-                                         // この変数は冗長であるが、_ruleName と _eventName と同じレベルで扱うために作成
-
+    private string _resourceName = null; // リソース名納用
     private string _ruleName = null;     // 検索ルールの英名格納用
     private string _eventName = null;    // 検索イベントの英名格納用
-    private string _eventDetail = null;  // _resourceName と同様の理由で作成
+    private string _eventDetail = null;  // イベント詳細格納用
                                         
 
    //時系列順に並んだ図形データ
@@ -228,12 +226,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         targetEventDetailForm.SelectedIndexChanged += (o, _e) => { _eventDetail = (string)targetEventDetailForm.SelectedItem; };
 
         //時系列順に並んだ可視化データの作成
-        
-        //ループがかなり深いので、ログの数が多くなると処理が非常に遅くなる可能性あり
-        //リスト中の適切な位置に一つ一つデータを挿入していくことで、全部のデータを格納し終わった
-        //段階でソートが完了させている。ただ、速度のことを考えると、最初は時系列を無視して格納し
-        //最後にクイックソートを使って整列させた方がいいかもしれない。　要検討
-        makeTimeSortedLog();
+         makeTimeSortedLog();
         _traceLogSearcher = new SimpleSearch(_timeSortedLog);
     }
 
@@ -997,11 +990,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(color, new Time(searchTimes[i].ToString(), _timeRadix));
         }
 
-        //２つのマクロビューア両方の再描画を促すために、ApplicationFactory.BlackBoard.CursorTimeの値を一瞬だけ変化させる
-        Time tmp1 = ApplicationFactory.BlackBoard.CursorTime;  //現在時刻
-        Time tmp2 = new Time((tmp1.Value - 1).ToString(), _timeRadix);//ダミー時刻
-        ApplicationFactory.BlackBoard.CursorTime = tmp2;
-        ApplicationFactory.BlackBoard.CursorTime = tmp1;
+        // 検索ボタンが押された際に、Macroviewer にもマーカーを反映させるには再描画を
+        // 促す必要がある。現在時刻が変更された際に再描画処理が発生するため、これを利用
+        // する。（一瞬だけ現在時刻を変更する）
+        Time current = ApplicationFactory.BlackBoard.CursorTime;
+        Time dummy = new Time((current.Value - 1).ToString(), _timeRadix);
+        ApplicationFactory.BlackBoard.CursorTime = dummy;
+        ApplicationFactory.BlackBoard.CursorTime = current;
+        
     }
 
     private void deleateAllMarker_Click(object sender, EventArgs e)
@@ -1011,11 +1007,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.DeleteMarker(tm.Name);
         }
 
-        //２つのマクロビューア両方の再描画を促すために、ApplicationFactory.BlackBoard.CursorTimeの値を一瞬だけ変化させる
-        Time tmp1 = ApplicationFactory.BlackBoard.CursorTime;  //現在時刻
-        Time tmp2 = new Time((tmp1.Value - 1).ToString(), _timeRadix);//ダミー時刻
-        ApplicationFactory.BlackBoard.CursorTime = tmp2;
-        ApplicationFactory.BlackBoard.CursorTime = tmp1;
+        // 検索ボタンが押された際に、Macroviewer にもマーカーを反映させるには再描画を
+        // 促す必要がある。現在時刻が変更された際に再描画処理が発生するため、これを利用
+        // する。（一瞬だけ現在時刻を変更する）
+        Time current = ApplicationFactory.BlackBoard.CursorTime;
+        Time dummy = new Time((current.Value - 1).ToString(), _timeRadix);
+        ApplicationFactory.BlackBoard.CursorTime = dummy;
+        ApplicationFactory.BlackBoard.CursorTime = current;
     }
 
 
@@ -1213,6 +1211,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             string[] ruleAndResName = evntShapesList.Key.Split(':'); //例えば"taskStateChange:LOGTASK"を切り分ける
             string resName = ruleAndResName[1];
             string ruleName = ruleAndResName[0];
+
+            //以下の処理はループが深いので、ログの数が多くなると処理が非常に遅くなる可能性あり
+            //リスト中の適切な位置に一つ一つデータを挿入していくことで、全部のデータを _timeSortedLog
+            //へ格納し終わった段階でソートを完了させている（挿入ソート）。ただ、速度のことを考えると、
+            //最初は時系列を無視して格納し最後にクイックソートを使って整列させた方がいいかもしれない。
             foreach (KeyValuePair<string, System.Collections.Generic.List<EventShape>> evntShapeList in evntShapesList.Value.List)
             {
                 string[] evntAndRuleName = evntShapeList.Key.Split(':');  // 例えば"taskStateChange:stateChangeEvent"を切り分ける
