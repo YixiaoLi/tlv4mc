@@ -56,6 +56,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		private TraceLogVisualizerData _data;
 
+        private List<int> _previousSearchRowId = new List<int>();
+
 		public TraceLogViewer()
 		{
 			InitializeComponent();
@@ -72,9 +74,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			if (_data.ResourceData != null)
 			{
-				dataGridView.Columns["time"].HeaderText = "時間[" + _data.ResourceData.TimeScale + "]";
+                dataGridView.Columns["time"].HeaderText = "時間[" + _data.ResourceData.TimeScale + "]";
 
-				setDataGridViewDataSource();
+                setDataGridViewDataSource();
 			}
 			else
 			{
@@ -90,7 +92,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			{
 				setResourceVisibleChange(kvp.Key, kvp.Value);
 			}
-
 		}
 
 		private void resourceExplorerSettingBecameDirty(object sender, string propertyName)
@@ -240,6 +241,38 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					}
 				}));
 			};
+            ApplicationFactory.BlackBoard.SearchTimeChanged += (o, _e) =>
+            {
+                //前回の検索でフォーカスされた行の選択を解除
+                if (_previousSearchRowId.Count() != 0)
+                {
+                    foreach (int id in _previousSearchRowId)
+                    {
+                        dataGridView.Rows[id].Selected = false;
+                    }
+                    _previousSearchRowId.Clear();
+                }
+
+                //検索時刻に該当するログの行をフォーカス
+                foreach(TraceLogViewerRowData data in this._dataSource)
+                {
+                    if(data.Time.Value == ApplicationFactory.BlackBoard.CursorTime.Value)
+                    {
+                        dataGridView.Rows[(int)data.Id].Selected = true;
+                        _previousSearchRowId.Add((int)data.Id);
+                    }
+                    if (data.Time.Value > ApplicationFactory.BlackBoard.CursorTime.Value)
+                    {
+                        break;
+                    }
+                }
+
+                double newLocation_X = dataGridView.Width;
+                double newLocation_Y = dataGridView.Height * ((double)_previousSearchRowId[0] / (double)(_dataSource.Count()+1));
+               // dataGridView.Location = new System.Drawing.Point((int)newLocation_X,(int)newLocation_Y);// *(_dataSource.Count());
+                dataGridView.FirstDisplayedScrollingRowIndex = (int)newLocation_Y;
+            };
+           
 		}
 
 		/// <summary>

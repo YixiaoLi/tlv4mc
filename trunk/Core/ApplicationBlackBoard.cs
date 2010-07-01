@@ -44,11 +44,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
 	public class ApplicationBlackBoard
 	{
-		public EventHandler<GeneralChangedEventArgs<Time>> CursorTimeChanged;
+        public EventHandler<GeneralChangedEventArgs<Time>> CursorTimeChanged;
         public EventHandler<GeneralChangedEventArgs<Pair<Time, Time>>> SelectedTimeRangeChanged;
+        public EventHandler<GeneralChangedEventArgs<Time>> SearchTimeChanged;
 
 		private Time _cursorTime;
-		public Time CursorTime { get { return _cursorTime; } set { ApplicationMethod.SetValue<Time>(ref _cursorTime, value, CursorTimeChanged, this); } }
+        public Time CursorTime { get { return _cursorTime; } set { ApplicationMethod.SetValue<Time>(ref _cursorTime, value, CursorTimeChanged, this); } }
+
+        private Time _searchTime;
+        public Time SearchTime { get { return _searchTime; } set { ApplicationMethod.SetValue<Time>(ref _searchTime, value, SearchTimeChanged, this); } }
+
 		private Pair<Time, Time> _selectedTimeRange;
 		public Pair<Time, Time> SelectedTimeRange { get { return _selectedTimeRange; } set { ApplicationMethod.SetValue<Pair<Time, Time>>(ref _selectedTimeRange, value, SelectedTimeRangeChanged, this); } }
 

@@ -951,6 +951,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             //カーソル、スクロールバーを移動
             ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
             moveScrollBar(jumpTime);
+
+            ApplicationFactory.BlackBoard.SearchTime = new Time(jumpTime.ToString(), _timeRadix);
         }
         else
         {
@@ -977,6 +979,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             System.Windows.Forms.MessageBox.Show("検索の終わりです");
         }
+        ApplicationFactory.BlackBoard.SearchTime = new Time(jumpTime.ToString(), _timeRadix);
     }
 
     private void searchWholeButton_Click(object sender, EventArgs e)
