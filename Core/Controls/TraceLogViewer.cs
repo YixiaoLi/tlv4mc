@@ -254,23 +254,38 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }
 
                 //検索時刻に該当するログの行をフォーカス
-                foreach(TraceLogViewerRowData data in this._dataSource)
+                foreach (Time oneOfSearchTime in ApplicationFactory.BlackBoard.SearchTime)
                 {
-                    if(data.Time.Value == ApplicationFactory.BlackBoard.CursorTime.Value)
+                    foreach (TraceLogViewerRowData data in this._dataSource)
                     {
-                        dataGridView.Rows[(int)data.Id].Selected = true;
-                        _previousSearchRowId.Add((int)data.Id);
-                    }
-                    if (data.Time.Value > ApplicationFactory.BlackBoard.CursorTime.Value)
-                    {
-                        break;
+                        if (data.Time.Value == oneOfSearchTime.Value)
+                        {
+                            int num = (int)(data.Id - this._dataSource[0].Id);
+                            dataGridView.Rows[num].Selected = true;
+                            _previousSearchRowId.Add(num);
+                            // 可視化ファイルを変更すると、_dataSource内の各ログのIDがリセットされず 前回の最後のログのID + 1
+                            // から始まってしまう。そこで、num = data.Id - this._dataSource[0].Id として正しい ID を作した
+                        }
+                        if (data.Time.Value > oneOfSearchTime.Value)
+                        {
+                            break;
+                        }
                     }
                 }
 
-                double newLocation_X = dataGridView.Width;
-                double newLocation_Y = dataGridView.Height * ((double)_previousSearchRowId[0] / (double)(_dataSource.Count()+1));
-               // dataGridView.Location = new System.Drawing.Point((int)newLocation_X,(int)newLocation_Y);// *(_dataSource.Count());
-                dataGridView.FirstDisplayedScrollingRowIndex = (int)newLocation_Y;
+                //スクロールを検索したイベントのログの位置へ移動する処理
+                //そのままイベントログへ飛ぶとトレースログビューアの一番上に表示されるので、
+                //若干の補正をかけておく（ここでは10。できればトレースログビューアの高さと
+                //一行の高さを計算し、該当部分がちょうど真ん中に来るように修正した方がよい）
+                int jumpLocation = _previousSearchRowId[0]-10;   
+                if (jumpLocation > 0)
+                {
+                    dataGridView.FirstDisplayedScrollingRowIndex = jumpLocation;
+                }
+                else
+                {
+                    dataGridView.FirstDisplayedScrollingRowIndex = _previousSearchRowId[0];
+                }
             };
            
 		}

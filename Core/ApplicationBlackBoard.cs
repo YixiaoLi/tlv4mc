@@ -46,23 +46,25 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	{
         public EventHandler<GeneralChangedEventArgs<Time>> CursorTimeChanged;
         public EventHandler<GeneralChangedEventArgs<Pair<Time, Time>>> SelectedTimeRangeChanged;
-        public EventHandler<GeneralChangedEventArgs<Time>> SearchTimeChanged;
+        public EventHandler<GeneralChangedEventArgs<List<Time>>> SearchTimeChanged;
 
 		private Time _cursorTime;
         public Time CursorTime { get { return _cursorTime; } set { ApplicationMethod.SetValue<Time>(ref _cursorTime, value, CursorTimeChanged, this); } }
 
-        private Time _searchTime;
-        public Time SearchTime { get { return _searchTime; } set { ApplicationMethod.SetValue<Time>(ref _searchTime, value, SearchTimeChanged, this); } }
+        //検索時刻を記録する。これの変化によってTraceLogViewer が
+        private List<Time> _searchTime;
+        public List<Time> SearchTime { get { return _searchTime; } set { ApplicationMethod.SetValue<List<Time>>(ref _searchTime, value, SearchTimeChanged, this);} }
 
-		private Pair<Time, Time> _selectedTimeRange;
-		public Pair<Time, Time> SelectedTimeRange { get { return _selectedTimeRange; } set { ApplicationMethod.SetValue<Pair<Time, Time>>(ref _selectedTimeRange, value, SelectedTimeRangeChanged, this); } }
+		private Pair<Time, Time> _selectedTimeChange;
+		public Pair<Time, Time> SelectedTimeChange { get { return _selectedTimeChange; } set { ApplicationMethod.SetValue<Pair<Time, Time>>(ref _selectedTimeChange, value, SelectedTimeRangeChanged, this); } }
 
         public int dragFlag = 0;
 
 		public ApplicationBlackBoard()
 		{
 			_cursorTime = Time.Empty;
-			_selectedTimeRange = null;
+            _searchTime = new List<Time>();
+			_selectedTimeChange = null;
 		}
 	}
 }

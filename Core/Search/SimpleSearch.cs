@@ -93,24 +93,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private Boolean checkSearchCondition(SearchType operation, VisualizeLog visLog)
         {
-            if (!visLog.resourceName.Equals(_targetResource)) //リソース名の一致を確認
+            if (!visLog.resourceName.Equals(_targetResource))
                 return false;
 
             if (_targetRule != null)
             {
-               if(!visLog.ruleName.Equals(_targetRule))  //ルール名の一致を確認
+               if(!visLog.ruleName.Equals(_targetRule))
                   return false;
             }
 
             if(_targetEvent != null)
             {
-               if(!visLog.evntName.Equals(_targetEvent)) //イベント名の一致を確認
+               if(!visLog.evntName.Equals(_targetEvent))
                   return false;
             }
 
             if(_targetEventDetail != null)  // イベント詳細が指定されているかを確認
             {
-                if (!visLog.evntDetail.Equals(_targetEventDetail))  //イベント詳細の一致を確認
+                if (!visLog.evntDetail.Equals(_targetEventDetail))
                     return false;
             }
 
@@ -127,7 +127,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
             else if (operation == SearchType.Whole)
             {
-                return true; //全体検索は全時刻を返すため、現在時刻との比較はいらない
+                return true; //全体検索は全時刻を返すため、現在時刻との比較は必要ない
             }
             else
             {
