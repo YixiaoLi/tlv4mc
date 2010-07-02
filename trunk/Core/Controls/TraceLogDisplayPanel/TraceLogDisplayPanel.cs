@@ -218,6 +218,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         Cursor = this.HandCursor;
 
         searchToolStrip.Enabled = true;
+        this.searchForwardButton.Enabled = false;
+        this.searchBackwardButton.Enabled = false;
+        this.searchWholeButton.Enabled = false;    // 各検索ボタンを無効化しておく
+        
 
         makeResourceForm();
         targetResourceForm.SelectedIndexChanged += (o, _e) => { _resourceName = (string)targetResourceForm.SelectedItem;  makeRuleForm(); };
@@ -942,7 +946,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         _traceLogSearcher.setSearchData(_resourceName, _ruleName, _eventName, _eventDetail, ApplicationFactory.BlackBoard.CursorTime.Value);
         int t = ApplicationFactory.BlackBoard.dragFlag;
         decimal jumpTime = _traceLogSearcher.searchForward();
-        if (jumpTime != -1)
+        if (jumpTime >= 0)
         {
             decimal start = decimal.Parse(TimeLine.MinTime.ToString());
             decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
@@ -952,7 +956,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
             moveScrollBar(jumpTime);
 
-            ApplicationFactory.BlackBoard.SearchTime = new Time(jumpTime.ToString(), _timeRadix);
+            //トレースログビューアにおいて、該当時刻のログをフォーカス
+            List<Time> resultTime = new List<Time>();
+            resultTime.Add(ApplicationFactory.BlackBoard.CursorTime);
+            ApplicationFactory.BlackBoard.SearchTime = resultTime;
         }
         else
         {
@@ -965,21 +972,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         _traceLogSearcher.setSearchData(_resourceName, _ruleName, _eventName, _eventDetail, ApplicationFactory.BlackBoard.CursorTime.Value);
 
         decimal jumpTime = _traceLogSearcher.searchBackward();
-        if (jumpTime != -1)
+        if (jumpTime >= 0)
         {
             decimal start = decimal.Parse(TimeLine.MinTime.ToString());
             decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
             if (jumpTime < start) jumpTime = start;
 
            //カーソル、スクロールバーを移動
-           ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
+            ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
            moveScrollBar(jumpTime);
+
+           //トレースログビューアにおいて、該当時刻のログをフォーカス
+           List<Time> resultTime = new List<Time>();
+           resultTime.Add(ApplicationFactory.BlackBoard.CursorTime);
+           ApplicationFactory.BlackBoard.SearchTime = resultTime;
         }
         else
         {
             System.Windows.Forms.MessageBox.Show("検索の終わりです");
         }
-        ApplicationFactory.BlackBoard.SearchTime = new Time(jumpTime.ToString(), _timeRadix);
+
     }
 
     private void searchWholeButton_Click(object sender, EventArgs e)
@@ -988,10 +1000,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         decimal[] searchTimes = _traceLogSearcher.searchWhole();
         Color color = ApplicationFactory.ColorFactory.RamdomColor();
-        for (int i = 0; i < searchTimes.Count(); i++)
+
+
+        if (searchTimes.Count() > 0)
         {
-            ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(color, new Time(searchTimes[i].ToString(), _timeRadix));
+            List<Time> resultTime = new List<Time>();
+            for (int i = 0; i < searchTimes.Count(); i++)
+            {
+                ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(color, new Time(searchTimes[i].ToString(), _timeRadix));
+                resultTime.Add(new Time(searchTimes[i].ToString(), _timeRadix));
+            }
+            ApplicationFactory.BlackBoard.SearchTime = resultTime;
         }
+        else
+        {
+            System.Windows.Forms.MessageBox.Show("該当イベントは存在しません");
+        }
+
 
         // 検索ボタンが押された際に、Macroviewer にもマーカーを反映させるには再描画を
         // 促す必要がある。現在時刻が変更された際に再描画処理が発生するため、これを利用
@@ -1000,7 +1025,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         Time dummy = new Time((current.Value - 1).ToString(), _timeRadix);
         ApplicationFactory.BlackBoard.CursorTime = dummy;
         ApplicationFactory.BlackBoard.CursorTime = current;
-        
     }
 
     private void deleateAllMarker_Click(object sender, EventArgs e)
@@ -1010,7 +1034,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.DeleteMarker(tm.Name);
         }
 
-        // 検索ボタンが押された際に、Macroviewer にもマーカーを反映させるには再描画を
+        // マーカー消去ボタンが押された際に、Macroviewer からもマーカーを消去するには、再描画を
         // 促す必要がある。現在時刻が変更された際に再描画処理が発生するため、これを利用
         // する。（一瞬だけ現在時刻を変更する）
         Time current = ApplicationFactory.BlackBoard.CursorTime;
@@ -1102,7 +1126,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 targetRuleForm.Items.Add(rule.DisplayName);
             }
         }
-        
+
 
         this.searchForwardButton.Enabled = true;
         this.searchBackwardButton.Enabled = true;
