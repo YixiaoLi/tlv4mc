@@ -56,7 +56,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		private TraceLogVisualizerData _data;
 
-        private List<int> _previousSearchRowId = new List<int>();
+        private List<int> _SearchRowId = new List<int>();
 
 		public TraceLogViewer()
 		{
@@ -244,13 +244,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             ApplicationFactory.BlackBoard.SearchTimeChanged += (o, _e) =>
             {
                 //前回の検索でフォーカスされた行の選択を解除
-                if (_previousSearchRowId.Count() != 0)
+                if (_SearchRowId.Count() != 0)
                 {
-                    foreach (int id in _previousSearchRowId)
+                    foreach (int id in _SearchRowId)
                     {
                         dataGridView.Rows[id].Selected = false;
                     }
-                    _previousSearchRowId.Clear();
+                    _SearchRowId.Clear();
                 }
 
                 //検索時刻に該当するログの行をフォーカス
@@ -262,7 +262,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                         {
                             int num = (int)(data.Id - this._dataSource[0].Id);
                             dataGridView.Rows[num].Selected = true;
-                            _previousSearchRowId.Add(num);
+                            _SearchRowId.Add(num);
                             // 可視化ファイルを変更すると、_dataSource内の各ログのIDがリセットされず 前回の最後のログのID + 1
                             // から始まってしまう。そこで、num = data.Id - this._dataSource[0].Id として正しい ID を作した
                         }
@@ -274,17 +274,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }
 
                 //スクロールを検索したイベントのログの位置へ移動する処理
-                //そのままイベントログへ飛ぶとトレースログビューアの一番上に表示されるので、
-                //若干の補正をかけておく（ここでは10。できればトレースログビューアの高さと
-                //一行の高さを計算し、該当部分がちょうど真ん中に来るように修正した方がよい）
-                int jumpLocation = _previousSearchRowId[0]-10;   
+                int grid_height = dataGridView.Height;
+                int row_height = dataGridView.Rows[0].Height;
+                int visibleRowNum = grid_height / row_height;
+                int jumpLocation = _SearchRowId[0]-(visibleRowNum/2 - 1); //検索時刻のログがだいたい中央にくる位置   
+
                 if (jumpLocation > 0)
                 {
                     dataGridView.FirstDisplayedScrollingRowIndex = jumpLocation;
                 }
                 else
                 {
-                    dataGridView.FirstDisplayedScrollingRowIndex = _previousSearchRowId[0];
+                    dataGridView.FirstDisplayedScrollingRowIndex = _SearchRowId[0];
                 }
             };
            
