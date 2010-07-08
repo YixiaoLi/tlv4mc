@@ -1,4 +1,4 @@
-/*  This file is generated from svc.def by gensvc. */
+/*  This file is generated from svc.def by gensvc. ¡¡*/
 
 #ifndef TOPPERS_KERNEL_FNCODE_H
 #define TOPPERS_KERNEL_FNCODE_H
