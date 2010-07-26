@@ -232,9 +232,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             };
             captureToolStripeButton.Click += (o, e) =>
             {
-                // TraceLogDisplayPanel の現在位置を取得し、スクリーン上の絶対位置に変換したうえでスクリーンショットを撮る
-                Rectangle MainPanelRectangle = _windowManager.MainPanel.RectangleToScreen(_windowManager.MainPanel.ClientRectangle);
-                _commandManager.Do(new CaptureCommand(MainPanelRectangle));
+               _commandManager.Do(new CaptureCommand((TraceLogDisplayPanel) _windowManager.MainPanel));
             };
 
             #endregion
