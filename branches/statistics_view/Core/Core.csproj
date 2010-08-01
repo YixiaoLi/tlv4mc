@@ -84,6 +84,12 @@
     <Compile Include="Controls\ResourceExplorer.Designer.cs">
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\StatsVewier.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StatsVewier.Designer.cs">
+      <DependentUpon>StatsVewier.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TimeLineMacroViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -255,6 +261,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -289,6 +296,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ResourceExplorer.resx">
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StatsVewier.resx">
+      <DependentUpon>StatsVewier.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TimeLine\TimeLineControl.resx">
@@ -376,5 +387,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\zoomSelect.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Stats\" />
   </ItemGroup>
 </Project>
