@@ -572,8 +572,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		#endregion
 
-		private NU.OJL.MPRTOS.TLV.Third.TreeGridView treeGridView;
-		private System.Windows.Forms.ImageList imageList;
+        private NU.OJL.MPRTOS.TLV.Third.TreeGridView treeGridView;
+        private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.HScrollBar hScrollBar;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer;
 		private System.Windows.Forms.ToolStrip viewingAreaToolStrip;
