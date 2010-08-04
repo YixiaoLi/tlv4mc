@@ -33,10 +33,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
            int height4 = ctls4[0].Height;
            int height5 = ctls5[0].Height;
 
-            // TraceLogDisplayPanel の現在位置を取得し、スクリーン上の絶対位置に変換
-            mainPanelRectangle = tr.RectangleToScreen(tr.ClientRectangle);
-            mainPanelRectangle.Y = mainPanelRectangle.Y + height + height2;  //スクリーンショットの上面の位置を調整
-            mainPanelRectangle.Height = height3 + height4 + height5;         //スクリーンショットの高さを調整
+           mainPanelRectangle = tr.RectangleToScreen(tr.ClientRectangle);   // TraceLogDisplayPanel の現在位置を取得し、スクリーン上の絶対位置に変換
+           mainPanelRectangle.Y = mainPanelRectangle.Y + height + height2;  //スクリーンショットの上面の位置を調整
+           mainPanelRectangle.Height = height3 + height4 + height5;         //スクリーンショットの高さを調整
+
+           //TreeGridViewに垂直スクロールバーが存在している場合、スクロールバーの幅分だけキャプチャ領域から削る処理
+           int treeGridViewHscrollBarWidth = tr.Width - (ctls3[0].Left + ctls3[0].Width);
+           if (treeGridViewHscrollBarWidth > 0)
+           {
+               mainPanelRectangle.Width -= treeGridViewHscrollBarWidth;
+           }
+
         }
 
         public string Text { get; set; }
