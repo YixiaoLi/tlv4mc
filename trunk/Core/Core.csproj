@@ -388,12 +388,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\BackwardArrow.png" />
-    <None Include="Resources\BackwardArrow1.png" />
+    <None Include="Resources\camera.png" />
     <Content Include="Resources\Eraser.PNG" />
-    <None Include="Resources\Eraser1.PNG" />
     <Content Include="Resources\ForwardArrow.png" />
-    <None Include="Resources\ForwardArrow1.png" />
     <Content Include="Resources\SearchWhole.PNG" />
-    <None Include="Resources\SearchWhole1.PNG" />
   </ItemGroup>
 </Project>

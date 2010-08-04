@@ -51,8 +51,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		private Time _cursorTime;
         public Time CursorTime { get { return _cursorTime; } set { ApplicationMethod.SetValue<Time>(ref _cursorTime, value, CursorTimeChanged, this); } }
 
-        //検索時刻を記録する。これの変化によってTraceLogViewer が
-        private List<Time> _searchTime;
+        //検索時刻を記録する。これが変化するとTraceLogViewerにおいて表示ログの位置が更新される
+        private List<Time> _searchTime; 
         public List<Time> SearchTime { get { return _searchTime; } set { ApplicationMethod.SetValue<List<Time>>(ref _searchTime, value, SearchTimeChanged, this);} }
 
 		private Pair<Time, Time> _selectedTimeChange;
