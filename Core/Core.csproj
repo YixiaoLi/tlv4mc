@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\NU.OJL.MPRTOS.TLV.Core.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -129,6 +130,9 @@
     <Compile Include="FileContext\SettingData\TraceLogViewerSetting.cs" />
     <Compile Include="FileContext\SettingData\TimeLineMacroViewerSetting.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
+    <Compile Include="FileContext\TraceLogData\TraceLogParser\ITraceLogParser.cs" />
+    <Compile Include="FileContext\TraceLogData\TraceLogParser\NullObjectOfTraceLogParser.cs" />
+    <Compile Include="FileContext\TraceLogData\TraceLogParser\TraceLogParser.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogGenerator.cs" />
     <Compile Include="FileContext\VisualizeData\VisualizeLog.cs" />
     <Compile Include="FileContext\VisualizeShapeData\EventShapesGenerator.cs" />
