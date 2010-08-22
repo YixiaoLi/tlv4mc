@@ -62,31 +62,32 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			_progressTo = progressTo;
 		}
 
-		public TraceLogData Generate()
-		{
+        public TraceLogData Generate()
+        {
             Dictionary<string, Json> oldRule = new Dictionary<string, Json>();
             Json newRule = null;
             StreamWriter writer = new StreamWriter("testOutput.txt");
 
-			string[] target = _resourceData.ConvertRules.ToArray();
+            string[] target = _resourceData.ConvertRules.ToArray();
 
-			string[] convertRulePaths = Directory.GetFiles(ApplicationData.Setting.ConvertRulesDirectoryPath, "*." + Properties.Resources.ConvertRuleFileExtension);
-			// トレースログ変換ファイルを開きJsonValueでデシリアライズ
-			// ファイルが複数ある場合を想定している
-			foreach (string s in convertRulePaths)
+            string[] convertRulePaths = Directory.GetFiles(ApplicationData.Setting.ConvertRulesDirectoryPath, "*." + Properties.Resources.ConvertRuleFileExtension);
+            // トレースログ変換ファイルを開きJsonValueでデシリアライズ
+            // ファイルが複数ある場合を想定している
+            foreach (string s in convertRulePaths)
             {
-				Json json = new Json().Parse(File.ReadAllText(s));
-				foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
-				{
-					if (target.Contains(j.Key))
-					{
+                Json json = new Json().Parse(File.ReadAllText(s));
+                foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
+                {
+                    if (target.Contains(j.Key))
+                    {
                         if (j.Value.ContainsKey("$STYLE"))
                         {
                             if (newRule == null)
                             {
                                 newRule = j.Value;
                             }
-                            else {
+                            else
+                            {
                                 throw new Exception("複数の新形式変換ルールが存在します");
                             }
                         }
@@ -98,9 +99,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
                                 writer.WriteLine(_j.Key);
                             }
                         }
-					}
-				}
-			}
+                    }
+                }
+            }
             writer.Close();
 
             if (newRule != null && oldRule.Count > 0)
@@ -119,7 +120,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
             {
                 throw new Exception(target.ToString() + " に一致する変換ルールが見つかりません。");
             }
-		}
+        }
+
 
         private TraceLogData generateByNewRule(Json rule)
         {
@@ -161,7 +163,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return t;
         }
 
-        private TraceLogData generateByOldRule(Dictionary<string, Json> dic) {
+        private TraceLogData generateByOldRule(Dictionary<string, Json> dic)
+        {
             TraceLogData t = new TraceLogData(_resourceData);
 
             // トレースログを一行ずつ調べTraceLogクラスに変換しTraceLogListに追加していく
@@ -187,6 +190,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             t.Path = this._traceLogFilePath;
             return t;
         }
+
 
 		/// <summary>
 		/// 読み込んだログがパターンにマッチした場合に変換してログを追加する
@@ -276,6 +280,34 @@ namespace NU.OJL.MPRTOS.TLV.Core
 				}
 			}
 		}
+
+     //以下、標準形式ログファイルが入力された際に、変換プロセスをパスするためのメソッド
+        public TraceLogData Generate2()
+        {
+            return generateTraceLog();
+        }
+
+        private TraceLogData generateTraceLog()
+        {
+            TraceLogData t = new TraceLogData(_resourceData);
+
+            // トレースログを一行ずつ調べTraceLogクラスに変換しTraceLogListに追加していく
+            string[] logs = File.ReadAllLines(_traceLogFilePath);
+            float i = 1;
+            float max = logs.Length;
+            foreach (string s in logs)
+            {
+                if (_constructProgressReport != null)
+                    _constructProgressReport((int)(((i / max) * (float)(_progressTo - _progressFrom)) + (float)_progressFrom), "トレースログを共通形式へ変換中 " + i + "/" + max + " 行目...");
+
+                t.Add(new TraceLog(s));
+            }
+            i++;
+
+            t.LogDataBase.SetIds();
+            t.Path = this._traceLogFilePath;
+            return t;
+        }
 
 
 

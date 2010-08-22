@@ -187,8 +187,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		}
 		private TraceLogData getTraceLogData(string traceLogFilePath)
 		{
-			return new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate();
+           
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();            
+            sw.Start();
+            return new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate();
+            //return new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate2();
+            sw.Stop();
 		}
+
 		private SettingData getSettingData()
 		{
 			SettingData settingData = new SettingData();
