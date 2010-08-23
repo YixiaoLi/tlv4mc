@@ -190,9 +190,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
            
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();            
             sw.Start();
-            return new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate();
-            //return new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate2();
+            TraceLogData data = new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate();
+            //TraceLogData data = new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate2();
             sw.Stop();
+            return data;
 		}
 
 		private SettingData getSettingData()
