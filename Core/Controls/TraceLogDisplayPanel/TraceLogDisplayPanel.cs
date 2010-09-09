@@ -579,9 +579,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
 		};
 	    #endregion
-
-		#region 可視化領域移動イベント
-		PreviewKeyDownEventHandler onPreviewKeyDownEventHandler = (o, _e) =>
+        
+        #region detailSearchPanel初期化
+        detailSearchButton.Click += (o, _e) =>
+        {
+            DetailSearchPanel detailSearchPanel = new DetailSearchPanel();
+            detailSearchPanel.Visible = true;
+        };
+        #endregion
+        
+        #region 可視化領域移動イベント
+        PreviewKeyDownEventHandler onPreviewKeyDownEventHandler = (o, _e) =>
 		{
 		    if (_data == null)
 			return;
@@ -1284,16 +1292,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     private void TargetResourceForm_Click(object sender, EventArgs e)
     {
         //MessageBox.Show("test");
-    }
-
-    private void markerDellButton_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    private void detailSearchButton_Click_1(object sender, EventArgs e)
-    {
-
     }
 
     }

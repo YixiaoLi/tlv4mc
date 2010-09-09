@@ -241,6 +241,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Search\DetailSearchPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Search\DetailSearchPanel.Designer.cs">
+      <DependentUpon>DetailSearchPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Search\SimpleSearch.cs" />
     <Compile Include="Search\TraceLogSearcher.cs" />
   </ItemGroup>
