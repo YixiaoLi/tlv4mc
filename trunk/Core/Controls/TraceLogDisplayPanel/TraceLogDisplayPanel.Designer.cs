@@ -107,6 +107,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.searchForwardButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.searchWholeButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.detailSerachLabel = new System.Windows.Forms.ToolStripLabel();
+            this.detailSearchButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -450,10 +453,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripSeparator4,
             this.searchForwardButton,
             this.toolStripSeparator7,
-            this.searchWholeButton});
+            this.searchWholeButton,
+            this.toolStripSeparator5,
+            this.detailSerachLabel,
+            this.detailSearchButton});
             this.searchToolStrip.Location = new System.Drawing.Point(3, 25);
             this.searchToolStrip.Name = "searchToolStrip";
-            this.searchToolStrip.Size = new System.Drawing.Size(260, 25);
+            this.searchToolStrip.Size = new System.Drawing.Size(685, 25);
             this.searchToolStrip.TabIndex = 2;
             // 
             // searchLabelName
@@ -546,6 +552,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.searchWholeButton.Text = "全体検索";
             this.searchWholeButton.Click += new System.EventHandler(this.searchWholeButton_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // detailSerachLabel
+            // 
+            this.detailSerachLabel.Name = "detailSerachLabel";
+            this.detailSerachLabel.Size = new System.Drawing.Size(59, 22);
+            this.detailSerachLabel.Text = "詳細検索：";
+            // 
+            // detailSearchButton
+            // 
+            this.detailSearchButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.detailSearchButton.Image = ((System.Drawing.Image)(resources.GetObject("detailSearchButton.Image")));
+            this.detailSearchButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.detailSearchButton.Name = "detailSearchButton";
+            this.detailSearchButton.Size = new System.Drawing.Size(23, 22);
+            this.detailSearchButton.Text = "詳細検索";
+            // 
             // TraceLogDisplayPanel
             // 
             this.Controls.Add(this.toolStripContainer);
@@ -613,6 +639,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private System.Windows.Forms.ToolStripButton searchWholeButton;
         private System.Windows.Forms.ToolStripButton deleateAllMarker;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripLabel detailSerachLabel;
+        private System.Windows.Forms.ToolStripButton detailSearchButton;
 
 
 	}
