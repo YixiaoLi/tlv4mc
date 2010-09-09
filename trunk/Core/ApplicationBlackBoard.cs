@@ -47,6 +47,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public EventHandler<GeneralChangedEventArgs<Time>> CursorTimeChanged;
         public EventHandler<GeneralChangedEventArgs<Pair<Time, Time>>> SelectedTimeRangeChanged;
         public EventHandler<GeneralChangedEventArgs<List<Time>>> SearchTimeChanged;
+        public EventHandler<GeneralChangedEventArgs<int>> DetailSearchFlagChanged;
 
 		private Time _cursorTime;
         public Time CursorTime { get { return _cursorTime; } set { ApplicationMethod.SetValue<Time>(ref _cursorTime, value, CursorTimeChanged, this); } }
@@ -60,11 +61,19 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
         public int dragFlag = 0;
 
+        private int _detailSearchFlag = 0;
+        public int DetailSearchFlag
+        {
+            get { return _detailSearchFlag; }
+            set { ApplicationMethod.SetValue<int>(ref _detailSearchFlag, value, DetailSearchFlagChanged, this); }
+        }
+
 		public ApplicationBlackBoard()
 		{
 			_cursorTime = Time.Empty;
             _searchTime = new List<Time>();
 			_selectedTimeChange = null;
+            DetailSearchFlag = _detailSearchFlag;
 		}
 	}
 }
