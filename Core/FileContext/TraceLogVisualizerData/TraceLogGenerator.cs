@@ -293,6 +293,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             // トレースログを一行ずつ調べTraceLogクラスに変換しTraceLogListに追加していく
             string[] logs = File.ReadAllLines(_traceLogFilePath);
+            StreamReader sr = new StreamReader(_traceLogFilePath);
             float i = 1;
             float max = logs.Length;
             foreach (string s in logs)
