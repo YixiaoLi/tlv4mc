@@ -164,6 +164,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             {
                 if (ApplicationFactory.BlackBoard.dragFlag == 0) { Refresh(); }
             };
+
+            ApplicationFactory.BlackBoard.DetailSearchFlagChanged += (o, _e) =>
+            {
+                if (ApplicationFactory.BlackBoard.DetailSearchFlag == 0) { this.Enabled = true; }
+                else { this.Enabled = false; }
+            };
             
             ApplicationData.FileContext.DataChanged += (o, _e) =>
 			{

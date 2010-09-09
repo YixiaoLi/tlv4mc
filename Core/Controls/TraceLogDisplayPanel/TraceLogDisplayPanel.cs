@@ -318,9 +318,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         treeGridView.Clear();
         searchConboBoxClear();
 	}
-   
 
-	protected override void OnLoad(EventArgs e)
+
+    protected override void OnLoad(EventArgs e)
 	{
 	    base.OnLoad(e);
 	    this.ApplyNativeScroll();
@@ -585,7 +585,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             DetailSearchPanel detailSearchPanel = new DetailSearchPanel();
             detailSearchPanel.Visible = true;
+            ApplicationFactory.BlackBoard.DetailSearchFlag = 1;
         };
+
+//        ApplicationFactory.BlackBoard.detailSearchConditionSettingFlag
+
+        
         #endregion
         
         #region 可視化領域移動イベント
@@ -955,7 +960,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     private void searchForwardButton_Click(object sender, EventArgs e)
     {
         _traceLogSearcher.setSearchData(_resourceName, _ruleName, _eventName, _eventDetail, ApplicationFactory.BlackBoard.CursorTime.Value);
-        int t = ApplicationFactory.BlackBoard.dragFlag;
+        //int t = ApplicationFactory.BlackBoard.dragFlag;
         decimal jumpTime = _traceLogSearcher.searchForward();
         if (jumpTime >= 0)
         {
