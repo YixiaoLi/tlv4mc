@@ -241,6 +241,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Search\ConditionBeans.cs" />
     <Compile Include="Search\DetailSearchPanel.cs">
       <SubType>Form</SubType>
     </Compile>
