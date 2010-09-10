@@ -61,7 +61,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
         public int dragFlag = 0;
 
-        private int _detailSearchFlag = 0;
+        
+        private int _detailSearchFlag = 0; //これが１のときは詳細検索フォームが出現していることを表す
+                                           //詳細検索フォームが出現中は、TraceLogDisplayPanel.Enable = false とする
         public int DetailSearchFlag
         {
             get { return _detailSearchFlag; }

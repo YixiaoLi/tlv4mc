@@ -583,7 +583,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         #region detailSearchPanel初期化
         detailSearchButton.Click += (o, _e) =>
         {
-            DetailSearchPanel detailSearchPanel = new DetailSearchPanel();
+            DetailSearchPanel detailSearchPanel = new DetailSearchPanel(_data);
             detailSearchPanel.Visible = true;
             ApplicationFactory.BlackBoard.DetailSearchFlag = 1;
         };
@@ -1078,7 +1078,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         hScrollBar.Value = (int)scrollLocation;
     }
 
-    
+
 
     //リソース指定コンボボックスのアイテムをセット
     private void makeResourceForm()
@@ -1087,7 +1087,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         foreach (Resource res in resData)
         {
-            if(!res.Name.Equals("CurrentContext"))
+            if (!res.Name.Equals("CurrentContext"))
                 targetResourceForm.Items.Add(res.Name);
         }
 
@@ -1122,8 +1122,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             targetEventForm.Visible = false;
             targetEventDetailForm.Visible = false;
+
+            //各検索ボタンを有効にする
             searchForwardButton.Enabled = false;
             searchBackwardButton.Enabled = false;
+            searchWholeButton.Enabled = true;  
         }
         else
         {
@@ -1143,10 +1146,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             }
         }
 
-
+        //各検索ボタンを有効にする
         this.searchForwardButton.Enabled = true;
         this.searchBackwardButton.Enabled = true;
-        this.searchWholeButton.Enabled = true;    //各検索ボタンを有効にする
+        this.searchWholeButton.Enabled = true;
     }
 
     //イベント指定コンボボックスのアイテムをセット
@@ -1166,23 +1169,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             targetEventForm.Visible = true;
         }
 
-        //選択されているルール名を調べる（DisplayNameではない方の名称　：例 taskStateChange）
-        foreach(VisualizeRule visRule in _data.VisualizeData.VisualizeRules)
+        //選択されているルール名(例："状態遷移")の正式名称(例："taskStateChange")を調べる
+        foreach (VisualizeRule visRule in _data.VisualizeData.VisualizeRules)
         {
 
-              if( visRule.Target == null) // ルールのターゲットは CurrentContext
-              {
+            if (visRule.Target == null) // ルールのターゲットは CurrentContext
+            {
                 _ruleName = visRule.Name;
-              }
-              else if ( visRule.Target.Equals(_resourceType) && visRule.DisplayName.Equals(targetRuleForm.SelectedItem))
-              {
-                  _ruleName = visRule.Name;
-                  break;
-              }
+            }
+            else if (visRule.Target.Equals(_resourceType) && visRule.DisplayName.Equals(targetRuleForm.SelectedItem))
+            {
+                _ruleName = visRule.Name;
+                break;
+            }
         }
 
         GeneralNamedCollection<Event> eventShapes = _data.VisualizeData.VisualizeRules[_ruleName].Shapes;
-        foreach(Event e in eventShapes)
+        foreach (Event e in eventShapes)
         {
             targetEventForm.Items.Add(e.DisplayName);
         }
@@ -1196,15 +1199,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             targetEventDetailForm.Items.Clear();
             _eventDetail = null;
-    
+
         }
         else
         {
             targetEventDetailForm.Visible = true;
         }
 
-        //選択されているイベント名を調べる（DisplayName ではない方の名称　例： stateChangeEvent ）
-        foreach ( Event ev in _data.VisualizeData.VisualizeRules[_ruleName].Shapes)
+        //選択されているイベント名(例："状態")の正式名称(例："stateChangeEvent")を調べる
+        foreach (Event ev in _data.VisualizeData.VisualizeRules[_ruleName].Shapes)
         {
             if (ev.DisplayName.Equals(targetEventForm.SelectedItem))
             {
@@ -1215,7 +1218,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         //指定されたイベントが持つ RUNNABLE, RUNNING といった状態を切り出す
         Event e = _data.VisualizeData.VisualizeRules[_ruleName].Shapes[_eventName];
-        foreach(Figure fg in e.Figures) // いつも要素は一つしかないが、とりあえず foreach で回しておく（どんなときに複数の要素を持つかは要調査）
+        foreach (Figure fg in e.Figures) // いつもe.Figuresの要素は一つしかないが、foreach で回しておく（どんなときに複数の要素を持つかは要調査）
         {
             if (fg.Figures == null) //選択されたイベントにイベント詳細が存在しない場合
             {
@@ -1229,7 +1232,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                     targetEventDetailForm.Items.Add(conditions[2]); // "RUNNING"をイベント詳細のコンボボックスへセット
                 }
             }
-            
+
         }
     }
 

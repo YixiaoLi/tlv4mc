@@ -63,7 +63,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		protected CursorModes _cursorMode = CursorModes.Normal;
 		protected CursorModes _lastCursorMode;
 		protected int _timeRadix = 10;
-		protected TraceLogVisualizerData _data;
+        protected TraceLogVisualizerData _data;
 		protected ToolStripMenuItem _addMarkerContextToolStripItem;
 		protected ToolStripMenuItem _delMarkerContextToolStripItem;
 		protected ContextMenuStrip _normalContextMenuStrip;
