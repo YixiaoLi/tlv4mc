@@ -465,6 +465,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             nextSubConditionBox.Multiline = true;
             nextSubConditionBox.Visible = true;
             nextSubConditionBox.ReadOnly = true;
+            this.panel2.Controls.Add(nextSubConditionBox);
+
 
 
             //int currentHeight = mainConditionBox.Location.Y;
