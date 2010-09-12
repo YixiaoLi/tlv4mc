@@ -521,7 +521,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             //Sub条件表示画面から一度すべてのSubConditionTextBox を消去
             this.SubConditionDisplay.Controls.Clear();
 
-            //searchConditions に登録されている検索条件一つ一つにラベルとテキストボックスを割り当てていく処理
+            //以下ずっとsearchConditions に登録されている検索条件一つ一つにラベルとテキストボックスを割り当てていく処理
             int conditionLabelLeftLocation = MainConditionBox.Location.X;
             int conditionLabelTopLocation = 10;
             int subConditionID = 1;
