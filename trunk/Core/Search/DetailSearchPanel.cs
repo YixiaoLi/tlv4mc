@@ -14,8 +14,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     {
 
         protected TraceLogVisualizerData _data;
-        ConditionBeans searchConditions;
-
+        ConditionBeans conditionRegister;
+        private SearchCondition mainSearchCondition; //メインの検索条件を保持する変数
+        private List<SearchCondition> subSearchConditions; //サブの検索条件を保持する変数
+        
         public DetailSearchPanel(TraceLogVisualizerData data)
         {
             InitializeComponent();
@@ -23,9 +25,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             MainEventForm.Enabled = false;
             MainEventDetailForm.Enabled = false;
             _data = data;
-            searchConditions = new ConditionBeans();
+            conditionRegister = new ConditionBeans();
+            mainSearchCondition = null;
+            subSearchConditions = new List<SearchCondition>();
             makeMainResourceForm();
             makeSubResourceForm();
+            
         }
 
         protected override void OnLoad(EventArgs e)
@@ -84,14 +89,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             };
 
 
-            makeMainConditionButton.Click += (o, _e) =>
+            MakeMainConditionButton.Click += (o, _e) =>
             {
                 makeMainCondition();
             };
 
-            addSubConditionButton.Click += (o, _e) =>
+            AddSubConditionButton.Click += (o, _e) =>
             {
                 makeSubCondition();
+            };
+
+            DeleteMainConditionButton.Click += (o, _e) =>
+            {
+                deleteMainCondition();
             };
         }
 
@@ -112,10 +122,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 MainEventForm.Items.Clear();
                 MainEventDetailForm.Items.Clear();
 
-                searchConditions.mainResourceName = null;
-                searchConditions.mainRuleName = null;
-                searchConditions.mainEventName = null;
-                searchConditions.mainEventDetail = null;
+                conditionRegister.mainResourceName = null;
+                conditionRegister.mainRuleName = null;
+                conditionRegister.mainEventName = null;
+                conditionRegister.mainEventDetail = null;
 
 
                 MainRuleForm.Enabled = false;
@@ -127,15 +137,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         //リソースが選択されたときにルール指定コンボボックスのアイテムをセットする
         private void makeMainRuleForm()
         {
+            MakeMainConditionButton.Enabled = true;
+
             if (MainRuleForm.Enabled == true)
             {
                 MainRuleForm.Items.Clear();
                 MainEventForm.Items.Clear();
                 MainEventDetailForm.Items.Clear();
 
-                searchConditions.mainRuleName = null;
-                searchConditions.mainEventName = null;
-                searchConditions.mainEventDetail = null;
+                conditionRegister.mainRuleName = null;
+                conditionRegister.mainEventName = null;
+                conditionRegister.mainEventDetail = null;
 
                 MainEventForm.Enabled = false;
                 MainEventDetailForm.Enabled = false;
@@ -150,12 +162,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
 
             //選ばれているリソースの種類を調べる
-            searchConditions.mainResourceType = _data.ResourceData.Resources[(string)MainResourceForm.SelectedItem].Type;
+            conditionRegister.mainResourceType = _data.ResourceData.Resources[(string)MainResourceForm.SelectedItem].Type;
             GeneralNamedCollection<VisualizeRule> visRules = _data.VisualizeData.VisualizeRules;
 
             foreach (VisualizeRule rule in visRules)
             {
-                if (rule.Target != null && rule.Target.Equals(searchConditions.mainResourceType))
+                if (rule.Target != null && rule.Target.Equals(conditionRegister.mainResourceType))
                 {
                     MainRuleForm.Items.Add(rule.DisplayName);
                 }
@@ -165,7 +177,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             //this.searchBackwardButton.Enabled = true;
             //this.searchWholeButton.Enabled = true;    //各検索ボタンを有効にする
 
-            makeMainConditionButton.Enabled = true;
+            MakeMainConditionButton.Enabled = true;
         }
 
         //イベント指定コンボボックスのアイテムをセット
@@ -177,8 +189,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 MainEventDetailForm.Items.Clear();
                 MainEventDetailForm.Enabled = false;
 
-                searchConditions.mainEventName = null;
-                searchConditions.mainEventDetail = null;
+                conditionRegister.mainEventName = null;
+                conditionRegister.mainEventDetail = null;
             }
             else
             {
@@ -191,16 +203,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                 if (visRule.Target == null) // ルールのターゲットは CurrentContext
                 {
-                    searchConditions.mainRuleName = visRule.Name;
+                    conditionRegister.mainRuleName = visRule.Name;
                 }
-                else if (visRule.Target.Equals(searchConditions.mainResourceType) && visRule.DisplayName.Equals(MainRuleForm.SelectedItem))
+                else if (visRule.Target.Equals(conditionRegister.mainResourceType) && visRule.DisplayName.Equals(MainRuleForm.SelectedItem))
                 {
-                    searchConditions.mainRuleName = visRule.Name;
+                    conditionRegister.mainRuleName = visRule.Name;
                     break;
                 }
             }
 
-            GeneralNamedCollection<Event> eventShapes = _data.VisualizeData.VisualizeRules[searchConditions.mainRuleName].Shapes;
+            GeneralNamedCollection<Event> eventShapes = _data.VisualizeData.VisualizeRules[conditionRegister.mainRuleName].Shapes;
             foreach (Event e in eventShapes)
             {
                 MainEventForm.Items.Add(e.DisplayName);
@@ -221,17 +233,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
 
             //選択されているイベント名(例："状態")の正式名称(例："stateChangeEvent")を調べる
-            foreach (Event ev in _data.VisualizeData.VisualizeRules[searchConditions.mainRuleName].Shapes)
+            foreach (Event ev in _data.VisualizeData.VisualizeRules[conditionRegister.mainRuleName].Shapes)
             {
                 if (ev.DisplayName.Equals(MainEventForm.SelectedItem))
                 {
-                    searchConditions.mainEventName = ev.Name;
+                    conditionRegister.mainEventName = ev.Name;
                     break;
                 }
             }
 
             //指定されたイベントが持つ RUNNABLE, RUNNING といった状態を切り出す
-            Event e = _data.VisualizeData.VisualizeRules[searchConditions.mainRuleName].Shapes[searchConditions.mainEventName];
+            Event e = _data.VisualizeData.VisualizeRules[conditionRegister.mainRuleName].Shapes[conditionRegister.mainEventName];
             foreach (Figure fg in e.Figures) // いつもe.Figuresの要素は一つしかないが、foreach で回しておく（どんなときに複数の要素を持つかは要調査）
             {
                 if (fg.Figures == null) //選択されたイベントにイベント詳細が存在しない場合
@@ -266,10 +278,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 SubEventForm.Items.Clear();
                 SubEventDetailForm.Items.Clear();
 
-                searchConditions.subResourceName = null;
-                searchConditions.subRuleName = null;
-                searchConditions.subEventName = null;
-                searchConditions.subEventDetail = null;
+                conditionRegister.subResourceName = null;
+                conditionRegister.subRuleName = null;
+                conditionRegister.subEventName = null;
+                conditionRegister.subEventDetail = null;
 
 
                 SubRuleForm.Enabled = false;
@@ -281,15 +293,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         //リソースが選択されたときにルール指定コンボボックスのアイテムをセットする
         private void makeSubRuleForm()
         {
+            AddSubConditionButton.Enabled = true;
+
             if (SubRuleForm.Enabled == true)
             {
                 SubRuleForm.Items.Clear();
                 SubEventForm.Items.Clear();
                 SubEventDetailForm.Items.Clear();
 
-                searchConditions.subRuleName = null;
-                searchConditions.subEventName = null;
-                searchConditions.subEventDetail = null;
+                conditionRegister.subRuleName = null;
+                conditionRegister.subEventName = null;
+                conditionRegister.subEventDetail = null;
 
                 SubEventForm.Enabled = false;
                 SubEventDetailForm.Enabled = false;
@@ -304,12 +318,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
 
             //選ばれているリソースの種類を調べる
-            searchConditions.subResourceType = _data.ResourceData.Resources[(string)SubResourceForm.SelectedItem].Type;
+            conditionRegister.subResourceType = _data.ResourceData.Resources[(string)SubResourceForm.SelectedItem].Type;
             GeneralNamedCollection<VisualizeRule> visRules = _data.VisualizeData.VisualizeRules;
 
             foreach (VisualizeRule rule in visRules)
             {
-                if (rule.Target != null && rule.Target.Equals(searchConditions.subResourceType))
+                if (rule.Target != null && rule.Target.Equals(conditionRegister.subResourceType))
                 {
                     SubRuleForm.Items.Add(rule.DisplayName);
                 }
@@ -319,7 +333,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             //this.searchBackwardButton.Enabled = true;
             //this.searchWholeButton.Enabled = true;    //各検索ボタンを有効にする
 
-            addSubConditionButton.Enabled = true;
+            AddSubConditionButton.Enabled = true;
         }
 
         //イベント指定コンボボックスのアイテムをセット
@@ -331,8 +345,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 SubEventDetailForm.Items.Clear();
                 SubEventDetailForm.Enabled = false;
 
-                searchConditions.subEventName = null;
-                searchConditions.subEventDetail = null;
+                conditionRegister.subEventName = null;
+                conditionRegister.subEventDetail = null;
             }
             else
             {
@@ -345,16 +359,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                 if (visRule.Target == null) // ルールのターゲットは CurrentContext
                 {
-                    searchConditions.subRuleName = visRule.Name;
+                    conditionRegister.subRuleName = visRule.Name;
                 }
-                else if (visRule.Target.Equals(searchConditions.subResourceType) && visRule.DisplayName.Equals(SubRuleForm.SelectedItem))
+                else if (visRule.Target.Equals(conditionRegister.subResourceType) && visRule.DisplayName.Equals(SubRuleForm.SelectedItem))
                 {
-                    searchConditions.subRuleName = visRule.Name;
+                    conditionRegister.subRuleName = visRule.Name;
                     break;
                 }
             }
 
-            GeneralNamedCollection<Event> eventShapes = _data.VisualizeData.VisualizeRules[searchConditions.subRuleName].Shapes;
+            GeneralNamedCollection<Event> eventShapes = _data.VisualizeData.VisualizeRules[conditionRegister.subRuleName].Shapes;
             foreach (Event e in eventShapes)
             {
                 SubEventForm.Items.Add(e.DisplayName);
@@ -375,17 +389,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
 
             //選択されているイベント名(例："状態")の正式名称(例："stateChangeEvent")を調べる
-            foreach (Event ev in _data.VisualizeData.VisualizeRules[searchConditions.subRuleName].Shapes)
+            foreach (Event ev in _data.VisualizeData.VisualizeRules[conditionRegister.subRuleName].Shapes)
             {
                 if (ev.DisplayName.Equals(SubEventForm.SelectedItem))
                 {
-                    searchConditions.subEventName = ev.Name;
+                    conditionRegister.subEventName = ev.Name;
                     break;
                 }
             }
 
             //指定されたイベントが持つ RUNNABLE, RUNNING といった状態を切り出す
-            Event e = _data.VisualizeData.VisualizeRules[searchConditions.subRuleName].Shapes[searchConditions.subEventName];
+            Event e = _data.VisualizeData.VisualizeRules[conditionRegister.subRuleName].Shapes[conditionRegister.subEventName];
             foreach (Figure fg in e.Figures) // いつもe.Figuresの要素は一つしかないが、foreach で回しておく（どんなときに複数の要素を持つかは要調査）
             {
                 if (fg.Figures == null) //選択されたイベントにイベント詳細が存在しない場合
@@ -404,7 +418,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
         }
 
-        private void searchMainConditionClear()
+        private void clearSearchMainCondition()
         {
             MainResourceForm.Items.Clear();
             MainRuleForm.Items.Clear();
@@ -414,10 +428,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             MainRuleForm.Text = null;
             MainEventForm.Text = null;
             MainEventDetailForm.Text = null;
-            searchConditions.clearMainCondition();
+            conditionRegister.clearMainCondition();
         }
 
-        private void searchSubConditionClear()
+        private void clearSearchSubCondition()
         {
             SubResourceForm.Items.Clear();
             SubRuleForm.Items.Clear();
@@ -431,64 +445,155 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             SubEventDetailForm.Text = null;
             TimingForm.Text = null;
             TimingValueForm.Text = null;
-            searchConditions.clearSubCondition();
+            conditionRegister.clearSubCondition();
         }
 
 
         private void makeMainCondition()
         {
-            string condition = MainResourceForm.Text;
-            if ((MainRuleForm.Text != null) && (!MainRuleForm.Text.Equals("")))
+            if (mainSearchCondition == null)
             {
-                condition += System.Environment.NewLine + MainRuleForm.Text;
-            }
+                mainSearchCondition = new SearchCondition();
+                mainSearchCondition.resourceName = (string)MainResourceForm.SelectedItem;
+                mainSearchCondition.ruleName = (string)MainRuleForm.SelectedItem;
+                mainSearchCondition.eventName = (string)MainEventForm.SelectedItem;
+                mainSearchCondition.eventDetail = (string)MainEventDetailForm.SelectedItem;
+                updateMainConditionDisplay();
 
-            if ((MainEventForm.Text != null) && (!MainEventForm.Text.Equals("")))
+                BackwardSearchButton.Enabled = true;
+                ForwardSearchButton.Enabled = true;
+                WholeSearchButton.Enabled = true;
+            }
+            else
             {
-                condition += System.Environment.NewLine + MainEventForm.Text;
+                System.Windows.Forms.MessageBox.Show("Mainの検索条件は２つ以上指定することができません。\n既存の条件を削除してください\n");
             }
-
-            if ((MainEventDetailForm.Text != null) && (!MainEventDetailForm.Text.Equals("")))
-            {
-                condition += System.Environment.NewLine + MainEventDetailForm.Text;
-            }
-
-            MainConditionBox.Text = condition + System.Environment.NewLine;
         }
+
+        private void updateMainConditionDisplay()
+        {
+            string condition = mainSearchCondition.resourceName;
+            if ((mainSearchCondition.ruleName != null) && (!mainSearchCondition.ruleName.Equals("")))
+            {
+                condition += System.Environment.NewLine + mainSearchCondition.ruleName;
+            }
+            if ((mainSearchCondition.eventName != null) && (!mainSearchCondition.eventName.Equals("")))
+            {
+                condition += System.Environment.NewLine + mainSearchCondition.eventName;
+            }
+            if ((mainSearchCondition.eventDetail != null) && (!mainSearchCondition.eventDetail.Equals("")))
+            {
+                condition += System.Environment.NewLine + mainSearchCondition.eventDetail;
+            }
+
+            MainConditionBox.Text = condition;
+            DeleteMainConditionButton.Enabled = true;
+        }
+
+        private void deleteMainCondition()
+        {
+            mainSearchCondition = null;
+            MainConditionBox.Text = "";
+            BackwardSearchButton.Enabled = false;
+            ForwardSearchButton.Enabled = false;
+            WholeSearchButton.Enabled = false;
+            DeleteMainConditionButton.Enabled = false;
+        }
+
 
         private void makeSubCondition()
         {
-            TextBox nextSubConditionBox = new TextBox();
-            nextSubConditionBox.Name = "SubConditionBox";
-            nextSubConditionBox.Location = new System.Drawing.Point(MainConditionBox.Location.X, MainConditionBox.Location.Y + 10);
-            nextSubConditionBox.Size = MainConditionBox.Size;
-            nextSubConditionBox.Multiline = true;
-            nextSubConditionBox.Visible = true;
-            nextSubConditionBox.ReadOnly = true;
-            this.panel2.Controls.Add(nextSubConditionBox);
+            SearchCondition subCondition = new SearchCondition();
+            subCondition.resourceName = (string)SubResourceForm.SelectedItem;
+            subCondition.ruleName = (string)SubRuleForm.SelectedItem;
+            subCondition.eventName = (string)SubEventForm.SelectedItem;
+            subCondition.eventDetail = (string)SubEventDetailForm.SelectedItem;
+            subCondition.timing = (string)TimingForm.SelectedItem;
+            subCondition.timingValue = (string)TimingValueForm.SelectedItem;
+            subSearchConditions.Add(subCondition);
 
-
-
-            //int currentHeight = mainConditionBox.Location.Y;
-            //int boxwidth = 1;
-
-            string condition = SubResourceForm.Text;
-            if ((SubRuleForm.Text != null) && (!SubRuleForm.Text.Equals("")))
-            {
-                condition += System.Environment.NewLine + SubRuleForm.Text;
-            }
-
-            if ((SubEventForm.Text != null) && (!SubEventForm.Text.Equals("")))
-            {
-                condition += System.Environment.NewLine + SubEventForm.Text;
-            }
-
-            if ((SubEventDetailForm.Text != null) && (!SubEventDetailForm.Text.Equals("")))
-            {
-                condition += System.Environment.NewLine + SubEventDetailForm.Text;
-            }
-
-            nextSubConditionBox.Text = condition + System.Environment.NewLine;
+            updateSubConditionsDisplay();
         }
+
+
+        private void updateSubConditionsDisplay()
+        {
+            //Sub条件表示画面から一度すべてのSubConditionTextBox を消去
+            this.SubConditionDisplay.Controls.Clear();
+
+            //searchConditions に登録されている検索条件一つ一つにラベルとテキストボックスを割り当てていく処理
+            int conditionLabelLeftLocation = MainConditionBox.Location.X;
+            int conditionLabelTopLocation = 10;
+            int subConditionID = 1;
+
+            foreach(SearchCondition s in subSearchConditions){
+                //条件の番号を表示するラベルの作成
+                Label conditionLabel = new Label();
+                conditionLabel.Name = "SubConditionLabel" + subConditionID;
+                conditionLabel.Text = "SubCondition:" + subConditionID;
+                conditionLabel.AutoSize = true;
+                conditionLabel.Location = new System.Drawing.Point(conditionLabelLeftLocation, conditionLabelTopLocation);
+                conditionLabel.Font = MainConditionLabel.Font;
+
+
+                //条件を表示するテキストボックスの作成
+                TextBox conditionBox = new TextBox();
+                conditionBox.Name = "SubConditionBox" + subConditionID;
+                conditionBox.Size = MainConditionBox.Size;
+                int conditionBoxLeftLocation = MainConditionBox.Location.X;
+                int conditionBoxTopLocation = conditionLabelTopLocation + conditionLabel.Size.Height + 5 ;
+                conditionBox.Location = new System.Drawing.Point(conditionBoxLeftLocation, conditionBoxTopLocation);
+                conditionBox.Multiline = true;
+                conditionBox.Visible = true;
+                conditionBox.ReadOnly = true;
+
+                //条件を消去するボタンの作成
+                Button deleteButton = new Button();
+                deleteButton.Name = "DeleteSubConditionButton" + subConditionID;
+                deleteButton.Tag = subConditionID - 1;
+                deleteButton.Text = "-";
+                deleteButton.Size = MakeMainConditionButton.Size;
+                int deleteButtonTopLocation = conditionLabel.Location.Y;
+                int deleteBUttonLeftLocation = conditionLabel.Location.X + conditionLabel.Size.Width + 40;
+                deleteButton.Location = new System.Drawing.Point(deleteBUttonLeftLocation, deleteButtonTopLocation);
+                deleteButton.Click += (o, _e) =>
+                {
+                    subSearchConditions.RemoveAt((int)deleteButton.Tag);
+                    updateSubConditionsDisplay();
+                };
+
+                conditionLabelTopLocation = conditionBox.Location.Y + conditionBox.Size.Height + 5;
+                subConditionID++;
+                
+
+                string condition = s.resourceName;
+                if (((s.eventName != null)) && (!s.ruleName.Equals("")))
+                {
+                    condition += System.Environment.NewLine + s.ruleName;
+                }
+                if ((s.eventName != null) && (!s.eventName.Equals("")))
+                {
+                    condition += System.Environment.NewLine + s.eventName;
+                }
+                if ((s.eventDetail != null) && (!s.eventDetail.Equals("")))
+                {
+                    condition += System.Environment.NewLine + s.eventDetail;
+                }
+                if ((s.timing != null) && (!s.timing.Equals("")))
+                {
+                    condition += System.Environment.NewLine + s.timing;
+                }
+                if ((s.timingValue != null) && (!s.timingValue.Equals("")))
+                {
+                    condition += System.Environment.NewLine + s.timingValue;
+                }
+
+                conditionBox.Text = condition + System.Environment.NewLine;
+                this.SubConditionDisplay.Controls.Add(conditionLabel);
+                this.SubConditionDisplay.Controls.Add(conditionBox);
+                this.SubConditionDisplay.Controls.Add(deleteButton);
+            }
+        }
+
     }
 }
