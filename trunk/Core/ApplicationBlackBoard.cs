@@ -48,6 +48,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public EventHandler<GeneralChangedEventArgs<Pair<Time, Time>>> SelectedTimeRangeChanged;
         public EventHandler<GeneralChangedEventArgs<List<Time>>> SearchTimeChanged;
         public EventHandler<GeneralChangedEventArgs<int>> DetailSearchFlagChanged;
+        public EventHandler<GeneralChangedEventArgs<int>> DeletedSearchConditionNumChanged;
 
 		private Time _cursorTime;
         public Time CursorTime { get { return _cursorTime; } set { ApplicationMethod.SetValue<Time>(ref _cursorTime, value, CursorTimeChanged, this); } }
@@ -63,12 +64,20 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
         
         private int _detailSearchFlag = 0; //これが１のときは詳細検索フォームが出現していることを表す
-                                           //詳細検索フォームが出現中は、TraceLogDisplayPanel.Enable = false とする
+                                           //（詳細検索フォームが出現中は、TraceLogDisplayPanelを操作不能にするためのフラグ）
         public int DetailSearchFlag
         {
             get { return _detailSearchFlag; }
             set { ApplicationMethod.SetValue<int>(ref _detailSearchFlag, value, DetailSearchFlagChanged, this); }
         }
+
+        private int _deletedSearchConditionNum = -1; //消去された検索条件の番号。検索条件が消去されるたびに値が更新される。
+        public int DeletedSearchConditionNum
+        {
+            get { return _deletedSearchConditionNum; }
+            set { ApplicationMethod.SetValue<int>(ref _deletedSearchConditionNum, value, DeletedSearchConditionNumChanged, this); }
+        }
+
 
 		public ApplicationBlackBoard()
 		{

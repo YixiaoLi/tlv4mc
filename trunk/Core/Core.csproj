@@ -248,6 +248,9 @@
     <Compile Include="Search\DetailSearchPanel.Designer.cs">
       <DependentUpon>DetailSearchPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Search\SearchConditionPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Search\SearchCondition.cs" />
     <Compile Include="Search\SimpleSearch.cs" />
     <Compile Include="Search\TraceLogSearcher.cs" />
