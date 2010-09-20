@@ -15,11 +15,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public string mainEventName;
         public string mainEventDetail;
 
-        public string subResourceName;
-        public string subResourceType;
-        public string subRuleName;
-        public string subEventName;
-        public string subEventDetail;
+        public string refiningResourceName;
+        public string refiningResourceType;
+        public string refiningRuleName;
+        public string refiningEventName;
+        public string refiningEventDetail;
         
         public string timing;
         public string  timingValue;
@@ -32,11 +32,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             mainEventName = null;
             mainEventDetail = null;
 
-            subResourceName = null;
-            subResourceType = null;
-            subRuleName = null;
-            subEventName = null;
-            subEventDetail = null;
+            refiningResourceName = null;
+            refiningResourceType = null;
+            refiningRuleName = null;
+            refiningEventName = null;
+            refiningEventDetail = null;
             timing = null;
             timingValue = null;
 
@@ -53,11 +53,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         public void clearSubCondition()
         {
-            subResourceName = null;
-            subResourceType = null;
-            subRuleName = null;
-            subEventName = null;
-            subEventDetail = null;
+            refiningResourceName = null;
+            refiningResourceType = null;
+            refiningRuleName = null;
+            refiningEventName = null;
+            refiningEventDetail = null;
 
             timing = null;
             timingValue = null;
