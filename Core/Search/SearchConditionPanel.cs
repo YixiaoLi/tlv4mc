@@ -56,7 +56,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             int conditionBoxLeftLocation = conditionLabel.Location.X;
             int conditionBoxTopLocation = conditionLabelTopLocation + conditionLabel.Size.Height + 5;
             conditionBox.Location = new System.Drawing.Point(conditionBoxLeftLocation, conditionBoxTopLocation);
-            conditionBox.Width = 200;
+            conditionBox.Width = 250;
             //conditionBox.Multiline = true;
             conditionBox.Visible = true;
             conditionBox.ReadOnly = true;
@@ -133,7 +133,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 int conditionBoxLeftLocation = refiningConditionLabelLeftLocation;
                 int conditionBoxTopLocation = refiningConditionLabel.Location.Y + refiningConditionLabel.Size.Height + 5;
                 refiningConditionBox.Location = new System.Drawing.Point(conditionBoxLeftLocation, conditionBoxTopLocation);
-                refiningConditionBox.Width = 200;
+                refiningConditionBox.Width = 250;
                 refiningConditionBox.Height = 40;
                 refiningConditionBox.Visible = true;
                 refiningConditionBox.Multiline = true;
@@ -180,7 +180,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     refiningConditionText += s.timingValue;
                 }
 
-                refiningConditionBox.Text = refiningConditionText + System.Environment.NewLine;
+                refiningConditionBox.Text = refiningConditionText;
                 this.Controls.Add(refiningConditionLabel);
                 this.Controls.Add(refiningConditionBox);
                 this.Controls.Add(deleteRefiningConditionButton);
