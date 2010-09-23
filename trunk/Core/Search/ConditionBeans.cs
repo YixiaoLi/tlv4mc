@@ -51,7 +51,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             mainEventDetail = null;
         }
 
-        public void clearSubCondition()
+        public void clearRefiningCondition()
         {
             refiningResourceName = null;
             refiningResourceType = null;

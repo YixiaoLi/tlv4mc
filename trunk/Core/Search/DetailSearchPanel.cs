@@ -27,7 +27,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             conditionRegister = new ConditionBeans();
             searchConditionPanels = new List<SearchConditionPanel>();
             makeMainResourceForm();
-            makeRefiningResourceForm();
+            makeRefiningConditionResourceForm();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -37,77 +37,213 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 ApplicationFactory.BlackBoard.DetailSearchFlag = 0;
             };
 
+            //以下、各フォームを操作したときの動作を定義
             MainResourceForm.SelectedIndexChanged += (o, _e) =>
             {
-                makeMainRuleForm();
+                if (MainResourceForm.SelectedIndex != -1)
+                {
+                    if (MainRuleForm.Enabled == true)
+                    {
+                        conditionRegister.mainRuleName = null;
+                        conditionRegister.mainEventName = null;
+                        conditionRegister.mainEventDetail = null;
+
+                        MainEventForm.Enabled = false;
+                        MainEventDetailForm.Enabled = false;
+                    }
+                    else
+                    {
+                        MainRuleForm.Enabled = true;
+                    }
+
+                    makeMainRuleForm();
+                    AddMainConditionButton.Enabled = true;
+                }
             };
 
             MainRuleForm.SelectedIndexChanged += (o, _e) =>
             {
-                makeMainEventForm();
+
+                if (MainRuleForm.SelectedIndex != -1)
+                {
+                    if (MainEventForm.Enabled == true)
+                    {
+                        conditionRegister.mainEventName = null;
+                        conditionRegister.mainEventDetail = null;
+
+                        MainEventDetailForm.Enabled = false;
+                    }
+                    else
+                    {
+                        MainEventForm.Enabled = true;
+                    }
+                    makeMainEventForm();          
+                }
             };
 
             MainEventForm.SelectedIndexChanged += (o, _e) =>
             {
-                makeMainEventDetailForm();
+                if (MainEventForm.SelectedIndex != -1)
+                {
+                    if (MainEventDetailForm.Enabled == true)
+                    {
+                        MainEventDetailForm.Items.Clear();
+                    }
+                    else
+                    {
+                        MainEventDetailForm.Enabled = true;
+                    }
+                    makeMainEventDetailForm();
+                }
             };
 
             TargetConditionForm.SelectedIndexChanged += (o, _e) =>
             {
-                makeRefiningResourceForm();
-                RefiningConditionResourceForm.Enabled = true;
+                if (TargetConditionForm.SelectedIndex != -1)
+                {
+                    makeRefiningConditionResourceForm();
+                    RefiningConditionResourceForm.Enabled = true;
+                }
             };
 
             RefiningConditionResourceForm.SelectedIndexChanged += (o, _e) =>
             {
-                makeRefiningRuleForm();
-                TimingForm.Enabled = true;
-                TimingValueForm.Enabled = false;
+                if (RefiningConditionResourceForm.SelectedIndex != -1)
+                {
+                    if (RefiningConditionRuleForm.Enabled == true)
+                    {
+                        conditionRegister.refiningRuleName = null;
+                        conditionRegister.refiningEventName = null;
+                        conditionRegister.refiningEventDetail = null;
+
+                        RefiningConditionEventForm.Enabled = false;
+                        RefiningConditionEventDetailForm.Enabled = false;
+                    }
+                    else
+                    {
+                        RefiningConditionRuleForm.Enabled = true;
+                    }
+
+                    TimingForm.Enabled = true;
+                    TimingValueForm.Enabled = false;
+
+                    makeRefiningConditionRuleForm();
+                }
             };
 
             RefiningConditionRuleForm.SelectedIndexChanged += (o, _e) =>
             {
-                makeRefiningEventForm();
+                if (RefiningConditionResourceForm.SelectedIndex != -1)
+                {
+                    if (RefiningConditionEventForm.Enabled == true)
+                    {
+                        conditionRegister.refiningEventName = null;
+                        conditionRegister.refiningEventDetail = null;
+
+                        RefiningConditionEventDetailForm.Enabled = false;
+                    }
+                    else
+                    {
+                        RefiningConditionEventForm.Enabled = true;
+                    }
+
+                    makeRefiningConditionEventForm();
+                }
             };
 
             RefiningConditionEventForm.SelectedIndexChanged += (o, _e) =>
             {
-                makeRefiningEventDetailForm();
+                if (RefiningConditionEventForm.SelectedIndex != -1)
+                makeRefiningConditionEventDetailForm();
             };
 
 
             TimingForm.SelectedIndexChanged += (o, _e) =>
             {
-                if (TimingValueForm.Enabled == true)
+                if (TimingForm.SelectedIndex != -1)
                 {
-                    TimingValueForm.Text = "";
-                }
-                else
-                {
-                    if (!TimingForm.SelectedItem.Equals("直前") || !TimingForm.SelectedItem.Equals("直後"))
+                    if (TimingValueForm.Enabled == true)
                     {
-                        TimingValueForm.Enabled = true;
+                        TimingValueForm.Text = "";
                     }
+                    else
+                    {
+                        if (!TimingForm.SelectedItem.Equals("直前") || !TimingForm.SelectedItem.Equals("直後"))
+                        {
+                            TimingValueForm.Enabled = true;
+                        }
+                        else
+                        {
+                            TimingValueForm.Enabled = false;
+                            AddRefiningConditionButton.Enabled = true;
+                        }
+                    }
+
+
                 }
             };
 
+            TimingValueForm.TextChanged += (o, _e) =>
+            {
+                if (!TimingValueForm.Text.Equals(""))
+                {
+                    AddRefiningConditionButton.Enabled = true;
+                }
+            };
 
             AddMainConditionButton.Click += (o, _e) =>
             {
                 makeSearchConditionPanel();
                 makeTargetConditionFormItems();
+                conditionRegister.clearMainCondition();
+                MainResourceForm.SelectedIndex = -1;
+                MainRuleForm.Enabled = false;
+                MainRuleForm.SelectedIndex = -1;
+                MainEventForm.Enabled = false;
+                MainEventForm.SelectedIndex = -1;
+                MainEventDetailForm.Enabled = false;
+                MainEventDetailForm.SelectedIndex = -1;
+                TargetConditionForm.Enabled = true;
             };
 
             AddRefiningConditionButton.Click += (o, _e) =>
             {
                 addRefiningSearchCondition();
+                TargetConditionForm.SelectedIndex = -1;
                 RefiningConditionResourceForm.Enabled = false;
+                RefiningConditionResourceForm.SelectedIndex = -1;
+                RefiningConditionRuleForm.Enabled = false;
+                RefiningConditionRuleForm.SelectedIndex = -1;
+                RefiningConditionEventForm.Enabled = false;
+                RefiningConditionEventForm.SelectedIndex = -1;
+                RefiningConditionEventDetailForm.Enabled = false;
+                RefiningConditionEventDetailForm.SelectedIndex = -1;
+                
+                TimingForm.Enabled = false;
+                TimingForm.SelectedIndex = -1;
+                TimingValueForm.Enabled = false;
+                TimingValueForm.Text = "";
+                AddRefiningConditionButton.Enabled = false;
+
+                conditionRegister.clearRefiningCondition();
             };
 
             ApplicationFactory.BlackBoard.DeletedSearchConditionNumChanged += (o, _e) =>
             {
                 deleteCondition();
+                if (searchConditionPanels.Count == 0)
+                {
+                    ForwardSearchButton.Enabled = false;
+                    BackwardSearchButton.Enabled = false;
+                    WholeSearchButton.Enabled = false;
+                }
             };
+
+            this.SizeChanged += (o, _e) =>
+            {
+                changePanelSize();
+            };
+
         }
 
         //リソース指定コンボボックスのアイテムをセット
@@ -142,30 +278,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         //リソースが選択されたときにルール指定コンボボックスのアイテムをセットする
         private void makeMainRuleForm()
         {
-            AddMainConditionButton.Enabled = true;
-
-            if (MainRuleForm.Enabled == true)
-            {
-                MainRuleForm.Items.Clear();
-                MainEventForm.Items.Clear();
-                MainEventDetailForm.Items.Clear();
-
-                conditionRegister.mainRuleName = null;
-                conditionRegister.mainEventName = null;
-                conditionRegister.mainEventDetail = null;
-
-                MainEventForm.Enabled = false;
-                MainEventDetailForm.Enabled = false;
-                //searchForwardButton.Enabled = false;
-                //searchBackwardButton.Enabled = false;
-                //this.searchWholeButton.Enabled = true;    //各検索ボタンを有効にする
-            }
-            else
-            {
-                MainRuleForm.Enabled = true;
-            }
-
-
+            MainRuleForm.Items.Clear();
             //選ばれているリソースの種類を調べる
             conditionRegister.mainResourceType = _data.ResourceData.Resources[(string)MainResourceForm.SelectedItem].Type;
             GeneralNamedCollection<VisualizeRule> visRules = _data.VisualizeData.VisualizeRules;
@@ -177,35 +290,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     MainRuleForm.Items.Add(rule.DisplayName);
                 }
             }
-
-            //this.searchForwardButton.Enabled = true;
-            //this.searchBackwardButton.Enabled = true;
-            //this.searchWholeButton.Enabled = true;    //各検索ボタンを有効にする
-
-            AddMainConditionButton.Enabled = true;
         }
+
 
         //イベント指定コンボボックスのアイテムをセット
         private void makeMainEventForm()
         {
-            if (MainEventForm.Enabled == true)
-            {
-                MainEventForm.Items.Clear();
-                MainEventDetailForm.Items.Clear();
-                MainEventDetailForm.Enabled = false;
-
-                conditionRegister.mainEventName = null;
-                conditionRegister.mainEventDetail = null;
-            }
-            else
-            {
-                MainEventForm.Enabled = true;
-            }
-
+            MainEventForm.Items.Clear();
             //選択されているルール名(例："状態遷移")の正式名称(例："taskStateChange")を調べる
             foreach (VisualizeRule visRule in _data.VisualizeData.VisualizeRules)
             {
-
                 if (visRule.Target == null) // ルールのターゲットは CurrentContext
                 {
                     conditionRegister.mainRuleName = visRule.Name;
@@ -228,15 +322,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         //イベント詳細指定コンボボックスのアイテムをセット
         private void makeMainEventDetailForm()
         {
-            if (MainEventDetailForm.Enabled == true)
-            {
-                MainEventDetailForm.Items.Clear();
-            }
-            else
-            {
-                MainEventDetailForm.Enabled = true;
-            }
-
+            MainEventDetailForm.Items.Clear();
             //選択されているイベント名(例："状態")の正式名称(例："stateChangeEvent")を調べる
             foreach (Event ev in _data.VisualizeData.VisualizeRules[conditionRegister.mainRuleName].Shapes)
             {
@@ -267,7 +353,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
         }
 
-        private void makeRefiningResourceForm()
+        private void makeRefiningConditionResourceForm()
         {
             GeneralNamedCollection<Resource> resData = this._data.ResourceData.Resources;
 
@@ -296,32 +382,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         }
 
         //リソースが選択されたときにルール指定コンボボックスのアイテムをセットする
-        private void makeRefiningRuleForm()
+        private void makeRefiningConditionRuleForm()
         {
-            AddRefiningConditionButton.Enabled = true;
-
-            if (RefiningConditionRuleForm.Enabled == true)
-            {
-                RefiningConditionRuleForm.Items.Clear();
-                RefiningConditionEventForm.Items.Clear();
-                RefiningConditionEventDetailForm.Items.Clear();
-
-                conditionRegister.refiningRuleName = null;
-                conditionRegister.refiningEventName = null;
-                conditionRegister.refiningEventDetail = null;
-
-                RefiningConditionEventForm.Enabled = false;
-                RefiningConditionEventDetailForm.Enabled = false;
-                //searchForwardButton.Enabled = false;
-                //searchBackwardButton.Enabled = false;
-                //this.searchWholeButton.Enabled = true;    //各検索ボタンを有効にする
-            }
-            else
-            {
-                RefiningConditionRuleForm.Enabled = true;
-            }
-
-
+            RefiningConditionRuleForm.Items.Clear();
             //選ばれているリソースの種類を調べる
             conditionRegister.refiningResourceType = _data.ResourceData.Resources[(string)RefiningConditionResourceForm.SelectedItem].Type;
             GeneralNamedCollection<VisualizeRule> visRules = _data.VisualizeData.VisualizeRules;
@@ -333,30 +396,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     RefiningConditionRuleForm.Items.Add(rule.DisplayName);
                 }
             }
-
-            //this.searchForwardButton.Enabled = true;
-            //this.searchBackwardButton.Enabled = true;
-            //this.searchWholeButton.Enabled = true;    //各検索ボタンを有効にする
-
-            AddRefiningConditionButton.Enabled = true;
         }
 
         //イベント指定コンボボックスのアイテムをセット
-        private void makeRefiningEventForm()
+        private void makeRefiningConditionEventForm()
         {
-            if (RefiningConditionEventForm.Enabled == true)
-            {
-                RefiningConditionEventForm.Items.Clear();
-                RefiningConditionEventDetailForm.Items.Clear();
-                RefiningConditionEventDetailForm.Enabled = false;
-
-                conditionRegister.refiningEventName = null;
-                conditionRegister.refiningEventDetail = null;
-            }
-            else
-            {
-                RefiningConditionEventForm.Enabled = true;
-            }
+            RefiningConditionEventForm.Items.Clear();
 
             //選択されているルール名(例："状態遷移")の正式名称(例："taskStateChange")を調べる
             foreach (VisualizeRule visRule in _data.VisualizeData.VisualizeRules)
@@ -382,7 +427,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
 
         //イベント詳細指定コンボボックスのアイテムをセット
-        private void makeRefiningEventDetailForm()
+        private void makeRefiningConditionEventDetailForm()
         {
             if (RefiningConditionEventDetailForm.Enabled == true)
             {
@@ -450,7 +495,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             RefiningConditionEventDetailForm.Text = null;
             TimingForm.Text = null;
             TimingValueForm.Text = null;
-            conditionRegister.clearSubCondition();
+            conditionRegister.clearRefiningCondition();
         }
 
         private void makeTargetConditionFormItems()
@@ -495,12 +540,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             SearchConditionPanel targetSearchCondition = searchConditionPanels[targetConditionPanelNum];
 
             refiningSearchCondition = new SearchCondition();
-            refiningSearchCondition.resourceName = (string)MainResourceForm.SelectedItem;
-            refiningSearchCondition.ruleName = (string)MainRuleForm.SelectedItem;
-            refiningSearchCondition.eventName = (string)MainEventForm.SelectedItem;
-            refiningSearchCondition.eventDetail = (string)MainEventDetailForm.SelectedItem;
+            refiningSearchCondition.resourceName = (string)RefiningConditionResourceForm.SelectedItem;
+            refiningSearchCondition.ruleName = (string)RefiningConditionRuleForm.SelectedItem;
+            refiningSearchCondition.eventName = (string)RefiningConditionEventForm.SelectedItem;
+            refiningSearchCondition.eventDetail = (string)RefiningConditionEventDetailForm.SelectedItem;
             refiningSearchCondition.timing = (string)TimingForm.SelectedItem;
-            refiningSearchCondition.eventDetail = (string)TimingValueForm.SelectedItem;
+            refiningSearchCondition.timingValue = (string)TimingValueForm.SelectedItem;
             targetSearchCondition.addRefiningSearchCondition(refiningSearchCondition);
         }
 
@@ -546,7 +591,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 ConditionDisplayPanel.Controls.Add(panel);
                 nextPanelLocation.Y += panel.Size.Height;
             }
-            
+        }
+
+        private void changePanelSize()
+        {
+            foreach (SearchConditionPanel panel in searchConditionPanels)
+            {
+                panel.Width = this.Width - 15;
+                
+            }
         }
 
 

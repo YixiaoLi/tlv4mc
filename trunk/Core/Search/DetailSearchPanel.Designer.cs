@@ -101,6 +101,7 @@
             // 
             // TargetConditionForm
             // 
+            this.TargetConditionForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TargetConditionForm.Enabled = false;
             this.TargetConditionForm.FormattingEnabled = true;
             this.TargetConditionForm.Location = new System.Drawing.Point(232, 70);
