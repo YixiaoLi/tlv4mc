@@ -30,7 +30,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             this._conditionNumber = conditionNumber;
             updateMainCondition();
             this.AutoScroll = true;
-            this.Size = new System.Drawing.Size(604,209);
+            this.Size = new System.Drawing.Size(584,209);
         }
 
         private void updateMainCondition()
@@ -45,7 +45,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             //main条件のラベルの作成
             Label conditionLabel = new Label();
             conditionLabel.Name = "ConditionLabel" + _conditionNumber;
-            conditionLabel.Text = "検索条件";
+            conditionLabel.Text = "検索条件：" + _conditionNumber;
             conditionLabel.AutoSize = true;
             conditionLabel.Location = new System.Drawing.Point(conditionLabelLeftLocation, conditionLabelTopLocation);
             mainConditionLabelLocation = conditionLabel.Location;
@@ -76,7 +76,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
               };
 
             //絞り込み条件の表示位置のY座標を設定
-            nextRefiningConditionLocation = new System.Drawing.Point(conditionLabel.Location.X, conditionBox.Location.Y + conditionBox.Size.Height + 10);
+            nextRefiningConditionLocation = new System.Drawing.Point(conditionLabel.Location.X + 30, conditionBox.Location.Y + conditionBox.Size.Height + 20);
 
             
             string conditionText = mainCondition.resourceName + " : ";
@@ -114,7 +114,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             updateMainCondition();
 
             //以下 refiningConditions に登録されている絞り込み条件一つ一つにラベル、テキストボックス、ボタンを割り当てる
-            int refiningConditionLabelLeftLocation = mainConditionLabelLocation.X　+ 20;
             int refiningConditionID = 1;
 
             foreach (SearchCondition s in refiningSearchConditions)
@@ -130,7 +129,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 //条件を表示するテキストボックスの作成
                 TextBox refiningConditionBox = new TextBox();
                 refiningConditionBox.Name = "RefiningConditionBox:" + refiningConditionID;
-                int conditionBoxLeftLocation = refiningConditionLabelLeftLocation;
+                int conditionBoxLeftLocation = refiningConditionLabel.Location.X;
                 int conditionBoxTopLocation = refiningConditionLabel.Location.Y + refiningConditionLabel.Size.Height + 5;
                 refiningConditionBox.Location = new System.Drawing.Point(conditionBoxLeftLocation, conditionBoxTopLocation);
                 refiningConditionBox.Width = 250;

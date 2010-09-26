@@ -162,23 +162,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 if (TimingForm.SelectedIndex != -1)
                 {
-                    if (TimingValueForm.Enabled == true)
+                    if (TimingForm.SelectedItem.Equals("直前") || TimingForm.SelectedItem.Equals("直後"))
                     {
                         TimingValueForm.Text = "";
+                        TimingValueForm.Enabled = false;
+                        AddRefiningConditionButton.Enabled = true;
                     }
                     else
                     {
-                        if (!TimingForm.SelectedItem.Equals("直前") || !TimingForm.SelectedItem.Equals("直後"))
-                        {
-                            TimingValueForm.Enabled = true;
-                        }
-                        else
-                        {
-                            TimingValueForm.Enabled = false;
-                            AddRefiningConditionButton.Enabled = true;
-                        }
+                        TimingValueForm.Text = "";
+                        TimingValueForm.Enabled = true;
                     }
-
 
                 }
             };
@@ -204,6 +198,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 MainEventDetailForm.Enabled = false;
                 MainEventDetailForm.SelectedIndex = -1;
                 TargetConditionForm.Enabled = true;
+                AddMainConditionButton.Enabled = false;
             };
 
             AddRefiningConditionButton.Click += (o, _e) =>
@@ -545,7 +540,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             refiningSearchCondition.eventName = (string)RefiningConditionEventForm.SelectedItem;
             refiningSearchCondition.eventDetail = (string)RefiningConditionEventDetailForm.SelectedItem;
             refiningSearchCondition.timing = (string)TimingForm.SelectedItem;
-            refiningSearchCondition.timingValue = (string)TimingValueForm.SelectedItem;
+            refiningSearchCondition.timingValue = (string)TimingValueForm.Text;
             targetSearchCondition.addRefiningSearchCondition(refiningSearchCondition);
         }
 
@@ -597,7 +592,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         {
             foreach (SearchConditionPanel panel in searchConditionPanels)
             {
-                panel.Width = this.Width - 15;
+                panel.Width = ConditionDisplayPanel.Width - 20;
                 
             }
         }
