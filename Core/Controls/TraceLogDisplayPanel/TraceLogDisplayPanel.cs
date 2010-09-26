@@ -73,10 +73,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         
    //簡易検索に必要な変数群
     private string _resourceType = null;
-    private string _resourceName = null; // リソース名納用
-    private string _ruleName = null;     // 検索ルールの英名格納用
-    private string _eventName = null;    // 検索イベントの英名格納用
-    private string _eventDetail = null;  // イベント詳細格納用
+    private string _resourceName = null; // リソース名納用変数
+    private string _ruleName = null;     // 検索ルールの英名格納用変数
+    private string _eventName = null;    // 検索イベントの英名格納用変数
+    private string _eventDetail = null;  // イベント詳細格納用変数
                                         
 
    //時系列順に並んだ図形データ
@@ -959,7 +959,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void searchForwardButton_Click(object sender, EventArgs e)
     {
-        _traceLogSearcher.setSearchData(_resourceName, _ruleName, _eventName, _eventDetail, ApplicationFactory.BlackBoard.CursorTime.Value);
+        SearchCondition condition = new SearchCondition();
+        condition.resourceName = _resourceName;
+        condition.ruleName = _ruleName;
+        condition.eventName = _eventName;
+        condition.eventDetail = _eventDetail;
+        _traceLogSearcher.setSearchData(condition);
         //int t = ApplicationFactory.BlackBoard.dragFlag;
         decimal jumpTime = _traceLogSearcher.searchForward();
         if (jumpTime >= 0)
@@ -985,7 +990,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void searchBackwardButton_Click(object sender, EventArgs e)
     {
-        _traceLogSearcher.setSearchData(_resourceName, _ruleName, _eventName, _eventDetail, ApplicationFactory.BlackBoard.CursorTime.Value);
+        SearchCondition condition = new SearchCondition();
+        condition.resourceName = _resourceName;
+        condition.ruleName = _ruleName;
+        condition.eventName = _eventName;
+        condition.eventDetail = _eventDetail;
+        _traceLogSearcher.setSearchData(condition);
 
         decimal jumpTime = _traceLogSearcher.searchBackward();
         if (jumpTime >= 0)
@@ -1012,7 +1022,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void searchWholeButton_Click(object sender, EventArgs e)
     {
-        _traceLogSearcher.setSearchData(_resourceName, _ruleName, _eventName, _eventDetail, ApplicationFactory.BlackBoard.CursorTime.Value);
+        SearchCondition condition = new SearchCondition();
+        condition.resourceName = _resourceName;
+        condition.ruleName = _ruleName;
+        condition.eventName = _eventName;
+        condition.eventDetail = _eventDetail;
+        _traceLogSearcher.setSearchData(condition);
 
         decimal[] searchTimes = _traceLogSearcher.searchWhole();
         Color color = ApplicationFactory.ColorFactory.RamdomColor();

@@ -320,10 +320,12 @@
             // ConditionDisplayPanel
             // 
             this.ConditionDisplayPanel.AutoScroll = true;
+            this.ConditionDisplayPanel.BackColor = System.Drawing.Color.LavenderBlush;
+            this.ConditionDisplayPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ConditionDisplayPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ConditionDisplayPanel.Location = new System.Drawing.Point(0, 209);
             this.ConditionDisplayPanel.Name = "ConditionDisplayPanel";
-            this.ConditionDisplayPanel.Size = new System.Drawing.Size(604, 401);
+            this.ConditionDisplayPanel.Size = new System.Drawing.Size(604, 425);
             this.ConditionDisplayPanel.TabIndex = 1;
             // 
             // DetailSearchPanel
@@ -331,7 +333,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Snow;
-            this.ClientSize = new System.Drawing.Size(604, 610);
+            this.ClientSize = new System.Drawing.Size(604, 634);
             this.Controls.Add(this.ConditionDisplayPanel);
             this.Controls.Add(this.ConditionOpratior);
             this.Name = "DetailSearchPanel";

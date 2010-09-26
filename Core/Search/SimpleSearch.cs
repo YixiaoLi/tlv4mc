@@ -15,7 +15,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private List<VisualizeLog> _visLogs;
         private decimal _currentTime;
         
-        enum SearchType{
+       enum SearchType{
             Forward,
             Backward,
             Whole
@@ -31,63 +31,72 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _currentTime = 0;
         }
 
-        public void setSearchData(string resource, string rule, string ev, string detail, decimal time)
+        public void setSearchData(SearchCondition condition)
         {
-            _targetResource = resource;
-            _targetRule = rule;
-            _targetEvent = ev;
-            _targetEventDetail = detail;
-            _currentTime = time;
+            _targetResource = condition.resourceName;
+            _targetRule = condition.ruleName;
+            _targetEvent = condition.eventName;
+            _targetEventDetail = condition.eventDetail;
+            _currentTime = ApplicationFactory.BlackBoard.CursorTime.Value;
+        }
+
+        public void setSearchData(SearchCondition condition, decimal currentTime)
+        {
+            _targetResource = condition.resourceName;
+            _targetRule = condition.ruleName;
+            _targetEvent = condition.eventName;
+            _targetEventDetail = condition.eventDetail;
+            _currentTime = currentTime;
         }
 
 
         public decimal searchForward()
         {
-            decimal searchTime = -1;
+            decimal resultTime = -1;
 
             foreach (VisualizeLog visLog in _visLogs)
             {
                 if (checkSearchCondition(SearchType.Forward, visLog))
                 {
-                    searchTime = visLog.fromTime;
+                    resultTime = visLog.fromTime;
                     break;
                 }
             }
 
-            return searchTime;
+            return resultTime;
         }
 
 
         public decimal searchBackward()
         {
-            decimal searchTime = -1;
+            decimal resultTime = -1;
 
             for(int i = _visLogs.Count -1  ; i>0; i--)
             {
                 VisualizeLog visLog = _visLogs[i];
                 if (checkSearchCondition(SearchType.Backward, visLog))
                 {
-                    searchTime = visLog.fromTime;
+                    resultTime = visLog.fromTime;
                     break;
                 }
             }
-            return searchTime;
+            return resultTime;
         }
 
 
         public decimal[] searchWhole()
         {
-            List<decimal> searchTime = new List<decimal>();
+            List<decimal> resultTimes = new List<decimal>();
 
             foreach (VisualizeLog visLog in _visLogs)
             {
                 if (checkSearchCondition(SearchType.Whole, visLog))
                 {
-                    searchTime.Add(visLog.fromTime);
+                    resultTimes.Add(visLog.fromTime);
                 }
             }
 
-            return searchTime.ToArray<decimal>();
+            return resultTimes.ToArray<decimal>();
         }
 
 
