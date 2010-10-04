@@ -19,13 +19,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             simpleSearch = new SimpleSearch(logs);
         }
 
-        public void setData(SearchCondition mainCondition, List<SearchCondition> refiningConditions)
+        public void setSearchData(SearchCondition mainCondition, List<SearchCondition> refiningConditions)
         {
             _mainCondition = mainCondition;
             _refiningConditions = refiningConditions;
 
             //絞り込み条件はリストの後ろから順に適用していくため、あらかじめ反転させておく
-            _refiningConditions.Reverse(0,_refiningConditions.Count-1);
+            if(_refiningConditions.Count > 1) _refiningConditions.Reverse(0,_refiningConditions.Count-1);
         }
 
         public decimal searchForward()
@@ -39,7 +39,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 resultTime = simpleSearch.searchForward();
 
                 //絞り込み条件によるフィルタリング
-                if (checkConditions( resultTime, 0, _refiningConditions[0])) break;
+                if (_refiningConditions.Count > 0)
+                {
+                    if (checkConditions(resultTime, 0, _refiningConditions[0])) break;
+                }
+                else
+                {
+                    break;
+                }
             }
 
             if (resultTime > 0)
@@ -63,7 +70,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
             return resultTime;
 
-            return resultTime;
         }
 
         public decimal[] searchWhole()
@@ -76,6 +82,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         //再帰的に全ての絞り込み条件に合致するかどうかを調べる
         private Boolean checkConditions(decimal normTime, int conditionIndex, SearchCondition refiningCondition)
         {
+            if (conditionIndex == _refiningConditions.Count)
+            {
+                return false;
+            }
+
+
             if (refiningCondition.timing.Equals("以内"))
             {
             }
@@ -84,6 +96,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
             else if (refiningCondition.timing.Equals("以後"))
             {
+                simpleSearch.setSearchData(_mainCondition, normTime);
+                decimal tmpTime = simpleSearch.searchBackward();
+                if (tmpTime == -1)
+                {
+                    return false;
+                }
+
+                decimal refiningTime = decimal.Parse(refiningCondition.timingValue);
+                if (tmpTime + refiningTime < normTime) //絞り込み条件に合致した場合
+                {
+                    if (conditionIndex == _refiningConditions.Count - 1)
+                    {   //他に絞り込み条件がなければ true を返す
+                        return true;
+                    }
+                    else
+                    {   //まだ絞り込み条件があるなら、次の条件とマッチングさせる
+                        return checkConditions(normTime, conditionIndex + 1, _refiningConditions[conditionIndex]);
+                    }
+                }
+                else
+                {
+                    return checkConditions(tmpTime, conditionIndex, _refiningConditions[conditionIndex]);;
+                }
             }
             else if (refiningCondition.timing.Equals("直前"))
             {

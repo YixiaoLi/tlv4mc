@@ -76,7 +76,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.viewableSpanTextBox = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleateAllMarker = new System.Windows.Forms.ToolStripButton();
+            this.deleateAllMarkerButton = new System.Windows.Forms.ToolStripButton();
             this.bottomTimeLineScale = new NU.OJL.MPRTOS.TLV.Core.Controls.TimeLineScale();
             this.topTimeLineScale = new NU.OJL.MPRTOS.TLV.Core.Controls.TimeLineScale();
             this.treeGridView = new NU.OJL.MPRTOS.TLV.Third.TreeGridView();
@@ -170,7 +170,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripLabel2,
             this.viewableSpanTextBox,
             this.toolStripSeparator10,
-            this.deleateAllMarker});
+            this.deleateAllMarkerButton});
             this.informationToolStrip.Location = new System.Drawing.Point(3, 0);
             this.informationToolStrip.Name = "informationToolStrip";
             this.informationToolStrip.Size = new System.Drawing.Size(173, 25);
@@ -208,16 +208,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripSeparator10.Name = "toolStripSeparator10";
             this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
             // 
-            // deleateAllMarker
+            // deleateAllMarkerButton
             // 
-            this.deleateAllMarker.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.deleateAllMarker.Image = ((System.Drawing.Image)(resources.GetObject("deleateAllMarker.Image")));
-            this.deleateAllMarker.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deleateAllMarker.Name = "deleateAllMarker";
-            this.deleateAllMarker.Size = new System.Drawing.Size(23, 22);
-            this.deleateAllMarker.Text = "toolStripButton1";
-            this.deleateAllMarker.ToolTipText = "マーカーを全て削除";
-            this.deleateAllMarker.Click += new System.EventHandler(this.deleateAllMarker_Click);
+            this.deleateAllMarkerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.deleateAllMarkerButton.Image = ((System.Drawing.Image)(resources.GetObject("deleateAllMarkerButton.Image")));
+            this.deleateAllMarkerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deleateAllMarkerButton.Name = "deleateAllMarkerButton";
+            this.deleateAllMarkerButton.Size = new System.Drawing.Size(23, 22);
+            this.deleateAllMarkerButton.Text = "toolStripButton1";
+            this.deleateAllMarkerButton.ToolTipText = "マーカーを全て削除";
+            this.deleateAllMarkerButton.Click += new System.EventHandler(this.deleateAllMarker_Click);
             // 
             // bottomTimeLineScale
             // 
@@ -518,7 +518,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.searchBackwardButton.Name = "searchBackwardButton";
             this.searchBackwardButton.Size = new System.Drawing.Size(23, 22);
             this.searchBackwardButton.Text = "後ろを検索";
-            this.searchBackwardButton.Click += new System.EventHandler(this.searchBackwardButton_Click);
             // 
             // toolStripSeparator4
             // 
@@ -534,7 +533,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.searchForwardButton.Name = "searchForwardButton";
             this.searchForwardButton.Size = new System.Drawing.Size(23, 22);
             this.searchForwardButton.Text = "次を検索";
-            this.searchForwardButton.Click += new System.EventHandler(this.searchForwardButton_Click);
             // 
             // toolStripSeparator7
             // 
@@ -550,7 +548,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.searchWholeButton.Name = "searchWholeButton";
             this.searchWholeButton.Size = new System.Drawing.Size(23, 22);
             this.searchWholeButton.Text = "全体検索";
-            this.searchWholeButton.Click += new System.EventHandler(this.searchWholeButton_Click);
             // 
             // toolStripSeparator5
             // 
@@ -637,7 +634,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton searchWholeButton;
-        private System.Windows.Forms.ToolStripButton deleateAllMarker;
+        private System.Windows.Forms.ToolStripButton deleateAllMarkerButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripLabel detailSerachLabel;

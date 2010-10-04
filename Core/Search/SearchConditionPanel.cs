@@ -11,8 +11,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     //検索条件ごとにこのクラスを割り当てる
     class SearchConditionPanel : Panel
     {
-        private SearchCondition mainCondition = null;
-        private List<SearchCondition> refiningSearchConditions = null;
+        public SearchCondition mainCondition = null;
+        public List<SearchCondition> refiningSearchConditions = null;
         private int _conditionNumber;
         public int conditionNumber
         { 

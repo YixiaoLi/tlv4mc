@@ -77,7 +77,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     private string _ruleName = null;     // 検索ルールの英名格納用変数
     private string _eventName = null;    // 検索イベントの英名格納用変数
     private string _eventDetail = null;  // イベント詳細格納用変数
-                                        
+
 
    //時系列順に並んだ図形データ
     private List<VisualizeLog> _timeSortedLog = null;
@@ -235,6 +235,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         //時系列順に並んだ可視化データの作成
          makeTimeSortedLog();
         _traceLogSearcher = new SimpleSearch(_timeSortedLog);
+
+       
     }
 
 	private void setNodes()
@@ -583,7 +585,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         #region detailSearchPanel初期化
         detailSearchButton.Click += (o, _e) =>
         {
-            DetailSearchPanel detailSearchPanel = new DetailSearchPanel(_data);
+            DetailSearchPanel detailSearchPanel = new DetailSearchPanel(_data, TimeLine.MinTime.Value, TimeLine.MaxTime.Value, _timeRadix);
             detailSearchPanel.Visible = true;
             ApplicationFactory.BlackBoard.DetailSearchFlag = 1;
         };
@@ -675,7 +677,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	    bottomTimeLineScale.PreviewKeyDown += onPreviewKeyDownEventHandler;
 	    hScrollBar.PreviewKeyDown += onPreviewKeyDownEventHandler;
 	    #endregion
-		}
+
+        ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) =>
+        {
+            if (ApplicationFactory.BlackBoard.DetailSearchFlag == 1) //詳細検索によって CursorTime が変化したとき
+            {
+                moveScrollBar(ApplicationFactory.BlackBoard.CursorTime.Value);
+            }
+        };
+
+        searchForwardButton.Click += (o, _e) =>
+        {
+            searchForward();
+        };
+
+        searchBackwardButton.Click += (o, _e) =>
+        {
+            searchBackward();
+        };
+
+        searchWholeButton.Click += (o, _e) =>
+        {
+            searchWhole();
+        };
+
+    }
 
 	protected void treeGridViewRowChanged(object sender, EventArgs e)
 	{
@@ -957,7 +983,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	    drawMarker(g, new Rectangle(Location.X + _timeLineX, Location.Y, _timeLineWidth, Height), marker);
 	}
 
-    private void searchForwardButton_Click(object sender, EventArgs e)
+    private void searchForward()
     {
         SearchCondition condition = new SearchCondition();
         condition.resourceName = _resourceName;
@@ -988,7 +1014,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         }
     }
 
-    private void searchBackwardButton_Click(object sender, EventArgs e)
+    private void searchBackward()
     {
         SearchCondition condition = new SearchCondition();
         condition.resourceName = _resourceName;
@@ -1020,7 +1046,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     }
 
-    private void searchWholeButton_Click(object sender, EventArgs e)
+    private void searchWhole()
     {
         SearchCondition condition = new SearchCondition();
         condition.resourceName = _resourceName;
@@ -1316,6 +1342,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     {
         //MessageBox.Show("test");
     }
-
+   
     }
 }
