@@ -29,29 +29,29 @@
         private void InitializeComponent()
         {
             this.ConditionOpratior = new System.Windows.Forms.Panel();
-            this.TargetConditionLabel = new System.Windows.Forms.Label();
-            this.TargetConditionForm = new System.Windows.Forms.ComboBox();
-            this.WholeSearchButton = new System.Windows.Forms.Button();
-            this.ForwardSearchButton = new System.Windows.Forms.Button();
-            this.BackwardSearchButton = new System.Windows.Forms.Button();
-            this.TimeValue = new System.Windows.Forms.Label();
+            this.targetConditionLabel = new System.Windows.Forms.Label();
+            this.targetConditionForm = new System.Windows.Forms.ComboBox();
+            this.searchWholeButton = new System.Windows.Forms.Button();
+            this.searchForwardButton = new System.Windows.Forms.Button();
+            this.searchBackwardButton = new System.Windows.Forms.Button();
+            this.timeValueLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.AddRefiningConditionButton = new System.Windows.Forms.Button();
-            this.TimingValueForm = new System.Windows.Forms.ComboBox();
-            this.TimingForm = new System.Windows.Forms.ComboBox();
-            this.TimingSetting = new System.Windows.Forms.Label();
-            this.RefiningConditionEventDetailForm = new System.Windows.Forms.ComboBox();
-            this.RefiningConditionEventForm = new System.Windows.Forms.ComboBox();
-            this.RefiningConditionRuleForm = new System.Windows.Forms.ComboBox();
-            this.RefiningConditionResourceForm = new System.Windows.Forms.ComboBox();
-            this.RefiningConditionSettingLabel = new System.Windows.Forms.Label();
+            this.addRefiningConditionButton = new System.Windows.Forms.Button();
+            this.timingValueForm = new System.Windows.Forms.ComboBox();
+            this.timingForm = new System.Windows.Forms.ComboBox();
+            this.timingSetting = new System.Windows.Forms.Label();
+            this.refiningConditionEventDetailForm = new System.Windows.Forms.ComboBox();
+            this.refiningConditionEventForm = new System.Windows.Forms.ComboBox();
+            this.refiningConditionRuleForm = new System.Windows.Forms.ComboBox();
+            this.refiningConditionResourceForm = new System.Windows.Forms.ComboBox();
+            this.refiningConditionSettingLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.MainConditionSettingLabel = new System.Windows.Forms.Label();
-            this.AddMainConditionButton = new System.Windows.Forms.Button();
-            this.MainEventDetailForm = new System.Windows.Forms.ComboBox();
-            this.MainEventForm = new System.Windows.Forms.ComboBox();
-            this.MainRuleForm = new System.Windows.Forms.ComboBox();
-            this.MainResourceForm = new System.Windows.Forms.ComboBox();
+            this.mainConditionSettingLabel = new System.Windows.Forms.Label();
+            this.addMainConditionButton = new System.Windows.Forms.Button();
+            this.mainEventDetailForm = new System.Windows.Forms.ComboBox();
+            this.mainEventForm = new System.Windows.Forms.ComboBox();
+            this.mainRuleForm = new System.Windows.Forms.ComboBox();
+            this.mainResourceForm = new System.Windows.Forms.ComboBox();
             this.ConditionDisplayPanel = new System.Windows.Forms.Panel();
             this.ConditionOpratior.SuspendLayout();
             this.SuspendLayout();
@@ -60,94 +60,94 @@
             // 
             this.ConditionOpratior.BackColor = System.Drawing.Color.SeaShell;
             this.ConditionOpratior.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.ConditionOpratior.Controls.Add(this.TargetConditionLabel);
-            this.ConditionOpratior.Controls.Add(this.TargetConditionForm);
-            this.ConditionOpratior.Controls.Add(this.WholeSearchButton);
-            this.ConditionOpratior.Controls.Add(this.ForwardSearchButton);
-            this.ConditionOpratior.Controls.Add(this.BackwardSearchButton);
-            this.ConditionOpratior.Controls.Add(this.TimeValue);
+            this.ConditionOpratior.Controls.Add(this.targetConditionLabel);
+            this.ConditionOpratior.Controls.Add(this.targetConditionForm);
+            this.ConditionOpratior.Controls.Add(this.searchWholeButton);
+            this.ConditionOpratior.Controls.Add(this.searchForwardButton);
+            this.ConditionOpratior.Controls.Add(this.searchBackwardButton);
+            this.ConditionOpratior.Controls.Add(this.timeValueLabel);
             this.ConditionOpratior.Controls.Add(this.label2);
-            this.ConditionOpratior.Controls.Add(this.AddRefiningConditionButton);
-            this.ConditionOpratior.Controls.Add(this.TimingValueForm);
-            this.ConditionOpratior.Controls.Add(this.TimingForm);
-            this.ConditionOpratior.Controls.Add(this.TimingSetting);
-            this.ConditionOpratior.Controls.Add(this.RefiningConditionEventDetailForm);
-            this.ConditionOpratior.Controls.Add(this.RefiningConditionEventForm);
-            this.ConditionOpratior.Controls.Add(this.RefiningConditionRuleForm);
-            this.ConditionOpratior.Controls.Add(this.RefiningConditionResourceForm);
-            this.ConditionOpratior.Controls.Add(this.RefiningConditionSettingLabel);
+            this.ConditionOpratior.Controls.Add(this.addRefiningConditionButton);
+            this.ConditionOpratior.Controls.Add(this.timingValueForm);
+            this.ConditionOpratior.Controls.Add(this.timingForm);
+            this.ConditionOpratior.Controls.Add(this.timingSetting);
+            this.ConditionOpratior.Controls.Add(this.refiningConditionEventDetailForm);
+            this.ConditionOpratior.Controls.Add(this.refiningConditionEventForm);
+            this.ConditionOpratior.Controls.Add(this.refiningConditionRuleForm);
+            this.ConditionOpratior.Controls.Add(this.refiningConditionResourceForm);
+            this.ConditionOpratior.Controls.Add(this.refiningConditionSettingLabel);
             this.ConditionOpratior.Controls.Add(this.label1);
-            this.ConditionOpratior.Controls.Add(this.MainConditionSettingLabel);
-            this.ConditionOpratior.Controls.Add(this.AddMainConditionButton);
-            this.ConditionOpratior.Controls.Add(this.MainEventDetailForm);
-            this.ConditionOpratior.Controls.Add(this.MainEventForm);
-            this.ConditionOpratior.Controls.Add(this.MainRuleForm);
-            this.ConditionOpratior.Controls.Add(this.MainResourceForm);
+            this.ConditionOpratior.Controls.Add(this.mainConditionSettingLabel);
+            this.ConditionOpratior.Controls.Add(this.addMainConditionButton);
+            this.ConditionOpratior.Controls.Add(this.mainEventDetailForm);
+            this.ConditionOpratior.Controls.Add(this.mainEventForm);
+            this.ConditionOpratior.Controls.Add(this.mainRuleForm);
+            this.ConditionOpratior.Controls.Add(this.mainResourceForm);
             this.ConditionOpratior.Dock = System.Windows.Forms.DockStyle.Top;
             this.ConditionOpratior.Location = new System.Drawing.Point(0, 0);
             this.ConditionOpratior.Name = "ConditionOpratior";
             this.ConditionOpratior.Size = new System.Drawing.Size(604, 209);
             this.ConditionOpratior.TabIndex = 0;
             // 
-            // TargetConditionLabel
+            // targetConditionLabel
             // 
-            this.TargetConditionLabel.AutoSize = true;
-            this.TargetConditionLabel.Font = new System.Drawing.Font("MS UI Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.TargetConditionLabel.Location = new System.Drawing.Point(140, 74);
-            this.TargetConditionLabel.Name = "TargetConditionLabel";
-            this.TargetConditionLabel.Size = new System.Drawing.Size(92, 13);
-            this.TargetConditionLabel.TabIndex = 22;
-            this.TargetConditionLabel.Text = "対象条件番号：";
+            this.targetConditionLabel.AutoSize = true;
+            this.targetConditionLabel.Font = new System.Drawing.Font("MS UI Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.targetConditionLabel.Location = new System.Drawing.Point(140, 74);
+            this.targetConditionLabel.Name = "targetConditionLabel";
+            this.targetConditionLabel.Size = new System.Drawing.Size(92, 13);
+            this.targetConditionLabel.TabIndex = 22;
+            this.targetConditionLabel.Text = "対象条件番号：";
             // 
-            // TargetConditionForm
+            // targetConditionForm
             // 
-            this.TargetConditionForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.TargetConditionForm.Enabled = false;
-            this.TargetConditionForm.FormattingEnabled = true;
-            this.TargetConditionForm.Location = new System.Drawing.Point(232, 70);
-            this.TargetConditionForm.Name = "TargetConditionForm";
-            this.TargetConditionForm.Size = new System.Drawing.Size(79, 20);
-            this.TargetConditionForm.TabIndex = 21;
+            this.targetConditionForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.targetConditionForm.Enabled = false;
+            this.targetConditionForm.FormattingEnabled = true;
+            this.targetConditionForm.Location = new System.Drawing.Point(232, 70);
+            this.targetConditionForm.Name = "targetConditionForm";
+            this.targetConditionForm.Size = new System.Drawing.Size(79, 20);
+            this.targetConditionForm.TabIndex = 21;
             // 
-            // WholeSearchButton
+            // searchWholeButton
             // 
-            this.WholeSearchButton.Enabled = false;
-            this.WholeSearchButton.Location = new System.Drawing.Point(513, 181);
-            this.WholeSearchButton.Name = "WholeSearchButton";
-            this.WholeSearchButton.Size = new System.Drawing.Size(75, 23);
-            this.WholeSearchButton.TabIndex = 20;
-            this.WholeSearchButton.Text = "全体を検索";
-            this.WholeSearchButton.UseVisualStyleBackColor = true;
+            this.searchWholeButton.Enabled = false;
+            this.searchWholeButton.Location = new System.Drawing.Point(513, 181);
+            this.searchWholeButton.Name = "searchWholeButton";
+            this.searchWholeButton.Size = new System.Drawing.Size(75, 23);
+            this.searchWholeButton.TabIndex = 20;
+            this.searchWholeButton.Text = "全体を検索";
+            this.searchWholeButton.UseVisualStyleBackColor = true;
             // 
-            // ForwardSearchButton
+            // searchForwardButton
             // 
-            this.ForwardSearchButton.Enabled = false;
-            this.ForwardSearchButton.Location = new System.Drawing.Point(421, 181);
-            this.ForwardSearchButton.Name = "ForwardSearchButton";
-            this.ForwardSearchButton.Size = new System.Drawing.Size(75, 23);
-            this.ForwardSearchButton.TabIndex = 19;
-            this.ForwardSearchButton.Text = "前を検索";
-            this.ForwardSearchButton.UseVisualStyleBackColor = true;
+            this.searchForwardButton.Enabled = false;
+            this.searchForwardButton.Location = new System.Drawing.Point(421, 181);
+            this.searchForwardButton.Name = "searchForwardButton";
+            this.searchForwardButton.Size = new System.Drawing.Size(75, 23);
+            this.searchForwardButton.TabIndex = 19;
+            this.searchForwardButton.Text = "前を検索";
+            this.searchForwardButton.UseVisualStyleBackColor = true;
             // 
-            // BackwardSearchButton
+            // searchBackwardButton
             // 
-            this.BackwardSearchButton.Enabled = false;
-            this.BackwardSearchButton.Location = new System.Drawing.Point(330, 181);
-            this.BackwardSearchButton.Name = "BackwardSearchButton";
-            this.BackwardSearchButton.Size = new System.Drawing.Size(75, 23);
-            this.BackwardSearchButton.TabIndex = 18;
-            this.BackwardSearchButton.Text = "後ろを検索";
-            this.BackwardSearchButton.UseVisualStyleBackColor = true;
+            this.searchBackwardButton.Enabled = false;
+            this.searchBackwardButton.Location = new System.Drawing.Point(330, 181);
+            this.searchBackwardButton.Name = "searchBackwardButton";
+            this.searchBackwardButton.Size = new System.Drawing.Size(75, 23);
+            this.searchBackwardButton.TabIndex = 18;
+            this.searchBackwardButton.Text = "後ろを検索";
+            this.searchBackwardButton.UseVisualStyleBackColor = true;
             // 
-            // TimeValue
+            // timeValueLabel
             // 
-            this.TimeValue.AutoSize = true;
-            this.TimeValue.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.TimeValue.Location = new System.Drawing.Point(317, 140);
-            this.TimeValue.Name = "TimeValue";
-            this.TimeValue.Size = new System.Drawing.Size(29, 12);
-            this.TimeValue.TabIndex = 17;
-            this.TimeValue.Text = "(us)";
+            this.timeValueLabel.AutoSize = true;
+            this.timeValueLabel.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.timeValueLabel.Location = new System.Drawing.Point(317, 140);
+            this.timeValueLabel.Name = "timeValueLabel";
+            this.timeValueLabel.Size = new System.Drawing.Size(29, 12);
+            this.timeValueLabel.TabIndex = 17;
+            this.timeValueLabel.Text = "(us)";
             // 
             // label2
             // 
@@ -157,101 +157,101 @@
             this.label2.Size = new System.Drawing.Size(451, 1);
             this.label2.TabIndex = 16;
             // 
-            // AddRefiningConditionButton
+            // addRefiningConditionButton
             // 
-            this.AddRefiningConditionButton.Enabled = false;
-            this.AddRefiningConditionButton.Location = new System.Drawing.Point(447, 128);
-            this.AddRefiningConditionButton.Name = "AddRefiningConditionButton";
-            this.AddRefiningConditionButton.Size = new System.Drawing.Size(29, 23);
-            this.AddRefiningConditionButton.TabIndex = 15;
-            this.AddRefiningConditionButton.Text = "+";
-            this.AddRefiningConditionButton.UseVisualStyleBackColor = true;
+            this.addRefiningConditionButton.Enabled = false;
+            this.addRefiningConditionButton.Location = new System.Drawing.Point(447, 128);
+            this.addRefiningConditionButton.Name = "addRefiningConditionButton";
+            this.addRefiningConditionButton.Size = new System.Drawing.Size(29, 23);
+            this.addRefiningConditionButton.TabIndex = 15;
+            this.addRefiningConditionButton.Text = "+";
+            this.addRefiningConditionButton.UseVisualStyleBackColor = true;
             // 
-            // TimingValueForm
+            // timingValueForm
             // 
-            this.TimingValueForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
-            this.TimingValueForm.Enabled = false;
-            this.TimingValueForm.FormattingEnabled = true;
-            this.TimingValueForm.Location = new System.Drawing.Point(233, 134);
-            this.TimingValueForm.Name = "TimingValueForm";
-            this.TimingValueForm.Size = new System.Drawing.Size(79, 20);
-            this.TimingValueForm.TabIndex = 14;
+            this.timingValueForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+            this.timingValueForm.Enabled = false;
+            this.timingValueForm.FormattingEnabled = true;
+            this.timingValueForm.Location = new System.Drawing.Point(233, 134);
+            this.timingValueForm.Name = "timingValueForm";
+            this.timingValueForm.Size = new System.Drawing.Size(79, 20);
+            this.timingValueForm.TabIndex = 14;
             // 
-            // TimingForm
+            // timingForm
             // 
-            this.TimingForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.TimingForm.Enabled = false;
-            this.TimingForm.FormattingEnabled = true;
-            this.TimingForm.Items.AddRange(new object[] {
+            this.timingForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.timingForm.Enabled = false;
+            this.timingForm.FormattingEnabled = true;
+            this.timingForm.Items.AddRange(new object[] {
             "以内",
             "以前",
             "以後",
             "直後",
             "直前"});
-            this.TimingForm.Location = new System.Drawing.Point(140, 134);
-            this.TimingForm.Name = "TimingForm";
-            this.TimingForm.Size = new System.Drawing.Size(78, 20);
-            this.TimingForm.TabIndex = 13;
+            this.timingForm.Location = new System.Drawing.Point(140, 134);
+            this.timingForm.Name = "timingForm";
+            this.timingForm.Size = new System.Drawing.Size(78, 20);
+            this.timingForm.TabIndex = 13;
             // 
-            // TimingSetting
+            // timingSetting
             // 
-            this.TimingSetting.AutoSize = true;
-            this.TimingSetting.Font = new System.Drawing.Font("Century", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TimingSetting.Location = new System.Drawing.Point(73, 135);
-            this.TimingSetting.Name = "TimingSetting";
-            this.TimingSetting.Size = new System.Drawing.Size(67, 16);
-            this.TimingSetting.TabIndex = 12;
-            this.TimingSetting.Text = "Timing：";
+            this.timingSetting.AutoSize = true;
+            this.timingSetting.Font = new System.Drawing.Font("Century", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.timingSetting.Location = new System.Drawing.Point(73, 135);
+            this.timingSetting.Name = "timingSetting";
+            this.timingSetting.Size = new System.Drawing.Size(67, 16);
+            this.timingSetting.TabIndex = 12;
+            this.timingSetting.Text = "Timing：";
             // 
-            // RefiningConditionEventDetailForm
+            // refiningConditionEventDetailForm
             // 
-            this.RefiningConditionEventDetailForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.RefiningConditionEventDetailForm.Enabled = false;
-            this.RefiningConditionEventDetailForm.FormattingEnabled = true;
-            this.RefiningConditionEventDetailForm.Location = new System.Drawing.Point(327, 97);
-            this.RefiningConditionEventDetailForm.Name = "RefiningConditionEventDetailForm";
-            this.RefiningConditionEventDetailForm.Size = new System.Drawing.Size(79, 20);
-            this.RefiningConditionEventDetailForm.TabIndex = 11;
+            this.refiningConditionEventDetailForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.refiningConditionEventDetailForm.Enabled = false;
+            this.refiningConditionEventDetailForm.FormattingEnabled = true;
+            this.refiningConditionEventDetailForm.Location = new System.Drawing.Point(327, 97);
+            this.refiningConditionEventDetailForm.Name = "refiningConditionEventDetailForm";
+            this.refiningConditionEventDetailForm.Size = new System.Drawing.Size(79, 20);
+            this.refiningConditionEventDetailForm.TabIndex = 11;
             // 
-            // RefiningConditionEventForm
+            // refiningConditionEventForm
             // 
-            this.RefiningConditionEventForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.RefiningConditionEventForm.Enabled = false;
-            this.RefiningConditionEventForm.FormattingEnabled = true;
-            this.RefiningConditionEventForm.Location = new System.Drawing.Point(232, 98);
-            this.RefiningConditionEventForm.Name = "RefiningConditionEventForm";
-            this.RefiningConditionEventForm.Size = new System.Drawing.Size(79, 20);
-            this.RefiningConditionEventForm.TabIndex = 10;
+            this.refiningConditionEventForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.refiningConditionEventForm.Enabled = false;
+            this.refiningConditionEventForm.FormattingEnabled = true;
+            this.refiningConditionEventForm.Location = new System.Drawing.Point(232, 98);
+            this.refiningConditionEventForm.Name = "refiningConditionEventForm";
+            this.refiningConditionEventForm.Size = new System.Drawing.Size(79, 20);
+            this.refiningConditionEventForm.TabIndex = 10;
             // 
-            // RefiningConditionRuleForm
+            // refiningConditionRuleForm
             // 
-            this.RefiningConditionRuleForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.RefiningConditionRuleForm.Enabled = false;
-            this.RefiningConditionRuleForm.FormattingEnabled = true;
-            this.RefiningConditionRuleForm.Location = new System.Drawing.Point(140, 98);
-            this.RefiningConditionRuleForm.Name = "RefiningConditionRuleForm";
-            this.RefiningConditionRuleForm.Size = new System.Drawing.Size(77, 20);
-            this.RefiningConditionRuleForm.TabIndex = 9;
+            this.refiningConditionRuleForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.refiningConditionRuleForm.Enabled = false;
+            this.refiningConditionRuleForm.FormattingEnabled = true;
+            this.refiningConditionRuleForm.Location = new System.Drawing.Point(140, 98);
+            this.refiningConditionRuleForm.Name = "refiningConditionRuleForm";
+            this.refiningConditionRuleForm.Size = new System.Drawing.Size(77, 20);
+            this.refiningConditionRuleForm.TabIndex = 9;
             // 
-            // RefiningConditionResourceForm
+            // refiningConditionResourceForm
             // 
-            this.RefiningConditionResourceForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.RefiningConditionResourceForm.Enabled = false;
-            this.RefiningConditionResourceForm.FormattingEnabled = true;
-            this.RefiningConditionResourceForm.Location = new System.Drawing.Point(44, 98);
-            this.RefiningConditionResourceForm.Name = "RefiningConditionResourceForm";
-            this.RefiningConditionResourceForm.Size = new System.Drawing.Size(83, 20);
-            this.RefiningConditionResourceForm.TabIndex = 8;
+            this.refiningConditionResourceForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.refiningConditionResourceForm.Enabled = false;
+            this.refiningConditionResourceForm.FormattingEnabled = true;
+            this.refiningConditionResourceForm.Location = new System.Drawing.Point(44, 98);
+            this.refiningConditionResourceForm.Name = "refiningConditionResourceForm";
+            this.refiningConditionResourceForm.Size = new System.Drawing.Size(83, 20);
+            this.refiningConditionResourceForm.TabIndex = 8;
             // 
-            // RefiningConditionSettingLabel
+            // refiningConditionSettingLabel
             // 
-            this.RefiningConditionSettingLabel.AutoSize = true;
-            this.RefiningConditionSettingLabel.Font = new System.Drawing.Font("Century", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RefiningConditionSettingLabel.Location = new System.Drawing.Point(28, 70);
-            this.RefiningConditionSettingLabel.Name = "RefiningConditionSettingLabel";
-            this.RefiningConditionSettingLabel.Size = new System.Drawing.Size(96, 18);
-            this.RefiningConditionSettingLabel.TabIndex = 7;
-            this.RefiningConditionSettingLabel.Text = "絞り込み条件";
+            this.refiningConditionSettingLabel.AutoSize = true;
+            this.refiningConditionSettingLabel.Font = new System.Drawing.Font("Century", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.refiningConditionSettingLabel.Location = new System.Drawing.Point(28, 70);
+            this.refiningConditionSettingLabel.Name = "refiningConditionSettingLabel";
+            this.refiningConditionSettingLabel.Size = new System.Drawing.Size(96, 18);
+            this.refiningConditionSettingLabel.TabIndex = 7;
+            this.refiningConditionSettingLabel.Text = "絞り込み条件";
             // 
             // label1
             // 
@@ -261,61 +261,61 @@
             this.label1.Size = new System.Drawing.Size(453, 1);
             this.label1.TabIndex = 6;
             // 
-            // MainConditionSettingLabel
+            // mainConditionSettingLabel
             // 
-            this.MainConditionSettingLabel.AutoSize = true;
-            this.MainConditionSettingLabel.Font = new System.Drawing.Font("Century", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MainConditionSettingLabel.Location = new System.Drawing.Point(28, 8);
-            this.MainConditionSettingLabel.Name = "MainConditionSettingLabel";
-            this.MainConditionSettingLabel.Size = new System.Drawing.Size(72, 18);
-            this.MainConditionSettingLabel.TabIndex = 5;
-            this.MainConditionSettingLabel.Text = "検索条件";
+            this.mainConditionSettingLabel.AutoSize = true;
+            this.mainConditionSettingLabel.Font = new System.Drawing.Font("Century", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mainConditionSettingLabel.Location = new System.Drawing.Point(28, 8);
+            this.mainConditionSettingLabel.Name = "mainConditionSettingLabel";
+            this.mainConditionSettingLabel.Size = new System.Drawing.Size(72, 18);
+            this.mainConditionSettingLabel.TabIndex = 5;
+            this.mainConditionSettingLabel.Text = "検索条件";
             // 
-            // AddMainConditionButton
+            // addMainConditionButton
             // 
-            this.AddMainConditionButton.Enabled = false;
-            this.AddMainConditionButton.Location = new System.Drawing.Point(447, 27);
-            this.AddMainConditionButton.Name = "AddMainConditionButton";
-            this.AddMainConditionButton.Size = new System.Drawing.Size(29, 23);
-            this.AddMainConditionButton.TabIndex = 4;
-            this.AddMainConditionButton.Text = "+";
-            this.AddMainConditionButton.UseVisualStyleBackColor = true;
+            this.addMainConditionButton.Enabled = false;
+            this.addMainConditionButton.Location = new System.Drawing.Point(447, 27);
+            this.addMainConditionButton.Name = "addMainConditionButton";
+            this.addMainConditionButton.Size = new System.Drawing.Size(29, 23);
+            this.addMainConditionButton.TabIndex = 4;
+            this.addMainConditionButton.Text = "+";
+            this.addMainConditionButton.UseVisualStyleBackColor = true;
             // 
-            // MainEventDetailForm
+            // mainEventDetailForm
             // 
-            this.MainEventDetailForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.MainEventDetailForm.FormattingEnabled = true;
-            this.MainEventDetailForm.Location = new System.Drawing.Point(327, 29);
-            this.MainEventDetailForm.Name = "MainEventDetailForm";
-            this.MainEventDetailForm.Size = new System.Drawing.Size(79, 20);
-            this.MainEventDetailForm.TabIndex = 3;
+            this.mainEventDetailForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mainEventDetailForm.FormattingEnabled = true;
+            this.mainEventDetailForm.Location = new System.Drawing.Point(327, 29);
+            this.mainEventDetailForm.Name = "mainEventDetailForm";
+            this.mainEventDetailForm.Size = new System.Drawing.Size(79, 20);
+            this.mainEventDetailForm.TabIndex = 3;
             // 
-            // MainEventForm
+            // mainEventForm
             // 
-            this.MainEventForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.MainEventForm.FormattingEnabled = true;
-            this.MainEventForm.Location = new System.Drawing.Point(232, 29);
-            this.MainEventForm.Name = "MainEventForm";
-            this.MainEventForm.Size = new System.Drawing.Size(79, 20);
-            this.MainEventForm.TabIndex = 2;
+            this.mainEventForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mainEventForm.FormattingEnabled = true;
+            this.mainEventForm.Location = new System.Drawing.Point(232, 29);
+            this.mainEventForm.Name = "mainEventForm";
+            this.mainEventForm.Size = new System.Drawing.Size(79, 20);
+            this.mainEventForm.TabIndex = 2;
             // 
-            // MainRuleForm
+            // mainRuleForm
             // 
-            this.MainRuleForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.MainRuleForm.FormattingEnabled = true;
-            this.MainRuleForm.Location = new System.Drawing.Point(138, 29);
-            this.MainRuleForm.Name = "MainRuleForm";
-            this.MainRuleForm.Size = new System.Drawing.Size(79, 20);
-            this.MainRuleForm.TabIndex = 0;
+            this.mainRuleForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mainRuleForm.FormattingEnabled = true;
+            this.mainRuleForm.Location = new System.Drawing.Point(138, 29);
+            this.mainRuleForm.Name = "mainRuleForm";
+            this.mainRuleForm.Size = new System.Drawing.Size(79, 20);
+            this.mainRuleForm.TabIndex = 0;
             // 
-            // MainResourceForm
+            // mainResourceForm
             // 
-            this.MainResourceForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.MainResourceForm.FormattingEnabled = true;
-            this.MainResourceForm.Location = new System.Drawing.Point(44, 29);
-            this.MainResourceForm.Name = "MainResourceForm";
-            this.MainResourceForm.Size = new System.Drawing.Size(83, 20);
-            this.MainResourceForm.TabIndex = 1;
+            this.mainResourceForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mainResourceForm.FormattingEnabled = true;
+            this.mainResourceForm.Location = new System.Drawing.Point(44, 29);
+            this.mainResourceForm.Name = "mainResourceForm";
+            this.mainResourceForm.Size = new System.Drawing.Size(83, 20);
+            this.mainResourceForm.TabIndex = 1;
             // 
             // ConditionDisplayPanel
             // 
@@ -347,29 +347,29 @@
         #endregion
 
         private System.Windows.Forms.Panel ConditionOpratior;
-        private System.Windows.Forms.Button AddMainConditionButton;
-        private System.Windows.Forms.ComboBox MainEventDetailForm;
-        private System.Windows.Forms.ComboBox MainEventForm;
-        private System.Windows.Forms.ComboBox MainRuleForm;
-        private System.Windows.Forms.ComboBox MainResourceForm;
+        private System.Windows.Forms.Button addMainConditionButton;
+        private System.Windows.Forms.ComboBox mainEventDetailForm;
+        private System.Windows.Forms.ComboBox mainEventForm;
+        private System.Windows.Forms.ComboBox mainRuleForm;
+        private System.Windows.Forms.ComboBox mainResourceForm;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label MainConditionSettingLabel;
-        private System.Windows.Forms.Label RefiningConditionSettingLabel;
-        private System.Windows.Forms.ComboBox TimingValueForm;
-        private System.Windows.Forms.ComboBox TimingForm;
-        private System.Windows.Forms.Label TimingSetting;
-        private System.Windows.Forms.ComboBox RefiningConditionEventDetailForm;
-        private System.Windows.Forms.ComboBox RefiningConditionEventForm;
-        private System.Windows.Forms.ComboBox RefiningConditionRuleForm;
-        private System.Windows.Forms.ComboBox RefiningConditionResourceForm;
-        private System.Windows.Forms.Button AddRefiningConditionButton;
+        private System.Windows.Forms.Label mainConditionSettingLabel;
+        private System.Windows.Forms.Label refiningConditionSettingLabel;
+        private System.Windows.Forms.ComboBox timingValueForm;
+        private System.Windows.Forms.ComboBox timingForm;
+        private System.Windows.Forms.Label timingSetting;
+        private System.Windows.Forms.ComboBox refiningConditionEventDetailForm;
+        private System.Windows.Forms.ComboBox refiningConditionEventForm;
+        private System.Windows.Forms.ComboBox refiningConditionRuleForm;
+        private System.Windows.Forms.ComboBox refiningConditionResourceForm;
+        private System.Windows.Forms.Button addRefiningConditionButton;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label TimeValue;
-        private System.Windows.Forms.Button WholeSearchButton;
-        private System.Windows.Forms.Button ForwardSearchButton;
-        private System.Windows.Forms.Button BackwardSearchButton;
-        private System.Windows.Forms.ComboBox TargetConditionForm;
-        private System.Windows.Forms.Label TargetConditionLabel;
+        private System.Windows.Forms.Label timeValueLabel;
+        private System.Windows.Forms.Button searchWholeButton;
+        private System.Windows.Forms.Button searchForwardButton;
+        private System.Windows.Forms.Button searchBackwardButton;
+        private System.Windows.Forms.ComboBox targetConditionForm;
+        private System.Windows.Forms.Label targetConditionLabel;
         private System.Windows.Forms.Panel ConditionDisplayPanel;
 
 

@@ -8,12 +8,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
     class SimpleSearch : TraceLogSearcher
     {
-        private string _targetResource;
-        private string _targetRule;
-        private string _targetEvent;
-        private string _targetEventDetail;
         private List<VisualizeLog> _visLogs;
         private decimal _currentTime;
+        private SearchCondition _condition;
         
        enum SearchType{
             Forward,
@@ -23,29 +20,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         public SimpleSearch(List<VisualizeLog> visLogs)
         {
-            _targetResource = null;
-            _targetRule = null;
-            _targetEvent = null;
-            _targetEventDetail = null;
             _visLogs = visLogs;
             _currentTime = 0;
         }
 
         public void setSearchData(SearchCondition condition)
         {
-            _targetResource = condition.resourceName;
-            _targetRule = condition.ruleName;
-            _targetEvent = condition.eventName;
-            _targetEventDetail = condition.eventDetail;
+            _condition = condition;
             _currentTime = ApplicationFactory.BlackBoard.CursorTime.Value;
         }
 
         public void setSearchData(SearchCondition condition, decimal currentTime)
         {
-            _targetResource = condition.resourceName;
-            _targetRule = condition.ruleName;
-            _targetEvent = condition.eventName;
-            _targetEventDetail = condition.eventDetail;
+            _condition = condition;
             _currentTime = currentTime;
         }
 
@@ -102,24 +89,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private Boolean checkSearchCondition(SearchType operation, VisualizeLog visLog)
         {
-            if (!visLog.resourceName.Equals(_targetResource))
+            if (!visLog.resourceName.Equals(_condition.resourceName))
                 return false;
 
-            if (_targetRule != null)
+            if (_condition.ruleName != null)
             {
-               if(!visLog.ruleName.Equals(_targetRule))
+               if(!visLog.ruleName.Equals(_condition.ruleName))
                   return false;
             }
 
-            if(_targetEvent != null)
+            if(_condition.eventName != null)
             {
-               if(!visLog.evntName.Equals(_targetEvent))
+               if(!visLog.evntName.Equals(_condition.eventName))
                   return false;
             }
 
-            if(_targetEventDetail != null)  // イベント詳細が指定されているかを確認
+            if(_condition.eventDetail != null)  // イベント詳細が指定されているかを確認
             {
-                if (!visLog.evntDetail.Equals(_targetEventDetail))
+                if (!visLog.evntDetail.Equals(_condition.eventDetail))
                     return false;
             }
 
@@ -136,7 +123,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
             else if (operation == SearchType.Whole)
             {
-                return true; //全体検索は全時刻を返すため、現在時刻との比較は必要ない
+                return true; //全体検索は全時刻を返すため、時刻の比較は必要ない
             }
             else
             {

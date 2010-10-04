@@ -108,6 +108,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		public virtual TimeLine TimeLine { get; set; }
 		public virtual GeneralNamedCollection<TimeLineMarker> LocalTimeLineMarkers { get; private set; }
 
+        protected Boolean searchFlag = false;
+
   		public TimeLineControl()
 		{
 			ResizeRedraw = true;

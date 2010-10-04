@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
-    //検索条件１セットの保持を担当
+    //検索条件
     class SearchCondition
     {
         private string _resourceName;
