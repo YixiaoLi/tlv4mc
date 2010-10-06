@@ -61,6 +61,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                         mainEventForm.Enabled = false;
                         mainEventDetailForm.Enabled = false;
+                        mainRuleForm.SelectedIndex = -1;
+                        mainEventForm.SelectedIndex = -1;
+                        mainEventDetailForm.SelectedIndex = -1;
                     }
                     else
                     {
@@ -83,6 +86,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                         _conditionRegister.mainEventDetail = null;
 
                         mainEventDetailForm.Enabled = false;
+                        mainEventForm.SelectedIndex = -1;
+                        mainEventDetailForm.SelectedIndex = -1;
                     }
                     else
                     {
@@ -637,18 +642,28 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void searchForward()
         {
-            decimal jumpTime = -1;
+
+            decimal jumpTime = -1; //最終結果を保持させる
+
+            //検索条件を１セットずつ調べ、現在時刻により近い時刻を検索結果とする
             foreach (SearchConditionPanel panel in _searchConditionPanels)
             {
                 _detailSearchWithTiming.setSearchData(panel.mainCondition, panel.refiningSearchConditions);
                 decimal tmpJumpTime = _detailSearchWithTiming.searchForward();
-                if (tmpJumpTime > jumpTime)
+                if (jumpTime == -1) //最初のループ
                 {
                     jumpTime = tmpJumpTime;
                 }
+                else
+                {
+                    if (tmpJumpTime < jumpTime) //より現在時刻に近い方を採用
+                    {
+                        jumpTime = tmpJumpTime;
+                    }
+                }
             }
 
-            if (jumpTime >= 0)
+            if (jumpTime != -1)
             {
                 decimal start = _minTime;
                 decimal end = _maxTime;
@@ -671,10 +686,85 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void searchBackward()
         {
+            decimal jumpTime = -1; 
+            foreach (SearchConditionPanel panel in _searchConditionPanels)
+            {
+                _detailSearchWithTiming.setSearchData(panel.mainCondition, panel.refiningSearchConditions);
+                decimal tmpJumpTime = _detailSearchWithTiming.searchBackward();
+
+                if (jumpTime == -1)
+                {
+                    jumpTime = tmpJumpTime;
+                }
+                else
+                {
+                    if (tmpJumpTime > jumpTime)
+                    {
+                        jumpTime = tmpJumpTime;
+                    }
+                }
+            }
+
+            if (jumpTime != -1)
+            {
+                decimal start = _minTime;
+                decimal end = _maxTime;
+                if (jumpTime < start) jumpTime = start;
+
+                //カーソルを移動
+                ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
+
+                //トレースログビューアにおいて、該当時刻のログをフォーカス
+                List<Time> focusTime = new List<Time>();
+                focusTime.Add(ApplicationFactory.BlackBoard.CursorTime);
+                ApplicationFactory.BlackBoard.SearchTime = focusTime;
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("検索の終わりです");
+            }
+
         }
 
         private void searchWhole()
         {
+            List<decimal> searchTimes = new List<decimal>();
+            Color color = ApplicationFactory.ColorFactory.RamdomColor(); //マーカーの色
+
+            foreach(SearchConditionPanel panel in _searchConditionPanels)
+            {
+                _detailSearchWithTiming.setSearchData(panel.mainCondition, panel.refiningSearchConditions);
+                decimal[] tmpTime = _detailSearchWithTiming.searchWhole();
+                foreach (decimal time in tmpTime)
+                {
+                    searchTimes.Add(time);
+                }
+            }
+
+            if (searchTimes.Count > 0)
+            {
+                List<Time> resultTime = new List<Time>();
+                for (int i = 0; i < searchTimes.Count; i++)
+                {
+                    ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(color, new Time(searchTimes[i].ToString(), _timeRadix));
+                    resultTime.Add(new Time(searchTimes[i].ToString(), _timeRadix));
+                }
+                ApplicationFactory.BlackBoard.SearchTime = resultTime;
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("該当イベントは存在しません");
+            }
+
+           
+            // 検索ボタンが押された際に、Macroviewer にもマーカーを反映させるには再描画を
+            // 促す必要がある。現在時刻が変更された際に再描画処理が発生するため、これを利用
+            // する。（一瞬だけ現在時刻を変更する）
+            Time current = ApplicationFactory.BlackBoard.CursorTime;
+            Time dummy = new Time((current.Value - 1).ToString(), _timeRadix);
+            ApplicationFactory.BlackBoard.CursorTime = dummy;
+            ApplicationFactory.BlackBoard.CursorTime = current;
+
         }
 
         private void changePanelSize()
