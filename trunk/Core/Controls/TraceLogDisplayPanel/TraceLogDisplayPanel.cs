@@ -69,7 +69,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	private bool _mouseDown;
 
    //簡易検索用のオブジェクト
-    private SimpleSearch _traceLogSearcher = null;
+    private SimpleSearch _simpleSearcher = null;
         
    //簡易検索に必要な変数群
     private string _resourceType = null;
@@ -234,7 +234,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         //時系列順に並んだ可視化データの作成
          makeTimeSortedLog();
-        _traceLogSearcher = new SimpleSearch(_timeSortedLog);
+        _simpleSearcher = new SimpleSearch(_timeSortedLog);
 
        
     }
@@ -990,9 +990,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         condition.ruleName = _ruleName;
         condition.eventName = _eventName;
         condition.eventDetail = _eventDetail;
-        _traceLogSearcher.setSearchData(condition);
+        _simpleSearcher.setSearchData(condition);
         //int t = ApplicationFactory.BlackBoard.dragFlag;
-        decimal jumpTime = _traceLogSearcher.searchForward();
+        decimal jumpTime = _simpleSearcher.searchForward();
         if (jumpTime >= 0)
         {
             decimal start = decimal.Parse(TimeLine.MinTime.ToString());
@@ -1021,9 +1021,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         condition.ruleName = _ruleName;
         condition.eventName = _eventName;
         condition.eventDetail = _eventDetail;
-        _traceLogSearcher.setSearchData(condition);
+        _simpleSearcher.setSearchData(condition);
 
-        decimal jumpTime = _traceLogSearcher.searchBackward();
+        decimal jumpTime = _simpleSearcher.searchBackward();
         if (jumpTime >= 0)
         {
             decimal start = decimal.Parse(TimeLine.MinTime.ToString());
@@ -1053,9 +1053,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         condition.ruleName = _ruleName;
         condition.eventName = _eventName;
         condition.eventDetail = _eventDetail;
-        _traceLogSearcher.setSearchData(condition);
+        _simpleSearcher.setSearchData(condition);
 
-        decimal[] searchTimes = _traceLogSearcher.searchWhole();
+        decimal[] searchTimes = _simpleSearcher.searchWhole();
         Color color = ApplicationFactory.ColorFactory.RamdomColor();
 
 

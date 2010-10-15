@@ -113,7 +113,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         }
 
 
-        //再帰的に全ての絞り込み条件に合致するかどうかを調べる
+        //全ての絞り込み条件に合致するかどうかを再帰的に調べる
         private Boolean checkConditions(decimal normTime, int conditionIndex, SearchCondition refiningCondition)
         {
             if (conditionIndex == _refiningConditions.Count)
@@ -124,11 +124,58 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             if (refiningCondition.timing.Equals("以内"))
             {
+            
+                decimal refiningEventOccuredTime;
+                decimal refiningTime = decimal.Parse(refiningCondition.timingValue);
+                simpleSearch.setSearchData(refiningCondition, normTime);
+                //まず基準時刻よりも前に発生した（絞り込み条件で指定されている）イベントの発生を調査
+                while((refiningEventOccuredTime = simpleSearch.searchBackward())>0)
+                {
+                    if (refiningEventOccuredTime - normTime < System.Math.Abs(refiningTime)) //絞り込み条件に合致した場合
+                    {
+                        if (conditionIndex == _refiningConditions.Count - 1)
+                        {   //他に絞り込み条件がなければ true を返す
+                            return true;
+                        }
+                        else
+                        {   //まだ絞り込み条件があるなら、次の条件とマッチングさせる
+                            return checkConditions(refiningEventOccuredTime, conditionIndex + 1, _refiningConditions[conditionIndex]);
+                        }
+                    }
+                    else
+                    {
+                        // 今回見つかった時刻が時間制約を満足していない場合、今回の時刻を基準時刻として、次にイベントが発生した時刻を探す
+                        return checkConditions(refiningEventOccuredTime, conditionIndex, _refiningConditions[conditionIndex]); ;
+                    }
+   
+                }
+
+                //基準時刻よりも前に条件に合致するイベント発生がなかった場合、基準時刻以降も調べる
+                simpleSearch.setSearchData(refiningCondition, normTime);
+                while ((refiningEventOccuredTime = simpleSearch.searchForward()) > 0)
+                {
+                    if (refiningEventOccuredTime - normTime < System.Math.Abs(refiningTime)) //絞り込み条件に合致した場合
+                    {
+                        if (conditionIndex == _refiningConditions.Count - 1)
+                        {   //他に絞り込み条件がなければ true を返す
+                            return true;
+                        }
+                        else
+                        {   //まだ絞り込み条件があるなら、次の条件とマッチングさせる
+                            return checkConditions(refiningEventOccuredTime, conditionIndex + 1, _refiningConditions[conditionIndex]);
+                        }
+                    }
+                    else
+                    {
+                        // 今回見つかった時刻が時間制約を満足していない場合、今回の時刻を基準時刻として、次にイベントが発生した時刻を探す
+                        return checkConditions(refiningEventOccuredTime, conditionIndex, _refiningConditions[conditionIndex]); ;
+                    }
+                }
             }
             else if (refiningCondition.timing.Equals("以前"))
             {
                 //絞り込み条件で指定されているイベントが発生した時刻を検索
-                simpleSearch.setSearchData(refiningCondition, normTime); 
+                simpleSearch.setSearchData(refiningCondition, normTime);
                 decimal refiningEventOccuredTime = simpleSearch.searchForward();
                 if (refiningEventOccuredTime == -1)
                 {
@@ -153,7 +200,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     return checkConditions(refiningEventOccuredTime, conditionIndex, _refiningConditions[conditionIndex]); ;
                 }
             }
-            else if (refiningCondition.timing.Equals("以後"))
+            else if (refiningCondition.timing.Equals("以降"))
             {
                 simpleSearch.setSearchData(refiningCondition, normTime);
                 decimal refiningEventOccuredTime = simpleSearch.searchBackward();
@@ -179,10 +226,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     return checkConditions(refiningEventOccuredTime, conditionIndex, _refiningConditions[conditionIndex]); ;
                 }
             }
-            else if (refiningCondition.timing.Equals("直前"))
+            else if (refiningCondition.timing.Equals("次イベント"))
             {
+                for (int i = 0; i < _visLogs.Count; i++)
+                {
+                    if (_visLogs[i].fromTime == normTime)
+                    {
+                        
+                    }
+                }
             }
-            else if (refiningCondition.timing.Equals("直後"))
+            else if (refiningCondition.timing.Equals("前イベント"))
             {
             }
             else
@@ -191,6 +245,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 return false;
             }
             
+            return false;
+        }
+
+        private Boolean checkCondition(decimal normTime, decimal refiningEventOccuredTime, SearchCondition refiningCondition)
+        {
+            if (refiningCondition.timing.Equals("以内"))
+            {
+            }
+            else if (refiningCondition.timing.Equals("以前"))
+            {
+            }
+            else if (refiningCondition.timing.Equals("以降"))
+            {
+            }
+            else if (refiningCondition.timing.Equals("前イベント"))
+            {
+            }
+            else if (refiningCondition.timing.Equals("次イベント"))
+            {
+            }
             return false;
         }
     }
