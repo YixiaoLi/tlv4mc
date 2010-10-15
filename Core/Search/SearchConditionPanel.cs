@@ -157,14 +157,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 nextRefiningConditionLocation.Y = refiningConditionBox.Location.Y + refiningConditionBox.Size.Height + 5;
                 refiningConditionID++;
 
+
+                //テキストボックスに表示する文字列を作成
                 string refiningConditionText = s.resourceName + " : ";
-                if (((s.eventName != null)) && (!s.ruleName.Equals("")))
+                if (((s.eventDisplayName != null)) && (!s.ruleDisplayName.Equals("")))
                 {
-                    refiningConditionText += s.ruleName + " : ";
+                    refiningConditionText += s.ruleDisplayName + " : ";
                 }
-                if ((s.eventName != null) && (!s.eventName.Equals("")))
+                if ((s.eventDisplayName != null) && (!s.eventDisplayName.Equals("")))
                 {
-                    refiningConditionText += s.eventName + " : ";
+                    refiningConditionText += s.eventDisplayName + " : ";
                 }
                 if ((s.eventDetail != null) && (!s.eventDetail.Equals("")))
                 {

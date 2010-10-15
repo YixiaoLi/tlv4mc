@@ -40,14 +40,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public decimal searchForward()
         {
             decimal resultTime = -1;
-
+            int count = 0;
             foreach (VisualizeLog visLog in _visLogs)
             {
                 if (checkSearchCondition(SearchType.Forward, visLog))
                 {
                     resultTime = visLog.fromTime;
+                    ApplicationFactory.BlackBoard.logIndex = count;
                     break;
                 }
+                count++;
             }
 
             return resultTime;
@@ -64,6 +66,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 if (checkSearchCondition(SearchType.Backward, visLog))
                 {
                     resultTime = visLog.fromTime;
+                    ApplicationFactory.BlackBoard.logIndex = i;
                     break;
                 }
             }

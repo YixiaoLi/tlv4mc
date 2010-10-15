@@ -53,14 +53,21 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		private Time _cursorTime;
         public Time CursorTime { get { return _cursorTime; } set { ApplicationMethod.SetValue<Time>(ref _cursorTime, value, CursorTimeChanged, this); } }
 
-        //検索時刻を記録する。これが変化するとTraceLogViewerにおいて表示ログの位置が更新される
+        //検索時刻を記録する。これが変化するとTraceLogViewerにおいて表示ログのフォーカス位置が更新される
         private List<Time> _searchTime; 
         public List<Time> SearchTime { get { return _searchTime; } set { ApplicationMethod.SetValue<List<Time>>(ref _searchTime, value, SearchTimeChanged, this);} }
 
 		private Pair<Time, Time> _selectedTimeChange;
 		public Pair<Time, Time> SelectedTimeChange { get { return _selectedTimeChange; } set { ApplicationMethod.SetValue<Pair<Time, Time>>(ref _selectedTimeChange, value, SelectedTimeRangeChanged, this); } }
 
+        //ログファイルとリソースファイルをドラッグしていることを示すフラグ
+        //これが1のときは、TraceLogDisplayPanel, MacroViewer,TraceLogViewer において、
+        //カーソルが動かないようにする
         public int dragFlag = 0;
+
+        //前回検索にヒットした（時刻ソート済みの）図形データが何番目のデータかを記録する。
+        //詳細検索におけるタイミングで"次イベント"、"前イベント"が選択された時の処理に必要 
+        public int logIndex = -1;
 
         
         private int _detailSearchFlag = 0; //これが１のときは詳細検索フォームが出現していることを表す

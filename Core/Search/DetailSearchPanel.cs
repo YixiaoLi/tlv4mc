@@ -194,7 +194,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 if (timingForm.SelectedIndex != -1)
                 {
-                    if (timingForm.SelectedItem.Equals("直前") || timingForm.SelectedItem.Equals("直後"))
+                    if (timingForm.SelectedItem.Equals("次イベント")   || timingForm.SelectedItem.Equals("前イベント"))
                     {
                         timingValueForm.Text = "";
                         timingValueForm.Enabled = false;
@@ -562,7 +562,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             mainSearchCondition = new SearchCondition();
             mainSearchCondition.resourceName = (string)mainResourceForm.SelectedItem;
             mainSearchCondition.ruleName = _conditionRegister.mainRuleName;
+            mainSearchCondition.ruleDisplayName = (string)mainRuleForm.SelectedItem; 
             mainSearchCondition.eventName = _conditionRegister.mainEventName;
+            mainSearchCondition.eventDisplayName = (string)mainEventForm.SelectedItem; 
             mainSearchCondition.eventDetail = (string)mainEventDetailForm.SelectedItem;
 
             searchBackwardButton.Enabled = true;
@@ -588,7 +590,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             refiningSearchCondition = new SearchCondition();
             refiningSearchCondition.resourceName = (string)refiningConditionResourceForm.SelectedItem;
+            refiningSearchCondition.ruleDisplayName = (string)refiningConditionRuleForm.SelectedItem;
             refiningSearchCondition.ruleName = _conditionRegister.refiningRuleName;
+            refiningSearchCondition.eventDisplayName = (string)refiningConditionEventForm.SelectedItem;
             refiningSearchCondition.eventName = _conditionRegister.refiningEventName;
             refiningSearchCondition.eventDetail = (string)refiningConditionEventDetailForm.SelectedItem;
             refiningSearchCondition.timing = (string)timingForm.SelectedItem;
@@ -822,6 +826,5 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 }
             }
         }
-
     }
 }
