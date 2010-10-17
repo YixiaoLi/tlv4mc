@@ -22,7 +22,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public string ruleDisplayName { set { this._ruleDisplayName = value; } get { return _ruleDisplayName; } }
         public string eventName { set { this._eventName = value; } get { return _eventName; } }
         public string eventDisplayName { set { this._eventDisplayName = value; } get { return _eventDisplayName; } }
-        public string eventDetail{ set { this._eventDetail = value; } get { return _eventDetail; } }
+        public string eventDetail { set { this._eventDetail = value; } get { return _eventDetail; } }
         public string timing { set { this._timing = value; } get { return _timing; } }
         public string timingValue { set { this._timingValue = value; } get { return _timingValue; } }
 

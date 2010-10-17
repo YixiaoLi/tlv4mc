@@ -65,9 +65,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
         //カーソルが動かないようにする
         public int dragFlag = 0;
 
-        //前回検索にヒットした（時刻ソート済みの）図形データが何番目のデータかを記録する。
-        //詳細検索におけるタイミングで"次イベント"、"前イベント"が選択された時の処理に必要 
-        public int logIndex = -1;
+        //一つの検索条件に対する絞り込み条件が複数ある場合、それらが ANDでつながれるのか、それとも OR でつながれるのかを表す
+        public Boolean isAnd = false;
 
         
         private int _detailSearchFlag = 0; //これが１のときは詳細検索フォームが出現していることを表す
@@ -84,6 +83,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
             get { return _deletedSearchConditionNum; }
             set { ApplicationMethod.SetValue<int>(ref _deletedSearchConditionNum, value, DeletedSearchConditionNumChanged, this); }
         }
+
+
 
 
 		public ApplicationBlackBoard()

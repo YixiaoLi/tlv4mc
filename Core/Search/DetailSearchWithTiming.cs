@@ -3,87 +3,136 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
+using NU.OJL.MPRTOS.TLV.Core.Search.Filters;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
     class DetailSearchWithTiming : TraceLogSearcher
     {
-        private SearchCondition _mainCondition = null;
+        private SearchCondition _baseCondition = null;
         private List<SearchCondition> _refiningConditions = null;
         private List<VisualizeLog> _visLogs = null;
-        private SimpleSearch simpleSearch = null;
+        private TraceLogSearcher _searcher = null;
+        private SearchFilter _filter = null;
 
-        public DetailSearchWithTiming(List<VisualizeLog> logs)
+        public DetailSearchWithTiming()
         {
-            _visLogs = logs;
-            simpleSearch = new SimpleSearch(logs);
+            _searcher = new SimpleSearch();
+            _filter = new TimingFilter();
         }
 
-        public void setSearchData(SearchCondition mainCondition, List<SearchCondition> refiningConditions)
+        public void setSearchData(List<VisualizeLog> logs, SearchCondition mainCondition, List<SearchCondition> refiningConditions)
         {
-            _mainCondition = mainCondition;
+            _visLogs = logs;
+            _baseCondition = mainCondition;
             _refiningConditions = refiningConditions;
-
-            //絞り込み条件はリストの後ろから順に適用していくため、あらかじめ反転させておく
-            if(_refiningConditions.Count > 1) _refiningConditions.Reverse(0,_refiningConditions.Count-1);
         }
 
         public decimal searchForward()
         {
             decimal resultTime = ApplicationFactory.BlackBoard.CursorTime.Value;
+            Boolean matchingFlag = false;
+            _searcher.setSearchData(_visLogs, _baseCondition, null);
 
-            while (resultTime > 0) // main 条件に該当する時刻がなくなるまでループ
+            //現在時刻よりもあとに基本条件のイベントが発生した時刻を探す
+            //基本条件に該当する時刻がなくなるまでループ
+            while ((resultTime = _searcher.searchForward()) > 0)
             {
-                //main条件に合致する、現在時刻よりも前の一番近い時刻を検索
-                simpleSearch.setSearchData(_mainCondition, resultTime);
-                resultTime = simpleSearch.searchForward();
+                if (_refiningConditions.Count == 0)
+                {
+                    return resultTime;
+                }
 
                 //絞り込み条件によるフィルタリング
-                if (_refiningConditions.Count > 0)
+                foreach (SearchCondition refiningCondition in _refiningConditions)
                 {
-                    if (checkConditions(resultTime, 0, _refiningConditions[0])) break;
-                }
-                else
-                {
-                    break;
+                    for (int i = 0; i < _visLogs.Count; i++)
+                    {
+                        VisualizeLog visLog = _visLogs[i];
+                        if (_filter.checkSearchCondition(visLog, refiningCondition, resultTime))
+                        {
+                            matchingFlag = true;
+                            break;
+                        }
+
+                        if (i == _visLogs.Count - 1)
+                        {
+                            matchingFlag = false;
+                        }
+                    }
+
+                    if (matchingFlag)
+                    {
+                        if (!ApplicationFactory.BlackBoard.isAnd) //ORの場合
+                        {
+                            return resultTime;
+                        }
+                    }
+                    else
+                    {
+                        if (ApplicationFactory.BlackBoard.isAnd) //ANDの場合
+                        {
+                            return -1;
+                        }
+                    }
                 }
             }
 
-            if (resultTime > 0)
-            { return resultTime; }
-            else
-            { return -1; }
+            //ここまで来るのは該当するイベントがなかった場合
+            return -1;
         }
 
         public decimal searchBackward()
         {
             decimal resultTime = ApplicationFactory.BlackBoard.CursorTime.Value;
+            Boolean matchingFlag = false;
+            _searcher.setSearchData(_visLogs, _baseCondition, null);
 
-            while (resultTime > 0)
+            //現在時刻よりもあとに基本条件のイベントが発生した時刻を探す
+            //基本条件に該当する時刻がなくなるまでループ
+            while ((resultTime = _searcher.searchBackward()) > 0)
             {
-                //main条件に合致する、現在時刻よりも前の一番近い時刻を検索
-                simpleSearch.setSearchData(_mainCondition, resultTime);
-                resultTime = simpleSearch.searchBackward();
-
-                foreach(SearchCondition condition in _refiningConditions)
+                if (_refiningConditions.Count == 0)
                 {
-
+                    return resultTime;
                 }
+
                 //絞り込み条件によるフィルタリング
-                if (_refiningConditions.Count > 0)
+                foreach (SearchCondition refiningCondition in _refiningConditions)
                 {
-                    if (checkConditions(resultTime, 0, _refiningConditions[0])) break;
-                }
-                else
-                {
-                    break;
+                    for (int i = 0; i < _visLogs.Count; i++)
+                    {
+                        VisualizeLog visLog = _visLogs[i];
+                        if (_filter.checkSearchCondition(visLog, refiningCondition, resultTime))
+                        {
+                            matchingFlag = true;
+                            break;
+                        }
+
+                        if (i == _visLogs.Count - 1)
+                        {
+                            matchingFlag = false;
+                        }
+                    }
+
+                    if (matchingFlag)
+                    {
+                        if (!ApplicationFactory.BlackBoard.isAnd) //ORの場合
+                        {
+                            return resultTime;
+                        }
+                    }
+                    else
+                    {
+                        if (ApplicationFactory.BlackBoard.isAnd) //ANDの場合
+                        {
+                            return -1;
+                        }
+                    }
                 }
             }
-
-            if (resultTime > 0)
-            { return resultTime; }
-            else
-            { return -1; }
+            //ここまで来るのは該当するイベントがなかった場合
+            return -1;
         }
 
         public decimal[] searchWhole()
@@ -91,181 +140,25 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             List<decimal> resultTimes = new List<decimal>();
 
             //main条件に合致する全時刻を取得
-            simpleSearch.setSearchData(_mainCondition);
-            decimal[] tmpTimes = simpleSearch.searchWhole();
+            _searcher.setSearchData(_visLogs, _baseCondition, null);
+            decimal[] tmpTimes = _searcher.searchWhole();
 
             foreach (decimal time in tmpTimes)
             {
-                if (_refiningConditions.Count > 0)
+                //絞り込み条件によるフィルタリング
+                foreach (SearchCondition refiningCondition in _refiningConditions)
                 {
-                    //絞り込み条件によるフィルタリング
-                    if (checkConditions(time, 0, _refiningConditions[0]))
+                    for (int i = 0; i < _visLogs.Count; i++)
                     {
-                        resultTimes.Add(time);
+                        VisualizeLog visLog = _visLogs[i];
+                        if (_filter.checkSearchCondition(visLog, refiningCondition, time))
+                        {
+                            resultTimes.Add(time);
+                        }
                     }
-                }
-                else
-                {
-                    resultTimes.Add(time);
                 }
             }
             return resultTimes.ToArray();
-        }
-
-
-        //全ての絞り込み条件に合致するかどうかを再帰的に調べる
-        private Boolean checkConditions(decimal normTime, int conditionIndex, SearchCondition refiningCondition)
-        {
-            if (conditionIndex == _refiningConditions.Count)
-            {
-                return false;
-            }
-
-
-            if (refiningCondition.timing.Equals("以内"))
-            {
-            
-                decimal refiningEventOccuredTime;
-                decimal refiningTime = decimal.Parse(refiningCondition.timingValue);
-                simpleSearch.setSearchData(refiningCondition, normTime);
-                //まず基準時刻よりも前に発生した（絞り込み条件で指定されている）イベントの発生を調査
-                while((refiningEventOccuredTime = simpleSearch.searchBackward())>0)
-                {
-                    if (refiningEventOccuredTime - normTime < System.Math.Abs(refiningTime)) //絞り込み条件に合致した場合
-                    {
-                        if (conditionIndex == _refiningConditions.Count - 1)
-                        {   //他に絞り込み条件がなければ true を返す
-                            return true;
-                        }
-                        else
-                        {   //まだ絞り込み条件があるなら、次の条件とマッチングさせる
-                            return checkConditions(refiningEventOccuredTime, conditionIndex + 1, _refiningConditions[conditionIndex]);
-                        }
-                    }
-                    else
-                    {
-                        // 今回見つかった時刻が時間制約を満足していない場合、今回の時刻を基準時刻として、次にイベントが発生した時刻を探す
-                        return checkConditions(refiningEventOccuredTime, conditionIndex, _refiningConditions[conditionIndex]); ;
-                    }
-   
-                }
-
-                //基準時刻よりも前に条件に合致するイベント発生がなかった場合、基準時刻以降も調べる
-                simpleSearch.setSearchData(refiningCondition, normTime);
-                while ((refiningEventOccuredTime = simpleSearch.searchForward()) > 0)
-                {
-                    if (refiningEventOccuredTime - normTime < System.Math.Abs(refiningTime)) //絞り込み条件に合致した場合
-                    {
-                        if (conditionIndex == _refiningConditions.Count - 1)
-                        {   //他に絞り込み条件がなければ true を返す
-                            return true;
-                        }
-                        else
-                        {   //まだ絞り込み条件があるなら、次の条件とマッチングさせる
-                            return checkConditions(refiningEventOccuredTime, conditionIndex + 1, _refiningConditions[conditionIndex]);
-                        }
-                    }
-                    else
-                    {
-                        // 今回見つかった時刻が時間制約を満足していない場合、今回の時刻を基準時刻として、次にイベントが発生した時刻を探す
-                        return checkConditions(refiningEventOccuredTime, conditionIndex, _refiningConditions[conditionIndex]); ;
-                    }
-                }
-            }
-            else if (refiningCondition.timing.Equals("以前"))
-            {
-                //絞り込み条件で指定されているイベントが発生した時刻を検索
-                simpleSearch.setSearchData(refiningCondition, normTime);
-                decimal refiningEventOccuredTime = simpleSearch.searchForward();
-                if (refiningEventOccuredTime == -1)
-                {
-                    return false;
-                }
-
-                decimal refiningTime = decimal.Parse(refiningCondition.timingValue);
-                if (refiningEventOccuredTime > normTime + refiningTime) //絞り込み条件に合致した場合
-                {
-                    if (conditionIndex == _refiningConditions.Count - 1)
-                    {   //他に絞り込み条件がなければ true を返す
-                        return true;
-                    }
-                    else
-                    {   //まだ絞り込み条件があるなら、次の条件とマッチングさせる
-                        return checkConditions(normTime, conditionIndex + 1, _refiningConditions[conditionIndex]);
-                    }
-                }
-                else
-                {
-                    // 今回見つかった時刻が時間制約を満足していない場合、今回の時刻を基準時刻として、次にイベントが発生した時刻を探す
-                    return checkConditions(refiningEventOccuredTime, conditionIndex, _refiningConditions[conditionIndex]); ;
-                }
-            }
-            else if (refiningCondition.timing.Equals("以降"))
-            {
-                simpleSearch.setSearchData(refiningCondition, normTime);
-                decimal refiningEventOccuredTime = simpleSearch.searchBackward();
-                if (refiningEventOccuredTime == -1)
-                {
-                    return false;
-                }
-
-                decimal refiningTime = decimal.Parse(refiningCondition.timingValue);
-                if (refiningEventOccuredTime + refiningTime < normTime) //絞り込み条件に合致した場合
-                {
-                    if (conditionIndex == _refiningConditions.Count - 1)
-                    {   //他に絞り込み条件がなければ true を返す
-                        return true;
-                    }
-                    else
-                    {   //まだ絞り込み条件があるなら、次の条件とマッチングさせる
-                        return checkConditions(normTime, conditionIndex + 1, _refiningConditions[conditionIndex]);
-                    }
-                }
-                else
-                {
-                    return checkConditions(refiningEventOccuredTime, conditionIndex, _refiningConditions[conditionIndex]); ;
-                }
-            }
-            else if (refiningCondition.timing.Equals("次イベント"))
-            {
-                for (int i = 0; i < _visLogs.Count; i++)
-                {
-                    if (_visLogs[i].fromTime == normTime)
-                    {
-                        
-                    }
-                }
-            }
-            else if (refiningCondition.timing.Equals("前イベント"))
-            {
-            }
-            else
-            {
-                //例外発生  （notSurpotedTimingValueException を作る？）
-                return false;
-            }
-            
-            return false;
-        }
-
-        private Boolean checkCondition(decimal normTime, decimal refiningEventOccuredTime, SearchCondition refiningCondition)
-        {
-            if (refiningCondition.timing.Equals("以内"))
-            {
-            }
-            else if (refiningCondition.timing.Equals("以前"))
-            {
-            }
-            else if (refiningCondition.timing.Equals("以降"))
-            {
-            }
-            else if (refiningCondition.timing.Equals("前イベント"))
-            {
-            }
-            else if (refiningCondition.timing.Equals("次イベント"))
-            {
-            }
-            return false;
         }
     }
 }
