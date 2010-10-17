@@ -53,8 +53,6 @@
             this.mainRuleForm = new System.Windows.Forms.ComboBox();
             this.mainResourceForm = new System.Windows.Forms.ComboBox();
             this.ConditionDisplayPanel = new System.Windows.Forms.Panel();
-            this.andButton = new System.Windows.Forms.RadioButton();
-            this.orButton = new System.Windows.Forms.RadioButton();
             this.ConditionOpratior.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,8 +60,6 @@
             // 
             this.ConditionOpratior.BackColor = System.Drawing.Color.SeaShell;
             this.ConditionOpratior.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.ConditionOpratior.Controls.Add(this.orButton);
-            this.ConditionOpratior.Controls.Add(this.andButton);
             this.ConditionOpratior.Controls.Add(this.targetConditionLabel);
             this.ConditionOpratior.Controls.Add(this.targetConditionForm);
             this.ConditionOpratior.Controls.Add(this.searchWholeButton);
@@ -147,11 +143,11 @@
             // 
             this.timeValueLabel.AutoSize = true;
             this.timeValueLabel.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.timeValueLabel.Location = new System.Drawing.Point(317, 140);
+            this.timeValueLabel.Location = new System.Drawing.Point(320, 134);
             this.timeValueLabel.Name = "timeValueLabel";
-            this.timeValueLabel.Size = new System.Drawing.Size(29, 12);
+            this.timeValueLabel.Size = new System.Drawing.Size(31, 12);
             this.timeValueLabel.TabIndex = 17;
-            this.timeValueLabel.Text = "(us)";
+            this.timeValueLabel.Text = "μ秒";
             // 
             // label2
             // 
@@ -164,7 +160,7 @@
             // addRefiningConditionButton
             // 
             this.addRefiningConditionButton.Enabled = false;
-            this.addRefiningConditionButton.Location = new System.Drawing.Point(447, 128);
+            this.addRefiningConditionButton.Location = new System.Drawing.Point(464, 126);
             this.addRefiningConditionButton.Name = "addRefiningConditionButton";
             this.addRefiningConditionButton.Size = new System.Drawing.Size(29, 23);
             this.addRefiningConditionButton.TabIndex = 15;
@@ -176,7 +172,7 @@
             this.timingValueForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.timingValueForm.Enabled = false;
             this.timingValueForm.FormattingEnabled = true;
-            this.timingValueForm.Location = new System.Drawing.Point(233, 134);
+            this.timingValueForm.Location = new System.Drawing.Point(234, 128);
             this.timingValueForm.Name = "timingValueForm";
             this.timingValueForm.Size = new System.Drawing.Size(79, 20);
             this.timingValueForm.TabIndex = 14;
@@ -187,25 +183,23 @@
             this.timingForm.Enabled = false;
             this.timingForm.FormattingEnabled = true;
             this.timingForm.Items.AddRange(new object[] {
-            "以内",
-            "以降",
-            "以前",
-            "次イベント",
-            "前イベント"});
-            this.timingForm.Location = new System.Drawing.Point(140, 134);
+            "以内に発生",
+            "以上前に発生",
+            "以上後に発生"});
+            this.timingForm.Location = new System.Drawing.Point(360, 129);
             this.timingForm.Name = "timingForm";
-            this.timingForm.Size = new System.Drawing.Size(78, 20);
+            this.timingForm.Size = new System.Drawing.Size(93, 20);
             this.timingForm.TabIndex = 13;
             // 
             // timingSetting
             // 
             this.timingSetting.AutoSize = true;
-            this.timingSetting.Font = new System.Drawing.Font("Century", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.timingSetting.Location = new System.Drawing.Point(73, 135);
+            this.timingSetting.Font = new System.Drawing.Font("Century", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.timingSetting.Location = new System.Drawing.Point(45, 130);
             this.timingSetting.Name = "timingSetting";
-            this.timingSetting.Size = new System.Drawing.Size(67, 16);
+            this.timingSetting.Size = new System.Drawing.Size(188, 15);
             this.timingSetting.TabIndex = 12;
-            this.timingSetting.Text = "Timing：";
+            this.timingSetting.Text = "基本条件のイベント発生時刻に対して";
             // 
             // refiningConditionEventDetailForm
             // 
@@ -273,12 +267,12 @@
             this.mainConditionSettingLabel.Name = "mainConditionSettingLabel";
             this.mainConditionSettingLabel.Size = new System.Drawing.Size(72, 18);
             this.mainConditionSettingLabel.TabIndex = 5;
-            this.mainConditionSettingLabel.Text = "検索条件";
+            this.mainConditionSettingLabel.Text = "基本条件";
             // 
             // addMainConditionButton
             // 
             this.addMainConditionButton.Enabled = false;
-            this.addMainConditionButton.Location = new System.Drawing.Point(447, 27);
+            this.addMainConditionButton.Location = new System.Drawing.Point(463, 27);
             this.addMainConditionButton.Name = "addMainConditionButton";
             this.addMainConditionButton.Size = new System.Drawing.Size(29, 23);
             this.addMainConditionButton.TabIndex = 4;
@@ -332,28 +326,6 @@
             this.ConditionDisplayPanel.Size = new System.Drawing.Size(604, 425);
             this.ConditionDisplayPanel.TabIndex = 1;
             // 
-            // andButton
-            // 
-            this.andButton.AutoSize = true;
-            this.andButton.Location = new System.Drawing.Point(42, 186);
-            this.andButton.Name = "andButton";
-            this.andButton.Size = new System.Drawing.Size(119, 16);
-            this.andButton.TabIndex = 23;
-            this.andButton.TabStop = true;
-            this.andButton.Text = "すべての条件に一致";
-            this.andButton.UseVisualStyleBackColor = true;
-            // 
-            // orButton
-            // 
-            this.orButton.AutoSize = true;
-            this.orButton.Location = new System.Drawing.Point(170, 186);
-            this.orButton.Name = "orButton";
-            this.orButton.Size = new System.Drawing.Size(131, 16);
-            this.orButton.TabIndex = 24;
-            this.orButton.TabStop = true;
-            this.orButton.Text = "いずれかの条件に一致";
-            this.orButton.UseVisualStyleBackColor = true;
-            // 
             // DetailSearchPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -397,8 +369,6 @@
         private System.Windows.Forms.ComboBox targetConditionForm;
         private System.Windows.Forms.Label targetConditionLabel;
         private System.Windows.Forms.Panel ConditionDisplayPanel;
-        private System.Windows.Forms.RadioButton orButton;
-        private System.Windows.Forms.RadioButton andButton;
 
 
 

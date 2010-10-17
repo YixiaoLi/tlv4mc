@@ -12,7 +12,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     class SearchConditionPanel : Panel
     {
         public SearchCondition mainCondition = null;
-        public List<SearchCondition> refiningSearchConditions = null;
+        public List<SearchCondition> refiningConditions = null;
         private int _conditionNumber;
         public int conditionNumber
         { 
@@ -20,13 +20,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             get{return _conditionNumber;}
         }
 
+        private Label conditionLabel;
+        private TextBox conditionBox;
+        private Button deleteButton;
         private System.Drawing.Point mainConditionLabelLocation;
         private System.Drawing.Point nextRefiningConditionLocation;
+
+        public RadioButton andButton = null;
+        public RadioButton orButton = null;
 
         public SearchConditionPanel(SearchCondition condition, int conditionNumber)
         {
             mainCondition = condition;
-            refiningSearchConditions = new List<SearchCondition>();
+            refiningConditions = new List<SearchCondition>();
             this._conditionNumber = conditionNumber;
             updateMainCondition();
             this.AutoScroll = true;
@@ -39,19 +45,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             //int conditionLabelTopLocation = this.Location.Y + 10;
             int conditionLabelLeftLocation = 10;
             int conditionLabelTopLocation = 10;
-            
-
 
             //main条件のラベルの作成
-            Label conditionLabel = new Label();
+            conditionLabel = new Label();
             conditionLabel.Name = "ConditionLabel" + _conditionNumber;
-            conditionLabel.Text = "検索条件：" + _conditionNumber;
+            conditionLabel.Text = "基本条件：" + _conditionNumber;
             conditionLabel.AutoSize = true;
             conditionLabel.Location = new System.Drawing.Point(conditionLabelLeftLocation, conditionLabelTopLocation);
             mainConditionLabelLocation = conditionLabel.Location;
 
             //条件を表示するテキストボックスの作成
-            TextBox conditionBox = new TextBox();
+            conditionBox = new TextBox();
             conditionBox.Name = "ConditionBox:" + _conditionNumber;
             int conditionBoxLeftLocation = conditionLabel.Location.X;
             int conditionBoxTopLocation = conditionLabelTopLocation + conditionLabel.Size.Height + 5;
@@ -62,7 +66,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             conditionBox.ReadOnly = true;
 
             //条件を消去するボタンの作成
-            Button deleteButton = new Button();
+            deleteButton = new Button();
             deleteButton.Name = "DeleteConditionButton:" + _conditionNumber;
             deleteButton.Text = "-";
             deleteButton.Tag = _conditionNumber -1;
@@ -80,13 +84,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             
             string conditionText = mainCondition.resourceName + " : ";
-            if (((mainCondition.eventName != null)) && (!mainCondition.ruleName.Equals("")))
+            if (((mainCondition.ruleDisplayName != null)) && (!mainCondition.ruleDisplayName.Equals("")))
             {
-                conditionText += mainCondition.ruleName + " : ";
+                conditionText += mainCondition.ruleDisplayName + " : ";
             }
-            if ((mainCondition.eventName != null) && (!mainCondition.eventName.Equals("")))
+            if ((mainCondition.eventDisplayName != null) && (!mainCondition.eventDisplayName.Equals("")))
             {
-                    conditionText += mainCondition.eventName + " : ";
+                    conditionText += mainCondition.eventDisplayName + " : ";
             }
             if ((mainCondition.eventDetail != null) && (!mainCondition.eventDetail.Equals("")))
             {
@@ -101,7 +105,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         public void addRefiningSearchCondition(SearchCondition refiningCondition)
         {
-            refiningSearchConditions.Add(refiningCondition);
+            refiningConditions.Add(refiningCondition);
             updateRefiningConditions();
         }
 
@@ -110,13 +114,34 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             //パネル上に乗っているコンポーネントを一度消去する
             this.Controls.Clear();
 
-            //検索条件を再度表示し直す
+            //基本条件を再度表示し直す
             updateMainCondition();
+
+            //絞り込み条件が２つ以上ある場合、「全ての条件に一致する」「いずれかの条件に一致する」を選択するラジオボタンを配置する
+            if (refiningConditions.Count >1 )
+            {
+                andButton = new RadioButton();
+                andButton.Name = "andButton" + _conditionNumber;
+                andButton.Text = "全ての条件に一致";
+                andButton.Tag = _conditionNumber;
+                andButton.Location = new System.Drawing.Point(conditionBox.Location.X, conditionBox.Location.Y + conditionBox.Height + 10);
+
+                orButton = new RadioButton();
+                orButton.Name = "orButton" + _conditionNumber;
+                orButton.Text = "いずれかの条件に一致";
+                orButton.Tag = _conditionNumber;
+                orButton.Location = new System.Drawing.Point(andButton.Location.X + andButton.Width + 5 , conditionBox.Location.Y + conditionBox.Height + 10);
+
+                nextRefiningConditionLocation = new System.Drawing.Point(nextRefiningConditionLocation.X, nextRefiningConditionLocation.Y + andButton.Height + 5);
+
+                this.Controls.Add(andButton);
+                this.Controls.Add(orButton);
+            }
 
             //以下 refiningConditions に登録されている絞り込み条件一つ一つにラベル、テキストボックス、ボタンを割り当てる
             int refiningConditionID = 1;
 
-            foreach (SearchCondition s in refiningSearchConditions)
+            foreach (SearchCondition s in refiningConditions)
             {
                 //条件の番号を表示するラベルの作成
                 Label refiningConditionLabel = new Label();
@@ -149,7 +174,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 deleteRefiningConditionButton.Location = new System.Drawing.Point(deleteButtonLeftLocation, deleteButtonTopLocation);
                 deleteRefiningConditionButton.Click += (o, _e) =>
                 {
-                    refiningSearchConditions.RemoveAt((int)deleteRefiningConditionButton.Tag);
+                    refiningConditions.RemoveAt((int)deleteRefiningConditionButton.Tag);
                     updateRefiningConditions();
                 };
 
@@ -164,23 +189,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 {
                     refiningConditionText += s.ruleDisplayName + " : ";
                 }
+
                 if ((s.eventDisplayName != null) && (!s.eventDisplayName.Equals("")))
                 {
-                    refiningConditionText += s.eventDisplayName + " : ";
-                }
-                if ((s.eventDetail != null) && (!s.eventDetail.Equals("")))
-                {
-                    refiningConditionText += s.eventDetail;
-                }
-                if ((s.timing != null) && (!s.timing.Equals("")))
-                {
-                    refiningConditionText += System.Environment.NewLine + s.timing + " : ";
-                }
-                if ((s.timingValue != null) && (!s.timingValue.Equals("")))
-                {
-                    refiningConditionText += s.timingValue;
+                    refiningConditionText += " : " + s.eventDisplayName;
                 }
 
+                if ((s.eventDetail != null) && (!s.eventDetail.Equals("")))
+                {
+                    refiningConditionText += " : " + s.eventDetail;
+                }
+
+                if ((s.timingValue != null) && (!s.timingValue.Equals("")))
+                {
+                    refiningConditionText +=  System.Environment.NewLine + s.timingValue + " μ秒";
+                }
+
+                if ((s.timing != null) && (!s.timing.Equals("")))
+                {
+                    refiningConditionText += s.timing +"に発生";
+                }
+               
                 refiningConditionBox.Text = refiningConditionText;
                 this.Controls.Add(refiningConditionLabel);
                 this.Controls.Add(refiningConditionBox);

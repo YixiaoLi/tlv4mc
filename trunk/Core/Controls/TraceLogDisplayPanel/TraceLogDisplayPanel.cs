@@ -69,7 +69,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 	private bool _mouseDown;
 
    //簡易検索用のオブジェクト
-    private SimpleSearch _simpleSearcher = null;
+    private TraceLogSearcher _searcher = null;
         
    //簡易検索に必要な変数群
     private string _resourceType = null;
@@ -80,7 +80,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 
    //時系列順に並んだ図形データ
-    private List<VisualizeLog> _timeSortedLog = null;
+    private List<VisualizeLog> _timeSortedLogs = null;
 
 	public override int TimeLineX
 	{
@@ -143,6 +143,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		hScrollBar.Value = hScrollBar.Minimum;
 		viewingAreaToolStrip.Enabled = false;
         searchToolStrip.Enabled = false;
+        _searcher = new SimpleSearch();
         
 		imageList.Images.Add("visualize", Properties.Resources.visualize);
 		imageList.Images.Add("resource", Properties.Resources.resource);
@@ -234,9 +235,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         //時系列順に並んだ可視化データの作成
          makeTimeSortedLog();
-        _simpleSearcher = new SimpleSearch(_timeSortedLog);
-
-       
     }
 
 	private void setNodes()
@@ -990,9 +988,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         condition.ruleName = _ruleName;
         condition.eventName = _eventName;
         condition.eventDetail = _eventDetail;
-        _simpleSearcher.setSearchData(condition);
+        _searcher.setSearchData(_timeSortedLogs, condition, null);
         //int t = ApplicationFactory.BlackBoard.dragFlag;
-        decimal jumpTime = _simpleSearcher.searchForward();
+        decimal jumpTime = _searcher.searchForward();
         if (jumpTime >= 0)
         {
             decimal start = decimal.Parse(TimeLine.MinTime.ToString());
@@ -1021,9 +1019,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         condition.ruleName = _ruleName;
         condition.eventName = _eventName;
         condition.eventDetail = _eventDetail;
-        _simpleSearcher.setSearchData(condition);
+        _searcher.setSearchData(_timeSortedLogs, condition, null);
 
-        decimal jumpTime = _simpleSearcher.searchBackward();
+        decimal jumpTime = _searcher.searchBackward();
         if (jumpTime >= 0)
         {
             decimal start = decimal.Parse(TimeLine.MinTime.ToString());
@@ -1053,9 +1051,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         condition.ruleName = _ruleName;
         condition.eventName = _eventName;
         condition.eventDetail = _eventDetail;
-        _simpleSearcher.setSearchData(condition);
+        _searcher.setSearchData(_timeSortedLogs, condition, null);
 
-        decimal[] searchTimes = _simpleSearcher.searchWhole();
+        decimal[] searchTimes = _searcher.searchWhole();
         Color color = ApplicationFactory.ColorFactory.RamdomColor();
 
 
@@ -1292,7 +1290,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
     private void makeTimeSortedLog()
     {
-        _timeSortedLog = new List<VisualizeLog>();
+        _timeSortedLogs = new List<VisualizeLog>();
         foreach (KeyValuePair<string, EventShapes> evntShapesList in this._data.VisualizeShapeData.RuleResourceShapes)
         {
             string[] ruleAndResName = evntShapesList.Key.Split(':'); //例えば"taskStateChange:LOGTASK"を切り分ける
@@ -1310,25 +1308,25 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 foreach (EventShape evntShape in evntShapeList.Value)
                 {
                     //　evntShape を_timeSortedLog へ挿入すべき場所（インデックス）を探して格納する
-                    if (_timeSortedLog.Count == 0)
+                    if (_timeSortedLogs.Count == 0)
                     {
-                        _timeSortedLog.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                        _timeSortedLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
                     }
                     else
                     {
-                        for (int i = 0; i < _timeSortedLog.Count; i++)
+                        for (int i = 0; i < _timeSortedLogs.Count; i++)
                         {
-                            VisualizeLog addedLog = _timeSortedLog[i];
+                            VisualizeLog addedLog = _timeSortedLogs[i];
                             if (evntShape.From.Value <= addedLog.fromTime)
                             {
-                                _timeSortedLog.Insert(i, new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                                _timeSortedLogs.Insert(i, new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
                                 break;
                             }
                             else
                             {
-                                if (i == _timeSortedLog.Count - 1)
+                                if (i == _timeSortedLogs.Count - 1)
                                 {
-                                    _timeSortedLog.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                                    _timeSortedLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
                                 }
                             }
                         }

@@ -249,10 +249,14 @@
       <DependentUpon>DetailSearchPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Search\DetailSearchWithTiming.cs" />
+    <Compile Include="Search\Filters\DetailFilter.cs" />
+    <Compile Include="Search\Filters\SimpleFilter.cs" />
+    <Compile Include="Search\Filters\TimingFilter.cs" />
     <Compile Include="Search\SearchConditionPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Search\SearchCondition.cs" />
+    <Compile Include="Search\Filters\SearchFilter.cs" />
     <Compile Include="Search\SimpleSearch.cs" />
     <Compile Include="Search\TraceLogSearcher.cs" />
   </ItemGroup>

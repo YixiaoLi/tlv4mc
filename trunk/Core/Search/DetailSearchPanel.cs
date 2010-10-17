@@ -14,10 +14,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     public partial class DetailSearchPanel : Form
     {
         private TraceLogVisualizerData _data;
-        private List<VisualizeLog> _timeSortedLog;
+        private List<VisualizeLog> _visLogs;
         private ConditionBeans _conditionRegister;
         private List<SearchConditionPanel> _searchConditionPanels;
-        private DetailSearchWithTiming _detailSearchWithTiming;
+        private TraceLogSearcher _searcher;
 
         private decimal _minTime;
         private decimal _maxTime;
@@ -33,7 +33,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             makeTimeSortedLog();
             _conditionRegister = new ConditionBeans();
             _searchConditionPanels = new List<SearchConditionPanel>();
-            _detailSearchWithTiming = new DetailSearchWithTiming(_timeSortedLog);
+            _searcher = new DetailSearchWithTiming();
             _minTime = minTime;
             _maxTime = maxTime;
             _timeRadix = timeRadix;
@@ -141,8 +141,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                         refiningConditionRuleForm.Enabled = true;
                     }
 
+                    timingValueForm.Enabled = true;
+                    timingValueForm.Text = "";
                     timingForm.Enabled = true;
-                    timingValueForm.Enabled = false;
                     timingForm.SelectedIndex = -1;
                     _conditionRegister.timing = null;
                     _conditionRegister.timingValue = null;
@@ -192,29 +193,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             timingForm.SelectedIndexChanged += (o, _e) =>
             {
-                if (timingForm.SelectedIndex != -1)
-                {
-                    if (timingForm.SelectedItem.Equals("次イベント")   || timingForm.SelectedItem.Equals("前イベント"))
-                    {
-                        timingValueForm.Text = "";
-                        timingValueForm.Enabled = false;
-                        addRefiningConditionButton.Enabled = true;
-                    }
-                    else
-                    {
-                        timingValueForm.Text = "";
-                        timingValueForm.Enabled = true;
-                    }
-                    _conditionRegister.timing = (string)timingForm.SelectedItem;
-                    _conditionRegister.timingValue = null;
-                }
+                _conditionRegister.timing = (string)timingForm.SelectedItem;
+                addRefiningConditionButton.Enabled = true;
             };
 
             timingValueForm.TextChanged += (o, _e) =>
             {
                 if (!timingValueForm.Text.Equals(""))
                 {
-                    addRefiningConditionButton.Enabled = true;
+                    try
+                    {
+                        decimal.Parse(timingValueForm.Text);
+                    }
+                    catch (Exception exception)
+                    {
+                        System.Windows.Forms.MessageBox.Show(exception.Message);
+                    }
                 }
             };
 
@@ -236,24 +230,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             addRefiningConditionButton.Click += (o, _e) =>
             {
-                addRefiningSearchCondition();
-                targetConditionForm.SelectedIndex = -1;
-                refiningConditionResourceForm.Enabled = false;
-                refiningConditionResourceForm.SelectedIndex = -1;
-                refiningConditionRuleForm.Enabled = false;
-                refiningConditionRuleForm.SelectedIndex = -1;
-                refiningConditionEventForm.Enabled = false;
-                refiningConditionEventForm.SelectedIndex = -1;
-                refiningConditionEventDetailForm.Enabled = false;
-                refiningConditionEventDetailForm.SelectedIndex = -1;
-                
-                timingForm.Enabled = false;
-                timingForm.SelectedIndex = -1;
-                timingValueForm.Enabled = false;
-                timingValueForm.Text = "";
-                addRefiningConditionButton.Enabled = false;
+                if (!timingValueForm.Text.Equals(""))
+                {
+                    addRefiningSearchCondition();
+                    targetConditionForm.SelectedIndex = -1;
+                    refiningConditionResourceForm.Enabled = false;
+                    refiningConditionResourceForm.SelectedIndex = -1;
+                    refiningConditionRuleForm.Enabled = false;
+                    refiningConditionRuleForm.SelectedIndex = -1;
+                    refiningConditionEventForm.Enabled = false;
+                    refiningConditionEventForm.SelectedIndex = -1;
+                    refiningConditionEventDetailForm.Enabled = false;
+                    refiningConditionEventDetailForm.SelectedIndex = -1;
 
-                _conditionRegister.clearRefiningCondition();
+                    timingForm.Enabled = false;
+                    timingForm.SelectedIndex = -1;
+                    timingValueForm.Enabled = false;
+                    timingValueForm.Text = "";
+                    addRefiningConditionButton.Enabled = false;
+
+                    _conditionRegister.clearRefiningCondition();
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("タイミングの値を設定してください");
+                }
             };
 
             ApplicationFactory.BlackBoard.DeletedSearchConditionNumChanged += (o, _e) =>
@@ -652,9 +653,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             //検索条件を１セットずつ調べ、現在時刻により近い時刻を検索結果とする
             foreach (SearchConditionPanel panel in _searchConditionPanels)
             {
-                _detailSearchWithTiming.setSearchData(panel.mainCondition, panel.refiningSearchConditions);
-                decimal tmpJumpTime = _detailSearchWithTiming.searchForward();
-                if (jumpTime == -1) //最初のループ
+                _searcher.setSearchData(_visLogs, panel.mainCondition, panel.refiningConditions);
+                if (panel.andButton != null) ApplicationFactory.BlackBoard.isAnd = panel.andButton.Checked;
+
+                decimal tmpJumpTime = _searcher.searchForward();
+                if (jumpTime == -1) //最初のループ時の処理
                 {
                     jumpTime = tmpJumpTime;
                 }
@@ -693,8 +696,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             decimal jumpTime = -1; 
             foreach (SearchConditionPanel panel in _searchConditionPanels)
             {
-                _detailSearchWithTiming.setSearchData(panel.mainCondition, panel.refiningSearchConditions);
-                decimal tmpJumpTime = _detailSearchWithTiming.searchBackward();
+                _searcher.setSearchData(_visLogs, panel.mainCondition, panel.refiningConditions);
+                decimal tmpJumpTime = _searcher.searchBackward();
 
                 if (jumpTime == -1)
                 {
@@ -737,8 +740,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             foreach(SearchConditionPanel panel in _searchConditionPanels)
             {
-                _detailSearchWithTiming.setSearchData(panel.mainCondition, panel.refiningSearchConditions);
-                decimal[] tmpTime = _detailSearchWithTiming.searchWhole();
+                _searcher.setSearchData(_visLogs, panel.mainCondition, panel.refiningConditions);
+                decimal[] tmpTime = _searcher.searchWhole();
                 foreach (decimal time in tmpTime)
                 {
                     searchTimes.Add(time);
@@ -781,7 +784,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void makeTimeSortedLog()
         {
-            _timeSortedLog = new List<VisualizeLog>();
+            _visLogs = new List<VisualizeLog>();
             foreach (KeyValuePair<string, EventShapes> evntShapesList in this._data.VisualizeShapeData.RuleResourceShapes)
             {
                 string[] ruleAndResName = evntShapesList.Key.Split(':'); //例えば"taskStateChange:LOGTASK"を切り分ける
@@ -799,25 +802,25 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     foreach (EventShape evntShape in evntShapeList.Value)
                     {
                         //　evntShape を_timeSortedLog へ挿入すべき場所（インデックス）を探して格納する
-                        if (_timeSortedLog.Count == 0)
+                        if (_visLogs.Count == 0)
                         {
-                            _timeSortedLog.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                            _visLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
                         }
                         else
                         {
-                            for (int i = 0; i < _timeSortedLog.Count; i++)
+                            for (int i = 0; i < _visLogs.Count; i++)
                             {
-                                VisualizeLog addedLog = _timeSortedLog[i];
+                                VisualizeLog addedLog = _visLogs[i];
                                 if (evntShape.From.Value <= addedLog.fromTime)
                                 {
-                                    _timeSortedLog.Insert(i, new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                                    _visLogs.Insert(i, new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
                                     break;
                                 }
                                 else
                                 {
-                                    if (i == _timeSortedLog.Count - 1)
+                                    if (i == _visLogs.Count - 1)
                                     {
-                                        _timeSortedLog.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                                        _visLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
                                     }
                                 }
                             }
