@@ -30,7 +30,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public decimal searchForward()
         {
             decimal resultTime = -1;
-            int count = 0;
             foreach (VisualizeLog visLog in _visLogs)
             {
                 if (filter.checkSearchCondition(visLog, _condition, _currentTime))
@@ -41,7 +40,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                         break;
                     }
                 }
-                count++;
             }
 
             return resultTime;

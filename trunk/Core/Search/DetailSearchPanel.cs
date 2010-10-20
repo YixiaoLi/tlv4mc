@@ -203,7 +203,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 {
                     try
                     {
-                        decimal.Parse(timingValueForm.Text);
+                        decimal value = decimal.Parse(timingValueForm.Text);
+                        if (value < 0)
+                        {
+                            System.Windows.Forms.MessageBox.Show("0より大きい値を指定してください");
+                        }
                     }
                     catch (Exception exception)
                     {

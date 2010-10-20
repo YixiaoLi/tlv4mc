@@ -1317,32 +1317,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                         {
                             _visLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
                         }
-
-                        /*     //　evntShape を_timeSortedLog へ挿入すべき場所（インデックス）を探して格納する
-                             if (_visLogs.Count == 0)
-                             {
-                                 _visLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
-                             }
-                             else
-                             {
-                                 for (int i = 0; i < _visLogs.Count; i++)
-                                 {
-                                     VisualizeLog addedLog = _visLogs[i];
-                                     if (evntShape.From.Value <= addedLog.fromTime)
-                                     {
-                                         _visLogs.Insert(i, new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
-                                         break;
-                                     }
-                                     else
-                                     {
-                                         if (i == _visLogs.Count - 1)
-                                         {
-                                             _visLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
-                                         }
-                                     }
-                                 }
-                             }
-                          */
                     }
                 }
             }
