@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData
 {
-    class VisualizeLog
+    class VisualizeLog : IComparable
     {
         public string resourceName = null;
         public string ruleName = null;
@@ -22,5 +22,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData
             evntDetail = detail;
             fromTime = from;
         }
+
+        public int CompareTo(object obj)
+        {
+            VisualizeLog log1 = this;
+            VisualizeLog log2 = (VisualizeLog) obj;
+
+            return (int)(log1.fromTime - log2.fromTime);
+        }
+
     }
 }
