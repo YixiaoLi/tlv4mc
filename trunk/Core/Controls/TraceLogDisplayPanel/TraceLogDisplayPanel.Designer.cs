@@ -475,7 +475,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.targetResourceForm.Name = "targetResourceForm";
             this.targetResourceForm.Size = new System.Drawing.Size(100, 25);
             this.targetResourceForm.ToolTipText = "リソースの指定";
-            this.targetResourceForm.Click += new System.EventHandler(this.TargetResourceForm_Click);
             // 
             // targetRuleForm
             // 
