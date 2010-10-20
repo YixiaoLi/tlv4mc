@@ -71,11 +71,23 @@
     <Compile Include="Controls\Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Forms\ChartSettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Forms\ChartSettingForm.Designer.cs">
+      <DependentUpon>ChartSettingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Forms\MessageForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Controls\Forms\MessageForm.Designer.cs">
       <DependentUpon>MessageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Forms\StatsViewerTmp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Forms\StatsViewerTmp.Designer.cs">
+      <DependentUpon>StatsViewerTmp.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ITraceLogVisualizerControl.cs" />
     <Compile Include="Controls\ResourceExplorer.cs">
@@ -83,6 +95,12 @@
     </Compile>
     <Compile Include="Controls\ResourceExplorer.Designer.cs">
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StatsExplorer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StatsExplorer.Designer.cs">
+      <DependentUpon>StatsExplorer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\StatsVewier.cs">
       <SubType>UserControl</SubType>
@@ -282,6 +300,10 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Forms\ChartSettingForm.resx">
+      <DependentUpon>ChartSettingForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Forms\MessageForm.resx">
       <DependentUpon>MessageForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -294,8 +316,16 @@
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Forms\StatsViewerTmp.resx">
+      <DependentUpon>StatsViewerTmp.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ResourceExplorer.resx">
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StatsExplorer.resx">
+      <DependentUpon>StatsExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\StatsVewier.resx">
