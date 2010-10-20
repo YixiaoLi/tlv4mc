@@ -27,12 +27,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _currentTime = ApplicationFactory.BlackBoard.CursorTime.Value;
         }
 
-        public void setSearchData(SearchCondition condition, decimal currentTime)
-        {
-            _condition = condition;
-            _currentTime = currentTime;
-        }
-
         public decimal searchForward()
         {
             decimal resultTime = -1;

@@ -30,17 +30,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         public decimal searchForward()
         {
-            decimal resultTime = ApplicationFactory.BlackBoard.CursorTime.Value;
+            decimal normTime = ApplicationFactory.BlackBoard.CursorTime.Value;
             Boolean matchingFlag = false;
             _searcher.setSearchData(_visLogs, _baseCondition, null);
 
-            //現在時刻よりもあとに基本条件のイベントが発生した時刻を探す
-            //基本条件に該当する時刻がなくなるまでループ
-            while ((resultTime = _searcher.searchForward()) > 0)
+            //現在時刻よりもあとに基本条件のイベントが発生した時刻（基準時）を探す
+            while ((normTime = _searcher.searchForward()) > 0)
             {
                 if (_refiningConditions.Count == 0)
                 {
-                    return resultTime;
+                    return normTime;
                 }
 
                 //絞り込み条件によるフィルタリング
@@ -49,7 +48,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
                         VisualizeLog visLog = _visLogs[i];
-                        if (_filter.checkSearchCondition(visLog, refiningCondition, resultTime))
+                        if (_filter.checkSearchCondition(visLog, refiningCondition, normTime))
                         {
                             matchingFlag = true;
                             break;
@@ -65,7 +64,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     {
                         if (!ApplicationFactory.BlackBoard.isAnd) //ORの場合
                         {
-                            return resultTime;
+                            return normTime;
                         }
                     }
                     else
@@ -84,17 +83,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         public decimal searchBackward()
         {
-            decimal resultTime = ApplicationFactory.BlackBoard.CursorTime.Value;
+            decimal normTime = ApplicationFactory.BlackBoard.CursorTime.Value;
             Boolean matchingFlag = false;
             _searcher.setSearchData(_visLogs, _baseCondition, null);
 
             //現在時刻よりもあとに基本条件のイベントが発生した時刻を探す
-            //基本条件に該当する時刻がなくなるまでループ
-            while ((resultTime = _searcher.searchBackward()) > 0)
+            while ((normTime = _searcher.searchBackward()) > 0)
             {
                 if (_refiningConditions.Count == 0)
                 {
-                    return resultTime;
+                    return normTime;
                 }
 
                 //絞り込み条件によるフィルタリング
@@ -103,7 +101,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
                         VisualizeLog visLog = _visLogs[i];
-                        if (_filter.checkSearchCondition(visLog, refiningCondition, resultTime))
+                        if (_filter.checkSearchCondition(visLog, refiningCondition, normTime))
                         {
                             matchingFlag = true;
                             break;
@@ -119,7 +117,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     {
                         if (!ApplicationFactory.BlackBoard.isAnd) //ORの場合
                         {
-                            return resultTime;
+                            return normTime;
                         }
                     }
                     else
@@ -137,13 +135,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         public decimal[] searchWhole()
         {
-            List<decimal> resultTimes = new List<decimal>();
+            List<decimal> normTimes = new List<decimal>();
 
             //main条件に合致する全時刻を取得
             _searcher.setSearchData(_visLogs, _baseCondition, null);
-            decimal[] tmpTimes = _searcher.searchWhole();
+            decimal[] tmpNormTimes = _searcher.searchWhole();
 
-            foreach (decimal time in tmpTimes)
+            foreach (decimal normTime in tmpNormTimes)
             {
                 //絞り込み条件によるフィルタリング
                 foreach (SearchCondition refiningCondition in _refiningConditions)
@@ -151,14 +149,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
                         VisualizeLog visLog = _visLogs[i];
-                        if (_filter.checkSearchCondition(visLog, refiningCondition, time))
+                        if (_filter.checkSearchCondition(visLog, refiningCondition, normTime))
                         {
-                            resultTimes.Add(time);
+                            normTimes.Add(normTime);
                         }
                     }
                 }
             }
-            return resultTimes.ToArray();
+            return normTimes.ToArray();
         }
     }
 }
