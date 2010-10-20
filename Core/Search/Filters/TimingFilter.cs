@@ -14,9 +14,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search.Filters
 
             if (refiningCondition.timing.Equals("以内に発生(基準時以前)"))
             {
-                // refiningCondition の「リソース名」～「イベント詳細」までが visLog とマッチするかを調べる
-                if (filter.checkSearchCondition(visLog, refiningCondition, normTime))
-                {
+
+                if (filter.checkSearchCondition(visLog, refiningCondition, normTime)) // SimpleFilterを使ってrefiningCondition の「リソース名」～「イベント詳細」
+                {                                                                     // までが visLog とマッチするかを調べる
+
+                    // マッチしたら時間制約の処理を行う
                     if ((Math.Abs(visLog.fromTime - normTime) < decimal.Parse(refiningCondition.timingValue)) && (visLog.fromTime < normTime))
                         return true;
                 }
@@ -47,6 +49,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search.Filters
                     if (visLog.fromTime - normTime > decimal.Parse(refiningCondition.timingValue))
                         return true;
                 }
+            }
+            else
+            {
+                return false;
             }
 
             return false;

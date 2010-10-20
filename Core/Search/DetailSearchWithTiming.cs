@@ -28,18 +28,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _refiningConditions = refiningConditions;
         }
 
-        public decimal searchForward()
+        public VisualizeLog searchForward()
         {
             decimal normTime = ApplicationFactory.BlackBoard.CursorTime.Value;
+            VisualizeLog hitLog = null;
             Boolean matchingFlag = false;
             _searcher.setSearchData(_visLogs, _baseCondition, null);
 
-            //現在時刻よりもあとに基本条件のイベントが発生した時刻（基準時）を探す
-            while ((normTime = _searcher.searchForward()) > 0)
+            while ((hitLog = _searcher.searchForward()) != null) //現在時刻よりもあとに基本条件のイベントが発生したログを見つける
             {
                 if (_refiningConditions.Count == 0)
                 {
-                    return normTime;
+                    return hitLog;
                 }
 
                 //絞り込み条件によるフィルタリング
@@ -48,7 +48,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
                         VisualizeLog visLog = _visLogs[i];
-                        if (_filter.checkSearchCondition(visLog, refiningCondition, normTime))
+                        if (_filter.checkSearchCondition(visLog, refiningCondition, hitLog.fromTime))
                         {
                             matchingFlag = true;
                             break;
@@ -64,35 +64,36 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     {
                         if (!ApplicationFactory.BlackBoard.isAnd) //ORの場合
                         {
-                            return normTime;
+                            return hitLog;
                         }
                     }
                     else
                     {
                         if (ApplicationFactory.BlackBoard.isAnd) //ANDの場合
                         {
-                            return -1;
+                            return null;
                         }
                     }
                 }
             }
 
             //ここまで来るのは該当するイベントがなかった場合
-            return -1;
+            return null;
         }
 
-        public decimal searchBackward()
+        public VisualizeLog searchBackward()
         {
             decimal normTime = ApplicationFactory.BlackBoard.CursorTime.Value;
+            VisualizeLog hitLog = null;
             Boolean matchingFlag = false;
             _searcher.setSearchData(_visLogs, _baseCondition, null);
 
             //現在時刻よりもあとに基本条件のイベントが発生した時刻を探す
-            while ((normTime = _searcher.searchBackward()) > 0)
+            while ((hitLog = _searcher.searchBackward()) !=  null)
             {
                 if (_refiningConditions.Count == 0)
                 {
-                    return normTime;
+                    return hitLog;
                 }
 
                 //絞り込み条件によるフィルタリング
@@ -101,7 +102,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
                         VisualizeLog visLog = _visLogs[i];
-                        if (_filter.checkSearchCondition(visLog, refiningCondition, normTime))
+                        if (_filter.checkSearchCondition(visLog, refiningCondition, hitLog.fromTime))
                         {
                             matchingFlag = true;
                             break;
@@ -117,31 +118,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     {
                         if (!ApplicationFactory.BlackBoard.isAnd) //ORの場合
                         {
-                            return normTime;
+                            return hitLog;
                         }
                     }
                     else
                     {
                         if (ApplicationFactory.BlackBoard.isAnd) //ANDの場合
                         {
-                            return -1;
+                            return null;
                         }
                     }
                 }
             }
             //ここまで来るのは該当するイベントがなかった場合
-            return -1;
+            return null;
         }
 
-        public decimal[] searchWhole()
+        public List<VisualizeLog> searchWhole()
         {
-            List<decimal> normTimes = new List<decimal>();
-
             //main条件に合致する全時刻を取得
             _searcher.setSearchData(_visLogs, _baseCondition, null);
-            decimal[] tmpNormTimes = _searcher.searchWhole();
+            List<VisualizeLog> hitLogs =  _searcher.searchWhole();
 
-            foreach (decimal normTime in tmpNormTimes)
+            foreach(VisualizeLog hitLog in hitLogs)
             {
                 //絞り込み条件によるフィルタリング
                 foreach (SearchCondition refiningCondition in _refiningConditions)
@@ -149,14 +148,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
                         VisualizeLog visLog = _visLogs[i];
-                        if (_filter.checkSearchCondition(visLog, refiningCondition, normTime))
+                        if (_filter.checkSearchCondition(visLog, refiningCondition, hitLog.fromTime))
                         {
-                            normTimes.Add(normTime);
+                            hitLogs.Add(hitLog);
                         }
                     }
                 }
             }
-            return normTimes.ToArray();
+            return hitLogs;
         }
     }
 }

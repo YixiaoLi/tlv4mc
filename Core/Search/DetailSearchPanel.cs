@@ -651,8 +651,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void searchForward()
         {
-
-            decimal jumpTime = -1; //最終結果を保持させる
+            VisualizeLog hitLog = null;
 
             //検索条件を１セットずつ調べ、現在時刻により近い時刻を検索結果とする
             foreach (SearchConditionPanel panel in _searchConditionPanels)
@@ -660,29 +659,36 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 _searcher.setSearchData(_visLogs, panel.mainCondition, panel.refiningConditions);
                 if (panel.andButton != null) ApplicationFactory.BlackBoard.isAnd = panel.andButton.Checked;
 
-                decimal tmpJumpTime = _searcher.searchForward();
-                if (jumpTime == -1) //最初のループ時の処理
+                VisualizeLog tmpHitLog = _searcher.searchForward();
+                if (hitLog == null) //最初のループ時の処理
                 {
-                    jumpTime = tmpJumpTime;
+                    hitLog = tmpHitLog;
                 }
                 else
                 {
-                    if (tmpJumpTime < jumpTime) //より現在時刻に近い方を採用
+                    if (tmpHitLog != null)
                     {
-                        jumpTime = tmpJumpTime;
+                        if (hitLog.fromTime > tmpHitLog.fromTime) //より現在時刻に近い方のログを採用
+                        {
+                            hitLog = tmpHitLog;
+                        }
                     }
                 }
             }
 
-            if (jumpTime != -1)
+            if (hitLog != null)
             {
                 decimal start = _minTime;
                 decimal end = _maxTime;
-                if (jumpTime < start) jumpTime = start;
-
-                //カーソルを移動
-                ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
-
+                if (hitLog.fromTime < start)
+                {
+                    //カーソルを移動
+                    ApplicationFactory.BlackBoard.CursorTime = new Time(start.ToString(), _timeRadix);
+                }
+                else
+                {
+                    ApplicationFactory.BlackBoard.CursorTime = new Time(hitLog.fromTime.ToString(), _timeRadix);
+                }
                 //トレースログビューアにおいて、該当時刻のログをフォーカス
                 List<Time> focusTime = new List<Time>();
                 focusTime.Add(ApplicationFactory.BlackBoard.CursorTime);
@@ -697,34 +703,45 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void searchBackward()
         {
-            decimal jumpTime = -1; 
+
+            VisualizeLog hitLog = null;
+
+            //検索条件を１セットずつ調べ、現在時刻により近い時刻を検索結果とする
             foreach (SearchConditionPanel panel in _searchConditionPanels)
             {
                 _searcher.setSearchData(_visLogs, panel.mainCondition, panel.refiningConditions);
-                decimal tmpJumpTime = _searcher.searchBackward();
+                if (panel.andButton != null) ApplicationFactory.BlackBoard.isAnd = panel.andButton.Checked;
 
-                if (jumpTime == -1)
+                VisualizeLog tmpHitLog = _searcher.searchBackward();
+                if (hitLog == null) //最初のループ時の処理
                 {
-                    jumpTime = tmpJumpTime;
+                    hitLog = tmpHitLog;
                 }
                 else
                 {
-                    if (tmpJumpTime > jumpTime)
+                    if (tmpHitLog != null)
                     {
-                        jumpTime = tmpJumpTime;
+                        if (hitLog.fromTime > tmpHitLog.fromTime) //より現在時刻に近い方のログを採用
+                        {
+                            hitLog = tmpHitLog;
+                        }
                     }
                 }
             }
 
-            if (jumpTime != -1)
+            if (hitLog != null)
             {
                 decimal start = _minTime;
                 decimal end = _maxTime;
-                if (jumpTime < start) jumpTime = start;
-
-                //カーソルを移動
-                ApplicationFactory.BlackBoard.CursorTime = new Time(jumpTime.ToString(), _timeRadix);
-
+                if (hitLog.fromTime < start)
+                {
+                    //カーソルを移動
+                    ApplicationFactory.BlackBoard.CursorTime = new Time(start.ToString(), _timeRadix);
+                }
+                else
+                {
+                    ApplicationFactory.BlackBoard.CursorTime = new Time(hitLog.fromTime.ToString(), _timeRadix);
+                }
                 //トレースログビューアにおいて、該当時刻のログをフォーカス
                 List<Time> focusTime = new List<Time>();
                 focusTime.Add(ApplicationFactory.BlackBoard.CursorTime);
@@ -734,7 +751,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 System.Windows.Forms.MessageBox.Show("検索の終わりです");
             }
-
         }
 
         private void searchWhole()
@@ -745,20 +761,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             foreach(SearchConditionPanel panel in _searchConditionPanels)
             {
                 _searcher.setSearchData(_visLogs, panel.mainCondition, panel.refiningConditions);
-                decimal[] tmpTime = _searcher.searchWhole();
-                foreach (decimal time in tmpTime)
+                List<VisualizeLog> hitLogs = _searcher.searchWhole();
+                foreach (VisualizeLog hitLog in hitLogs)
                 {
-                    searchTimes.Add(time);
+                    searchTimes.Add(hitLog.fromTime);
                 }
             }
 
             if (searchTimes.Count > 0)
             {
                 List<Time> resultTime = new List<Time>();
-                for (int i = 0; i < searchTimes.Count; i++)
+                foreach(decimal searchTime in searchTimes)
                 {
-                    ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(color, new Time(searchTimes[i].ToString(), _timeRadix));
-                    resultTime.Add(new Time(searchTimes[i].ToString(), _timeRadix));
+                    ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(color, new Time(searchTime.ToString(), _timeRadix));
+                    resultTime.Add(new Time(searchTime.ToString(), _timeRadix));
                 }
                 ApplicationFactory.BlackBoard.SearchTime = resultTime;
             }
