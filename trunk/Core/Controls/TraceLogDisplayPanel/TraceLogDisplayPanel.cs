@@ -993,10 +993,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             condition.eventName = _eventName;
             condition.eventDetail = _eventDetail;
             _searcher.setSearchData(_visLogs, condition, null);
-            //int t = ApplicationFactory.BlackBoard.dragFlag;
-            decimal jumpTime = _searcher.searchForward();
-            if (jumpTime >= 0)
+
+            VisualizeLog hitLog = _searcher.searchForward();
+
+            if( hitLog != null)
             {
+                decimal jumpTime = hitLog.fromTime;
                 decimal start = decimal.Parse(TimeLine.MinTime.ToString());
                 decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
                 if (jumpTime < start) jumpTime = start;
@@ -1025,9 +1027,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             condition.eventDetail = _eventDetail;
             _searcher.setSearchData(_visLogs, condition, null);
 
-            decimal jumpTime = _searcher.searchBackward();
-            if (jumpTime >= 0)
+            VisualizeLog hitLog = _searcher.searchBackward();
+            if (hitLog != null)
             {
+                decimal jumpTime = hitLog.fromTime;
                 decimal start = decimal.Parse(TimeLine.MinTime.ToString());
                 decimal end = decimal.Parse(TimeLine.MaxTime.ToString());
                 if (jumpTime < start) jumpTime = start;
@@ -1056,18 +1059,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             condition.eventName = _eventName;
             condition.eventDetail = _eventDetail;
             _searcher.setSearchData(_visLogs, condition, null);
-
-            decimal[] searchTimes = _searcher.searchWhole();
+            
+            List<VisualizeLog> hitLogs =  _searcher.searchWhole();
             Color color = ApplicationFactory.ColorFactory.RamdomColor();
 
-
-            if (searchTimes.Count() > 0)
+            if (hitLogs.Count > 0)
             {
                 List<Time> resultTime = new List<Time>();
-                for (int i = 0; i < searchTimes.Count(); i++)
+                foreach(VisualizeLog hitLog in hitLogs)
                 {
-                    ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(color, new Time(searchTimes[i].ToString(), _timeRadix));
-                    resultTime.Add(new Time(searchTimes[i].ToString(), _timeRadix));
+                    ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(color, new Time(hitLog.fromTime.ToString(), _timeRadix));
+                    resultTime.Add(new Time(hitLog.fromTime.ToString(), _timeRadix));
                 }
                 ApplicationFactory.BlackBoard.SearchTime = resultTime;
             }

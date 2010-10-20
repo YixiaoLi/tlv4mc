@@ -207,7 +207,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                 if ((s.timing != null) && (!s.timing.Equals("")))
                 {
-                    refiningConditionText += s.timing +"に発生";
+                    refiningConditionText += s.timing;
                 }
                
                 refiningConditionBox.Text = refiningConditionText;

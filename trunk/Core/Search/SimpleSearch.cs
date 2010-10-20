@@ -27,29 +27,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _currentTime = ApplicationFactory.BlackBoard.CursorTime.Value;
         }
 
-        public decimal searchForward()
+        public VisualizeLog searchForward()
         {
-            decimal resultTime = -1;
+            VisualizeLog hitLog = null;
+            _currentTime = ApplicationFactory.BlackBoard.CursorTime.Value;
             foreach (VisualizeLog visLog in _visLogs)
             {
                 if (filter.checkSearchCondition(visLog, _condition, _currentTime))
                 {
                     if (visLog.fromTime > _currentTime)
                     {
-                        resultTime = visLog.fromTime;
+                        hitLog = visLog;
                         break;
                     }
                 }
             }
-
-            return resultTime;
+            return hitLog;
         }
 
 
-        public decimal searchBackward()
+        public VisualizeLog searchBackward()
         {
-            decimal resultTime = -1;
-
+            VisualizeLog hitLog = null ;
+            _currentTime = ApplicationFactory.BlackBoard.CursorTime.Value;
             for(int i = _visLogs.Count -1  ; i>0; i--)
             {
                 VisualizeLog visLog = _visLogs[i];
@@ -57,28 +57,28 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 {
                     if (visLog.fromTime < _currentTime)
                     {
-                        resultTime = visLog.fromTime;
+                        hitLog  = visLog;
                         break;
                     }
                 }
             }
-            return resultTime;
+            return hitLog;
         }
 
 
-        public decimal[] searchWhole()
+        public List<VisualizeLog> searchWhole()
         {
-            List<decimal> resultTimes = new List<decimal>();
+            List<VisualizeLog> hitLogs = new List<VisualizeLog>();
 
             foreach (VisualizeLog visLog in _visLogs)
             {
                 if (filter.checkSearchCondition(visLog, _condition, _currentTime))
                 {
-                    resultTimes.Add(visLog.fromTime);
+                    hitLogs.Add(visLog);
                 }
             }
 
-            return resultTimes.ToArray<decimal>();
+            return hitLogs;
         }
     }
 }
