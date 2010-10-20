@@ -180,10 +180,12 @@
             // timingForm
             // 
             this.timingForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.timingForm.DropDownWidth = 125;
             this.timingForm.Enabled = false;
             this.timingForm.FormattingEnabled = true;
             this.timingForm.Items.AddRange(new object[] {
-            "以内に発生",
+            "以内に発生(基準時以前)",
+            "以内に発生(基準時以後)",
             "以上前に発生",
             "以上後に発生"});
             this.timingForm.Location = new System.Drawing.Point(360, 129);
