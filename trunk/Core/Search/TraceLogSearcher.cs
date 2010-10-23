@@ -9,8 +9,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     interface TraceLogSearcher
     {
         void setSearchData(List<VisualizeLog> visLogs, SearchCondition baseCondition, List<SearchCondition> refiningCondition);
-        VisualizeLog searchForward();
-        VisualizeLog searchBackward();
+        VisualizeLog searchForward(decimal normTime);
+        VisualizeLog searchBackward(decimal normTime);
         List<VisualizeLog> searchWhole();
     }
 }

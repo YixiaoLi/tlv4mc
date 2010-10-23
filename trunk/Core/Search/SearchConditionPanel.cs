@@ -157,7 +157,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 int conditionBoxLeftLocation = refiningConditionLabel.Location.X;
                 int conditionBoxTopLocation = refiningConditionLabel.Location.Y + refiningConditionLabel.Size.Height + 5;
                 refiningConditionBox.Location = new System.Drawing.Point(conditionBoxLeftLocation, conditionBoxTopLocation);
-                refiningConditionBox.Width = 250;
+                refiningConditionBox.Width = 350;
                 refiningConditionBox.Height = 40;
                 refiningConditionBox.Visible = true;
                 refiningConditionBox.Multiline = true;
@@ -202,7 +202,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                 if ((s.timingValue != null) && (!s.timingValue.Equals("")))
                 {
-                    refiningConditionText +=  System.Environment.NewLine + s.timingValue + " μ秒";
+                    refiningConditionText +=  System.Environment.NewLine + "基本条件のイベント発生時刻に対して " + s.timingValue + " μ秒";
                 }
 
                 if ((s.timing != null) && (!s.timing.Equals("")))

@@ -10,13 +10,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     class SimpleSearch : TraceLogSearcher
     {
         private List<VisualizeLog> _visLogs;
-        private decimal _currentTime;
+        private decimal _normTime;
         private SearchCondition _condition;
         private SearchFilter filter;
 
         public SimpleSearch()
         {
-            _currentTime = 0;
+            _normTime = 0;
             filter = new SimpleFilter();
         }
 
@@ -24,18 +24,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         {
             _visLogs = visLogs;
             _condition = condition;
-            _currentTime = ApplicationFactory.BlackBoard.CursorTime.Value;
         }
 
-        public VisualizeLog searchForward()
+        public VisualizeLog searchForward(decimal normTime)
         {
+            _normTime = normTime;
             VisualizeLog hitLog = null;
-            _currentTime = ApplicationFactory.BlackBoard.CursorTime.Value;
             foreach (VisualizeLog visLog in _visLogs)
             {
-                if (filter.checkSearchCondition(visLog, _condition, _currentTime))
+                if (filter.checkSearchCondition(visLog, _condition, _normTime))
                 {
-                    if (visLog.fromTime > _currentTime)
+                    if (visLog.fromTime > _normTime)
                     {
                         hitLog = visLog;
                         break;
@@ -46,16 +45,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         }
 
 
-        public VisualizeLog searchBackward()
+        public VisualizeLog searchBackward(decimal normTime)
         {
+            _normTime = normTime;
             VisualizeLog hitLog = null ;
-            _currentTime = ApplicationFactory.BlackBoard.CursorTime.Value;
             for(int i = _visLogs.Count -1  ; i>0; i--)
             {
                 VisualizeLog visLog = _visLogs[i];
-                if (filter.checkSearchCondition(visLog, _condition, _currentTime))
+                if (filter.checkSearchCondition(visLog, _condition, _normTime))
                 {
-                    if (visLog.fromTime < _currentTime)
+                    if (visLog.fromTime < _normTime)
                     {
                         hitLog  = visLog;
                         break;
@@ -69,10 +68,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public List<VisualizeLog> searchWhole()
         {
             List<VisualizeLog> hitLogs = new List<VisualizeLog>();
-
             foreach (VisualizeLog visLog in _visLogs)
             {
-                if (filter.checkSearchCondition(visLog, _condition, _currentTime))
+                if (filter.checkSearchCondition(visLog, _condition, _normTime))
                 {
                     hitLogs.Add(visLog);
                 }

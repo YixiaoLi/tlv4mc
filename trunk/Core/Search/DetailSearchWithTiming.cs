@@ -14,6 +14,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private List<VisualizeLog> _visLogs = null;
         private TraceLogSearcher _searcher = null;
         private SearchFilter _filter = null;
+        private decimal _normTime;
 
         public DetailSearchWithTiming()
         {
@@ -28,15 +29,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _refiningConditions = refiningConditions;
         }
 
-        public VisualizeLog searchForward()
+        public VisualizeLog searchForward(decimal normTime)
         {
-            decimal normTime = ApplicationFactory.BlackBoard.CursorTime.Value;
+            _normTime = normTime;
             VisualizeLog hitLog = null;
             Boolean matchingFlag = false;
             _searcher.setSearchData(_visLogs, _baseCondition, null);
 
-            while ((hitLog = _searcher.searchForward()) != null) //現在時刻よりもあとに基本条件のイベントが発生しているログを見つける
+            while ((hitLog = _searcher.searchForward(normTime)) != null) //現在時刻よりもあとに基本条件のイベントが発生しているログを見つけ、絞込み条件と照合する
             {
+                normTime = hitLog.fromTime;
                 if (_refiningConditions.Count == 0)
                 {
                     return hitLog;
@@ -47,8 +49,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 {
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
-                        VisualizeLog visLog = _visLogs[i];
-                        if (_filter.checkSearchCondition(visLog, refiningCondition, hitLog.fromTime))
+                        if (_filter.checkSearchCondition(_visLogs[i], refiningCondition, hitLog.fromTime))
                         {
                             matchingFlag = true;
                             break;
@@ -81,16 +82,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             return null;
         }
 
-        public VisualizeLog searchBackward()
+        public VisualizeLog searchBackward(decimal normTime)
         {
-            decimal normTime = ApplicationFactory.BlackBoard.CursorTime.Value;
+            _normTime = normTime;
             VisualizeLog hitLog = null;
             Boolean matchingFlag = false;
             _searcher.setSearchData(_visLogs, _baseCondition, null);
 
             //現在時刻よりもあとに基本条件のイベントが発生した時刻を探す
-            while ((hitLog = _searcher.searchBackward()) !=  null)
+            while ((hitLog = _searcher.searchBackward(normTime)) !=  null)
             {
+                _normTime = hitLog.fromTime;
                 if (_refiningConditions.Count == 0)
                 {
                     return hitLog;
@@ -101,8 +103,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 {
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
-                        VisualizeLog visLog = _visLogs[i];
-                        if (_filter.checkSearchCondition(visLog, refiningCondition, hitLog.fromTime))
+                        if (_filter.checkSearchCondition(_visLogs[i], refiningCondition, hitLog.fromTime))
                         {
                             matchingFlag = true;
                             break;
@@ -147,8 +148,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 {
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
-                        VisualizeLog visLog = _visLogs[i];
-                        if (_filter.checkSearchCondition(visLog, refiningCondition, hitLog.fromTime))
+                        if (_filter.checkSearchCondition(_visLogs[i], refiningCondition, hitLog.fromTime))
                         {
                             hitLogs.Add(hitLog);
                         }
