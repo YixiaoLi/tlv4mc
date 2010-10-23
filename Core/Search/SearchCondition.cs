@@ -16,6 +16,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private string _eventDetail;
         private string _timing;
         private string _timingValue;
+        private Boolean _denyCondition;
 
         public string resourceName { set { this._resourceName = value; } get { return _resourceName; } }
         public string ruleName { set { this._ruleName = value; } get { return _ruleName; } }
@@ -25,6 +26,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public string eventDetail { set { this._eventDetail = value; } get { return _eventDetail; } }
         public string timing { set { this._timing = value; } get { return _timing; } }
         public string timingValue { set { this._timingValue = value; } get { return _timingValue; } }
+        public Boolean denyCondition { set { this._denyCondition = value; } get { return _denyCondition; } }
+
 
         public SearchCondition()
         {
@@ -34,6 +37,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _eventDetail = null;
             _timing = null;
             _timingValue = null;
+            _denyCondition = false;
         }
     }
 }

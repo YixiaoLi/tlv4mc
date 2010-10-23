@@ -18,9 +18,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search.Filters
                 if (filter.checkSearchCondition(visLog, refiningCondition, normTime)) // SimpleFilterを使ってrefiningCondition の「リソース名」～「イベント詳細」
                 {                                                                     // までが visLog とマッチするかを調べる
 
-                    // マッチしたら時間制約の処理を行う
+                    // 時間制約による判定
                     if ((Math.Abs(visLog.fromTime - normTime) < decimal.Parse(refiningCondition.timingValue)) && (visLog.fromTime < normTime))
-                        return true;
+                    {
+                        if (refiningCondition.denyCondition) //この絞込み条件の否定がとられていた場合
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
                 }
 
             }
@@ -28,8 +37,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search.Filters
             {
                 if (filter.checkSearchCondition(visLog, refiningCondition, normTime))
                 {
+
                     if ((Math.Abs(visLog.fromTime - normTime) < decimal.Parse(refiningCondition.timingValue)) && (visLog.fromTime > normTime))
-                        return true;
+                    {
+                        if (refiningCondition.denyCondition)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
                 }
 
             }
@@ -38,7 +57,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search.Filters
                 if (filter.checkSearchCondition(visLog, refiningCondition, normTime))
                 {
                     if (normTime - visLog.fromTime > decimal.Parse(refiningCondition.timingValue))
-                        return true;
+                    {
+                        if (refiningCondition.denyCondition)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
                 }
 
             }
@@ -47,7 +75,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search.Filters
                 if (filter.checkSearchCondition(visLog, refiningCondition, normTime))
                 {
                     if (visLog.fromTime - normTime > decimal.Parse(refiningCondition.timingValue))
-                        return true;
+                    {
+                        if (refiningCondition.denyCondition)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
                 }
             }
             else

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.ConditionOpratior = new System.Windows.Forms.Panel();
+            this.denialCheckBox = new System.Windows.Forms.CheckBox();
             this.targetConditionLabel = new System.Windows.Forms.Label();
             this.targetConditionForm = new System.Windows.Forms.ComboBox();
             this.searchWholeButton = new System.Windows.Forms.Button();
@@ -60,6 +61,7 @@
             // 
             this.ConditionOpratior.BackColor = System.Drawing.Color.SeaShell;
             this.ConditionOpratior.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.ConditionOpratior.Controls.Add(this.denialCheckBox);
             this.ConditionOpratior.Controls.Add(this.targetConditionLabel);
             this.ConditionOpratior.Controls.Add(this.targetConditionForm);
             this.ConditionOpratior.Controls.Add(this.searchWholeButton);
@@ -86,8 +88,19 @@
             this.ConditionOpratior.Dock = System.Windows.Forms.DockStyle.Top;
             this.ConditionOpratior.Location = new System.Drawing.Point(0, 0);
             this.ConditionOpratior.Name = "ConditionOpratior";
-            this.ConditionOpratior.Size = new System.Drawing.Size(604, 209);
+            this.ConditionOpratior.Size = new System.Drawing.Size(604, 219);
             this.ConditionOpratior.TabIndex = 0;
+            // 
+            // denialCheckBox
+            // 
+            this.denialCheckBox.AutoSize = true;
+            this.denialCheckBox.Enabled = false;
+            this.denialCheckBox.Location = new System.Drawing.Point(48, 161);
+            this.denialCheckBox.Name = "denialCheckBox";
+            this.denialCheckBox.Size = new System.Drawing.Size(126, 16);
+            this.denialCheckBox.TabIndex = 23;
+            this.denialCheckBox.Text = "この条件の否定をとる";
+            this.denialCheckBox.UseVisualStyleBackColor = true;
             // 
             // targetConditionLabel
             // 
@@ -112,7 +125,7 @@
             // searchWholeButton
             // 
             this.searchWholeButton.Enabled = false;
-            this.searchWholeButton.Location = new System.Drawing.Point(513, 181);
+            this.searchWholeButton.Location = new System.Drawing.Point(513, 189);
             this.searchWholeButton.Name = "searchWholeButton";
             this.searchWholeButton.Size = new System.Drawing.Size(75, 23);
             this.searchWholeButton.TabIndex = 20;
@@ -122,7 +135,7 @@
             // searchForwardButton
             // 
             this.searchForwardButton.Enabled = false;
-            this.searchForwardButton.Location = new System.Drawing.Point(421, 181);
+            this.searchForwardButton.Location = new System.Drawing.Point(421, 189);
             this.searchForwardButton.Name = "searchForwardButton";
             this.searchForwardButton.Size = new System.Drawing.Size(75, 23);
             this.searchForwardButton.TabIndex = 19;
@@ -132,7 +145,7 @@
             // searchBackwardButton
             // 
             this.searchBackwardButton.Enabled = false;
-            this.searchBackwardButton.Location = new System.Drawing.Point(330, 181);
+            this.searchBackwardButton.Location = new System.Drawing.Point(330, 189);
             this.searchBackwardButton.Name = "searchBackwardButton";
             this.searchBackwardButton.Size = new System.Drawing.Size(75, 23);
             this.searchBackwardButton.TabIndex = 18;
@@ -152,7 +165,7 @@
             // label2
             // 
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label2.Location = new System.Drawing.Point(31, 159);
+            this.label2.Location = new System.Drawing.Point(31, 180);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(451, 1);
             this.label2.TabIndex = 16;
@@ -160,7 +173,7 @@
             // addRefiningConditionButton
             // 
             this.addRefiningConditionButton.Enabled = false;
-            this.addRefiningConditionButton.Location = new System.Drawing.Point(464, 126);
+            this.addRefiningConditionButton.Location = new System.Drawing.Point(467, 128);
             this.addRefiningConditionButton.Name = "addRefiningConditionButton";
             this.addRefiningConditionButton.Size = new System.Drawing.Size(29, 23);
             this.addRefiningConditionButton.TabIndex = 15;
@@ -323,9 +336,9 @@
             this.ConditionDisplayPanel.BackColor = System.Drawing.Color.LavenderBlush;
             this.ConditionDisplayPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ConditionDisplayPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ConditionDisplayPanel.Location = new System.Drawing.Point(0, 209);
+            this.ConditionDisplayPanel.Location = new System.Drawing.Point(0, 219);
             this.ConditionDisplayPanel.Name = "ConditionDisplayPanel";
-            this.ConditionDisplayPanel.Size = new System.Drawing.Size(604, 425);
+            this.ConditionDisplayPanel.Size = new System.Drawing.Size(604, 415);
             this.ConditionDisplayPanel.TabIndex = 1;
             // 
             // DetailSearchPanel
@@ -371,6 +384,7 @@
         private System.Windows.Forms.ComboBox targetConditionForm;
         private System.Windows.Forms.Label targetConditionLabel;
         private System.Windows.Forms.Panel ConditionDisplayPanel;
+        private System.Windows.Forms.CheckBox denialCheckBox;
 
 
 

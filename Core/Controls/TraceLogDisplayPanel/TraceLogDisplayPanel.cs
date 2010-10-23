@@ -994,7 +994,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             condition.eventDetail = _eventDetail;
             _searcher.setSearchData(_visLogs, condition, null);
 
-            VisualizeLog hitLog = _searcher.searchForward();
+            VisualizeLog hitLog = _searcher.searchForward(ApplicationFactory.BlackBoard.CursorTime.Value);
 
             if( hitLog != null)
             {
@@ -1027,7 +1027,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             condition.eventDetail = _eventDetail;
             _searcher.setSearchData(_visLogs, condition, null);
 
-            VisualizeLog hitLog = _searcher.searchBackward();
+            VisualizeLog hitLog = _searcher.searchBackward(ApplicationFactory.BlackBoard.CursorTime.Value);
             if (hitLog != null)
             {
                 decimal jumpTime = hitLog.fromTime;
@@ -1323,7 +1323,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }
             }
 
-           //_visLogsの要素を時間でソート
+            //_visLogsの要素を時間でソート
             VisualizeLog[] tmpLogs = _visLogs.ToArray();
             Array.Sort(tmpLogs);
             _visLogs = tmpLogs.ToList();

@@ -30,7 +30,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             mainEventForm.Enabled = false;
             mainEventDetailForm.Enabled = false;
             _data = data;
-            makeTimeSortedLog();
+            sortByTime();
             _conditionRegister = new ConditionBeans();
             _searchConditionPanels = new List<SearchConditionPanel>();
             _searcher = new DetailSearchWithTiming();
@@ -147,9 +147,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     timingForm.SelectedIndex = -1;
                     _conditionRegister.timing = null;
                     _conditionRegister.timingValue = null;
-
+                    denialCheckBox.Enabled = true;
                     makeRefiningConditionRuleForm();
                 }
+
             };
 
             refiningConditionRuleForm.SelectedIndexChanged += (o, _e) =>
@@ -197,25 +198,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 addRefiningConditionButton.Enabled = true;
             };
 
-            timingValueForm.TextChanged += (o, _e) =>
-            {
-                if (!timingValueForm.Text.Equals(""))
-                {
-                    try
-                    {
-                        decimal value = decimal.Parse(timingValueForm.Text);
-                        if (value < 0)
-                        {
-                            System.Windows.Forms.MessageBox.Show("0より大きい値を指定してください");
-                        }
-                    }
-                    catch (Exception exception)
-                    {
-                        System.Windows.Forms.MessageBox.Show(exception.Message);
-                    }
-                }
-            };
-
             addMainConditionButton.Click += (o, _e) =>
             {
                 makeSearchConditionPanel();
@@ -234,30 +216,46 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             addRefiningConditionButton.Click += (o, _e) =>
             {
-                if (!timingValueForm.Text.Equals(""))
+                if (timingValueForm.Text.Equals(""))
                 {
-                    addRefiningSearchCondition();
-                    targetConditionForm.SelectedIndex = -1;
-                    refiningConditionResourceForm.Enabled = false;
-                    refiningConditionResourceForm.SelectedIndex = -1;
-                    refiningConditionRuleForm.Enabled = false;
-                    refiningConditionRuleForm.SelectedIndex = -1;
-                    refiningConditionEventForm.Enabled = false;
-                    refiningConditionEventForm.SelectedIndex = -1;
-                    refiningConditionEventDetailForm.Enabled = false;
-                    refiningConditionEventDetailForm.SelectedIndex = -1;
-
-                    timingForm.Enabled = false;
-                    timingForm.SelectedIndex = -1;
-                    timingValueForm.Enabled = false;
-                    timingValueForm.Text = "";
-                    addRefiningConditionButton.Enabled = false;
-
-                    _conditionRegister.clearRefiningCondition();
+                    System.Windows.Forms.MessageBox.Show("タイミングの値を設定してください");
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("タイミングの値を設定してください");
+                    try
+                    {
+                       decimal value = decimal.Parse(timingValueForm.Text);
+                       if (value < 0)
+                       {
+                           System.Windows.Forms.MessageBox.Show("0より大きい値を指定してください");
+                       }
+                       else //正常値が入力された場合
+                       {
+                           addRefiningSearchCondition();
+                           targetConditionForm.SelectedIndex = -1;
+                           refiningConditionResourceForm.Enabled = false;
+                           refiningConditionResourceForm.SelectedIndex = -1;
+                           refiningConditionRuleForm.Enabled = false;
+                           refiningConditionRuleForm.SelectedIndex = -1;
+                           refiningConditionEventForm.Enabled = false;
+                           refiningConditionEventForm.SelectedIndex = -1;
+                           refiningConditionEventDetailForm.Enabled = false;
+                           refiningConditionEventDetailForm.SelectedIndex = -1;
+                           timingForm.Enabled = false;
+                           timingForm.SelectedIndex = -1;
+                           timingValueForm.Enabled = false;
+                           timingValueForm.Text = "";
+                           denialCheckBox.Enabled = false;
+                           denialCheckBox.Checked = false;
+                           addRefiningConditionButton.Enabled = false;
+
+                           _conditionRegister.clearRefiningCondition();
+                       }
+                    }
+                    catch (Exception exception)
+                   {
+                     System.Windows.Forms.MessageBox.Show(exception.Message);
+                   }
                 }
             };
 
@@ -602,6 +600,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             refiningSearchCondition.eventDetail = (string)refiningConditionEventDetailForm.SelectedItem;
             refiningSearchCondition.timing = (string)timingForm.SelectedItem;
             refiningSearchCondition.timingValue = (string)timingValueForm.Text;
+            refiningSearchCondition.denyCondition = denialCheckBox.Checked;
             targetSearchCondition.addRefiningSearchCondition(refiningSearchCondition);
         }
 
@@ -659,7 +658,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 _searcher.setSearchData(_visLogs, panel.mainCondition, panel.refiningConditions);
                 if (panel.andButton != null) ApplicationFactory.BlackBoard.isAnd = panel.andButton.Checked;
 
-                VisualizeLog tmpHitLog = _searcher.searchForward();
+                VisualizeLog tmpHitLog = _searcher.searchForward(ApplicationFactory.BlackBoard.CursorTime.Value);
                 if (hitLog == null) //最初のループ時の処理
                 {
                     hitLog = tmpHitLog;
@@ -712,7 +711,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 _searcher.setSearchData(_visLogs, panel.mainCondition, panel.refiningConditions);
                 if (panel.andButton != null) ApplicationFactory.BlackBoard.isAnd = panel.andButton.Checked;
 
-                VisualizeLog tmpHitLog = _searcher.searchBackward();
+                VisualizeLog tmpHitLog = _searcher.searchBackward(ApplicationFactory.BlackBoard.CursorTime.Value);
                 if (hitLog == null) //最初のループ時の処理
                 {
                     hitLog = tmpHitLog;
@@ -802,52 +801,39 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
         }
 
-        private void makeTimeSortedLog()
+        private void sortByTime()
         {
-            _visLogs = new List<VisualizeLog>();
+            _visLogs = new List<VisualizeLog>(); //イベント情報を格納する
+
+            //_visLogs の要素を作成し、 随時_visLogs に加えていく
             foreach (KeyValuePair<string, EventShapes> evntShapesList in this._data.VisualizeShapeData.RuleResourceShapes)
             {
                 string[] ruleAndResName = evntShapesList.Key.Split(':'); //例えば"taskStateChange:LOGTASK"を切り分ける
                 string resName = ruleAndResName[1];
                 string ruleName = ruleAndResName[0];
 
-                //以下の処理はループが深いので、ログの数が多くなると処理が非常に遅くなる可能性あり
-                //リスト中の適切な位置に一つ一つデータを挿入していくことで、全部のデータを _timeSortedLog
-                //へ格納し終わった段階でソートを完了させている（挿入ソート）。ただ、速度のことを考えると、
-                //最初は時系列を無視して格納し最後にクイックソートを使って整列させた方がいいかもしれない。
                 foreach (KeyValuePair<string, System.Collections.Generic.List<EventShape>> evntShapeList in evntShapesList.Value.List)
                 {
                     string[] evntAndRuleName = evntShapeList.Key.Split(':');  // 例えば"taskStateChange:stateChangeEvent"を切り分ける
                     string evntName = evntAndRuleName[1];
                     foreach (EventShape evntShape in evntShapeList.Value)
                     {
-                        //　evntShape を_timeSortedLog へ挿入すべき場所（インデックス）を探して格納する
-                        if (_visLogs.Count == 0)
+                        if (evntShape.From.Value < 0)
                         {
-                            _visLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                            _visLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, 0));
                         }
                         else
                         {
-                            for (int i = 0; i < _visLogs.Count; i++)
-                            {
-                                VisualizeLog addedLog = _visLogs[i];
-                                if (evntShape.From.Value <= addedLog.fromTime)
-                                {
-                                    _visLogs.Insert(i, new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
-                                    break;
-                                }
-                                else
-                                {
-                                    if (i == _visLogs.Count - 1)
-                                    {
-                                        _visLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
-                                    }
-                                }
-                            }
+                            _visLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
                         }
                     }
                 }
             }
+
+           //_visLogsの要素を時間でソート
+            VisualizeLog[] tmpLogs = _visLogs.ToArray();
+            Array.Sort(tmpLogs);
+            _visLogs = tmpLogs.ToList();
         }
     }
 }
