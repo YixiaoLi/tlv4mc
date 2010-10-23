@@ -35,7 +35,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             Boolean matchingFlag = false;
             _searcher.setSearchData(_visLogs, _baseCondition, null);
 
-            while ((hitLog = _searcher.searchForward()) != null) //現在時刻よりもあとに基本条件のイベントが発生したログを見つける
+            while ((hitLog = _searcher.searchForward()) != null) //現在時刻よりもあとに基本条件のイベントが発生しているログを見つける
             {
                 if (_refiningConditions.Count == 0)
                 {
