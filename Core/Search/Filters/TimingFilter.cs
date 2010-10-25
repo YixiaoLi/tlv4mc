@@ -21,14 +21,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search.Filters
                     // 時間制約による判定
                     if ((Math.Abs(visLog.fromTime - normTime) < decimal.Parse(refiningCondition.timingValue)) && (visLog.fromTime < normTime))
                     {
-                        if (refiningCondition.denyCondition) //この絞込み条件の否定がとられていた場合
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
 
@@ -40,14 +33,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search.Filters
 
                     if ((Math.Abs(visLog.fromTime - normTime) < decimal.Parse(refiningCondition.timingValue)) && (visLog.fromTime > normTime))
                     {
-                        if (refiningCondition.denyCondition)
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
 
@@ -58,14 +44,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search.Filters
                 {
                     if (normTime - visLog.fromTime > decimal.Parse(refiningCondition.timingValue))
                     {
-                        if (refiningCondition.denyCondition)
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
 
@@ -76,14 +55,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search.Filters
                 {
                     if (visLog.fromTime - normTime > decimal.Parse(refiningCondition.timingValue))
                     {
-                        if (refiningCondition.denyCondition)
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
             }
