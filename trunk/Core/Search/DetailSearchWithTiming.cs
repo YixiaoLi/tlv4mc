@@ -36,9 +36,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             Boolean matchingFlag = false;
             _searcher.setSearchData(_visLogs, _baseCondition, null);
 
-            while ((hitLog = _searcher.searchForward(normTime)) != null) //現在時刻よりもあとに基本条件のイベントが発生しているログを見つけ、絞込み条件と照合する
+            while ((hitLog = _searcher.searchForward(_normTime)) != null) //現在時刻よりもあとに基本条件のイベントが発生しているログを見つけ、絞込み条件と照合する
             {
-                normTime = hitLog.fromTime;
+                _normTime = hitLog.fromTime;
                 if (_refiningConditions.Count == 0)
                 {
                     return hitLog;
@@ -59,6 +59,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                         {
                             matchingFlag = false;
                         }
+                    }
+
+                    if (refiningCondition.denyCondition)
+                    {
+                        matchingFlag = !matchingFlag; //現在調べている絞込み条件で、条件の否定が選択されている場合、フィルタリング結果を反転させる
                     }
 
                     if (matchingFlag)
@@ -90,7 +95,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _searcher.setSearchData(_visLogs, _baseCondition, null);
 
             //現在時刻よりもあとに基本条件のイベントが発生した時刻を探す
-            while ((hitLog = _searcher.searchBackward(normTime)) !=  null)
+            while ((hitLog = _searcher.searchBackward(_normTime)) !=  null)
             {
                 _normTime = hitLog.fromTime;
                 if (_refiningConditions.Count == 0)
@@ -115,6 +120,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                         }
                     }
 
+                    if (refiningCondition.denyCondition)
+                    {
+                        matchingFlag = !matchingFlag;
+                    }
+
+
                     if (matchingFlag)
                     {
                         if (!ApplicationFactory.BlackBoard.isAnd) //ORの場合
@@ -137,24 +148,49 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         public List<VisualizeLog> searchWhole()
         {
-            //main条件に合致する全時刻を取得
+            
             _searcher.setSearchData(_visLogs, _baseCondition, null);
-            List<VisualizeLog> hitLogs =  _searcher.searchWhole();
+            List<VisualizeLog> candidateHitLogs = _searcher.searchWhole(); //基本条件に合致する全可視化ログを取得
+            List<VisualizeLog> hitLogs = new List<VisualizeLog>();
+            Boolean matchingFlag = false;
 
-            foreach(VisualizeLog hitLog in hitLogs)
+            foreach(VisualizeLog candidateHitLog in candidateHitLogs)//hitLogs の各要素に対して絞込み条件でフィルタリングをかける
             {
-                //絞り込み条件によるフィルタリング
                 foreach (SearchCondition refiningCondition in _refiningConditions)
                 {
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
-                        if (_filter.checkSearchCondition(_visLogs[i], refiningCondition, hitLog.fromTime))
+                        if (_filter.checkSearchCondition(_visLogs[i], refiningCondition, candidateHitLog.fromTime))
                         {
-                            hitLogs.Add(hitLog);
+                            matchingFlag = true;
+                            break;
+                        }
+                    }
+
+                    if(refiningCondition.denyCondition)
+                    {
+                        matchingFlag = !matchingFlag;
+                    }
+
+                    if (matchingFlag)
+                    {
+                        if (!ApplicationFactory.BlackBoard.isAnd) //ORの場合
+                        {
+                            hitLogs.Add(candidateHitLog); //ORの場合は一つの絞り込み条件にマッチすればいいため、一つ当たった時点で candidateHitLog が正式採用される
+                            matchingFlag = false;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (ApplicationFactory.BlackBoard.isAnd) //ANDの場合
+                        {
+                            break; //ANDの場合は全部の絞込み条件にマッチしないといけないので、一つはずした時点で candidateHitLog は候補から外れる
                         }
                     }
                 }
             }
+
             return hitLogs;
         }
     }
