@@ -12,12 +12,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private List<VisualizeLog> _visLogs;
         private decimal _normTime;
         private SearchCondition _condition;
-        private SearchFilter filter;
+        private SearchFilter _filter;
 
         public SimpleSearch()
         {
             _normTime = 0;
-            filter = new SimpleFilter();
+            _filter = new SimpleFilter();
         }
 
         public void setSearchData(List<VisualizeLog> visLogs, SearchCondition condition, List<SearchCondition> refiningCondition)
@@ -32,7 +32,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             VisualizeLog hitLog = null;
             foreach (VisualizeLog visLog in _visLogs)
             {
-                if (filter.checkSearchCondition(visLog, _condition, _normTime))
+                if (_filter.checkSearchCondition(visLog, _condition, _normTime))
                 {
                     if (visLog.fromTime > _normTime)
                     {
@@ -52,7 +52,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             for(int i = _visLogs.Count -1  ; i>0; i--)
             {
                 VisualizeLog visLog = _visLogs[i];
-                if (filter.checkSearchCondition(visLog, _condition, _normTime))
+                if (_filter.checkSearchCondition(visLog, _condition, _normTime))
                 {
                     if (visLog.fromTime < _normTime)
                     {
@@ -70,7 +70,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             List<VisualizeLog> hitLogs = new List<VisualizeLog>();
             foreach (VisualizeLog visLog in _visLogs)
             {
-                if (filter.checkSearchCondition(visLog, _condition, _normTime))
+                if (_filter.checkSearchCondition(visLog, _condition, _normTime))
                 {
                     hitLogs.Add(visLog);
                 }

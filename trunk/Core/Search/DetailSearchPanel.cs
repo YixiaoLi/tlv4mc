@@ -184,7 +184,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     }
                     else
                     {
-                        refiningConditionEventForm.Enabled = true;
+                        refiningConditionEventDetailForm.Enabled = true;
                     }
                 }
 
@@ -254,19 +254,36 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     }
                     catch (Exception exception)
                    {
-                     System.Windows.Forms.MessageBox.Show(exception.Message);
+                     System.Windows.Forms.MessageBox.Show("入力値が不正な値です");
                    }
                 }
             };
 
+            //検索条件が消去された場合、その条件の番号が DeletedSearchConditionNum に記録されている
             ApplicationFactory.BlackBoard.DeletedSearchConditionNumChanged += (o, _e) =>
             {
                 deleteCondition();
                 if (_searchConditionPanels.Count == 0)
                 {
+                    //検索条件が一つもない場合は検索ボタンを操作不可にする
                     searchForwardButton.Enabled = false;
                     searchBackwardButton.Enabled = false;
                     searchWholeButton.Enabled = false;
+
+                    //絞込み条件の操作領域をすべて Enable にし、かつ各フォームを空白表示にする
+                    refiningConditionResourceForm.Enabled = false;
+                    refiningConditionRuleForm.Enabled = false;
+                    refiningConditionEventForm.Enabled = false;
+                    refiningConditionEventDetailForm.Enabled = false;
+                    timingForm.Enabled = false;
+                    timingValueForm.Enabled = false;
+                    addRefiningConditionButton.Enabled = false;
+                    refiningConditionResourceForm.SelectedIndex = -1;
+                    refiningConditionRuleForm.SelectedIndex = -1;
+                    refiningConditionEventForm.SelectedIndex = -1;
+                    refiningConditionEventDetailForm.SelectedIndex = -1;
+                    timingForm.SelectedIndex = -1;
+                    timingValueForm.Text = "";
                 }
             };
 
@@ -293,6 +310,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             this.FormClosed += (o, _e) =>
             {
                 ApplicationFactory.BlackBoard.DetailSearchFlag = 0;
+                ApplicationFactory.BlackBoard.DeletedSearchConditionNum = -1;
             };
         }
 
@@ -405,8 +423,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void makeRefiningConditionResourceForm()
         {
+            refiningConditionResourceForm.Items.Clear();
             GeneralNamedCollection<Resource> resData = this._data.ResourceData.Resources;
-
             foreach (Resource res in resData)
             {
                 if (!res.Name.Equals("CurrentContext"))
@@ -479,14 +497,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         //イベント詳細指定コンボボックスのアイテムをセット
         private void makeRefiningConditionEventDetailForm()
         {
-            if (refiningConditionEventDetailForm.Enabled == true)
-            {
-                refiningConditionEventDetailForm.Items.Clear();
-            }
-            else
-            {
-                refiningConditionEventDetailForm.Enabled = true;
-            }
+            refiningConditionEventDetailForm.Items.Clear();
 
             //選択されているイベント名(例："状態")の正式名称(例："stateChangeEvent")を調べる
             foreach (Event ev in _data.VisualizeData.VisualizeRules[_conditionRegister.refiningRuleName].Shapes)
@@ -589,7 +600,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             //絞り込み条件を追加する検索条件の番号
             int targetConditionPanelNum = int.Parse((string)targetConditionForm.SelectedItem) - 1;
             SearchCondition refiningSearchCondition = new SearchCondition();
-            SearchConditionPanel targetSearchCondition = _searchConditionPanels[targetConditionPanelNum];
 
             refiningSearchCondition = new SearchCondition();
             refiningSearchCondition.resourceName = (string)refiningConditionResourceForm.SelectedItem;
@@ -601,7 +611,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             refiningSearchCondition.timing = (string)timingForm.SelectedItem;
             refiningSearchCondition.timingValue = (string)timingValueForm.Text;
             refiningSearchCondition.denyCondition = denialCheckBox.Checked;
-            targetSearchCondition.addRefiningSearchCondition(refiningSearchCondition);
+            _searchConditionPanels[targetConditionPanelNum].addRefiningSearchCondition(refiningSearchCondition);
         }
 
         private void deleteCondition()
@@ -609,9 +619,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             int deletedNum = ApplicationFactory.BlackBoard.DeletedSearchConditionNum;
             if (deletedNum != -1)
             {
-                _searchConditionPanels.RemoveAt(deletedNum - 1);
+                try
+                {
+                    _searchConditionPanels.RemoveAt(deletedNum - 1);
+                }
+                catch (Exception e)
+                {
+                    updateConditionDisplayPanel();
+                }
 
-                //絞り込み対象選択フォームのアイテムをすべてクリア
+                //絞込み対象の選択フォームのアイテムをすべてクリア
                 targetConditionForm.Items.Clear();
 
                 //各検索条件に番号を振り直す
@@ -625,13 +642,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 updateConditionDisplayPanel();
                 ApplicationFactory.BlackBoard.DeletedSearchConditionNum = -1;
             }
-
-            if (_searchConditionPanels.Count == 0)
-            {
-                addRefiningConditionButton.Enabled = false;
-            }
         }
-
+       
         private void updateConditionDisplayPanel()
         {
             //条件表示画面から全ての条件を一度消去する
@@ -754,26 +766,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void searchWhole()
         {
-            List<decimal> searchTimes = new List<decimal>();
+            List<VisualizeLog> hitLogs = new List<VisualizeLog>();
             Color color = ApplicationFactory.ColorFactory.RamdomColor(); //マーカーの色
 
             foreach(SearchConditionPanel panel in _searchConditionPanels)
             {
                 _searcher.setSearchData(_visLogs, panel.mainCondition, panel.refiningConditions);
-                List<VisualizeLog> hitLogs = _searcher.searchWhole();
-                foreach (VisualizeLog hitLog in hitLogs)
+                List<VisualizeLog> candidateHitLogs = _searcher.searchWhole();
+                foreach (VisualizeLog candidateHitLog in candidateHitLogs)
                 {
-                    searchTimes.Add(hitLog.fromTime);
+                    hitLogs.Add(candidateHitLog);
                 }
             }
 
-            if (searchTimes.Count > 0)
+            if (hitLogs.Count > 0)
             {
                 List<Time> resultTime = new List<Time>();
-                foreach(decimal searchTime in searchTimes)
+                foreach(VisualizeLog hitLog in hitLogs)
                 {
-                    ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(color, new Time(searchTime.ToString(), _timeRadix));
-                    resultTime.Add(new Time(searchTime.ToString(), _timeRadix));
+                    ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(color, new Time(hitLog.fromTime.ToString(), _timeRadix));
+                    resultTime.Add(new Time(hitLog.fromTime.ToString(), _timeRadix));
                 }
                 ApplicationFactory.BlackBoard.SearchTime = resultTime;
             }
@@ -834,6 +846,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             VisualizeLog[] tmpLogs = _visLogs.ToArray();
             Array.Sort(tmpLogs);
             _visLogs = tmpLogs.ToList();
+        }
+
+        private void goStart_Click(object sender, EventArgs e)
+        {
+            ApplicationFactory.BlackBoard.CursorTime = new Time("0",10);
+        }
+
+        private void goEnd_Click(object sender, EventArgs e)
+        {
+            ApplicationFactory.BlackBoard.CursorTime = new Time("5600000", 10);
         }
     }
 }

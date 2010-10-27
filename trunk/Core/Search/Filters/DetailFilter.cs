@@ -8,7 +8,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search.Filters
 {
     abstract class DetailFilter : SearchFilter
     {
-       protected SearchFilter filter;
+       protected SearchFilter _filter;
       
        abstract public Boolean checkSearchCondition(VisualizeLog visLog, SearchCondition condition, decimal currentTime);
     }

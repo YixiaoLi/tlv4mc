@@ -19,7 +19,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public DetailSearchWithTiming()
         {
             _searcher = new SimpleSearch();
-            _filter = new TimingFilter();
+            _filter = new TimingFilter(new SimpleFilter());
         }
 
         public void setSearchData(List<VisualizeLog> logs, SearchCondition mainCondition, List<SearchCondition> refiningConditions)
@@ -45,8 +45,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 }
 
                 //絞り込み条件によるフィルタリング
-                foreach (SearchCondition refiningCondition in _refiningConditions)
+                int refiningConditionNum = 0;
+                foreach(SearchCondition refiningCondition in _refiningConditions)
                 {
+                    refiningConditionNum++;
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
                         if (_filter.checkSearchCondition(_visLogs[i], refiningCondition, hitLog.fromTime))
@@ -72,12 +74,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                         {
                             return hitLog;
                         }
+                        else //ANDの場合
+                        {
+                            if (refiningConditionNum == _refiningConditions.Count) //全部の絞り込み条件にマッチしたとき
+                            {
+                                return hitLog;
+                            }
+                        }
                     }
                     else
                     {
                         if (ApplicationFactory.BlackBoard.isAnd) //ANDの場合
                         {
-                            return null;
+                            break; //今回の candidateHitLog は絞込み条件を満たさないので、次の candidateHitLog を調査する
                         }
                     }
                 }
@@ -104,8 +113,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 }
 
                 //絞り込み条件によるフィルタリング
+                int refiningConditionNum = 0;
                 foreach (SearchCondition refiningCondition in _refiningConditions)
                 {
+                    refiningConditionNum++;
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
                         if (_filter.checkSearchCondition(_visLogs[i], refiningCondition, hitLog.fromTime))
@@ -132,12 +143,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                         {
                             return hitLog;
                         }
+                        else //ANDの場合
+                        {
+                            if (refiningConditionNum == _refiningConditions.Count) //全部の絞り込み条件にマッチしたとき
+                            {
+                                return hitLog;
+                            }
+                        }
                     }
                     else
                     {
                         if (ApplicationFactory.BlackBoard.isAnd) //ANDの場合
                         {
-                            return null;
+                             break;
                         }
                     }
                 }
@@ -148,16 +166,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         public List<VisualizeLog> searchWhole()
         {
-            
             _searcher.setSearchData(_visLogs, _baseCondition, null);
             List<VisualizeLog> candidateHitLogs = _searcher.searchWhole(); //基本条件に合致する全可視化ログを取得
             List<VisualizeLog> hitLogs = new List<VisualizeLog>();
-            Boolean matchingFlag = false;
-
-            foreach(VisualizeLog candidateHitLog in candidateHitLogs)//hitLogs の各要素に対して絞込み条件でフィルタリングをかける
+            
+            foreach (VisualizeLog candidateHitLog in candidateHitLogs)//hitLogs の各要素に対して絞込み条件でフィルタリングをかける
             {
+                if (_refiningConditions.Count == 0) //絞込み条件がなければ、候補として挙がったログはすべて条件を満たす
+                {
+                    hitLogs.Add(candidateHitLog);
+                }
+
+                int refiningConditionNum = 0;
+                Boolean matchingFlag = false;
                 foreach (SearchCondition refiningCondition in _refiningConditions)
                 {
+                    refiningConditionNum++;
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
                         if (_filter.checkSearchCondition(_visLogs[i], refiningCondition, candidateHitLog.fromTime))
@@ -165,9 +189,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                             matchingFlag = true;
                             break;
                         }
+
+                        if (i == _visLogs.Count - 1)
+                        {
+                            matchingFlag = false;
+                        }
                     }
 
-                    if(refiningCondition.denyCondition)
+                    if (refiningCondition.denyCondition)
                     {
                         matchingFlag = !matchingFlag;
                     }
@@ -177,8 +206,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                         if (!ApplicationFactory.BlackBoard.isAnd) //ORの場合
                         {
                             hitLogs.Add(candidateHitLog); //ORの場合は一つの絞り込み条件にマッチすればいいため、一つ当たった時点で candidateHitLog が正式採用される
-                            matchingFlag = false;
                             break;
+                        }
+                        else //ANDの場合
+                        {
+                            if (refiningConditionNum == _refiningConditions.Count) //全部の絞り込み条件にマッチしたとき
+                            {
+                                hitLogs.Add(candidateHitLog);
+                            }
                         }
                     }
                     else
@@ -190,8 +225,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     }
                 }
             }
-
             return hitLogs;
         }
+        
+        
     }
 }

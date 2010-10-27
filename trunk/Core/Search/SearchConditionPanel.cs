@@ -76,7 +76,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             deleteButton.Location = new System.Drawing.Point(deleteButtonLeftLocation, deleteButtonTopLocation);
             deleteButton.Click += (o, _e) =>
               {
-                  ApplicationFactory.BlackBoard.DeletedSearchConditionNum = _conditionNumber;
+                 ApplicationFactory.BlackBoard.DeletedSearchConditionNum = _conditionNumber;
               };
 
             //絞り込み条件の表示位置のY座標を設定
@@ -131,6 +131,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 orButton.Text = "いずれかの条件に一致";
                 orButton.Tag = _conditionNumber;
                 orButton.Location = new System.Drawing.Point(andButton.Location.X + andButton.Width + 5 , conditionBox.Location.Y + conditionBox.Height + 10);
+                orButton.Checked = true;
 
                 nextRefiningConditionLocation = new System.Drawing.Point(nextRefiningConditionLocation.X, nextRefiningConditionLocation.Y + andButton.Height + 5);
 
@@ -157,8 +158,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 int conditionBoxLeftLocation = refiningConditionLabel.Location.X;
                 int conditionBoxTopLocation = refiningConditionLabel.Location.Y + refiningConditionLabel.Size.Height + 5;
                 refiningConditionBox.Location = new System.Drawing.Point(conditionBoxLeftLocation, conditionBoxTopLocation);
-                refiningConditionBox.Width = 350;
-                refiningConditionBox.Height = 40;
+                refiningConditionBox.Width = 450;
+                refiningConditionBox.Height = 45;
                 refiningConditionBox.Visible = true;
                 refiningConditionBox.Multiline = true;
                 refiningConditionBox.ReadOnly = true;
@@ -209,7 +210,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 {
                     refiningConditionText += s.timing;
                 }
-               
+
+                if (s.denyCondition)
+                {
+                    refiningConditionText += System.Environment.NewLine + "していない";
+                }
+
                 refiningConditionBox.Text = refiningConditionText;
                 this.Controls.Add(refiningConditionLabel);
                 this.Controls.Add(refiningConditionBox);

@@ -77,7 +77,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
             set { ApplicationMethod.SetValue<int>(ref _detailSearchFlag, value, DetailSearchFlagChanged, this); }
         }
 
-        private int _deletedSearchConditionNum = -1; //消去された検索条件の番号。検索条件が消去されるたびに値が更新される。
+        //消去された検索条件セットの番号。検索条件セットが消去されるたびに値が更新される。
+        //（検索条件セットとは基本条件と絞込み条件のセットのこと）
+        private int _deletedSearchConditionNum = -1;
+
         public int DeletedSearchConditionNum
         {
             get { return _deletedSearchConditionNum; }
