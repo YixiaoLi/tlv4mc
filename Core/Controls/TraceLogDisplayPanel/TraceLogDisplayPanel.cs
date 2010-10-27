@@ -588,8 +588,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 ApplicationFactory.BlackBoard.DetailSearchFlag = 1;
             };
 
-            //        ApplicationFactory.BlackBoard.detailSearchConditionSettingFlag
-
 
             #endregion
 
@@ -1115,9 +1113,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             decimal offset = (Decimal.Parse(viewingTimeRangeToTextBox.Text) - (Decimal.Parse(viewingTimeRangeFromTextBox.Text))) / 2; //補正値の計算
             decimal relatedLocation = (jumpTime - start - offset) / (end - start);  //移動する場所がスクロール領域の何割目かを計算
             decimal scrollLocation = (int)((double)hScrollBar.Maximum * ((double)relatedLocation)); //移動場所 = スクロール領域の広さ × 割合
-            if (scrollLocation < 0)
+            if (scrollLocation < hScrollBar.Minimum)
             {
                 scrollLocation = hScrollBar.Minimum;
+            }
+
+            if (scrollLocation > hScrollBar.Maximum)
+            {
+                scrollLocation = hScrollBar.Maximum;
             }
 
             hScrollBar.Value = (int)scrollLocation;

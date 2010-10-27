@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.ConditionOpratior = new System.Windows.Forms.Panel();
+            this.goEnd = new System.Windows.Forms.Button();
+            this.goStart = new System.Windows.Forms.Button();
             this.denialCheckBox = new System.Windows.Forms.CheckBox();
             this.targetConditionLabel = new System.Windows.Forms.Label();
             this.targetConditionForm = new System.Windows.Forms.ComboBox();
@@ -61,6 +63,8 @@
             // 
             this.ConditionOpratior.BackColor = System.Drawing.Color.SeaShell;
             this.ConditionOpratior.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.ConditionOpratior.Controls.Add(this.goEnd);
+            this.ConditionOpratior.Controls.Add(this.goStart);
             this.ConditionOpratior.Controls.Add(this.denialCheckBox);
             this.ConditionOpratior.Controls.Add(this.targetConditionLabel);
             this.ConditionOpratior.Controls.Add(this.targetConditionForm);
@@ -90,6 +94,26 @@
             this.ConditionOpratior.Name = "ConditionOpratior";
             this.ConditionOpratior.Size = new System.Drawing.Size(604, 219);
             this.ConditionOpratior.TabIndex = 0;
+            // 
+            // goEnd
+            // 
+            this.goEnd.Location = new System.Drawing.Point(488, 91);
+            this.goEnd.Name = "goEnd";
+            this.goEnd.Size = new System.Drawing.Size(100, 23);
+            this.goEnd.TabIndex = 25;
+            this.goEnd.Text = "カーソルをEへ";
+            this.goEnd.UseVisualStyleBackColor = true;
+            this.goEnd.Click += new System.EventHandler(this.goEnd_Click);
+            // 
+            // goStart
+            // 
+            this.goStart.Location = new System.Drawing.Point(488, 66);
+            this.goStart.Name = "goStart";
+            this.goStart.Size = new System.Drawing.Size(102, 23);
+            this.goStart.TabIndex = 24;
+            this.goStart.Text = "カーソルをSへ";
+            this.goStart.UseVisualStyleBackColor = true;
+            this.goStart.Click += new System.EventHandler(this.goStart_Click);
             // 
             // denialCheckBox
             // 
@@ -385,6 +409,8 @@
         private System.Windows.Forms.Label targetConditionLabel;
         private System.Windows.Forms.Panel ConditionDisplayPanel;
         private System.Windows.Forms.CheckBox denialCheckBox;
+        private System.Windows.Forms.Button goStart;
+        private System.Windows.Forms.Button goEnd;
 
 
 
