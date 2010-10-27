@@ -3,80 +3,136 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
-using NU.OJL.MPRTOS.TLV.Core.Search.Filters;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
     class SimpleSearch : TraceLogSearcher
     {
+        private string _targetResource;
+        private string _targetRule;
+        private string _targetEvent;
+        private string _targetEventDetail;
         private List<VisualizeLog> _visLogs;
-        private decimal _normTime;
-        private SearchCondition _condition;
-        private SearchFilter _filter;
-
-        public SimpleSearch()
-        {
-            _normTime = 0;
-            _filter = new SimpleFilter();
+        private decimal _currentTime;
+        
+        enum SearchType{
+            Forward,
+            Backward,
+            Whole
         }
 
-        public void setSearchData(List<VisualizeLog> visLogs, SearchCondition condition, List<SearchCondition> refiningCondition)
+        public SimpleSearch(List<VisualizeLog> visLogs)
         {
+            _targetResource = null;
+            _targetRule = null;
+            _targetEvent = null;
+            _targetEventDetail = null;
             _visLogs = visLogs;
-            _condition = condition;
+            _currentTime = 0;
         }
 
-        public VisualizeLog searchForward(decimal normTime)
+        public void setSearchData(string resource, string rule, string ev, string detail, decimal time)
         {
-            _normTime = normTime;
-            VisualizeLog hitLog = null;
+            _targetResource = resource;
+            _targetRule = rule;
+            _targetEvent = ev;
+            _targetEventDetail = detail;
+            _currentTime = time;
+        }
+
+
+        public decimal searchForward()
+        {
+            decimal searchTime = -1;
+
             foreach (VisualizeLog visLog in _visLogs)
             {
-                if (_filter.checkSearchCondition(visLog, _condition, _normTime))
+                if (checkSearchCondition(SearchType.Forward, visLog))
                 {
-                    if (visLog.fromTime > _normTime)
-                    {
-                        hitLog = visLog;
-                        break;
-                    }
+                    searchTime = visLog.fromTime;
+                    break;
                 }
             }
-            return hitLog;
+
+            return searchTime;
         }
 
 
-        public VisualizeLog searchBackward(decimal normTime)
+        public decimal searchBackward()
         {
-            _normTime = normTime;
-            VisualizeLog hitLog = null ;
+            decimal searchTime = -1;
+
             for(int i = _visLogs.Count -1  ; i>0; i--)
             {
                 VisualizeLog visLog = _visLogs[i];
-                if (_filter.checkSearchCondition(visLog, _condition, _normTime))
+                if (checkSearchCondition(SearchType.Backward, visLog))
                 {
-                    if (visLog.fromTime < _normTime)
-                    {
-                        hitLog  = visLog;
-                        break;
-                    }
+                    searchTime = visLog.fromTime;
+                    break;
                 }
             }
-            return hitLog;
+            return searchTime;
         }
 
 
-        public List<VisualizeLog> searchWhole()
+        public decimal[] searchWhole()
         {
-            List<VisualizeLog> hitLogs = new List<VisualizeLog>();
+            List<decimal> searchTime = new List<decimal>();
+
             foreach (VisualizeLog visLog in _visLogs)
             {
-                if (_filter.checkSearchCondition(visLog, _condition, _normTime))
+                if (checkSearchCondition(SearchType.Whole, visLog))
                 {
-                    hitLogs.Add(visLog);
+                    searchTime.Add(visLog.fromTime);
                 }
             }
 
-            return hitLogs;
+            return searchTime.ToArray<decimal>();
         }
-    }
+
+
+        private Boolean checkSearchCondition(SearchType operation, VisualizeLog visLog)
+        {
+            if (!visLog.resourceName.Equals(_targetResource))
+                return false;
+
+            if (_targetRule != null)
+            {
+               if(!visLog.ruleName.Equals(_targetRule))
+                  return false;
+            }
+
+            if(_targetEvent != null)
+            {
+               if(!visLog.evntName.Equals(_targetEvent))
+                  return false;
+            }
+
+            if(_targetEventDetail != null)  // イベント詳細が指定されているかを確認
+            {
+                if (!visLog.evntDetail.Equals(_targetEventDetail))
+                    return false;
+            }
+
+
+            if(operation == SearchType.Forward)
+            {
+                if (_currentTime < visLog.fromTime){  return true;}
+                else{ return false;}
+            }
+            else if(operation == SearchType.Backward)
+            {
+                if (_currentTime > visLog.fromTime){  return true;}
+                else{ return false;}
+            }
+            else if (operation == SearchType.Whole)
+            {
+                return true; //全体検索は全時刻を返すため、現在時刻との比較は必要ない
+            }
+            else
+            {
+                return false;
+            }
+        }
+     }
 }

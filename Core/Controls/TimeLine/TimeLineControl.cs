@@ -63,7 +63,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		protected CursorModes _cursorMode = CursorModes.Normal;
 		protected CursorModes _lastCursorMode;
 		protected int _timeRadix = 10;
-        protected TraceLogVisualizerData _data;
+		protected TraceLogVisualizerData _data;
 		protected ToolStripMenuItem _addMarkerContextToolStripItem;
 		protected ToolStripMenuItem _delMarkerContextToolStripItem;
 		protected ContextMenuStrip _normalContextMenuStrip;
@@ -107,8 +107,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		public virtual bool SelectedTimeRangeTracked { get; set; }
 		public virtual TimeLine TimeLine { get; set; }
 		public virtual GeneralNamedCollection<TimeLineMarker> LocalTimeLineMarkers { get; private set; }
-
-        protected Boolean searchFlag = false;
 
   		public TimeLineControl()
 		{
@@ -165,12 +163,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) =>
             {
                 if (ApplicationFactory.BlackBoard.dragFlag == 0) { Refresh(); }
-            };
-
-            ApplicationFactory.BlackBoard.DetailSearchFlagChanged += (o, _e) =>
-            {
-                if (ApplicationFactory.BlackBoard.DetailSearchFlag == 0) { this.Enabled = true; }
-                else { this.Enabled = false; }
             };
             
             ApplicationData.FileContext.DataChanged += (o, _e) =>
