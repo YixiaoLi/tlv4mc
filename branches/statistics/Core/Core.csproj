@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7C37CBB0-B554-4268-8A92-D78714219A41}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -129,6 +129,11 @@
     <Compile Include="FileContext\SettingData\VisualizeRuleExplorerSetting.cs" />
     <Compile Include="FileContext\SettingData\TraceLogViewerSetting.cs" />
     <Compile Include="FileContext\SettingData\TimeLineMacroViewerSetting.cs" />
+    <Compile Include="FileContext\StatisticsData\Series\DataPoint.cs" />
+    <Compile Include="FileContext\StatisticsData\Series\DataPointList.cs" />
+    <Compile Include="FileContext\StatisticsData\Series\Series.cs" />
+    <Compile Include="FileContext\StatisticsData\Statistics.cs" />
+    <Compile Include="FileContext\StatisticsData\StatisticsData.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\ITraceLogParser.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\NullObjectOfTraceLogParser.cs" />
