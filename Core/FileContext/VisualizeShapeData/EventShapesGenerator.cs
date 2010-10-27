@@ -329,26 +329,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             s.SetDefaultValue();
                             s.ChackValidate();
 
-                            string tmp = from.ToString().Replace(" ","");
-                            string[] eventDetail = tmp.Split('=');
-                            if (eventDetail.Count() == 2)
-                            {
-                                _drawShapes.Add(new EventShape(fromTime, toTime, s, evnt, eventDetail[1]));
-                            }
-                            else
-                            {
-                                _drawShapes.Add(new EventShape(fromTime, toTime, s, evnt, null));
-                            }
-
-                            /*  if(fg.Condition != null)
-                              {
-                                  string[] detailEvent = fg.Condition.Split('=');
-                                  _drawShapes.Add(new EventShape(fromTime, toTime, s, evnt, detailEvent[2]));
-                              }else
-                              {
-                                  _drawShapes.Add(new EventShape(fromTime, toTime, s, evnt, null));
-                              }
-                              */
+                            _drawShapes.Add(new EventShape(fromTime, toTime, s, evnt));
                         }
                     }
                 }

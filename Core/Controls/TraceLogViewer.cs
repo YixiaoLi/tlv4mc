@@ -56,8 +56,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		private TraceLogVisualizerData _data;
 
-        private List<int> _SearchRowId = new List<int>();
-
 		public TraceLogViewer()
 		{
 			InitializeComponent();
@@ -74,9 +72,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			if (_data.ResourceData != null)
 			{
-                dataGridView.Columns["time"].HeaderText = "時間[" + _data.ResourceData.TimeScale + "]";
+				dataGridView.Columns["time"].HeaderText = "時間[" + _data.ResourceData.TimeScale + "]";
 
-                setDataGridViewDataSource();
+				setDataGridViewDataSource();
 			}
 			else
 			{
@@ -92,6 +90,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			{
 				setResourceVisibleChange(kvp.Key, kvp.Value);
 			}
+
 		}
 
 		private void resourceExplorerSettingBecameDirty(object sender, string propertyName)
@@ -216,10 +215,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						if (dataGridView.HitTest(_e.X, _e.Y).RowIndex != -1)
 						{
 							Time time = _dataSource[dataGridView.HitTest(_e.X, _e.Y).RowIndex].Time;
-                            if (ApplicationFactory.BlackBoard.DetailSearchFlag == 0) //詳細検索中出ない場合はカーソルの動きを許可
-                            {
-                                ApplicationFactory.BlackBoard.CursorTime = time;
-                            }
+							ApplicationFactory.BlackBoard.CursorTime = time;
 						}
 					}
 				};
@@ -244,54 +240,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					}
 				}));
 			};
-            ApplicationFactory.BlackBoard.SearchTimeChanged += (o, _e) =>
-            {
-                //前回の検索でフォーカスされた行の選択を解除
-                if (_SearchRowId.Count() != 0)
-                {
-                    foreach (int id in _SearchRowId)
-                    {
-                        dataGridView.Rows[id].Selected = false;
-                    }
-                    _SearchRowId.Clear();
-                }
-
-                //検索時刻に該当するログの行をフォーカス
-                foreach (Time oneOfSearchTime in ApplicationFactory.BlackBoard.SearchTime)
-                {
-                    foreach (TraceLogViewerRowData data in this._dataSource)
-                    {
-                        if (data.Time.Value == oneOfSearchTime.Value)
-                        {
-                            int num = (int)(data.Id - this._dataSource[0].Id);
-                            dataGridView.Rows[num].Selected = true;
-                            _SearchRowId.Add(num);
-                            // 可視化ファイルを変更すると、_dataSource内の各ログのIDがリセットされず 前回の最後のログのID + 1
-                            // から始まってしまう。そこで、num = data.Id - this._dataSource[0].Id として正しい ID を作した
-                        }
-                        if (data.Time.Value > oneOfSearchTime.Value)
-                        {
-                            break;
-                        }
-                    }
-                }
-
-                //スクロールを検索したイベントのログの位置へ移動する処理
-                int grid_height = dataGridView.Height;
-                int row_height = dataGridView.Rows[0].Height;
-                int visibleRowNum = grid_height / row_height;
-                int jumpLocation = _SearchRowId[0]-(visibleRowNum/2 - 1); //検索時刻のログがだいたい中央にくる位置   
-
-                if (jumpLocation > 0)
-                {
-                    dataGridView.FirstDisplayedScrollingRowIndex = jumpLocation;
-                }
-                else
-                {
-                    dataGridView.FirstDisplayedScrollingRowIndex = _SearchRowId[0];
-                }
-            };
-           
 		}
 
 		/// <summary>

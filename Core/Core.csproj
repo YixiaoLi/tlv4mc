@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7C37CBB0-B554-4268-8A92-D78714219A41}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -23,7 +23,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\NU.OJL.MPRTOS.TLV.Core.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -65,7 +64,6 @@
     <Compile Include="Base\INamedCollection.cs" />
     <Compile Include="Base\TimeLine.cs" />
     <Compile Include="Commands\AboutCommand.cs" />
-    <Compile Include="Commands\CaptureCommand.cs" />
     <Compile Include="Commands\ReloadCommand.cs" />
     <Compile Include="Controls\Forms\AboutForm.cs">
       <SubType>Form</SubType>
@@ -130,11 +128,7 @@
     <Compile Include="FileContext\SettingData\TraceLogViewerSetting.cs" />
     <Compile Include="FileContext\SettingData\TimeLineMacroViewerSetting.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
-    <Compile Include="FileContext\TraceLogData\TraceLogParser\ITraceLogParser.cs" />
-    <Compile Include="FileContext\TraceLogData\TraceLogParser\NullObjectOfTraceLogParser.cs" />
-    <Compile Include="FileContext\TraceLogData\TraceLogParser\TraceLogParser.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogGenerator.cs" />
-    <Compile Include="FileContext\VisualizeData\VisualizeLog.cs" />
     <Compile Include="FileContext\VisualizeShapeData\EventShapesGenerator.cs" />
     <Compile Include="FileContext\VisualizeData\Event.cs" />
     <Compile Include="FileContext\VisualizeData\EventType.cs" />
@@ -241,24 +235,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Search\ConditionBeans.cs" />
-    <Compile Include="Search\DetailSearchPanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Search\DetailSearchPanel.Designer.cs">
-      <DependentUpon>DetailSearchPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Search\DetailSearchWithTiming.cs" />
-    <Compile Include="Search\Filters\DetailFilter.cs" />
-    <Compile Include="Search\Filters\SimpleFilter.cs" />
-    <Compile Include="Search\Filters\TimingFilter.cs" />
-    <Compile Include="Search\SearchConditionPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Search\SearchCondition.cs" />
-    <Compile Include="Search\Filters\SearchFilter.cs" />
-    <Compile Include="Search\SimpleSearch.cs" />
-    <Compile Include="Search\TraceLogSearcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -273,7 +249,6 @@
     <Reference Include="System.ServiceModel.Web">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Threading, Version=1.0.3058.34407, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dll\System.Threading.dll</HintPath>
@@ -341,9 +316,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Search\DetailSearchPanel.resx">
-      <DependentUpon>DetailSearchPanel.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Settings.settings">
@@ -404,12 +376,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\zoomSelect.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\BackwardArrow.png" />
-    <None Include="Resources\camera.png" />
-    <Content Include="Resources\Eraser.PNG" />
-    <Content Include="Resources\ForwardArrow.png" />
-    <Content Include="Resources\SearchWhole.PNG" />
   </ItemGroup>
 </Project>

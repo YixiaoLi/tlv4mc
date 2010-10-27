@@ -86,19 +86,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			Markers.Add(key, new TimeLineMarker(key, time));
 		}
 
-        public void AddMarker(Color color, Time time)
-        {
-            string jam = new Random().Next().ToString();
-            string key = time.GetHashCode().ToString() + jam;
-            while (Markers.ContainsKey(key))
-            {
-                jam = new Random().Next().ToString();
-                key = time.GetHashCode().ToString() + jam;
-            }
-
-            Markers.Add(key, new TimeLineMarker(key, color, time));
-        }
-
 		public void DeleteMarker(string key)
 		{
 			Markers.Remove(key);

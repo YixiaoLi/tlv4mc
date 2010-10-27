@@ -63,7 +63,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		}
 
 		public TimeLineMarker(string name, Time time)
-            : this(name, ApplicationFactory.ColorFactory.RamdomColor(), time)
+			: this(name, ApplicationFactory.ColorFactory.RamdomColor(), time)
 		{
 
 		}

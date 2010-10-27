@@ -21,7 +21,7 @@
 					"Type":"Line",
 					"Points":["r(0),40%","r(0),80%"],
 					"Pen":{"Color":"ffffaa00","Width":1}
-		    	}
+				}
 			],
 			"dormantToRunnableShapes":[
 				{

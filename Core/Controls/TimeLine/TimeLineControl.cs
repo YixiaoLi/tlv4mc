@@ -57,13 +57,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			MarkerMode
 		}
 
-        
 		protected int _lastMouseMoveX;
 		protected int _mouseDownX = -1;
 		protected CursorModes _cursorMode = CursorModes.Normal;
 		protected CursorModes _lastCursorMode;
 		protected int _timeRadix = 10;
-        protected TraceLogVisualizerData _data;
+		protected TraceLogVisualizerData _data;
 		protected ToolStripMenuItem _addMarkerContextToolStripItem;
 		protected ToolStripMenuItem _delMarkerContextToolStripItem;
 		protected ContextMenuStrip _normalContextMenuStrip;
@@ -98,25 +97,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		// カーソルマーカーをマウスの動きに合わせて変化させるかどうか
 		public virtual bool CursorTimeTracked { get; set; }
-
-	
+		
 		// カーソルマーカーを描画するかどうか
 		public virtual bool CursorTimeDrawed { get; set; }
-
-
+		
 		public virtual bool SelectedTimeRangeTracked { get; set; }
 		public virtual TimeLine TimeLine { get; set; }
 		public virtual GeneralNamedCollection<TimeLineMarker> LocalTimeLineMarkers { get; private set; }
 
-        protected Boolean searchFlag = false;
-
-  		public TimeLineControl()
+		public TimeLineControl()
 		{
 			ResizeRedraw = true;
 			DoubleBuffered = true;
 			CursorTimeTracked = true;
 			CursorTimeDrawed = true;
-   			SelectedTimeRangeTracked = true;
+			SelectedTimeRangeTracked = true;
 			LocalTimeLineMarkers = new GeneralNamedCollection<TimeLineMarker>();
 			InitializeComponent();
 			_addMarkerContextToolStripItem = new ToolStripMenuItem("ここにマーカーを追加する");
@@ -148,7 +143,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		protected void addMarkerContextToolStripItemClick(object sender, EventArgs e)
 		{
-            ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(ApplicationFactory.BlackBoard.CursorTime);
+			ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.AddMarker(ApplicationFactory.BlackBoard.CursorTime);
 		}
 
 		protected void delMarkerContextToolStripItemClick(object sender, EventArgs e)
@@ -160,35 +155,25 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			base.OnLoad(e);
 
-            this.ApplyNativeScroll();
+			this.ApplyNativeScroll();
 
-            ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) =>
-            {
-                if (ApplicationFactory.BlackBoard.dragFlag == 0) { Refresh(); }
-            };
+			ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) => { Refresh(); };
 
-            ApplicationFactory.BlackBoard.DetailSearchFlagChanged += (o, _e) =>
-            {
-                if (ApplicationFactory.BlackBoard.DetailSearchFlag == 0) { this.Enabled = true; }
-                else { this.Enabled = false; }
-            };
-            
-            ApplicationData.FileContext.DataChanged += (o, _e) =>
+			ApplicationData.FileContext.DataChanged += (o, _e) =>
 			{
-                Invoke((MethodInvoker)(() =>
-                {
-                    if (ApplicationData.FileContext.Data == null)
-                    {
-                        ClearData();
-                    }
-                    else
-                    {
-                        SetData(ApplicationData.FileContext.Data);
-                    }
-                }));
-            };
+				Invoke((MethodInvoker)(() =>
+				{
+					if (ApplicationData.FileContext.Data == null)
+					{
+						ClearData();
+					}
+					else
+					{
+						SetData(ApplicationData.FileContext.Data);
+					}
+				}));
+			};
 		}
-
 
 		public virtual void SetData(TraceLogVisualizerData data)
 		{
@@ -208,7 +193,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				else
 					ContextMenuStrip = _markerSelectedContextMenuStrip;
 
-                Refresh();
+				Refresh();
 			};
 
 			_timeLineMarkerManager.Markers.CollectionChanged += (o, e) =>
@@ -218,14 +203,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				};
 		}
 
-
 		public virtual void Draw(Graphics g, Rectangle rect)
 		{
-            // TimeLineScale で override されている
+
 		}
 
-
-        public virtual void ClearData()
+		public virtual void ClearData()
 		{
 			_timeRadix = 10;
 			TimeLine = null;
@@ -233,27 +216,28 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			_timeLineMarkerManager = null;
 		}
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-            Draw(e.Graphics, e.ClipRectangle); //時刻目盛部分の描画
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			base.OnPaint(e);
+			Draw(e.Graphics, e.ClipRectangle);
 
+			if (_data != null)
+			{
 
-            if (_data != null)
-            {
-                DrawCursor(e.Graphics, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, ApplicationFactory.BlackBoard.CursorTime);
+				DrawCursor(e.Graphics, _data.SettingData.TraceLogDisplayPanelSetting.CursorColor, ApplicationFactory.BlackBoard.CursorTime);
 
-                foreach (TimeLineMarker tlm in LocalTimeLineMarkers)
-                {
-                    DrawCursor(e.Graphics, tlm.Color, tlm.Time);
-                }
+				foreach (TimeLineMarker tlm in LocalTimeLineMarkers)
+				{
+					DrawCursor(e.Graphics, tlm.Color, tlm.Time);
+				}
 
-                foreach (TimeLineMarker tlm in _globalTimeLineMarkers)
-                {
-                    DrawMarker(e.Graphics, tlm);
-                }
-            }
-        }
+				foreach (TimeLineMarker tlm in _globalTimeLineMarkers)
+				{
+					DrawMarker(e.Graphics, tlm);
+				}
+
+			}
+		}
 
 		public virtual void DrawCursor(Graphics g, Color color, Time time)
 		{
@@ -264,13 +248,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		{
 			if (CursorTimeDrawed && !ApplicationFactory.BlackBoard.CursorTime.IsEmpty && TimeLine != null)
 			{
-                float x = time.ToX(TimeLine.FromTime, TimeLine.ToTime, rect.Width);
-                if (rect.X + x > Width)
-                {
-                    return;
-                }
-                g.DrawLine(new System.Drawing.Pen(Color.FromArgb(200, color)), rect.X + x, rect.Y, rect.X + x, rect.Height);
+				float x = time.ToX(TimeLine.FromTime, TimeLine.ToTime, rect.Width);
 
+				if (rect.X + x > Width)
+					return;
+
+				g.DrawLine(new System.Drawing.Pen(Color.FromArgb(200, color)), rect.X + x, rect.Y, rect.X + x, rect.Height);
 			}
 		}
 
@@ -339,10 +322,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 			}
 
-            if (CursorTimeTracked)
-            {
-                ApplicationFactory.BlackBoard.CursorTime = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x);
-            }
+			if (CursorTimeTracked)
+			{
+				ApplicationFactory.BlackBoard.CursorTime = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x);
+			}
 
 			_lastMouseMoveX = x;
 		}
@@ -379,7 +362,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 					}
 				}
 
-                Refresh();
+				Refresh();
 			}
 		}
 
