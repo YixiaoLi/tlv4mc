@@ -47,55 +47,24 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public EventHandler<GeneralChangedEventArgs<Time>> CursorTimeChanged;
         public EventHandler<GeneralChangedEventArgs<Pair<Time, Time>>> SelectedTimeRangeChanged;
         public EventHandler<GeneralChangedEventArgs<List<Time>>> SearchTimeChanged;
-        public EventHandler<GeneralChangedEventArgs<int>> DetailSearchFlagChanged;
-        public EventHandler<GeneralChangedEventArgs<int>> DeletedSearchConditionNumChanged;
 
 		private Time _cursorTime;
         public Time CursorTime { get { return _cursorTime; } set { ApplicationMethod.SetValue<Time>(ref _cursorTime, value, CursorTimeChanged, this); } }
 
-        //検索時刻を記録する。これが変化するとTraceLogViewerにおいて表示ログのフォーカス位置が更新される
-        private List<Time> _searchTime; 
+        //検索時刻を記録する。これの変化によってTraceLogViewer が
+        private List<Time> _searchTime;
         public List<Time> SearchTime { get { return _searchTime; } set { ApplicationMethod.SetValue<List<Time>>(ref _searchTime, value, SearchTimeChanged, this);} }
 
 		private Pair<Time, Time> _selectedTimeChange;
 		public Pair<Time, Time> SelectedTimeChange { get { return _selectedTimeChange; } set { ApplicationMethod.SetValue<Pair<Time, Time>>(ref _selectedTimeChange, value, SelectedTimeRangeChanged, this); } }
 
-        //ログファイルとリソースファイルをドラッグしていることを示すフラグ
-        //これが1のときは、TraceLogDisplayPanel, MacroViewer,TraceLogViewer において、
-        //カーソルが動かないようにする
         public int dragFlag = 0;
-
-        //一つの検索条件に対する絞り込み条件が複数ある場合、それらが ANDでつながれるのか、それとも OR でつながれるのかを表す
-        public Boolean isAnd = false;
-
-        
-        private int _detailSearchFlag = 0; //これが１のときは詳細検索フォームが出現していることを表す
-                                           //（詳細検索フォームが出現中は、TraceLogDisplayPanelを操作不能にするためのフラグ）
-        public int DetailSearchFlag
-        {
-            get { return _detailSearchFlag; }
-            set { ApplicationMethod.SetValue<int>(ref _detailSearchFlag, value, DetailSearchFlagChanged, this); }
-        }
-
-        //消去された検索条件セットの番号。検索条件セットが消去されるたびに値が更新される。
-        //（検索条件セットとは基本条件と絞込み条件のセットのこと）
-        private int _deletedSearchConditionNum = -1;
-
-        public int DeletedSearchConditionNum
-        {
-            get { return _deletedSearchConditionNum; }
-            set { ApplicationMethod.SetValue<int>(ref _deletedSearchConditionNum, value, DeletedSearchConditionNumChanged, this); }
-        }
-
-
-
 
 		public ApplicationBlackBoard()
 		{
 			_cursorTime = Time.Empty;
             _searchTime = new List<Time>();
 			_selectedTimeChange = null;
-            DetailSearchFlag = _detailSearchFlag;
 		}
 	}
 }

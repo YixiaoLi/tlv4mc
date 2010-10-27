@@ -8,39 +8,43 @@
  *  Copyright (C) 2004-2008 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  * 
- *  ╛х╡н├°║√╘в╝╘д╧бд░╩▓╝д╬(1)б┴(4)д╬╛Є╖БEЄ╦■д┐д╣╛БEчд╦╕┬дъбд╦▄е╜е╒е╚ежез
+ *  ╛х╡н├°║ю╕в╝╘д╧бд░╩▓╝д╬(1)б┴(4)д╬╛Є╖ядЄ╦■д┐д╣╛ь╣чд╦╕┬дъбд╦▄е╜е╒е╚ежез
  *  евб╩╦▄е╜е╒е╚ежезевдЄ▓■╩╤д╖д┐дтд╬дЄ┤▐дрбе░╩▓╝╞▒д╕б╦дЄ╗╚═╤бж╩г└╜бж▓■
- *  ╩╤бж║╞╟█╔█б╩░╩▓╝бд═°═╤д╚╕╞д╓б╦д╣дБE│д╚дЄ╠╡╜■д╟╡Ў┬·д╣дБEе
- *  (1) ╦▄е╜е╒е╚ежезевдЄе╜б╝е╣е│б╝е╔д╬╖┴д╟═°═╤д╣дБEБEчд╦д╧бд╛х╡нд╬├°║БE *      ╕в╔╜╝ибдд│д╬═°═╤╛Є╖БEкдшд╙▓╝╡нд╬╠╡╩▌╛┌╡м─ъдмбдд╜д╬д▐д▐д╬╖┴д╟е╜б╝
- *      е╣е│б╝е╔├цд╦┤▐д▐дБE╞дддБE│д╚бе
- *  (2) ╦▄е╜е╒е╚ежезевдЄбдещеде╓ещеБE┴╝░д╩д╔бд┬╛д╬е╜е╒е╚ежезев│л╚пд╦╗╚
- *      ═╤д╟дндБE┴д╟║╞╟█╔█д╣дБEБEчд╦д╧бд║╞╟█╔█д╦╚╝дже╔енехесеєе╚б╩═°═╤
- *      ╝╘е▐е╦ехевеБE╩д╔б╦д╦бд╛х╡нд╬├°║√╘в╔╜╝ибдд│д╬═°═╤╛Є╖БEкдшд╙▓╝╡н
- *      д╬╠╡╩▌╛┌╡м─ъдЄ╖╟║▄д╣дБE│д╚бе
- *  (3) ╦▄е╜е╒е╚ежезевдЄбд╡б┤БE╦┴╚д▀╣■дрд╩д╔бд┬╛д╬е╜е╒е╚ежезев│л╚пд╦╗╚
- *      ═╤д╟днд╩дд╖┴д╟║╞╟█╔█д╣дБEБEчд╦д╧бд╝бд╬ддд║дБEлд╬╛Є╖БEЄ╦■д┐д╣д│
+ *  ╩╤бж║╞╟█╔█б╩░╩▓╝бд═°═╤д╚╕╞д╓б╦д╣дыд│д╚дЄ╠╡╜■д╟╡Ў┬·д╣дыбе
+ *  (1) ╦▄е╜е╒е╚ежезевдЄе╜б╝е╣е│б╝е╔д╬╖┴д╟═°═╤д╣ды╛ь╣чд╦д╧бд╛х╡нд╬├°║ю
+ *      ╕в╔╜╝ибдд│д╬═°═╤╛Є╖ядкдшд╙▓╝╡нд╬╠╡╩▌╛┌╡м─ъдмбдд╜д╬д▐д▐д╬╖┴д╟е╜б╝
+ *      е╣е│б╝е╔├цд╦┤▐д▐дьд╞дддыд│д╚бе
+ *  (2) ╦▄е╜е╒е╚ежезевдЄбдещеде╓ещеъ╖┴╝░д╩д╔бд┬╛д╬е╜е╒е╚ежезев│л╚пд╦╗╚
+ *      ═╤д╟днды╖┴д╟║╞╟█╔█д╣ды╛ь╣чд╦д╧бд║╞╟█╔█д╦╚╝дже╔енехесеєе╚б╩═°═╤
+ *      ╝╘е▐е╦ехевеыд╩д╔б╦д╦бд╛х╡нд╬├°║ю╕в╔╜╝ибдд│д╬═°═╤╛Є╖ядкдшд╙▓╝╡н
+ *      д╬╠╡╩▌╛┌╡м─ъдЄ╖╟║▄д╣дыд│д╚бе
+ *  (3) ╦▄е╜е╒е╚ежезевдЄбд╡б┤яд╦┴╚д▀╣■дрд╩д╔бд┬╛д╬е╜е╒е╚ежезев│л╚пд╦╗╚
+ *      ═╤д╟днд╩дд╖┴д╟║╞╟█╔█д╣ды╛ь╣чд╦д╧бд╝бд╬ддд║дьдлд╬╛Є╖ядЄ╦■д┐д╣д│
  *      д╚бе
- *    (a) ║╞╟█╔█д╦╚╝дже╔енехесеєе╚б╩═°═╤╝╘е▐е╦ехевеБE╩д╔б╦д╦бд╛х╡нд╬├БE *        ║√╘в╔╜╝ибдд│д╬═°═╤╛Є╖БEкдшд╙▓╝╡нд╬╠╡╩▌╛┌╡м─ъдЄ╖╟║▄д╣дБE│д╚бе
- *    (b) ║╞╟█╔█д╬╖┴┬╓дЄбд╩╠д╦─ъдсдБE¤╦бд╦дшд├д╞бдTOPPERSе╫е·┴╕езепе╚д╦
- *        ╩є╣Ёд╣дБE│д╚бе
- *  (4) ╦▄е╜е╒е╚ежезевд╬═°═╤д╦дшдБE╛└▄┼кд▐д┐д╧┤╓└▄┼кд╦└╕д╕дБEддлд╩дБE╗
- *      │▓длдщдтбд╛х╡н├°║√╘в╝╘дкдшд╙TOPPERSе╫е·┴╕езепе╚дЄ╠╚└╒д╣дБE│д╚бе
- *      д▐д┐бд╦▄е╜е╒е╚ежезевд╬ецб╝е╢д▐д┐д╧еиеєе╔ецб╝е╢длдщд╬дддлд╩дБE¤
- *      ═│д╦┤Ёд┼дп└┴╡сдлдщдтбд╛х╡н├°║√╘в╝╘дкдшд╙TOPPERSе╫е·┴╕езепе╚дБE *      ╠╚└╒д╣дБE│д╚бе
+ *    (a) ║╞╟█╔█д╦╚╝дже╔енехесеєе╚б╩═°═╤╝╘е▐е╦ехевеыд╩д╔б╦д╦бд╛х╡нд╬├°
+ *        ║ю╕в╔╜╝ибдд│д╬═°═╤╛Є╖ядкдшд╙▓╝╡нд╬╠╡╩▌╛┌╡м─ъдЄ╖╟║▄д╣дыд│д╚бе
+ *    (b) ║╞╟█╔█д╬╖┴┬╓дЄбд╩╠д╦─ъдсды╩¤╦бд╦дшд├д╞бдTOPPERSе╫еэе╕езепе╚д╦
+ *        ╩є╣Ёд╣дыд│д╚бе
+ *  (4) ╦▄е╜е╒е╚ежезевд╬═°═╤д╦дшдъ─╛└▄┼кд▐д┐д╧┤╓└▄┼кд╦└╕д╕дыдддлд╩ды┬╗
+ *      │▓длдщдтбд╛х╡н├°║ю╕в╝╘дкдшд╙TOPPERSе╫еэе╕езепе╚дЄ╠╚└╒д╣дыд│д╚бе
+ *      д▐д┐бд╦▄е╜е╒е╚ежезевд╬ецб╝е╢д▐д┐д╧еиеєе╔ецб╝е╢длдщд╬дддлд╩ды═¤
+ *      ═│д╦┤Ёд┼дп└┴╡сдлдщдтбд╛х╡н├°║ю╕в╝╘дкдшд╙TOPPERSе╫еэе╕езепе╚дЄ
+ *      ╠╚└╒д╣дыд│д╚бе
  * 
- *  ╦▄е╜е╒е╚ежезевд╧бд╠╡╩▌╛┌д╟─є╢бд╡дБE╞дддБEтд╬д╟двдБEе╛х╡н├°║√╘в╝╘дк
- *  дшд╙TOPPERSе╫е·┴╕езепе╚д╧бд╦▄е╜е╒е╚ежезевд╦┤╪д╖д╞бд╞├─ъд╬╗╚═╤╠▄┼к
- *  д╦┬╨д╣дБEм╣ч└ндт┤▐дсд╞бддддлд╩дБE▌╛┌дт╣╘дБE╩ддбед▐д┐бд╦▄е╜е╒е╚ежез
- *  евд╬═°═╤д╦дшдБE╛└▄┼кд▐д┐д╧┤╓└▄┼кд╦└╕д╕д┐дддлд╩дБE╗│▓д╦┤╪д╖д╞дтбдд╜
- *  д╬└╒╟ддЄ╔щдБE╩ддбе
+ *  ╦▄е╜е╒е╚ежезевд╧бд╠╡╩▌╛┌д╟─є╢бд╡дьд╞дддыдтд╬д╟двдыбе╛х╡н├°║ю╕в╝╘дк
+ *  дшд╙TOPPERSе╫еэе╕езепе╚д╧бд╦▄е╜е╒е╚ежезевд╦┤╪д╖д╞бд╞├─ъд╬╗╚═╤╠▄┼к
+ *  д╦┬╨д╣ды┼м╣ч└ндт┤▐дсд╞бддддлд╩ды╩▌╛┌дт╣╘дяд╩ддбед▐д┐бд╦▄е╜е╒е╚ежез
+ *  евд╬═°═╤д╦дшдъ─╛└▄┼кд▐д┐д╧┤╓└▄┼кд╦└╕д╕д┐дддлд╩ды┬╗│▓д╦┤╪д╖д╞дтбдд╜
+ *  д╬└╒╟ддЄ╔щдяд╩ддбе
  * 
  *  @(#) $Id: trace_config.h 264 2007-07-12 08:23:10Z hiro $
  */
 
 /*
- *		е╚еБE╝е╣е·┴░д╦┤╪д╣дБE▀─БE *
- *  д│д╬едеєепеБE╝е╔е╒ебедеБE╧бдtarget_config.hдкдшд╙target_syssvc.hд╬
- *  д▀длдщедеєепеБE╝е╔д╡дБEБEе┬╛д╬е╒ебедеБEлдщ─╛└▄едеєепеБE╝е╔д╖д╞д╧д╩
+ *		е╚еьб╝е╣еэе░д╦┤╪д╣ды└▀─ъ
+ *
+ *  д│д╬едеєепеыб╝е╔е╒ебедеыд╧бдtarget_config.hдкдшд╙target_syssvc.hд╬
+ *  д▀длдщедеєепеыб╝е╔д╡дьдыбе┬╛д╬е╒ебедеыдлдщ─╛└▄едеєепеыб╝е╔д╖д╞д╧д╩
  *  дщд╩ддбе
  */
 
@@ -53,21 +57,21 @@
 #include "kernel_fncode.h"
 
 /*
- *  е╚еБE╝е╣е·┴░е╨е├е╒ебд╬е╡еде║
+ *  е╚еьб╝е╣еэе░е╨е├е╒ебд╬е╡еде║
  */
 #ifndef TCNT_TRACE_BUFFER
 #define TCNT_TRACE_BUFFER	8192
 #endif /* TCNT_TRACE_BUFFER */
 
 /*
- *  е╚еБE╝е╣╗■╣БEш╞└═╤е╧б╝е╔ежезевд╬╜щ┤БE╜
+ *  е╚еьб╝е╣╗■╣я╝ш╞└═╤е╧б╝е╔ежезевд╬╜щ┤№▓╜
  */
 #ifndef TRACE_HW_INIT
 #define TRACE_HW_INIT()
 #endif  /* TRACE_HW_INIT */
 
 /*
- *  е╚еБE╝е╣╗■╣БE╬╝ш╞└╩¤╦б
+ *  е╚еьб╝е╣╗■╣яд╬╝ш╞└╩¤╦б
  */
 #ifndef TRACE_GET_TIM
 #ifdef TOPPERS_SUPPORT_GET_UTM
@@ -80,79 +84,81 @@
 #ifndef TOPPERS_MACRO_ONLY
 
 /*
- *  е╚еБE╝е╣е·┴░д╬е╟б╝е┐╣╜┬д
+ *  е╚еьб╝е╣еэе░д╬е╟б╝е┐╣╜┬д
  *
- *  е╖е╣е╞ере·┴░╡б╟╜д╬е·┴░╛Ё╩єд╬е╟б╝е┐╣╜┬дд╚╞▒д╕дтд╬дЄ═╤дддБEе
+ *  е╖е╣е╞ереэе░╡б╟╜д╬еэе░╛Ё╩єд╬е╟б╝е┐╣╜┬дд╚╞▒д╕дтд╬дЄ═╤дддыбе
  */
 #include <t_syslog.h>
 typedef	SYSLOG	TRACE;
 
 /*
- *  е╚еБE╝е╣е·┴░е╨е├е╒ебд╚д╜дБE╦евепе╗е╣д╣дБE┐дсд╬е▌едеєе┐
+ *  е╚еьб╝е╣еэе░е╨е├е╒ебд╚д╜дьд╦евепе╗е╣д╣дыд┐дсд╬е▌едеєе┐
  */
-extern TRACE	trace_buffer[];		/* е╚еБE╝е╣е·┴░е╨е├е╒еб */
-extern uint_t	trace_count;		/* е╚еБE╝е╣е·┴░е╨е├е╒еб├цд╬е·┴░д╬┐БE*/
-extern uint_t	trace_head;			/* └ш╞мд╬е╚еБE╝е╣е·┴░д╬│╩╟╝░╠├╓ */
-extern uint_t	trace_tail;			/* ╝бд╬е╚еБE╝е╣е·┴░д╬│╩╟╝░╠├╓ */
-extern uint_t	trace_lost;			/* ╝║дБEБE┐е╚еБE╝е╣д╬┐БE*/
+extern TRACE	trace_buffer[];		/* е╚еьб╝е╣еэе░е╨е├е╒еб */
+extern uint_t	trace_count;		/* е╚еьб╝е╣еэе░е╨е├е╒еб├цд╬еэе░д╬┐Ї */
+extern uint_t	trace_head;			/* └ш╞мд╬е╚еьб╝е╣еэе░д╬│╩╟╝░╠├╓ */
+extern uint_t	trace_tail;			/* ╝бд╬е╚еьб╝е╣еэе░д╬│╩╟╝░╠├╓ */
+extern uint_t	trace_lost;			/* ╝║дядьд┐е╚еьб╝е╣д╬┐Ї */
 
 #endif /* TOPPERS_MACRO_ONLY */
 
 /*
- *  е╚еБE╝е╣етб╝е╔д╬─БE┴
+ *  е╚еьб╝е╣етб╝е╔д╬─ъ╡┴
  */
-#define TRACE_STOP			UINT_C(0x00)	/* е╚еБE╝е╣─ф╗▀ */
-#define TRACE_RINGBUF		UINT_C(0x01)	/* еБEєе░е╨е├е╒ебетб╝е╔ */
+#define TRACE_STOP			UINT_C(0x00)	/* е╚еьб╝е╣─ф╗▀ */
+#define TRACE_RINGBUF		UINT_C(0x01)	/* еъеєе░е╨е├е╒ебетб╝е╔ */
 #define TRACE_AUTOSTOP		UINT_C(0x02)	/* ╝л╞░─ф╗▀етб╝е╔ */
-#define TRACE_CLEAR			UINT_C(0x04)	/* е╚еБE╝е╣е·┴░д╬епеБEв */
+#define TRACE_CLEAR			UINT_C(0x04)	/* е╚еьб╝е╣еэе░д╬епеъев */
 
 #ifndef TOPPERS_MACRO_ONLY
 
 /*
- *  е╚еБE╝е╣е·┴░╡б╟╜д╬╜щ┤БE╜
+ *  е╚еьб╝е╣еэе░╡б╟╜д╬╜щ┤№▓╜
  *
- *  е╚еБE╝е╣е·┴░╡б╟╜дЄ╜щ┤БE╜д╣дБEе╜щ┤БE╜еБE╝е┴еєд╚д╖д╞┼╨╧┐д╣дБE│д╚дЄ┴█
- *  ─ъд╖д╞дддБEе░·┐Їд╦дшдБEбд╬╞░║√└Є╣╘джбе
+ *  е╚еьб╝е╣еэе░╡б╟╜дЄ╜щ┤№▓╜д╣дыбе╜щ┤№▓╜еыб╝е┴еєд╚д╖д╞┼╨╧┐д╣дыд│д╚дЄ┴█
+ *  ─ъд╖д╞дддыбе░·┐Їд╦дшдъ╝бд╬╞░║юдЄ╣╘джбе
  *
- *  TRACE_STOPбз╜щ┤БE╜д╬д▀д╟е╚еБE╝е╣д╧│л╗╧д╖д╩ддбе
- *  TRACE_RINGBUFбзеБEєе░е╨е├е╒ебетб╝е╔д╟е╚еБE╝е╣дЄ│л╗╧бе
- *  TRACE_AUTOSTOPбз╝л╞░─ф╗▀етб╝е╔д╟е╚еБE╝е╣дЄ│л╗╧бе
+ *  TRACE_STOPбз╜щ┤№▓╜д╬д▀д╟е╚еьб╝е╣д╧│л╗╧д╖д╩ддбе
+ *  TRACE_RINGBUFбзеъеєе░е╨е├е╒ебетб╝е╔д╟е╚еьб╝е╣дЄ│л╗╧бе
+ *  TRACE_AUTOSTOPбз╝л╞░─ф╗▀етб╝е╔д╟е╚еьб╝е╣дЄ│л╗╧бе
  */
 extern void	trace_initialize(intptr_t exinf);
 
 /*
- *  е╚еБE╝е╣е·┴░д╬│л╗╧
+ *  е╚еьб╝е╣еэе░д╬│л╗╧
  *
- *  е╚еБE╝е╣е·┴░д╬╡н╧┐дЄ│л╗╧б┐─ф╗▀д╣дБEе░·┐Їд╦дшдБEбд╬╞░║√└Є╣╘джбе
+ *  е╚еьб╝е╣еэе░д╬╡н╧┐дЄ│л╗╧б┐─ф╗▀д╣дыбе░·┐Їд╦дшдъ╝бд╬╞░║юдЄ╣╘джбе
  *
- *  TRACE_STOPбзе╚еБE╝е╣дЄ─ф╗▀бе
- *  TRACE_RINGBUFбзеБEєе░е╨е├е╒ебетб╝е╔д╟е╚еБE╝е╣дЄ│л╗╧бе
- *  TRACE_AUTOSTOPбз╝л╞░─ф╗▀етб╝е╔д╟е╚еБE╝е╣дЄ│л╗╧бе
- *  TRACE_CLEARбзе╚еБE╝е╣е·┴░дЄепеБEвбе
+ *  TRACE_STOPбзе╚еьб╝е╣дЄ─ф╗▀бе
+ *  TRACE_RINGBUFбзеъеєе░е╨е├е╒ебетб╝е╔д╟е╚еьб╝е╣дЄ│л╗╧бе
+ *  TRACE_AUTOSTOPбз╝л╞░─ф╗▀етб╝е╔д╟е╚еьб╝е╣дЄ│л╗╧бе
+ *  TRACE_CLEARбзе╚еьб╝е╣еэе░дЄепеъевбе
  */
 extern ER	trace_sta_log(MODE mode);
 
 /*
- *  е╚еБE╝е╣е·┴░д╬╜ё╣■д▀
+ *  е╚еьб╝е╣еэе░д╬╜ё╣■д▀
  */
 extern ER	trace_wri_log(TRACE *p_trace);
 
 /*
- *  е╚еБE╝е╣е·┴░д╬╞╔╜╨д╖
+ *  е╚еьб╝е╣еэе░д╬╞╔╜╨д╖
  */
 extern ER	trace_rea_log(TRACE *p_trace);
 
 /* 
- *  е╚еБE╝е╣е·┴░д╬е└еєе╫б╩trace_dump.cб╦
+ *  е╚еьб╝е╣еэе░д╬е└еєе╫б╩trace_dump.cб╦
  *
- *  е╚еБE╝е╣е·┴░дЄе└еєе╫д╣дБEе╜к╬╗╜ш═¤еБE╝е┴еєд╚д╖д╞┼╨╧┐д╣дБE│д╚дт┴█─БE *  д╖д╞дддБEе░·┐Їд╚д╖д╞бде└еєе╫└шд╚д╩дБE╕╗·╜╨╬╧┤╪┐Їд╪д╬е▌едеєе┐дЄ┼╧д╣бе
- *  е┐б╝е▓е├е╚░═┬╕д╬─уеБE┘еБE╕╗·╜╨╬╧дЄ═°═╤д╣дБEБEчд╦д╧бдtarget_putcдЄ┼╧
+ *  е╚еьб╝е╣еэе░дЄе└еєе╫д╣дыбе╜к╬╗╜ш═¤еыб╝е┴еєд╚д╖д╞┼╨╧┐д╣дыд│д╚дт┴█─ъ
+ *  д╖д╞дддыбе░·┐Їд╚д╖д╞бде└еєе╫└шд╚д╩ды╩╕╗·╜╨╬╧┤╪┐Їд╪д╬е▌едеєе┐дЄ┼╧д╣бе
+ *  е┐б╝е▓е├е╚░═┬╕д╬─уеье┘еы╩╕╗·╜╨╬╧дЄ═°═╤д╣ды╛ь╣чд╦д╧бдtarget_putcдЄ┼╧
  *  д╣бе
  */
 extern void	trace_dump(intptr_t exinf);
 
 /*
- *  е╚еБE╝е╣е·┴░дЄ╜╨╬╧д╣дБE┐дсд╬ещеде╓ещеБE╪┐БE */
+ *  е╚еьб╝е╣еэе░дЄ╜╨╬╧д╣дыд┐дсд╬ещеде╓ещеъ┤╪┐Ї
+ */
 extern void	trace_write_0(uint_t type);
 extern void	trace_write_1(uint_t type, intptr_t arg1);
 extern void	trace_write_2(uint_t type, intptr_t arg1, intptr_t arg2);
@@ -165,7 +171,8 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
                               intptr_t arg4, intptr_t arg5, intptr_t arg6);
 
 /*
- *  е╚еБE╝е╣е·┴░дЄ╜╨╬╧д╣дБE┐дсд╬е▐епеБE */
+ *  е╚еьб╝е╣еэе░дЄ╜╨╬╧д╣дыд┐дсд╬е▐епеэ
+ */
 
 #define trace_0(type) \
 				trace_write_0(type)
@@ -197,42 +204,44 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 #endif /* TOPPERS_MACRO_ONLY */
 
 /*
- *  е╚еБE╝е╣е·┴░╩¤╦бд╬└▀─БE */
+ *  е╚еьб╝е╣еэе░╩¤╦бд╬└▀─ъ
+ */
 
 /*
- *  │ф╣■д▀е╧еєе╔ещд╬┴░╕БE */
+ *  │ф╣■д▀е╧еєе╔ещд╬┴░╕х
+ */
 #define LOG_INH_ENTER(inhno) trace_1(LOG_TYPE_INH|LOG_ENTER, inhno)
 #define LOG_INH_LEAVE(inhno) trace_1(LOG_TYPE_INH|LOG_LEAVE, inhno)
 
 /*
- *  │ф╣■д▀е╡б╝е╙е╣еБE╝е┴еєд╬┴░╕БE */
+ *  │ф╣■д▀е╡б╝е╙е╣еыб╝е┴еєд╬┴░╕х
+ */
 #define LOG_ISR_ENTER(intno) trace_1(LOG_TYPE_ISR|LOG_ENTER, intno)
 #define LOG_ISR_LEAVE(intno) trace_1(LOG_TYPE_ISR|LOG_LEAVE, intno)
 
 /*
- *  ╝■┤БE╧еєе╔ещд╬┴░╕БE */
+ *  ╝■┤№е╧еєе╔ещд╬┴░╕х
+ */
 #define LOG_CYC_ENTER(p_cyccb) trace_1(LOG_TYPE_CYC|LOG_ENTER, p_cyccb)
 #define LOG_CYC_LEAVE(p_cyccb) trace_1(LOG_TYPE_CYC|LOG_LEAVE, p_cyccb)
 
 /*
- *  евещб╝ере╧еєе╔ещд╬┴░╕БE */
+ *  евещб╝ере╧еєе╔ещд╬┴░╕х
+ */
 #define LOG_ALM_ENTER(p_almcb) trace_1(LOG_TYPE_ALM|LOG_ENTER, p_almcb)
 #define LOG_ALM_LEAVE(p_almcb) trace_1(LOG_TYPE_ALM|LOG_LEAVE, p_almcb)
 
 /*
- *  CPU╬у│░е╧еєе╔ещд╬┴░╕БE */
+ *  CPU╬у│░е╧еєе╔ещд╬┴░╕х
+ */
 #define LOG_EXC_ENTER(excno) trace_1(LOG_TYPE_EXC|LOG_ENTER, excno)
 #define LOG_EXC_LEAVE(excno) trace_1(LOG_TYPE_EXC|LOG_LEAVE, excno)
 
 /*
- *  е┐е╣еп╬у│░╜ш═¤еБE╝е┴еБE */
+ *  е┐е╣еп╬у│░╜ш═¤еыб╝е┴еє
+ */
 #define LOG_TEX_ENTER(p_tcb, texptn) trace_2(LOG_TYPE_TEX|LOG_ENTER, p_tcb, texptn)
-#if TKERNEL_PRVER < 0x1050
-#define LOG_TEX_LEAVE(p_tcb, texptn) trace_2(LOG_TYPE_TEX|LOG_LEAVE,p_tcb, texptn)
-#else
-#define LOG_TEX_LEAVE(p_tcb) trace_2(LOG_TYPE_TEX|LOG_LEAVE, p_tcb, texptn)
-#endif /* TKERNEL_PRVER < 0x1050 */
-/*#define LOG_TEX_LEAVE(p_tcb, texptn) trace_2(LOG_TYPE_TEX|LOG_LEAVE, p_tcb, texptn)*/
+#define LOG_TEX_LEAVE(p_tcb, texptn) trace_2(LOG_TYPE_TEX|LOG_LEAVE, p_tcb, texptn)
 
 /*
  *  е┐е╣епд╬╛ї┬╓╩╤╣╣
@@ -240,17 +249,19 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 #define LOG_TSKSTAT(p_tcb) trace_2(LOG_TYPE_TSKSTAT, p_tcb, p_tcb->tstat)
 
 /*
- *  е╟еге╣е╤е├е┴еуд╬┴░╕БE */
+ *  е╟еге╣е╤е├е┴еуд╬┴░╕х
+ */
 #define LOG_DSP_ENTER(p_tcb) trace_1(LOG_TYPE_DSP|LOG_ENTER, p_tcb)
 #define LOG_DSP_LEAVE(p_tcb) trace_1(LOG_TYPE_DSP|LOG_LEAVE, p_tcb)
 
 /*
- *  е╖е╣е╞ере·┴░д╪д╬╜ёдн╜╨д╖
+ *  е╖е╣е╞ереэе░д╪д╬╜ёдн╜╨д╖
  */
 #define LOG_SYSLOG_WRI_LOG_ENTER(prio, p_syslog) trace_wri_log((TRACE *) p_syslog)
 
 /*
- *  е╖е╣е╞ере│б╝еБE */
+ *  е╖е╣е╞ере│б╝еы
+ */
 
 /*
  *  е┐е╣еп┤╔═¤╡б╟╜
@@ -288,7 +299,7 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 
 
 /*
- *  е┐е╣еп╔╒┬░╞▒┤БEб╟╜
+ *  е┐е╣еп╔╒┬░╞▒┤№╡б╟╜
  */
 #define LOG_SLP_TSK_ENTER() trace_1(LOG_TYPE_SVC|LOG_ENTER, TFN_SLP_TSK)
 #define LOG_SLP_TSK_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SLP_TSK, ercd)
@@ -465,7 +476,7 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 
 
 /*
- *  есб╝еБE▄е├епе╣╡б╟╜
+ *  есб╝еые▄е├епе╣╡б╟╜
  */
 #define LOG_SND_MBX_ENTER(mbxid, pk_msg) trace_3(LOG_TYPE_SVC|LOG_ENTER, TFN_SND_MBX, mbxid, pk_msg)
 #define LOG_SND_MBX_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_SND_MBX, ercd)
@@ -487,7 +498,7 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 
 
 /*
- *  ╕╟─БE╣есетеБE╫б╝еБEб╟╜
+ *  ╕╟─ъ─╣есетеъе╫б╝еы╡б╟╜
  */
 #define LOG_GET_MPF_ENTER(mpfid, p_blk) trace_3(LOG_TYPE_SVC|LOG_ENTER, TFN_GET_MPF, mpfid, p_blk)
 #define LOG_GET_MPF_LEAVE(ercd, blk) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_GET_MPF, ercd, blk)
@@ -509,18 +520,18 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 
 
 /*
- *  е╖е╣е╞ер╗■╣БE╔═¤╡б╟╜
+ *  е╖е╣е╞ер╗■╣я┤╔═¤╡б╟╜
  */
 #define LOG_GET_TIM_ENTER(p_systim) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_GET_TIM, p_systim)
 #define LOG_GET_TIM_LEAVE(ercd, systim) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_GET_TIM, ercd, systim)
 
-//е·┴░╩▌┬╕╗■д╦get_utmдЄ╗╚═╤д╣дБE┐дсбде·┴░дЄ═н╕·д╦д╣дБE╚╜█┤─д╖д╞ддд╖д▐джд┐дс╠╡╕·д╦
+//еэе░╩▌┬╕╗■д╦get_utmдЄ╗╚═╤д╣дыд┐дсбдеэе░дЄ═н╕·д╦д╣дыд╚╜█┤─д╖д╞ддд╖д▐джд┐дс╠╡╕·д╦
 //#define LOG_GET_UTM_ENTER(p_sysutm) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_GET_UTM, p_sysutm)
 //#define LOG_GET_UTM_LEAVE(ercd, sysutm) trace_3(LOG_TYPE_SVC|LOG_LEAVE, TFN_GET_UTM, ercd, sysutm)
 
 
 /*
- *  ╝■┤БE╧еєе╔ещ╡б╟╜
+ *  ╝■┤№е╧еєе╔ещ╡б╟╜
  */
 #define LOG_STA_CYC_ENTER(cycid) trace_2(LOG_TYPE_SVC|LOG_ENTER, TFN_STA_CYC, cycid)
 #define LOG_STA_CYC_LEAVE(ercd) trace_2(LOG_TYPE_SVC|LOG_LEAVE, TFN_STA_CYC, ercd)
@@ -627,7 +638,7 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 
 
 /*
- *  елб╝е═еБE╬╜щ┤БE╜д╚╜к╬╗╜ш═¤
+ *  елб╝е═еыд╬╜щ┤№▓╜д╚╜к╬╗╜ш═¤
  */
 #define LOG_KER_ENTER()
 #define LOG_KER_LEAVE()
@@ -636,7 +647,7 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 
 
 /*
- *  е╖е╣е╞ере·┴░╡б╟╜
+ *  е╖е╣е╞ереэе░╡б╟╜
  */
 #define LOG_SYSLOG_WRI_LOG_LEAVE(ercd)
 #define LOG_SYSLOG_REA_LOG_ENTER(p_syslog)

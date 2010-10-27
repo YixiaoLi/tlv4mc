@@ -17,33 +17,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 
         private Rectangle mainPanelRectangle;
 
-        public CaptureCommand(TraceLogDisplayPanel tr)
+        public CaptureCommand(Rectangle mainPanel)
         {
-          // スクリーンショットで欲しいのは topTimeLineScale から BottomTimeLineScale までの領域である
-          // 以下、不要な領域を削るための調整を行う
-           Control[] ctls = tr.Controls.Find("viewingAreaToolStrip", true);
-           Control[] ctls2 = tr.Controls.Find("searchToolStrip", true);
-           Control[] ctls3 = tr.Controls.Find("topTimeLineScale", true);
-           Control[] ctls4 = tr.Controls.Find("BottomTimeLineScale", true);
-           Control[] ctls5 = tr.Controls.Find("treeGridView", true);
-
-           int height = ctls[0].Height;
-           int height2 = ctls2[0].Height;
-           int height3 = ctls3[0].Height;
-           int height4 = ctls4[0].Height;
-           int height5 = ctls5[0].Height;
-
-           mainPanelRectangle = tr.RectangleToScreen(tr.ClientRectangle);   // TraceLogDisplayPanel の現在位置を取得し、スクリーン上の絶対位置に変換
-           mainPanelRectangle.Y = mainPanelRectangle.Y + height + height2;  //スクリーンショットの上面の位置を調整
-           mainPanelRectangle.Height = height3 + height4 + height5;         //スクリーンショットの高さを調整
-
-           //TreeGridViewに垂直スクロールバーが存在している場合、スクロールバーの幅分だけキャプチャ領域から削る処理
-           int treeGridViewHscrollBarWidth = tr.Width - (ctls3[0].Left + ctls3[0].Width);
-           if (treeGridViewHscrollBarWidth > 0)
-           {
-               mainPanelRectangle.Width -= treeGridViewHscrollBarWidth;
-           }
-
+            mainPanelRectangle = mainPanel;
         }
 
         public string Text { get; set; }
@@ -69,7 +45,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
             SaveFileDialog sfd = new SaveFileDialog();
 
 
-            sfd.FileName = "新しいファイル";    //はじめのファイル名を指定する
+            sfd.FileName = "新しいファイル.bmp";    //はじめのファイル名を指定する
             sfd.InitialDirectory = @"C:\";          //はじめに表示されるフォルダを指定する
             sfd.Filter =                            //[ファイルの種類]に表示される選択肢を指定する
                 "ビットマップ(*.bmp)|*.bmp|" +

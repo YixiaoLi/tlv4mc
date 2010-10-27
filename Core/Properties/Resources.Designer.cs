@@ -109,13 +109,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap camera {
-            get {
-                object obj = ResourceManager.GetObject("camera", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         /// <summary>
         ///   cnv に類似しているローカライズされた文字列を検索します。
         /// </summary>

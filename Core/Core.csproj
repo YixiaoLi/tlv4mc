@@ -23,7 +23,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\NU.OJL.MPRTOS.TLV.Core.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -130,9 +129,6 @@
     <Compile Include="FileContext\SettingData\TraceLogViewerSetting.cs" />
     <Compile Include="FileContext\SettingData\TimeLineMacroViewerSetting.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
-    <Compile Include="FileContext\TraceLogData\TraceLogParser\ITraceLogParser.cs" />
-    <Compile Include="FileContext\TraceLogData\TraceLogParser\NullObjectOfTraceLogParser.cs" />
-    <Compile Include="FileContext\TraceLogData\TraceLogParser\TraceLogParser.cs" />
     <Compile Include="FileContext\TraceLogVisualizerData\TraceLogGenerator.cs" />
     <Compile Include="FileContext\VisualizeData\VisualizeLog.cs" />
     <Compile Include="FileContext\VisualizeShapeData\EventShapesGenerator.cs" />
@@ -241,22 +237,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Search\ConditionBeans.cs" />
-    <Compile Include="Search\DetailSearchPanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Search\DetailSearchPanel.Designer.cs">
-      <DependentUpon>DetailSearchPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Search\DetailSearchWithTiming.cs" />
-    <Compile Include="Search\Filters\DetailFilter.cs" />
-    <Compile Include="Search\Filters\SimpleFilter.cs" />
-    <Compile Include="Search\Filters\TimingFilter.cs" />
-    <Compile Include="Search\SearchConditionPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Search\SearchCondition.cs" />
-    <Compile Include="Search\Filters\SearchFilter.cs" />
     <Compile Include="Search\SimpleSearch.cs" />
     <Compile Include="Search\TraceLogSearcher.cs" />
   </ItemGroup>
@@ -341,9 +321,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Search\DetailSearchPanel.resx">
-      <DependentUpon>DetailSearchPanel.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Settings.settings">
@@ -407,9 +384,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\BackwardArrow.png" />
-    <None Include="Resources\camera.png" />
+    <None Include="Resources\BackwardArrow1.png" />
     <Content Include="Resources\Eraser.PNG" />
+    <None Include="Resources\Eraser1.PNG" />
     <Content Include="Resources\ForwardArrow.png" />
+    <None Include="Resources\ForwardArrow1.png" />
     <Content Include="Resources\SearchWhole.PNG" />
+    <None Include="Resources\SearchWhole1.PNG" />
   </ItemGroup>
 </Project>

@@ -218,7 +218,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             // captureToolStripeButton
             // 
             this.captureToolStripeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.captureToolStripeButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.camera;
+            this.captureToolStripeButton.Image = ((System.Drawing.Image)(resources.GetObject("captureToolStripeButton.Image")));
             this.captureToolStripeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.captureToolStripeButton.Name = "captureToolStripeButton";
             this.captureToolStripeButton.Size = new System.Drawing.Size(23, 22);

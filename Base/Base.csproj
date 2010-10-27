@@ -23,7 +23,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\NU.OJL.MPRTOS.TLV.Base.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -120,11 +119,6 @@
     <Compile Include="ObservableDictionary.cs" />
     <Compile Include="ObservableMultiKeyDictionary.cs" />
     <Compile Include="Pair.cs" />
-    <Compile Include="Parser\InputStreamForParser.cs" />
-    <Compile Include="Parser\IParser.cs" />
-    <Compile Include="Parser\NullObjectForParser.cs" />
-    <Compile Include="Parser\Parser.cs" />
-    <Compile Include="Parser\StackForParser.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
