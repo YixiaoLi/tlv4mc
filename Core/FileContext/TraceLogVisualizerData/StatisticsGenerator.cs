@@ -67,7 +67,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 _constructProgressReport(0, "統計生成ルールを読み込み中");
             }
 
-            string[] target = _resourceData.ConvertRules.ToArray();
+            string[] target = _resourceData.StatisticsGenerationRules.ToArray();
 
             string[] rulePaths = Directory.GetFiles(ApplicationData.Setting.StatisticsGenerationRulesDirectoryPath, "*." + Properties.Resources.StatisticsGenerationRuleFileExtension);
 

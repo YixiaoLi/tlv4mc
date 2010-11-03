@@ -49,6 +49,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public string Path { get; set; }
 		public List<string> ConvertRules { get; private set; }
 		public List<string> VisualizeRules { get; private set; }
+        public List<string> StatisticsGenerationRules { get; private set; }
 		public ResourceHeader ResourceHeaders { get; private set; }
 		public GeneralNamedCollection<Resource> Resources { get; private set; }
 
@@ -58,6 +59,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 			TimeRadix = 10;
 			ConvertRules = null;
 			VisualizeRules = null;
+            StatisticsGenerationRules = null;
 			ResourceHeaders = null;
 			Resources = null;
 		}
