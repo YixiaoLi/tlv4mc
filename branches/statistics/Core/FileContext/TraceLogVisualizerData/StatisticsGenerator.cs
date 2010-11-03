@@ -203,7 +203,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
         private Statistics applyRegexRule(string name, Json rule)
         {
-            if (!rule.ContainsKey("RegexRule"))
+            if (!rule.ContainsKey("RegexpRule"))
             {
                 throw new StatisticsGenerateException(@"""RegexpRule""が定義されて言いません。");
             }
