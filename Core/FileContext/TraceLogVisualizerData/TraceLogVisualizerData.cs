@@ -135,7 +135,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <param name="shapesData">図形データ</param>
         /// <param name="statisticsData">統計データ</param>
         public TraceLogVisualizerData(ResourceData resourceData, TraceLogData traceLogData, VisualizeData visualizeData, SettingData settingData, VisualizeShapeData shapesData, StatisticsData statisticsData)
-            : this(resourceData, traceLogData, visualizeData, settingData)
+            : this(resourceData, traceLogData, visualizeData, settingData, shapesData)
         {
             StatisticsData = statisticsData;
         }

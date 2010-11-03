@@ -54,6 +54,7 @@
     <Compile Include="Base\EventShapes.cs" />
     <Compile Include="Base\Exception\ConvertException.cs" />
     <Compile Include="Base\Exception\ResNotFoundException.cs" />
+    <Compile Include="Base\Exception\StatisticsGenerateException.cs" />
     <Compile Include="Base\Exception\VisualizeException.cs" />
     <Compile Include="Base\ObservableNamedCollection.cs" />
     <Compile Include="Base\TimeLineEvents.cs" />
@@ -129,11 +130,14 @@
     <Compile Include="FileContext\SettingData\VisualizeRuleExplorerSetting.cs" />
     <Compile Include="FileContext\SettingData\TraceLogViewerSetting.cs" />
     <Compile Include="FileContext\SettingData\TimeLineMacroViewerSetting.cs" />
+    <Compile Include="FileContext\StatisticsData\ChartSetting.cs" />
     <Compile Include="FileContext\StatisticsData\Series\DataPoint.cs" />
     <Compile Include="FileContext\StatisticsData\Series\DataPointList.cs" />
     <Compile Include="FileContext\StatisticsData\Series\Series.cs" />
     <Compile Include="FileContext\StatisticsData\Statistics.cs" />
     <Compile Include="FileContext\StatisticsData\StatisticsData.cs" />
+    <Compile Include="FileContext\StatisticsData\StatisticsGenerationRule.cs" />
+    <Compile Include="FileContext\TraceLogVisualizerData\StatisticsGenerator.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\ITraceLogParser.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\NullObjectOfTraceLogParser.cs" />
