@@ -120,10 +120,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             _constructProgressReport((int)(current / max) * 10, string.Format(@"統計情報""{0}""を生成中 {1}/{2} 個目...", tgt, current, max));
                         }
 
-                        Statistics stats = null;
+                        Statistics stats = new Statistics(tgt);
                         switch (rules[tgt]["Style"])
                         {
-                            case "Regexp": stats = applyRegexRule(tgt, rules[tgt]["Style"]); break;
+                            case "Regexp": stats = applyRegexRule(stats, rules[tgt]["Style"]); break;
                             default: throw new StatisticsGenerateException(rules[tgt]["Style"] + "無効なスタイルです");
                         }
                         sd.Statisticses.Add(stats);
@@ -201,10 +201,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 
 
-        private Statistics applyRegexRule(string name, Json rule)
+        private Statistics applyRegexRule(Statistics stats, Json rule)
         {
-            Statistics stats = new Statistics(name);
-
             stats.Setting.SetData(rule["Setting"]);
 
             List<string> data = getTargetData(rule["Target"]);
