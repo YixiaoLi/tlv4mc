@@ -121,9 +121,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
                         }
 
                         Statistics stats = new Statistics(tgt);
+                        stats.Setting.SetData(rules[tgt]["Setting"]);
+
                         switch (rules[tgt]["Style"])
                         {
-                            case "Regexp": stats = applyRegexRule(stats, rules[tgt]["Style"]); break;
+                            case "Regexp": stats = applyRegexRule(stats, rules[tgt]["RegexpRule"]); break;
                             default: throw new StatisticsGenerateException(rules[tgt]["Style"] + "無効なスタイルです");
                         }
                         sd.Statisticses.Add(stats);
@@ -203,8 +205,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
         private Statistics applyRegexRule(Statistics stats, Json rule)
         {
-            stats.Setting.SetData(rule["Setting"]);
-
             List<string> data = getTargetData(rule["Target"]);
 
             // Key: 正規表現、Value:正規表現にマッチした場合の統計情報設定方法を記述したJsonオブジェクト

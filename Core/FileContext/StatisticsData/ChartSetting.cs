@@ -71,8 +71,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     case "AxisYTitle": AxisYTitle = j.Value; break;
                     case "SeriesTitle": SeriesTitle = j.Value; break;
                     case "DefaultType": DefaultType = j.Value; break;
-                    case "MajorTickMarkInterval": MajorTickMarkInterval = (double)(j.Value.Value); break;
-                    case "MinorTickMarkInterval": MinorTickMarkInterval = (double)(j.Value.Value); break;
+                    case "MajorTickMarkInterval": MajorTickMarkInterval = double.Parse(j.Value.ToString()); break;
+                    case "MinorTickMarkInterval": MinorTickMarkInterval = double.Parse(j.Value.ToString()); break;
                     case "MajorGridVisible": MajorGridVisible = j.Value; break;
                     case "MinorGridVisible": MinorGridVisible = j.Value; break;
                     default: throw new Exception(j.Key + "は設定できない、または、存在しない設定です。");
