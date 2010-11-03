@@ -209,13 +209,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             stats.Setting.SetData(rule["Setting"]);
 
-            string[] logs = File.ReadAllLines(_traceLogFilePath);
+            string[] data = null;
 
             // Key: 正規表現、Value:正規表現にマッチした場合の統計情報設定方法を記述したJsonオブジェクト
             // 複数の正規表現によってパースされることを想定している
             foreach (KeyValuePair<string, Json> j in rule["RegexpRule"].GetKeyValuePairEnumerator())
             {
-                foreach (string l in logs)
+                foreach (string l in data)
                 {
                     if (Regex.IsMatch(l, j.Key))
                     {
@@ -240,6 +240,33 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
 
             return stats;
+        }
+
+        private List<string> getTargetData(string target)
+        {
+            List<string> data = new List<string>();
+            switch (target)
+            {
+                 case "standard":
+                    foreach (TraceLog t in _traceLogData.TraceLogs)
+                    {
+                        data.Add(t.ToString());
+                    }
+                    break;
+
+                case "nonstandard":
+                    data.AddRange(File.ReadAllLines(_traceLogFilePath));
+                    break;
+
+                default:
+                    if (!File.Exists(target))
+                    {
+                        throw new StatisticsGenerateException("ファイル：" + target + "が見つかりません。");
+                    }
+                    data.AddRange(File.ReadAllLines(target));
+                    break;
+            }
+            return data;
         }
     }
 }
