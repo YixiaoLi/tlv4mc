@@ -66,7 +66,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
             Dictionary<string, Json> oldRule = new Dictionary<string, Json>();
             Json newRule = null;
-            StreamWriter writer = new StreamWriter("testOutput.txt");
 
 			string[] target = _resourceData.ConvertRules.ToArray();
 
@@ -95,13 +94,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePairEnumerator())
                             {
                                 oldRule.Add(_j.Key, _j.Value);
-                                writer.WriteLine(_j.Key);
                             }
                         }
 					}
 				}
 			}
-            writer.Close();
 
             if (newRule != null && oldRule.Count > 0)
             {
