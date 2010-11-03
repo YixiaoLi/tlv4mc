@@ -84,39 +84,62 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 
 			_convertBw.DoWork += (o, _e) =>
 			{
-				try
-				{
-					string[] visualizeRuleFilePaths = Directory.GetFiles(ApplicationData.Setting.VisualizeRulesDirectoryPath, "*." + Properties.Resources.VisualizeRuleFileExtension);
+                try
+                {
+                    string[] visualizeRuleFilePaths = Directory.GetFiles(ApplicationData.Setting.VisualizeRulesDirectoryPath, "*." + Properties.Resources.VisualizeRuleFileExtension);
 
-					StandardFormatConverter cfc = new StandardFormatConverter(
-						_resFilePath,
-						_logFilePath,
-						visualizeRuleFilePaths,
-						(p, s) =>
-						{
-							if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
-							_convertBw.ReportProgress((int)((double)p * 0.8));
-							_convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = s; }));
-						});
+                    StandardFormatConverter cfc = new StandardFormatConverter(
+                        _resFilePath,
+                        _logFilePath,
+                        visualizeRuleFilePaths,
+                        (p, s) =>
+                        {
+                            if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
+                            _convertBw.ReportProgress((int)((double)p * 0.7));
+                            _convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = s; }));
+                        });
 
-					if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
-					_convertBw.ReportProgress(90);
-					_convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = "共通形式データを生成中"; }));
+                    StatisticsGenerator sg = new StatisticsGenerator(
+                        _logFilePath,
+                        cfc.ResourceData,
+                        cfc.TraceLogData,
+                        (p, s) =>
+                        {
+                            if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
+                            _convertBw.ReportProgress((int)((double)p + 70));
+                            _convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = s; }));
+                        }
+                    );
 
-					_cftl = new TraceLogVisualizerData(cfc.ResourceData, cfc.TraceLogData, cfc.VisualizeData, cfc.SettingData,cfc.VisualizeShapeData);
+                    StatisticsData sd = null;
+                    try
+                    {
+                        sd = sg.GenerateData();
+                    }
+                    catch (StatisticsGenerateException e) // 統計情報の生成に失敗しても可視化を続ける
+                    {
+                        MessageForm mbox = new MessageForm(e.ToString(), "統計情報の生成に失敗しました。");
+                        mbox.ShowDialog();
+                    }
 
-					if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
-					_convertBw.ReportProgress(100);
-					_convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = "完了"; }));
-				}
-				catch (Exception e)
-				{
-				    MessageForm mbox = new MessageForm(e.ToString(), "変換に失敗しました。");
+                    if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
+                    _convertBw.ReportProgress(90);
+                    _convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = "共通形式データを生成中"; }));
+
+                    _cftl = new TraceLogVisualizerData(cfc.ResourceData, cfc.TraceLogData, cfc.VisualizeData, cfc.SettingData, cfc.VisualizeShapeData, sd);
+
+                    if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
+                    _convertBw.ReportProgress(100);
+                    _convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = "完了"; }));
+                }
+                catch (Exception e)
+                {
+                    MessageForm mbox = new MessageForm(e.ToString(), "変換に失敗しました。");
                     mbox.ShowDialog();
-					//MessageBox.Show(e.ToString(), "共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					_e.Cancel = true;
-					return;
-				}
+                    //MessageBox.Show(e.ToString(), "共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _e.Cancel = true;
+                    return;
+                }
 			};
 		}
 

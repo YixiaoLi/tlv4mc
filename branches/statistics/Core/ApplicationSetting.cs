@@ -56,6 +56,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		[UserScopedSetting]
 		public string VisualizeRulesDirectoryPath { get { return (string)this["VisualizeRulesDirectoryPath"]; } set { this["VisualizeRulesDirectoryPath"] = value; } }
 
+        [UserScopedSetting]
+        public string StatisticsGenerationRulesDirectoryPath { get { return (string)this["StatisticsGenerationRulesDirectoryPath"]; } set { this["StatisticsGenerationRulesDirectoryPath"] = value; } }
+
 		[UserScopedSetting]
 		public string TemporaryDirectoryPath { get { return (string)this["TemporaryDirectoryPath"]; } set { this["TemporaryDirectoryPath"] = value; } }
 
@@ -75,6 +78,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			if (VisualizeRulesDirectoryPath == null)
 				VisualizeRulesDirectoryPath = Path.Combine(ApplicationData.ApplicationDirectory,  NU.OJL.MPRTOS.TLV.Core.Properties.Resources.DefaultVisualizeRulesDirectoryName);
+
+            if (StatisticsGenerationRulesDirectoryPath == null)
+                StatisticsGenerationRulesDirectoryPath = Path.Combine(ApplicationData.ApplicationDirectory, NU.OJL.MPRTOS.TLV.Core.Properties.Resources.DefaultStatisticsGenerationRulesDirectoryName);
 
 			if (TemporaryDirectoryPath == null)
 				TemporaryDirectoryPath = Path.Combine(Path.GetTempPath(), NU.OJL.MPRTOS.TLV.Core.Properties.Resources.DefaultTemporaryDirectoryName);

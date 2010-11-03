@@ -10,12 +10,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
     public class DataPoint
     {
         public string XLabel { get; set; }
-        public string XValue { get; set; }
-        public string YValue { get; set; }
+        public double XValue { get; set; }
+        public double YValue { get; set; }
         public Color? Color { get; set; }
 
         public DataPoint()
         {
+            XLabel = string.Empty;
+            XValue = 0;
+            YValue = 0;
+            Color = null;
         }
     }
 }
