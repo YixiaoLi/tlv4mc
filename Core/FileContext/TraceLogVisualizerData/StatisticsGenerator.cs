@@ -90,14 +90,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             {
                                 rules.Add(j.Key, j.Value);
                             }
-                            // Key:生成ルールの各要素("Style"等)、Value:各要素の値またはオブジェクト
-                            foreach (KeyValuePair<string, Json> jj in j.Value.GetKeyValuePairEnumerator())
+                            else
                             {
-                                if (rules[j.Key].ContainsKey(jj.Key))
+                                // Key:生成ルールの各要素("Style"等)、Value:各要素の値またはオブジェクト
+                                foreach (KeyValuePair<string, Json> jj in j.Value.GetKeyValuePairEnumerator())
                                 {
-                                    throw new StatisticsGenerateException(string.Format(@"統計情報""{0}""の生成ルールで""{1}""が複数設定されています。", j.Key, jj.Key));
+                                    if (rules[j.Key].ContainsKey(jj.Key))
+                                    {
+                                        throw new StatisticsGenerateException(string.Format(@"統計情報""{0}""の生成ルールで""{1}""が複数設定されています。", j.Key, jj.Key));
+                                    }
+                                    rules[j.Key].Add(jj.Key, jj.Value);
                                 }
-                                rules[j.Key].Add(jj.Key, jj.Value);
                             }
                         }
                     }
