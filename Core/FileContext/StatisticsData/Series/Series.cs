@@ -9,5 +9,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
     {
         public string Label { get; set; }
         public DataPointList Points { get; set; }
+
+        public Series()
+        {
+            Label = null;
+            Points = new DataPointList();
+        }
     }
 }

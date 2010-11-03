@@ -125,7 +125,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
                         switch (rules[tgt]["Style"])
                         {
-                            case "Regexp": stats = applyRegexRule(stats, rules[tgt]["RegexpRule"]); break;
+                            case "Regexp": applyRegexRule(stats, rules[tgt]["RegexpRule"]); break;
                             default: throw new StatisticsGenerateException(rules[tgt]["Style"] + "無効なスタイルです");
                         }
                         sd.Statisticses.Add(stats);
@@ -202,19 +202,24 @@ namespace NU.OJL.MPRTOS.TLV.Core
         #endregion
 
 
-
-        private Statistics applyRegexRule(Statistics stats, Json rule)
+        /// <summary>
+        /// RegexpRuleで生成
+        /// </summary>
+        /// <param name="stats"></param>
+        /// <param name="rule">"RegexpRule"のJsonオブジェクト</param>
+        /// <returns></returns>
+        private void applyRegexRule(Statistics stats, Json rule)
         {
             List<string> data = getTargetData(rule["Target"]);
 
             // Key: 正規表現、Value:正規表現にマッチした場合の統計情報設定方法を記述したJsonオブジェクト
             // 複数の正規表現によってパースされることを想定している
-            foreach (KeyValuePair<string, Json> j in rule["RegexpRule"].GetKeyValuePairEnumerator())
+            foreach (KeyValuePair<string, Json> j in rule.GetKeyValuePairEnumerator())
             {
+                if (j.Key.Equals("Target")) continue;
+
                 foreach (string l in data)
                 {
-                    if (l.Equals("Target")) continue;
-
                     if (Regex.IsMatch(l, j.Key))
                     {
                         DataPoint dp = new DataPoint();
@@ -236,8 +241,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     }
                 }
             }
-
-            return stats;
         }
 
         private List<string> getTargetData(string target)

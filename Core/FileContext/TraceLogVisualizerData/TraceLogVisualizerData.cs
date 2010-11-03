@@ -178,7 +178,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.VisualizeShapesFileExtension, VisualizeShapeData.ToJson());
             foreach (Statistics s in StatisticsData.Statisticses)
             {
-                File.WriteAllText(targetTmpStatisticsDirPath + name + "-" + s.Name + "." + Properties.Resources.StatisticsFileExtension, StatisticsData.ToJson());
+                File.WriteAllText(targetTmpStatisticsDirPath + name + "-" + s.Name + "." + Properties.Resources.StatisticsFileExtension, s.ToJson());
             }
             zip.Compress(path, targetTmpDirPath);
 
@@ -209,7 +209,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             string vixFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.VisualizeRuleFileExtension)[0];
             string settingFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.SettingFileExtension)[0];
             string visualizeShapesPath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.VisualizeShapesFileExtension)[0];
-            string[] statisticsFilePathes = Directory.GetFiles(targetTmpStatisticsDirPath, "*." + Properties.Resources.VisualizeShapesFileExtension);
+            string[] statisticsFilePathes = Directory.GetFiles(targetTmpStatisticsDirPath, "*." + Properties.Resources.StatisticsFileExtension);
 
             ResourceData res = ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(resFilePath));
             TraceLogList log = ApplicationFactory.JsonSerializer.Deserialize<TraceLogList>(File.ReadAllText(logFilePath));

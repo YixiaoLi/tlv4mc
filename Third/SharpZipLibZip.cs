@@ -49,7 +49,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
 
         public void Compress(string zipFilePath, string targetDirectoryPath)
         {
-            new FastZip().CreateZip(zipFilePath, targetDirectoryPath, false, "", "");
+            new FastZip().CreateZip(zipFilePath, targetDirectoryPath, true, "", "");
         }
 
         public void Extract(string zipFilePath, string targetDirectoryPath)
