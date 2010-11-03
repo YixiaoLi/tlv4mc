@@ -37,17 +37,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _minTime = minTime;
             _maxTime = maxTime;
             _timeRadix = timeRadix;
+            timeValueLabel.Text = _data.ResourceData.TimeScale;
             makeMainResourceForm();
             makeRefiningConditionResourceForm();
+            arrangeDropDownSize(timingForm);
         }
 
         protected override void OnLoad(EventArgs e)
         {
-            this.FormClosed += (o, _e) =>
-            {
-                ApplicationFactory.BlackBoard.DetailSearchFlag = 0;
-            };
-
             //以下、各フォームを操作したときの動作を定義
             mainResourceForm.SelectedIndexChanged += (o, _e) =>
             {
@@ -147,7 +144,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     timingForm.SelectedIndex = -1;
                     _conditionRegister.timing = null;
                     _conditionRegister.timingValue = null;
-                    denialCheckBox.Enabled = true;
                     makeRefiningConditionRuleForm();
                 }
 
@@ -245,8 +241,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                            timingForm.SelectedIndex = -1;
                            timingValueForm.Enabled = false;
                            timingValueForm.Text = "";
-                           denialCheckBox.Enabled = false;
-                           denialCheckBox.Checked = false;
                            addRefiningConditionButton.Enabled = false;
 
                            _conditionRegister.clearRefiningCondition();
@@ -259,33 +253,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 }
             };
 
-            //検索条件が消去された場合、その条件の番号が DeletedSearchConditionNum に記録されている
-            ApplicationFactory.BlackBoard.DeletedSearchConditionNumChanged += (o, _e) =>
-            {
-                deleteCondition();
-                if (_searchConditionPanels.Count == 0)
-                {
-                    //検索条件が一つもない場合は検索ボタンを操作不可にする
-                    searchForwardButton.Enabled = false;
-                    searchBackwardButton.Enabled = false;
-                    searchWholeButton.Enabled = false;
-
-                    //絞込み条件の操作領域をすべて Enable にし、かつ各フォームを空白表示にする
-                    refiningConditionResourceForm.Enabled = false;
-                    refiningConditionRuleForm.Enabled = false;
-                    refiningConditionEventForm.Enabled = false;
-                    refiningConditionEventDetailForm.Enabled = false;
-                    timingForm.Enabled = false;
-                    timingValueForm.Enabled = false;
-                    addRefiningConditionButton.Enabled = false;
-                    refiningConditionResourceForm.SelectedIndex = -1;
-                    refiningConditionRuleForm.SelectedIndex = -1;
-                    refiningConditionEventForm.SelectedIndex = -1;
-                    refiningConditionEventDetailForm.SelectedIndex = -1;
-                    timingForm.SelectedIndex = -1;
-                    timingValueForm.Text = "";
-                }
-            };
+            //SearchConditionPanel上で基本条件が消去された場合、その条件の番号が DeletedSearchConditionNum に記録される
+            //このイベントが発生した場合、消去された条件番号に対応する SearchConditionPanel を消去する
+            //DetailSearchPanelがクローズする際にイベントハンドラを削除したいため、ラムダ式で登録しない
+            ApplicationFactory.BlackBoard.DeletedSearchConditionNumChanged +=
+                                    new EventHandler<NU.OJL.MPRTOS.TLV.Base.GeneralChangedEventArgs<int>>(deleteCondition);
 
             searchForwardButton.Click += (o, _e) =>
             {
@@ -307,12 +279,38 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 changePanelSize();
             };
 
-            this.FormClosed += (o, _e) =>
+            this.FormClosing += (o, _e) =>
             {
                 ApplicationFactory.BlackBoard.DetailSearchFlag = 0;
                 ApplicationFactory.BlackBoard.DeletedSearchConditionNum = -1;
+                ApplicationFactory.BlackBoard.DeletedSearchConditionNumChanged -= new EventHandler<NU.OJL.MPRTOS.TLV.Base.GeneralChangedEventArgs<int>>(deleteCondition);
+            };
+
+            settingCursorButton.Click += (o, _e) =>
+            {
+                try
+                {
+                    decimal time = decimal.Parse(settingCursorBox.Text);
+                    if (time < _minTime)
+                    {
+                        time = _minTime;
+                    }
+                    else if (time > _maxTime)
+                    {
+                        time = _maxTime;
+                    }
+                    else { }
+
+                    ApplicationFactory.BlackBoard.CursorTime = new Time(time.ToString(), _timeRadix);
+                }
+                catch (FormatException fe)
+                {
+                    MessageBox.Show(fe.Message);
+                }
             };
         }
+
+        
 
         //リソース指定コンボボックスのアイテムをセット
         private void makeMainResourceForm()
@@ -341,6 +339,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 mainEventForm.Enabled = false;
                 mainEventDetailForm.Enabled = false;
             }
+
+            arrangeDropDownSize(mainResourceForm);
         }
 
         //リソースが選択されたときにルール指定コンボボックスのアイテムをセットする
@@ -358,6 +358,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     mainRuleForm.Items.Add(rule.DisplayName);
                 }
             }
+            arrangeDropDownSize(mainRuleForm);
         }
 
 
@@ -384,6 +385,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 mainEventForm.Items.Add(e.DisplayName);
             }
+
+            arrangeDropDownSize(mainEventForm);
         }
 
 
@@ -419,6 +422,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 }
 
             }
+            arrangeDropDownSize(mainEventDetailForm);
         }
 
         private void makeRefiningConditionResourceForm()
@@ -447,6 +451,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 refiningConditionEventForm.Enabled = false;
                 refiningConditionEventDetailForm.Enabled = false;
             }
+            arrangeDropDownSize(refiningConditionResourceForm);
         }
 
         //リソースが選択されたときにルール指定コンボボックスのアイテムをセットする
@@ -464,6 +469,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     refiningConditionRuleForm.Items.Add(rule.DisplayName);
                 }
             }
+            arrangeDropDownSize(refiningConditionRuleForm);
         }
 
         //イベント指定コンボボックスのアイテムをセット
@@ -491,6 +497,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 refiningConditionEventForm.Items.Add(e.DisplayName);
             }
+            arrangeDropDownSize(refiningConditionEventForm);
         }
 
 
@@ -527,6 +534,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 }
 
             }
+            arrangeDropDownSize(refiningConditionEventDetailForm);
         }
 
         private void clearSearchMainCondition()
@@ -568,6 +576,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 targetConditionForm.Items.Add(i.ToString());
             }
+            arrangeDropDownSize(targetConditionForm);
         }
 
         private void makeSearchConditionPanel()
@@ -585,7 +594,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             searchForwardButton.Enabled = true;
             searchWholeButton.Enabled = true;
 
-            SearchConditionPanel panel = new SearchConditionPanel(mainSearchCondition, _searchConditionPanels.Count+1);
+            SearchConditionPanel panel = new SearchConditionPanel(mainSearchCondition, _searchConditionPanels.Count+1, _data.ResourceData.TimeScale);
             panel.BorderStyle = BorderStyle.FixedSingle;
             panel.AutoScroll = true;
             panel.Width = ConditionDisplayPanel.Width - 15;
@@ -610,25 +619,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             refiningSearchCondition.eventDetail = (string)refiningConditionEventDetailForm.SelectedItem;
             refiningSearchCondition.timing = (string)timingForm.SelectedItem;
             refiningSearchCondition.timingValue = (string)timingValueForm.Text;
-            refiningSearchCondition.denyCondition = denialCheckBox.Checked;
             _searchConditionPanels[targetConditionPanelNum].addRefiningSearchCondition(refiningSearchCondition);
         }
 
-        private void deleteCondition()
+        private void deleteCondition(object sender, System.EventArgs e)
         {
             int deletedNum = ApplicationFactory.BlackBoard.DeletedSearchConditionNum;
             if (deletedNum != -1)
             {
                 try
                 {
+                    int j;
                     _searchConditionPanels.RemoveAt(deletedNum - 1);
+                    int i;
                 }
-                catch (Exception e)
+                catch (Exception _e)
                 {
                     updateConditionDisplayPanel();
                 }
 
-                //絞込み対象の選択フォームのアイテムをすべてクリア
+                //絞込み対象となる基本条件を選択するフォームのアイテムをすべてクリア
                 targetConditionForm.Items.Clear();
 
                 //各検索条件に番号を振り直す
@@ -642,6 +652,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 updateConditionDisplayPanel();
                 ApplicationFactory.BlackBoard.DeletedSearchConditionNum = -1;
             }
+
+            if (_searchConditionPanels.Count == 0)
+            {
+                //検索条件が一つもない場合は検索ボタンを操作不可にする
+                searchForwardButton.Enabled = false;
+                searchBackwardButton.Enabled = false;
+                searchWholeButton.Enabled = false;
+
+                //絞込み条件の操作領域をすべて Enable にし、かつ各フォームを空白表示にする
+                refiningConditionResourceForm.Enabled = false;
+                refiningConditionRuleForm.Enabled = false;
+                refiningConditionEventForm.Enabled = false;
+                refiningConditionEventDetailForm.Enabled = false;
+                timingForm.Enabled = false;
+                timingValueForm.Enabled = false;
+                addRefiningConditionButton.Enabled = false;
+                refiningConditionResourceForm.SelectedIndex = -1;
+                refiningConditionRuleForm.SelectedIndex = -1;
+                refiningConditionEventForm.SelectedIndex = -1;
+                refiningConditionEventDetailForm.SelectedIndex = -1;
+                timingForm.SelectedIndex = -1;
+                timingValueForm.Text = "";
+            }
         }
        
         private void updateConditionDisplayPanel()
@@ -649,7 +682,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             //条件表示画面から全ての条件を一度消去する
             ConditionDisplayPanel.Controls.Clear();
 
-            System.Drawing.Point nextPanelLocation = new System.Drawing.Point(0,0);
+            System.Drawing.Point nextPanelLocation = new System.Drawing.Point(0, 0);
 
             //各検索条件を ConditionDisplayPanel上に再描画
             foreach(SearchConditionPanel panel in _searchConditionPanels)
@@ -848,14 +881,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _visLogs = tmpLogs.ToList();
         }
 
-        private void goStart_Click(object sender, EventArgs e)
+        //コンボボックスのドロップダウンボックスのサイズを自動調整
+        private void arrangeDropDownSize(ComboBox targetBox)
         {
-            ApplicationFactory.BlackBoard.CursorTime = new Time("0",10);
-        }
+            int maxTextLength = 0;
+            int font_W = (int)Math.Ceiling(
+                             targetBox.Font.SizeInPoints * 2.0F / 3.0F);  // フォント幅を取得
 
-        private void goEnd_Click(object sender, EventArgs e)
-        {
-            ApplicationFactory.BlackBoard.CursorTime = new Time("5600000", 10);
+            foreach (string A in targetBox.Items)
+            {
+                // 各行の文字バイト長から「横幅」を算出し、その最大値を求める
+                int len = System.Text.Encoding.GetEncoding("Shift_JIS").GetByteCount(A);
+                maxTextLength = Math.Max(maxTextLength, len * font_W);
+            }
+            targetBox.DropDownWidth = maxTextLength + 10;
         }
     }
 }

@@ -68,8 +68,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private int _mouseDownX;
         private bool _mouseDown;
 
-        //簡易検索用のオブジェクト
-        private TraceLogSearcher _searcher = null;
+        private TraceLogSearcher _searcher = null;  //簡易検索処理を行うオブジェクト
+        private DetailSearchPanel _detailSearchPanel = null; //詳細検索ウィンドウオブジェクト
+        
 
         //簡易検索に必要な変数群
         private string _resourceType = null;
@@ -92,7 +93,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
                     // ToolStripeに検索バーを追加したことで、タイムライン上のレイアウトが崩れた
                     // _timeLineX  の値を少しでも変更すればレイアウト崩れが直るため、応急処置
-                    // として +1 しておいた。直る理由は現在究明中
+                    // として +1 しておいた。直る理由は現在究明中(おそらく_timeLineXの値が変更されたことによる再描画が要因となっている)
 
                     //_timeLineX = value;
                     _timeLineX = value + 1;
@@ -124,7 +125,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             get
             {
-
                 return toolStripContainer.ContentPanel.Height - 2
                 - topTimeLineScale.Height
                 - bottomTimeLineScale.Height
@@ -583,8 +583,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region detailSearchPanel初期化
             detailSearchButton.Click += (o, _e) =>
             {
-                DetailSearchPanel detailSearchPanel = new DetailSearchPanel(_data, TimeLine.MinTime.Value, TimeLine.MaxTime.Value, _timeRadix);
-                detailSearchPanel.Visible = true;
+                _detailSearchPanel = new DetailSearchPanel(_data, TimeLine.MinTime.Value, TimeLine.MaxTime.Value, _timeRadix);
+                _detailSearchPanel.Visible = true;
                 ApplicationFactory.BlackBoard.DetailSearchFlag = 1;
             };
 
@@ -1153,6 +1153,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 targetEventForm.Visible = false;
                 targetEventDetailForm.Visible = false;
             }
+            arrangeDropDownSize(targetResourceForm);
         }
 
         //リソースが選択されたときにルール指定コンボボックスのアイテムをセットする
@@ -1198,6 +1199,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.searchForwardButton.Enabled = true;
             this.searchBackwardButton.Enabled = true;
             this.searchWholeButton.Enabled = true;
+
+            arrangeDropDownSize(targetRuleForm);
         }
 
         //イベント指定コンボボックスのアイテムをセット
@@ -1237,6 +1240,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             {
                 targetEventForm.Items.Add(e.DisplayName);
             }
+
+            arrangeDropDownSize(targetEventForm);
         }
 
 
@@ -1282,6 +1287,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }
 
             }
+
+            arrangeDropDownSize(targetEventDetailForm);
         }
 
         private void searchConboBoxClear()
@@ -1330,6 +1337,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             VisualizeLog[] tmpLogs = _visLogs.ToArray();
             Array.Sort(tmpLogs);
             _visLogs = tmpLogs.ToList();
+        }
+
+        //コンボボックスのドロップダウンボックスのサイズを自動調整
+        private void arrangeDropDownSize(ToolStripComboBox targetBox)
+        {
+            int maxTextLength = 0;
+            int font_W = (int)Math.Ceiling(
+                             targetBox.Font.SizeInPoints * 2.0F / 3.0F);  // フォント幅を取得
+
+            foreach (string A in targetBox.Items)
+            {
+                // 各行の文字バイト長から「横幅」を算出し、その最大値を求める
+                int len = System.Text.Encoding.GetEncoding("Shift_JIS").GetByteCount(A);
+                maxTextLength = Math.Max(maxTextLength, len * font_W);
+            }
+            targetBox.DropDownWidth = maxTextLength + 10;
         }
     }
 }

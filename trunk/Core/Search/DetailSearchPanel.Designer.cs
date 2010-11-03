@@ -29,9 +29,8 @@
         private void InitializeComponent()
         {
             this.ConditionOpratior = new System.Windows.Forms.Panel();
-            this.goEnd = new System.Windows.Forms.Button();
-            this.goStart = new System.Windows.Forms.Button();
-            this.denialCheckBox = new System.Windows.Forms.CheckBox();
+            this.settingCursorButton = new System.Windows.Forms.Button();
+            this.settingCursorBox = new System.Windows.Forms.TextBox();
             this.targetConditionLabel = new System.Windows.Forms.Label();
             this.targetConditionForm = new System.Windows.Forms.ComboBox();
             this.searchWholeButton = new System.Windows.Forms.Button();
@@ -63,9 +62,8 @@
             // 
             this.ConditionOpratior.BackColor = System.Drawing.Color.SeaShell;
             this.ConditionOpratior.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.ConditionOpratior.Controls.Add(this.goEnd);
-            this.ConditionOpratior.Controls.Add(this.goStart);
-            this.ConditionOpratior.Controls.Add(this.denialCheckBox);
+            this.ConditionOpratior.Controls.Add(this.settingCursorButton);
+            this.ConditionOpratior.Controls.Add(this.settingCursorBox);
             this.ConditionOpratior.Controls.Add(this.targetConditionLabel);
             this.ConditionOpratior.Controls.Add(this.targetConditionForm);
             this.ConditionOpratior.Controls.Add(this.searchWholeButton);
@@ -92,39 +90,24 @@
             this.ConditionOpratior.Dock = System.Windows.Forms.DockStyle.Top;
             this.ConditionOpratior.Location = new System.Drawing.Point(0, 0);
             this.ConditionOpratior.Name = "ConditionOpratior";
-            this.ConditionOpratior.Size = new System.Drawing.Size(604, 219);
+            this.ConditionOpratior.Size = new System.Drawing.Size(604, 224);
             this.ConditionOpratior.TabIndex = 0;
             // 
-            // goEnd
+            // settingCursorButton
             // 
-            this.goEnd.Location = new System.Drawing.Point(488, 91);
-            this.goEnd.Name = "goEnd";
-            this.goEnd.Size = new System.Drawing.Size(100, 23);
-            this.goEnd.TabIndex = 25;
-            this.goEnd.Text = "カーソルをEへ";
-            this.goEnd.UseVisualStyleBackColor = true;
-            this.goEnd.Click += new System.EventHandler(this.goEnd_Click);
+            this.settingCursorButton.Location = new System.Drawing.Point(172, 175);
+            this.settingCursorButton.Name = "settingCursorButton";
+            this.settingCursorButton.Size = new System.Drawing.Size(97, 23);
+            this.settingCursorButton.TabIndex = 27;
+            this.settingCursorButton.Text = "カーソルを移動";
+            this.settingCursorButton.UseVisualStyleBackColor = true;
             // 
-            // goStart
+            // settingCursorBox
             // 
-            this.goStart.Location = new System.Drawing.Point(488, 66);
-            this.goStart.Name = "goStart";
-            this.goStart.Size = new System.Drawing.Size(102, 23);
-            this.goStart.TabIndex = 24;
-            this.goStart.Text = "カーソルをSへ";
-            this.goStart.UseVisualStyleBackColor = true;
-            this.goStart.Click += new System.EventHandler(this.goStart_Click);
-            // 
-            // denialCheckBox
-            // 
-            this.denialCheckBox.AutoSize = true;
-            this.denialCheckBox.Enabled = false;
-            this.denialCheckBox.Location = new System.Drawing.Point(48, 161);
-            this.denialCheckBox.Name = "denialCheckBox";
-            this.denialCheckBox.Size = new System.Drawing.Size(126, 16);
-            this.denialCheckBox.TabIndex = 23;
-            this.denialCheckBox.Text = "この条件の否定をとる";
-            this.denialCheckBox.UseVisualStyleBackColor = true;
+            this.settingCursorBox.Location = new System.Drawing.Point(34, 177);
+            this.settingCursorBox.Name = "settingCursorBox";
+            this.settingCursorBox.Size = new System.Drawing.Size(132, 19);
+            this.settingCursorBox.TabIndex = 26;
             // 
             // targetConditionLabel
             // 
@@ -149,7 +132,7 @@
             // searchWholeButton
             // 
             this.searchWholeButton.Enabled = false;
-            this.searchWholeButton.Location = new System.Drawing.Point(513, 189);
+            this.searchWholeButton.Location = new System.Drawing.Point(502, 173);
             this.searchWholeButton.Name = "searchWholeButton";
             this.searchWholeButton.Size = new System.Drawing.Size(75, 23);
             this.searchWholeButton.TabIndex = 20;
@@ -159,7 +142,7 @@
             // searchForwardButton
             // 
             this.searchForwardButton.Enabled = false;
-            this.searchForwardButton.Location = new System.Drawing.Point(421, 189);
+            this.searchForwardButton.Location = new System.Drawing.Point(421, 173);
             this.searchForwardButton.Name = "searchForwardButton";
             this.searchForwardButton.Size = new System.Drawing.Size(75, 23);
             this.searchForwardButton.TabIndex = 19;
@@ -169,7 +152,7 @@
             // searchBackwardButton
             // 
             this.searchBackwardButton.Enabled = false;
-            this.searchBackwardButton.Location = new System.Drawing.Point(330, 189);
+            this.searchBackwardButton.Location = new System.Drawing.Point(340, 173);
             this.searchBackwardButton.Name = "searchBackwardButton";
             this.searchBackwardButton.Size = new System.Drawing.Size(75, 23);
             this.searchBackwardButton.TabIndex = 18;
@@ -180,24 +163,23 @@
             // 
             this.timeValueLabel.AutoSize = true;
             this.timeValueLabel.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.timeValueLabel.Location = new System.Drawing.Point(320, 134);
+            this.timeValueLabel.Location = new System.Drawing.Point(357, 134);
             this.timeValueLabel.Name = "timeValueLabel";
-            this.timeValueLabel.Size = new System.Drawing.Size(31, 12);
+            this.timeValueLabel.Size = new System.Drawing.Size(0, 12);
             this.timeValueLabel.TabIndex = 17;
-            this.timeValueLabel.Text = "μ秒";
             // 
             // label2
             // 
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label2.Location = new System.Drawing.Point(31, 180);
+            this.label2.Location = new System.Drawing.Point(20, 160);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(451, 1);
+            this.label2.Size = new System.Drawing.Size(550, 1);
             this.label2.TabIndex = 16;
             // 
             // addRefiningConditionButton
             // 
             this.addRefiningConditionButton.Enabled = false;
-            this.addRefiningConditionButton.Location = new System.Drawing.Point(467, 128);
+            this.addRefiningConditionButton.Location = new System.Drawing.Point(539, 128);
             this.addRefiningConditionButton.Name = "addRefiningConditionButton";
             this.addRefiningConditionButton.Size = new System.Drawing.Size(29, 23);
             this.addRefiningConditionButton.TabIndex = 15;
@@ -209,32 +191,32 @@
             this.timingValueForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.timingValueForm.Enabled = false;
             this.timingValueForm.FormattingEnabled = true;
-            this.timingValueForm.Location = new System.Drawing.Point(234, 128);
+            this.timingValueForm.Location = new System.Drawing.Point(236, 131);
             this.timingValueForm.Name = "timingValueForm";
-            this.timingValueForm.Size = new System.Drawing.Size(79, 20);
+            this.timingValueForm.Size = new System.Drawing.Size(115, 20);
             this.timingValueForm.TabIndex = 14;
             // 
             // timingForm
             // 
             this.timingForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.timingForm.DropDownWidth = 125;
+            this.timingForm.DropDownWidth = 150;
             this.timingForm.Enabled = false;
             this.timingForm.FormattingEnabled = true;
             this.timingForm.Items.AddRange(new object[] {
-            "以内に発生(基準時以前)",
-            "以内に発生(基準時以後)",
+            "以上後に発生",
             "以上前に発生",
-            "以上後に発生"});
-            this.timingForm.Location = new System.Drawing.Point(360, 129);
+            "以内に発生(基準時以後)",
+            "以内に発生(基準時以前)"});
+            this.timingForm.Location = new System.Drawing.Point(390, 130);
             this.timingForm.Name = "timingForm";
-            this.timingForm.Size = new System.Drawing.Size(93, 20);
+            this.timingForm.Size = new System.Drawing.Size(115, 20);
             this.timingForm.TabIndex = 13;
             // 
             // timingSetting
             // 
             this.timingSetting.AutoSize = true;
             this.timingSetting.Font = new System.Drawing.Font("Century", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.timingSetting.Location = new System.Drawing.Point(45, 130);
+            this.timingSetting.Location = new System.Drawing.Point(46, 134);
             this.timingSetting.Name = "timingSetting";
             this.timingSetting.Size = new System.Drawing.Size(188, 15);
             this.timingSetting.TabIndex = 12;
@@ -243,41 +225,45 @@
             // refiningConditionEventDetailForm
             // 
             this.refiningConditionEventDetailForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.refiningConditionEventDetailForm.DropDownWidth = 150;
             this.refiningConditionEventDetailForm.Enabled = false;
             this.refiningConditionEventDetailForm.FormattingEnabled = true;
-            this.refiningConditionEventDetailForm.Location = new System.Drawing.Point(327, 97);
+            this.refiningConditionEventDetailForm.Location = new System.Drawing.Point(390, 98);
             this.refiningConditionEventDetailForm.Name = "refiningConditionEventDetailForm";
-            this.refiningConditionEventDetailForm.Size = new System.Drawing.Size(79, 20);
+            this.refiningConditionEventDetailForm.Size = new System.Drawing.Size(115, 20);
             this.refiningConditionEventDetailForm.TabIndex = 11;
             // 
             // refiningConditionEventForm
             // 
             this.refiningConditionEventForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.refiningConditionEventForm.DropDownWidth = 150;
             this.refiningConditionEventForm.Enabled = false;
             this.refiningConditionEventForm.FormattingEnabled = true;
-            this.refiningConditionEventForm.Location = new System.Drawing.Point(232, 98);
+            this.refiningConditionEventForm.Location = new System.Drawing.Point(266, 98);
             this.refiningConditionEventForm.Name = "refiningConditionEventForm";
-            this.refiningConditionEventForm.Size = new System.Drawing.Size(79, 20);
+            this.refiningConditionEventForm.Size = new System.Drawing.Size(115, 20);
             this.refiningConditionEventForm.TabIndex = 10;
             // 
             // refiningConditionRuleForm
             // 
             this.refiningConditionRuleForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.refiningConditionRuleForm.DropDownWidth = 150;
             this.refiningConditionRuleForm.Enabled = false;
             this.refiningConditionRuleForm.FormattingEnabled = true;
-            this.refiningConditionRuleForm.Location = new System.Drawing.Point(140, 98);
+            this.refiningConditionRuleForm.Location = new System.Drawing.Point(144, 98);
             this.refiningConditionRuleForm.Name = "refiningConditionRuleForm";
-            this.refiningConditionRuleForm.Size = new System.Drawing.Size(77, 20);
+            this.refiningConditionRuleForm.Size = new System.Drawing.Size(115, 20);
             this.refiningConditionRuleForm.TabIndex = 9;
             // 
             // refiningConditionResourceForm
             // 
             this.refiningConditionResourceForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.refiningConditionResourceForm.DropDownWidth = 115;
             this.refiningConditionResourceForm.Enabled = false;
             this.refiningConditionResourceForm.FormattingEnabled = true;
-            this.refiningConditionResourceForm.Location = new System.Drawing.Point(44, 98);
+            this.refiningConditionResourceForm.Location = new System.Drawing.Point(20, 98);
             this.refiningConditionResourceForm.Name = "refiningConditionResourceForm";
-            this.refiningConditionResourceForm.Size = new System.Drawing.Size(83, 20);
+            this.refiningConditionResourceForm.Size = new System.Drawing.Size(115, 20);
             this.refiningConditionResourceForm.TabIndex = 8;
             // 
             // refiningConditionSettingLabel
@@ -293,9 +279,9 @@
             // label1
             // 
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.Location = new System.Drawing.Point(29, 52);
+            this.label1.Location = new System.Drawing.Point(18, 52);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(453, 1);
+            this.label1.Size = new System.Drawing.Size(550, 1);
             this.label1.TabIndex = 6;
             // 
             // mainConditionSettingLabel
@@ -311,7 +297,7 @@
             // addMainConditionButton
             // 
             this.addMainConditionButton.Enabled = false;
-            this.addMainConditionButton.Location = new System.Drawing.Point(463, 27);
+            this.addMainConditionButton.Location = new System.Drawing.Point(540, 27);
             this.addMainConditionButton.Name = "addMainConditionButton";
             this.addMainConditionButton.Size = new System.Drawing.Size(29, 23);
             this.addMainConditionButton.TabIndex = 4;
@@ -321,37 +307,41 @@
             // mainEventDetailForm
             // 
             this.mainEventDetailForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mainEventDetailForm.DropDownWidth = 150;
             this.mainEventDetailForm.FormattingEnabled = true;
-            this.mainEventDetailForm.Location = new System.Drawing.Point(327, 29);
+            this.mainEventDetailForm.Location = new System.Drawing.Point(390, 29);
             this.mainEventDetailForm.Name = "mainEventDetailForm";
-            this.mainEventDetailForm.Size = new System.Drawing.Size(79, 20);
+            this.mainEventDetailForm.Size = new System.Drawing.Size(115, 20);
             this.mainEventDetailForm.TabIndex = 3;
             // 
             // mainEventForm
             // 
             this.mainEventForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mainEventForm.DropDownWidth = 150;
             this.mainEventForm.FormattingEnabled = true;
-            this.mainEventForm.Location = new System.Drawing.Point(232, 29);
+            this.mainEventForm.Location = new System.Drawing.Point(266, 29);
             this.mainEventForm.Name = "mainEventForm";
-            this.mainEventForm.Size = new System.Drawing.Size(79, 20);
+            this.mainEventForm.Size = new System.Drawing.Size(115, 20);
             this.mainEventForm.TabIndex = 2;
             // 
             // mainRuleForm
             // 
             this.mainRuleForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mainRuleForm.DropDownWidth = 150;
             this.mainRuleForm.FormattingEnabled = true;
-            this.mainRuleForm.Location = new System.Drawing.Point(138, 29);
+            this.mainRuleForm.Location = new System.Drawing.Point(144, 29);
             this.mainRuleForm.Name = "mainRuleForm";
-            this.mainRuleForm.Size = new System.Drawing.Size(79, 20);
+            this.mainRuleForm.Size = new System.Drawing.Size(115, 20);
             this.mainRuleForm.TabIndex = 0;
             // 
             // mainResourceForm
             // 
             this.mainResourceForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mainResourceForm.DropDownWidth = 150;
             this.mainResourceForm.FormattingEnabled = true;
-            this.mainResourceForm.Location = new System.Drawing.Point(44, 29);
+            this.mainResourceForm.Location = new System.Drawing.Point(20, 29);
             this.mainResourceForm.Name = "mainResourceForm";
-            this.mainResourceForm.Size = new System.Drawing.Size(83, 20);
+            this.mainResourceForm.Size = new System.Drawing.Size(115, 20);
             this.mainResourceForm.TabIndex = 1;
             // 
             // ConditionDisplayPanel
@@ -360,9 +350,9 @@
             this.ConditionDisplayPanel.BackColor = System.Drawing.Color.LavenderBlush;
             this.ConditionDisplayPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ConditionDisplayPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ConditionDisplayPanel.Location = new System.Drawing.Point(0, 219);
+            this.ConditionDisplayPanel.Location = new System.Drawing.Point(0, 224);
             this.ConditionDisplayPanel.Name = "ConditionDisplayPanel";
-            this.ConditionDisplayPanel.Size = new System.Drawing.Size(604, 415);
+            this.ConditionDisplayPanel.Size = new System.Drawing.Size(604, 410);
             this.ConditionDisplayPanel.TabIndex = 1;
             // 
             // DetailSearchPanel
@@ -408,9 +398,8 @@
         private System.Windows.Forms.ComboBox targetConditionForm;
         private System.Windows.Forms.Label targetConditionLabel;
         private System.Windows.Forms.Panel ConditionDisplayPanel;
-        private System.Windows.Forms.CheckBox denialCheckBox;
-        private System.Windows.Forms.Button goStart;
-        private System.Windows.Forms.Button goEnd;
+        private System.Windows.Forms.Button settingCursorButton;
+        private System.Windows.Forms.TextBox settingCursorBox;
 
 
 
