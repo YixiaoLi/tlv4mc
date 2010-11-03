@@ -66,7 +66,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Dictionary<string, Json> oldRule = new Dictionary<string, Json>();
             Json newRule = null;
-            StreamWriter writer = new StreamWriter("testOutput.txt");
 
             string[] target = _resourceData.ConvertRules.ToArray();
 
@@ -96,13 +95,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             foreach (KeyValuePair<string, Json> _j in j.Value.GetKeyValuePairEnumerator())
                             {
                                 oldRule.Add(_j.Key, _j.Value);
-                                writer.WriteLine(_j.Key);
                             }
                         }
                     }
                 }
             }
-            writer.Close();
 
             if (newRule != null && oldRule.Count > 0)
             {
@@ -293,7 +290,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             // トレースログを一行ずつ調べTraceLogクラスに変換しTraceLogListに追加していく
             string[] logs = File.ReadAllLines(_traceLogFilePath);
-            StreamReader sr = new StreamReader(_traceLogFilePath);
+
             float i = 1;
             float max = logs.Length;
             foreach (string s in logs)
