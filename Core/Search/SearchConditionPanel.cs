@@ -22,14 +22,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private Label conditionLabel;
         private TextBox conditionBox;
-        private Button deleteButton;
+        public Button deleteButton;
         private System.Drawing.Point mainConditionLabelLocation;
         private System.Drawing.Point nextRefiningConditionLocation;
 
         public RadioButton andButton = null;
         public RadioButton orButton = null;
+        private string _timeScale; //タイムラインの時間単位（s, ms, μsなど）
 
-        public SearchConditionPanel(SearchCondition condition, int conditionNumber)
+        public SearchConditionPanel(SearchCondition condition, int conditionNumber, string timeScale)
         {
             mainCondition = condition;
             refiningConditions = new List<SearchCondition>();
@@ -37,6 +38,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             updateMainCondition();
             this.AutoScroll = true;
             this.Size = new System.Drawing.Size(584,209);
+            _timeScale = timeScale; 
         }
 
         private void updateMainCondition()
@@ -60,10 +62,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             int conditionBoxLeftLocation = conditionLabel.Location.X;
             int conditionBoxTopLocation = conditionLabelTopLocation + conditionLabel.Size.Height + 5;
             conditionBox.Location = new System.Drawing.Point(conditionBoxLeftLocation, conditionBoxTopLocation);
-            conditionBox.Width = 250;
             //conditionBox.Multiline = true;
             conditionBox.Visible = true;
             conditionBox.ReadOnly = true;
+
 
             //条件を消去するボタンの作成
             deleteButton = new Button();
@@ -76,7 +78,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             deleteButton.Location = new System.Drawing.Point(deleteButtonLeftLocation, deleteButtonTopLocation);
             deleteButton.Click += (o, _e) =>
               {
-                 ApplicationFactory.BlackBoard.DeletedSearchConditionNum = _conditionNumber;
+                  ApplicationFactory.BlackBoard.DeletedSearchConditionNum = _conditionNumber;
               };
 
             //絞り込み条件の表示位置のY座標を設定
@@ -98,6 +100,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
 
             conditionBox.Text = conditionText;
+            arrangeTextBoxSize(conditionBox);
             this.Controls.Add(conditionLabel);
             this.Controls.Add(conditionBox);
             this.Controls.Add(deleteButton);
@@ -158,26 +161,44 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 int conditionBoxLeftLocation = refiningConditionLabel.Location.X;
                 int conditionBoxTopLocation = refiningConditionLabel.Location.Y + refiningConditionLabel.Size.Height + 5;
                 refiningConditionBox.Location = new System.Drawing.Point(conditionBoxLeftLocation, conditionBoxTopLocation);
-                refiningConditionBox.Width = 450;
                 refiningConditionBox.Height = 45;
                 refiningConditionBox.Visible = true;
                 refiningConditionBox.Multiline = true;
                 refiningConditionBox.ReadOnly = true;
+
+                //条件の否定をとるためのチェックボックスを作成
+                CheckBox denyConditionCheckBox = new CheckBox();
+                denyConditionCheckBox.Name = "denyConditionCheckBox:" + refiningConditionID;
+                denyConditionCheckBox.Text = "条件を否定";
+                denyConditionCheckBox.Size = new System.Drawing.Size(120, 23);
+                int denyConditionLocationY = refiningConditionLabel.Location.Y;
+                int denyConditionLocationX = refiningConditionLabel.Location.X + refiningConditionLabel.Size.Width + 10;
+                denyConditionCheckBox.Location = new System.Drawing.Point(denyConditionLocationX, denyConditionLocationY);
+                if (s.denyCondition)
+                {
+                    denyConditionCheckBox.Checked = true;
+                }
+
+                denyConditionCheckBox.CheckedChanged += (o, _e) =>
+                {
+                    s.denyCondition = denyConditionCheckBox.Checked;
+                };
 
                 //条件を消去するボタンの作成
                 Button deleteRefiningConditionButton = new Button();
                 deleteRefiningConditionButton.Name = "DeleteConditionButton:" + refiningConditionID;
                 deleteRefiningConditionButton.Tag = refiningConditionID -1; 
                 deleteRefiningConditionButton.Text = "-";
-                deleteRefiningConditionButton.Size = new System.Drawing.Size(29,23);
-                int deleteButtonTopLocation = refiningConditionLabel.Location.Y;
-                int deleteButtonLeftLocation = refiningConditionLabel.Location.X + refiningConditionLabel.Size.Width + 40;
-                deleteRefiningConditionButton.Location = new System.Drawing.Point(deleteButtonLeftLocation, deleteButtonTopLocation);
+                deleteRefiningConditionButton.Size = new System.Drawing.Size(29, 23);
+                int deleteButtonLocationY = refiningConditionLabel.Location.Y;
+                int deleteButtonLocationX = denyConditionLocationX + denyConditionCheckBox.Width + 20;
+                deleteRefiningConditionButton.Location = new System.Drawing.Point(deleteButtonLocationX, deleteButtonLocationY);
                 deleteRefiningConditionButton.Click += (o, _e) =>
                 {
                     refiningConditions.RemoveAt((int)deleteRefiningConditionButton.Tag);
                     updateRefiningConditions();
                 };
+
 
                 //nextRefiningConditionLocation = System.Drawing.Point(refiningConditionLabel.Location.X ,refiningConditionLabel.Location.Y + refiningConditionBox.Size.Height + 5);
                 nextRefiningConditionLocation.Y = refiningConditionBox.Location.Y + refiningConditionBox.Size.Height + 5;
@@ -203,7 +224,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                 if ((s.timingValue != null) && (!s.timingValue.Equals("")))
                 {
-                    refiningConditionText +=  System.Environment.NewLine + "基本条件のイベント発生時刻に対して " + s.timingValue + " μ秒";
+                    refiningConditionText +=  System.Environment.NewLine + "基本条件のイベント発生時刻に対して " + s.timingValue + _timeScale;
                 }
 
                 if ((s.timing != null) && (!s.timing.Equals("")))
@@ -211,18 +232,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     refiningConditionText += s.timing;
                 }
 
-                if (s.denyCondition)
-                {
-                    refiningConditionText += System.Environment.NewLine + "していない";
-                }
-
                 refiningConditionBox.Text = refiningConditionText;
+                arrangeTextBoxSize(refiningConditionBox);
                 this.Controls.Add(refiningConditionLabel);
                 this.Controls.Add(refiningConditionBox);
+                this.Controls.Add(denyConditionCheckBox);
                 this.Controls.Add(deleteRefiningConditionButton);
             }
         }
 
+        //テキストボックスのサイズを自動調整
+        private void arrangeTextBoxSize(TextBox targetBox)
+        {
+            int maxTextLength = 0;
+            int font_W = (int)Math.Ceiling(
+                             targetBox.Font.SizeInPoints * 2.0F / 3.0F);  // フォント幅を取得
 
+            foreach (string A in targetBox.Lines)
+            {
+                // 各行の文字バイト長から「横幅」を算出し、その最大値を求める
+                int len = System.Text.Encoding.GetEncoding("Shift_JIS").GetByteCount(A);
+                maxTextLength = Math.Max(maxTextLength, len * font_W);
+            }
+            targetBox.Width = maxTextLength + 10;
+        }
     }
 }
