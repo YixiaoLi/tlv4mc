@@ -209,7 +209,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             stats.Setting.SetData(rule["Setting"]);
 
-            string[] data = null;
+            List<string> data = getTargetData(rule["Target"]);
 
             // Key: 正規表現、Value:正規表現にマッチした場合の統計情報設定方法を記述したJsonオブジェクト
             // 複数の正規表現によってパースされることを想定している
@@ -217,6 +217,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
             {
                 foreach (string l in data)
                 {
+                    if (l.Equals("Target")) continue;
+
                     if (Regex.IsMatch(l, j.Key))
                     {
                         DataPoint dp = new DataPoint();
