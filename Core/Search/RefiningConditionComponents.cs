@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
     class RefiningConditionComponents
     {
         private TraceLogVisualizerData _data;
-        public RefiningConditionComponents(TraceLogVisualizerData data)
-        {
+        private ComboBox _baseTargetResource;
+        private ComboBox _baseTargetRule;
+        private ComboBox _baseTargetEvent;
+        private ComboBox _baseTargetEventDetail;
 
+        public RefiningConditionComponents(TracepLogVisualizerData data)
+        {
+            _data = data;
         }
     }
 }

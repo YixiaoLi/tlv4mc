@@ -86,9 +86,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
             set { ApplicationMethod.SetValue<int>(ref _deletedSearchConditionNum, value, DeletedSearchConditionNumChanged, this); }
         }
 
-
-
-
 		public ApplicationBlackBoard()
 		{
 			_cursorTime = Time.Empty;
