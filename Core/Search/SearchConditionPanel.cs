@@ -30,8 +30,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public RadioButton orButton = null;
         private string _timeScale; //タイムラインの時間単位（s, ms, μsなど）
 
-        public SearchConditionPanel(SearchCondition condition, int conditionNumber, string timeScale)
+        private DetailSearchForm _parentPanel = null;
+        
+        public SearchConditionPanel(DetailSearchForm detailSearchPanel, SearchCondition condition, int conditionNumber, string timeScale)
         {
+            _parentPanel = detailSearchPanel;
             mainCondition = condition;
             refiningConditions = new List<SearchCondition>();
             this._conditionNumber = conditionNumber;
@@ -70,9 +73,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             //条件を消去するボタンの作成
             deleteButton = new Button();
             deleteButton.Name = "DeleteConditionButton:" + _conditionNumber;
-            deleteButton.Text = "-";
+            deleteButton.Text = "削除";
             deleteButton.Tag = _conditionNumber -1;
-            deleteButton.Size = new System.Drawing.Size(29, 23);
+            deleteButton.Size = new System.Drawing.Size(37, 23);
             int deleteButtonTopLocation = conditionLabel.Location.Y;
             int deleteButtonLeftLocation = conditionLabel.Location.X + conditionLabel.Size.Width + 40;
             deleteButton.Location = new System.Drawing.Point(deleteButtonLeftLocation, deleteButtonTopLocation);
@@ -188,8 +191,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 Button deleteRefiningConditionButton = new Button();
                 deleteRefiningConditionButton.Name = "DeleteConditionButton:" + refiningConditionID;
                 deleteRefiningConditionButton.Tag = refiningConditionID -1; 
-                deleteRefiningConditionButton.Text = "-";
-                deleteRefiningConditionButton.Size = new System.Drawing.Size(29, 23);
+                deleteRefiningConditionButton.Text = "削除";
+                deleteRefiningConditionButton.Size = new System.Drawing.Size(37, 23);
                 int deleteButtonLocationY = refiningConditionLabel.Location.Y;
                 int deleteButtonLocationX = denyConditionLocationX + denyConditionCheckBox.Width + 20;
                 deleteRefiningConditionButton.Location = new System.Drawing.Point(deleteButtonLocationX, deleteButtonLocationY);

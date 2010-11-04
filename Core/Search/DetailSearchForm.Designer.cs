@@ -1,6 +1,6 @@
 ﻿namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
-    partial class DetailSearchPanel
+    partial class DetailSearchForm
     {
         /// <summary>
         /// Required designer variable.
@@ -90,7 +90,7 @@
             this.ConditionOpratior.Dock = System.Windows.Forms.DockStyle.Top;
             this.ConditionOpratior.Location = new System.Drawing.Point(0, 0);
             this.ConditionOpratior.Name = "ConditionOpratior";
-            this.ConditionOpratior.Size = new System.Drawing.Size(604, 224);
+            this.ConditionOpratior.Size = new System.Drawing.Size(604, 218);
             this.ConditionOpratior.TabIndex = 0;
             // 
             // settingCursorButton
@@ -179,11 +179,11 @@
             // addRefiningConditionButton
             // 
             this.addRefiningConditionButton.Enabled = false;
-            this.addRefiningConditionButton.Location = new System.Drawing.Point(539, 128);
+            this.addRefiningConditionButton.Location = new System.Drawing.Point(519, 128);
             this.addRefiningConditionButton.Name = "addRefiningConditionButton";
-            this.addRefiningConditionButton.Size = new System.Drawing.Size(29, 23);
+            this.addRefiningConditionButton.Size = new System.Drawing.Size(38, 23);
             this.addRefiningConditionButton.TabIndex = 15;
-            this.addRefiningConditionButton.Text = "+";
+            this.addRefiningConditionButton.Text = "追加";
             this.addRefiningConditionButton.UseVisualStyleBackColor = true;
             // 
             // timingValueForm
@@ -191,7 +191,7 @@
             this.timingValueForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.timingValueForm.Enabled = false;
             this.timingValueForm.FormattingEnabled = true;
-            this.timingValueForm.Location = new System.Drawing.Point(236, 131);
+            this.timingValueForm.Location = new System.Drawing.Point(263, 131);
             this.timingValueForm.Name = "timingValueForm";
             this.timingValueForm.Size = new System.Drawing.Size(115, 20);
             this.timingValueForm.TabIndex = 14;
@@ -216,7 +216,7 @@
             // 
             this.timingSetting.AutoSize = true;
             this.timingSetting.Font = new System.Drawing.Font("Century", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.timingSetting.Location = new System.Drawing.Point(46, 134);
+            this.timingSetting.Location = new System.Drawing.Point(68, 134);
             this.timingSetting.Name = "timingSetting";
             this.timingSetting.Size = new System.Drawing.Size(188, 15);
             this.timingSetting.TabIndex = 12;
@@ -297,11 +297,11 @@
             // addMainConditionButton
             // 
             this.addMainConditionButton.Enabled = false;
-            this.addMainConditionButton.Location = new System.Drawing.Point(540, 27);
+            this.addMainConditionButton.Location = new System.Drawing.Point(520, 27);
             this.addMainConditionButton.Name = "addMainConditionButton";
-            this.addMainConditionButton.Size = new System.Drawing.Size(29, 23);
+            this.addMainConditionButton.Size = new System.Drawing.Size(37, 23);
             this.addMainConditionButton.TabIndex = 4;
-            this.addMainConditionButton.Text = "+";
+            this.addMainConditionButton.Text = "追加";
             this.addMainConditionButton.UseVisualStyleBackColor = true;
             // 
             // mainEventDetailForm
@@ -350,9 +350,9 @@
             this.ConditionDisplayPanel.BackColor = System.Drawing.Color.LavenderBlush;
             this.ConditionDisplayPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ConditionDisplayPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ConditionDisplayPanel.Location = new System.Drawing.Point(0, 224);
+            this.ConditionDisplayPanel.Location = new System.Drawing.Point(0, 218);
             this.ConditionDisplayPanel.Name = "ConditionDisplayPanel";
-            this.ConditionDisplayPanel.Size = new System.Drawing.Size(604, 410);
+            this.ConditionDisplayPanel.Size = new System.Drawing.Size(604, 416);
             this.ConditionDisplayPanel.TabIndex = 1;
             // 
             // DetailSearchPanel

@@ -11,7 +11,7 @@ using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
-    public partial class DetailSearchPanel : Form
+    public partial class DetailSearchForm : Form
     {
         private TraceLogVisualizerData _data;
         private List<VisualizeLog> _visLogs;
@@ -23,7 +23,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private decimal _maxTime;
         private int _timeRadix;
 
-        public DetailSearchPanel(TraceLogVisualizerData data, decimal minTime, decimal maxTime, int timeRadix)
+        public DetailSearchForm(TraceLogVisualizerData data, decimal minTime, decimal maxTime, int timeRadix)
         {
             InitializeComponent();
             mainRuleForm.Enabled = false;
@@ -594,7 +594,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             searchForwardButton.Enabled = true;
             searchWholeButton.Enabled = true;
 
-            SearchConditionPanel panel = new SearchConditionPanel(mainSearchCondition, _searchConditionPanels.Count+1, _data.ResourceData.TimeScale);
+            SearchConditionPanel panel = new SearchConditionPanel(this,mainSearchCondition, _searchConditionPanels.Count+1, _data.ResourceData.TimeScale);
             panel.BorderStyle = BorderStyle.FixedSingle;
             panel.AutoScroll = true;
             panel.Width = ConditionDisplayPanel.Width - 15;
