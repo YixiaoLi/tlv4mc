@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NU.OJL.MPRTOS.TLV.Base {
+namespace NU.OJL.MPRTOS.TLV.Properties {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace NU.OJL.MPRTOS.TLV.Base {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class StatusManagerResource {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal StatusManagerResource() {
+        internal Resources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace NU.OJL.MPRTOS.TLV.Base {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NU.OJL.MPRTOS.TLV.Base.StatusManager.StatusManagerResource", typeof(StatusManagerResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NU.OJL.MPRTOS.TLV.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,13 +57,6 @@ namespace NU.OJL.MPRTOS.TLV.Base {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        internal static System.Drawing.Bitmap status_anim {
-            get {
-                object obj = ResourceManager.GetObject("status_anim", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

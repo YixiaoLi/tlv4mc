@@ -117,7 +117,7 @@ namespace Test
                 char[] input = s.ToCharArray(); // TODO: 適切な値に初期化してください
                 target.Parse(input);
                 var actual = new TestTraceLogInstance(target);
-                using (StreamWriter w = new StreamWriter(@"F:/mydebug/expected.txt", true))  // TODO: あらかじめ空ファイルを用意してフルパスを指定して下さい
+                using (StreamWriter w = new StreamWriter(@"C:\OJL\expected.txt", false))  // TODO: あらかじめ空ファイルを用意してフルパスを指定して下さい
                 {                                                                            //       
                     w.WriteLine("Log: " + s);
                     w.WriteLine("Time: " + _expected.Time);
@@ -133,7 +133,7 @@ namespace Test
                     w.WriteLine("HasObjectType: " + _expected.HasObjectType);
                     w.WriteLine("Type: " + _expected.Type);
                 }
-                using (StreamWriter w = new StreamWriter(@"F:/mydebug/actual.txt", true))  // TODO: あらかじめ空ファイルを用意してフルパスを指定して下さい
+                using (StreamWriter w = new StreamWriter(@"C:\OJL\actual.txt", false))  // TODO: あらかじめ空ファイルを用意してフルパスを指定して下さい
                 {
                     w.WriteLine("Log: " + s);
                     w.WriteLine("Time: " + actual.Time);

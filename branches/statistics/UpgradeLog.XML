@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="TLV">
+</Property><Property Name="ソリューション ファイル" Value="C:\OJL\statistics\TLV.sln">
+</Property><Property Name="Date" Value="2010年11月4日">
+</Property><Property Name="Time" Value="16:43">
+</Property></Properties><Event ErrorLevel="0" Project="Main" Source="TLV\Main.csproj" Description="プロジェクトは正常に変換されました。">
+</Event><Event ErrorLevel="3" Project="Main" Source="TLV\Main.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Core" Source="Core\Core.csproj" Description="プロジェクトは正常に変換されました。">
+</Event><Event ErrorLevel="3" Project="Core" Source="Core\Core.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Base" Source="Base\Base.csproj" Description="プロジェクトは正常に変換されました。">
+</Event><Event ErrorLevel="3" Project="Base" Source="Base\Base.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Third" Source="Third\Third.csproj" Description="プロジェクトは正常に変換されました。">
+</Event><Event ErrorLevel="3" Project="Third" Source="Third\Third.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Test" Source="Test\Test.csproj" Description="プロジェクトは正常に変換されました。">
+</Event><Event ErrorLevel="3" Project="Test" Source="Test\Test.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="TLV.sln" Description="ソリューションは正常に変換されました">
+</Event><Event ErrorLevel="3" Project="" Source="TLV.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Main" Source="TLV\Main.csproj" Description="スキャンが完了しました: プロジェクト ファイルにアップグレードは必要ありません。">
+</Event><Event ErrorLevel="0" Project="Core" Source="Core\Core.csproj" Description="スキャンが完了しました: プロジェクト ファイルにアップグレードは必要ありません。">
+</Event><Event ErrorLevel="0" Project="Base" Source="Base\Base.csproj" Description="スキャンが完了しました: プロジェクト ファイルにアップグレードは必要ありません。">
+</Event><Event ErrorLevel="0" Project="Third" Source="Third\Third.csproj" Description="スキャンが完了しました: プロジェクト ファイルにアップグレードは必要ありません。">
+</Event><Event ErrorLevel="3" Project="" Source="LocalTestRun.testrunconfig" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="LocalTestRun.testrunconfig" Description="ファイルが現在の形式に変換されました。">
+</Event><Event ErrorLevel="3" Project="" Source="TLV1.vsmdi" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="TLV1.vsmdi" Description="ファイルが現在の形式に変換されました。">
+</Event><Event ErrorLevel="0" Project="Test" Source="Test\Test.csproj" Description="スキャンが完了しました: プロジェクト ファイルにアップグレードは必要ありません。">
+</Event></UpgradeLog>
