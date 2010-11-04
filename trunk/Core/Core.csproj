@@ -241,17 +241,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Search\ConditionBeans.cs" />
-    <Compile Include="Search\DetailSearchPanel.cs">
+    <Compile Include="Search\BaseConditionComponents.cs" />
+    <Compile Include="Search\ConditionRegister.cs" />
+    <Compile Include="Search\DetailSearchForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Search\DetailSearchPanel.Designer.cs">
-      <DependentUpon>DetailSearchPanel.cs</DependentUpon>
+    <Compile Include="Search\DetailSearchForm.Designer.cs">
+      <DependentUpon>DetailSearchForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Search\DetailSearchWithTiming.cs" />
     <Compile Include="Search\Filters\DetailFilter.cs" />
     <Compile Include="Search\Filters\SimpleFilter.cs" />
     <Compile Include="Search\Filters\TimingFilter.cs" />
+    <Compile Include="Search\RefiningConditionComponents.cs" />
     <Compile Include="Search\SearchConditionPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -341,8 +343,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Search\DetailSearchPanel.resx">
-      <DependentUpon>DetailSearchPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Search\DetailSearchForm.resx">
+      <DependentUpon>DetailSearchForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

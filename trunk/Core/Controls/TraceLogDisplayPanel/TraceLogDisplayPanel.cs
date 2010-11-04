@@ -69,7 +69,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private bool _mouseDown;
 
         private TraceLogSearcher _searcher = null;  //簡易検索処理を行うオブジェクト
-        private DetailSearchPanel _detailSearchPanel = null; //詳細検索ウィンドウオブジェクト
+        private DetailSearchForm _detailSearchPanel = null; //詳細検索ウィンドウオブジェクト
         
 
         //簡易検索に必要な変数群
@@ -583,7 +583,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region detailSearchPanel初期化
             detailSearchButton.Click += (o, _e) =>
             {
-                _detailSearchPanel = new DetailSearchPanel(_data, TimeLine.MinTime.Value, TimeLine.MaxTime.Value, _timeRadix);
+                _detailSearchPanel = new DetailSearchForm(_data, TimeLine.MinTime.Value, TimeLine.MaxTime.Value, _timeRadix);
                 _detailSearchPanel.Visible = true;
                 ApplicationFactory.BlackBoard.DetailSearchFlag = 1;
             };
