@@ -14,7 +14,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private ComboBox _baseTargetEvent;
         private ComboBox _baseTargetEventDetail;
 
-        public RefiningConditionComponents(TracepLogVisualizerData data)
+        public RefiningConditionComponents(TraceLogVisualizerData data)
         {
             _data = data;
         }

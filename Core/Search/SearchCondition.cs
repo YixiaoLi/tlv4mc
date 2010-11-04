@@ -9,6 +9,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     class SearchCondition
     {
         private string _resourceName;
+        private string _resourceType;
         private string _ruleName;
         private string _ruleDisplayName;
         private string _eventName;
@@ -19,6 +20,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private Boolean _denyCondition;
 
         public string resourceName { set { this._resourceName = value; } get { return _resourceName; } }
+        public string resourceType { set { this._resourceType = value; } get { return _resourceType; } }
         public string ruleName { set { this._ruleName = value; } get { return _ruleName; } }
         public string ruleDisplayName { set { this._ruleDisplayName = value; } get { return _ruleDisplayName; } }
         public string eventName { set { this._eventName = value; } get { return _eventName; } }
@@ -32,6 +34,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public SearchCondition()
         {
             _resourceName = null;
+            _resourceType = null;
             _ruleName = null;
             _eventName = null;
             _eventDetail = null;

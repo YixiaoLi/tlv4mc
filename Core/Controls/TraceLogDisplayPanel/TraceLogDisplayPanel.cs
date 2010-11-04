@@ -70,6 +70,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         private TraceLogSearcher _searcher = null;  //簡易検索処理を行うオブジェクト
         private DetailSearchForm _detailSearchPanel = null; //詳細検索ウィンドウオブジェクト
+        private TestForm _testForm = null; //オブジェクト配置テスト用のウィンドウオブジェクト
         
 
         //簡易検索に必要な変数群
@@ -583,8 +584,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region detailSearchPanel初期化
             detailSearchButton.Click += (o, _e) =>
             {
-                _detailSearchPanel = new DetailSearchForm(_data, TimeLine.MinTime.Value, TimeLine.MaxTime.Value, _timeRadix);
-                _detailSearchPanel.Visible = true;
+                //_detailSearchPanel = new DetailSearchForm(_data, TimeLine.MinTime.Value, TimeLine.MaxTime.Value, _timeRadix);
+                //_detailSearchPanel.Visible = true;
+                _testForm = new TestForm(_data);
+                _testForm.Visible = true;
                 ApplicationFactory.BlackBoard.DetailSearchFlag = 1;
             };
 

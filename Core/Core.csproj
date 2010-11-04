@@ -241,7 +241,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Search\BaseConditionComponents.cs" />
+    <Compile Include="Search\BaseConditionComponents.cs">
+    </Compile>
     <Compile Include="Search\ConditionRegister.cs" />
     <Compile Include="Search\DetailSearchForm.cs">
       <SubType>Form</SubType>
@@ -260,7 +261,16 @@
     <Compile Include="Search\SearchCondition.cs" />
     <Compile Include="Search\Filters\SearchFilter.cs" />
     <Compile Include="Search\SimpleSearch.cs" />
+    <Compile Include="Search\TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Search\TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Search\TraceLogSearcher.cs" />
+    <Compile Include="Search\ConditionSettingPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -345,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Search\DetailSearchForm.resx">
       <DependentUpon>DetailSearchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Search\TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
