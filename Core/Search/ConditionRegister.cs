@@ -7,7 +7,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
     //詳細検索画面のメイン条件フォーム、サブ条件フォームで選択されている
     //検索条件を記録しておくためのクラス
-    class ConditionBeans
+    class ConditionRegister
     {
         public string mainResourceName;
         public string mainResourceType;
@@ -24,7 +24,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public string timing;
         public string  timingValue;
 
-        public ConditionBeans()
+        public ConditionRegister()
         {
             mainResourceName = null;
             mainResourceType = null;

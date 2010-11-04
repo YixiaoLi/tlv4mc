@@ -15,7 +15,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     {
         private TraceLogVisualizerData _data;
         private List<VisualizeLog> _visLogs;
-        private ConditionBeans _conditionRegister;
+        private ConditionRegister _conditionRegister;
         private List<SearchConditionPanel> _searchConditionPanels;
         private TraceLogSearcher _searcher;
 
@@ -31,7 +31,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             mainEventDetailForm.Enabled = false;
             _data = data;
             sortByTime();
-            _conditionRegister = new ConditionBeans();
+            _conditionRegister = new ConditionRegister();
             _searchConditionPanels = new List<SearchConditionPanel>();
             _searcher = new DetailSearchWithTiming();
             _minTime = minTime;
@@ -310,7 +310,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             };
         }
 
-        
+
 
         //リソース指定コンボボックスのアイテムをセット
         private void makeMainResourceForm()
