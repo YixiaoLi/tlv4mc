@@ -30,11 +30,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public RadioButton orButton = null;
         private string _timeScale; //タイムラインの時間単位（s, ms, μsなど）
 
-        private DetailSearchForm _parentPanel = null;
-        
-        public SearchConditionPanel(DetailSearchForm detailSearchPanel, SearchCondition condition, int conditionNumber, string timeScale)
+        public SearchConditionPanel(SearchCondition condition, int conditionNumber, string timeScale)
         {
-            _parentPanel = detailSearchPanel;
             mainCondition = condition;
             refiningConditions = new List<SearchCondition>();
             this._conditionNumber = conditionNumber;

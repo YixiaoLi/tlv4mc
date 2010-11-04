@@ -22,7 +22,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private decimal _minTime;
         private decimal _maxTime;
         private int _timeRadix;
-
+        
         public DetailSearchForm(TraceLogVisualizerData data, decimal minTime, decimal maxTime, int timeRadix)
         {
             InitializeComponent();
@@ -594,7 +594,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             searchForwardButton.Enabled = true;
             searchWholeButton.Enabled = true;
 
-            SearchConditionPanel panel = new SearchConditionPanel(this,mainSearchCondition, _searchConditionPanels.Count+1, _data.ResourceData.TimeScale);
+            SearchConditionPanel panel = new SearchConditionPanel(mainSearchCondition, _searchConditionPanels.Count+1, _data.ResourceData.TimeScale);
             panel.BorderStyle = BorderStyle.FixedSingle;
             panel.AutoScroll = true;
             panel.Width = ConditionDisplayPanel.Width - 15;
