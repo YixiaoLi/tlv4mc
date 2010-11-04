@@ -178,7 +178,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
             File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.VisualizeShapesFileExtension, VisualizeShapeData.ToJson());
             foreach (Statistics s in StatisticsData.Statisticses)
             {
-                File.WriteAllText(targetTmpStatisticsDirPath + name + "-" + s.Name + "." + Properties.Resources.StatisticsFileExtension, s.ToJson());
+                StatisticsData sd = new StatisticsData();
+                sd.Statisticses.Add(s);
+                File.WriteAllText(targetTmpStatisticsDirPath + name + "-" + s.Name + "." + Properties.Resources.StatisticsFileExtension, sd.Statisticses.ToJson());
             }
             zip.Compress(path, targetTmpDirPath);
 
@@ -219,7 +221,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
             StatisticsData stad = new StatisticsData();
             foreach (string staPath in statisticsFilePathes)
             {
-                stad.Statisticses.Add(ApplicationFactory.JsonSerializer.Deserialize<Statistics>(File.ReadAllText(staPath)));
+                StatisticsData sd = ApplicationFactory.JsonSerializer.Deserialize<StatisticsData>(File.ReadAllText(staPath));
+                stad.Statisticses.Add(sd.Statisticses.Single<Statistics>());
             }
 
             ResourceData = res;
