@@ -13,12 +13,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     {
         public SearchCondition mainCondition = null;
         public List<SearchCondition> refiningConditions = null;
-        private int _conditionNumber;
-        public int conditionNumber
-        { 
-            set{_conditionNumber = value;}
-            get{return _conditionNumber;}
-        }
+        private int _panelNumber;
+        public int panelNumber { set { _panelNumber = value; } get { return _panelNumber; } }
 
         private Label conditionLabel;
         private TextBox conditionBox;
@@ -30,11 +26,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public RadioButton orButton = null;
         private string _timeScale; //タイムラインの時間単位（s, ms, μsなど）
 
-        public SearchConditionPanel(SearchCondition condition, int conditionNumber, string timeScale)
+        public SearchConditionPanel(SearchCondition condition, int panelNumber, string timeScale)
         {
             mainCondition = condition;
             refiningConditions = new List<SearchCondition>();
-            this._conditionNumber = conditionNumber;
+            this._panelNumber = panelNumber;
             updateMainCondition();
             this.AutoScroll = true;
             this.Size = new System.Drawing.Size(584,209);
@@ -50,15 +46,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             //main条件のラベルの作成
             conditionLabel = new Label();
-            conditionLabel.Name = "ConditionLabel" + _conditionNumber;
-            conditionLabel.Text = "基本条件：" + _conditionNumber;
+            conditionLabel.Name = "ConditionLabel" + _panelNumber;
+            conditionLabel.Text = "基本条件：" + _panelNumber;
             conditionLabel.AutoSize = true;
             conditionLabel.Location = new System.Drawing.Point(conditionLabelLeftLocation, conditionLabelTopLocation);
             mainConditionLabelLocation = conditionLabel.Location;
 
             //条件を表示するテキストボックスの作成
             conditionBox = new TextBox();
-            conditionBox.Name = "ConditionBox:" + _conditionNumber;
+            conditionBox.Name = "ConditionBox:" + _panelNumber;
             int conditionBoxLeftLocation = conditionLabel.Location.X;
             int conditionBoxTopLocation = conditionLabelTopLocation + conditionLabel.Size.Height + 5;
             conditionBox.Location = new System.Drawing.Point(conditionBoxLeftLocation, conditionBoxTopLocation);
@@ -69,16 +65,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             //条件を消去するボタンの作成
             deleteButton = new Button();
-            deleteButton.Name = "DeleteConditionButton:" + _conditionNumber;
+            deleteButton.Name = "DeleteConditionButton:" + _panelNumber;
             deleteButton.Text = "削除";
-            deleteButton.Tag = _conditionNumber -1;
+            deleteButton.Tag = _panelNumber -1;
             deleteButton.Size = new System.Drawing.Size(37, 23);
             int deleteButtonTopLocation = conditionLabel.Location.Y;
             int deleteButtonLeftLocation = conditionLabel.Location.X + conditionLabel.Size.Width + 40;
             deleteButton.Location = new System.Drawing.Point(deleteButtonLeftLocation, deleteButtonTopLocation);
             deleteButton.Click += (o, _e) =>
               {
-                  ApplicationFactory.BlackBoard.DeletedSearchConditionNum = _conditionNumber;
+                  ApplicationFactory.BlackBoard.DeletedSearchConditionNum = _panelNumber;
               };
 
             //絞り込み条件の表示位置のY座標を設定
@@ -124,15 +120,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             if (refiningConditions.Count >1 )
             {
                 andButton = new RadioButton();
-                andButton.Name = "andButton" + _conditionNumber;
+                andButton.Name = "andButton" + _panelNumber;
                 andButton.Text = "全ての条件に一致";
-                andButton.Tag = _conditionNumber;
+                andButton.Tag = _panelNumber;
                 andButton.Location = new System.Drawing.Point(conditionBox.Location.X, conditionBox.Location.Y + conditionBox.Height + 10);
 
                 orButton = new RadioButton();
-                orButton.Name = "orButton" + _conditionNumber;
+                orButton.Name = "orButton" + _panelNumber;
                 orButton.Text = "いずれかの条件に一致";
-                orButton.Tag = _conditionNumber;
+                orButton.Tag = _panelNumber;
                 orButton.Location = new System.Drawing.Point(andButton.Location.X + andButton.Width + 5 , conditionBox.Location.Y + conditionBox.Height + 10);
                 orButton.Checked = true;
 

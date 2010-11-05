@@ -8,37 +8,33 @@ using NU.OJL.MPRTOS.TLV.Core.Controls;
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
     //詳細検索画面に張り付ける検索条件用のパネル
-    //検索条件ごとにこのクラスを割り当てる
     class ConditionSettingPanel : Panel
     {
         private TraceLogVisualizerData _data = null;
+        private TestForm _parentForm = null;
         private BaseConditionComponents _baseConditionComponent = null;
         private List<RefiningConditionComponents> _refiningConditionComponents = null;
-        private int _conditionNumber;
-        public int conditionNumber
-        { 
-            set{_conditionNumber = value;}
-            get{return _conditionNumber;}
-        }
-
+        private int _panelID = 0;
         private string _timeScale; //タイムラインの時間単位（s, ms, μsなど）
 
-        public ConditionSettingPanel(TraceLogVisualizerData data, int conditionNumber, System.Drawing.Point formLocation, int formWidth)
+        public ConditionSettingPanel(TraceLogVisualizerData data, TestForm parentForm, int panelID)
         {
             _data = data;
-            _conditionNumber = conditionNumber;
-            this.Location = formLocation;
-            this.Width = formWidth;
+            _parentForm = parentForm;
+            _panelID = panelID;
+            this.Location = _parentForm.Location;
+            this.Width = _parentForm.Width;
             this.AutoScroll = true;
             this.BorderStyle = BorderStyle.Fixed3D;
-            this.Size = new System.Drawing.Size(formWidth,200);
+            this.Size = new System.Drawing.Size(this.Width,200);
 
-            _baseConditionComponent = new BaseConditionComponents(data, _conditionNumber, this.Width);
+            _baseConditionComponent = new BaseConditionComponents(_data, this);
             this.Controls.Add(_baseConditionComponent.getDisplayLabel());
             this.Controls.Add(_baseConditionComponent.getTargetResourceForm());
             this.Controls.Add(_baseConditionComponent.getTargetRuleForm());
             this.Controls.Add(_baseConditionComponent.getTargetEventForm());
             this.Controls.Add(_baseConditionComponent.getTargetEventDetailForm());
+            this.Controls.Add(_baseConditionComponent.getDeleteButton());
             _refiningConditionComponents = new List<RefiningConditionComponents>();
         }
 
@@ -46,6 +42,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         {
             this.Size = new System.Drawing.Size(parentPanelSize.Width,200);
             _baseConditionComponent.updateComponentsSize(this.Size.Width); //パネルサイズ変更に伴う条件指定ボックスのサイズ変更
+        }
+
+        public void deleteBaseCondition()
+        {
+            _parentForm.deleteBaseCondition(_panelID);
+        }
+
+        public void deleteRefiningCondition()
+        {
+        }
+
+        public void setPanelID(int panelID)
+        {
+            _panelID = panelID;
+            _baseConditionComponent.changeComponentID(_panelID);
+        }
+
+        public int getPanelID()
+        {
+            return _panelID;
         }
 
         private void updateComponents()

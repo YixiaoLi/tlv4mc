@@ -281,7 +281,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             this.FormClosing += (o, _e) =>
             {
-                ApplicationFactory.BlackBoard.DetailSearchFlag = 0;
+                ApplicationFactory.BlackBoard.DetailSearchFlag = false;
                 ApplicationFactory.BlackBoard.DeletedSearchConditionNum = -1;
                 ApplicationFactory.BlackBoard.DeletedSearchConditionNumChanged -= new EventHandler<NU.OJL.MPRTOS.TLV.Base.GeneralChangedEventArgs<int>>(deleteCondition);
             };
@@ -645,7 +645,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 int panelNum = 1;
                 foreach (SearchConditionPanel panel in _searchConditionPanels)
                 {
-                    panel.conditionNumber = panelNum;
+                    panel.panelNumber = panelNum;
                     targetConditionForm.Items.Add(panelNum);
                     panelNum++;
                 }

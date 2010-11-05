@@ -169,7 +169,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             ApplicationFactory.BlackBoard.DetailSearchFlagChanged += (o, _e) =>
             {
-                if (ApplicationFactory.BlackBoard.DetailSearchFlag == 0) { this.Enabled = true; }
+                if (!ApplicationFactory.BlackBoard.DetailSearchFlag) { this.Enabled = true; }
                 else { this.Enabled = false; }
             };
             

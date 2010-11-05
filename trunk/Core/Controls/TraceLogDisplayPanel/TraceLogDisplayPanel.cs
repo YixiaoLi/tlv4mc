@@ -588,7 +588,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 //_detailSearchPanel.Visible = true;
                 _testForm = new TestForm(_data);
                 _testForm.Visible = true;
-                ApplicationFactory.BlackBoard.DetailSearchFlag = 1;
+                ApplicationFactory.BlackBoard.DetailSearchFlag = true;
             };
 
 
@@ -680,7 +680,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) =>
             {
-                if (ApplicationFactory.BlackBoard.DetailSearchFlag == 1) //詳細検索によって CursorTime が変化したとき
+                if (ApplicationFactory.BlackBoard.DetailSearchFlag) //詳細検索によって CursorTime が変化したとき
                 {
                     moveScrollBar(ApplicationFactory.BlackBoard.CursorTime.Value);
                 }

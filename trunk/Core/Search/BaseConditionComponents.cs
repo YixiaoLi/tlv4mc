@@ -10,8 +10,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     class BaseConditionComponents
     {
         protected TraceLogVisualizerData _data;
-        protected int _parentPanelID;                        //親パネルのID
-        protected int _parentPanelWidth;                     //親パネルの横幅。これをもとにComboBox の配置を決定する
+        protected ConditionSettingPanel _parentPanel;     //親パネル
         protected Label _displayLabel;
         protected ComboBox _targetResourceForm;
         protected ComboBox _targetRuleForm;
@@ -20,11 +19,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         protected SearchCondition _searchCondition;
         protected Button _deleteButton;         //基本条件の削除用ボタン
 
-        public BaseConditionComponents(TraceLogVisualizerData data, int componentID,int parentPanelWidth)
+
+        public BaseConditionComponents(TraceLogVisualizerData data, ConditionSettingPanel parentPanel)
         {
             _data = data;
-            _parentPanelID = componentID;
-            _parentPanelWidth = parentPanelWidth;
+            _parentPanel = parentPanel;
             _searchCondition = new SearchCondition();
             initializeComponents();
         }
@@ -32,27 +31,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private void initializeComponents()
         {
             _displayLabel = new Label();
-            _displayLabel.Name = "displayLabel:" + _parentPanelID;
-            _displayLabel.Text = "基本条件" + _parentPanelID;
+            _displayLabel.Name = "displayLabel:" + _parentPanel.getPanelID();
+            _displayLabel.Text = "基本条件" + _parentPanel.getPanelID();
             _targetResourceForm = new ComboBox();
-            _targetResourceForm.Name = "resourceForm:" + _parentPanelID;
+            _targetResourceForm.Name = "resourceForm:" + _parentPanel.getPanelID();
             _targetResourceForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetRuleForm = new ComboBox();
-            _targetRuleForm.Name = "eventForm:" + _parentPanelID;
+            _targetRuleForm.Name = "eventForm:" + _parentPanel.getPanelID();
             _targetRuleForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetEventForm = new ComboBox();
-            _targetEventForm.Name = "eventForm:" + _parentPanelID;
+            _targetEventForm.Name = "eventForm:" + _parentPanel.getPanelID();
             _targetEventForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetEventDetailForm = new ComboBox();
-            _targetEventDetailForm.Name = "eventDetailForm:" + _parentPanelID;
+            _targetEventDetailForm.Name = "eventDetailForm:" + _parentPanel.getPanelID();
             _targetEventDetailForm.DropDownStyle = ComboBoxStyle.DropDownList;
+            _deleteButton = new Button();
+            _deleteButton.Name = "deleteButton"+ _parentPanel.getPanelID();
+            _deleteButton.Text = "削除";
+            _deleteButton.Size = new System.Drawing.Size(37,25);
 
             _targetResourceForm.Enabled = false;
             _targetRuleForm.Enabled = false;
             _targetEventForm.Enabled = false;
             _targetEventDetailForm.Enabled = false;
 
-            arrangeComboBoxSize(_parentPanelWidth);
+            arrangeComboBoxSize(_parentPanel.Width);
             arrangeComponentLocations();
             makeBaseResourceForm();
 
@@ -120,6 +123,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 _searchCondition.eventDetail = (string)_targetEventDetailForm.SelectedItem;
             };
 
+            _deleteButton.Click += (o, _e) =>
+            {
+                _parentPanel.deleteBaseCondition();
+            };
+        }
+
+        public void changeComponentID(int ID)
+        {
+            _displayLabel.Name = "displayLabel:" + ID;
+            _displayLabel.Text = "基本条件:" + ID;
+            _targetResourceForm.Name = "resourceForm:" + ID;
+            _targetRuleForm.Name = "resourceForm:" + ID;
+            _targetEventForm.Name = "resourceForm:" + ID;
+            _targetEventDetailForm.Name = "resourceForm:" + ID;
         }
 
         //リソース指定コンボボックスのアイテムをセット
@@ -206,6 +223,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _targetRuleForm.Location = new System.Drawing.Point(_targetResourceForm.Location.X + _targetResourceForm.Width + 5, _targetResourceForm.Location.Y);
             _targetEventForm.Location = new System.Drawing.Point(_targetRuleForm.Location.X + _targetRuleForm.Width + 5, _targetRuleForm.Location.Y);
             _targetEventDetailForm.Location = new System.Drawing.Point(_targetEventForm.Location.X + _targetEventForm.Width + 5, _targetEventForm.Location.Y);
+            _deleteButton.Location = new System.Drawing.Point(_displayLabel.Location.X + _displayLabel.Width + 20,_displayLabel.Location.Y);
         }
 
         public void updateComponentsSize(int width)
@@ -258,6 +276,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public ComboBox getTargetEventDetailForm()
         {
             return _targetEventDetailForm;
+        }
+
+        public Button getDeleteButton()
+        {
+            return _deleteButton;
         }
     }
 }
