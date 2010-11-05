@@ -47,7 +47,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public EventHandler<GeneralChangedEventArgs<Time>> CursorTimeChanged;
         public EventHandler<GeneralChangedEventArgs<Pair<Time, Time>>> SelectedTimeRangeChanged;
         public EventHandler<GeneralChangedEventArgs<List<Time>>> SearchTimeChanged;
-        public EventHandler<GeneralChangedEventArgs<int>> DetailSearchFlagChanged;
+        public EventHandler<GeneralChangedEventArgs<Boolean>> DetailSearchFlagChanged;
         public EventHandler<GeneralChangedEventArgs<int>> DeletedSearchConditionNumChanged;
         
 		private Time _cursorTime;
@@ -68,12 +68,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
         //一つの検索条件に対する絞り込み条件が複数ある場合、それらが ANDでつながれるのか、それとも OR でつながれるのかを表す
         public Boolean isAnd = false;
 
-        private int _detailSearchFlag = 0; //これが１のときは詳細検索フォームが出現していることを表す
-                                           //（詳細検索フォームが出現中は、TraceLogDisplayPanelを操作不能にするためのフラグ）
-        public int DetailSearchFlag
+        private Boolean _detailSearchFlag = false; //これがfalseのときは詳細検索フォームが出現していることを表す
+                                                   //（詳細検索フォームが出現中は、TraceLogDisplayPanelを操作不能にするためのフラグ）
+        public Boolean DetailSearchFlag
         {
             get { return _detailSearchFlag; }
-            set { ApplicationMethod.SetValue<int>(ref _detailSearchFlag, value, DetailSearchFlagChanged, this); }
+            set { ApplicationMethod.SetValue<Boolean>(ref _detailSearchFlag, value, DetailSearchFlagChanged, this); }
         }
 
         //消去された検索条件セットの番号。検索条件セットが消去されるたびに値が更新される。
