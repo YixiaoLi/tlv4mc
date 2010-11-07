@@ -20,13 +20,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _filter = new SimpleFilter();
         }
 
-        public void setSearchData(List<VisualizeLog> visLogs, SearchCondition condition, List<SearchCondition> refiningCondition)
+        public override void setSearchData(List<VisualizeLog> visLogs, SearchCondition condition, List<SearchCondition> refiningCondition)
         {
             _visLogs = visLogs;
             _condition = condition;
         }
 
-        public VisualizeLog searchForward(decimal normTime)
+        // 簡易検索では↑の setSearchData と全く同じ動作
+        public override void setSearchData(List<VisualizeLog> visLogs, SearchCondition condition, List<SearchCondition> refiningCondition, Boolean isAnd)
+        {
+            _visLogs = visLogs;
+            _condition = condition;
+        }
+
+        public override VisualizeLog searchForward(decimal normTime)
         {
             _normTime = normTime;
             VisualizeLog hitLog = null;
@@ -45,7 +52,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         }
 
 
-        public VisualizeLog searchBackward(decimal normTime)
+        public override VisualizeLog searchBackward(decimal normTime)
         {
             _normTime = normTime;
             VisualizeLog hitLog = null ;
@@ -65,7 +72,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         }
 
 
-        public List<VisualizeLog> searchWhole()
+        public override List<VisualizeLog> searchWhole()
         {
             List<VisualizeLog> hitLogs = new List<VisualizeLog>();
             foreach (VisualizeLog visLog in _visLogs)

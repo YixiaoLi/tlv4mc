@@ -241,31 +241,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Search\BaseConditionComponents.cs">
+    <Compile Include="Search\BaseConditionPanel.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Search\ConditionRegister.cs" />
-    <Compile Include="Search\DetailSearchForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Search\DetailSearchForm.Designer.cs">
-      <DependentUpon>DetailSearchForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Search\DetailSearchWithTiming.cs" />
     <Compile Include="Search\Filters\DetailFilter.cs" />
     <Compile Include="Search\Filters\SimpleFilter.cs" />
     <Compile Include="Search\Filters\TimingFilter.cs" />
-    <Compile Include="Search\RefiningConditionComponents.cs" />
-    <Compile Include="Search\SearchConditionPanel.cs">
+    <Compile Include="Search\RefiningConditionPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Search\SearchCondition.cs" />
     <Compile Include="Search\Filters\SearchFilter.cs" />
     <Compile Include="Search\SimpleSearch.cs" />
-    <Compile Include="Search\TestForm.cs">
+    <Compile Include="Search\DetailSearchForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Search\TestForm.Designer.cs">
-      <DependentUpon>TestForm.cs</DependentUpon>
+    <Compile Include="Search\DetailSearchForm.Designer.cs">
+      <DependentUpon>DetailSearchForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Search\TraceLogSearcher.cs" />
     <Compile Include="Search\ConditionSettingPanel.cs">
@@ -355,9 +349,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Search\DetailSearchForm.resx">
       <DependentUpon>DetailSearchForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Search\TestForm.resx">
-      <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

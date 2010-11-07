@@ -6,11 +6,12 @@ using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
-    interface TraceLogSearcher
+     abstract class TraceLogSearcher
     {
-        void setSearchData(List<VisualizeLog> visLogs, SearchCondition baseCondition, List<SearchCondition> refiningCondition);
-        VisualizeLog searchForward(decimal normTime);
-        VisualizeLog searchBackward(decimal normTime);
-        List<VisualizeLog> searchWhole();
+         abstract public void setSearchData(List<VisualizeLog> visLogs, SearchCondition condition, List<SearchCondition> refiningCondition);
+         abstract public void setSearchData(List<VisualizeLog> visLogs, SearchCondition condition, List<SearchCondition> refiningCondition, Boolean isAnd);
+         abstract public VisualizeLog searchForward(decimal time);
+         abstract public VisualizeLog searchBackward(decimal time);
+         abstract public List<VisualizeLog> searchWhole();
     }
 }

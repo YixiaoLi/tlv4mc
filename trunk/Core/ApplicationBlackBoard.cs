@@ -65,9 +65,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
         //カーソルが動かないようにする
         public int dragFlag = 0;
 
-        //一つの検索条件に対する絞り込み条件が複数ある場合、それらが ANDでつながれるのか、それとも OR でつながれるのかを表す
-        public Boolean isAnd = false;
-
         private Boolean _detailSearchFlag = false; //これがfalseのときは詳細検索フォームが出現していることを表す
                                                    //（詳細検索フォームが出現中は、TraceLogDisplayPanelを操作不能にするためのフラグ）
         public Boolean DetailSearchFlag

@@ -7,23 +7,29 @@ using System.Windows.Forms;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
-    class BaseConditionComponents
+    class BaseConditionPanel : Panel
     {
         protected TraceLogVisualizerData _data;
-        protected ConditionSettingPanel _parentPanel;     //親パネル
+        protected int _parentPanelID;
+        protected System.Drawing.Size _parentPanelSize;
         protected Label _displayLabel;
         protected ComboBox _targetResourceForm;
         protected ComboBox _targetRuleForm;
         protected ComboBox _targetEventForm;
         protected ComboBox _targetEventDetailForm;
         protected SearchCondition _searchCondition;
-        protected Button _deleteButton;         //基本条件の削除用ボタン
+        protected Button _deleteButton;
+        public Button DeleteButton{ set {_deleteButton = value ;} get { return _deleteButton; }}
 
+        protected BaseConditionPanel()
+        {
+        }
 
-        public BaseConditionComponents(TraceLogVisualizerData data, ConditionSettingPanel parentPanel)
+        public BaseConditionPanel(TraceLogVisualizerData data, int parentPanelID, System.Drawing.Size parentPanelSize)
         {
             _data = data;
-            _parentPanel = parentPanel;
+            _parentPanelID = parentPanelID;
+            _parentPanelSize = parentPanelSize;
             _searchCondition = new SearchCondition();
             initializeComponents();
         }
@@ -31,38 +37,52 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private void initializeComponents()
         {
             _displayLabel = new Label();
-            _displayLabel.Name = "displayLabel:" + _parentPanel.getPanelID();
-            _displayLabel.Text = "基本条件" + _parentPanel.getPanelID();
+            _displayLabel.Name = "displayLabel:" + _parentPanelID;
+            _displayLabel.Text = "基本条件" + _parentPanelID;
+            _displayLabel.Font = new System.Drawing.Font("Century", 12, System.Drawing.FontStyle.Underline);
             _targetResourceForm = new ComboBox();
-            _targetResourceForm.Name = "resourceForm:" + _parentPanel.getPanelID();
+            _targetResourceForm.Name = "resourceForm:" + _parentPanelID;
             _targetResourceForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetRuleForm = new ComboBox();
-            _targetRuleForm.Name = "eventForm:" + _parentPanel.getPanelID();
+            _targetRuleForm.Name = "ruleForm:" + _parentPanelID;
             _targetRuleForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetEventForm = new ComboBox();
-            _targetEventForm.Name = "eventForm:" + _parentPanel.getPanelID();
+            _targetEventForm.Name = "eventForm:" + _parentPanelID;
             _targetEventForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetEventDetailForm = new ComboBox();
-            _targetEventDetailForm.Name = "eventDetailForm:" + _parentPanel.getPanelID();
+            _targetEventDetailForm.Name = "eventDetailForm:" + _parentPanelID;
             _targetEventDetailForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _deleteButton = new Button();
-            _deleteButton.Name = "deleteButton"+ _parentPanel.getPanelID();
+            _deleteButton.Name = "deleteButton" + _parentPanelID;
             _deleteButton.Text = "削除";
-            _deleteButton.Size = new System.Drawing.Size(37,25);
-
+            _deleteButton.Size = new System.Drawing.Size(37, 25);
             _targetResourceForm.Enabled = false;
             _targetRuleForm.Enabled = false;
             _targetEventForm.Enabled = false;
             _targetEventDetailForm.Enabled = false;
 
-            arrangeComboBoxSize(_parentPanel.Width);
-            arrangeComponentLocations();
-            makeBaseResourceForm();
+            setEventHandler();
 
+            arrangeComboBoxSize(_parentPanelSize.Width);
+            arrangeLocations();
+            makeResourceForm();
+
+            this.Controls.Add(_displayLabel);
+            this.Controls.Add(_targetResourceForm);
+            this.Controls.Add(_targetRuleForm);
+            this.Controls.Add(_targetEventForm);
+            this.Controls.Add(_targetEventDetailForm);
+            this.Controls.Add(_deleteButton);
+            this.Size = new System.Drawing.Size(_parentPanelSize.Width - 25, _targetResourceForm.Location.Y + _targetResourceForm.Height + 1);
+        }
+
+        //各コンポーネントが選択された際のイベントハンドラーをイベントに追加
+        protected void setEventHandler()
+        {
             _targetResourceForm.SelectedIndexChanged += (o, _e) =>
             {
                 _searchCondition.resourceName = (string)_targetResourceForm.SelectedItem;
-                _searchCondition.resourceType = _searchCondition.resourceType = _data.ResourceData.Resources[(string)_targetResourceForm.SelectedItem].Type; 
+                _searchCondition.resourceType = _searchCondition.resourceType = _data.ResourceData.Resources[(string)_targetResourceForm.SelectedItem].Type;
                 _targetRuleForm.Enabled = false;
                 _targetRuleForm.Items.Clear();
                 _targetEventForm.Enabled = false;
@@ -72,7 +92,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                 _targetRuleForm.Enabled = true;
                 _targetRuleForm.Items.Clear();
-                makeBaseRuleForm();
+                makeRuleForm();
+
+
+                _targetResourceForm.Width = getComponentLength(_targetResourceForm.Font, (string)_targetResourceForm.SelectedItem);
+                arrangeLocations();
+                changePanelSize(_targetEventDetailForm.Location.X + _targetEventDetailForm.Width);
             };
 
             _targetRuleForm.SelectedIndexChanged += (o, _e) =>
@@ -94,10 +119,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                 _targetEventForm.Enabled = true;
                 _targetEventForm.Items.Clear();
-                makeBaseEventForm();
+                makeEventForm();
 
                 _targetEventDetailForm.Enabled = false;
                 _targetEventDetailForm.Items.Clear();
+
+                _targetRuleForm.Width = getComponentLength(_targetRuleForm.Font, (string)_targetRuleForm.SelectedItem);
+                arrangeLocations();
+                changePanelSize(_targetEventDetailForm.Location.X + _targetEventDetailForm.Width);
             };
 
             _targetEventForm.SelectedIndexChanged += (o, _e) =>
@@ -115,21 +144,28 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                 _targetEventDetailForm.Enabled = true;
                 _targetEventDetailForm.Items.Clear();
-                makeBaseEventDetailForm();
+                makeEventDetailForm();
+
+                _targetEventForm.Width = getComponentLength(_targetEventForm.Font, (string)_targetEventForm.SelectedItem);
+                arrangeLocations();
+                changePanelSize(_targetEventDetailForm.Location.X + _targetEventDetailForm.Width);
             };
 
             _targetEventDetailForm.SelectedIndexChanged += (o, _e) =>
             {
                 _searchCondition.eventDetail = (string)_targetEventDetailForm.SelectedItem;
+                _targetEventDetailForm.Width = getComponentLength(_targetEventDetailForm.Font, (string)_targetEventDetailForm.SelectedItem);
+                arrangeLocations();
+                changePanelSize(_targetEventDetailForm.Location.X + _targetEventDetailForm.Width);
             };
 
-            _deleteButton.Click += (o, _e) =>
+            this.Click += (o, _e) =>
             {
-                _parentPanel.deleteBaseCondition();
+                this.Focus();
             };
         }
 
-        public void changeComponentID(int ID)
+        public void setParentPanelID(int ID)
         {
             _displayLabel.Name = "displayLabel:" + ID;
             _displayLabel.Text = "基本条件:" + ID;
@@ -137,10 +173,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _targetRuleForm.Name = "resourceForm:" + ID;
             _targetEventForm.Name = "resourceForm:" + ID;
             _targetEventDetailForm.Name = "resourceForm:" + ID;
+            _deleteButton.Name = "deleteButton:" + ID;
         }
 
         //リソース指定コンボボックスのアイテムをセット
-        protected void makeBaseResourceForm()
+        protected void makeResourceForm()
         {
             _targetResourceForm.Enabled = true;
             GeneralNamedCollection<Resource> resData = this._data.ResourceData.Resources;
@@ -155,7 +192,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         }
 
         //リソースが選択されたときにルール指定コンボボックスのアイテムをセットする
-        protected void makeBaseRuleForm()
+        protected void makeRuleForm()
         {
             GeneralNamedCollection<VisualizeRule> visRules = _data.VisualizeData.VisualizeRules;
 
@@ -171,7 +208,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
 
         //イベント指定コンボボックスのアイテムをセット
-        protected void makeBaseEventForm()
+        protected void makeEventForm()
         {
             GeneralNamedCollection<Event> eventShapes = _data.VisualizeData.VisualizeRules[_searchCondition.ruleName].Shapes;
             foreach (Event e in eventShapes)
@@ -183,7 +220,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         }
 
         //イベント詳細指定コンボボックスのアイテムをセット
-        protected void makeBaseEventDetailForm()
+        protected void makeEventDetailForm()
         {
             //指定されたイベントが持つ RUNNABLE, RUNNING といった状態を切り出す
             Event e = _data.VisualizeData.VisualizeRules[_searchCondition.ruleName].Shapes[_searchCondition.eventName];
@@ -207,6 +244,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             arrangeDropDownSize(_targetEventDetailForm);
         }
 
+         protected void changePanelSize(int width)
+         {
+             if (width > _parentPanelSize.Width)
+             {
+                 this.Width = width;
+             }
+         }
+    
+
         private void arrangeComboBoxSize(int width)
         {
             int boxSize = width / 6; //初期サイズを width / 6 に固定
@@ -216,71 +262,39 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _targetEventDetailForm.Width = boxSize;
         }
 
-        private void arrangeComponentLocations()
+        protected void arrangeLocations()
         {
-            _displayLabel.Location = new System.Drawing.Point(10, 5);
-            _targetResourceForm.Location = new System.Drawing.Point(_displayLabel.Location.X, _displayLabel.Location.Y + _displayLabel.Height + 5);
+            _displayLabel.Location = new System.Drawing.Point(10, 10);
+            _targetResourceForm.Location = new System.Drawing.Point(_displayLabel.Location.X, _displayLabel.Location.Y + _displayLabel.Height + 1);
             _targetRuleForm.Location = new System.Drawing.Point(_targetResourceForm.Location.X + _targetResourceForm.Width + 5, _targetResourceForm.Location.Y);
             _targetEventForm.Location = new System.Drawing.Point(_targetRuleForm.Location.X + _targetRuleForm.Width + 5, _targetRuleForm.Location.Y);
             _targetEventDetailForm.Location = new System.Drawing.Point(_targetEventForm.Location.X + _targetEventForm.Width + 5, _targetEventForm.Location.Y);
-            _deleteButton.Location = new System.Drawing.Point(_displayLabel.Location.X + _displayLabel.Width + 20,_displayLabel.Location.Y);
-        }
-
-        public void updateComponentsSize(int width)
-        {
-            arrangeComboBoxSize(width);
-            arrangeComponentLocations();
+            _deleteButton.Location = new System.Drawing.Point(_displayLabel.Location.X + _displayLabel.Width + 20, _displayLabel.Location.Y - 2);
         }
 
         //コンボボックスのドロップダウンボックスのサイズを自動調整
         protected void arrangeDropDownSize(ComboBox targetBox)
         {
             int maxTextLength = 0;
-            int font_W = (int)Math.Ceiling(
-                             targetBox.Font.SizeInPoints * 2.0F / 3.0F);  // フォント幅を取得
-
             foreach (string A in targetBox.Items)
             {
                 // 各行の文字バイト長から「横幅」を算出し、その最大値を求める
-                int len = System.Text.Encoding.GetEncoding("Shift_JIS").GetByteCount(A);
-                maxTextLength = Math.Max(maxTextLength, len * font_W);
+                maxTextLength = Math.Max(maxTextLength, getComponentLength(targetBox.Font, A));
             }
-            targetBox.DropDownWidth = maxTextLength + 10;
+            targetBox.DropDownWidth = maxTextLength + 5;
+        }
+
+
+        protected int getComponentLength(System.Drawing.Font font, string text)
+        {
+            int len = System.Text.Encoding.GetEncoding("Shift_JIS").GetByteCount(text);
+            int font_W = (int)Math.Ceiling(font.SizeInPoints * 2.0F / 3.0F);  // フォント幅を取得
+            return len * font_W + 50;
         }
 
         public SearchCondition getSearchCondition()
         {
             return _searchCondition;
-        }
-
-        public Label getDisplayLabel()
-        {
-            return _displayLabel;
-        }
-
-        public ComboBox getTargetResourceForm()
-        {
-            return _targetResourceForm;
-        }
-
-        public ComboBox getTargetRuleForm()
-        {
-            return _targetRuleForm;
-        }
-
-        public ComboBox getTargetEventForm()
-        {
-            return _targetEventForm;
-        }
-
-        public ComboBox getTargetEventDetailForm()
-        {
-            return _targetEventDetailForm;
-        }
-
-        public Button getDeleteButton()
-        {
-            return _deleteButton;
         }
     }
 }

@@ -69,8 +69,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private bool _mouseDown;
 
         private TraceLogSearcher _searcher = null;  //簡易検索処理を行うオブジェクト
-        private DetailSearchForm _detailSearchPanel = null; //詳細検索ウィンドウオブジェクト
-        private TestForm _testForm = null; //オブジェクト配置テスト用のウィンドウオブジェクト
+        //private detailSearchFormOld _detailSearchPanel = null; //詳細検索ウィンドウオブジェクト
+        private detailSearchForm _detailSearchForm = null; //オブジェクト配置テスト用のウィンドウオブジェクト
         
 
         //簡易検索に必要な変数群
@@ -233,6 +233,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             targetRuleForm.SelectedIndexChanged += (o, _e) => { makeEventForm(); };
             targetEventForm.SelectedIndexChanged += (o, _e) => { makeDetailEventForm(); };
             targetEventDetailForm.SelectedIndexChanged += (o, _e) => { _eventDetail = (string)targetEventDetailForm.SelectedItem; };
+            deleteAllMarkerButton.Click += (o, _e) =>
+            {
+                deleteAllMarker();
+            };
 
             //時系列順に並んだ可視化データの作成
             sortByTime();
@@ -581,14 +585,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             };
             #endregion
 
-            #region detailSearchPanel初期化
+            #region detailSearchForm初期化
             detailSearchButton.Click += (o, _e) =>
             {
-                //_detailSearchPanel = new DetailSearchForm(_data, TimeLine.MinTime.Value, TimeLine.MaxTime.Value, _timeRadix);
-                //_detailSearchPanel.Visible = true;
-                _testForm = new TestForm(_data);
-                _testForm.Visible = true;
+                _detailSearchForm = new detailSearchForm(_data, TimeLine.MinTime.Value, TimeLine.MaxTime.Value);
+                _detailSearchForm.Visible = true;
                 ApplicationFactory.BlackBoard.DetailSearchFlag = true;
+                _detailSearchForm.Move += (_o, __e) =>
+                {
+                    //詳細検索ウィンドウをドラッグすると、 MacroViewer の表示がおかしくなる。よって
+                    //ドラッグした際にカーソルを一瞬だけ動かし、 MacroViewer に強制的に再描画を促す
+                    Time time = ApplicationFactory.BlackBoard.CursorTime;
+                    ApplicationFactory.BlackBoard.CursorTime = new Time((time.Value + 1).ToString(), _timeRadix);
+                    ApplicationFactory.BlackBoard.CursorTime = new Time(time.Value.ToString(), _timeRadix);
+                };
+
+                _detailSearchForm.MarkerDleteButton.Click += (obj, _exc) =>
+                {
+                    this.deleteAllMarker();
+                };
+
             };
 
 
@@ -700,7 +716,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             {
                 searchWhole();
             };
-
         }
 
         protected void treeGridViewRowChanged(object sender, EventArgs e)
@@ -1089,7 +1104,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             ApplicationFactory.BlackBoard.CursorTime = current;
         }
 
-        private void deleateAllMarker_Click(object sender, EventArgs e)
+        private void deleteAllMarker()
         {
             foreach (TimeLineMarker tm in ApplicationData.FileContext.Data.SettingData.LocalSetting.TimeLineMarkerManager.Markers)
             {
