@@ -216,7 +216,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 						if (dataGridView.HitTest(_e.X, _e.Y).RowIndex != -1)
 						{
 							Time time = _dataSource[dataGridView.HitTest(_e.X, _e.Y).RowIndex].Time;
-                            if (ApplicationFactory.BlackBoard.DetailSearchFlag)
+                            if (!ApplicationFactory.BlackBoard.DetailSearchFlag)
                             { //詳細検索ウィンドウが出現していない場合はカーソルの動きを許可
                                 ApplicationFactory.BlackBoard.CursorTime = time;
                             }

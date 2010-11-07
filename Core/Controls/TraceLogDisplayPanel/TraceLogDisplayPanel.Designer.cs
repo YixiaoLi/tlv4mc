@@ -76,7 +76,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.viewableSpanTextBox = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleateAllMarkerButton = new System.Windows.Forms.ToolStripButton();
+            this.deleteAllMarkerButton = new System.Windows.Forms.ToolStripButton();
             this.bottomTimeLineScale = new NU.OJL.MPRTOS.TLV.Core.Controls.TimeLineScale();
             this.topTimeLineScale = new NU.OJL.MPRTOS.TLV.Core.Controls.TimeLineScale();
             this.treeGridView = new NU.OJL.MPRTOS.TLV.Third.TreeGridView();
@@ -170,10 +170,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripLabel2,
             this.viewableSpanTextBox,
             this.toolStripSeparator10,
-            this.deleateAllMarkerButton});
+            this.deleteAllMarkerButton});
             this.informationToolStrip.Location = new System.Drawing.Point(3, 0);
             this.informationToolStrip.Name = "informationToolStrip";
-            this.informationToolStrip.Size = new System.Drawing.Size(173, 25);
+            this.informationToolStrip.Size = new System.Drawing.Size(204, 25);
             this.informationToolStrip.TabIndex = 2;
             // 
             // timePerSclaeLabel
@@ -208,16 +208,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.toolStripSeparator10.Name = "toolStripSeparator10";
             this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
             // 
-            // deleateAllMarkerButton
+            // deleteAllMarkerButton
             // 
-            this.deleateAllMarkerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.deleateAllMarkerButton.Image = ((System.Drawing.Image)(resources.GetObject("deleateAllMarkerButton.Image")));
-            this.deleateAllMarkerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deleateAllMarkerButton.Name = "deleateAllMarkerButton";
-            this.deleateAllMarkerButton.Size = new System.Drawing.Size(23, 22);
-            this.deleateAllMarkerButton.Text = "toolStripButton1";
-            this.deleateAllMarkerButton.ToolTipText = "マーカーを全て削除";
-            this.deleateAllMarkerButton.Click += new System.EventHandler(this.deleateAllMarker_Click);
+            this.deleteAllMarkerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.deleteAllMarkerButton.Image = ((System.Drawing.Image)(resources.GetObject("deleteAllMarkerButton.Image")));
+            this.deleteAllMarkerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deleteAllMarkerButton.Name = "deleteAllMarkerButton";
+            this.deleteAllMarkerButton.Size = new System.Drawing.Size(23, 22);
+            this.deleteAllMarkerButton.Text = "toolStripButton1";
+            this.deleteAllMarkerButton.ToolTipText = "マーカーを全て削除";
             // 
             // bottomTimeLineScale
             // 
@@ -459,7 +458,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.detailSearchButton});
             this.searchToolStrip.Location = new System.Drawing.Point(3, 25);
             this.searchToolStrip.Name = "searchToolStrip";
-            this.searchToolStrip.Size = new System.Drawing.Size(685, 25);
+            this.searchToolStrip.Size = new System.Drawing.Size(348, 25);
             this.searchToolStrip.TabIndex = 2;
             // 
             // searchLabelName
@@ -633,7 +632,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton searchWholeButton;
-        private System.Windows.Forms.ToolStripButton deleateAllMarkerButton;
+        private System.Windows.Forms.ToolStripButton deleteAllMarkerButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripLabel detailSerachLabel;

@@ -15,6 +15,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private TraceLogSearcher _searcher = null;
         private SearchFilter _filter = null;
         private decimal _normTime;
+        private Boolean _isAnd = true;
 
         public DetailSearchWithTiming()
         {
@@ -22,14 +23,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _filter = new TimingFilter(new SimpleFilter());
         }
 
-        public void setSearchData(List<VisualizeLog> logs, SearchCondition mainCondition, List<SearchCondition> refiningConditions)
+        public override void setSearchData(List<VisualizeLog> logs, SearchCondition mainCondition, List<SearchCondition> refiningConditions)
         {
             _visLogs = logs;
             _baseCondition = mainCondition;
             _refiningConditions = refiningConditions;
         }
 
-        public VisualizeLog searchForward(decimal normTime)
+        public override void setSearchData(List<VisualizeLog> logs, SearchCondition mainCondition, List<SearchCondition> refiningConditions, Boolean isAnd)
+        {
+            _visLogs = logs;
+            _baseCondition = mainCondition;
+            _refiningConditions = refiningConditions;
+            _isAnd = isAnd;
+        }
+
+        public override VisualizeLog searchForward(decimal normTime)
         {
             _normTime = normTime;
             VisualizeLog hitLog = null;
@@ -70,7 +79,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                     if (matchingFlag)
                     {
-                        if (!ApplicationFactory.BlackBoard.isAnd) //ORの場合
+                        if (_isAnd) //ORの場合
                         {
                             return hitLog;
                         }
@@ -84,7 +93,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     }
                     else
                     {
-                        if (ApplicationFactory.BlackBoard.isAnd) //ANDの場合
+                        if (_isAnd) //ANDの場合
                         {
                             break; //今回の candidateHitLog は絞込み条件を満たさないので、次の candidateHitLog を調査する
                         }
@@ -96,7 +105,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             return null;
         }
 
-        public VisualizeLog searchBackward(decimal normTime)
+        public override VisualizeLog searchBackward(decimal normTime)
         {
             _normTime = normTime;
             VisualizeLog hitLog = null;
@@ -139,7 +148,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                     if (matchingFlag)
                     {
-                        if (!ApplicationFactory.BlackBoard.isAnd) //ORの場合
+                        if (_isAnd) //ORの場合
                         {
                             return hitLog;
                         }
@@ -153,7 +162,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     }
                     else
                     {
-                        if (ApplicationFactory.BlackBoard.isAnd) //ANDの場合
+                        if (_isAnd) //ANDの場合
                         {
                              break;
                         }
@@ -164,7 +173,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             return null;
         }
 
-        public List<VisualizeLog> searchWhole()
+        public override List<VisualizeLog> searchWhole()
         {
             _searcher.setSearchData(_visLogs, _baseCondition, null);
             List<VisualizeLog> candidateHitLogs = _searcher.searchWhole(); //基本条件に合致する全可視化ログを取得
@@ -203,7 +212,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                     if (matchingFlag)
                     {
-                        if (!ApplicationFactory.BlackBoard.isAnd) //ORの場合
+                        if (_isAnd) //ORの場合
                         {
                             hitLogs.Add(candidateHitLog); //ORの場合は一つの絞り込み条件にマッチすればいいため、一つ当たった時点で candidateHitLog が正式採用される
                             break;
@@ -218,7 +227,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     }
                     else
                     {
-                        if (ApplicationFactory.BlackBoard.isAnd) //ANDの場合
+                        if (_isAnd) //ANDの場合
                         {
                             break; //ANDの場合は全部の絞込み条件にマッチしないといけないので、一つはずした時点で candidateHitLog は候補から外れる
                         }
