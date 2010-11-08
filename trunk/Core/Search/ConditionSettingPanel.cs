@@ -75,20 +75,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _searchBackwardButton = new Button();
             _searchBackwardButton.Name = "searchBackwardButton:" + _panelID;
             _searchBackwardButton.Text = "後ろを検索";
-            _searchBackwardButton.Width = 100;
+            _searchBackwardButton.Width = 80;
             _searchBackwardButton.Location = new System.Drawing.Point(//
                _baseConditionPanel.DeleteButton.Location.X + _baseConditionPanel.DeleteButton.Width + 40, //
                                                              _baseConditionPanel.DeleteButton.Location.Y);
             _searchForwardButton = new Button();
             _searchForwardButton.Name = "searchForwardButton:" + _panelID;
             _searchForwardButton.Text = "次を検索";
-            _searchForwardButton.Width = 100;
+            _searchForwardButton.Width = 80;
             _searchForwardButton.Location = new System.Drawing.Point(//
                                      _searchBackwardButton.Location.X + _searchBackwardButton.Width + 5, _searchBackwardButton.Location.Y);
             _searchWholeButton = new Button();
             _searchWholeButton.Name = "searchForwardButton:" + _panelID;
             _searchWholeButton.Text = "全体検索";
-            _searchWholeButton.Width = 100;
+            _searchWholeButton.Width = 80;
             _searchWholeButton.Location = new System.Drawing.Point(//
                                      _searchForwardButton.Location.X + _searchForwardButton.Width + 5, _searchForwardButton.Location.Y);
             _baseConditionPanel.Controls.Add(_searchBackwardButton);
