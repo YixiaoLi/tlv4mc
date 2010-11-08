@@ -59,6 +59,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _timingExpressionLabel.Width = 180;
             _timeScaleLabel.Name = "timeScaleLabel:" + _parentPanelID + "_" + _refiningConditionPanelID;
             _timeScaleLabel.Width = 20;
+            _denyConditionBox = new CheckBox();
+            _denyConditionBox.Name = "denyConditionBox:" + _parentPanelID;
+            _denyConditionBox.Text = "条件を否定";
+            _denyConditionBox.Width = 100;
             _deleteButton = new Button();
             _deleteButton.Name = "refiningConditionDeleteButton" + _parentPanelID + "_" + _refiningConditionPanelID;
             _deleteButton.Text = "削除";
@@ -70,6 +74,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _targetEventDetailForm.Enabled = false;
             _timingValueBox.Enabled = false;
             _timingForm.Enabled = false;
+            _denyConditionBox.Checked = false;
 
             arrangeComboBoxSize(_parentPanelSize.Width);
             arrangeLocations();
@@ -81,6 +86,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             this.Controls.Add(_targetRuleForm);
             this.Controls.Add(_targetEventForm);
             this.Controls.Add(_targetEventDetailForm);
+            this.Controls.Add(_denyConditionBox);
             this.Controls.Add(_deleteButton);
             this.Controls.Add(_timingExpressionLabel);
             this.Controls.Add(_timingValueBox);
@@ -91,7 +97,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         protected void setEventHandler()
         {
-            base.setEventHandler();
+            base.setEventHandler(); //BaseConditionPanelで定義済みの条件指定ボックスにイベントハンドラを追加する
             _targetResourceForm.SelectedIndexChanged += (o, _e) =>
             {
                 _timingValueBox.Enabled = true;
@@ -139,12 +145,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _timingValueBox.Location = new System.Drawing.Point(_timingExpressionLabel.Location.X + _timingExpressionLabel.Width + 5, _timingExpressionLabel.Location.Y);
             _timeScaleLabel.Location = new System.Drawing.Point(_timingValueBox.Location.X + _timingValueBox.Width + 5, _timingValueBox.Location.Y);
             _timingForm.Location = new System.Drawing.Point(_timeScaleLabel.Location.X + _timeScaleLabel.Width + 5, _timeScaleLabel.Location.Y);
-        }
-
-        public void updateSize(int parentPanelWidth)
-        {
-            arrangeComboBoxSize(parentPanelWidth);
-            arrangeLocations();
         }
 
         public void setParentPanelID(int ID)
