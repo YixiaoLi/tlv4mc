@@ -43,7 +43,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dll", "dll", "{0296E089-064
 	ProjectSection(SolutionItems) = preProject
 		dll\ExpandableGridView.dll = dll\ExpandableGridView.dll
 		dll\ICSharpCode.SharpZipLib.dll = dll\ICSharpCode.SharpZipLib.dll
-		dll\Newtonsoft.Json.dll = dll\Newtonsoft.Json.dll
 		dll\WeifenLuo.WinFormsUI.Docking.dll = dll\WeifenLuo.WinFormsUI.Docking.dll
 	EndProjectSection
 EndProject
