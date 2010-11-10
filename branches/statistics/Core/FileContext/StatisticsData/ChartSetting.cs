@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms.DataVisualization.Charting;
 using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core
@@ -27,15 +28,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <summary>
         /// 最初に描画するグラフタイプ
         /// </summary>
-        public string DefaultType { get; set; }
+        public SeriesChartType DefaultType { get; set; }
         /// <summary>
         /// 目盛の間隔
         /// </summary>
-        public double? MajorTickMarkInterval { get; set; }
+        public double MajorTickMarkInterval { get; set; }
         /// <summary>
         /// 補助目盛の間隔
         /// </summary>
-        public double? MinorTickMarkInterval { get; set; }
+        public double MinorTickMarkInterval { get; set; }
         /// <summary>
         /// グリッド線を表示するかどうか
         /// </summary>
@@ -51,8 +52,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
             AxisXTitle = string.Empty;
             AxisYTitle = string.Empty;
             SeriesTitle = string.Empty;
-            MajorTickMarkInterval = null;
-            MinorTickMarkInterval = null;
+            DefaultType = SeriesChartType.Pie;
+            MajorTickMarkInterval = 0.0;//null;
+            MinorTickMarkInterval = 0.0;//null;
             MajorGridVisible = false;
             MinorGridVisible = false;
         }
@@ -70,7 +72,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     case "AxisXTitle": AxisXTitle = j.Value; break;
                     case "AxisYTitle": AxisYTitle = j.Value; break;
                     case "SeriesTitle": SeriesTitle = j.Value; break;
-                    case "DefaultType": DefaultType = j.Value; break;
+                    case "DefaultType": DefaultType = (SeriesChartType)Enum.Parse(typeof(SeriesChartType), j.Value); break;
                     case "MajorTickMarkInterval": MajorTickMarkInterval = double.Parse(j.Value.ToString()); break;
                     case "MinorTickMarkInterval": MinorTickMarkInterval = double.Parse(j.Value.ToString()); break;
                     case "MajorGridVisible": MajorGridVisible = j.Value; break;
