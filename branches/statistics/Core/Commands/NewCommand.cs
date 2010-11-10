@@ -116,10 +116,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                     {
                         sd = sg.GenerateData();
                     }
-                    catch (StatisticsGenerateException e) // 統計情報の生成に失敗しても可視化を続ける
+                    catch (Exception e) // 統計情報の生成に失敗しても可視化を続ける
                     {
                         MessageForm mbox = new MessageForm(e.ToString(), "統計情報の生成に失敗しました。");
-                        mbox.ShowDialog();
+                        mbox.Show();
                     }
 
                     if (_convertBw.CancellationPending) { _e.Cancel = true; return; }

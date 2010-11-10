@@ -6,6 +6,7 @@ using System.IO;
 using NU.OJL.MPRTOS.TLV.Base;
 using System.Text.RegularExpressions;
 using System.Drawing;
+using NU.OJL.MPRTOS.TLV.Core.Controls.Forms;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
@@ -73,135 +74,73 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             Dictionary<string, Json> rules = new Dictionary<string, Json>(); // Key: 統計情報名、Value:生成ルールのJsonオブジェクト
 
-            try
-            {
-                // 統計生成ルールファイルを開きJsonValueでデシリアライズ
-                // ファイルが複数あり、複数のファイルに同じ統計情報名を指定してファイル分割を実現する(変換ルール、可視化ルールと同様)
-                foreach (string path in rulePaths)
-                {
-                    Json json = new Json().Parse(File.ReadAllText(path));
 
-                    // Key:統計情報名、Value:生成ルールのJsonオブジェクト
-                    foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
+            // 統計生成ルールファイルを開きJsonValueでデシリアライズ
+            // ファイルが複数あり、複数のファイルに同じ統計情報名を指定してファイル分割を実現する(変換ルール、可視化ルールと同様)
+            foreach (string path in rulePaths)
+            {
+                Json json = new Json().Parse(File.ReadAllText(path));
+
+                // Key:統計情報名、Value:生成ルールのJsonオブジェクト
+                foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
+                {
+                    if (target.Contains(j.Key))
                     {
-                        if (target.Contains(j.Key))
+                        if (!rules.ContainsKey(j.Key))
                         {
-                            if (!rules.ContainsKey(j.Key))
+                            rules.Add(j.Key, j.Value);
+                        }
+                        else
+                        {
+                            // Key:生成ルールの各要素("Style"等)、Value:各要素の値またはオブジェクト
+                            foreach (KeyValuePair<string, Json> jj in j.Value.GetKeyValuePairEnumerator())
                             {
-                                rules.Add(j.Key, j.Value);
-                            }
-                            else
-                            {
-                                // Key:生成ルールの各要素("Style"等)、Value:各要素の値またはオブジェクト
-                                foreach (KeyValuePair<string, Json> jj in j.Value.GetKeyValuePairEnumerator())
+                                if (rules[j.Key].ContainsKey(jj.Key))
                                 {
-                                    if (rules[j.Key].ContainsKey(jj.Key))
-                                    {
-                                        throw new StatisticsGenerateException(string.Format(@"統計情報""{0}""の生成ルールで""{1}""が複数設定されています。", j.Key, jj.Key));
-                                    }
-                                    rules[j.Key].Add(jj.Key, jj.Value);
+                                    throw new StatisticsGenerateException(string.Format(@"統計情報""{0}""の生成ルールで""{1}""が複数設定されています。", j.Key, jj.Key));
                                 }
+                                rules[j.Key].Add(jj.Key, jj.Value);
                             }
                         }
                     }
                 }
-
-                // 統計情報の生成
-                StatisticsData sd = new StatisticsData();
-                int max = target.Length;
-                double current = 0.0;
-                foreach (string tgt in target)
-                {
-                    try
-                    {
-                        if (_constructProgressReport != null)
-                        {
-                            current += 1.0;
-                            _constructProgressReport((int)(current / max) * 10, string.Format(@"統計情報""{0}""を生成中 {1}/{2} 個目...", tgt, current, max));
-                        }
-
-                        Statistics stats = new Statistics(tgt);
-                        stats.Setting.SetData(rules[tgt]["Setting"]);
-
-                        switch (rules[tgt]["Style"])
-                        {
-                            case "Regexp": applyRegexRule(stats, rules[tgt]["RegexpRule"]); break;
-                            default: throw new StatisticsGenerateException(rules[tgt]["Style"] + "無効なスタイルです");
-                        }
-                        sd.Statisticses.Add(stats);
-                    }
-                    catch (Exception e)
-                    {
-                        // ある統計情報の生成に失敗した場合、処理は止めずにほかの統計情報の生成を試みる
-                    }
-                }
-
-                return sd;
             }
-            catch (Exception e)
+
+            // 統計情報の生成
+            StatisticsData sd = new StatisticsData();
+            int max = target.Length;
+            double current = 0.0;
+            foreach (string tgt in target)
             {
-                throw new StatisticsGenerateException("統計情報の生成に失敗しました。", e);
+                try
+                {
+                    if (_constructProgressReport != null)
+                    {
+                        current += 1.0;
+                        _constructProgressReport((int)(current / max) * 10, string.Format(@"統計情報""{0}""を生成中 {1}/{2} 個目...", tgt, current, max));
+                    }
+
+                    Statistics stats = new Statistics(tgt);
+                    stats.Setting.SetData(rules[tgt]["Setting"]);
+
+                    switch (rules[tgt]["Style"])
+                    {
+                        case "Regexp": applyRegexRule(stats, rules[tgt]["RegexpRule"]); break;
+                        default: throw new StatisticsGenerateException(rules[tgt]["Style"] + "無効なスタイルです");
+                    }
+                    sd.Statisticses.Add(stats);
+                }
+                catch (Exception e)
+                {
+                    MessageForm mbox = new MessageForm(string.Format(@"統計情報 ""{0}"": {1}", tgt, e.ToString()), "統計情報の生成に失敗しました");
+                    mbox.Show();
+                }
             }
+
+            return sd;
         }
 
-        #region 複数のファイル対応のためのメソッドサンプル
-        //private StatisticsGenerationRule deserializeRule(Json json)
-        //{
-        //                // 統計生成ルールファイルを開きJsonValueでデシリアライズ
-        //    // ファイルが複数あり、複数のファイルに同じ統計情報名を指定してファイル分割を実現する(変換ルール、可視化ルールと同様)
-        //    foreach (string path in rulePaths)
-        //    {
-        //        Json json = new Json().Parse(File.ReadAllText(path));
-        //        foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
-        //        {
-        //            if (target.Contains(j.Key))
-        //            {
-        //                if (!rules.ContainsKey(j.Key))
-        //                {
-        //                    rules.Add(j.Key, new StatisticsGenerationRule());
-        //                }
-        //                foreach (KeyValuePair<string, Json> jj in j.Value.GetKeyValuePairEnumerator())
-        //                {
-        //                    setRule(jj, rules[j.Key]);
-        //                    j.Value.
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-        //private void setRule(KeyValuePair<string, Json> data, StatisticsGenerationRule rule)
-        //{
-        //    switch (data.Key)
-        //    {
-        //        case "Name":
-        //            if (!string.IsNullOrEmpty(rule.Name)) throw new Exception("複数の" + data.Key + "が存在します"); ;
-        //            rule.Name = data.Value;
-        //            break;
-
-        //        case "Style":
-        //            if (!string.IsNullOrEmpty(rule.Style)) throw new Exception("複数の" + data.Key + "が存在します"); ;
-        //            rule.Style = data.Value;
-        //            break;
-
-        //        case "Target":
-        //            if (!string.IsNullOrEmpty(rule.Target)) throw new Exception("複数の" + data.Key + "が存在します"); ;
-        //            rule.Target = data.Value;
-        //            break;
-
-        //        case "Setting":
-        //            setChartSetting(data, rule);
-        //    }
-        //}
-
-        //private void setChartSetting(KeyValuePair<string, Json> data, StatisticsGenerationRule rule)
-        //{
-        //    switch (data.Key)
-        //    {
-        //    }
-        //}
-        #endregion
-
-
+        
         /// <summary>
         /// RegexpRuleで生成
         /// </summary>
@@ -223,7 +162,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     if (Regex.IsMatch(l, j.Key))
                     {
                         DataPoint dp = new DataPoint();
-                        
+
                         // Key:各種設定("XValue"等)
                         foreach (KeyValuePair<string, Json> jj in j.Value.GetKeyValuePairEnumerator())
                         {
@@ -248,7 +187,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             List<string> data = new List<string>();
             switch (target)
             {
-                 case "standard":
+                case "standard":
                     foreach (TraceLog t in _traceLogData.TraceLogs)
                     {
                         data.Add(t.ToString());
