@@ -157,7 +157,7 @@
     <Compile Include="FileContext\StatisticsData\Statistics.cs" />
     <Compile Include="FileContext\StatisticsData\StatisticsData.cs" />
     <Compile Include="FileContext\StatisticsData\StatisticsGenerationRule.cs" />
-    <Compile Include="FileContext\TraceLogVisualizerData\StatisticsGenerator.cs" />
+    <Compile Include="FileContext\StatisticsData\StatisticsGenerator.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\ITraceLogParser.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\NullObjectOfTraceLogParser.cs" />
@@ -195,6 +195,7 @@
     <Compile Include="FileContext\VisualizeShapeData\VisualizeShapeData.cs" />
     <Compile Include="JsonConverters\ArcConverter.cs" />
     <Compile Include="JsonConverters\ArgumentTypeConverter.cs" />
+    <Compile Include="JsonConverters\ChartSettingConverter.cs" />
     <Compile Include="JsonConverters\EventShapesConverter.cs" />
     <Compile Include="JsonConverters\FontFamilyConverter.cs" />
     <Compile Include="JsonConverters\GeneralConverter.cs" />
@@ -288,6 +289,7 @@
     </Reference>
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
