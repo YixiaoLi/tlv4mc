@@ -221,8 +221,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
             StatisticsData stad = new StatisticsData();
             foreach (string staPath in statisticsFilePathes)
             {
-                StatisticsData sd = ApplicationFactory.JsonSerializer.Deserialize<StatisticsData>(File.ReadAllText(staPath));
-                stad.Statisticses.Add(sd.Statisticses.Single<Statistics>());
+                GeneralNamedCollection<Statistics> sd = ApplicationFactory.JsonSerializer.Deserialize<GeneralNamedCollection<Statistics>>(File.ReadAllText(staPath));
+                stad.Statisticses.Add(sd.Single<Statistics>());
             }
 
             ResourceData = res;
