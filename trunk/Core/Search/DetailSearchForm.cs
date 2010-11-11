@@ -222,6 +222,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     List<Time> focusTime = new List<Time>();
                     focusTime.Add(ApplicationFactory.BlackBoard.CursorTime);
                     ApplicationFactory.BlackBoard.SearchTime = focusTime;
+
+                    //カーソルスクロールの位置を調整
+                    decimal rate = (ApplicationFactory.BlackBoard.CursorTime.Value - _minTime) / (_maxTime - _minTime);
+                    cursorScrollBar.Value = (int)(cursorScrollBar.Maximum * rate);
                 }
                 else
                 {
@@ -286,6 +290,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     List<Time> focusTime = new List<Time>();
                     focusTime.Add(ApplicationFactory.BlackBoard.CursorTime);
                     ApplicationFactory.BlackBoard.SearchTime = focusTime;
+
+                    //カーソルスクロールの位置を調整
+                    decimal rate = (ApplicationFactory.BlackBoard.CursorTime.Value - _minTime) / (_maxTime - _minTime);
+                    cursorScrollBar.Value = (int)(cursorScrollBar.Maximum * rate);
                 }
                 else
                 {

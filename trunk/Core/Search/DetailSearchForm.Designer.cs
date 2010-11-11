@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.searchOperationArea = new System.Windows.Forms.Panel();
+            this.markerDeleteButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.cursorScrollBar = new System.Windows.Forms.HScrollBar();
             this.cursorScrollBarLabel = new System.Windows.Forms.Label();
@@ -37,7 +38,6 @@
             this.searchBackwardButton = new System.Windows.Forms.Button();
             this.addConditionButton = new System.Windows.Forms.Button();
             this.conditionSettingArea = new System.Windows.Forms.Panel();
-            this.markerDeleteButton = new System.Windows.Forms.Button();
             this.searchOperationArea.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,6 +59,15 @@
             this.searchOperationArea.Size = new System.Drawing.Size(592, 108);
             this.searchOperationArea.TabIndex = 0;
             // 
+            // markerDeleteButton
+            // 
+            this.markerDeleteButton.Location = new System.Drawing.Point(487, 71);
+            this.markerDeleteButton.Name = "markerDeleteButton";
+            this.markerDeleteButton.Size = new System.Drawing.Size(86, 23);
+            this.markerDeleteButton.TabIndex = 7;
+            this.markerDeleteButton.Text = "マーカーを消す";
+            this.markerDeleteButton.UseVisualStyleBackColor = true;
+            // 
             // label1
             // 
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -72,7 +81,7 @@
             // 
             this.cursorScrollBar.Location = new System.Drawing.Point(172, 19);
             this.cursorScrollBar.Name = "cursorScrollBar";
-            this.cursorScrollBar.Size = new System.Drawing.Size(229, 17);
+            this.cursorScrollBar.Size = new System.Drawing.Size(363, 17);
             this.cursorScrollBar.TabIndex = 5;
             // 
             // cursorScrollBarLabel
@@ -84,7 +93,7 @@
             this.cursorScrollBarLabel.Name = "cursorScrollBarLabel";
             this.cursorScrollBarLabel.Size = new System.Drawing.Size(127, 20);
             this.cursorScrollBarLabel.TabIndex = 4;
-            this.cursorScrollBarLabel.Text = "検索基準時の移動";
+            this.cursorScrollBarLabel.Text = "検索開始点の移動";
             // 
             // searchWholeButton
             // 
@@ -134,15 +143,6 @@
             this.conditionSettingArea.Name = "conditionSettingArea";
             this.conditionSettingArea.Size = new System.Drawing.Size(592, 4);
             this.conditionSettingArea.TabIndex = 1;
-            // 
-            // markerDeleteButton
-            // 
-            this.markerDeleteButton.Location = new System.Drawing.Point(487, 71);
-            this.markerDeleteButton.Name = "markerDeleteButton";
-            this.markerDeleteButton.Size = new System.Drawing.Size(86, 23);
-            this.markerDeleteButton.TabIndex = 7;
-            this.markerDeleteButton.Text = "マーカーを消す";
-            this.markerDeleteButton.UseVisualStyleBackColor = true;
             // 
             // detailSearchForm
             // 

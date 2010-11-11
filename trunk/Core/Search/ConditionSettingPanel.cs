@@ -194,7 +194,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             //絞込み条件の追加
             foreach (RefiningConditionPanel panel in _refiningConditionPanels)
             {
-                panel.Location = new System.Drawing.Point(this.Location.X, _nextComponentLocationY);
+                panel.Location = new System.Drawing.Point(this.Location.X + 20, _nextComponentLocationY);
                 panel.setConditionID(conditionID);
                 this.Controls.Add(panel);
                 _nextComponentLocationY += panel.Height+1;
