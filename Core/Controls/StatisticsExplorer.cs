@@ -16,10 +16,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         /// _dataGridViewのデータソース
         /// </summary>
         private BindingList<StatisticsExplorerRowData> _dataSource = new BindingList<StatisticsExplorerRowData>();
+        /// <summary>
+        /// 統計情報ビューアの親フォーム　Focus移動でビューアが隠れることを防ぎたいときに使用
+        /// </summary>
+        private Form _ownedViewer = null;
 
         public StatisticsExplorer()
         {
             InitializeComponent();
+        }
+
+        public StatisticsExplorer(Form owner)
+            : this()
+        {
+            _ownedViewer = owner;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -67,7 +77,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             foreach (Statistics s in data.StatisticsData.Statisticses)
             {
                 var obj = new StatisticsExplorerRowData(s);
-                obj.Viewer.FormClosing += (o, e) => { e.Cancel = true; this.Refresh(); }; 
+                obj.Viewer.FormClosing += (o, e) => 
+                {
+                    if (e.CloseReason == CloseReason.UserClosing)
+                    {
+                        e.Cancel = true;
+                        this.Refresh();
+                    }
+                };
+                if (_ownedViewer != null)
+                {
+                    obj.Viewer.Owner = _ownedViewer;
+                }
                 _dataSource.Add(obj);
             }
 

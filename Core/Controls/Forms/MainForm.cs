@@ -153,7 +153,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 new SubWindow("traceLogViewer", new TraceLogViewer(){ Text = "トレースログビューア" }, DockState.DockRight) { Text = "トレースログビューア" },
                 new SubWindow("resourceExplorer", new ResourceExplorer(){ Text = "リソースエクスプローラ" }, DockState.DockLeft) { Text = "リソースエクスプローラ" },
                 new SubWindow("visualizeRuleExplorer", new VisualizeRuleExplorer(){ Text = "可視化ルールエクスプローラ" }, DockState.DockLeft) { Text = "可視化ルールエクスプローラ" },
-                new SubWindow("statisticsExplorer", new StatisticsExplorer(){ Text = "統計情報エクスプローラ" }, DockState.DockRight) { Text = "統計情報エクスプローラ" },
+                new SubWindow("statisticsExplorer", new StatisticsExplorer(this){ Text = "統計情報エクスプローラ" }, DockState.DockRight) { Text = "統計情報エクスプローラ" },
             };
 			_windowManager.AddSubWindow(sws);
 			_windowManager.Load();

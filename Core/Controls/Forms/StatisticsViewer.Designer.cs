@@ -80,7 +80,6 @@
             this.Controls.Add(this.chart1);
             this.Name = "StatisticsViewer";
             this.Text = "統計情報名 - 統計情報ビューア";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StatisticsViewer_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
