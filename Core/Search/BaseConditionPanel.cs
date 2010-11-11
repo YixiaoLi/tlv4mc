@@ -105,6 +105,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 _targetResourceForm.Width = getComponentLength(_targetResourceForm.Font, (string)_targetResourceForm.SelectedItem);
                 arrangeLocations();
                 changePanelSize(_targetEventDetailForm.Location.X + _targetEventDetailForm.Width);
+
+                _searchCondition.ruleName = null;
+                _searchCondition.ruleDisplayName = null;
+                _searchCondition.eventName = null;
+                _searchCondition.eventDisplayName = null;
+                _searchCondition.eventDetail = null;
             };
 
             _targetRuleForm.SelectedIndexChanged += (o, _e) =>
@@ -134,6 +140,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 _targetRuleForm.Width = getComponentLength(_targetRuleForm.Font, (string)_targetRuleForm.SelectedItem);
                 arrangeLocations();
                 changePanelSize(_targetEventDetailForm.Location.X + _targetEventDetailForm.Width);
+
+                _searchCondition.eventName = null;
+                _searchCondition.eventDisplayName = null;
+                _searchCondition.eventDetail = null;
             };
 
             _targetEventForm.SelectedIndexChanged += (o, _e) =>
@@ -156,6 +166,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 _targetEventForm.Width = getComponentLength(_targetEventForm.Font, (string)_targetEventForm.SelectedItem);
                 arrangeLocations();
                 changePanelSize(_targetEventDetailForm.Location.X + _targetEventDetailForm.Width);
+
+                _searchCondition.eventDetail = null;
             };
 
             _targetEventDetailForm.SelectedIndexChanged += (o, _e) =>
@@ -169,7 +181,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _denyConditionBox.CheckedChanged += (o, _e) =>
             {
                 _searchCondition.denyCondition = _denyConditionBox.Checked;
-                int i = 0;
             };
 
             this.Click += (o, _e) =>

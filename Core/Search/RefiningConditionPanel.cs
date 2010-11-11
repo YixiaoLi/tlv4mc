@@ -77,7 +77,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _denyConditionBox.Checked = false;
 
             arrangeComboBoxSize(_parentPanelSize.Width);
-            arrangeLocations();
+            this.arrangeLocations();
             makeResourceForm();
             this.setEventHandler();
 
@@ -100,15 +100,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             base.setEventHandler(); //BaseConditionPanelで定義済みの条件指定ボックスにイベントハンドラを追加する
             _targetResourceForm.SelectedIndexChanged += (o, _e) =>
             {
-                _timingValueBox.Enabled = true;
-                _timingForm.Enabled = true;
+                if (_timingForm.Enabled == true)
+                {
+                    _searchCondition.timing = null;
+                    _timingForm.SelectedIndex = -1;
+                    _timingValueBox.Text = "";
+                }
+                else
+                {
+                    _timingValueBox.Enabled = true;
+                    _timingForm.Enabled = true;
+                }
             };
 
             _timingForm.SelectedIndexChanged += (o, _e) =>
             {
                 _timingForm.Width = getComponentLength(_timingForm.Font, (string)_timingForm.SelectedItem);
                 _searchCondition.timing = (string)_timingForm.SelectedItem;
-                arrangeLocations();
+                this.arrangeLocations();
                 changePanelSize(_timingForm.Location.X + _timingForm.Width);
             };
 
@@ -150,16 +159,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public void setParentPanelID(int ID)
         {
             _refiningConditionPanelID = ID;
-            setComponentName(ID);
+            setComponentName();
         }
 
         public void setConditionID(int ID)
         {
             _conditionID = ID;
-            setComponentName(ID);
+            setComponentName();
         }
 
-        private void setComponentName(int ID)
+        private void setComponentName()
         {
             _displayLabel.Name = "displayLabel:" + _parentPanelID + _refiningConditionPanelID;
             _displayLabel.Text = "絞込み条件:" + _refiningConditionPanelID;
