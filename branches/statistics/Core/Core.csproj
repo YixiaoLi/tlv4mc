@@ -100,12 +100,24 @@
     <Compile Include="Controls\Forms\MessageForm.Designer.cs">
       <DependentUpon>MessageForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Forms\StatisticsViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Forms\StatisticsViewer.Designer.cs">
+      <DependentUpon>StatisticsViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ITraceLogVisualizerControl.cs" />
     <Compile Include="Controls\ResourceExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ResourceExplorer.Designer.cs">
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StatisticsExplorer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StatisticsExplorer.Designer.cs">
+      <DependentUpon>StatisticsExplorer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TimeLineMacroViewer.cs">
       <SubType>UserControl</SubType>
@@ -146,6 +158,7 @@
     <Compile Include="FileContext\SettingData\LocalSetting.cs" />
     <Compile Include="FileContext\SettingData\ResourceExplorerSetting.cs" />
     <Compile Include="FileContext\SettingData\SettingData.cs" />
+    <Compile Include="FileContext\SettingData\StatisticsExplorerSetting.cs" />
     <Compile Include="FileContext\SettingData\TraceLogDisplayPanelSetting.cs" />
     <Compile Include="FileContext\SettingData\VisualizeRuleExplorerSetting.cs" />
     <Compile Include="FileContext\SettingData\TraceLogViewerSetting.cs" />
@@ -320,9 +333,15 @@
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Forms\StatisticsViewer.resx">
+      <DependentUpon>StatisticsViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ResourceExplorer.resx">
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StatisticsExplorer.resx">
+      <DependentUpon>StatisticsExplorer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TimeLine\TimeLineControl.resx">
       <DependentUpon>TimeLineControl.cs</DependentUpon>
