@@ -45,11 +45,5 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 chart1.Series[0].Points.Add(dp);
             }
         }
-
-        private void StatisticsViewer_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            this.Visible = false;
-        }
     }
 }
