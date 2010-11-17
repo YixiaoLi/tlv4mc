@@ -72,6 +72,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         public void SetData(TraceLogVisualizerData data)
         {
+            if (data.StatisticsData == null)
+            {
+                return;
+            }
+
             ClearData();
 
             foreach (Statistics s in data.StatisticsData.Statisticses)
@@ -82,6 +87,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                     if (e.CloseReason == CloseReason.UserClosing)
                     {
                         e.Cancel = true;
+                        ((StatisticsViewer)o).Visible = false;
                         this.Refresh();
                     }
                 };
