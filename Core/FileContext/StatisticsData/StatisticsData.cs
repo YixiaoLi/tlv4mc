@@ -11,6 +11,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// </summary>
     public class StatisticsData : IJsonable<StatisticsData>
     {
+        /// <summary>
+        /// 統計情報ファイルデータのリスト
+        /// </summary>
         public GeneralNamedCollection<Statistics> Statisticses { get; private set; }
 
         public StatisticsData()

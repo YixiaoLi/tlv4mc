@@ -72,7 +72,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     case "AxisXTitle": AxisXTitle = j.Value; break;
                     case "AxisYTitle": AxisYTitle = j.Value; break;
                     case "SeriesTitle": SeriesTitle = j.Value; break;
-                    case "DefaultType": DefaultType = (SeriesChartType)Enum.Parse(typeof(SeriesChartType), j.Value); break;
+                    case "DefaultType":
+                        if (!Enum.IsDefined(typeof(AvailableChartType), j.Value.ToString()))
+                        {
+                            throw new Exception(j.Value + "は利用できないグラフタイプです。");
+                        }
+                        DefaultType = (SeriesChartType)Enum.Parse(typeof(SeriesChartType), j.Value); 
+                        break;
                     case "MajorTickMarkInterval": MajorTickMarkInterval = double.Parse(j.Value.ToString()); break;
                     case "MinorTickMarkInterval": MinorTickMarkInterval = double.Parse(j.Value.ToString()); break;
                     case "MajorGridVisible": MajorGridVisible = j.Value; break;
@@ -91,5 +97,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             return ApplicationFactory.JsonSerializer.Deserialize<ChartSetting>(chartSetting);
         }
+    }
+
+    /// <summary>
+    /// 利用可能なグラフタイプの列挙体<para></para>
+    /// System.Windows.Forms.DataVisualization.Charting.SeriesChartTypeを参考にしている。
+    /// </summary>
+    public enum AvailableChartType
+    {
+        Bar = SeriesChartType.Bar,
+        Column = SeriesChartType.Column,
+        Line = SeriesChartType.Line,
+        Pie = SeriesChartType.Pie
     }
 }
