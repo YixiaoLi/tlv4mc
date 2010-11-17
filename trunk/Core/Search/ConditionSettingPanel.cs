@@ -52,7 +52,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             setBaseConditionPanel();
             setSearchButton();
             setAddRefiningConditionButton();
-            setConditionRelationRadioButton();
+            setANDORRadioButton();
         }
 
         private void setBaseConditionPanel()
@@ -130,7 +130,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
         }
 
-        private void setConditionRelationRadioButton()
+        private void setANDORRadioButton()
         {
             _andRadioButton = new RadioButton();
             _andRadioButton.Name = "andRadioButton:" + _panelID;

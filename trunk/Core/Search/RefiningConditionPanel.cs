@@ -13,8 +13,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private ComboBox _timingForm;
         private Label _timingExpressionLabel;
         private Label _timeScaleLabel;
-        private int _refiningConditionPanelID;
-
 
         public RefiningConditionPanel(TraceLogVisualizerData data, int parentPanelID, int conditionID, System.Drawing.Size parentPanelSize, string timeScale)
         {
@@ -22,7 +20,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _conditionID = conditionID;
             _parentPanelID = parentPanelID;
             _parentPanelSize = parentPanelSize;
-            _refiningConditionPanelID = conditionID;
+            _conditionID = conditionID;
             _searchCondition = new SearchCondition();
             _timeScaleLabel = new Label();
             _timeScaleLabel.Text = timeScale;
@@ -32,39 +30,39 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private void initializeComponents()
         {
             _displayLabel = new Label();
-            _displayLabel.Name = "displayLabel:" + _parentPanelID + "_" + _refiningConditionPanelID;
+            _displayLabel.Name = "displayLabel:" + _parentPanelID + "_" + _conditionID;
             _displayLabel.Font = new System.Drawing.Font("Century", 10, System.Drawing.FontStyle.Underline);
-            _displayLabel.Text = "絞込み条件" + _refiningConditionPanelID;
+            _displayLabel.Text = "絞込み条件" + _conditionID;
             _targetResourceForm = new ComboBox();
-            _targetResourceForm.Name = "refiningResourceForm:" + _parentPanelID + "_" + _refiningConditionPanelID;
+            _targetResourceForm.Name = "refiningResourceForm:" + _parentPanelID + "_" + _conditionID;
             _targetResourceForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetRuleForm = new ComboBox();
-            _targetRuleForm.Name = "refiningRuleForm:" + _parentPanelID + "_" + _refiningConditionPanelID;
+            _targetRuleForm.Name = "refiningRuleForm:" + _parentPanelID + "_" + _conditionID;
             _targetRuleForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetEventForm = new ComboBox();
-            _targetEventForm.Name = "refiningEventForm:" + _parentPanelID + "_" + _refiningConditionPanelID;
+            _targetEventForm.Name = "refiningEventForm:" + _parentPanelID + "_" + _conditionID;
             _targetEventForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetEventDetailForm = new ComboBox();
-            _targetEventDetailForm.Name = "refiningEventDetailForm:" + _parentPanelID + "_" + _refiningConditionPanelID;
+            _targetEventDetailForm.Name = "refiningEventDetailForm:" + _parentPanelID + "_" + _conditionID;
             _targetEventDetailForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _timingValueBox = new TextBox();
-            _timingValueBox.Name = "timingValueTextBox:" + _parentPanelID + "_" + _refiningConditionPanelID;
+            _timingValueBox.Name = "timingValueTextBox:" + _parentPanelID + "_" + _conditionID;
             _timingForm = new ComboBox();
-            _timingForm.Name = "timingForm:" + _parentPanelID + "_" + _refiningConditionPanelID;
+            _timingForm.Name = "timingForm:" + _parentPanelID + "_" + _conditionID;
             _timingForm.DropDownStyle = ComboBoxStyle.DropDownList;
             makeTimingForm();
             _timingExpressionLabel = new Label();
-            _timingExpressionLabel.Name = "timingExpressionLabel:" + _parentPanelID + "_" + _refiningConditionPanelID;
+            _timingExpressionLabel.Name = "timingExpressionLabel:" + _parentPanelID + "_" + _conditionID;
             _timingExpressionLabel.Text = "基本条件のイベント発生時刻に対して";
             _timingExpressionLabel.Width = 180;
-            _timeScaleLabel.Name = "timeScaleLabel:" + _parentPanelID + "_" + _refiningConditionPanelID;
+            _timeScaleLabel.Name = "timeScaleLabel:" + _parentPanelID + "_" + _conditionID;
             _timeScaleLabel.Width = 20;
             _denyConditionBox = new CheckBox();
             _denyConditionBox.Name = "denyConditionBox:" + _parentPanelID;
             _denyConditionBox.Text = "条件を否定";
             _denyConditionBox.Width = 100;
             _deleteButton = new Button();
-            _deleteButton.Name = "refiningConditionDeleteButton" + _parentPanelID + "_" + _refiningConditionPanelID;
+            _deleteButton.Name = "refiningConditionDeleteButton" + _parentPanelID + "_" + _conditionID;
             _deleteButton.Text = "削除";
             _deleteButton.Size = new System.Drawing.Size(37, 25);
 
@@ -158,7 +156,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         public void setParentPanelID(int ID)
         {
-            _refiningConditionPanelID = ID;
+            _parentPanelID = ID;
             setComponentName();
         }
 
@@ -170,16 +168,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void setComponentName()
         {
-            _displayLabel.Name = "displayLabel:" + _parentPanelID + _refiningConditionPanelID;
-            _displayLabel.Text = "絞込み条件:" + _refiningConditionPanelID;
-            _targetResourceForm.Name = "refiningResourceForm:" + _parentPanelID + "_" + _refiningConditionPanelID;
-            _targetRuleForm.Name = "refiningRuleForm:" + _parentPanelID + "_" + _refiningConditionPanelID;
-            _targetEventForm.Name = "refiningEventForm:" + _parentPanelID + "_" + _refiningConditionPanelID;
-            _targetEventDetailForm.Name = "refiningEventDetailForm:" + _parentPanelID + "_" + _refiningConditionPanelID;
-            _timingValueBox.Name = "timingValueTextBox:" + _parentPanelID + "_" + _refiningConditionPanelID;
-            _timingForm.Name = "timingForm:" + _parentPanelID + "_" + _refiningConditionPanelID;
-            _timingExpressionLabel.Name = "timingExpressionLabel:" + _parentPanelID + "_" + _refiningConditionPanelID;
-            _deleteButton.Name = "refiningConditionDeleteButton" + _parentPanelID + "_" + _refiningConditionPanelID;
+            _displayLabel.Name = "displayLabel:" + _parentPanelID + _conditionID;
+            _displayLabel.Text = "絞込み条件:" + _conditionID;
+            _targetResourceForm.Name = "refiningResourceForm:" + _parentPanelID + "_" + _conditionID;
+            _targetRuleForm.Name = "refiningRuleForm:" + _parentPanelID + "_" + _conditionID;
+            _targetEventForm.Name = "refiningEventForm:" + _parentPanelID + "_" + _conditionID;
+            _targetEventDetailForm.Name = "refiningEventDetailForm:" + _parentPanelID + "_" + _conditionID;
+            _timingValueBox.Name = "timingValueTextBox:" + _parentPanelID + "_" + _conditionID;
+            _timingForm.Name = "timingForm:" + _parentPanelID + "_" + _conditionID;
+            _timingExpressionLabel.Name = "timingExpressionLabel:" + _parentPanelID + "_" + _conditionID;
+            _deleteButton.Name = "refiningConditionDeleteButton" + _parentPanelID + "_" + _conditionID;
         }
 
         public int getConditionID()

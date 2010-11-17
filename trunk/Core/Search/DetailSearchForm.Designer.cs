@@ -65,7 +65,7 @@
             this.markerDeleteButton.Name = "markerDeleteButton";
             this.markerDeleteButton.Size = new System.Drawing.Size(86, 23);
             this.markerDeleteButton.TabIndex = 7;
-            this.markerDeleteButton.Text = "マーカーを消す";
+            this.markerDeleteButton.Text = "マーカーを削除";
             this.markerDeleteButton.UseVisualStyleBackColor = true;
             // 
             // label1
