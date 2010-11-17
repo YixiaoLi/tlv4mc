@@ -44,6 +44,7 @@ using NU.OJL.MPRTOS.TLV.Core.Controls;
 using System.ComponentModel;
 using System.Threading;
 using System.Collections.Generic;
+using NU.OJL.MPRTOS.TLV.Core.Controls.Forms;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Commands
 {
@@ -95,9 +96,32 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 						(p, s) =>
 						{
 							if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
-							_convertBw.ReportProgress((int)((double)p * 0.8));
+							_convertBw.ReportProgress((int)((double)p * 0.7));
 							_convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = s; }));
 						});
+
+                    StatisticsGenerator sg = new StatisticsGenerator(
+                        _logFilePath,
+                        cfc.ResourceData,
+                        cfc.TraceLogData,
+                        (p, s) =>
+                        {
+                            if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
+                            _convertBw.ReportProgress((int)((double)p + 70));
+                            _convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = s; }));
+                        }
+                    );
+
+                    StatisticsData sd = null;
+                    try
+                    {
+                        sd = sg.GenerateData();
+                    }
+                    catch (Exception e) // 統計情報の生成に失敗しても可視化を続ける
+                    {
+                        MessageForm mbox = new MessageForm(e.ToString(), "統計情報の生成に失敗しました");
+                        mbox.ShowDialog();
+                    }
 
 					if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
 					_convertBw.ReportProgress(90);
@@ -111,7 +135,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 				}
 				catch (Exception e)
 				{
-					MessageBox.Show(e.Message, "共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageForm mbox = new MessageForm(e.ToString(), "変換に失敗しました。");
+                    mbox.ShowDialog();
+					//MessageBox.Show(e.Message, "共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					_e.Cancel = true;
 					return;
 				}
