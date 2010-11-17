@@ -133,7 +133,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 catch (Exception e)
                 {
                     MessageForm mbox = new MessageForm(string.Format(@"統計情報 ""{0}"": {1}", tgt, e.ToString()), "統計情報の生成に失敗しました");
-                    mbox.Show();
+                    mbox.ShowDialog();
                 }
             }
 
@@ -201,7 +201,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 default:
                     if (!File.Exists(target))
                     {
-                        throw new StatisticsGenerateException("ファイル：" + target + "が見つかりません。");
+                        throw new FileNotFoundException("ファイル：" + target + "が見つかりません。");
                     }
                     data.AddRange(File.ReadAllLines(target));
                     break;

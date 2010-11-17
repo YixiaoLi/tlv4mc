@@ -118,8 +118,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                     }
                     catch (Exception e) // 統計情報の生成に失敗しても可視化を続ける
                     {
-                        MessageForm mbox = new MessageForm(e.ToString(), "統計情報の生成に失敗しました。");
-                        mbox.Show();
+                        MessageForm mbox = new MessageForm(e.ToString(), "統計情報の生成に失敗しました");
+                        mbox.ShowDialog() ;
                     }
 
                     if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
