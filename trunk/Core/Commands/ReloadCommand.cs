@@ -44,6 +44,7 @@ using NU.OJL.MPRTOS.TLV.Core.Controls;
 using System.ComponentModel;
 using System.Threading;
 using System.Collections.Generic;
+using NU.OJL.MPRTOS.TLV.Core.Controls.Forms;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Commands
 {
@@ -111,7 +112,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 				}
 				catch (Exception e)
 				{
-					MessageBox.Show(e.Message, "共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageForm mbox = new MessageForm(e.ToString(), "変換に失敗しました。");
+                    mbox.ShowDialog();
+					//MessageBox.Show(e.Message, "共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					_e.Cancel = true;
 					return;
 				}
