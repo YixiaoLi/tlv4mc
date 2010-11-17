@@ -211,6 +211,9 @@ xcopy $(SolutionDir)visualizeRules $(TargetDir)visualizeRules /e /c /q /y /exclu
 if not exist $(TargetDir)sampleFiles mkdir $(TargetDir)sampleFiles
 xcopy $(SolutionDir)sampleFiles $(TargetDir)sampleFiles /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
 
+if not exist $(TargetDir)statisticsGenerationRules mkdir $(TargetDir)statisticsGenerationRules
+xcopy $(SolutionDir)statisticsGenerationRules $(TargetDir)statisticsGenerationRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+
 if not exist $(TargetDir)doc mkdir $(Target)doc
 copy $(SolutionDir)doc\*.pdf $(TargetDir)doc
 copy $(SolutionDir)doc\applog_manual\*.pdf $(TargetDir)doc

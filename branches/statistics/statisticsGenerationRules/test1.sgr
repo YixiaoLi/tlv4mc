@@ -1,0 +1,44 @@
+﻿{
+	"test1" : {
+		"Setting":{
+			"Title":"CPU利用率横棒",
+			"AxisXTitle":"xTitle",
+			"AxisYTitle":"yTilte",
+			"SeriesTitle":"testSeries",
+			"DefaultType":"Bar",
+			"MajorTickMarkInterval":1.0,
+			"MinorTickMarkInterval":0.5,
+			"MajorGridVisible":true,
+			"MinorGridVisible":false
+		},
+		"Style":"Regexp",
+		"RegexpRule":{
+			"Target":"nonstandard",
+			"\[\d+\] (?<task>task \d+) CPU utilization (?<per>\d+)%\." : {
+				"XLabel" : "${task}",
+				"YValue" : "${per}"
+			}
+		}
+    },
+		"test3" : {
+		"Setting":{
+			"Title":072,
+			"AxisXTitle":"xTitle",
+			"AxisYTitle":"yTilte",
+			"SeriesTitle":"testSeries",
+			"DefaultType":"Column",
+			"MajorTickMarkInterval":1.0,
+			"MinorTickMarkInterval":0.5,
+			"MajorGridVisible":true,
+			"MinorGridVisible":false
+		},
+		"Style":"Regexp",
+		"RegexpRule":{
+			"Target":"nonstandard",
+			"\[\d+\] (?<task>task \d+) CPU utilization (?<per>\d+)%\." : {
+				"XLabel" : "${task}",
+				"YValue" : "${per}"
+			}
+		}
+    }
+}
