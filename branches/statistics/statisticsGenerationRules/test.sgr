@@ -19,6 +19,26 @@
 				"YValue" : "${per}"
 			}
 		}
-            }
+	},
+	"testLine" : {
+		"Setting":{
+			"Title":"デフォ折れ線",
+			"AxisXTitle":"横軸",
+			"AxisYTitle":"縦軸",
+			"SeriesTitle":"折れ線データ",
+			"DefaultType":"Line",
+			"MajorTickMarkInterval":10,
+			"MinorTickMarkInterval":5,
+			"MajorGridVisible":true,
+			"MinorGridVisible":true
+		},
+		"Style":"Regexp",
+		"RegexpRule":{
+			"Target":"nonstandard",
+			"\[\d+\] (?<task>task \d+) CPU utilization (?<per>\d+)%\." : {
+				"XLabel" : "${task}",
+				"YValue" : "${per}"
+			}
+		}
 	}
 }

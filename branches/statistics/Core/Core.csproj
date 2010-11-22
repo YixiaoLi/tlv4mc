@@ -186,12 +186,15 @@
     <Compile Include="FileContext\SettingData\TraceLogViewerSetting.cs" />
     <Compile Include="FileContext\SettingData\TimeLineMacroViewerSetting.cs" />
     <Compile Include="FileContext\StatisticsData\ChartSetting.cs" />
-    <Compile Include="FileContext\StatisticsData\JsonReaderException.cs" />
+    <Compile Include="FileContext\StatisticsData\Rules\IStatisticsGeneratable.cs" />
+    <Compile Include="FileContext\StatisticsData\Rules\RegexpRule.cs" />
+    <Compile Include="FileContext\StatisticsData\Rules\ScriptExtension.cs" />
     <Compile Include="FileContext\StatisticsData\Series\DataPoint.cs" />
     <Compile Include="FileContext\StatisticsData\Series\DataPointList.cs" />
     <Compile Include="FileContext\StatisticsData\Series\Series.cs" />
     <Compile Include="FileContext\StatisticsData\Statistics.cs" />
     <Compile Include="FileContext\StatisticsData\StatisticsData.cs" />
+    <Compile Include="FileContext\StatisticsData\StatisticsGenerationRule.cs" />
     <Compile Include="FileContext\StatisticsData\StatisticsGenerator.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\ITraceLogParser.cs" />
@@ -476,4 +479,5 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
 </Project>

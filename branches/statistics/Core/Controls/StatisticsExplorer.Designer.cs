@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this._dataGridView = new System.Windows.Forms.DataGridView();
-            this.VisibleButtonTextColumn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VisibleColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this._dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -47,8 +47,8 @@
             this._dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this._dataGridView.ColumnHeadersVisible = false;
             this._dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.NameColumn,
-            this.VisibleButtonTextColumn});
+            this.VisibleColumn,
+            this.NameColumn});
             this._dataGridView.Location = new System.Drawing.Point(0, 0);
             this._dataGridView.MultiSelect = false;
             this._dataGridView.Name = "_dataGridView";
@@ -59,16 +59,6 @@
             this._dataGridView.TabIndex = 0;
             this._dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this._dataGridView_CellContentClick);
             // 
-            // VisibleButtonTextColumn
-            // 
-            this.VisibleButtonTextColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.VisibleButtonTextColumn.FillWeight = 50F;
-            this.VisibleButtonTextColumn.HeaderText = "表示切替";
-            this.VisibleButtonTextColumn.MinimumWidth = 50;
-            this.VisibleButtonTextColumn.Name = "VisibleButtonTextColumn";
-            this.VisibleButtonTextColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.VisibleButtonTextColumn.Width = 50;
-            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -77,6 +67,16 @@
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
             this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // VisibleColumn
+            // 
+            this.VisibleColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.VisibleColumn.FillWeight = 20F;
+            this.VisibleColumn.HeaderText = "表示切替";
+            this.VisibleColumn.MinimumWidth = 20;
+            this.VisibleColumn.Name = "VisibleColumn";
+            this.VisibleColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.VisibleColumn.Width = 20;
             // 
             // NameColumn
             // 
@@ -102,8 +102,8 @@
 
         private System.Windows.Forms.DataGridView _dataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn VisibleColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
-        private System.Windows.Forms.DataGridViewButtonColumn VisibleButtonTextColumn;
 
     }
 }
