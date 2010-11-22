@@ -66,12 +66,21 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private void setChartSetting()
         {
             // ウィンドウタイトル
-            this.Text = _data.Setting.Title + " - 統計情報ビューア";
+            if (!string.IsNullOrEmpty(_data.Setting.Title))
+            {
+                this.Text = _data.Setting.Title + " - 統計情報ビューア";
+            }
+            else
+            {
+                this.Text = _data.Name + " - 統計情報ビューア";
+            }
 
             // 補助目盛、補助グリッドの色
             chart1.ChartAreas[0].AxisY.MinorTickMark.LineColor = Color.LightGray;
             chart1.ChartAreas[0].AxisY.MinorGrid.LineColor = Color.LightGray;
 
+            // 棒グラフや折れ線で邪魔に感じたので消しました
+            // 必要に応じて設定しなおしてください
             chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
 
             chart1.Series[0].Name = _data.Setting.SeriesTitle;
@@ -89,7 +98,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = _data.Setting.MinorGridVisible;
             chart1.ChartAreas[0].AxisY.MinorGrid.Interval = _data.Setting.MinorTickMarkInterval;
-
         }
 
         private void setEachTypeSetting()

@@ -54,7 +54,7 @@ namespace NU.OJL.MPRTOS.TLV.Third
     /// </summary>
     public class WeifenLuoWindowManager : WindowManager
     {
-		private readonly string path = Path.Combine(Application.LocalUserAppDataPath, "windowManager.setting");
+		private readonly string path = Path.Combine(Application.StartupPath, "windowManager.setting");
         private Dictionary<string, DockContent> _dockContents = new Dictionary<string, DockContent>();
         private DockPanel _dockPanel = null;
 		private DockPanel _settingDockPanel;

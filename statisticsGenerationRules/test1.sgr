@@ -4,12 +4,11 @@
 			"Title":"CPU利用率横棒",
 			"AxisXTitle":"xTitle",
 			"AxisYTitle":"yTilte",
-			"SeriesTitle":"testSeries",
 			"DefaultType":"Bar",
-			"MajorTickMarkInterval":1.0,
-			"MinorTickMarkInterval":0.5,
+			"MajorTickMarkInterval":10,
+			"MinorTickMarkInterval":5,
 			"MajorGridVisible":true,
-			"MinorGridVisible":false
+			"MinorGridVisible":true
 		},
 		"Style":"Regexp",
 		"RegexpRule":{

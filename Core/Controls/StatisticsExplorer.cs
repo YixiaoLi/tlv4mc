@@ -99,27 +99,31 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             }
 
             _dataGridView.Columns["NameColumn"].DataPropertyName = "DisplayName"; // 2度目の生成で例外
-            _dataGridView.Columns["VisibleButtonTextColumn"].DataPropertyName = "VisibleButtonText";
+            _dataGridView.Columns["VisibleColumn"].DataPropertyName = "Visible";
 
             _dataGridView.DataSource = _dataSource;
-            // "NameColumn", "VisibleButtonTextColumn"以外は表示させない
+            // "NameColumn", "VisibleColumn"以外は表示させない
             _dataGridView.Columns["Id"].Visible = false;
             _dataGridView.Columns["Viewer"].Visible = false;
-            _dataGridView.Columns["Visible"].Visible = false;
+            //_dataGridView.Columns["VisibleButtonText"].Visible = false;
 
             _dataGridView.ClearSelection();
         }
 
         public void ClearData()
         {
+            foreach (StatisticsExplorerRowData serd in _dataSource)
+            {
+                serd.Viewer.Visible = false;
+                serd.Viewer.Dispose();
+            }
             _dataSource = new BindingList<StatisticsExplorerRowData>();
-            _dataGridView.DataSource = null;
         }
 
         private void _dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // [表示/非表示]ボタンが押された場合
-            if (_dataGridView.Columns[e.ColumnIndex].Name == "VisibleButtonTextColumn")
+            // チェックボックスが押された場合
+            if (_dataGridView.Columns[e.ColumnIndex].Name == "VisibleColumn")
             {
                 _dataGridView.BindingContext[_dataSource].SuspendBinding();
 
@@ -145,13 +149,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         /// 一覧に表示する統計情報名
         /// </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// [表示/非表示]ボタンの文字列
-        /// </summary>
-        public string VisibleButtonText
-        {
-            get { return Visible ? "非表示" : "表示"; } // true:表示しているのでボタンを押すと非表示なることを通知する必要がある
-        }
         /// <summary>
         /// 統計情報ビューア　表示非表示のコントロールに使い、行には表示されない
         /// </summary>
