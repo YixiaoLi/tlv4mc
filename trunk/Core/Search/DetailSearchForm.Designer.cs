@@ -43,6 +43,7 @@
             // 
             // searchOperationArea
             // 
+            this.searchOperationArea.AutoScroll = true;
             this.searchOperationArea.BackColor = System.Drawing.Color.AliceBlue;
             this.searchOperationArea.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.searchOperationArea.Controls.Add(this.markerDeleteButton);

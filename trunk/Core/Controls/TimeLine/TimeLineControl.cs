@@ -108,8 +108,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 		public virtual TimeLine TimeLine { get; set; }
 		public virtual GeneralNamedCollection<TimeLineMarker> LocalTimeLineMarkers { get; private set; }
 
-        protected Boolean searchFlag = false;
-
   		public TimeLineControl()
 		{
 			ResizeRedraw = true;
@@ -164,15 +162,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             ApplicationFactory.BlackBoard.CursorTimeChanged += (o, _e) =>
             {
-                if (ApplicationFactory.BlackBoard.dragFlag == 0) { Refresh(); }
+                if (!ApplicationFactory.BlackBoard.dragFlag) { Refresh(); }
             };
 
             ApplicationFactory.BlackBoard.DetailSearchFlagChanged += (o, _e) =>
-            {
-                if (!ApplicationFactory.BlackBoard.DetailSearchFlag) { this.Enabled = true; }
-                else { this.Enabled = false; }
-            };
-            
+             {
+                 if (!ApplicationFactory.BlackBoard.DetailSearchFlag) { this.Enabled = true; }
+                 else { this.Enabled = false; }
+             };
+
+
             ApplicationData.FileContext.DataChanged += (o, _e) =>
 			{
                 Invoke((MethodInvoker)(() =>
@@ -187,6 +186,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                     }
                 }));
             };
+
+
 		}
 
 
@@ -297,59 +298,61 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-			base.OnMouseMove(e);
 
-			int x = e.X - TimeLineX;
+            base.OnMouseMove(e);
 
-			if (TimeLine == null)
-				return;
+            int x = e.X - TimeLineX;
 
-			if (e.Button == MouseButtons.Left)
-			{
-				if (CursorMode == CursorModes.MarkerMode)
-				{
-					if (e.Button == MouseButtons.Left && _timeLineMarkerManager.GetSelectedMarker().Count() != 0 && _mouseDownX != -1)
-					{
-						foreach (TimeLineMarker tlm in _timeLineMarkerManager.GetSelectedMarker())
-						{
-							Time dt = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x) - Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, _lastMouseMoveX);
-							tlm.Time += dt;
-						}
-					}
-				}
-			}
-			else
-			{
-				Time t = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x);
-				Time b = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x - 3);
-				Time a = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x + 3);
+            if (TimeLine == null)
+                return;
 
-				TimeLineMarker onMarker = _globalTimeLineMarkers.FirstOrDefault<TimeLineMarker>(m => m.Time > b && a > m.Time);
+            if (e.Button == MouseButtons.Left)
+            {
+                if (CursorMode == CursorModes.MarkerMode)
+                {
+                    if (e.Button == MouseButtons.Left && _timeLineMarkerManager.GetSelectedMarker().Count() != 0 && _mouseDownX != -1)
+                    {
+                        foreach (TimeLineMarker tlm in _timeLineMarkerManager.GetSelectedMarker())
+                        {
+                            Time dt = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x) - Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, _lastMouseMoveX);
+                            tlm.Time += dt;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Time t = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x);
+                Time b = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x - 3);
+                Time a = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x + 3);
 
-				if (onMarker != null)
-				{
-					CursorMode = CursorModes.MarkerMode;
-					Cursor = GetCursor(CursorMode);
-				}
-				else if(CursorMode == CursorModes.MarkerMode)
-				{
-					CursorMode = _lastCursorMode;
-					Cursor = GetCursor(CursorMode);
-				}
+                TimeLineMarker onMarker = _globalTimeLineMarkers.FirstOrDefault<TimeLineMarker>(m => m.Time > b && a > m.Time);
 
-			}
+                if (onMarker != null)
+                {
+                    CursorMode = CursorModes.MarkerMode;
+                    Cursor = GetCursor(CursorMode);
+                }
+                else if (CursorMode == CursorModes.MarkerMode)
+                {
+                    CursorMode = _lastCursorMode;
+                    Cursor = GetCursor(CursorMode);
+                }
+
+            }
 
             if (CursorTimeTracked)
             {
                 ApplicationFactory.BlackBoard.CursorTime = Time.FromX(TimeLine.FromTime, TimeLine.ToTime, TimeLineWidth, x);
             }
 
-			_lastMouseMoveX = x;
-		}
+            _lastMouseMoveX = x;
 
-		protected override void OnMouseDown(MouseEventArgs e)
-		{
-			base.OnMouseDown(e);
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
 
 			if (_data == null)
 				return;

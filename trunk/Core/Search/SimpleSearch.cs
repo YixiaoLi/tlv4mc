@@ -12,12 +12,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private List<VisualizeLog> _visLogs;
         private decimal _normTime;
         private SearchCondition _condition;
-        private SearchFilter _filter;
 
         public SimpleSearch()
         {
             _normTime = 0;
-            _filter = new SimpleFilter();
         }
 
         public override void setSearchData(List<VisualizeLog> visLogs, SearchCondition condition, List<SearchCondition> refiningCondition)
@@ -39,7 +37,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             VisualizeLog hitLog = null;
             foreach (VisualizeLog visLog in _visLogs)
             {
-                if (_filter.checkSearchCondition(visLog, _condition, _normTime))
+                if (checkSearchCondition(visLog, _condition, _normTime))
                 {
                     if (visLog.fromTime > _normTime)
                     {
@@ -59,7 +57,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             for(int i = _visLogs.Count -1  ; i>0; i--)
             {
                 VisualizeLog visLog = _visLogs[i];
-                if (_filter.checkSearchCondition(visLog, _condition, _normTime))
+                if (checkSearchCondition(visLog, _condition, _normTime))
                 {
                     if (visLog.fromTime < _normTime)
                     {
@@ -77,7 +75,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             List<VisualizeLog> hitLogs = new List<VisualizeLog>();
             foreach (VisualizeLog visLog in _visLogs)
             {
-                if (_filter.checkSearchCondition(visLog, _condition, _normTime))
+                if (checkSearchCondition(visLog, _condition, _normTime))
                 {
                     hitLogs.Add(visLog);
                 }
@@ -85,5 +83,32 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             return hitLogs;
         }
+
+        private Boolean checkSearchCondition(VisualizeLog visLog, SearchCondition condition, decimal normTime)
+        {
+            if (!visLog.resourceName.Equals(condition.resourceName))
+                return false;
+
+            if (condition.ruleName != null)
+            {
+                if (!visLog.ruleName.Equals(condition.ruleName))
+                    return false;
+            }
+
+            if (condition.eventName != null)
+            {
+                if (!visLog.evntName.Equals(condition.eventName))
+                    return false;
+            }
+
+            if (condition.eventDetail != null)  // イベント詳細が指定されているかを確認
+            {
+                if (!visLog.evntDetail.Equals(condition.eventDetail))
+                    return false;
+            }
+
+            return true;
+        }
+
     }
 }
