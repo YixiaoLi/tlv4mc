@@ -161,7 +161,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _baseConditionPanel.setParentPanelID(_panelID);
             foreach(RefiningConditionPanel panel in _refiningConditionPanels )
             {
-                panel.setParentPanelID(_panelID);
+                panel.setBaseConditionID(_panelID);
             }
         }
 

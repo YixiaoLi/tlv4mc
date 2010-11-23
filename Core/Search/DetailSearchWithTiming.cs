@@ -13,14 +13,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private List<SearchCondition> _refiningConditions = null;
         private List<VisualizeLog> _visLogs = null;
         private TraceLogSearcher _searcher = null;
-        private SearchFilter _filter = null;
         private decimal _normTime;
         private Boolean _isAnd = true;
 
         public DetailSearchWithTiming()
         {
             _searcher = new SimpleSearch();
-            _filter = new TimingFilter(new SimpleFilter());
         }
 
         public override void setSearchData(List<VisualizeLog> logs, SearchCondition mainCondition, List<SearchCondition> refiningConditions)
@@ -60,7 +58,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     refiningConditionNum++;
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
-                        if (_filter.checkSearchCondition(_visLogs[i], refiningCondition, hitLog.fromTime))
+                        if (checkSearchCondition(_visLogs[i], refiningCondition, hitLog.fromTime))
                         {
                             matchingFlag = true;
                             break;
@@ -128,7 +126,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     refiningConditionNum++;
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
-                        if (_filter.checkSearchCondition(_visLogs[i], refiningCondition, hitLog.fromTime))
+                        if (checkSearchCondition(_visLogs[i], refiningCondition, hitLog.fromTime))
                         {
                             matchingFlag = true;
                             break;
@@ -193,7 +191,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     refiningConditionNum++;
                     for (int i = 0; i < _visLogs.Count; i++)
                     {
-                        if (_filter.checkSearchCondition(_visLogs[i], refiningCondition, candidateHitLog.fromTime))
+                        if (checkSearchCondition(_visLogs[i], refiningCondition, candidateHitLog.fromTime))
                         {
                             matchingFlag = true;
                             break;
@@ -236,6 +234,67 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
             return hitLogs;
         }
+
+        private Boolean checkSearchCondition(VisualizeLog visLog, SearchCondition condition, decimal normTime)
+        {
+            if (!visLog.resourceName.Equals(condition.resourceName))
+                return false;
+
+            if (condition.ruleName != null)
+            {
+                if (!visLog.ruleName.Equals(condition.ruleName))
+                    return false;
+            }
+
+            if (condition.eventName != null)
+            {
+                if (!visLog.evntName.Equals(condition.eventName))
+                    return false;
+            }
+
+            if (condition.eventDetail != null)  // イベント詳細が指定されているかを確認
+            {
+                if (!visLog.evntDetail.Equals(condition.eventDetail))
+                    return false;
+            }
+
+            if (condition.timing.Equals("以内に発生(基準時以前)"))
+            {
+                // 時間制約による判定
+                if ((Math.Abs(visLog.fromTime - normTime) <= decimal.Parse(condition.timingValue)) && (visLog.fromTime < normTime))
+                {
+                    return true;
+                }
+            }
+            else if (condition.timing.Equals("以内に発生(基準時以後)"))
+            {
+                if ((Math.Abs(visLog.fromTime - normTime) <= decimal.Parse(condition.timingValue)) && (visLog.fromTime > normTime))
+                {
+                    return true;
+                }
+            }
+            else if (condition.timing.Equals("以上前に発生"))
+            {
+                if (normTime - visLog.fromTime >= decimal.Parse(condition.timingValue))
+                {
+                    return true;
+                }
+            }
+            else if (condition.timing.Equals("以上後に発生"))
+            {
+                if (visLog.fromTime - normTime >= decimal.Parse(condition.timingValue))
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         
         
     }

@@ -94,7 +94,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			BackColor = System.Drawing.Color.Black;
 			Font = new System.Drawing.Font(FontFamily.GenericMonospace, 8);
 
-			SizeChanged += (o, _e) => { memberUpdate(); };
+			SizeChanged += (o, _e) =>
+            {
+                memberUpdate();
+            };
 
 			_stringFormat = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
 
@@ -132,7 +135,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 				base.TimeLine = value;
 				if (base.TimeLine != null)
 				{
-					TimeLine.ViewingAreaChanged += (o, e) => { memberUpdate(); };
+					TimeLine.ViewingAreaChanged += (o, e) => {
+                        int i = 0;
+                        memberUpdate();
+                    };
 					memberUpdate();
 				}
 			}

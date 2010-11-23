@@ -76,8 +76,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			_scale.Anchor = AnchorStyles.Left | AnchorStyles.Right| AnchorStyles.Top;
             this.TimeLineX = 1;
 			ResumeLayout();
-
-//            TimeLine.ViewingAreaChanged += (o,e) => {               };
 		}
 
 		protected override void OnLoad(EventArgs e)
@@ -307,7 +305,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-
 			if (_data == null)
 				return;
 
@@ -323,7 +320,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-
 			if (_data == null)
 				return;
 

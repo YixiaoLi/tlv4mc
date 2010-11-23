@@ -10,14 +10,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     class BaseConditionPanel : Panel
     {
         protected TraceLogVisualizerData _data;
-        protected int _parentPanelID;
-        protected System.Drawing.Size _parentPanelSize;
+        protected int _baseConditionID;
+        private System.Drawing.Size _parentPanelSize;
         protected Label _displayLabel;
         protected ComboBox _targetResourceForm;
         protected ComboBox _targetRuleForm;
         protected ComboBox _targetEventForm;
         protected ComboBox _targetEventDetailForm;
-        protected CheckBox _denyConditionBox;
+        
         protected SearchCondition _searchCondition;
         protected Button _deleteButton;
         public Button DeleteButton{ set {_deleteButton = value ;} get { return _deleteButton; }}
@@ -29,7 +29,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         public BaseConditionPanel(TraceLogVisualizerData data, int parentPanelID, System.Drawing.Size parentPanelSize)
         {
             _data = data;
-            _parentPanelID = parentPanelID;
+            _baseConditionID = parentPanelID;  //基本条件番号 = 親パネルのID 
             _parentPanelSize = parentPanelSize;
             _searchCondition = new SearchCondition();
             initializeComponents();
@@ -38,34 +38,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private void initializeComponents()
         {
             _displayLabel = new Label();
-            _displayLabel.Name = "displayLabel:" + _parentPanelID;
-            _displayLabel.Text = "基本条件" + _parentPanelID;
+            _displayLabel.Name = "displayLabel:" + _baseConditionID;
+            _displayLabel.Text = "基本条件" + _baseConditionID;
             _displayLabel.Font = new System.Drawing.Font("Century", 12, System.Drawing.FontStyle.Underline);
             _targetResourceForm = new ComboBox();
-            _targetResourceForm.Name = "resourceForm:" + _parentPanelID;
+            _targetResourceForm.Name = "resourceForm:" + _baseConditionID;
             _targetResourceForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetRuleForm = new ComboBox();
-            _targetRuleForm.Name = "ruleForm:" + _parentPanelID;
+            _targetRuleForm.Name = "ruleForm:" + _baseConditionID;
             _targetRuleForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetEventForm = new ComboBox();
-            _targetEventForm.Name = "eventForm:" + _parentPanelID;
+            _targetEventForm.Name = "eventForm:" + _baseConditionID;
             _targetEventForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetEventDetailForm = new ComboBox();
-            _targetEventDetailForm.Name = "eventDetailForm:" + _parentPanelID;
+            _targetEventDetailForm.Name = "eventDetailForm:" + _baseConditionID;
             _targetEventDetailForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _deleteButton = new Button();
-            _deleteButton.Name = "deleteButton" + _parentPanelID;
+            _deleteButton.Name = "deleteButton" + _baseConditionID;
             _deleteButton.Text = "削除";
             _deleteButton.Size = new System.Drawing.Size(37, 25);
-            _denyConditionBox = new CheckBox();
-            _denyConditionBox.Name = "denyConditionBox:" + _parentPanelID;
-            _denyConditionBox.Text = "条件を否定";
-            _denyConditionBox.Width = 100;
             _targetResourceForm.Enabled = false;
             _targetRuleForm.Enabled = false;
             _targetEventForm.Enabled = false;
             _targetEventDetailForm.Enabled = false;
-            _denyConditionBox.Checked = false;
 
             setEventHandler();
 
@@ -178,11 +173,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 changePanelSize(_targetEventDetailForm.Location.X + _targetEventDetailForm.Width);
             };
 
-            _denyConditionBox.CheckedChanged += (o, _e) =>
-            {
-                _searchCondition.denyCondition = _denyConditionBox.Checked;
-            };
-
             this.Click += (o, _e) =>
             {
                 this.Focus();
@@ -286,16 +276,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _targetEventDetailForm.Width = boxSize;
         }
 
-        protected void arrangeLocations()
+        private void arrangeLocations()
         {
             _displayLabel.Location = new System.Drawing.Point(10, 10);
             _targetResourceForm.Location = new System.Drawing.Point(_displayLabel.Location.X, _displayLabel.Location.Y + _displayLabel.Height + 1);
             _targetRuleForm.Location = new System.Drawing.Point(_targetResourceForm.Location.X + _targetResourceForm.Width + 5, _targetResourceForm.Location.Y);
             _targetEventForm.Location = new System.Drawing.Point(_targetRuleForm.Location.X + _targetRuleForm.Width + 5, _targetRuleForm.Location.Y);
             _targetEventDetailForm.Location = new System.Drawing.Point(_targetEventForm.Location.X + _targetEventForm.Width + 5, _targetEventForm.Location.Y);
-            _denyConditionBox.Location = new System.Drawing.Point(_displayLabel.Location.X + _displayLabel.Width, _displayLabel.Location.Y);
-            _deleteButton.Location = new System.Drawing.Point(_denyConditionBox.Location.X + _denyConditionBox.Width + 10, _denyConditionBox.Location.Y -2);
-
+            _deleteButton.Location = new System.Drawing.Point(_displayLabel.Location.X + _displayLabel.Width + 20, _displayLabel.Location.Y - 2);
         }
 
         //コンボボックスのドロップダウンボックスのサイズを自動調整
