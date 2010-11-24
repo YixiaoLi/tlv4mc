@@ -132,6 +132,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     {
                         case "Regexp": applyRegexpRule(stats, rules[tgt].RegexpRule); break;
                         case "Script": applyScriptExtension(stats, rules[tgt].ScriptExtension); break;
+                        case "Basic": applyBasicRule(stats, rules[tgt].BasicRule); break;
                         case "Input": applyInputRule(stats, rules[tgt].InputRule); break;
                         default: throw new StatisticsGenerateException(rules[tgt].Mode + "無効なスタイルです");
                     }
@@ -282,6 +283,50 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 stats.Setting = newStats.Setting;
             }
             stats.Series = newStats.Series;
+        }
+
+        private void applyBasicRule(Statistics stats, BasicRule rule)
+        {
+            Func<Resource, bool> resFilter = (r) =>
+                {
+                    return r.Type == rule.When.ResourceType;
+                };
+
+            Func<TraceLog, bool> logFilter;
+
+            
+            switch (rule.Method)
+            {
+                case BasicRuleMethod.Count:
+                    
+                    foreach (Resource res in _resourceData.Resources.Where<Resource>(resFilter))
+                    {
+                        DataPoint dp = new DataPoint();
+                        if (rule.When.AttributeName != null)
+                        {
+                            logFilter = (t) =>
+                            {
+                                return t.ObjectName == res.Name
+                                    && t.Attribute == rule.When.AttributeName
+                                    && t.Value == rule.When.AttributeValue;
+                            };
+                        }
+                        else// if (rule.When.BehaviorName != null)
+                        {
+                            logFilter = (t) =>
+                            {
+                                return t.ObjectName == res.Name
+                                    && t.Behavior == rule.When.BehaviorName
+                                    && t.Arguments == rule.When.BehaviorArg;
+                            };
+                        }
+                        dp.XLabel = res.Name;
+                        dp.YValue = _traceLogData.TraceLogs.Count<TraceLog>(logFilter);
+
+                        stats.Series.Points.Add(dp);
+                    }
+                    break;
+            }
         }
 
         /// <summary>

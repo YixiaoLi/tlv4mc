@@ -186,6 +186,7 @@
     <Compile Include="FileContext\SettingData\TraceLogViewerSetting.cs" />
     <Compile Include="FileContext\SettingData\TimeLineMacroViewerSetting.cs" />
     <Compile Include="FileContext\StatisticsData\ChartSetting.cs" />
+    <Compile Include="FileContext\StatisticsData\Rules\BasicRule\BasicRule.cs" />
     <Compile Include="FileContext\StatisticsData\Rules\InputRule.cs" />
     <Compile Include="FileContext\StatisticsData\Rules\RegexpRule.cs" />
     <Compile Include="FileContext\StatisticsData\Rules\ScriptExtension.cs" />
