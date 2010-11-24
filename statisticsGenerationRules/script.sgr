@@ -1,0 +1,22 @@
+{
+	"script1" : {
+		"Setting":{
+			"Title":"CPU利用率",
+			"AxisXTitle":"xTitle",
+			"AxisYTitle":"yTilte",
+			"SeriesTitle":"testSeries",
+			"DefaultType":"Pie",
+			"MajorTickMarkInterval":1.0,
+			"MinorTickMarkInterval":0.5,
+			"MajorGridVisible":true,
+			"MinorGridVisible":false
+		},
+		"Mode":"Script",
+		"ScriptExtension":{
+			"Target":"nonstandard",
+			"FileName":"C:/cygwin/bin/ruby.exe",
+			"Arguments":"statisticsGenerationScript/outputStats.rb"
+			}
+		}
+	}
+}
