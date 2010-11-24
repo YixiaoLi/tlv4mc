@@ -8,33 +8,29 @@ namespace NU.OJL.MPRTOS.TLV.Core
 {
     public class StatisticsGenerationRule : INamed
     {
+        /// <summary>
+        /// 統計情報名　
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// グラフの設定
+        /// </summary>
         public ChartSetting Setting { get; set; }
+        /// <summary>
+        /// 統計情報を生成するモード
+        /// </summary>
         public string Mode { get; set; }
+        /// <summary>
+        /// DataPoint.XLabelの値がリソースファイルに定義されているリソース名の場合、そのColorを使用するか
+        /// </summary>
         public bool UseResourceColor { get; set; }
 
-        public RegexpRule RegexpRule 
-        { 
-            get
-            {
-                return (RegexpRule)_rule["RegexpRule"];
-            }
-            set
-            {
-                _rule["RegexpRule"] = value;
-            }
-        }
-        public ScriptExtension ScriptExtension
-        {
-            get
-            {
-                return (ScriptExtension)_rule["ScriptExtension"];
-            }
-            set
-            {
-                _rule["ScriptExtension"] = value;
-            }
-        }
+        #region モード別のルール
+        
+        public RegexpRule RegexpRule { get; set; }
+        public ScriptExtension ScriptExtension { get; set; }
+
+        #endregion モード別のルール
 
         public StatisticsGenerationRule()
         {
@@ -42,18 +38,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
             Setting = null;
             Mode = string.Empty;
             UseResourceColor = false;
+
             RegexpRule = null;
             ScriptExtension = null;
-        }
-
-        public void Apply(Statistics stats)
-        {
-            switch(Mode)
-            {
-                case "Regexp" : RegexpRule.Apply(stats); break;
-                case "Script" : ScriptExtension.Apply(stats);break;
-                default : throw new Exception(string.Format(@"統計生成ルール ""{0}"" に Mode が記述されていないか、無効なモードです。", Name));
-            }
         }
     }
 }
