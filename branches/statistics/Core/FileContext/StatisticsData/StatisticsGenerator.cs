@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using NU.OJL.MPRTOS.TLV.Core.Controls.Forms;
 using NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules;
+using System.Diagnostics;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
@@ -129,8 +130,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
                     switch (rules[tgt].Mode)
                     {
-                        case "Regexp": applyRegexRule(stats, rules[tgt].RegexpRule); break;
+                        case "Regexp": applyRegexpRule(stats, rules[tgt].RegexpRule); break;
+                        case "Script": applyScriptExtension(stats, rules[tgt].ScriptExtension);  break;
                         default: throw new StatisticsGenerateException(rules[tgt].Mode + "無効なスタイルです");
+                    }
+
+                    if (rules[tgt].UseResourceColor)
+                    {
+                        applyResourceColor(stats);
                     }
 
                     sd.Statisticses.Add(stats);
@@ -152,7 +159,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <param name="stats">統計情報を格納するオブジェクト</param>
         /// <param name="rule">"RegexpRule"のオブジェクト</param>
         /// <returns></returns>
-        private void applyRegexRule(Statistics stats, RegexpRule rule)
+        private void applyRegexpRule(Statistics stats, RegexpRule rule)
         {
             List<string> data = getTargetData(rule.Target);
             
@@ -179,6 +186,112 @@ namespace NU.OJL.MPRTOS.TLV.Core
         }
 
 
+        /// <summary>
+        /// ScriptExtensionで生成
+        /// </summary>
+        /// <param name="stats">統計情報を格納するオブジェクト(注：スクリプトで生成したオブジェクトのSettingがNullでない場合、Settingは生成したオブジェクトに置き換えられます)</param>
+        /// <param name="rule">"ScriptExtension"のオブジェクト</param>
+        private void applyScriptExtension(Statistics stats, ScriptExtension rule)
+        {
+            List<string> data = getTargetData(rule.Target);
+
+            #region StandardFrmatConverter.generateByNewRule　の一部をコピペして修正
+
+            ProcessStartInfo psi;
+            if (rule.Script != null)
+            {
+                string path = Path.GetTempFileName();
+                StreamWriter sw = new StreamWriter(new FileStream(path, FileMode.Create));
+
+                string script = rule.Script;
+                sw.Write(script);
+                sw.Close();
+                psi = new ProcessStartInfo(rule.FileName,
+                                           string.Format(rule.Arguments, path));  // Argumentsが"{0}"であれば一時ファイルを使用し、そうでなければ指定ファイルを使用する
+            }
+            else
+            {
+                psi = new ProcessStartInfo(rule.FileName, rule.Arguments);
+            }
+            psi.UseShellExecute = false;
+            psi.RedirectStandardInput = true;
+            psi.RedirectStandardOutput = true;
+            psi.RedirectStandardError = true;
+
+            Process p = new Process();
+            p.StartInfo = psi;
+            string AppPath = System.Windows.Forms.Application.StartupPath;
+            p.StartInfo.WorkingDirectory = AppPath;
+
+            string json = "";
+
+            p.Start();
+            p.StandardInput.WriteLine(_resourceData.ToJson());  // 修正：変数名をこのクラス用へ
+            p.StandardInput.WriteLine("---");
+
+            // 修正：TraceLog -> string, TraceLogData.TraceLogs -> data
+            foreach (string d in data)
+            {
+                p.StandardInput.WriteLine(d);
+            }
+
+
+            p.StandardInput.Close();
+
+            while (!(p.HasExited && p.StandardOutput.EndOfStream))
+            {
+                json += p.StandardOutput.ReadLine();
+            }
+
+            if (p.ExitCode != 0)
+            {
+                string error = "";
+                while (!p.StandardError.EndOfStream)
+                {
+                    error += p.StandardError.ReadLine() + "\n";
+                }
+                throw new Exception(error);
+            }
+            p.Close();
+
+            #endregion StandardFrmatConverter.generateByNewRule　の一部をコピペして修正
+
+            Statistics newStats = ApplicationFactory.JsonSerializer.Deserialize<Statistics>(json);
+
+
+            if (newStats.Setting != null)
+            {
+                stats.Setting = newStats.Setting;
+            }
+            stats.Series = newStats.Series;
+        }
+
+
+        /// <summary>
+        /// DataPoint.XLabel値がリソースファイルで定義されたリソース名である場合、リソースファイルで定義されたカラーをグラフ設定で使用する
+        /// </summary>
+        /// <param name="stats"></param>
+        private void applyResourceColor(Statistics stats)
+        {
+            foreach (DataPoint d in stats.Series.Points)
+            {
+                if (_resourceData.Resources.ContainsKey(d.XLabel))
+                {
+                    d.Color = _resourceData.Resources[d.XLabel].Color;
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// ルールファイルの"Target"で指定したファイルの内容を取得する
+        /// <para></para>
+        /// <para>standard: 標準形式トレースログ</para>
+        /// <para>nonstandard: 標準形式へ変換する前のログ(TLVへ入力したログ)</para>
+        /// <para>ファイルパス: 統計情報を取得するために用いるファイルのフルパス</para>
+        /// </summary>
+        /// <param name="target">"Target"に指定可能な文字列</param>
+        /// <returns>ファイルの内容</returns>
         private List<string> getTargetData(string target)
         {
             List<string> data = new List<string>();

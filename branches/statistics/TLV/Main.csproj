@@ -213,6 +213,8 @@ xcopy $(SolutionDir)sampleFiles $(TargetDir)sampleFiles /e /c /q /y /exclude:$(S
 
 if not exist $(TargetDir)statisticsGenerationRules mkdir $(TargetDir)statisticsGenerationRules
 xcopy $(SolutionDir)statisticsGenerationRules $(TargetDir)statisticsGenerationRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+if not exist $(TargetDir)statisticsGenerationScript mkdir $(TargetDir)statisticsGenerationScript
+xcopy $(SolutionDir)statisticsGenerationScript $(TargetDir)statisticsGenerationScript /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
 
 if not exist $(TargetDir)doc mkdir $(Target)doc
 copy $(SolutionDir)doc\*.pdf $(TargetDir)doc
