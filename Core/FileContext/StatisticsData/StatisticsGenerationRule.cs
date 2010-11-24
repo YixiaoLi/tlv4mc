@@ -29,6 +29,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         
         public RegexpRule RegexpRule { get; set; }
         public ScriptExtension ScriptExtension { get; set; }
+        public InputRule InputRule { get; set; }
 
         #endregion モード別のルール
 
