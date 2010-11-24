@@ -10,16 +10,18 @@
 			"MajorGridVisible":true,
 			"MinorGridVisible":true
 		},
-		"Style":"Regexp",
+		"Mode":"Regexp",
 		"RegexpRule":{
 			"Target":"nonstandard",
-			"\[\d+\] (?<task>task \d+) CPU utilization (?<per>\d+)%\." : {
-				"XLabel" : "${task}",
-				"YValue" : "${per}"
+			"Regexps":{
+				"\[\d+\] (?<task>task \d+) CPU utilization (?<per>\d+)%\." : {
+					"XLabel" : "${task}",
+					"YValue" : "${per}"
+				}
 			}
 		}
     },
-		"test3" : {
+	"test3" : {
 		"Setting":{
 			"Title":072,
 			"AxisXTitle":"xTitle",
@@ -31,12 +33,14 @@
 			"MajorGridVisible":true,
 			"MinorGridVisible":false
 		},
-		"Style":"Regexp",
+		"Mode":"Regexp",
 		"RegexpRule":{
 			"Target":"nonstandard",
-			"\[\d+\] (?<task>task \d+) CPU utilization (?<per>\d+)%\." : {
-				"XLabel" : "${task}",
-				"YValue" : "${per}"
+			"Regexps":{
+				"\[\d+\] (?<task>task \d+) CPU utilization (?<per>\d+)%\." : {
+					"XLabel" : "${task}",
+					"YValue" : "${per}"
+				}
 			}
 		}
     }

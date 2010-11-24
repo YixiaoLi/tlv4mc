@@ -7,6 +7,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using NU.OJL.MPRTOS.TLV.Core.Controls.Forms;
+using NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
@@ -72,7 +73,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             string[] rulePaths = Directory.GetFiles(ApplicationData.Setting.StatisticsGenerationRulesDirectoryPath, "*." + Properties.Resources.StatisticsGenerationRuleFileExtension);
 
-            Dictionary<string, Json> rules = new Dictionary<string, Json>(); // Key: 統計情報名、Value:生成ルールのJsonオブジェクト
+            Json jrules = Json.Object;
 
 
             // 統計生成ルールファイルを開きJsonValueでデシリアライズ
@@ -80,31 +81,34 @@ namespace NU.OJL.MPRTOS.TLV.Core
             foreach (string path in rulePaths)
             {
                 Json json = new Json().Parse(File.ReadAllText(path));
-
+                
                 // Key:統計情報名、Value:生成ルールのJsonオブジェクト
                 foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
                 {
                     if (target.Contains(j.Key))
                     {
-                        if (!rules.ContainsKey(j.Key))
+                        if (!jrules.ContainsKey(j.Key))
                         {
-                            rules.Add(j.Key, j.Value);
+                            jrules.Add(j.Key, j.Value);
                         }
                         else
                         {
                             // Key:生成ルールの各要素("Style"等)、Value:各要素の値またはオブジェクト
                             foreach (KeyValuePair<string, Json> jj in j.Value.GetKeyValuePairEnumerator())
                             {
-                                if (rules[j.Key].ContainsKey(jj.Key))
+                                if (jrules[j.Key].ContainsKey(jj.Key))
                                 {
                                     throw new StatisticsGenerateException(string.Format(@"統計情報""{0}""の生成ルールで""{1}""が複数設定されています。", j.Key, jj.Key));
                                 }
-                                rules[j.Key].Add(jj.Key, jj.Value);
+                                jrules[j.Key].Add(jj.Key, jj.Value);
                             }
                         }
                     }
                 }
             }
+
+            string d = ApplicationFactory.JsonSerializer.Serialize(jrules.Value);
+            StatisticsGenerationRuleList rules = ApplicationFactory.JsonSerializer.Deserialize<StatisticsGenerationRuleList>(d);
 
             // 統計情報の生成
             StatisticsData sd = new StatisticsData();
@@ -121,13 +125,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     }
 
                     Statistics stats = new Statistics(tgt);
-                    stats.Setting.SetData(rules[tgt]["Setting"]);
+                    stats.Setting = rules[tgt].Setting;
 
-                    switch (rules[tgt]["Style"])
+                    switch (rules[tgt].Mode)
                     {
-                        case "Regexp": applyRegexRule(stats, rules[tgt]["RegexpRule"]); break;
-                        default: throw new StatisticsGenerateException(rules[tgt]["Style"] + "無効なスタイルです");
+                        case "Regexp": applyRegexRule(stats, rules[tgt].RegexpRule); break;
+                        default: throw new StatisticsGenerateException(rules[tgt].Mode + "無効なスタイルです");
                     }
+
                     sd.Statisticses.Add(stats);
                 }
                 catch (Exception e)
@@ -144,43 +149,35 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <summary>
         /// RegexpRuleで生成
         /// </summary>
-        /// <param name="stats"></param>
-        /// <param name="rule">"RegexpRule"のJsonオブジェクト</param>
+        /// <param name="stats">統計情報を格納するオブジェクト</param>
+        /// <param name="rule">"RegexpRule"のオブジェクト</param>
         /// <returns></returns>
-        private void applyRegexRule(Statistics stats, Json rule)
+        private void applyRegexRule(Statistics stats, RegexpRule rule)
         {
-            List<string> data = getTargetData(rule["Target"]);
-
+            List<string> data = getTargetData(rule.Target);
+            
             // Key: 正規表現、Value:正規表現にマッチした場合の統計情報設定方法を記述したJsonオブジェクト
             // 複数の正規表現によってパースされることを想定している
-            foreach (KeyValuePair<string, Json> j in rule.GetKeyValuePairEnumerator())
+            foreach (KeyValuePair<string, DataPointReplacePattern> pattern in rule.Regexps)
             {
-                if (j.Key.Equals("Target")) continue;
-
+                // l:一行のログ
                 foreach (string l in data)
                 {
-                    if (Regex.IsMatch(l, j.Key))
+                    if (Regex.IsMatch(l, pattern.Key))
                     {
                         DataPoint dp = new DataPoint();
 
-                        // Key:各種設定("XValue"等)
-                        foreach (KeyValuePair<string, Json> jj in j.Value.GetKeyValuePairEnumerator())
-                        {
-                            switch (jj.Key)
-                            {
-                                case "XLabel": dp.XLabel = Regex.Replace(l, j.Key, jj.Value); break;
-                                case "XValue": dp.XValue = double.Parse(Regex.Replace(l, j.Key, jj.Value)); break;
-                                case "YValue": dp.YValue = double.Parse(Regex.Replace(l, j.Key, jj.Value)); break;
-                                case "Color": dp.Color = new Color().FromHexString(jj.Value); break;
-                                default: throw new StatisticsGenerateException(jj.Key + "という設定はありません。");
-                            }
-                        }
+                        if (!string.IsNullOrEmpty(pattern.Value.XLabel)) dp.XLabel = Regex.Replace(l, pattern.Key, pattern.Value.XLabel);
+                        if (!string.IsNullOrEmpty(pattern.Value.XValue)) dp.XValue = double.Parse(Regex.Replace(l, pattern.Key, pattern.Value.XValue));
+                        if (!string.IsNullOrEmpty(pattern.Value.YValue)) dp.YValue = double.Parse(Regex.Replace(l, pattern.Key, pattern.Value.YValue));
+                        if (!string.IsNullOrEmpty(pattern.Value.Color)) dp.Color = new Color().FromHexString(Regex.Replace(l, pattern.Key, pattern.Value.Color));
 
                         stats.Series.Points.Add(dp);
                     }
                 }
             }
         }
+
 
         private List<string> getTargetData(string target)
         {

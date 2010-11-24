@@ -7,11 +7,26 @@ using System.Drawing;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
+    /// <summary>
+    /// 統計情報の1つのデータポイントを表すクラス
+    /// </summary>
     public class DataPoint
     {
+        /// <summary>
+        /// X値のラベル　X値を文字列で表現する際に使用
+        /// </summary>
         public string XLabel { get; set; }
+        /// <summary>
+        /// Xの値
+        /// </summary>
         public double XValue { get; set; }
+        /// <summary>
+        /// Yの値
+        /// </summary>
         public double YValue { get; set; }
+        /// <summary>
+        /// グラフ上でこのデータを表す色
+        /// </summary>
         public Color? Color { get; set; }
 
         public DataPoint()
