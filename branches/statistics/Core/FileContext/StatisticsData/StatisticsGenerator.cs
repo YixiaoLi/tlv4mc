@@ -131,7 +131,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     switch (rules[tgt].Mode)
                     {
                         case "Regexp": applyRegexpRule(stats, rules[tgt].RegexpRule); break;
-                        case "Script": applyScriptExtension(stats, rules[tgt].ScriptExtension);  break;
+                        case "Script": applyScriptExtension(stats, rules[tgt].ScriptExtension); break;
+                        case "Input": applyInputRule(stats, rules[tgt].InputRule); break;
                         default: throw new StatisticsGenerateException(rules[tgt].Mode + "無効なスタイルです");
                     }
 
@@ -152,7 +153,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return sd;
         }
 
-        
+
+        #region 統計生成メソッド
+
         /// <summary>
         /// RegexpRuleで生成
         /// </summary>
@@ -161,6 +164,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <returns></returns>
         private void applyRegexpRule(Statistics stats, RegexpRule rule)
         {
+            if (rule == null
+                || rule.Target == null
+                || rule.Regexps == null)
+            {
+                throw new Exception("RegexpRuleに必要な項目が記述されていません");
+            }
+
             List<string> data = getTargetData(rule.Target);
             
             // Key: 正規表現、Value:正規表現にマッチした場合の統計情報設定方法を記述したJsonオブジェクト
@@ -185,7 +195,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
         }
 
-
         /// <summary>
         /// ScriptExtensionで生成
         /// </summary>
@@ -193,6 +202,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <param name="rule">"ScriptExtension"のオブジェクト</param>
         private void applyScriptExtension(Statistics stats, ScriptExtension rule)
         {
+            if (rule == null
+                || rule.Target == null
+                || rule.FileName == null
+                || rule.Arguments == null)
+            {
+                throw new Exception("ScriptExtensionに必要な項目が記述されていません");
+            }
+            
+
             List<string> data = getTargetData(rule.Target);
 
             #region StandardFrmatConverter.generateByNewRule　の一部をコピペして修正
@@ -266,6 +284,25 @@ namespace NU.OJL.MPRTOS.TLV.Core
             stats.Series = newStats.Series;
         }
 
+        /// <summary>
+        /// InputRuleで生成
+        /// </summary>
+        /// <param name="stats">統計情報を格納するオブジェクト(注：Name以外上書きされます)</param>
+        /// <param name="rule"></param>
+        private void applyInputRule(Statistics stats, InputRule rule)
+        {
+            if (rule == null || rule.FileName == null)
+            {
+                throw new Exception("InputRuleに必要な項目が記述されていません");
+            }
+
+            Statistics newStats = ApplicationFactory.JsonSerializer.Deserialize<GeneralNamedCollection<Statistics>>(File.ReadAllText(rule.FileName)).Single<Statistics>();
+
+            stats.Setting = newStats.Setting;
+            stats.Series = newStats.Series;
+        }
+
+        #endregion 統計生成メソッド
 
         /// <summary>
         /// DataPoint.XLabel値がリソースファイルで定義されたリソース名である場合、リソースファイルで定義されたカラーをグラフ設定で使用する
