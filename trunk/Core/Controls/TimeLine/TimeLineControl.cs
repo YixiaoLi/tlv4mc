@@ -46,7 +46,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Controls
 {
-	public partial class TimeLineControl : UserControl, ITimeLineControl
+    public partial class TimeLineControl : UserControl, ITimeLineControl
 	{
 		public enum CursorModes
 		{

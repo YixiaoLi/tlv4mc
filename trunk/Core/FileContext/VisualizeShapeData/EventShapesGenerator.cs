@@ -33,7 +33,8 @@
  *  の責任を負わない．
  *
  *  @(#) $Id$
- */﻿using System;
+ */﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -154,9 +155,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
         private void addDrawShapeByEvent(Event evnt)
         {
             if (evnt.When != null && evnt.From == null && evnt.To == null)
+            {
                 addDrawShapeFromWhenEvent(evnt);
+            }
             else if (evnt.When == null && evnt.From != null && evnt.To != null)
+            {
                 addDrawShapeFromBetweenEvent(evnt);
+            }
         }
 
         private void addDrawShapeFromBetweenEvent(Event evnt)
@@ -196,10 +201,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 {
                     if (kpv.Key != null && kpv.Value != null && log.CheckAttributeOrBehavior(kpv.Key) && kpv.Value.Contains(log.Object))
                     {
-
                         LogData fl = fromLogDic[kpv.Key];
 
-                        addDrawShape(evnt.Figures, fl, log, evnt);
+                        addDrawShape(evnt.Figures, fl, log, evnt); //flの時刻が起点 logの時刻が終点
 
                         delKeys.Add(kpv.Key);
 
@@ -232,7 +236,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     fromLogDic.Add(tmpToLog, log);
                 }
             }
-
         }
 
         private void addDrawShapeFromWhenEvent(Event evnt)
@@ -331,7 +334,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
                             string tmp = from.ToString().Replace(" ","");
                             string[] eventDetail = tmp.Split('=');
-                            if (eventDetail.Count() == 2)
+                            if ((eventDetail.Count() == 2) && (eventDetail[0].Contains(".state")))
                             {
                                 _drawShapes.Add(new EventShape(fromTime, toTime, s, evnt, eventDetail[1]));
                             }

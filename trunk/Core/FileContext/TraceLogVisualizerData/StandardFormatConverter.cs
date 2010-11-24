@@ -290,8 +290,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             double current = 0.0;
             foreach (VisualizeRule rule in this.VisualizeData.VisualizeRules)
             {
-                this._constructProgressReport((int)((current / count) * (to - from) + from),
-rule.DisplayName);
+                this._constructProgressReport((int)((current / count) * (to - from) + from),rule.DisplayName);
                 current += 1.0;
                 if (rule.IsBelongedTargetResourceType())
                 {

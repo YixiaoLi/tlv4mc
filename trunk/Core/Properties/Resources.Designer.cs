@@ -168,13 +168,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap DetailSearch1 {
-            get {
-                object obj = ResourceManager.GetObject("DetailSearch1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap Eraser {
             get {
                 object obj = ResourceManager.GetObject("Eraser", resourceCulture);

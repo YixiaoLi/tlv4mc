@@ -246,14 +246,10 @@
     </Compile>
     <Compile Include="Search\ConditionRegister.cs" />
     <Compile Include="Search\DetailSearchWithTiming.cs" />
-    <Compile Include="Search\Filters\DetailFilter.cs" />
-    <Compile Include="Search\Filters\SimpleFilter.cs" />
-    <Compile Include="Search\Filters\TimingFilter.cs" />
     <Compile Include="Search\RefiningConditionPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Search\SearchCondition.cs" />
-    <Compile Include="Search\Filters\SearchFilter.cs" />
     <Compile Include="Search\SimpleSearch.cs" />
     <Compile Include="Search\DetailSearchForm.cs">
       <SubType>Form</SubType>
@@ -415,7 +411,6 @@
     <Content Include="Resources\BackwardArrow.png" />
     <None Include="Resources\camera.png" />
     <Content Include="Resources\DetailSearch.PNG" />
-    <None Include="Resources\DetailSearch1.PNG" />
     <Content Include="Resources\Eraser.PNG" />
     <Content Include="Resources\ForwardArrow.png" />
     <Content Include="Resources\SearchWhole.PNG" />
