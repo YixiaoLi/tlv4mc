@@ -13,7 +13,33 @@
 		},
 		"Mode":"Input",
 		"InputRule":{
-			"FileName":"F:/ojl/statistics/sampleFiles/statistics/directInputStats.sta"
+			"Data":{
+			  "inputTest": {
+				"Setting": {
+				  "Title": "統計情報ファイル直接入力",
+				  "AxisXTitle": "わいじく",
+				  "AxisYTitle": "えっくすじく",
+				  "SeriesTitle": "でーた",
+				  "DefaultType": "Pie",
+				  "MajorTickMarkInterval": 1,
+				  "MinorGridVisible": false
+				},
+				"Series": {
+				  "Points": [
+					{
+					  "XLabel": "task 1",
+					  "XValue": 0,
+					  "YValue": 10
+					},
+					{
+					  "XLabel": "task 2",
+					  "XValue": 0,
+					  "YValue": 90
+					}
+				  ]
+				}
+			  }
+			}
 		}
 	}
 }

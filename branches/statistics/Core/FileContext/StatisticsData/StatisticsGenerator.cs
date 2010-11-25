@@ -341,8 +341,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 throw new Exception("InputRuleに必要な項目が記述されていません");
             }
 
-            Statistics newStats = ApplicationFactory.JsonSerializer.Deserialize<GeneralNamedCollection<Statistics>>(File.ReadAllText(rule.FileName)).Single<Statistics>();
-
+            Statistics newStats;
+            if (rule.FileName != null)
+            {
+                newStats = ApplicationFactory.JsonSerializer.Deserialize<GeneralNamedCollection<Statistics>>(File.ReadAllText(rule.FileName)).Single<Statistics>();
+            }
+            else
+            {
+                newStats = rule.Data;
+            }
             stats.Setting = newStats.Setting;
             stats.Series = newStats.Series;
         }
