@@ -79,6 +79,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
         public EventShapesGenerator(Event evnt, Resource target)
             : this(null, evnt, target) { }
 
+        private Dictionary<string, LogData> _lastLogs;
+
         private EventShapesGenerator(VisualizeRule rule, Event evnt, Resource target)
         {
             if (rule != null && rule.IsBelongedTargetResourceType() && target == null)
@@ -96,7 +98,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             _target = target;
         }
 
-        public void SetData(TraceLogData tracelogData, VisualizeData vizData, ResourceData resData)
+        public void SetData(TraceLogData tracelogData, VisualizeData vizData, ResourceData resData, Dictionary<string, LogData> lastLogs)
         {
             ClearData();
 
@@ -107,7 +109,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
             _dataSet = false;
             _logData = new LogDataEnumeable(tracelogData.LogDataBase);
             _logData.Filter(_target);
-
+            _lastLogs = lastLogs;
+            
 
             if (_rule != null && _evnt == null)
             {
@@ -194,8 +197,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             LogDataEnumeable logData = firsts + fromLogData + toLogData;
 
+            int count = 0;
             foreach (LogData log in logData)
             {
+                count++;
                 List<TraceLog> delKeys = new List<TraceLog>();
                 foreach (KeyValuePair<TraceLog, List<Resource>> kpv in toLogDic)
                 {
@@ -209,6 +214,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
                     }
                 }
+
                 foreach (TraceLog tl in delKeys)
                 {
                     toLogDic.Remove(tl);
@@ -234,6 +240,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     toLogDic.Add(tmpToLog, tmpToRes.ToList());
 
                     fromLogDic.Add(tmpToLog, log);
+                }
+
+                if (count == logData.Count()) //logがlogDataの最後の要素の場合
+                {
+                    if (_lastLogs.ContainsKey(log.Object.Name) && (log.Id == _lastLogs[log.Object.Name].Id))
+                    {
+                        LogData fl = new LogData(_tracelogData.MaxTime, log.Object);
+                        addDrawShape(evnt.Figures, log, fl, evnt); //flの時刻が起点 logの時刻が終点
+                    }
                 }
             }
         }
@@ -342,16 +357,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             {
                                 _drawShapes.Add(new EventShape(fromTime, toTime, s, evnt, null));
                             }
-
-                            /*  if(fg.Condition != null)
-                              {
-                                  string[] detailEvent = fg.Condition.Split('=');
-                                  _drawShapes.Add(new EventShape(fromTime, toTime, s, evnt, detailEvent[2]));
-                              }else
-                              {
-                                  _drawShapes.Add(new EventShape(fromTime, toTime, s, evnt, null));
-                              }
-                              */
                         }
                     }
                 }

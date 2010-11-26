@@ -56,10 +56,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		private int _progressTo = 0;
 
 		public ResourceData ResourceData { get; private set; }
-		public TraceLogData TraceLogData { get; private set; }
+        public TraceLogData TraceLogData { get; private set; }
 		public VisualizeData VisualizeData { get; private set; }
 		public SettingData SettingData { get; private set; }
         public VisualizeShapeData VisualizeShapeData { get; private set; }
+        public Dictionary<string,LogData> lastLogs { get; private set; }
 
 		public StandardFormatConverter(string resourceFilePath, string traceLogFilePath, string[] visualizeRuleFilePaths, Action<int, string> ConstructProgressReport)
 		{
@@ -91,6 +92,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             if (TraceLogData.MaxTime == TraceLogData.MinTime)
                 throw new Exception("時刻が全て同一である不正なトレースログです。");
 
+            setLastLogs();
             progressUpdate(50);
             generateData(
                () => { VisualizeShapeData = getVisualizeShapeData(50,99); },
@@ -187,13 +189,13 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		}
 		private TraceLogData getTraceLogData(string traceLogFilePath)
 		{
-           
-            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();            
-            sw.Start();
-            TraceLogData data = new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate();
+            //TraceLogData data = new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate();           
+            //System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();            
+            //sw.Start();
+            //TraceLogData data = new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate();
             //TraceLogData data = new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate2();
-            sw.Stop();
-            return data;
+            //sw.Stop();
+            return new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate();
 		}
 
 		private SettingData getSettingData()
@@ -303,7 +305,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                                 e.SetVisualizeRuleName(rule.Name);
                             }
                             var gen = new EventShapesGenerator(rule, res);
-                            gen.SetData(TraceLogData, VisualizeData, ResourceData);
+                            gen.SetData(TraceLogData, VisualizeData, ResourceData, lastLogs);
                             vizData.Add(rule, res, gen.GetEventShapes());
                         }
                         else
@@ -321,7 +323,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             e.SetVisualizeRuleName(rule.Name);
                         }
                         var gen = new EventShapesGenerator(rule);
-                        gen.SetData(TraceLogData, VisualizeData, ResourceData);
+                        gen.SetData(TraceLogData, VisualizeData, ResourceData, lastLogs);
                         vizData.Add(rule, gen.GetEventShapes());
                     }
                     else
@@ -332,6 +334,25 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
 
             return vizData;
+        }
+
+        //各リソースにおいて、最後に発生したイベントを lastLogs へ記録する
+        //チケット#156の解決に各リソースで最後に発生したイベントの情報が
+        //必要となったため、 11/25 に作成
+        private void setLastLogs()
+        {
+            lastLogs = new Dictionary<string, LogData>();
+            foreach (Resource res in ResourceData.Resources)
+            {
+                for (int i = TraceLogData.LogDataBase.Count-1; i > 0; i--)
+                {
+                    if (!res.Name.Contains("Current") && TraceLogData.LogDataBase[i].Object.Name.Equals(res.Name))
+                    {
+                        lastLogs.Add(res.Name, TraceLogData.LogDataBase[i]);
+                        break;
+                    }
+                }
+            }
         }
 	}
 
