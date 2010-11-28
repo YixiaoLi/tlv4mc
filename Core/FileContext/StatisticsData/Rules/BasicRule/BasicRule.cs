@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules
 {
@@ -36,10 +37,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules
 
     public class BaseEvent
     {
-        public string ResourceName { get; set; }
+        public List<string> ResourceName { get; set; }
         public string ResourceType { get; set; }
-         public string AttributeName { get; set; }
-        public string AttributeValue { get; set; }   // 必ずしも文字列とは限らないので要修正
+        public string AttributeName { get; set; }
+        public Json AttributeValue { get; set; }
         public string BehaviorName { get; set; }
         public string BehaviorArg { get; set; }
     }
