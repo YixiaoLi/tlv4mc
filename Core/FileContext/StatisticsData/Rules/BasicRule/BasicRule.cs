@@ -37,7 +37,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules
 
     public class BaseEvent
     {
-        public List<string> ResourceName { get; set; }
+        public List<string> ResourceNames { get; set; }
         public string ResourceType { get; set; }
         public string AttributeName { get; set; }
         public Json AttributeValue { get; set; }
