@@ -287,11 +287,57 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
         private void applyBasicRule(Statistics stats, BasicRule rule)
         {
-            Func<Resource, bool> resFilter = (r) =>
-                {
-                    return r.Type == rule.When.ResourceType;
-                };
+            if (rule.When != null && rule.From != null)
+            {
+                throw new Exception("BasicRuleにはWhen、または、FromとToの組、のどちらかしか設定できません");
+            }
+            if (rule.When == null && (rule.From == null || rule.To == null))
+            {
+                throw new Exception("BasicRuleに必要な項目が記述されていません");
+            }
 
+
+            if (rule.When != null)
+            {
+                List<string> ress = new List<string>();  // 対象とするリソース名のリスト
+
+                ress.AddRange(rule.When.ResourceNames);
+                foreach (Resource res in _resourceData.Resources.Where<Resource>((r) => { return r.Type == rule.When.ResourceType; }))
+                {
+                    ress.Add(res.Name);
+                }
+
+                Func<TraceLog, bool> logFilter;
+
+                switch (rule.Method)
+                {
+                    case BasicRuleMethod.Count:
+                        if (rule.Interval == 0)
+                        {
+                            foreach (string name in ress)
+                            {
+                                DataPoint dp = new DataPoint();
+
+                                dp.XLabel = name;
+                                dp.YValue = _traceLogData.TraceLogs.Count<TraceLog>(logFilter);
+
+                                stats.Series.Points.Add(dp);
+                            }
+                        }
+                        else
+                        {
+                            
+                        }
+                        break;
+                }
+            }
+            else if (rule.From != null && rule.To != null)
+            {
+                List<string> fromList = new List<string>();
+                List<string> toList = new List<string>();
+
+
+            }
             Func<TraceLog, bool> logFilter;
 
             
@@ -302,24 +348,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     foreach (Resource res in _resourceData.Resources.Where<Resource>(resFilter))
                     {
                         DataPoint dp = new DataPoint();
-                        if (rule.When.AttributeName != null)
-                        {
-                            logFilter = (t) =>
-                            {
-                                return t.ObjectName == res.Name
-                                    && t.Attribute == rule.When.AttributeName
-                                    && t.Value == rule.When.AttributeValue;
-                            };
-                        }
-                        else// if (rule.When.BehaviorName != null)
-                        {
-                            logFilter = (t) =>
-                            {
-                                return t.ObjectName == res.Name
-                                    && t.Behavior == rule.When.BehaviorName
-                                    && t.Arguments == rule.When.BehaviorArg;
-                            };
-                        }
+
                         dp.XLabel = res.Name;
                         dp.YValue = _traceLogData.TraceLogs.Count<TraceLog>(logFilter);
 
@@ -329,6 +358,45 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
         }
 
+        private Func<TraceLog, bool> makeEventFilter(string name, BaseEvent bEvent)
+        {
+            if (bEvent.AttributeName != null && bEvent.AttributeValue != null
+                && bEvent.BehaviorName == null)
+            {
+                return (t) =>
+                    {
+                        return t.ObjectName == name
+                            && t.Attribute == bEvent.AttributeName
+                            && t.Value == bEvent.AttributeValue;
+                    };
+            }
+            else if (bEvent.BehaviorName != null)
+            {
+                if (string.IsNullOrEmpty(bEvent.BehaviorArg))
+                {
+                    return (t) =>
+                    {
+                        return t.ObjectName == name
+                            && t.Behavior == bEvent.BehaviorName;
+                    };
+                }
+                else
+                {
+                    return (t) =>
+                    {
+                        return t.ObjectName == name
+                            && t.Behavior == bEvent.BehaviorName
+                            && t.Arguments == bEvent.BehaviorArg;
+                    };
+                }
+            }
+            else
+            {
+                throw new Exception("イベント指定に誤りがあります");
+            }
+        }
+
+        
         /// <summary>
         /// InputRuleで生成
         /// </summary>
