@@ -142,16 +142,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
             psi.RedirectStandardInput = true;
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardError = true;
+                        
+            Process p = new Process();
+
+            p.StartInfo = psi;
+            string AppPath = System.Windows.Forms.Application.StartupPath;
+            p.StartInfo.WorkingDirectory = AppPath;
+
+            TraceLogData t = new TraceLogData(_resourceData);
 
             try
             {
-                Process p = new Process();
-                p.StartInfo = psi;
-                string AppPath = System.Windows.Forms.Application.StartupPath;
-                p.StartInfo.WorkingDirectory = AppPath;
-
-                string json = "";
-
                 p.Start();
                 p.StandardInput.WriteLine(_resourceData.ToJson());
                 p.StandardInput.WriteLine("---");
@@ -164,8 +165,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
                 p.StandardInput.Close();
 
-
-                TraceLogData t = new TraceLogData(_resourceData);
+                               
                 while (!(p.HasExited && p.StandardOutput.EndOfStream))
                 {
                     t.Add(new TraceLog(p.StandardOutput.ReadLine()));
@@ -181,7 +181,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     {
                         error += p.StandardError.ReadLine() + "\n";
                     }
-                    p.Close();
                     throw new Exception(error);
                 }
             }
