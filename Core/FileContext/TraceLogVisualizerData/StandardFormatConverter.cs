@@ -227,39 +227,46 @@ namespace NU.OJL.MPRTOS.TLV.Core
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardError = true;
 
-            Process p = new Process();
-            p.StartInfo = psi;
-            string AppPath = System.Windows.Forms.Application.StartupPath;
-            p.StartInfo.WorkingDirectory = AppPath;
-
-            string json= "";
-   
-            p.Start();
-            p.StandardInput.WriteLine(this.ResourceData.ToJson());
-            p.StandardInput.WriteLine("---");
-            foreach (TraceLog log in TraceLogData.TraceLogs)
+            try
             {
-                p.StandardInput.WriteLine(log.ToString());
-            }
+                Process p = new Process();
+                p.StartInfo = psi;
+                string AppPath = System.Windows.Forms.Application.StartupPath;
+                p.StartInfo.WorkingDirectory = AppPath;
 
+                string json = "";
 
-            p.StandardInput.Close();
-
-            while (!(p.HasExited && p.StandardOutput.EndOfStream))
-            {
-                json += p.StandardOutput.ReadLine();
-            }
-
-            if (p.ExitCode != 0)
-            {
-                string error = "";
-                while (!p.StandardError.EndOfStream)
+                p.Start();
+                p.StandardInput.WriteLine(this.ResourceData.ToJson());
+                p.StandardInput.WriteLine("---");
+                foreach (TraceLog log in TraceLogData.TraceLogs)
                 {
-                    error += p.StandardError.ReadLine() + "\n";
-                } 
-                throw new Exception(error);
+                    p.StandardInput.WriteLine(log.ToString());
+                }
+
+
+                p.StandardInput.Close();
+
+                while (!(p.HasExited && p.StandardOutput.EndOfStream))
+                {
+                    json += p.StandardOutput.ReadLine();
+                }
+
+
+                if (p.ExitCode != 0)
+                {
+                    string error = "";
+                    while (!p.StandardError.EndOfStream)
+                    {
+                        error += p.StandardError.ReadLine() + "\n";
+                    }
+                    throw new Exception(error);
+                }
             }
-            p.Close();
+            finally
+            {
+                p.Close();
+            }
 
             EventShapes es = new EventShapes();
             List<EventShape> shapes = ApplicationFactory.JsonSerializer.Deserialize<List<EventShape>>(json);

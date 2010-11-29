@@ -141,22 +141,55 @@ namespace NU.OJL.MPRTOS.TLV.Core
             psi.UseShellExecute = false;
             psi.RedirectStandardInput = true;
             psi.RedirectStandardOutput = true;
+            psi.RedirectStandardError = true;
 
-            Process p = Process.Start(psi);
-            string[] logs = File.ReadAllLines(_traceLogFilePath);
+            try
+            {
+                Process p = new Process();
+                p.StartInfo = psi;
+                string AppPath = System.Windows.Forms.Application.StartupPath;
+                p.StartInfo.WorkingDirectory = AppPath;
+
+                string json = "";
+
+                p.Start();
+                p.StandardInput.WriteLine(_resourceData.ToJson());
+                p.StandardInput.WriteLine("---");
+                string[] logs = File.ReadAllLines(_traceLogFilePath);
+
+                foreach (string log in logs)
+                {
+                    p.StandardInput.WriteLine(log);
+                }
+
+                p.StandardInput.Close();
+
+
+                TraceLogData t = new TraceLogData(_resourceData);
+                while (!(p.HasExited && p.StandardOutput.EndOfStream))
+                {
+                    t.Add(new TraceLog(p.StandardOutput.ReadLine()));
+                }
+                t.LogDataBase.SetIds();
+                t.Path = this._traceLogFilePath;
+
+
+                if (p.ExitCode != 0)
+                {
+                    string error = "";
+                    while (!p.StandardError.EndOfStream)
+                    {
+                        error += p.StandardError.ReadLine() + "\n";
+                    }
+                    p.Close();
+                    throw new Exception(error);
+                }
+            }
+            finally
+            {
+                p.Close();
+            }
             
-            foreach(string log in logs){
-                p.StandardInput.WriteLine(log);
-            }
-            p.WaitForExit();
-
-
-            TraceLogData t = new TraceLogData(_resourceData);
-            while (!p.StandardOutput.EndOfStream) {
-                t.Add(new TraceLog(p.StandardOutput.ReadLine()));
-            }
-            t.LogDataBase.SetIds();
-            t.Path = this._traceLogFilePath;
             return t;
         }
 
