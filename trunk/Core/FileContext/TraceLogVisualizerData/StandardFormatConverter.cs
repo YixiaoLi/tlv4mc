@@ -227,15 +227,17 @@ namespace NU.OJL.MPRTOS.TLV.Core
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardError = true;
 
+
+            Process p = new Process();
+
+            p.StartInfo = psi;
+            string AppPath = System.Windows.Forms.Application.StartupPath;
+            p.StartInfo.WorkingDirectory = AppPath;
+
+            string json = "";
+
             try
             {
-                Process p = new Process();
-                p.StartInfo = psi;
-                string AppPath = System.Windows.Forms.Application.StartupPath;
-                p.StartInfo.WorkingDirectory = AppPath;
-
-                string json = "";
-
                 p.Start();
                 p.StandardInput.WriteLine(this.ResourceData.ToJson());
                 p.StandardInput.WriteLine("---");
