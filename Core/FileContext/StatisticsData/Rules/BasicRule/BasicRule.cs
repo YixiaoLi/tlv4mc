@@ -8,7 +8,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules
 {
     public enum BasicRuleMethod
     {
-        Count
+        Count,
+        Measure
     }
 
     public class BasicRule
@@ -43,5 +44,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules
         public Json AttributeValue { get; set; }
         public string BehaviorName { get; set; }
         public string BehaviorArg { get; set; }
+
+        public List<string> GetResourceNameList(ResourceData data)
+        {
+            List<string> result = new List<string>();
+
+            result.AddRange(ResourceNames);
+            foreach (Resource res in data.Resources.Where<Resource>((r) => { return r.Type == ResourceType; }))
+            {
+                result.Add(res.Name);
+            }
+
+            return result;
+        }
     }
 }
