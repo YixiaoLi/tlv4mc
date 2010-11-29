@@ -289,7 +289,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             if (rule.When != null && rule.From != null)
             {
-                throw new Exception("BasicRuleにはWhen、または、FromとToの組、のどちらかしか設定できません");
+                throw new Exception("BasicRuleにはWhen、または、From-Toの組、のどちらかしか設定できません");
             }
             if (rule.When == null && (rule.From == null || rule.To == null))
             {
@@ -299,14 +299,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             if (rule.When != null)
             {
-                List<string> ress = new List<string>();  // 対象とするリソース名のリスト
-
-                ress.AddRange(rule.When.ResourceNames);
-                foreach (Resource res in _resourceData.Resources.Where<Resource>((r) => { return r.Type == rule.When.ResourceType; }))
-                {
-                    ress.Add(res.Name);
-                }
-
+                List<string> ress = rule.When.GetResourceNameList(_resourceData); // 対象とするリソース名のリスト
+                
                 Func<TraceLog, bool> logFilter;
 
                 switch (rule.Method)
@@ -326,17 +320,33 @@ namespace NU.OJL.MPRTOS.TLV.Core
                         }
                         else
                         {
-                            
+                            // 系がリソースにあたるため、複数のリソースに対応するには、複数の系を一つのグラフに乗せる必要がある
+                            // 現在の仕様では、系は一つしか認めていないので一つのリソースしか乗せることができないので保留
                         }
                         break;
                 }
             }
             else if (rule.From != null && rule.To != null)
             {
-                List<string> fromList = new List<string>();
-                List<string> toList = new List<string>();
+                List<string> froms = rule.From.GetResourceNameList(_resourceData);
+                List<string> tos = rule.To.GetResourceNameList(_resourceData);
 
+                switch (rule.Method)
+                {
+                    case BasicRuleMethod.Measure:
+                        foreach (string from in froms)
+                        {
+                            // Toからみていけばいいよ
+                            foreach (string to in tos)
+                            {
 
+                            }
+                        }
+
+                    case BasicRuleMethod.Count:
+                    default:
+                        throw new Exception("From-Toの組に対して無効なMethodです");
+                }
             }
             Func<TraceLog, bool> logFilter;
 
