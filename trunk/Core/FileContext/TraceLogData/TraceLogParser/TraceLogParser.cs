@@ -423,7 +423,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Begin();
 
-            // v1.1.2現在、Valueが一番最後の要素であるため、実質全ての文字をパースしています
+            // v1.3rc現在、Valueが一番最後の要素であるため、実質全ての文字をパースしています
             var value = Many1(() => AnyCharOtherThan(' '));
 
             value.ValueValue = Result();

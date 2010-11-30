@@ -1,7 +1,7 @@
 
-	TraceLogVisualizer(TLV)（バージョン 1.2）
+	TraceLogVisualizer(TLV)（バージョン 1.3rc）
 
-					最終更新 : 2010年8月5日
+					最終更新 : 2010年11月30日
 
 ----------------------------------------------------------------------
  TraceLogVisualizer(TLV)
@@ -198,5 +198,6 @@ tlv＠nces.is.nagoya-u.ac.jp 宛にお送り下さい．
 	2010年04月06日	Release	1.1.1
 	2010年04月15日	Release	1.1.2
 	2010年08月06日	Release	1.2			機能追加
+	2010年11月30日	Release	1.3rc		機能追加
 
 以上．

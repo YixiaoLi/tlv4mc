@@ -173,7 +173,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.deleteAllMarkerButton});
             this.informationToolStrip.Location = new System.Drawing.Point(3, 0);
             this.informationToolStrip.Name = "informationToolStrip";
-            this.informationToolStrip.Size = new System.Drawing.Size(204, 25);
+            this.informationToolStrip.Size = new System.Drawing.Size(173, 25);
             this.informationToolStrip.TabIndex = 2;
             // 
             // timePerSclaeLabel
@@ -458,7 +458,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.detailSearchButton});
             this.searchToolStrip.Location = new System.Drawing.Point(3, 25);
             this.searchToolStrip.Name = "searchToolStrip";
-            this.searchToolStrip.Size = new System.Drawing.Size(348, 25);
+            this.searchToolStrip.Size = new System.Drawing.Size(685, 25);
             this.searchToolStrip.TabIndex = 2;
             // 
             // searchLabelName
@@ -561,7 +561,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             // detailSearchButton
             // 
             this.detailSearchButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.detailSearchButton.Image = ((System.Drawing.Image)(resources.GetObject("detailSearchButton.Image")));
+            this.detailSearchButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.DetailSearch;
             this.detailSearchButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.detailSearchButton.Name = "detailSearchButton";
             this.detailSearchButton.Size = new System.Drawing.Size(23, 22);
