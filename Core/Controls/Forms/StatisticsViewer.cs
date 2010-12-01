@@ -13,6 +13,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
     public partial class StatisticsViewer : Form
     {
         private Statistics _data = null;
+        private bool _existYLabel = false;
 
         public StatisticsViewer()
         {
@@ -31,9 +32,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             // コンボボックスの設定
             comboBox1.Items.AddRange( Enum.GetNames(typeof(AvailableChartType)) );
-            
-            setChartSetting();
-            setEachTypeSetting();
 
             foreach (DataPoint p in _data.Series.Points)
             {
@@ -41,6 +39,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 dp.LegendText = p.XLabel;
                 dp.AxisLabel = p.XLabel;
                 dp.XValue = p.XValue;
+                if (!_existYLabel)
+                {
+                    _existYLabel = !string.IsNullOrEmpty(p.YLabel);
+                }
                 dp.YValues[0] = p.YValue;
                 if (p.Color != null)
                 {
@@ -48,6 +50,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }
                 chart1.Series[0].Points.Add(dp);
             }
+
+            setChartSetting();
         }
 
         /// <summary>
@@ -105,10 +109,36 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             switch (chart1.Series[0].ChartType)
             {
                 case SeriesChartType.Pie:
-                    chart1.Series[0].Label = "#VALY\n" + "(#PERCENT)";
+                    if (_existYLabel)
+                    {
+                        foreach (var dp in chart1.Series[0].Points)
+                        {
+                            dp.Label = "#VALY\n(#PERCENT)";
+                        }
+                    }
+                    else
+                    {
+                        chart1.Series[0].Label = "#VALY\n(#PERCENT)";
+                    }
                     break;
+
                 default:
-                    chart1.Series[0].Label = "#VALY";
+                    if (_existYLabel)
+                    {
+                        int j = 0;
+                        for (int i = 0; i < _data.Series.Points.Count; i++)
+                        {
+                            if (_data.Series.Points[i].Visible)
+                            {
+                                chart1.Series[0].Points[j].Label = _data.Series.Points[i].YLabel;
+                                j++;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        chart1.Series[0].Label = "#VALY";
+                    }
                     break;
             }
         }

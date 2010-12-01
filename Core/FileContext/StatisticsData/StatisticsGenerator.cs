@@ -301,8 +301,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
             {
                 List<string> ress = rule.When.GetResourceNameList(_resourceData); // 対象とするリソース名のリスト
                 
-                Func<TraceLog, bool> logFilter;
-
                 switch (rule.Method)
                 {
                     case BasicRuleMethod.Count:
@@ -310,10 +308,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
                         {
                             foreach (string name in ress)
                             {
+                                Func<TraceLog, bool> logFilter = makeEventFilter(name, rule.When);
                                 DataPoint dp = new DataPoint();
 
                                 dp.XLabel = name;
-                                dp.YValue = _traceLogData.TraceLogs.Count<TraceLog>(logFilter);
+                                dp.YValue = _traceLogData.TraceLogs.Count(logFilter);
 
                                 stats.Series.Points.Add(dp);
                             }
@@ -322,56 +321,156 @@ namespace NU.OJL.MPRTOS.TLV.Core
                         {
                             // 系がリソースにあたるため、複数のリソースに対応するには、複数の系を一つのグラフに乗せる必要がある
                             // 現在の仕様では、系は一つしか認めていないので一つのリソースしか乗せることができないので保留
+                            Func<TraceLog, bool> logFilter = makeEventFilter(ress[0], rule.When);
+                            
+                            decimal from = _traceLogData.MinTime.Value - 1;
+                            decimal to = from + rule.Interval;
+
+                            while(from < _traceLogData.MaxTime.Value)
+                            {
+                                to = from + rule.Interval;
+
+                                DataPoint dp = new DataPoint();
+                                dp.XLabel = string.Format("{0}\n~{1}", from, to);
+                                dp.YValue = _traceLogData.TraceLogs
+                                    .Where(
+                                    (l) =>
+                                    {
+                                        decimal lt = l.Time.ToDecimal(_resourceData.TimeRadix);
+                                        return lt > from && lt <= to;
+                                    })
+                                    .Where(logFilter)
+                                    .Count();
+
+                                stats.Series.Points.Add(dp);
+
+                                from = to;
+                            }
+                        }
+                        break;
+                        
+                    case BasicRuleMethod.Measure:
+                        foreach (string name in ress)
+                        {
+                            Func<TraceLog, bool> logFilter = makeEventFilter(name, rule.When);
+                            var enumarator = _traceLogData.TraceLogs.Where(logFilter);
+
+                            DataPoint dp = new DataPoint();
+
+                            dp.XLabel = makeXLabelForFromTo(name, rule.When, name, rule.When);
+
+                            if (enumarator.Any())
+                            {
+                                TraceLog pre = enumarator.First();
+                                Time pTime = new Time(pre.Time, _resourceData.TimeRadix);
+
+                                double max = -1.0;             // 1組の中での最大値
+                                double min = double.MaxValue;  // 1組の中での最小値
+                                double num = 0.0;             // pre-nextの出現回数
+
+                                foreach (TraceLog next in enumarator.Skip(1))
+                                {
+                                    Time nTime = new Time(next.Time, _resourceData.TimeRadix);
+
+                                    double dis = double.Parse((nTime - pTime).Value.ToString());  // decimal -> double を無理やり行っている
+                                    max = dis > max ? dis : max;
+                                    min = dis < min ? dis : min;
+                                    num++;
+
+                                    dp.YValue += dis;
+
+                                    pTime = nTime;
+                                }
+
+                                if (num > 0)
+                                {
+                                    dp.YLabel = string.Format("total: {0:#,#.######}\n\nmax: {1:#,#.######}\nmin: {2:#,#.######}\nave: {3:#,#.######}", dp.YValue, max, min, dp.YValue / num);
+                                }
+                            }
+
+                            stats.Series.Points.Add(dp);
                         }
                         break;
                 }
             }
             else if (rule.From != null && rule.To != null)
             {
-                List<string> froms = rule.From.GetResourceNameList(_resourceData);
-                List<string> tos = rule.To.GetResourceNameList(_resourceData);
+                if (rule.From.GetResourceNameList(_resourceData).Count != rule.To.GetResourceNameList(_resourceData).Count)
+                {
+                    throw new Exception("FromとToのリソース数が違います");
+                }
 
+                // 対象とするFrom,Toの各リソース名の組のリスト
+                List<FromToPair> toFromPairs = new List<FromToPair>();
+
+                List<string> fs = rule.From.GetResourceNameList(_resourceData);
+                List<string> ts = rule.To.GetResourceNameList(_resourceData);
+
+                for(int i = 0; i < fs.Count; i++)
+                {
+                    toFromPairs.Add(new FromToPair(fs[i], ts[i]));
+                }
+
+                
                 switch (rule.Method)
                 {
                     case BasicRuleMethod.Measure:
-                        foreach (string from in froms)
+                        
+                        foreach (FromToPair p in toFromPairs)
                         {
-                            // Toからみていけばいいよ
-                            foreach (string to in tos)
-                            {
+                            Func<TraceLog, bool> fromLogFilter = makeEventFilter(p.From, rule.From);
+                            Func<TraceLog, bool> toLogFilter = makeEventFilter(p.To, rule.To);
 
+                            DataPoint dp = new DataPoint();
+                            dp.XLabel = makeXLabelForFromTo(p.From, rule.From, p.To, rule.To);
+
+                            double max = -1.0;             // 1組の中での最大値
+                            double min = double.MaxValue;  // 1組の中での最小値
+                            double num = 0.0;              // イベント出現回数
+
+                            foreach (TraceLog to in _traceLogData.TraceLogs.Where(toLogFilter))
+                            {
+                                var d = _traceLogData.TraceLogs
+                                    .Where(fromLogFilter)
+                                    .Where(t => new Time(t.Time, _resourceData.TimeRadix) < new Time(to.Time, _resourceData.TimeRadix));
+
+                                if (d.Any())
+                                {
+                                    TraceLog from = d.Last(); // 対象のtoから一番近いfromイベントを取り出す
+
+                                    Time fTime = new Time(from.Time, _resourceData.TimeRadix);
+                                    Time tTime = new Time(to.Time, _resourceData.TimeRadix);
+                                    
+                                    double dis = double.Parse((tTime - fTime).Value.ToString());  // decimal -> double を無理やり行っている
+                                    max = dis > max ? dis : max;
+                                    min = dis < min ? dis : min;
+                                    num++;
+
+                                    dp.YValue += dis;
+                                }
                             }
+
+                            if (num > 0)
+                            {
+                                dp.YLabel = string.Format("total: {0:#,#.######}\n\nmax: {1:#,#.######}\nmin: {2:#,#.######}\nave: {3:#,#.######}", dp.YValue, max, min, dp.YValue / num);
+                            }
+
+                            stats.Series.Points.Add(dp);
                         }
+                        break;
 
                     case BasicRuleMethod.Count:
                     default:
                         throw new Exception("From-Toの組に対して無効なMethodです");
                 }
             }
-            Func<TraceLog, bool> logFilter;
-
             
-            switch (rule.Method)
-            {
-                case BasicRuleMethod.Count:
-                    
-                    foreach (Resource res in _resourceData.Resources.Where<Resource>(resFilter))
-                    {
-                        DataPoint dp = new DataPoint();
-
-                        dp.XLabel = res.Name;
-                        dp.YValue = _traceLogData.TraceLogs.Count<TraceLog>(logFilter);
-
-                        stats.Series.Points.Add(dp);
-                    }
-                    break;
-            }
         }
 
         private Func<TraceLog, bool> makeEventFilter(string name, BaseEvent bEvent)
         {
-            if (bEvent.AttributeName != null && bEvent.AttributeValue != null
-                && bEvent.BehaviorName == null)
+            if (!string.IsNullOrEmpty(bEvent.AttributeName) && !string.IsNullOrEmpty(bEvent.AttributeValue)
+                && string.IsNullOrEmpty(bEvent.BehaviorName))
             {
                 return (t) =>
                     {
@@ -380,7 +479,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             && t.Value == bEvent.AttributeValue;
                     };
             }
-            else if (bEvent.BehaviorName != null)
+            else if (!string.IsNullOrEmpty(bEvent.BehaviorName))
             {
                 if (string.IsNullOrEmpty(bEvent.BehaviorArg))
                 {
@@ -406,6 +505,47 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
         }
 
+
+        private string makeXLabelForFromTo(string fname, BaseEvent fevent, string tname, BaseEvent tevent)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("From: ");
+
+            if(!string.IsNullOrEmpty(fevent.AttributeName) && !string.IsNullOrEmpty(fevent.AttributeValue)
+                && string.IsNullOrEmpty(fevent.BehaviorName))
+            {
+                    sb.Append(string.Format("{0}.{1}={2}\n", fname, fevent.AttributeName, fevent.AttributeValue));
+            }
+            else if (!string.IsNullOrEmpty(fevent.BehaviorName))
+            {
+                sb.Append(string.Format("{0}.{1}({2})\n", fname, fevent.BehaviorName, fevent.BehaviorArg));
+            }
+            else
+            {
+                throw new Exception("不正なログです");
+            }
+
+
+            sb.Append("To: ");
+
+            if (!string.IsNullOrEmpty(fevent.AttributeName) && !string.IsNullOrEmpty(fevent.AttributeValue)
+                 && string.IsNullOrEmpty(fevent.BehaviorName))
+            {
+                sb.Append(string.Format("{0}.{1}={2}", tname, tevent.AttributeName, tevent.AttributeValue));
+            }
+            else if (!string.IsNullOrEmpty(fevent.BehaviorName))
+            {
+                sb.Append(string.Format("{0}.{1}({2})", tname, tevent.BehaviorName, tevent.BehaviorArg));
+            }
+            else
+            {
+                throw new Exception("不正なログです");
+            }
+
+            return sb.ToString();
+        }
+
         
         /// <summary>
         /// InputRuleで生成
@@ -414,7 +554,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <param name="rule"></param>
         private void applyInputRule(Statistics stats, InputRule rule)
         {
-            if (rule == null || rule.FileName == null)
+            if (rule == null || (rule.FileName == null && rule.Data == null))
             {
                 throw new Exception("InputRuleに必要な項目が記述されていません");
             }
@@ -426,7 +566,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else
             {
-                newStats = rule.Data;
+                newStats = rule.Data.Single<Statistics>();
             }
             stats.Setting = newStats.Setting;
             stats.Series = newStats.Series;

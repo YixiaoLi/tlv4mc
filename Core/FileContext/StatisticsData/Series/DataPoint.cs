@@ -20,6 +20,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// Xの値
         /// </summary>
         public double XValue { get; set; }
+        public string YLabel { get; set; }
         /// <summary>
         /// Yの値
         /// </summary>
@@ -29,12 +30,16 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// </summary>
         public Color? Color { get; set; }
 
+        public bool Visible { get; set; }
+
         public DataPoint()
         {
             XLabel = string.Empty;
             XValue = 0;
+            YLabel = string.Empty;
             YValue = 0;
             Color = null;
+            Visible = true;
         }
     }
 }
