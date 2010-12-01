@@ -1,0 +1,30 @@
+[1] task 1 CPU utilization 40%.
+[2] task 2 CPU utilization 60%.
+[1926099] dispatch to task 1.
+[1926446] enter to ena_int intno=2.
+[1926624] leave from ena_int ercd=0.
+[1926926] System logging task is started on port 1.
+[1945000] enter to dly_tsk dlytim=10.
+[1945398] task 1 becomes WAITING.
+[1945560] dispatch from task 1.
+[1945707] dispatch to task 5.
+[1946412] Sample program starts (exinf = 0).
+[1946926] enter to act_tsk tskid=2.
+[1947126] task 2 becomes RUNNABLE.
+[1947315] leave from act_tsk ercd=0.
+[1947461] enter to act_tsk tskid=3.
+[1947661] task 3 becomes RUNNABLE.
+[1947850] leave from act_tsk ercd=0.
+[1947996] enter to act_tsk tskid=4.
+[1948196] task 4 becomes RUNNABLE.
+[1948385] leave from act_tsk ercd=0.
+[1948878] task 5 becomes WAITING.
+[1949040] dispatch from task 5.
+[1949187] dispatch to task 2.
+[1949367] enter to ena_tex.
+[1949548] leave from ena_tex ercd=0
+[1950218] task1 is running (001).   |
+[2136637] enter to int handler 5.
+[2136861] leave from int handler 5.
+[2363096] enter to int handler 5.
+[2363320] leave from int handler 5.

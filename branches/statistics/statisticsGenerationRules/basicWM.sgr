@@ -1,0 +1,20 @@
+﻿{
+	"basicWM" : {
+		"Setting":{
+			"Title":"基本解析モードWhenMeasure",
+			"AxisXTitle":"xTitle",
+			"AxisYTitle":"yTilte",
+			"SeriesTitle":"INH_INHNO_TIMER_target_timer_handler.enter()",
+			"DefaultType":"Column"
+		},
+		"UseResourceColor":true,
+		"Mode":"Basic",
+		"BasicRule":{
+			"Method":"Measure",
+			"When":{
+				"ResourceNames":["INH_INHNO_TIMER_target_timer_handler"],
+				"BehaviorName":"enter"
+			}
+		}
+	}
+}

@@ -1,0 +1,25 @@
+﻿{
+	"basicFTM" : {
+		"Setting":{
+			"Title":"基本解析モードFromToMeasure",
+			"AxisXTitle":"xTitle",
+			"AxisYTitle":"yTilte",
+			"DefaultType":"Bar"
+		},
+		"UseResourceColor":true,
+		"Mode":"Basic",
+		"BasicRule":{
+			"Method":"Measure",
+			"From":{
+				"ResourceType":"Task",
+				"AttributeName":"state",
+				"AttributeValue":"RUNNABLE"
+			},
+			"To":{
+				"ResourceType":"Task",
+				"AttributeName":"state",
+				"AttributeValue":"RUNNING"
+			}
+		}
+	}
+}

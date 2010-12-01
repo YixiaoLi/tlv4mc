@@ -11,6 +11,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules
         /// 統計情報ファイルのフルパス
         /// </summary>
         public string FileName { get; set; }
-        public Statistics Data { get; set; }
+        public GeneralNamedCollection<Statistics> Data { get; set; }
     }
 }
