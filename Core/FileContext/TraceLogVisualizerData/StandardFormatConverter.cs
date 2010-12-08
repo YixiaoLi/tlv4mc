@@ -130,6 +130,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 throw new Exception(exceptionMessage + "\n" + _e.Message);
             }
 		}
+
 		private ResourceData getResourceData(string resourceFilePath)
 		{
 			ResourceData resData = ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(resourceFilePath));
@@ -151,6 +152,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             resData.Path = resourceFilePath;
 			return resData;
 		}
+
 		private VisualizeData getVisualizeData(string[] visualizeRuleFilePaths)
 		{
 			VisualizeData visualizeData = new VisualizeData();
@@ -187,6 +189,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
 			return visualizeData;
 		}
+
 		private TraceLogData getTraceLogData(string traceLogFilePath)
 		{
             //TraceLogData data = new TraceLogGenerator(traceLogFilePath, ResourceData, _constructProgressReport, _progressFrom, _progressTo).Generate();           

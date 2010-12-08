@@ -100,6 +100,8 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
         public void SetData(TraceLogData tracelogData, VisualizeData vizData, ResourceData resData, Dictionary<string, LogData> lastLogs)
         {
+            // lastLogs : 各リソースで最後に起きたイベントのログ
+
             ClearData();
 
             _tracelogData = tracelogData;
@@ -209,7 +211,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
                         LogData fl = fromLogDic[kpv.Key];
 
                         addDrawShape(evnt.Figures, fl, log, evnt); //flの時刻が起点 logの時刻が終点
-
                         delKeys.Add(kpv.Key);
 
                     }
@@ -246,8 +247,14 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 {
                     if (_lastLogs.ContainsKey(log.Object.Name) && (log.Id == _lastLogs[log.Object.Name].Id))
                     {
-                        LogData fl = new LogData(_tracelogData.MaxTime, log.Object);
-                        addDrawShape(evnt.Figures, log, fl, evnt); //flの時刻が起点 logの時刻が終点
+                        LogData fl = new LogData(_tracelogData.MaxTime, log.Object); //最終イベントlogと同じイベントfl を作成し、 flの時間をログの最終時刻にしておく
+                        addDrawShape(evnt.Figures, log, fl, evnt); // log の時刻から fl の時刻まで log のイベントを可視化できる
+                    }
+                    else if (evnt.Name.Equals("runningTaskChangeEvent"))
+                    {
+                        int j = 0;
+                        //LogData fl = new LogData(_tracelogData.MaxTime, log.Object); //最終イベントlogと同じイベントfl を作成し、 flの時間をログの最終時刻にしておく
+                        //addDrawShape(evnt.Figures, log, fl, evnt); // log の時刻から fl の時刻まで log のイベントを可視化できる
                     }
                 }
             }
