@@ -47,7 +47,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     {
         protected TraceLogVisualizerData _data;
         protected int _baseConditionID;
-        private System.Drawing.Size _parentPanelSize;
+        protected System.Drawing.Size _parentPanelSize;
         protected Label _displayLabel;
         protected ComboBox _targetResourceForm;
         protected ComboBox _targetRuleForm;
@@ -58,9 +58,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         protected Button _deleteButton;
         public Button DeleteButton{ set {_deleteButton = value ;} get { return _deleteButton; }}
 
-        protected BaseConditionPanel()
-        {
-        }
 
         public BaseConditionPanel(TraceLogVisualizerData data, int parentPanelID, System.Drawing.Size parentPanelSize)
         {
@@ -70,6 +67,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _searchCondition = new SearchCondition();
             initializeComponents();
         }
+
+        protected BaseConditionPanel() //継承元以外からは呼んではいけない
+        {
+        }
+
 
         private void initializeComponents()
         {
@@ -294,13 +296,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             arrangeDropDownSize(_targetEventDetailForm);
         }
 
-         protected void changePanelSize(int width)
-         {
-             if (width > _parentPanelSize.Width)
-             {
-                 this.Width = width;
-             }
-         }
+        protected virtual void changePanelSize(int width)
+        {
+            if ((width > _parentPanelSize.Width))
+            {
+                this.Width = width;
+            }
+        }
     
 
         private void arrangeComboBoxSize(int width)
@@ -311,8 +313,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _targetEventForm.Width = boxSize;
             _targetEventDetailForm.Width = boxSize;
         }
-
-        private void arrangeLocations()
+        
+        protected virtual void arrangeLocations()
         {
             _displayLabel.Location = new System.Drawing.Point(10, 10);
             _targetResourceForm.Location = new System.Drawing.Point(_displayLabel.Location.X, _displayLabel.Location.Y + _displayLabel.Height + 1);
