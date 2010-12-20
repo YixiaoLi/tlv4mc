@@ -45,21 +45,22 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     class RefiningConditionPanel : BaseConditionPanel
     {
         private int _refiningConditionID;
-        private System.Drawing.Size _baseConditionPanelSize;
         private TextBox _timingValueBox;
         private ComboBox _timingForm;
         private Label _timingExpressionLabel;
         private Label _timeScaleLabel;
         private CheckBox _denyConditionBox;
+        private int _margin;
 
-        public RefiningConditionPanel(TraceLogVisualizerData data, int baseConditionID, int conditionID, System.Drawing.Size baseConditionPanelSize, string timeScale)
+        public RefiningConditionPanel(TraceLogVisualizerData data, int baseConditionID, int conditionID, System.Drawing.Size parentPanelSize, int margin, string timeScale)
         {
             _data = data;
             _refiningConditionID = conditionID;
             _baseConditionID = baseConditionID;
-            _baseConditionPanelSize = baseConditionPanelSize;
+            _parentPanelSize = parentPanelSize;
             _refiningConditionID = conditionID;
             _searchCondition = new SearchCondition();
+            _margin = margin;
             _timeScaleLabel = new Label();
             _timeScaleLabel.Text = timeScale;
             initializeComponents();
@@ -112,7 +113,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _timingForm.Enabled = false;
             _denyConditionBox.Checked = false;
 
-            arrangeComboBoxSize(_baseConditionPanelSize.Width);
+            arrangeComboBoxSize(_parentPanelSize.Width - _margin);
             this.arrangeLocations();
             makeResourceForm();
             this.setEventHandler();
@@ -128,7 +129,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             this.Controls.Add(_timingValueBox);
             this.Controls.Add(_timeScaleLabel);
             this.Controls.Add(_timingForm);
-            this.Size = new System.Drawing.Size(_baseConditionPanelSize.Width - 25, _timingExpressionLabel.Location.Y + _timingExpressionLabel.Height + 1);
+            this.Size = new System.Drawing.Size(_parentPanelSize.Width - _margin, _timingExpressionLabel.Location.Y + _timingExpressionLabel.Height + 1);
         }
 
         protected void setEventHandler()
@@ -177,6 +178,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             arrangeDropDownSize(_timingForm);
         }
 
+        protected override void changePanelSize(int width)
+        {
+            if ((width > _parentPanelSize.Width - _margin))
+            {
+                this.Width = width;
+            }
+        }
+
+
         private void arrangeComboBoxSize(int width)
         {
             int boxWidth = width / 6; //初期サイズを width / 6 に固定
@@ -188,7 +198,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _timingForm.Width = boxWidth;
         }
 
-        private void arrangeLocations()
+        protected override void arrangeLocations()
         {
             _displayLabel.Location = new System.Drawing.Point(10, 10);
             _targetResourceForm.Location = new System.Drawing.Point(_displayLabel.Location.X, _displayLabel.Location.Y + _displayLabel.Height + 1);

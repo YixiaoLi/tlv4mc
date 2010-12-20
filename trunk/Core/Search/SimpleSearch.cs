@@ -59,7 +59,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _condition = condition;
         }
 
-        // 簡易検索では↑の setSearchData と全く同じ動作
+        // 簡易検索では不要なコード（インタフェースを用いた弊害）
         public override void setSearchData(List<VisualizeLog> visLogs, SearchCondition condition, List<SearchCondition> refiningCondition, Boolean isAnd)
         {
             _visLogs = visLogs;

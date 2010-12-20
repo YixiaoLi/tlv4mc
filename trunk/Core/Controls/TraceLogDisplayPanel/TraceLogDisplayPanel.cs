@@ -68,8 +68,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private int _mouseDownX;
         private bool _mouseDown;
 
-        private TraceLogSearcher _searcher = null;  //簡易検索処理を行うオブジェクト
-        //private detailSearchFormOld _detailSearchPanel = null; //詳細検索ウィンドウオブジェクト
+        private TraceLogSearcher _searcher = null;  //検索処理を行うオブジェクト
         private detailSearchForm _detailSearchForm = null; //オブジェクト配置テスト用のウィンドウオブジェクト
         
 

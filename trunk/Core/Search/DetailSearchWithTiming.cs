@@ -100,7 +100,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                             break;
                         }
 
-                        if (i == _visLogs.Count - 1)
+                        if (i == _visLogs.Count - 1)//ログを全部なめても該当ログがない場合
                         {
                             matchingFlag = false;
                         }
@@ -113,16 +113,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                     if (matchingFlag)
                     {
-                        if (_isAnd) //ORの場合
-                        {
-                            return hitLog;
-                        }
-                        else //ANDの場合
+                        if (_isAnd) //ANDの場合
                         {
                             if (refiningConditionNum == _refiningConditions.Count) //全部の絞り込み条件にマッチしたとき
                             {
                                 return hitLog;
                             }
+                        }
+                        else //ORの場合
+                        {
+                            return hitLog;
                         }
                     }
                     else
@@ -301,12 +301,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 {
                     return true;
                 }
+                else
+                {
+                    return false;
+                }
             }
             else if (condition.timing.Equals("以内に発生(基準時以後)"))
             {
                 if ((Math.Abs(visLog.fromTime - normTime) <= decimal.Parse(condition.timingValue)) && (visLog.fromTime > normTime))
                 {
                     return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
             else if (condition.timing.Equals("以上前に発生"))
@@ -315,6 +323,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 {
                     return true;
                 }
+                else
+                {
+                    return false;
+                }
             }
             else if (condition.timing.Equals("以上後に発生"))
             {
@@ -322,16 +334,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 {
                     return true;
                 }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
                 return false;
             }
-
-            return true;
         }
-
-        
-        
     }
 }

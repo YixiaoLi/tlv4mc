@@ -67,6 +67,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private int _panelID = 0;
         private string _timeScale; //タイムラインの時間単位（s, ms, μsなど）
         private int _nextComponentLocationY = 0;
+        private int refiningConditionPanelMargin = 20; //絞込み条件パネルを主条件パネルに対してどれだけインデントするか
 
         public ConditionSettingPanel(TraceLogVisualizerData data, int panelID, System.Drawing.Size parentFormSize)
         {
@@ -148,8 +149,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void addRefiningConditionPanel()
         {
-            RefiningConditionPanel refiningConditionPanel = new RefiningConditionPanel(_data,  _panelID, _refiningConditionPanels.Count + 1, this.Size, _timeScale);
-            refiningConditionPanel.Location = new System.Drawing.Point(_baseConditionPanel.Location.X + 20, _nextComponentLocationY);
+            RefiningConditionPanel refiningConditionPanel = new RefiningConditionPanel(_data,  _panelID, _refiningConditionPanels.Count + 1, this.Size, refiningConditionPanelMargin,_timeScale);
+            refiningConditionPanel.Location = new System.Drawing.Point(_baseConditionPanel.Location.X + refiningConditionPanelMargin, _nextComponentLocationY);
             refiningConditionPanel.DeleteButton.Click += (o, _e) =>
             {
                 deleteRefiningCondition((int)refiningConditionPanel.getConditionID());

@@ -186,7 +186,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 foreach (ConditionSettingPanel panel in conditionSettingPanels)
                 {
                     _searcher.setSearchData(_visLogs, panel.getBaseCondition(), panel.getRefiningConditions(), panel.isAnd());
-                    //if (panel.getRefiningConditions().Count > 1) ApplicationFactory.BlackBoard.isAnd = panel.isAnd();
 
                     VisualizeLog tmpHitLog = _searcher.searchForward(ApplicationFactory.BlackBoard.CursorTime.Value);
                     if (hitLog == null) //最初のループ時の処理
