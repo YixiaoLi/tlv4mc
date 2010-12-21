@@ -48,7 +48,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
     class ConditionSettingPanel : Panel
     {
         private TraceLogVisualizerData _data = null;
-        private System.Drawing.Size _parentFormSize;
         private BaseConditionPanel _baseConditionPanel = null;
         public BaseConditionPanel baseConditionPanel { set { _baseConditionPanel = value;} get{return _baseConditionPanel;}}
         private Button _searchBackwardButton = null;
@@ -62,30 +61,32 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private RadioButton _andRadioButton = null;
         private RadioButton _orRadioButton = null;
 
-
         private List<RefiningConditionPanel> _refiningConditionPanels = null;
         private int _panelID = 0;
         private string _timeScale; //タイムラインの時間単位（s, ms, μsなど）
         private int _nextComponentLocationY = 0;
-        private int refiningConditionPanelMargin = 20; //絞込み条件パネルを主条件パネルに対してどれだけインデントするか
+        private int _refiningConditionPanelMargin = 20; //絞込み条件パネルを主条件パネルに対してどれだけインデントするか
+        private int _maxPanelWidth = 585;
+        private int _maxPanelHeight = 300;
+        private Boolean _isAlreadyMaximumSizeChanged = false;
 
-        public ConditionSettingPanel(TraceLogVisualizerData data, int panelID, System.Drawing.Size parentFormSize)
+        public ConditionSettingPanel(TraceLogVisualizerData data, int panelID)
         {
             _data = data;
-            _panelID = panelID;
-            _parentFormSize = parentFormSize;
             _timeScale = _data.ResourceData.TimeScale;
+            _panelID = panelID;
             _refiningConditionPanels = new List<RefiningConditionPanel>();
             initializeCompoent();
         }
 
         private void initializeCompoent()
         {
-            this.Width = _parentFormSize.Width;
+            this.Width = _maxPanelWidth;
+            this.Height = _maxPanelHeight;
+            this.MaximumSize = new System.Drawing.Size(_maxPanelWidth, _maxPanelHeight);
             this.AutoScroll = true;
             this.HScroll = true;
             this.BorderStyle = BorderStyle.FixedSingle;
-            this.Size = new System.Drawing.Size(575, 300);
             setBaseConditionPanel();
             setSearchButton();
             setAddRefiningConditionButton();
@@ -149,8 +150,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void addRefiningConditionPanel()
         {
-            RefiningConditionPanel refiningConditionPanel = new RefiningConditionPanel(_data,  _panelID, _refiningConditionPanels.Count + 1, this.Size, refiningConditionPanelMargin,_timeScale);
-            refiningConditionPanel.Location = new System.Drawing.Point(_baseConditionPanel.Location.X + refiningConditionPanelMargin, _nextComponentLocationY);
+            RefiningConditionPanel refiningConditionPanel = new RefiningConditionPanel(_data,  _panelID, _refiningConditionPanels.Count + 1, this.Size, _refiningConditionPanelMargin,_timeScale);
+            refiningConditionPanel.Location = new System.Drawing.Point(_baseConditionPanel.Location.X + _refiningConditionPanelMargin, _nextComponentLocationY);
             refiningConditionPanel.DeleteButton.Click += (o, _e) =>
             {
                 deleteRefiningCondition((int)refiningConditionPanel.getConditionID());
@@ -164,6 +165,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 this.Controls.Add(_andRadioButton);
                 this.Controls.Add(_orRadioButton);
+            }
+
+            if (this.VerticalScroll.Visible && !_isAlreadyMaximumSizeChanged)
+            {
+                this.MaximumSize = new System.Drawing.Size(this.MaximumSize.Width - 15, this.MaximumSize.Height);
+                _isAlreadyMaximumSizeChanged = true;
             }
         }
 
@@ -236,6 +243,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 this.Controls.Add(panel);
                 _nextComponentLocationY += panel.Height+1;
                 conditionID++;
+            }
+
+            if (!this.VerticalScroll.Visible) //垂直スクロールバーが出現していない場合
+            {
+                this.MaximumSize = new System.Drawing.Size(_maxPanelWidth ,_maxPanelHeight);
+                _isAlreadyMaximumSizeChanged = false;
             }
         }
 
