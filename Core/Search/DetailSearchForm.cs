@@ -101,14 +101,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private void addConditionSettingPanel()
         {
             this.HorizontalScroll.Value = 0;
-            ConditionSettingPanel conditionSettingPanel = new ConditionSettingPanel(_data, _nextPanelID, conditionSettingArea.Size);
+            ConditionSettingPanel conditionSettingPanel = new ConditionSettingPanel(_data, _nextPanelID);
             conditionSettingPanel.Location = new System.Drawing.Point(0, _nextPanelLocationY);
             _conditionSettingPanels.Add(conditionSettingPanel);
-            this.Height += conditionSettingPanel.Height;
+            this.Height += conditionSettingPanel.Height + 5;
             _nextPanelLocationY += conditionSettingPanel.Height + 5;
             _nextPanelID++;
             conditionSettingPanel.SizeChanged += (o, _e) =>
             {
+                if (conditionSettingArea.VerticalScroll.Visible)
+                {
+                    conditionSettingArea.VerticalScroll.Value = 0;
+                    //上記処理がないと、番号の大きい（３番目以上）基本条件のパネルで絞込み条件の削除を
+                    //行った際に、 conditionSettingAreaに出現していた垂直スクロールバーが消えてしまい、
+                    //若い番号の基本条件にもどれなくなる不具合が発生する
+
+                    conditionSettingArea.Focus();
+                }
+
                 conditionSettingArea.Controls.Clear();
                 foreach (ConditionSettingPanel panel in _conditionSettingPanels)
                 {
@@ -149,7 +159,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void deleteBaseCondition(int panelID)
         {
-            this.Focus();
+            if (_conditionSettingPanels.Count > 0)
+            {
+                _conditionSettingPanels[0].Focus();
+            }
             _conditionSettingPanels.RemoveAt(panelID-1);
             updatePanel();
         }
@@ -167,6 +180,10 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 panel.Location = new System.Drawing.Point(conditionSettingArea.Location.X, _nextPanelLocationY);
                 panel.setPanelID(_nextPanelID);
+                if (panel.Width < conditionSettingArea.Width)
+                {
+                    panel.Width = conditionSettingArea.Width - 2;
+                }
                 conditionSettingArea.Controls.Add(panel);
                 _nextPanelLocationY += panel.Height + 5;
                 _nextPanelID++;
