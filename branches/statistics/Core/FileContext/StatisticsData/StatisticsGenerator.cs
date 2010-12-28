@@ -94,7 +94,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                         }
                         else
                         {
-                            // Key:生成ルールの各要素("Style"等)、Value:各要素の値またはオブジェクト
+                            // Key:生成ルールの各要素("Mode"等)、Value:各要素の値またはオブジェクト
                             foreach (KeyValuePair<string, Json> jj in j.Value.GetKeyValuePairEnumerator())
                             {
                                 if (jrules[j.Key].ContainsKey(jj.Key))
@@ -495,7 +495,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     {
                         return t.ObjectName == name
                             && t.Behavior == bEvent.BehaviorName
-                            && t.Arguments == bEvent.BehaviorArg;
+                            && t.Arguments == bEvent.BehaviorArg;  // 引数の
                     };
                 }
             }
