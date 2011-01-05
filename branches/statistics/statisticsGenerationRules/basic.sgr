@@ -16,7 +16,7 @@
 		"BasicRule":{
 			"Method":"Count",
 			"When":{
-				"ResourceType":"Task",
+				"ResourceType":["Task"],
 				"AttributeName":"state",
 				"AttributeValue":"RUNNING"
 			}

@@ -59,35 +59,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
             MinorGridVisible = false;
         }
 
-        public void SetData(Json json)
-        {
-            // Key: 設定名("Title"等)
-            // 各設定は必ずしもJsonに記述されているわけではないため、
-            // KeyNotFoundExceptionチェックをしなくてもよいようにループで処理している
-            foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
-            {
-                switch (j.Key)
-                {
-                    case "Title": Title = j.Value; break;
-                    case "AxisXTitle": AxisXTitle = j.Value; break;
-                    case "AxisYTitle": AxisYTitle = j.Value; break;
-                    case "SeriesTitle": SeriesTitle = j.Value; break;
-                    case "DefaultType":
-                        if (!Enum.IsDefined(typeof(AvailableChartType), j.Value.ToString()))
-                        {
-                            throw new Exception(j.Value + "は利用できないグラフタイプです。");
-                        }
-                        DefaultType = (SeriesChartType)Enum.Parse(typeof(SeriesChartType), j.Value); 
-                        break;
-                    case "MajorTickMarkInterval": MajorTickMarkInterval = double.Parse(j.Value.ToString()); break;
-                    case "MinorTickMarkInterval": MinorTickMarkInterval = double.Parse(j.Value.ToString()); break;
-                    case "MajorGridVisible": MajorGridVisible = j.Value; break;
-                    case "MinorGridVisible": MinorGridVisible = j.Value; break;
-                    default: throw new Exception(j.Key + "は設定できない、または、存在しない設定です。");
-                }
-            }
-        }
-
         public string ToJson()
         {
             return ApplicationFactory.JsonSerializer.Serialize(this);
@@ -108,6 +79,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         Bar = SeriesChartType.Bar,
         Column = SeriesChartType.Column,
         Line = SeriesChartType.Line,
-        Pie = SeriesChartType.Pie
+        Pie = SeriesChartType.Pie,
+        Histogram = SeriesChartType.Column
     }
 }

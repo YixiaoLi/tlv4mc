@@ -30,8 +30,8 @@
         {
             this._dataGridView = new System.Windows.Forms.DataGridView();
             this.VisibleColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this._dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,6 +42,7 @@
             this._dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this._dataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
             this._dataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this._dataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this._dataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -70,6 +71,14 @@
             this.VisibleColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.VisibleColumn.Width = 20;
             // 
+            // NameColumn
+            // 
+            this.NameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.NameColumn.HeaderText = "統計情報名";
+            this.NameColumn.Name = "NameColumn";
+            this.NameColumn.ReadOnly = true;
+            this.NameColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -78,14 +87,6 @@
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
             this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // NameColumn
-            // 
-            this.NameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.NameColumn.HeaderText = "統計情報名";
-            this.NameColumn.Name = "NameColumn";
-            this.NameColumn.ReadOnly = true;
-            this.NameColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // StatisticsExplorer
             // 

@@ -69,6 +69,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
             {
                 _constructProgressReport(0, "統計生成ルールを読み込み中");
             }
+            if (_resourceData.StatisticsGenerationRules == null
+                || _resourceData.StatisticsGenerationRules.Count == 0)
+            {
+                return new StatisticsData();
+            }
 
             string[] target = _resourceData.StatisticsGenerationRules.ToArray();
 
@@ -125,22 +130,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                         _constructProgressReport((int)(current / max) * 10, string.Format(@"統計情報""{0}""を生成中 {1}/{2} 個目...", tgt, current, max));
                     }
 
-                    Statistics stats = new Statistics(tgt);
-                    stats.Setting = rules[tgt].Setting;
-
-                    switch (rules[tgt].Mode)
-                    {
-                        case "Regexp": applyRegexpRule(stats, rules[tgt].RegexpRule); break;
-                        case "Script": applyScriptExtension(stats, rules[tgt].ScriptExtension); break;
-                        case "Basic": applyBasicRule(stats, rules[tgt].BasicRule); break;
-                        case "Input": applyInputRule(stats, rules[tgt].InputRule); break;
-                        default: throw new StatisticsGenerateException(rules[tgt].Mode + "無効なスタイルです");
-                    }
-
-                    if (rules[tgt].UseResourceColor)
-                    {
-                        applyResourceColor(stats);
-                    }
+                    Statistics stats = Generate(rules[tgt]);                                       
 
                     sd.Statisticses.Add(stats);
                 }
@@ -154,6 +144,32 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return sd;
         }
 
+        /// <summary>
+        /// 統計生成ルールを用いて統計情報ファイルを生成する
+        /// </summary>
+        /// <param name="rule">統計生成ルール</param>
+        /// <returns>統計情報ファイル</returns>
+        public Statistics Generate(StatisticsGenerationRule rule)
+        {
+            Statistics stats = new Statistics(rule.Name);
+            stats.Setting = rule.Setting;
+
+            switch (rule.Mode)
+            {
+                case "Regexp": applyRegexpRule(stats, rule.RegexpRule); break;
+                case "Script": applyScriptExtension(stats, rule.ScriptExtension); break;
+                case "Basic": applyBasicRule(stats, rule.BasicRule); break;
+                case "Input": applyInputRule(stats, rule.InputRule); break;
+                default: throw new StatisticsGenerateException(rule.Mode + "無効なスタイルです");
+            }
+
+            if (rule.UseResourceColor)
+            {
+                applyResourceColor(stats);
+            }
+
+            return stats;
+        }
 
         #region 統計生成メソッド
 
@@ -323,21 +339,21 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             // 現在の仕様では、系は一つしか認めていないので一つのリソースしか乗せることができないので保留
                             Func<TraceLog, bool> logFilter = makeEventFilter(ress[0], rule.When);
                             
-                            decimal from = _traceLogData.MinTime.Value - 1;
-                            decimal to = from + rule.Interval;
+                            decimal from = _traceLogData.MinTime.Value;
+                            decimal to;
 
                             while(from < _traceLogData.MaxTime.Value)
                             {
                                 to = from + rule.Interval;
 
                                 DataPoint dp = new DataPoint();
-                                dp.XLabel = string.Format("{0}\n~{1}", from, to);
+                                dp.XLabel = string.Format("[{0},\n{1})", from, to);
                                 dp.YValue = _traceLogData.TraceLogs
                                     .Where(
                                     (l) =>
                                     {
                                         decimal lt = l.Time.ToDecimal(_resourceData.TimeRadix);
-                                        return lt > from && lt <= to;
+                                        return lt >= from && lt < to;
                                     })
                                     .Where(logFilter)
                                     .Count();
@@ -382,9 +398,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
                                     pTime = nTime;
                                 }
 
+                                dp.YValue = dp.YValue / num; // 平均
+
                                 if (num > 0)
                                 {
-                                    dp.YLabel = string.Format("total: {0:#,#.######}\n\nmax: {1:#,#.######}\nmin: {2:#,#.######}\nave: {3:#,#.######}", dp.YValue, max, min, dp.YValue / num);
+                                    dp.YLabel = string.Format("ave: {0:#,#.######}\n\nmax: {1:#,#.######}\nmin: {2:#,#.######}", dp.YValue, max, min);
                                 }
                             }
 
@@ -450,9 +468,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
                                 }
                             }
 
+                            dp.YValue = dp.YValue / num; // 平均
+
                             if (num > 0)
                             {
-                                dp.YLabel = string.Format("total: {0:#,#.######}\n\nmax: {1:#,#.######}\nmin: {2:#,#.######}\nave: {3:#,#.######}", dp.YValue, max, min, dp.YValue / num);
+                                dp.YLabel = string.Format("ave: {0:#,#.######}\n\nmax: {1:#,#.######}\nmin: {2:#,#.######}", dp.YValue, max, min);
                             }
 
                             stats.Series.Points.Add(dp);
