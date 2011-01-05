@@ -9,7 +9,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules
     public class BaseEvent
     {
         public List<string> ResourceNames { get; set; }
-        public string ResourceType { get; set; }
+        public List<string> ResourceType { get; set; }
         public string AttributeName { get; set; }
         public Json AttributeValue { get; set; }
         public string BehaviorName { get; set; }
@@ -18,7 +18,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules
         public BaseEvent()
         {
             ResourceNames = new List<string>();
-            ResourceType = string.Empty;
+            ResourceType = new List<string>();
             AttributeName = string.Empty;
             AttributeValue = Json.Empty;
             BehaviorName = string.Empty;
@@ -33,9 +33,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules
             {
                 result.AddRange(ResourceNames);
             }
-            foreach (Resource res in data.Resources.Where<Resource>((r) => { return r.Type == ResourceType; }))
+            foreach (string rt in ResourceType)
             {
-                result.Add(res.Name);
+                foreach (Resource res in data.Resources.Where<Resource>((r) => { return r.Type == rt && !result.Contains(r.Name); }))
+                {
+                    result.Add(res.Name);
+                }
             }
 
             return result;

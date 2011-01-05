@@ -11,12 +11,12 @@
 		"BasicRule":{
 			"Method":"Measure",
 			"From":{
-				"ResourceType":"Task",
+				"ResourceType":["Task"],
 				"AttributeName":"state",
 				"AttributeValue":"RUNNABLE"
 			},
 			"To":{
-				"ResourceType":"Task",
+				"ResourceType":["Task"],
 				"AttributeName":"state",
 				"AttributeValue":"RUNNING"
 			}

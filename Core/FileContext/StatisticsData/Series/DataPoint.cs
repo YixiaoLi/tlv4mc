@@ -20,6 +20,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// Xの値
         /// </summary>
         public double XValue { get; set; }
+        /// <summary>
+        /// Y値のラベル
+        /// </summary>
         public string YLabel { get; set; }
         /// <summary>
         /// Yの値
@@ -29,7 +32,9 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// グラフ上でこのデータを表す色
         /// </summary>
         public Color? Color { get; set; }
-
+        /// <summary>
+        /// グラフに表示するかどうか
+        /// </summary>
         public bool Visible { get; set; }
 
         public DataPoint()

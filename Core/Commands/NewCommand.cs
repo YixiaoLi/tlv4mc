@@ -120,6 +120,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
                     {
                         MessageForm mbox = new MessageForm(e.ToString(), "統計情報の生成に失敗しました");
                         mbox.ShowDialog() ;
+                        sd = new StatisticsData();
                     }
 
                     if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
