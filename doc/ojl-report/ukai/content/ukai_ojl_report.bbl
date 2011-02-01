@@ -1,0 +1,22 @@
+\begin{thebibliography}{1}
+
+\bibitem{Goto}
+後藤隼弐.
+\newblock Ojlによるトレースログ可視化ツールの開発, 2009.
+
+\bibitem{mizuno}
+水野洋樹.
+\newblock トレースログ可視化ツール(tlv)に対する機能追加とリファクタリング,
+  2010.
+
+\bibitem{yanagi}
+柳澤大祐.
+\newblock
+  トレースログ可視化ツール(tlv)に対するアプリログ機能追加とプロファイリング,
+  2010.
+
+\bibitem{Goto2}
+後藤隼弐, 本田晋也, 長尾卓哉, 高田広章.
+\newblock トレースログ可視化ツールの開発, 2009.
+
+\end{thebibliography}

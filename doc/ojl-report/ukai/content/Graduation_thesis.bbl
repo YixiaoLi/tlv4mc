@@ -1,0 +1,125 @@
+\begin{thebibliography}{10}
+
+\bibitem{bib:LanguageGrid}
+Toru Ishida.
+Language Grid: An Infrastructure for Intercultural Collaboration, 
+IEEE/IPSJ Symposium on Applications and the Internet (SAINT-06), pp.96--100, 2006.
+
+\bibitem{bib:gotou}
+Masaki Gotou, Hirofumi Yamaki, Daisuke Yanagisawa, Masamitsu Ukai,
+Masahiro Tanaka, Toru Ishida.
+Resource Sharing by Multilingual Expression Services, 
+2008 IEEE Asia-Pacific Services Computing Conference (APSCC-08), pp.470--475, 2008.
+
+\bibitem{bib:ukai}
+鵜飼真充, 竹内育大, 八槇博史.
+メタデータを用いた多言語資源相互利用の実現1,
+情報処理学会第７１回全国大会, 2009.
+to be published.
+
+\bibitem{bib:Playground}
+境 智史, 後藤 雅樹, 森本 智史, 村上 陽平, 石田 亨.
+言語グリッドプレイグラウンド:軽量の構成部品を用いた異文化コラボレーション環境，
+ヒューマンインタフェース学会論文誌「共生を目指す、共生のための、共生を支えるヒューマンインタフェース特集号」
+，to be published, 2009.
+%Satoshi Sakai, Masaki Gotou, Yohei Murakami, Satoshi Morimoto,
+%Daisuke Morita, Masahiro Tanaka and Toru Ishida, Language Grid
+%Playground: Light Weight Building Blocks for Intercultural
+%Collaboration, International Workshop on Intercultural Collaboration
+%(IWIC-09) Late Breaking Papers, 2009.
+
+\bibitem{bib:MLDI}
+宮尾 克. 多言語防災情報翻訳システムについて,
+名古屋大学情報連携基盤センターニュース, 
+Vol.4, No.3, pp191--195, 2005.
+
+\bibitem{bib:furuta}
+古田卓也, 柳澤大祐, 鵜飼真充, 八槇博史. 
+言語グリッドにおけるシステム統合のためのディレクトリ機構の実現, 
+信学技報, to be published, 2009.
+
+\bibitem{bib:RDF}
+Graham Klyne, Jeremy J. Carroll, Brian McBride. 
+Description Framework (RDF): Concepts and Abstract Syntax, 
+W3C Recommendation (2004).
+
+%\bibitem{bib:RDFS}
+%Dan Brickley, Brian McBride. Resource Description Framework Schema,
+%, W3C Recommendation (2004).
+
+\bibitem{bib:SPARQL}
+Eric Prud'hommeaux, Andy Seaborne. 
+Query Language for RDF, 
+W3C Recommendation (2008).
+
+%\bibitem{bib:AllegroGraph}
+%AllegroGraph, http://jp.franz.com/base/allegrograph.html
+%\bibitem{bib:dc}
+%D.~Core,
+%Dublin Core Metadata Initiative, 2004, http://www. dublincore. org.
+\bibitem{bib:dc}
+Dublin Core Metadata Initiative(DCMI), DCMI Metadata Terms, 2008.
+http://www.dublincore.org/documents/dcmi-terms/.
+
+\bibitem{bib:imdi}
+ISLE MetaData Initiative (IMDI), IMDI Metadata Elements for Session Descriptions,
+2003.
+
+\bibitem{bib:damsl}
+James Allen, Mark Core
+Draft of damsl: Dialogue Act Markup in Several Layers,
+DRI: Discourse Research Initiative, 1997.
+
+\bibitem{bib:fipa}
+The Foundation for Intelligent Physical Agents, FIPA Communicative Act Library Specification, 2002,
+http://www.fipa.org/specs/fipa00037.
+
+\bibitem{bib:sigslud}
+荒木雅弘, 伊藤敏彦, 熊谷智子, 石崎雅人.
+発話単位タグ標準化案の作成,
+人工知能学会誌, Vol.14, No.2, pp.251--260, 1999.
+
+%\bibitem{bib:olac}
+%S.~Bird and G.~Simons.
+%The OLAC metadata set and controlled vocabularies.
+%Proceedings of the ACL 2001 Workshop on Human Language
+%Technology and Knowledge Management-Volume 15, pp.7--18,
+%Association for Computational Linguistics Morristown, NJ, USA, 2001.
+
+%\bibitem{bib:shachi}
+%遠山仁美, 小澤俊介, 内元清貴, 松原茂樹, 井佐原均.
+%言語資源メタデータデータベースSHACHIの構築と利用,
+%全国大会講演論文集, Vol.70, No.2, pp.73--74, 2008.
+
+\bibitem{bib:Facet}
+Louis Rosenfeld, Peter Morville.
+Information Architecture for the World Wide Web, 
+Oreilly \& Associates, Inc., Sebastopol, CA, USA, 2007.
+
+\bibitem{bib:FacetForImageSearch}
+Ka-Ping Yee, Kirsten Swearingen, Kevin Li, Marti Hearst. 
+Faceted Metadata for image Search and Browsing, 
+SIGCHI Conference on Human factors in computing systems,
+, pp401--408, 2003.
+%\bibitem{bib:TestCollection1}
+%栗山和子,情報検索システムの評価 : テストコレクションを中心に,
+%社団法人情報科学技術協会雑誌「情報の科学と技術」,Vol.57, No.8, pp.378-383, 2007.
+
+\bibitem{bib:TestCollection2}
+木本 晴夫, 小川 泰嗣, 石川 徹也, 増永 良文,福島 俊一, 田中 智博, 中渡瀬 秀一, 芥子
+育雄, 豊浦 潤, 宮内 忠信, 上田 良寛, 松井 くにお, 木谷 強, 三池 誠司, 酒井 哲也,
+徳永 健伸, 鶴岡 弘, 安形 輝. 
+日本語情報検索システム評価用テストコレクションの構築, 
+情報処理学会論文誌, vol40, No.9, pp.3537--3553, 1999.
+
+\bibitem{bib:TestCollection4}
+桝井文人, 福本淳一, 加藤恒昭, 神門典子.
+質問応答システム評価用テストコレクションの構築-NTCIR QACの取り組み-, 
+第10回年次大会発表論文集, 言語処理学会, pp.313--316, 2004.
+
+\bibitem{bib:takeuti}
+竹内育大, 八槇博史, 鵜飼真充. 言語グリッドのためのメタデータオーサリング環境の開発,
+電子情報通信学会研究会, to be published, 2009.
+
+
+\end{thebibliography}

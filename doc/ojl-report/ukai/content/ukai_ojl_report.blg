@@ -1,0 +1,47 @@
+This is JBibTeX, Version 0.99c-j0.33 (sjis.euc) (Web2C 7.5.6)
+The top-level auxiliary file: ukai_ojl_report.aux
+The style file: junsrt.bst
+Reallocated wiz_functions (elt_size=4) to 3400 items from 0.
+Database file #1: ojl_report.bib
+You've used 4 entries,
+            2270 wiz_defined-function locations,
+            558 strings with 4503 characters,
+and the built_in function-call counts, 720 in all, are:
+= -- 33
+> -- 25
+< -- 0
++ -- 11
+- -- 7
+* -- 12
+:= -- 90
+add.period$ -- 8
+call.type$ -- 4
+change.case$ -- 4
+chr.to.int$ -- 0
+cite$ -- 4
+duplicate$ -- 44
+empty$ -- 97
+format.name$ -- 14
+if$ -- 172
+int.to.chr$ -- 0
+int.to.str$ -- 4
+missing$ -- 0
+newline$ -- 19
+num.names$ -- 4
+pop$ -- 48
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 40
+stack$ -- 0
+substring$ -- 0
+swap$ -- 4
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 4
+width$ -- 5
+write$ -- 34
+is.kanji.str$ -- 32

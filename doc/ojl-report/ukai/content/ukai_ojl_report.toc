@@ -1,0 +1,69 @@
+\contentsline {section}{\numberline {1}はじめに}{3}
+\contentsline {section}{\numberline {2}トレースログ可視化ツール(TLV)}{5}
+\contentsline {subsection}{\numberline {2.1}TLVにおける汎用性と拡張性}{5}
+\contentsline {subsection}{\numberline {2.2}標準形式トレースログ}{5}
+\contentsline {subsubsection}{\numberline {2.2.1}トレースログの抽象化}{5}
+\contentsline {subsubsection}{\numberline {2.2.2}標準形式トレースログの定義}{6}
+\contentsline {subsubsection}{\numberline {2.2.3}標準形式トレースログの例}{7}
+\contentsline {subsection}{\numberline {2.3}トレースログの可視化}{8}
+\contentsline {subsubsection}{\numberline {2.3.1}可視化プロセス}{8}
+\contentsline {subsubsection}{\numberline {2.3.2}変換ルール}{9}
+\contentsline {subsubsection}{\numberline {2.3.3}可視化ルール}{9}
+\contentsline {subsubsection}{\numberline {2.3.4}具体的な可視化例}{9}
+\contentsline {subsection}{\numberline {2.4}TraceLogVisualizer のその他の機能}{11}
+\contentsline {subsection}{\numberline {2.5}本OJLで追加した機能}{13}
+\contentsline {paragraph}{イベント検索機能}{13}
+\contentsline {paragraph}{スクリーンショット機能}{13}
+\contentsline {paragraph}{リソース状態の追加}{13}
+\contentsline {paragraph}{JSON Validator（開発途中）}{13}
+\contentsline {section}{\numberline {3}実績}{14}
+\contentsline {subsection}{\numberline {3.1}開発プロセス}{14}
+\contentsline {paragraph}{開発フェーズ}{14}
+\contentsline {paragraph}{本OJL以前に実施されたフェーズ}{15}
+\contentsline {paragraph}{本OJLで実施されたフェーズ}{15}
+\contentsline {subsection}{\numberline {3.2}開発スケジュール}{15}
+\contentsline {paragraph}{フェーズ5}{15}
+\contentsline {paragraph}{フェーズ6}{16}
+\contentsline {paragraph}{フェーズ7}{17}
+\contentsline {subsection}{\numberline {3.3}チケット終了率}{19}
+\contentsline {subsection}{\numberline {3.4}発表実績}{19}
+\contentsline {paragraph}{過去の発表実績}{19}
+\contentsline {paragraph}{本OJLにおける発表実績}{20}
+\contentsline {subsection}{\numberline {3.5}活用事例}{20}
+\contentsline {section}{\numberline {4}要求抽出}{21}
+\contentsline {subsection}{\numberline {4.1}ユーザからの要求抽出}{21}
+\contentsline {subsection}{\numberline {4.2}要求された機能}{21}
+\contentsline {subsubsection}{\numberline {4.2.1}検索機能}{21}
+\contentsline {subsubsection}{\numberline {4.2.2}統計情報の表示}{21}
+\contentsline {subsubsection}{\numberline {4.2.3}標準形式ログの読込み機能}{22}
+\contentsline {subsubsection}{\numberline {4.2.4}凡例表示機能}{22}
+\contentsline {subsection}{\numberline {4.3}本OJLで対応する要求}{23}
+\contentsline {section}{\numberline {5}イベント検索機能}{24}
+\contentsline {subsection}{\numberline {5.1}実現可能性の調査}{24}
+\contentsline {subsection}{\numberline {5.2}開発プロセス}{24}
+\contentsline {subsection}{\numberline {5.3}簡易イベント検索機能}{25}
+\contentsline {subsubsection}{\numberline {5.3.1}機能仕様}{25}
+\contentsline {paragraph}{検索条件}{25}
+\contentsline {paragraph}{検索操作のためのGUI}{26}
+\contentsline {subsubsection}{\numberline {5.3.2}ユースケース}{26}
+\contentsline {subsubsection}{\numberline {5.3.3}設計}{28}
+\contentsline {paragraph}{クラス設計}{28}
+\contentsline {paragraph}{シーケンス}{29}
+\contentsline {subsubsection}{\numberline {5.3.4}実装画面}{30}
+\contentsline {subsection}{\numberline {5.4}詳細イベント検索機能}{30}
+\contentsline {subsubsection}{\numberline {5.4.1}機能仕様}{30}
+\contentsline {paragraph}{検索条件}{30}
+\contentsline {paragraph}{検索操作のためのGUI}{31}
+\contentsline {subsubsection}{\numberline {5.4.2}ユースケース}{32}
+\contentsline {paragraph}{Search Operation Area におけるユースケース}{32}
+\contentsline {paragraph}{Search Condition Setting Area におけるユースケース}{32}
+\contentsline {subsubsection}{\numberline {5.4.3}設計}{34}
+\contentsline {paragraph}{クラス設計}{34}
+\contentsline {paragraph}{シーケンス}{37}
+\contentsline {subsubsection}{\numberline {5.4.4}実装画面}{39}
+\contentsline {subsection}{\numberline {5.5}考察}{39}
+\contentsline {paragraph}{タイミング検索の有用性}{39}
+\contentsline {paragraph}{設計についての考察}{40}
+\contentsline {section}{\numberline {6}おわりに}{41}
+\contentsline {subsection}{\numberline {6.1}まとめ}{41}
+\contentsline {subsection}{\numberline {6.2}所感}{42}

@@ -1,0 +1,455 @@
+This is pTeX, Version 3.1415926-p3.1.10 (sjis) (Web2C 7.5.6) (format=platex 2008.6.23)  1 FEB 2011 17:12
+**ukai_ojl_report.tex
+(./ukai_ojl_report.tex
+pLaTeX2e <2006/11/10>+0 (based on LaTeX2e <2005/12/01> patch level 0)
+Babel <v3.8j> and hyphenation patterns for english, usenglishmax, ukenglish, ba
+sque, bulgarian, coptic, welsh, czech, slovak, german, ngerman, danish, esperan
+to, spanish, catalan, galician, estonian, farsi, finnish, french, irish, greek,
+ monogreek, ancientgreek, croatian, hungarian, interlingua, ibycus, bahasa, ice
+landic, italian, latin, mongolian, dutch, norsk, polish, portuguese, pinyin, ro
+manian, russian, slovenian, samin, uppersorbian, serbian, swedish, turkish, ukr
+ainian, dumylang, nohyphenation, loaded.
+(c:/tex/share/texmf-local/tex/platex/jsclasses/jsarticle.cls
+Document Class: jsarticle 2008/02/18 okumura
+LaTeX Info: Redefining \rmfamily on input line 319.
+LaTeX Info: Redefining \sffamily on input line 322.
+LaTeX Info: Redefining \ttfamily on input line 325.
+\symmincho=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `mincho' in version `bold'
+(Font)                  JY1/mc/m/n --> JY1/gt/m/n on input line 390.
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 589.
+LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 589.
+\fullwidth=\dimen118
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 7.68799pt on input line 736.
+LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
+(Font)              scaled to size 7.68799pt on input line 736.
+\c@part=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\@abstractbox=\box41
+\c@figure=\count87
+\c@table=\count88
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\@lnumwidth=\dimen119
+\bibindent=\dimen120
+LaTeX Info: Redefining \TeX on input line 1689.
+LaTeX Info: Redefining \LaTeX on input line 1715.
+LaTeX Info: Redefining \LaTeXe on input line 1740.
+\heisei=\count89
+) (c:/tex/share/texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(c:/tex/share/texmf/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks15
+)
+(c:/tex/share/texmf/tex/latex/graphics/graphics.sty
+Package: graphics 2006/02/20 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(c:/tex/share/texmf/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(c:/tex/share/texmf/tex/latex/config/graphics.cfg)
+Package graphics Info: Driver file: dviout.def on input line 90.
+
+(c:/tex/share/texmf/tex/latex/graphics/dviout.def
+File: dviout.def 2000/5/11 Driver file of `dviout' for LaTeX2e
+))
+\Gin@req@height=\dimen121
+\Gin@req@width=\dimen122
+)
+(c:/tex/share/texmf/tex/latex209/misc/misc.sty
+\pmboffset=\dimen123
+\lineno=\count90
+)
+(c:/tex/share/texmf/tex/latex/tools/tabularx.sty
+Package: tabularx 1999/01/07 v2.07 `tabularx' package (DPC)
+
+(c:/tex/share/texmf/tex/latex/tools/array.sty
+Package: array 2005/08/23 v2.4b Tabular extension package (FMi)
+\col@sep=\dimen124
+\extrarowheight=\dimen125
+\NC@list=\toks16
+\extratabsurround=\skip43
+\backup@length=\skip44
+)
+\TX@col@width=\dimen126
+\TX@old@table=\dimen127
+\TX@old@col=\dimen128
+\TX@target=\dimen129
+\TX@delta=\dimen130
+\TX@cols=\count91
+\TX@ftn=\toks17
+)
+(c:/tex/share/texmf/tex/latex/amslatex/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip45
+
+For additional information on amsmath, use the `?' option.
+(c:/tex/share/texmf/tex/latex/amslatex/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(c:/tex/share/texmf/tex/latex/amslatex/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks18
+\ex@=\dimen131
+))
+(c:/tex/share/texmf/tex/latex/amslatex/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+LaTeX Info: Redefining \pmb on input line 66.
+\pmbraise@=\dimen132
+)
+(c:/tex/share/texmf/tex/latex/amslatex/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count92
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count93
+\leftroot@=\count94
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count95
+\DOTSCASE@=\count96
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box42
+\strutbox@=\box43
+\big@size=\dimen133
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count97
+\c@MaxMatrixCols=\count98
+\dotsspace@=\muskip10
+\c@parentequation=\count99
+\dspbrk@lvl=\count100
+\tag@help=\toks19
+\row@=\count101
+\column@=\count102
+\maxfields@=\count103
+\andhelp@=\toks20
+\eqnshift@=\dimen134
+\alignsep@=\dimen135
+\tagshift@=\dimen136
+\tagwidth@=\dimen137
+\totwidth@=\dimen138
+\lineht@=\dimen139
+\@envbody=\toks21
+\multlinegap=\skip46
+\multlinetaggap=\skip47
+\mathdisplay@stack=\toks22
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+(c:/tex/share/texmf/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2002/01/22 v2.2d
+
+(c:/tex/share/texmf/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\symAMSa=\mathgroup5
+\symAMSb=\mathgroup6
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+))
+(c:/tex/share/texmf/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen140
+)
+(c:/tex/share/texmf/tex/latex/misc/subfigure.sty
+Package: subfigure 2002/07/30 v2.1.4 subfigure package
+\subfigtopskip=\skip48
+\subfigcapskip=\skip49
+\subfigcaptopadj=\dimen141
+\subfigbottomskip=\skip50
+\subfigcapmargin=\dimen142
+\subfiglabelskip=\skip51
+\c@subfigure=\count104
+\c@lofdepth=\count105
+\c@subtable=\count106
+\c@lotdepth=\count107
+\subfig@top=\skip52
+\subfig@bottom=\skip53
+)
+(c:/tex/share/texmf/tex/platex/base/ascmac.sty
+(c:/tex/share/texmf/tex/platex/base/tascmac.sty
+\@savetbaselineshift=\dimen143
+\@saveybaselineshift=\dimen144
+\scb@x=\box44
+\scscb@x=\box45
+\@bw=\dimen145
+\@nbox=\box46
+\@nbody=\box47
+\@scw=\dimen146
+\@itemh=\dimen147
+\@iboxpos=\toks23
+\@iboxstr=\box48
+\@bwsp=\box49
+\@@bwsp=\box50
+\@bcal=\count108
+\shaderule=\dimen148
+))
+(c:/tex/share/texmf/tex/latex/misc/slashbox.sty
+slashbox style by K.Yasuoka, May 1993.
+\@slashboxa=\box51
+\@slashboxb=\box52
+\@slashboxc=\box53
+\@slashboxwd=\count109
+\@slashboxht=\count110
+\@slashsepl=\dimen149
+\@slashsepr=\dimen150
+) (./eclbkbox.sty
+\bk@bxb=\box54
+\bk@bxa=\box55
+\bk@lcnt=\count111
+) (./mymacros.sty
+(c:/tex/share/texmf/tex/latex/misc/framed.sty
+Package: framed 2003/07/21 v 0.8a: framed or shaded text with page breaks
+\FrameRule=\dimen151
+\FrameSep=\dimen152
+)
+(c:/tex/share/texmf/tex/latex/misc/fancybox.sty
+Package: fancybox 2000/09/19 1.3
+
+Style option: `fancybox' v1.3 <2000/09/19> (tvz)
+\@fancybox=\box56
+\shadowsize=\dimen153
+\@Sbox=\box57
+\do@VerbBox=\toks24
+\the@fancyput=\toks25
+\this@fancyput=\toks26
+\EndVerbatimTokens=\toks27
+\Verbatim@Outfile=\write3
+\Verbatim@Infile=\read1
+)) (./ukai_ojl_report.aux)
+\openout1 = `ukai_ojl_report.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 16.60605pt on input line 29.
+LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
+(Font)              scaled to size 16.60605pt on input line 29.
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 19.9311pt on input line 29.
+LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
+(Font)              scaled to size 19.9311pt on input line 29.
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 11.53198pt on input line 29.
+LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
+(Font)              scaled to size 11.53198pt on input line 29.
+LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
+(Font)              scaled to size 5.76599pt on input line 29.
+LaTeX Font Info:    Try loading font information for U+msa on input line 29.
+ (c:/tex/share/texmf/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 29.
+
+(c:/tex/share/texmf/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 13.83836pt on input line 29.
+LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
+(Font)              scaled to size 13.83836pt on input line 29.
+ [1
+
+]
+LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 52.
+LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 52.
+ [1]
+LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
+(Font)              scaled to size 13.83836pt on input line 57.
+LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
+(Font)              scaled to size 13.83836pt on input line 57.
+ (./ukai_ojl_report.toc
+LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
+(Font)              scaled to size 6.72699pt on input line 3.
+LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
+(Font)              scaled to size 4.805pt on input line 3.
+
+[1])
+\tf@toc=\write4
+\openout4 = `ukai_ojl_report.toc'.
+
+ [2] [3
+
+] [4]
+LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
+(Font)              scaled to size 11.53198pt on input line 132.
+LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
+(Font)              scaled to size 11.53198pt on input line 132.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 156.
+
+ (c:/tex/share/texmf/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 156.
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 156.
+LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 156.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 156.
+LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 156.
+ [5
+
+] [6]
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 8.64899pt on input line 276.
+LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
+(Font)              scaled to size 8.64899pt on input line 276.
+LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
+(Font)              scaled to size 7.68799pt on input line 280.
+LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
+(Font)              scaled to size 7.68799pt on input line 280.
+ [7]
+File: fig/section2/TLVProcess.eps Graphic file (type eps)
+
+<fig/section2/TLVProcess.eps> [8]
+File: fig/section2/ConverterRule.eps Graphic file (type eps)
+ <fig/section2/ConverterRule.eps>
+File: fig/section2/VisualizeRule.eps Graphic file (type eps)
+
+<fig/section2/VisualizeRule.eps>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[9]
+File: fig/section2/VisualizeExample.eps Graphic file (type eps)
+ <fig/section2/VisualizeExample.eps> [10]
+File: fig/section2/TLV.eps Graphic file (type eps)
+ <fig/section2/TLV.eps> [11]
+[12]
+File: fig/section2/AddedFigures.eps Graphic file (type eps)
+ <fig/section2/AddedFigures.eps> [13
+
+]
+File: fig/section3/Phase.eps Graphic file (type eps)
+ <fig/section3/Phase.eps> [14
+
+]
+[15]
+File: fig/section3/Phase5_Schedule.eps Graphic file (type eps)
+ <fig/section3/Phase5_Schedule.eps> [16]
+File: fig/section3/Phase6_Schedule.eps Graphic file (type eps)
+
+<fig/section3/Phase6_Schedule.eps> [17]
+File: fig/section3/Phase7_Schedule.eps Graphic file (type eps)
+ <fig/section3/Phase7_Schedule.eps>
+[18]
+File: fig/section3/ticket.eps Graphic file (type eps)
+ <fig/section3/ticket.eps>
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 6.72699pt on input line 674.
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 5.76599pt on input line 674.
+ [19
+
+] [20]
+File: fig/section4/FigurePattern.eps Graphic file (type eps)
+ <fig/section4/FigurePattern.eps>
+[21
+
+]
+File: fig/section4/FormalizedLogProcessor.eps Graphic file (type eps)
+ <fig/section4/FormalizedLogProcessor.eps>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[22] [23] [24
+
+]
+File: fig/section5/visrule.eps Graphic file (type eps)
+ <fig/section5/visrule.eps> [25]
+File: fig/section5/SimpleSearchUC.eps Graphic file (type eps)
+
+<fig/section5/SimpleSearchUC.eps> [26] [27]
+File: fig/section5/SimpleSearchClass.eps Graphic file (type eps)
+
+<fig/section5/SimpleSearchClass.eps> [28
+
+]
+File: fig/section5/SimpleSearchSequence.eps Graphic file (type eps)
+
+<fig/section5/SimpleSearchSequence.eps> [29]
+File: fig/section5/SimpleSearchGUI.eps Graphic file (type eps)
+
+<fig/section5/SimpleSearchGUI.eps> [30]
+File: fig/section5/Timing.eps Graphic file (type eps)
+ <fig/section5/Timing.eps> [31]
+File: fig/section5/DetailSearchUC.eps Graphic file (type eps)
+
+<fig/section5/DetailSearchUC.eps>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[32] [33]
+File: fig/section5/DetailSearchClass.eps Graphic file (type eps)
+ <fig/section5/DetailSearchClass.eps> [34]
+File: fig/section5/DetailSearchPanel.eps Graphic file (type eps)
+
+<fig/section5/DetailSearchPanel.eps>
+File: fig/section5/BaseConditionPanel.eps Graphic file (type eps)
+ <fig/section5/BaseConditionPanel.eps>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[35]
+File: fig/section5/RefiningConditionPanel.eps Graphic file (type eps)
+ <fig/section5/RefiningConditionPanel.eps> [36]
+File: fig/section5/DetailSearchSequence.eps Graphic file (type eps)
+
+<fig/section5/DetailSearchSequence.eps>
+Overfull \hbox (19.92897pt too wide) in paragraph at lines 1253--1254
+ [] 
+ []
+
+[37
+
+] [38]
+File: fig/section5/DetailSearchPanelExample.eps Graphic file (type eps)
+ <fig/section5/DetailSearchPanelExample.eps> [39
+
+]
+File: fig/section5/ApplyingDecorator.eps Graphic file (type eps)
+
+<fig/section5/ApplyingDecorator.eps> [40] [41
+
+] [42] (./ukai_ojl_report.bbl)
+[43
+
+] (./ukai_ojl_report.aux) ) 
+Here is how much of TeX's memory you used:
+ 2331 strings out of 94375
+ 27634 string characters out of 1170804
+ 85564 words of memory out of 1500000
+ 5607 multiletter control sequences out of 10000+50000
+ 20463 words of font info for 95 fonts, out of 2000000 for 2000
+ 683 hyphenation exceptions out of 8191
+ 27i,8n,24p,232b,609s stack positions out of 3000i,500n,5000p,200000b,5000s
+
+Output written on ukai_ojl_report.dvi (45 pages, 117040 bytes).
