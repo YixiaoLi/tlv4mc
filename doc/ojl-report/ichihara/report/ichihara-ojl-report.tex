@@ -1,0 +1,144 @@
+﻿\documentclass[12pt,report]{jsbook}
+\usepackage{mymacros}
+\usepackage{mymacro}
+\usepackage{okumacro}
+\usepackage{here}
+\setcounter{secnumdepth}{3}
+\usepackage{pifont} 
+
+\makeatletter
+% \def\@pdfm@dest#1{%
+  % \Hy@SaveLastskip
+  % \@pdfm@mark{dest (#1) [@thispage /\@pdfview\space @xpos @ypos null]}%
+  % \Hy@RestoreLastskip
+ % }
+\makeatother
+\pagestyle{empty}
+
+\title{
+{\LARGE\sffamily\gtfamily
+O\ \ J\ \ L\ \ 報\ \ 告\ \ 書\\
+}
+\vspace*{.6in}
+{\huge\sffamily\gtfamily
+トレースログ可視化ツール(TLV)に対する\\
+統計情報表示機能の追加\\
+}
+\vfill\vfill\vfill
+}
+\author{
+\LARGE\sffamily\gtfamily
+2009834003\ \ \ \ 市原 大輔\\
+}
+\date{
+\vfill
+\Large\sffamily\gtfamily
+愛知県立大学 大学院情報科学研究科\\[.2in]
+情報システム専攻\\[.2in]
+2011年2月
+\vfill
+}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+\pagestyle{empty}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 目次
+%-------------------------------------------------------------------------
+\pagestyle{plain} \pagenumbering{roman}
+\setcounter{page}{1}
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 本文
+%-------------------------------------------------------------------------
+\pagestyle{plain} \pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{intro.tex}
+\input{tlv.tex}
+\input{preactual.tex}
+\input{./youkyu.tex}
+\input{./youkyu_toukei.tex}
+\input{./youkyu_kousokuka.tex}
+\input{sd_d.tex}
+\input{sd_d_gra.tex}
+\input{sd_d_gen.tex}
+\input{sd_d_sav.tex}
+\input{sd_impl.tex}
+\input{sd_sample.tex}
+\input{refact.tex}
+\input{actual.tex}
+\input{owari.tex}
+
+\chapter*{謝辞}
+TLVを開発するにあたり，ご指導を頂きました名古屋大学大学院情報科学研究科
+情報システム学専攻組込みリアルタイムシステム研究室の高田広章教授
+に深く感謝致します．
+また，開発プロジェクトマネージャとして
+日頃より多くのご助言を頂きました
+愛知県立大学情報科学部情報システム学科の山本晋一郎教授，
+名古屋大学大学院情報科学研究科附属組込みシステム研究センターの
+本田晋也准教授，
+企業出身者としての立場から実践的なご意見を頂きました同研究センターの鴫原一人研究員，同研究センターの長尾卓哉研究員
+に深く感謝致します．
+
+統計情報表示機能に関して，アンケートにご協力下さいました名古屋大学大学院情報科学研究科附属込みシステム研究センターの松原豊研究員，同研究科情報システム学専攻組込みリアルタイムシステム研究室の安藤友樹氏
+に深く感謝致します．また，統計情報表示機能のレビューにご協力下さいました同研究室の佐野泰正氏に深く感謝致します．
+
+\begin{thebibliography}{99}%\addcontentlzissekiline{toc}{chapter}{\bibname}
+\bibitem{goto} 後藤隼弐 『OJLによるトレースログ可視化ツールの開発』修士論文,名古屋大学,2009
+
+\bibitem{ipsj}
+後藤隼弐,
+本田晋也,
+長尾卓哉,
+高田広章，トレースログ可視化ツールTraceLogVisualizer(TLV)，コンピュータ　ソフトウェア，Vol.27，No.4，pp.8-23，Nov　2010.
+
+\bibitem{mz} 水野洋樹『トレースログ可視化ツール(TLV)に対する機能追加とリファクタリング』OJL報告書,
+名古屋大学,2010
+
+\bibitem{dm} 柳沢大祐『トレースログ可視化ツール(TLV)に対するアプリログ機能追加とプロファイリング』OJL報告書,
+名古屋大学,2010
+
+\bibitem{JSON}
+RFC4627 The application/json Media Type for JavaScript Object Notation (JSON)，http://tools.ietf.org/html/rfc4627，最終アクセス2011年2月1日
+
+\bibitem{TOPPERS}
+TOPPERS Project，http://www.toppers.jp/，最終アクセス2011年2月1日
+
+\bibitem{itsp} OJL による最先端技術適応能力を持つIT 人材育成拠点
+の形成，http://www.ocean.is.nagoya-u.ac.jp/，最終アクセス2011年2月1日
+
+\bibitem{ojl} 小林隆志, 沢田篤史, 山本晋一郎, 野呂昌満, 阿草清滋, “On
+the Job Learning: 産学連携による新しいソフトウェア
+工学教育手法”,  電子情報通信学会信学技報SS2009-28,
+vol.109, no.170, pp.95–100 2009
+
+\bibitem{asp} TOPPERSプロジェクト／ASPカーネル，http://www.toppers.jp/asp-kernel.html，最終アクセス2011年2月1日
+
+\bibitem{fmp} TOPPERSプロジェクト／FMPカーネル，http://www.toppers.jp/fmp-kernel.html，最終アクセス2011年2月1日
+
+\bibitem{parsec}
+LukeH's WebLog : Monadic Parser Combinators using C\# 3.0,\\
+http://blogs.msdn.com/lukeh/archive/2007/08/19/monadic-parser-combinators-using-c-3-0.aspx\\
+，最終アクセス2011年2月1日
+
+\bibitem{msdn}
+.NET Framework の正規表現,\\
+http://msdn.microsoft.com/ja-jp/library/hs600312(v=VS.80).aspx
+，最終アクセス2011年2月1日
+
+\bibitem{msdncode}
+グループ化構成体,\\
+http://msdn.microsoft.com/ja-jp/library/bs2twtah\%28VS.80\%29.aspx\\
+\#BalancingGroupDefinitionExample
+，最終アクセス2011年2月1日
+
+
+
+\end{thebibliography}
+\end{document}
+

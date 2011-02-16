@@ -1,0 +1,79 @@
+\section{統計情報表示機能の使用事例}
+本節では，TOPPERS/ASPカーネル\cite{asp}のトレースログにおける統計情報表示機能の利用例を
+2通り示し，統計情報表示機能の有用性について述べる．
+
+例で使用するTOPPERS/ASPカーネルのトレースログは，TLVのパッケージ内に含まれるサンプルであるasp\_short.logである．このログのリソースファイルasp\_short.resには，タスクとして，
+LOGTASK，TASK1，TASK2，TASK3，MAIN\_TASKが定義されている．このリソースファイルに対して，
+例に示す2つの統計情報生成ルールを指定する．
+トレースログを可視化し，タスクに関してのみ表示したものを\figref{fig:aspsample}に示す．
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.6]{asp_sample.png}
+\caption{例に示すTOPPERS/ASPカーネルのトレースログasp\_short.logの可視化}
+\label{fig:aspsample}
+\end{center}
+\end{figure}
+
+
+\subsection{基本解析モードを用いた各タスクのディスパッチ回数の生成}
+TOPPERS/ASPカーネルにおける各タスクのディスパッチ回数は，タスクが実行状態(RUNNING)になるイベントを数えることで求めることができる．標準形式トレースログで表すと{\tt "Task.state=RUNNING"}であり，{\tt "Task"}の部分に各タスク名が入ったログを数えることで統計情報を生成できる．
+よって，基本解析モードを利用する場合，統計情報生成ルールファイルは\sref{sec:statsgenfile}で示した図\ref{statsGenRule}のようになる．複数の生成モードに対するルールが記述されていても，{\tt "Mode"}で{\tt "Basic"}を指定することで，基本解析モードを利用できる．このファイルに定義した統計情報生成ルール\verb|"task_dispatch_count"|を用いて統計情報を生成し，グラフ表示したものを\figref{fig:aspsampledis}に示す．グラフの色と\figref{fig:aspsample}の実行タスクのラインにある図形の色を比較すると，同じような値になっていることがわかる．これが{\tt "UseResourceColor"}を{\tt true}にしたときの動作である．\figref{fig:aspsample}の方が薄いのは，色のアルファ値が別の値に設定されているためである．
+
+この統計情報をこの機能を利用せず求める場合，\figref{fig:aspsample}の各タスクのラインに表示されている緑色の長方形が立ち上がる箇所を手作業で数えたり，トレースログに対して各タスク毎にgrepを行ったりする必要がある．さらに，統計情報をグラフ表示するためには，入手した統計情報をグラフ作成ツールへ入力する必要がある．
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.6]{aspsampledis.png}
+\caption{asp\_short.logにおける各タスクのディスパッチ回数のグラフ表示}
+\label{fig:aspsampledis}
+\end{center}
+\end{figure}
+
+\subsection{スクリプト拡張モードを用いた各タスクのCPU利用率の生成}
+TOPPERS/ASPカーネルにおける各タスクのCPU利用率は，タスクが実行状態である時間を求め，その時間をトレースログの記録時間で割ることで求めることができる．実行状態である時間は，タスクの状態が実行状態に遷移してから，他の状態に遷移するまでの時間で求めることができ，CPU利用率を出すには，その合計を求める必要がある．また，トレースログの記録時間は，トレースログの最後のログの時間から最初のログの時間を引くことで求めることができる．
+
+以上のように，様々な値を導出し，それらを演算することは，基本解析モードではサポートしない．このような複雑な計算を要する統計情報には，スクリプト拡張モードを利用する．各タスクのCPU利用率を生成して統計情報ファイルとして出力するRubyスクリプトcpu\_utilization.rbを用意し，統計情報生成ルールファイルに定義したものを図\ref{statsgenscr}に示す．このスクリプトは，汎用性を高くするため，標準形式トレースログを処理する．
+
+\begin{figure}[h]
+\begin{lstlisting}
+{
+  "cpu_utilization" : {
+    "Setting":{
+      "Title":"タスクのCPU利用率",
+      "AxisXTitle":"タスク",
+      "AxisYTitle":"割合[%]",
+      "DefaultType":"Pie"
+    },
+    "UseResourceColor":true,
+    "Mode":"Script",
+    "ScriptExtension":{
+      "Target":"standard",
+      "FileName":"c:/cygwin/bin/ruby",
+      "Arguments":"F:/TLV/statisticsGenerationScript/cpu_utilization.rb"
+    }
+  }
+}
+\end{lstlisting}
+\caption{cpu\_utilization.rbを利用した統計情報ファイルの生成}
+\label{statsgenscr}
+\end{figure}
+
+このファイルに定義した統計情報生成ルール\verb|"cpu_utilization"|を用いて統計情報を生成し，グラフ表示したものを\figref{fig:aspsamplecpu}に示す．
+値が上下2段になっているが，上の値が求めた統計情報であり，下の値が円グラフ化したときの割合を表している．このように，グラフによって，適切な表示方法をする．また，各タスクのCPU利用率を円グラフで表したのにもかかわらず，上下の値が一致しないのは，全体のアイドル時間の割合を含めていないためである．その上，LOGTASKとMAIN\_TASKの値が小さすぎて重なってしまっている．このような，グラフの種類を変更して表示したい場合，統計情報ビューアの上部にあるグラフタイプとラベリングされたコンボボックスを操作することで，グラフの種類を変更できる．横棒グラフに変更した例を\figref{fig:aspsamplebar}に示す．
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.45]{aspsamplecpu.png}
+\caption{asp\_short.logにおける各タスクのCPU利用率のグラフ表示(初期状態)}
+\label{fig:aspsamplecpu}
+\end{center}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.45]{aspsamplebar.png}
+\caption{asp\_short.logにおける各タスクのCPU利用率のグラフ表示(グラフタイプ変更後)}
+\label{fig:aspsamplebar}
+\end{center}
+\end{figure}

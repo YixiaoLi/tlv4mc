@@ -1,0 +1,724 @@
+\section{実装}\label{sec:sd_impl}
+本節では，\sref{sec:sd_d}の設計に基づいた実装について述べる．
+
+\subsection{統計情報表示機能の主なプロセス}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.6]{stats_process.png}
+\caption{統計情報表示機能の処理プロセス}
+\label{fig:sdproc}
+\end{center}
+\end{figure}
+
+統計情報表示機能は，統計情報をグラフ表示するためのファイルを生成するプロセス
+と6種類のファイルによって実現される．\figref{fig:sdproc}に統計情報表示機能の
+主なプロセスを示す．
+
+統計情報ファイルを生成するプロセスでは，統計情報生成ルールファイルに記述された統計情報生成ルールに従い，指定したソースから統計情報を取得・生成する．そして，得ら
+れた統計情報と，統計情報生成ルールに従ったグラフの設定を1つのファイルに書き込む
+，といった処理を行う．このプロセスでは，統計情報のソースとなる3つのファイル
+(変換元のトレースログ，標準形式トレースログ，トレースログ以外のファイル)
+のうちのどれか1つと，統計情報生成ルールファイル，統計情報
+の生成やグラフの設定に関係するリソースファイルが読み込まれる．
+
+\figref{fig:sdproc}では，統計情報を取得・生成するプロセスとグラフ設定を行うプロ
+セスを，統計情報ファイルを生成するプロセスのサブプロセスとして表現しているが，
+これは2つのプロセスがそれぞれ独立して動作するとは限らないことを示している．
+たとえば，統計情報を生成しつつ，各データを表す色を個別に設定するといったケー
+スが該当する．
+
+生成した統計情報ファイルは，統計情報ビューアと呼ばれる統計情報をグラフ表示す
+るためのウィンドウで利用される．また，TLVデータ内に格納することで，TLVファイ
+ルとして外部ファイルに保存でき，同じトレースログを扱う際に再度，統計情報ファ
+イルを生成しなくてもよくなる．
+
+
+\subsection{統計情報表示機能を実装したTLVの処理プロセス}
+必要な統計情報を得るためには，ユーザがTLVに統計情報生成ルールを入力する必要がある．そこでまず考えられる方法は，トレースログとリソースファイルを入力する方法と同様に，GUIで指定する方法である．しかしながら，ターゲットシステムをデバッグする際，トレースログを何度も取り直し，TLVで何度も変換・可視化処理をすることになるので，そのたびに統計情報生成ルールを入力することになる．そのため，この方法だけでは，入力作業が非効率になる．よって，まず，従来のTLVの処理プロセスで統計情報ファイル生成プロセスを実行する方法を実現する．
+
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.6]{tlv_addstats.png}
+\caption{統計情報表示機能を実装したTLVの処理プロセス}
+\label{fig:newproc}
+\end{center}
+\end{figure}
+
+従来のTLVの処理プロセスは，\sref{sec:tlv_d}で示した通り，トレースログとリソースファイルを読み込み，トレースログを標準形式トレースログへ変換し，図形データ生成するプロセスとなっている．変換と図形データ生成に使用する変換ルールと可視化ルールは，リソースファイルで定義されている．
+
+統計情報表示機能を実装したTLVの処理プロセスを\figref{fig:newproc}に示す．
+従来のプロセスにある図形データ生成プロセスの後に，統計情報表示機能の処理プロセスである
+統計情報ファイル生成プロセスを追加する形となる．入力する統計情報生成ルールをリソースファイルで定義することで，ユーザが直接入力するファイル数を増やさずに済む．また，図\ref{resChangeSample}の{\tt "StatisticsGenerationRules"}のように，他のルールと同じ指定方法にすることで，統計情報表示機能に対する学習コストを軽減する効果もある．
+
+\begin{figure}[h]
+\begin{lstlisting}
+{
+	"TimeScale" :"us",
+	"TimeRadix" :10,
+	"ConvertRules"   :["asp"],
+	"VisualizeRules" :["toppers","asp"],
+	"ResourceHeaders":["asp"],
+
+	"StatisticsGenerationRules":["task_dispatch_count"],
+
+	"Resources": {...}
+}
+\end{lstlisting}
+\caption{統計情報表示機能を利用するリソースファイルの例}
+\label{resChangeSample}
+\end{figure}
+
+
+\subsection{統計情報ファイル}
+統計情報ファイルとは，グラフの設定と統計情報が形式的に記述されたファイルのことで
+ある．TLVでは，統計情報ファイル生成プロセスで生成され，統計情報ビューアにグラフ
+を表示するときに使用する．また，ユーザは，TLVファイルを通して外部出力することにより，統計情報を数値データとして得ることができる．
+
+統計情報ファイルには，1つの統計情報に関する統計情報ファイルが記述される．統計情報ファイルの例を図\ref{statsfileformat}に示す．
+
+\begin{figure}[h]
+\begin{lstlisting}
+{
+  "task_dispatch_count": {
+    "Setting":{
+      "Title":"タスクのディスパッチ回数",
+      "AxisXTitle":"タスク",
+      "AxisYTitle":"回数",
+      "DefaultType":"Column",
+      "MajorTickMarkInterval":10.0,
+      "MinorTickMarkInterval":5.0,
+      "MajorGridVisible":true,
+      "MinorGridVisible":true
+    },
+    "Series": {
+      "Points": [
+        {
+          "XLabel": "task 1",
+          "XValue": 0,
+          "YValue": 40
+        },
+        {
+          "XLabel": "task 2",
+          "XValue": 0,
+          "YValue": 60
+        }
+      ]
+    }
+  }
+}
+\end{lstlisting}
+\caption{統計情報ファイルの例}
+\label{statsfileformat}
+\end{figure}
+
+\clearpage
+\begin{description}
+\item[\texttt{Setting}] \mbox{}
+    \vspace{-0.25zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5mm}
+    \item[説明] グラフ設定の定義
+    \item[値] オブジェクト．メンバの説明は以下の通りである．
+    
+            \begin{description}
+            {\nopagebreak
+            \item[\texttt{Title}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] グラフのタイトル．主にGUI表示に用いられる．
+                \item[値] 文字列
+                \item[省略時] 統計情報生成ルール名が適用される．
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{AxisXTitle}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] X軸のタイトル．
+                \item[値] 文字列
+                \item[省略時] 設定されない．
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{AxisYTitle}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] Y軸のタイトル．
+                \item[値] 文字列
+                \item[省略時] 設定されない．
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{DefaultType}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] 最初に表示するグラフの種類．
+                \item[値] 文字列(現在，\verb|"Pie"|：円，\verb|"Column"|：縦棒，\verb|"Bar"|：横棒，\verb|"Line"|：折れ線，\verb|"Histogram"|：ヒストグラムのいずれか)
+                \item[省略時] \verb|"Pie"|
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{MajorTickMarkInterval}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] 主目盛の間隔．
+                \item[値] 数値
+                \item[省略時] データに合わせて自動設定．
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{MinorTickMarkInterval}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] 補助目盛の間隔．
+                \item[値] 数値
+                \item[省略時] データに合わせて自動設定．
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{MajorGridVisible}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] 主目盛のグリッド線を表示するかどうか．ここで\verb|true|を指定された場合，グリッド線が表示される．
+                \item[値] 真偽値
+                \item[省略時] \verb|false|
+                \end{description}
+            }
+\clearpage
+            {\nopagebreak
+            \item[\texttt{MinorGridVisible}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] 補助目盛のグリッド線を表示するかどうか．ここで\verb|true|を指定された場合，グリッド線が表示される．
+                \item[値] 真偽値
+                \item[省略時] \verb|false|
+                \end{description}
+            }
+            \end{description}
+    \end{description}
+\item[\texttt{Series}] \mbox{}
+    \vspace{-0.25zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5mm}
+    \item[説明] 系列．
+    \item[値] オブジェクト．唯一のメンバである\verb|Point|は値としてオブジェクトの配列をとる．配列に格納されるオブジェクトはデータポイントを表す．データポイントを表すオブジェクトのメンバの説明は以下の通りである．
+    
+            \begin{description}
+            \setlength{\itemsep}{-1.5mm}
+            {\nopagebreak
+            \item[\texttt{XLabel}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] X軸に並べるデータポイントのラベル．
+                \item[値] 文字列
+                \item[省略時] 設定されない．
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{YLabel}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] データポイント上に表示するラベル．円グラフとヒストグラムで表示するときは反映されない．
+                \item[値] 文字列(次のマクロが使用可能．\verb|"#VALX"|：X値，\verb|"#VALY"|：Y値，\verb|"#PERCENT"|：系列全体に対するY値の割合，\verb|"#TOTAL"|：系列の全てのY値の合計)
+                \item[省略時] グラフに合わせて自動的に設定される．
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{XValue}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] X値．
+                \item[値] 数値
+                \item[省略時] 0
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{YValue}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] Y値．
+                \item[値] 数値
+                \item[省略時] 0
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{Color}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] グラフにプロットしたデータポイントの色．
+                \item[値] 文字列(\verb|"#AARRGGBB"|というフォーマットに従う．A：アルファ値，R：赤，G：緑，B：青とし，16進数で表現する)
+                \item[省略時] グラフライブラリの初期値に従う．
+                \end{description}
+            }
+            \end{description}
+    \end{description}
+\end{description}
+    
+\subsection{統計情報の取得・生成}
+統計情報の取得・生成は，\sref{sec:dgenw}にて，3通りの手段を考えた．それらの
+実現方法を実現し，統計情報のソースとなるファイルや用途に合わせて選択できるようした．それらの実現方法を用いて統計情報を取得・生成して統計情報ファイルを生成する手段を生成モードと呼ぶ．生成モードは，次の4種類である．
+\begin{itemize}
+\item データ読み取りモード(\sref{sec:dgenw}における実現方法1)
+\item スクリプト拡張モード(\sref{sec:dgenw}における実現方法2)
+\item 基本解析モード(\sref{sec:dgenw}における実現方法3)
+\item 統計情報ファイル入力モード
+\end{itemize}
+これらの生成モードは，統計情報生成ルールで設定する．
+
+生成モードでは，基本的に統計情報の取得・生成とデータポイントに依存するグラフ設定のみを行うが，スクリプト拡張モードと統計情報ファイル入力モードに関してはその限りではない．詳しくは，それぞれのモード説明で述べる．
+
+
+\subsubsection{データ読み取りモード}\label{sec:datin}
+\begin{description}
+\item[対象となるソースファイル] \mbox{} \\トレースログ，標準形式トレースログ，その他のファイル
+\end{description}
+データ読み取りモードとは，\sref{sec:dgenw}における実現方法1を実現する
+生成モードである．正規表現のマッチングの際に名前付きグループ化構造体を用いて部分
+文字列をキャプチャし，X値とY値を取得する．必要に応じて，グラフ上の各データの色を
+設定できるようにすることで，グラフを見やすくできるようにした．
+
+正規表現は，複数定義できるようにした．こうすることで，同じ統計情報に対して異なる表
+現がされているケースに対応でき，また，マッチングする正規表現によって異なる色を設
+定できるようになる．色の設定に関する具体的なケースは，X軸がリソースとなるときに
+リソース別に色を設定するケース，Y値がある数値以上となるデータのみをほかの色に設
+定するケースなどがある．
+
+
+\subsubsection{スクリプト拡張モード}
+\begin{description}
+\item[対象となるソースファイル] \mbox{} \\トレースログ，標準形式トレースログ，その他のファイル
+\end{description}
+スクリプト拡張モードとは，\sref{sec:dgenw}における実現方法2を実現する生成モードである．
+
+この生成モードの名前は，変換ルール，可視化ルールにおけるスクリプト拡張機能に由来
+する．名前以外にも，入出力に多少の差異がある程度で，それ以外はほぼそれらに合わせ
+た実装にした．これは，すでにある機能に合わせることで，使用方法の習得を容易にする
+ためである．また，開発の観点では保守性を高めることにつながる．
+
+主にスクリプトを利用することを想定しているので，ここではそれに従って処理プロセス
+を説明する．まず，TLVは統計情報生成ルールで指定されたスクリプト処理系とスクリプト本
+体を外部プロセスとして起動する．次に，起動した外部プロセスの標準入力に対し，リソ
+ースファイルと対象となるソースファイルを出力する．外部プロセスは，標準入力に書き
+込まれた2つのファイルを読み込んで処理を行い，標準出力に統計情報ファイルを書き込
+む．そして，TLVが外部プロセスの標準出力に書き込まれた統計情報ファイルを読み込み
+，生成モードの処理を終える．
+
+外部プロセスとして起動するアプリケーションに関しては，標準入力でリソースファイル
+と対象となるソースファイルを読み込み，標準出力に統計情報ファイルを書き込む，とい
+う定められた入出力仕様を満たしていればよい．
+
+以上のように，この生成モードでは外部プロセスから取得・生成した統計情報を統計情報
+ファイルという形で受け取る．これは，取得・生成した統計情報とデータポイントに依存
+するグラフ設定を結び付けたデータを外部プロセスから受け取りやすくするほかに，デー
+タポイントに依存しないグラフ設定も外部プロセス内で設定したいケースに対応するため
+である．例えば，目盛間隔を微調整したいケースや，\sref{sec:datin}で
+挙げた色に関するケースである．
+
+
+
+\subsubsection{基本解析モード}
+\begin{description}
+\item[対象となるソースファイル] \mbox{} \\標準形式トレースログ
+\end{description}
+基本解析モードとは，\sref{sec:dgenw}における実現方法3を実現する生成モードである．この生成モードは，ユーザが解析メソッドとそれに必要な情報を与えることで，統計情報を生成する．
+
+この生成モードが対象とするソースファイルは標準形式トレースログのみである．これは，TLVが様々なトレースログを扱えるように，トレースログを標準形式トレースログという中間形式にするので，これを利用することで汎用的な解析メソッドを単純な形で提供できるからである．様々な形式に対応したものにしてしまうと，正規表現によるマッチングが必要になる．その結果，生成モードの指定が複雑な形となるうえ，統計情報生成ルールファイルに記述する際に可読性も低くなり，この生成モードの主旨とは異なるものになってしまう．
+
+第3期OJLでは，測定したイベント間隔のカウントの実装を行っていない．実装の優先順
+位を検討したとき，実装が複雑になることが予想されたので，他の実装よりも優先順位を
+低くした．その結果，時間に余裕がなくなり，実装できなくなったためである．また，
+同様の理由でオプション設定の実装も行っていない．
+
+
+\subsubsection{統計情報ファイル入力モード}\label{sec:inputmode}
+\begin{description}
+\item[対象となるソースファイル] \mbox{} \\統計情報ファイル
+\end{description}
+統計情報ファイル入力モードとは，ユーザが何らかの方法で入手した統計情報ファイルを
+TLVに入力する生成モードである．この生成モードは，他の生成モードと違い，統計情報を取得・生成ではなく，統計情報ファイル生成プロセスの最終成果物となるファイルを取得するモードである．そのため，\sref{sec:dgenw}における実現方法を実現するものではない．
+この生成モードの発想は，統計情報の比較を行うために，以前生成した統計情報ファイルを利用する手段が求められるのではないか，という分析がもとになっている．
+
+グラフ設定は，この生成モードを指定した統計情報生成ルールの設定ではなく，入力する統計情報ファイルの設定を利用する．これは，入力する統計情報ファイルには，そ
+れに記録された統計情報をグラフとして表現する際の最適なグラフ設定がされているはず
+だからである．
+
+\subsection{統計情報生成ルールファイル}\label{sec:statsgenfile}
+統計情報生成ルールファイルには，1つ以上の統計情報生成ルールが記述される．図\ref{statsGenRule}に例を示す．統計情報生成ルールファイルは，1つのオブジェクトで構成され，
+オブジェクトのメンバに統計情報毎の統計情報生成ルールを記述する．メンバ名に統計情報生成ル
+ール名を記述し，値としてオブジェクトを与え，そのオブジェクトに統計情報生成ルールの定
+義を記述する．統計情報生成ルールの定義は，大きく分けて統計情報の取得・生成方法とグラフ設定の2つを記述することで行う．それぞれについての説明は小節で述べる．
+
+統計情報生成ルールファイルのフォーマットは，メンバ名を含め，変換・可視化ルールを参考
+にしている．こうすることで，利用方法をわかりやすくし，開発の面でも再利用が可能な
+部分を増やしている．
+
+\clearpage
+\begin{figure}
+\begin{lstlisting}
+{
+  "task_dispatch_count" : {
+    "Setting":{
+      "Title":"タスクのディスパッチ回数",
+      "AxisXTitle":"タスク",
+      "AxisYTitle":"回数",
+      "DefaultType":"Column",
+      "MajorTickMarkInterval":10.0,
+      "MinorTickMarkInterval":5.0,
+      "MajorGridVisible":true,
+      "MinorGridVisible":true
+    },
+    "UseResorceColor":true,
+    "Mode":"Basic",
+
+    "RegexpRule":{
+      "Target":"C:/data/asp/task_dispatch_count.csv",
+      "(?<task>[^,]+),\s*(?<num>\d+),\s*(?<color>\d+)" : {
+        "XLabel" : "${task}",
+        "YValue" : "${num}",
+        "Color"  : "#${color}"
+      }
+    },
+
+    "ScriptExtension":{
+      "Target":"standard",
+      "FileName":"C:/cygwin/bin/ruby.exe",
+      "Arguments":"statisticsGenerationScript/dispatch_counter.rb"
+    },
+
+    "BasicRule":{
+      "Method":"Count",
+      "When":{
+        "ResourceType":["Task"],
+        "AttributeName":"state",
+        "AttributeValue":"RUNNING"
+      }
+    },
+
+    "InputRule":{
+      "FileName":"C:/data/asp/asp_stats-task_dispatch_count.sta"
+    }
+}
+\end{lstlisting}
+\caption{統計情報生成ルールファイルの例}
+\label{statsGenRule}
+\end{figure}
+
+\clearpage
+\subsubsection{統計情報の取得・生成方法}
+統計情報の取得・生成方法の定義は，図\ref{statsGenRule}の15行目にある{\tt "Mode"}以降のもので，生成モードと生成モードの動作の定義をすることで行う．生成モードは{\tt "Mode"}で定義し，生成モードの動作の定義は図\ref{statsGenRule}の17行目以降に定義されたオブジェクトで行う．
+
+生成モードの動作の定義は，{\tt "Mode"}で定義しなかった生成モードに関する定義も
+記述しておけるようにした(省略も可能)．これにより，生成モード別に統計情報生成ルール
+を記述する必要がなくなり，グラフ設定の冗長を抑えることができる．また，1つの統計情報生成ルール内に同じ統計情報を求める生成モードを集約することで，統計情報生成ルールの管
+理が容易になる．
+
+次に，統計情報生成ルールのオブジェクトにおける統計情報の取得・生成方法の定義に関する
+メンバを説明する．
+
+\begin{description}
+\item[\texttt{Mode}] \mbox{}
+    \vspace{-0.25zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5mm}
+    \item[説明] 生成モードの定義．
+    \item[値] 文字列(\verb|"Regexp"|：データ読み取りモード，\verb|"Script"|：スクリプト拡張モード，\verb|"Basic"|：基本解析モード，\verb|"Input"|：統計情報ファイル入力モードのいずれか)
+    \item[省略時] 省略不可能．
+    \end{description}
+
+\item[\texttt{RegexpRule}] \mbox{}
+    \vspace{-0.25zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5mm}
+    \item[説明] データ読み取りモードの動作定義．
+    \item[値] オブジェクト．\texttt{Target}以外のメンバは，メンバ名に適用する正規表現，値に正規表現がマッチしたときのデータポイントの定義をオブジェクトで行う．統計情報ファイルで説明したデータポイントのオブジェクトと同じであるので，そのオブジェクトのメンバの説明は省略し，\texttt{Target}の説明のみ次に示す．
+    \item[省略時] \verb|"Mode"|で\verb|"Regexp"|と定義した場合，省略不可能．
+            \begin{description}
+            \setlength{\itemsep}{-1.5mm}
+            {\nopagebreak
+            \item[\texttt{Target}] \mbox{}
+            \vspace{-0.25zw}
+          	\begin{description}
+          	\setlength{\itemsep}{-1.5mm}
+          	\item[説明] 対象となるソースファイル．
+	        \item[値] 文字列(\verb|"standard"|：標準形式トレースログ，\verb|"nonstandard"|：変換前のトレースログ，"ファイルパス"：トレースログ以外のファイルのいずれか)
+          	\item[省略時] 省略不可能．
+          	\end{description}
+            }
+            \end{description}
+    \end{description}
+
+\item[\texttt{ScriptExtension}] \mbox{}
+    \vspace{-0.25zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5mm}
+    \item[説明] スクリプト拡張モードの動作定義．
+    \item[値] オブジェクト．オブジェクトのメンバの説明は以下の通りである．
+    \item[省略時] \verb|"Mode"|で\verb|"Script"|と定義した場合，省略不可能．
+            \begin{description}
+            \setlength{\itemsep}{-1.5mm}
+            {\nopagebreak
+            \item[\texttt{Target}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] 対象となるソースファイル．
+	            \item[値] 文字列(\verb|"standard"|：標準形式トレースログ，\verb|"nonstandard"|：変換前のトレースログ，"ファイルパス"：トレースログ以外のファイルのいずれか)
+          	    \item[省略時] 省略不可能．
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{FileName}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] 使用するスクリプト処理系またはアプリケーション．
+	            \item[値] 文字列(絶対パス，または，TLV実行ディレクトリからの相対パス)
+          	    \item[省略時] 省略不可能．
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{Arguments}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] 使用するスクリプトまたはアプリケーションの引数．
+	            \item[値] 文字列(ファイルパスの場合，絶対パス，または，TLV実行ディレクトリからの相対パス．\verb|"{0}"|とした場合，TLV内で一時ファイル名に置き換えられる．)
+          	    \item[省略時] 省略不可能．ただし，空文字列を定義することは可能．
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{Script}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] 一時ファイルに記述するスクリプト文．\verb|"FileName"|で指定したスクリプト処理系に依存する．\verb|"Arguments"|で\verb|"{0}"|としたときのみ有効．
+	            \item[値] 文字列
+          	    \item[省略時] 空文字列
+                \end{description}
+            }
+            \end{description}
+    \end{description}
+
+\item[\texttt{BasicRule}] \mbox{}
+    \vspace{-0.25zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5mm}
+    \item[説明] 基本解析モードの動作定義．
+    \item[値] オブジェクト．オブジェクトのメンバの説明は以下の通りである．
+    \item[省略時] \verb|"Mode"|で\verb|"Script"|と定義した場合，省略不可能．
+            \begin{description}
+            \setlength{\itemsep}{-1.5mm}
+            {\nopagebreak
+            \item[\texttt{Method}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] 解析メソッド．
+	            \item[値] 文字列(\verb|"Count"|：イベント
+回数のカウント，\verb|"Measure"|：イベント間隔の測定のいずれか)
+          	    \item[省略時] 省略不可能．
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{When}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] 対象となるイベント．ある1つのイベントのみを対象としたいときに定義する．よって，\verb|From|，\verb|To|とは同時に定義できない．
+	            \item[値] オブジェクト．オブジェクトはイベントを表し，メンバはイベントを構成する要素でできている．オブジェクトのメンバの説明は以下の通りである．
+          	    \item[省略時] \verb|From|，\verb|To|が定義されていない場合，省略不可能．
+
+
+	            \begin{description}
+	            \setlength{\itemsep}{-1.5mm}
+	            {\nopagebreak
+	            \item[\texttt{ResourceType}] \mbox{}
+	            \vspace{-0.25zw}
+					\begin{description}
+					\setlength{\itemsep}{-1.5mm}
+					\item[説明] 対象となるリソースタイプ．定義されたリソースタイプに属するリソースを対象とする．
+					\item[値] 文字列の配列
+					\item[省略時] \verb|ResourceNames|が定義されていない場合，省略不可能．
+					\end{description}
+				}{\nopagebreak
+				\item[\texttt{ResourceNames}] \mbox{}
+				\vspace{-0.25zw}
+					\begin{description}
+					\setlength{\itemsep}{-1.5mm}
+					\item[説明] 対象となるリソースの名前．
+					\item[値] 文字列の配列
+					\item[省略時] \verb|ResourceType|が定義されていない場合，省略不可能．
+					\end{description}
+				}{\nopagebreak
+				\item[\texttt{AttributeName}] \mbox{}
+				\vspace{-0.25zw}
+					\begin{description}
+					\setlength{\itemsep}{-1.5mm}
+					\item[説明] 属性の名前．属性の変化に関するイベントを定義したいときに用いる．振る舞いに関するイベントの定義とは同時に定義できない．
+					\item[値] 文字列
+					\item[省略時] 振る舞いに関する定義をしていない場合，省略不可能．
+					\end{description}
+				}{\nopagebreak
+				\item[\texttt{AttributeValue}] \mbox{}
+				\vspace{-0.25zw}
+					\begin{description}
+					\setlength{\itemsep}{-1.5mm}
+					\item[説明] 属性の値．属性の変化に関するイベントを定義したいときに用いる．振る舞いに関するイベントの定義とは同時に定義できない．
+					\item[値] 文字列
+					\item[省略時] 振る舞いに関する定義をしていない場合，省略不可能．
+					\end{description}
+				}{\nopagebreak
+				\item[\texttt{BehaviorName}] \mbox{}
+				\vspace{-0.25zw}
+					\begin{description}
+					\setlength{\itemsep}{-1.5mm}
+					\item[説明] 振る舞いの名前．振る舞いに関するイベントを定義したいときに用いる．属性の変化に関するイベントの定義とは同時に定義できない．
+					\item[値] 文字列
+					\item[省略時] 属性の変化に関する定義をしていない場合，省略不可能．
+					\end{description}
+				}{\nopagebreak
+				\item[\texttt{BehaviorArg}] \mbox{}
+				\vspace{-0.25zw}
+					\begin{description}
+					\setlength{\itemsep}{-1.5mm}
+					\item[説明] 振る舞いの引数．振る舞いに関するイベントを定義したいときに用いる．属性の変化に関するイベントの定義とは同時に定義できない．
+					\item[値] 文字列
+					\item[省略時] 属性の変化に関する定義をしていない場合，省略不可能．
+					\end{description}
+				}
+				\end{description}
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{From}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] 始点となるイベント．\verb|To|とペア．\verb|When|とは同時に定義できない．
+	            \item[値] オブジェクト．オブジェクトはイベントを表し，メンバはイベントを構成する要素でできている．オブジェクトのメンバは\verb|When|を同じなので説明は省略する．
+          	    \item[省略時] \verb|When|が定義されていない場合，省略不可能．省略不可能．
+                \end{description}
+            }{\nopagebreak
+            \item[\texttt{To}] \mbox{}
+            \vspace{-0.25zw}
+                \begin{description}
+                \setlength{\itemsep}{-1.5mm}
+                \item[説明] 終点となるイベント．\verb|From|とペア．\verb|When|とは同時に定義できない．
+	            \item[値] オブジェクト．オブジェクトはイベントを表し，メンバはイベントを構成する要素でできている．オブジェクトのメンバは\verb|When|を同じなので説明は省略する．
+          	    \item[省略時] \verb|When|が定義されていない場合，省略不可能．省略不可能．
+                \end{description}
+            }
+            \end{description}
+    \end{description}
+
+\item[\texttt{InputRule}] \mbox{}
+    \vspace{-0.25zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5mm}
+    \item[説明] 統計情報ファイル入力モードの動作定義．
+    \item[値] オブジェクト．オブジェクトのメンバの説明は以下の通りである．
+    \item[省略時] \verb|"Mode"|で\verb|"Regexp"|と定義した場合，省略不可能．
+            \begin{description}
+            \setlength{\itemsep}{-1.5mm}
+            {\nopagebreak
+            \item[\texttt{FileName}] \mbox{}
+            \vspace{-0.25zw}
+          	\begin{description}
+          	\setlength{\itemsep}{-1.5mm}
+          	\item[説明] 入力する統計情報ファイル．\verb|Data|と同時に定義した場合，こちらが優先される．
+	        \item[値] 文字列(絶対パス)
+          	\item[省略時] \verb|Data|が定義されていない場合，省略不可能．
+          	\end{description}
+            }{\nopagebreak
+            \item[\texttt{Data}] \mbox{}
+            \vspace{-0.25zw}
+          	\begin{description}
+          	\setlength{\itemsep}{-1.5mm}
+          	\item[説明] 入力する統計情報ファイルの内容．\verb|FileName|と同時に定義した場合，\verb|FileName|が優先される．
+	        \item[値] 文字列
+          	\item[省略時] \verb|FileName|が定義されていない場合，省略不可能．
+          	\end{description}
+            }
+            \end{description}
+    \end{description}
+\end{description}
+
+
+
+
+\subsubsection{グラフの設定}
+グラフの設定は，統計情報生成ルールのオブジェクトのメンバにである{\tt "Setting"}と
+{\tt "UseResorceColor"}が該当する．{\tt "Setting"}は，統計情報ファイルの{\tt "Setting"}と同じなので説明を省略する．
+\begin{description}
+\item[\texttt{UseResorceColor}] \mbox{}
+    \vspace{-0.25zw}
+    \begin{description}
+    \setlength{\itemsep}{-1.5mm}
+    \item[説明] リソースファイルに定義されたリソースの名前がデータポイントの\verb|XLabel|に設定されているとき，リソースファイルに定義されたリソースのColorを利用するかどうか．\verb|true|を指定された場合，それを利用する．Colorが定義されていないリソースの色は，グラフライブラリの初期値に従う．
+    \item[値] 真偽値
+    \item[省略時] \verb|false|
+    \end{description}
+\end{description}
+グラフの設定には，どの設定が反映されるかという優先順位を設けた．これは，生成モードによってグラフの設定がされる場合に対応するためである．\figref{fig:settingpri}に示す．
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.5]{settingpri.png}
+\caption{グラフ設定の優先順位}
+\label{fig:settingpri}
+\end{center}
+\end{figure}
+
+{\tt "Setting"}は，生成モードによって統計情報ファイルが得られる場合があるので
+優先順位をつける必要がある．\sref{sec:inputmode}でも述べたように，生成モードに
+よって統計情報ファイルが得られる場合，得られた統計情報ファイルには統計情報生成ルール
+で定義した設定よりも最適なグラフ設定がされている可能性が高い．なぜなら，統計情報生成
+ルールに定義するグラフの設定は，変更回数の軽減をするために汎用性の高い設定が望ま
+れるからである．よって，図のような優先順位とした．
+
+生成モードによって{\tt "Color"}が設定される場合があるので，{\tt "Color"}にも優先
+順位をつける必要がある．優先順位は，{\tt "Setting"}とは逆のような形になっている．これは，
+リソースの色が関係するからである．リソースファイルで定義されるリソースの色は，
+TLVの可視化表示部に表示する際に使用される場合がある．それを統計情報表示機能でも
+利用できるようにすることで，色によるリソースの識別を可能にし，グラフを読みやすく
+なるよう工夫した．その\verb|ON/OFF|を実現しているのが{\tt "UseResorceColor"}で
+ある．これは，{\tt "UseResorceColor"}を{\tt "true"}にするのは，ユーザがその
+ような効果を狙っている可能性が高いからである．よって，図のような優先順位とした．
+
+
+\subsection{統計情報をグラフ表示するためのGUI}
+本節では，統計情報表示機能の実装に伴って追加された2種類のウィンドウについて説明する．該当するウィンドウは，統計情報をグラフ表示する統計情報ビューアとユーザが表示させる統計情報を選択する統計情報エクスプローラである．例を\figref{fig:window}に示す．
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.6]{window.png}
+\caption{統計情報ビューア(左)と統計情報エクスプローラ(右)}
+\label{fig:window}
+\end{center}
+\end{figure}
+
+\subsubsection{統計情報ビューア}
+統計情報ビューアは，1つのウィンドウに1つのグラフを表示する．異なる種類のグラフで表現したいときのために，グラフの種類が簡単に切り替えられる機能を実装している．また，ウィンドウのサイズを変えることで，グラフの拡大縮小が可能である．
+
+このウィンドウは，他のウィンドウを違い，TLVのメインウィンドウにドッキングができないようになっている．他のウィンドウと同じように実装してしまうと，\figref{fig:tlvview}に示すウィンドウのリストにウィンドウ名が列挙されることになる．統計情報ファイルは，1つのログに対して複数生成することが可能であるので，このリストが利用しづらくなる．
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.6]{tlvview.png}
+\caption{ドッキング可能なウィンドウがリストアップされているところ}
+\label{fig:tlvview}
+\end{center}
+\end{figure}
+
+グラフを表示させる部分の実装について述べる．グラフを描画するためのライブラリを調査したが，.NET\ Framework\ 3.5の標準ライブラリとして用意されておらず，ユーザ側にも開発側にも新たにライブラリをインストールする必要があった．そのライブラリは，.NET\ Framework\ 3.5の追加ライブラリと.NET\ Framework\ 4の2種類あり，それぞれの特徴を検討して適切な方を選択した．
+
+.NET\ Framework\ 3.5の追加ライブラリは，Microsoft\ Chart\ Controls\ for\ Microsoft\ .NET\ Framework\ 3.5をユーザ側も開発側もインストールする必要がある．これは，.NET\ Frameworkのバージョンアップによるコード改変や不具合調査などを行わずに済む．しかしながら，このライブラリを利用するケースはTLV以外にあまり考えられず，TLVのためだけにインストールすることになりかねない．
+
+一方，.NET\ Framework\ 4では，グラフを描画するライブラリが標準ライブラリとして用意されている．よって，TLV以外で不要となりうるライブラリをインストールする必要がない．また，現在のTLVがMicrosoft\ Parallel\ Extentions\ to\ .NET\ Framework\ 3.5というCommunity\ Technology\ Preview，つまりテスト版を利用しているが，これについても標準ライブラリとして用意されている．.NET\ Framework\ 3.5と.NET\ Framework\ 4では互換性が完全でないので，不具合調査や開発環境の再構築を行う必要があるが，前述した利点に加え，開発が進むにつれていずれは.NET\ Framework\ 4へ移行する必要がでてくると考え，.NET\ Framework\ 4で実装することにした．
+
+
+\subsubsection{統計情報エクスプローラ}
+統計情報エクスプローラは，表示させる統計情報を選択するためのウィンドウである．これを使用することで，見たい統計情報に関する統計情報ビューアのみを表示させることが可能になる．
+
+その他の役割として，コンピュータとユーザにかかる負荷の軽減がある．トレースログの可視化処理の終了後，全ての統計情報ビューアを同時に立ち上げてしまうと，コンピュータに負荷がかかり，TLVの応答性が低下する．そのうえ，ユーザにとって不要な統計情報ビューアまで立ち上がる可能性がある．よって，最初は統計情報ビューアのインスタンス化せず，必要になった時に初めてインスタンス化して表示することで，これらの問題も解決できる．また，インスタンス化したものは，プーリングすることで，その後のウィンドウ開閉を円滑に行えるようにした．
+

@@ -1,0 +1,139 @@
+%\documentclass[draft,report]{jsbook}
+\documentclass[report]{jsbook}
+\newcommand{\mzp}[1]{\texttt{<<}水野に相談\texttt{>>} #1}
+\newcommand{\dmp}[1]{\texttt{<<}調査中\texttt{>>} #1}
+%\usepackage[dviout]{graphicx}
+\usepackage[dviout]{graphicx}
+\usepackage{yanagi}
+\usepackage{mymacros}
+\usepackage{ascmac}
+\usepackage{url}
+\usepackage{fancybox}
+
+
+\begin{document}
+
+\title{
+{\LARGE\sffamily\gtfamily
+O\ \ J\ \ L\ \ 報\ \ 告\ \ 書\\
+}
+\vspace*{.6in}
+{\huge\sffamily\gtfamily
+トレースログ可視化ツール(TLV)に対する\\ 
+アプリログ機能追加とプロファイリング
+}
+\vfill\vfill\vfill
+}
+\author{
+\LARGE\sffamily\gtfamily
+350802254\ \ \ \ 柳澤 大祐\\
+}
+\date{
+\vfill
+\Large\sffamily\gtfamily
+名古屋大学 大学院情報科学研究科\\[.2in]
+情報システム学専攻\\[.2in]
+2010年1月
+\vfill
+}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{plain}
+\pagenumbering{roman}
+\setcounter{page}{1}
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 本文
+%-------------------------------------------------------------------------
+\pagestyle{plain} \pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{intro.tex}
+\input{tlv.tex}
+\input{achievement.tex}
+\input{applog.tex}
+\input{profiling.tex}
+\input{conclusion.tex}
+
+
+\chapter*{謝辞}
+TLVを開発するにあたり，ご指導を頂きました名古屋大学大学院情報科学研究科情報システム学専攻の高田広章教授，
+愛知県立大学大学院情報科学研究科の山本晋一郎教授
+に深く感謝致します．
+また，開発プロジェクトマネージャとして日頃より多くのご助言を頂きました同研究室の本田晋也助教，企業出身者としての立場から実践的なご意見を頂きました同研究科付属組込みリアルタイム研究センターの長尾卓哉研究員に深く感謝致します．
+
+\begin{thebibliography}{99}%\addcontentlzissekiline{toc}{chapter}{\bibname}
+\bibitem{goto} 後藤隼弐 『OJLによるトレースログ可視化ツールの開発』修士論文,名古屋大学,2009
+
+\bibitem{ipsj}
+後藤隼弐,
+本田晋也,
+長尾卓哉,
+高田広章『トレースログ可視化ツールの開発』
+情報処理学会 第 139 回 システムLSI設計技術(SLDM)研究会, 2009年 2月 26日
+
+%\bibitem{fuzzing}
+%Michael Sutton, Adam Greene, Pedram Amini, 園田道夫,伊藤裕之
+%『ファジング:ブルートフォースによる脆弱性発見手法』
+%毎日コミュニケーションズ, 2008年5月28日
+
+\bibitem{PARTNER-JET}
+JTAG ICE PARTNER-Jet，http://www.kmckk.co.jp/jet/，最終アクセス2009年1月14日
+
+\bibitem{watchpoint}
+WatchPointデバッガ，https://www.sophia-systems.co.jp/ice/products/watchpoint，最終アクセス2009年1月14日
+
+\bibitem{QNXMomentics}
+QNX Momentics Tool Suite，http://www.qnx.co.jp/products/tools/，最終アクセス2009年1月14日
+
+\bibitem{eBinder}
+eBinder，http://www.esol.co.jp/embedded/ebinder.html，最終アクセス2009年1月14日
+
+\bibitem{LKST}
+LKST（Linux Kernel State Tracer) - A tool that records
+traces of kernel state transition as events，http://oss.hitachi.co.jp/sdl/english/lkst.html，最終アクセス2009年1月14日
+
+\bibitem{SystemTap}
+Prasad, V., Cohen, W., Eigler, F. C., Hunt, M., Keniston, J. and Chen, B.: Locating system problems using dynamic instrumentation. Proc. of the Linux Symposium, Vol.2, pp.4964, 2005.
+
+\bibitem{LTTng}
+Mathieu Desnoyers and Michel Dagenais.: The lttng tracer : A low impact performance and behavior monitor for gnu/linux. In OLS (Ottawa Linux Symposium) 2006, pp.209224, 2006.
+
+\bibitem{Dtrace}
+R. McDougall, J. Mauro, and B. Gregg.: Solaris(TM) Performance and Tools: DTrace and MDB Techniques for Solaris 10 and OpenSolaris. Pearson Professional, 2006.
+
+\bibitem{LTTV}
+Mathieu Desnoyers and Michel Dagenais.: OS Tracing for Hardware, Driver and Binary Reverse Engineering in Linux. CodeBreakers Journal Article, vol.4, no.1, 2007.
+
+\bibitem{Chime}
+OpenSolaris Project: Chime Visualization Tool for DTrace，http://opensolaris.org/os/project/dtrace-chime/，最終アクセス2009年1月14日
+
+\bibitem{RFC3164}
+RFC3164 The BSD syslog Protocol, http://www.ietf.org/rfc/rfc3164.txt，最終アクセス2009年1月14日
+
+%\bibitem{Json}
+%RFC4627 The application/json Media Type for JavaScript Object Notation (JSON)，http://tools.ietf.org/html/rfc4627，最終アクセス2009年1月14日
+
+\bibitem{TOPPERS}
+TOPPERS Project，http://www.toppers.jp/，最終アクセス2009年1月14日
+
+\bibitem{TECS}
+Takuya Azumi and Masanari Yamamoto and Yasuo Kominami and Nobuhisa Takagi and Hiroshi Oyama and Hiroaki Takada.:A New Specification of Software Components for Embedded Systems. Proceedings of the 10th IEEE International Symposium on Object and Component-Oriented Real-Time Distributed Computing (ISORC 2007), pp.45-50, 2007
+
+%\bibitem{parsec}
+%Daan Leijen and Erik Meijer,
+%Parsec: Direct Style Monadic Parser Combinators for the Real World,
+%Department of Computer Science, Universiteit Utrecht,
+%UU-CS-2001-27,
+%2001
+%
+%\bibitem{gof}
+%Erich Gamma, Ralph Johnson, Richard Helm, John Vlissides『オブジェクト指向における再利用のためのデザインパターン』、ソフトバンクパブリッシング、1995
+\end{thebibliography}
+
+\end{document}
+

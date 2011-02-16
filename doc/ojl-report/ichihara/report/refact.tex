@@ -1,0 +1,524 @@
+\chapter{トレースログパーサの\\リファクタリング}\label{ch:refact}
+\section{概要}
+\subsection{実施理由}
+標準形式トレースログのパースにおいて，
+図\ref{rex}のような複雑な正規表現を計8回適用している．これは，Objectなどの要素1つにつき1行の正規表現で
+取得するためである．こうすることで，TimeやValue等の有無に関わらず
+\footnote{可視化ルールファイルには，Timeがない，Valueがない，AttributeNameがない等といった
+不完全な標準形式トレースログが記述されている．}
+パースできるようにしている．
+しかし，このような複雑な正規表現は可読性が低いので，リファクタリングを実施する．
+
+リファクタリング後のTLVは，標準形式トレースログのパースを専用のパーサに任せる．
+パーサを構成するコードを，\sref{sec:log}
+に示すEBNFのように記述することで，開発者が構文を直感的に理解できるようになる．
+コード例を図\ref{refacted}に示す．
+
+また，重複したコードおよび生成規則変更時の変更箇所も減らすことができるため，保守性も向上する．
+例えば，Timeを囲む記号\verb!"[","]"!を\verb!"<",">"!にするとき，従来の正規表現を用いた
+方法では，8行すべての正規表現を変更する必要があるが，リファクタリング後は1箇所で済むようになる．
+生成規則を追加する場合でも，従来の手法では8行の正規表現の中から変更箇所を探さねばならないが，
+リファクタリング後は，EBNFのように記述されているため，変更箇所が明確であるので見落としを減らせる．
+しかしながら，このような構文の変更は稀であるため，一番のメリットは構文を直感的に理解できるようになる
+ことである．
+
+\begin{figure}[h]
+\begin{lstlisting}
+m = Regex.Match(_log, 
+      @"^(\[[^\]]+\])?(?<objectType>[^\[\]\(\)\.]+)\([^\)]+\)(\.[^\s]+)?$");
+
+if (m.Success)
+	ObjectType = m.Groups["objectType"].Value;
+HasObjectType = m.Success;
+\end{lstlisting}
+\caption{リファクタリング前のコード例}
+\label{rex}
+\end{figure}
+
+\begin{figure}[h]
+\begin{lstlisting}
+var object_ = 
+	ObjectTypeName().Char('(').AttributeCondition().Char(')')
+	.OR().
+	ObjectName();
+\end{lstlisting}
+\caption{リファクタリング後に表現したいコード例}
+\label{refacted}
+\end{figure}
+
+
+
+\subsection{対象}\label{sec:tl}
+リファクタリング対象は，\verb!TraceLog!クラス，特にそのコンストラクタである．
+この\verb!TraceLog!クラスは，標準形式トレースログを構成するトークンを保持し，
+標準形式トレースログを用いた処理を容易にする．
+
+現在，標準形式トレースログのパースに正規表現を用いている箇所を
+パーサを用いるように，\verb!TraceLog!コンストラクタを変更する．
+
+
+\newpage
+\subsection{変更内容}
+\subsubsection{クラス構成}\label{sec:refclass}
+\verb!Regex!クラスと\verb!Match!クラスを用いた正規表現によるパースを廃止し，
+標準形式トレースログ用のパーサを作成する．そして，\verb!TraceLog!クラスは，そのパーサへパース処理を委譲する．
+これにより，現在はパースの実装が\verb!TraceLog!クラスに直書きされているため
+パースの実装方法を変更するのが困難であるのが，
+\verb!TraceLog!クラスとパースの実装を分離することでパーサの交換が容易になり，
+パーサの実装方法変更が容易になる．
+
+今回の変更に伴う影響範囲は，\verb!TraceLog!クラス以外に存在しない．
+リファクタリング前後のクラス図を図\ref{bclass},\ref{aclass}に示す．
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{bclass.png}
+\caption{リファクタリング前のクラス構成}\label{bclass}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{aclass.png}
+\caption{リファクタリング後のクラス構成}\label{aclass}
+\end{figure}
+
+
+% \subsubsection{処理の流れ}
+% リファクタリング前の処理の流れは，図\ref{before}のように，
+% \verb!TraceLog!コンストラクタにて正規表現を用いたパースを行っている．
+
+% リファクタリング後の処理の流れは，図\ref{after}のように，
+% \verb!TraceLog!コンストラクタでパーサクラスのメソッドを呼び，
+% パーサクラスにて標準形式トレースログのパースを行う．
+% パースが終了したら，パーサクラスから結果を受け取り，各値を設定する．
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[scale=0.6]{before.png}
+% \caption{リファクタリング前の標準ログ変換処理}\label{before}
+% \end{figure}
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[scale=0.6]{after.png}
+% \caption{リファクタリング後の標準ログ変換処理}\label{after}
+% \end{figure}
+
+
+\subsubsection{パーサの構成}\label{sec:parsec}
+パーサの実装は，コードでEBNFを表現し，直感的に理解できるようにする．
+
+例として，HaskellのパーサコンビネータライブラリParsecを参考にしたパーサ\cite{parsec}が挙げられる．
+このコードを使用するか，自作など他の実装方法を用いるかは，
+デバッグの容易さ，実装のしやすさ，可読性，実行速度などの要素により決定する．
+
+
+\newpage
+\section{詳細仕様}\label{sec:refspec}
+本節は，フェーズ5で行ったリファクタリングにより変更・追加された箇所，および，
+リファクタリング後のシーケンスを説明し，今回採用しなかった手法との比較や今回の実装の採用理由を記述する．
+
+
+\subsection{コード設計}
+ここでは，リファクタリングの目標であった，EBNFを表現して直感的に理解できるコードの紹介と，
+小節にて実装に用いた手法・概念および主要メソッドの説明をする．
+
+まず，EBNFを表現したコードの例を図\ref{code1}に示す．
+
+\begin{figure}[h]
+\begin{lstlisting}
+var line = Char('[').Time().Char(']').Event();
+...
+var object_ = 
+	ObjectTypeName().Char('(').AttributeCondition().Char(')')
+	.OR().
+	ObjectName();
+...			
+var typeName = Many1(() => AnyCharOtherThan('(', ')', '.'));
+\end{lstlisting}
+\caption{コードでEBNFを表現したコード例}
+\label{code1}
+\end{figure}
+
+
+これは，次のEBNFをパースすることを示している．
+
+\begin{figure}[h]
+\begin{lstlisting}
+TraceLogLine = "[", Time, "]", Event;
+
+Resource = ResourceTypeName, "(", AttributeCondition, ")"
+	 | ResourceName;
+
+ResourceTypeName = /[0-9a-Z_]+/;
+\end{lstlisting}
+\caption{図\ref{code1}が表す実際のEBNF}
+\label{ebnf1}
+\end{figure}
+
+
+このように，図\ref{code1}はEBNFを表現しており，正規表現によるパーシングより可読性が
+向上している．図\ref{code1}は，実際には図\ref{code2}
+のような解析メソッド内に記述され，それを組み合わせることで図\ref{code1}を実現している．
+\clearpage
+\begin{figure}[h]
+\begin{lstlisting}
+public ITraceLogParser ObjectTypeName()
+{
+	Begin();
+
+	var typeName = Many1(() => AnyCharOtherThan('(', ')', '.'));
+
+	typeName.ObjectTypeValue = Result();
+	return (ITraceLogParser)typeName.End();
+}
+\end{lstlisting}
+\caption{解析メソッド例}
+\label{code2}
+\end{figure}
+
+\subsubsection{利用した概念・手法}
+本節では，利用した概念と手法について述べる．
+\begin{description}
+\item[再帰下降パーサ] \mbox{} \\
+今回，実装したパーサは，スタックを利用した再帰下降パーサであり，バックトラッキングを用いている．
+これは，EBNFのようにトップダウンに記述されているものを表現するのに適しているが，
+バックトラッキングによる処理効率低下が懸念される．
+
+\item[パーサ・コンビネータ] \mbox{} \\
+パーサ・コンビネータとは，パーサとパーサを組み合わせることのできるコンビネータを指す．
+具体的には，Manyメソッド，Many1メソッド，ORメソッドが挙げられる．
+これにより，EBNFの表現やLL(k)文法のパーシングを可能にしている．
+しかしながら，LL(k)文法を扱うため生成規則から左再帰性の除去が必要である．
+
+\item[NullObjectパターン] \mbox{} \\
+インタフェースを実装しているが，何もしないクラスを用いるデザインパターンである．
+多態性を利用したもので，Nullかどうかを判別するコードを排除でき，処理の流れが明確になる．
+今回，これを用いることでEBNFのような記述を実現している．
+解析メソッドは，パーサクラスもしくはパーサクラス用のNullObjectを返すことで次の解析メソッドを実行するかを決定する．
+これにより，if分をはさまずにメソッドチェーンのみで生成規則を表現できるようになる．
+他に，意図しないNull参照による例外発生などの，Nullによる問題を防止できるというメリットもある．
+\end{description}
+
+\subsubsection{基本メソッドの説明}\label{sec:ms}
+本節では，パーサを記述する上で基本となるメソッドについて述べる．
+\begin{description}
+\item[Beginメソッド] \mbox{} \\
+解析メソッドの処理で最初に実行されるメソッドである．
+
+現在は，スタックへのパース結果およびポインタ
+\footnote{パーシング中の文字列の，解析の現在位置(文字)を示すもの．}
+の保存領域確保を行っている．
+
+\item[Endメソッド] \mbox{} \\
+解析メソッドの処理で最後に実行されるメソッドである．
+基本的に，パースを実行，つまり，生成規則を表すメソッドチェーンを実行して得られた戻り値
+であるパーサオブジェクトまたはNullObjectから呼ばれる．
+現在は，スタックのポップ，直前のスタックにあるパース結果との結合，NullObjectのステータス初期化を行っている．
+パーサクラスかNullObjectクラスかで動作が変わる．
+
+\item[Resultメソッド] \mbox{} \\
+パースを実行して得られた文字列を返すメソッドである．
+
+\item[ORメソッド] \mbox{} \\
+EBNFの記号\verb!"|"!を表すメソッドである．生成規則を表すメソッドチェーンで使用する．
+このメソッドより前の生成規則に当てはまらなかった場合，このメソッド内でバックトラッキングして，
+次の生成規則の適用を試みる．
+
+\item[Manyメソッド] \mbox{} \\
+EBNFの記号\verb!"*"!を表すメソッドである．生成規則を表すメソッドチェーンで使用する．
+引数に与えられた解析メソッドを0回以上適用させる．
+
+\item[Many1メソッド] \mbox{} \\
+EBNFの記号\verb!"+"!を表すメソッドである．生成規則を表すメソッドチェーンで使用する．
+引数に与えられた解析メソッドを1回以上適用させる．
+\end{description}
+
+\subsection{クラス設計}
+リファクタリング後のクラス図を図\ref{class}に示す．
+\verb!TraceLog!クラス以外のクラス群が，\sref{sec:refclass}の図\ref{aclass}にあるサブシステムに相当する．
+
+パーサは，基本的な機能を備えたクラスとパース対象に特化したクラスにわけることで，
+基本的な機能を備えたクラスの再利用ができるようになっている．
+そのため，それに該当するParserクラスおよびNullObjectForParserクラスを
+継承する派生クラスを定義し，ITraceLogParserクラスのような特化したインタフェースを定義してそれぞれの
+派生クラスが実装することで，様々なパーサが作成可能である．
+
+次に，図\ref{class}の各クラスについて説明する．
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{class.png}
+\caption{リファクタリング後の詳細なクラス構成}\label{class}
+\end{figure}
+
+\subsubsection{既設クラス}
+本節では，リファクタリング以前から存在するクラスについて述べる．
+\begin{description}
+\item[TraceLogクラス] \mbox{} \\
+標準形式トレースログをコード上で扱うためのクラスである．
+今回，そのコンストラクタをリファクタリングし，可読性の向上を行った．
+また，新たに\verb!TraceLogParser!オブジェクトを保持する静的フィールドを追加し，
+パーサの生成を一回で済むようにした．
+\end{description}
+
+\subsubsection{新設クラス}
+本節では，リファクタリングにより新しく追加したクラスについて述べる．
+\begin{description}
+\item[Parserクラス] \mbox{} \\
+パーサを実現するための基本的な機能を備えたクラスである．
+これを継承し，解析メソッドを記述することで専用のパーサを作成する．
+\ref{sec:ms}に示したメソッドの他に，アルファベットや数字の解析メソッドも有する．
+これらのメソッドは，単純に継承しただけでは戻り値の型が合わず，使用できない．
+よって，派生クラスに，処理を\verb!Parser!クラスに委譲し，その結果を使用するインタフェース型にキャストして\verb!return!する
+同名(もしくは，それとわかる名前)のメソッドを用意して使用する．
+
+\item[StackForParserクラス] \mbox{} \\
+\verb!Parser!クラスが利用する専用スタックである．
+パーサが今までのパース結果やポインタを退避させるのに用いる．できるだけ効率よく管理するために用意した．
+
+\item[InputStreamForParserクラス] \mbox{} \\
+パース対象を格納し，管理するクラスである．
+ポインタの制御やポインタの示す文字の提供などを行う．
+\verb!.NET Framework!の標準ライブラリである\verb!StringReader!クラスは，
+Readメソッドで文字を消費してしまって復元が難しいため，専用のクラスを用意した．
+
+\item[NullObjectForParserクラス] \mbox{} \\
+\verb!Parser!クラスのNullObjectを実現するための基本的な機能を備えたクラスである．
+これを継承し，解析メソッドを含むインタフェースを実装することで，専用のパーサ用NullObjectを作成する．
+
+
+\item[TraceLogParserクラス] \mbox{} \\
+標準形式トレースログ用のパーサクラスである．
+標準形式トレースログをパースするための解析メソッドや結果を取得するためのプロパティがある．
+
+\item[NullObjectOfTraceLogParserクラス] \mbox{} \\ %\label{sec:nullobj}
+標準形式トレースログ用のパーサクラス用のNullObjectクラスである．
+メソッドは基本的に何もしないが，効率やアルゴリズム上の理由などで処理を行う場合がある．
+ただし，NullObjectとしては異例なため，そのような場合は保守性が低下する恐れがある．
+
+\item[IParserクラス] \mbox{} \\
+\verb!Parser!クラスと\verb!NullObjectForParser!クラスを結ぶインタフェースである．
+これにより，メソッドチェーンによるEBNFのような表現を実現している．
+
+\item[ITraceLogParserクラス] \mbox{} \\
+\verb!TraceLogParser!クラスと\verb!NullObjectOfTraceLogParser!クラスを結ぶインタフェースである．
+これにより，メソッドチェーンによるEBNFのような表現を実現している．
+\end{description}
+
+\subsection{シーケンス}
+例として，\verb!"[.]Task.state=="RUNNING""!という誤ったログをパースする
+シーケンスの一部を図\ref{sequence}に示す．解析メソッドの適用に成功すれば次の解析メソッドを試み，
+失敗すれば以降の解析メソッドはNullObjectのものを呼ぶことでパーサの解析メソッドを適用しないようになっている．
+
+また，失敗した状態でORメソッドが呼ばれるとバックトラックし，ORメソッド以降の解析メソッドにより再度パースが行われる．
+その他の状態で呼ばれた時のORメソッドの処理を図\ref{orsequence}に示す．
+3つ目の場合は，例えば\verb!hoge().OR().fuga().OR().piyo()!という生成規則があった場合，
+\verb!hoge()!が成功した時の\verb!fuga()!と\verb!piyo()!の間にある\verb!OR()!の挙動を
+示している．
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{sequence.png}
+\caption{パーシング時のシーケンスの一部}\label{sequence}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{orsequence.png}
+\caption{各状態でのORメソッドの処理}\label{orsequence}
+\end{figure}
+
+
+\newpage
+\section{評価}
+本節は，\ref{sec:parsec}で紹介した\cite{parsec}を用いたパーサ(以降，C\#版Parsec)，\sref{sec:refspec}で紹介したパーサ(以降，自作パーサ)を比較し，
+自作パーサを選択した理由を記述する．
+また，それら二つのパーサおよび従来のパース手法で性能比較を示す．
+
+\subsection{可読性}
+まず，C\#版Parsecのコードを図\ref{codeparsec}に示す．
+このパーサは，HaskellのParsecを模したコードになっており，図\ref{haskellcode}のように置き換えることができる．
+すなわち，図\ref{codeparsec}では，\verb!in!より右の解析メソッドを上から順に見たものが生成規則を表している．
+しかしながら，この記述は，コード上でクエリ式を記述できるLINQを利用しているため，
+初見では理解しにくいということが現在の開発メンバとのレビューで出てきた．また，
+右の解析メソッドを上から順に見たものが生成規則を表していることがわかったとしても，
+\verb!select!が何をするのか，何が記述されているのかが理解しにくい．
+そのため，Haskell経験者であればよいとは思われるが，そうでない者にとっては可読性が従来のものより低くなってしまう
+可能性がある．
+
+自作パーサは，生成規則を表す解析メソッドのチェーンがEBNFに近いため，自作パーサの方が可読性が高いというレビュー結果
+が得られた．
+
+\begin{figure}[h]
+\begin{lstlisting}
+OBject = (from otn in ObjectTypeName
+          from u1 in Char('(')
+		  from ac in AttributeCondition
+		  from u2 in Char(')')
+		  select Base(otn).Append(u1).Append(ac).Append(u2).ToString())
+		 .OR(
+		 (from on in ObjectName
+		  select Base(on).ToString()));
+		  
+// Baseメソッドは，引数に基づいてStringBuilderクラスを新規作成して返すメソッド
+// StringBuilderクラスに関しては，.NET Framework ライブラリを参照
+\end{lstlisting}
+\caption{C\#版Parsecのコード例}
+\label{codeparsec}
+\end{figure}
+\clearpage
+\begin{figure}[h]
+\begin{lstlisting}
+OBject = do{ otn <- objectTypeName
+           ; u1 <- char '('
+           ; ac <- attributeCondition
+           ; u2 <- char ')'
+           ; return　$ otn ++ u1 ++ ac ++ u2
+           }		   
+         <|>
+         do{ on <- objectName
+           ; return $ on
+           }
+\end{lstlisting}
+\caption{図\ref{codeparsec}をHaskellに置き換えたコード例}
+\label{codeparsec}
+\end{figure}
+
+\subsection{保守性}
+C\#版Parsecのクラス構造は，機能ごとによく分割・整理されており，また，文字列以外にも対応できるように
+設計されているため汎用性が高い．
+このC\#版Parsecおよびパーサを変更するには，Parsecの実装に関する知識が必要になる．
+それに伴い，Haskellの知識が必要になる場合がある．
+よって，チューニングまで行おうとすると，事前知識がなければ学習コストがかかってしまう．
+
+自作パーサは，文字列のパーシングに特化したものであり，文字列化できないもののパーシングはほぼ不可能に近い．
+しかしながら，TLVで用いる場合，文字列以外は現状では考えられないため，問題にならない．
+変更するコストに関しては，自作パーサでも，NullObjectとの連携や解析メソッドのチェーンの理解に学習コストがかかる．
+
+次に，生成規則の変更について考える．
+これについては，両方ともEBNFを表現したものであるため，基本的な手順や特徴は同じである．
+記述変更すべき箇所は，目的の生成規則を表現している箇所をみればよいので，
+従来の手法より変更箇所を発見しやすく，変更箇所の個数も削減できる．
+変更には，生成規則の追加，削除がある
+\footnote{入れ替えは，追加・削除を組み合わせたものと考えられるため除外}
+ので，この順序で見ていく．
+まず追加時には，次の手順を踏む．
+\begin{enumerate}
+\item 新規の生成規則にしたがって解析メソッドを作成する
+\item 新規の解析メソッドを既存の生成規則に挿入する
+\item C\#版Parsecの場合：新規の解析メソッドを挿入した既存の生成規則のselect句を書き換える
+\end{enumerate}
+削除時には，次の手順を踏む．
+\begin{enumerate}
+\item 既存の生成規則から目的の解析メソッドを削除する
+\item C\#版Parsecの場合：解析メソッドを削除した生成規則のselect句を書き換える
+\end{enumerate}
+以上のように，C\#版Parsecの場合は，自作パーサより多く記述しなければならない場合があるので，
+変更箇所数でいえば，自作パーサの方が優れる場合がある．
+
+\subsection{デバッグの容易性}
+C\#版Parsecは，かなりの割合をデリゲートが占める．そのため，デバッガによるステップ実行では，どのデリゲートが
+適用されているのかがわかりづらく，結果，処理の流れが把握しづらいためデバッグが難しい．また，流れ自体も実装と関わっているため，Parsecなどの知識が必要となる．
+
+自作パーサは，コードを見るよりもデバッガによるステップ実行を行った方がデバッグが容易である．
+特に，取得したいパース結果の格納時の，図\ref{code3}のコードの※1，2である．
+
+\begin{figure}[h]
+\begin{lstlisting}
+var object_ =
+	ObjectTypeName().Char('(').AttributeCondition().Char(')')
+	.OR().
+	ObjectName();
+
+object_.ObjectValue = Result();    // ※1
+
+// HasObjectTypeValueは，ObjectTypeName()が真でも，ほかで失敗すれば偽である．
+object_.HasObjectTypeValue = false;  // ※2
+\end{lstlisting}
+\end{figure}
+
+例えば※1，2は，\verb!object_!が何を指すのかを推測して記述する必要がある．
+デバッガによるステップ実行を行うことで，\verb!object_!が明確となり，処理が間違っていないか確認できる．
+また，C\#版Parsecのようにデリゲートを多用しておらず，使用していてもシンプルなシーケンスであるため，
+どのメソッドまたはデリゲートを適用させているのかがC\#版Parsecよりシーケンスを追いやすい．
+
+\subsection{性能比較}
+\subsubsection{処理速度}
+各手法間で処理速度の違いが出るかを調査した．
+TLVは，ユーザから高速化の要求を頂いているため，処理速度がリファクタリングにより著しく低下することは望ましくなく，
+逆にリファクタリングにより高速化することが望ましい．
+
+以下の方法で行った．
+\begin{screen}
+\begin{description}
+\item[用いるもの] 各パーサを実装したTLV(計3つ)，ストップウォッチ
+\item[計測開始] 「新規作成ウィザード」の「OK」ボタンを押した状態から離したとき
+\item[計測終了] 「初期化中」という窓に切り替わったとき
+\item[計測順序] 自作パーサ3回→C\#版Parsec3回→従来3回
+\item[入力(.log)] 6958行 (TLV付属のサンプルファイル fmp\_long.log)
+\item[入力(.res)] リソース数28 (TLV付属のサンプルファイル fmp\_long.res)
+\item[備考] 1回の測定につきTLVの起動・終了を行う
+\end{description} 
+\end{screen}
+
+
+実施環境は次の通り．
+\begin{screen}
+\begin{description}
+\item[OS] Windows 7 Professional　x64
+\item[CPU] Core2Duo E8400(3.0GHz)
+\item[メモリ] DDR2-800　1GBx2+2GBx2
+\end{description} 
+\end{screen}
+
+結果を表\ref{tb:result}に示す．
+
+\begin{table}[H]
+ \centering
+ \caption{処理速度の測定結果}　\label{tb:result}
+ \begin{tabular}{|c|c|c|c|} \hline
+           &  1回目&  2回目&3回目\\ \hline
+自作パーサ   &2分26秒&2分21秒&2分22秒\\ \hline
+C\#版Parsec&2分40秒&2分38秒&2分38秒\\ \hline
+従来手法    &2分25秒&2分24秒&2分24秒\\ \hline
+ \end{tabular}
+\end{table}
+
+順位は自作パーサ，従来手法，C\#版Parsecの順であった．
+自作パーサは，処理時間がC\#版Parsecより約11\%，従来手法より約2\%短く，
+処理速度面でも優れていることがわかる．
+
+自作パーサが他より高速である理由は，次のものが考えられる．
+\begin{itemize}
+\item 文字列をそのまま扱うのではなく，文字列を文字に分解してコストが低い文字処理を行う
+\item 自作パーサ専用のスタックおよび入力ストリームのため無駄が少ない
+\item 文字列に特化することで，高速な文字列処理が行えるStringBuilderクラスを採用できた
+\end{itemize}
+
+C\#版Parsecがこのような結果になった理由は，次のものが考えられる．
+\begin{itemize}
+\item クラスメソッド呼び出しよりコストのかかるデリゲートを多用している
+\item 汎用性を高めるために，要素の結合を配列の結合
+\footnote{配列同士の結合は文字列の結合よりコストが高い}で行っている(Parsecの実装に似せている)
+\item newを多用し，多くのインスタンス化を行っている
+\end{itemize}
+
+
+\subsubsection{解析能力} 
+解析能力は，3種類全ての手法で変わらない．
+自作パーサおよびC\#版ParsecはLL(K)文法を解析でき，
+従来の手法は.NET Frameworkの正規表現が通常の正規表現より柔軟かつ強力にできている\cite{msdn}ため，
+標準形式トレースログのパーシングに問題はないからである．
+しかしながら，従来の手法で使用されていた正規表現では，
+括弧のネストを正確にパースするのに，現状以上に複雑な正規表現となってしまう
+\footnote{従来の手法では，括弧のネストのパースを実現していない．また，他の処理でも括弧のネストに対応しきれていない．}．
+たとえば，次のコードは\verb!<,>!のネストを正しくパースする正規表現\cite{msdncode}だが，
+これを現状の正規表現上の括弧のネストが起こりうる箇所に挿入することになる．
+
+\begin{FileNoTitleHere}
+^[^<>]*(((?'Open'<)[^<>]*)+((?'Close-Open'>)[^<>]*)+)*(?(Open)(?!))
+\end{FileNoTitleHere}
+
+したがって，従来の手法では現状より可読性が低くなってしまう．
+よって，括弧のネストに対応するという将来性を考慮しても，自作パーサの有用性は高いと言える．
