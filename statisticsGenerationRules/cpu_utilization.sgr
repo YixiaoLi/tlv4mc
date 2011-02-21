@@ -1,0 +1,17 @@
+﻿{
+	"cpu_utilization" : {
+		"Setting":{
+			"Title":"CPU利用率",
+			"AxisXTitle":"タスク",
+			"AxisYTitle":"割合",
+			"DefaultType":"Pie"
+		},
+		"UseResourceColor":true,
+		"Mode":"Script",
+		"ScriptExtension":{
+			"Target":"standard",
+			"FileName":"c:/cygwin/bin/ruby",
+			"Arguments":"./statisticsGenerationScript/cpu_utilization.rb"
+		}
+	}
+}

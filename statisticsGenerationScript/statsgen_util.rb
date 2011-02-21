@@ -1,4 +1,4 @@
-$:.push File.dirname(File.dirname(__FILE__)) + "/visualizeScript"
+$:.push File.dirname(__FILE__) + "/../visualizeScript"
 require 'rubygems'
 require 'json'
 require 'util'
@@ -10,6 +10,6 @@ def generate_statisticsfile(&f)
   raw_res,logs = ARGF.readlines().break{|line|
     line.chop == '---'
   }
-  resource = JSON.parse(raw_res.join.downcase)
+  resource = JSON.parse(raw_res.join)
   f.call(resource,logs)
 end
