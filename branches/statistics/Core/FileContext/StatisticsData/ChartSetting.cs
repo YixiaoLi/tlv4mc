@@ -28,7 +28,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <summary>
         /// 最初に描画するグラフタイプ
         /// </summary>
-        public SeriesChartType DefaultType { get; set; }
+        public AvailableChartType DefaultType { get; set; }
         /// <summary>
         /// 目盛の間隔
         /// </summary>
@@ -52,7 +52,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             AxisXTitle = string.Empty;
             AxisYTitle = string.Empty;
             SeriesTitle = string.Empty;
-            DefaultType = SeriesChartType.Pie;
+            DefaultType = AvailableChartType.Pie;
             MajorTickMarkInterval = 0.0;//null;
             MinorTickMarkInterval = 0.0;//null;
             MajorGridVisible = false;
@@ -76,10 +76,44 @@ namespace NU.OJL.MPRTOS.TLV.Core
     /// </summary>
     public enum AvailableChartType
     {
-        Bar = SeriesChartType.Bar,
-        Column = SeriesChartType.Column,
-        Line = SeriesChartType.Line,
-        Pie = SeriesChartType.Pie,
-        Histogram = SeriesChartType.Column
+        Bar,
+        Column,
+        Line,
+        Pie,
+        Histogram
     }
+
+    public static class AvailableChartTypeExtension
+    {
+        public static SeriesChartType GetChartType(this AvailableChartType type)
+        {
+            SeriesChartType result;
+
+            switch (type)
+            {
+                case AvailableChartType.Bar: 
+                    result = SeriesChartType.Bar; 
+                    break;
+
+                case AvailableChartType.Column:
+                case AvailableChartType.Histogram:
+                    result = SeriesChartType.Column;
+                    break;
+
+                case AvailableChartType.Line:
+                    result = SeriesChartType.Line;
+                    break;
+                    
+                case AvailableChartType.Pie:
+                    result = SeriesChartType.Pie;
+                    break;
+
+                default:
+                    throw new Exception("無効なグラフタイプです");
+            }
+
+            return result;
+        }
+    }
+
 }

@@ -83,7 +83,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             this.Text += " - 統計情報ビューア";
             
             chart1.Series[0].Name = Data.Setting.SeriesTitle;
-            chart1.Series[0].ChartType = Data.Setting.DefaultType;
+            chart1.Series[0].ChartType = Data.Setting.DefaultType.GetChartType();
             comboBox1.SelectedItem = Enum.GetName(typeof(AvailableChartType), Data.Setting.DefaultType);
             
             chart1.ChartAreas[0].AxisX.Title = Data.Setting.AxisXTitle;
@@ -103,10 +103,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             
             chart1.ChartAreas[0].AxisX.IntervalOffset = 0;
-
+            chart1.Series[0].IsVisibleInLegend = false;
             switch (comboBox1.Text)
             {
                 case "Pie":
+                    chart1.Series[0].IsVisibleInLegend = true;
                     chart1.Series[0].CustomProperties = "PieStartAngle=270";
                     if (_existYLabel)
                     {
@@ -128,7 +129,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                     break;
 
                 case "Histogram":
-                    setDefaultYLabel();
+                    chart1.Series[0].Label = "";
                     chart1.Series[0].CustomProperties = "PointWidth=1";
                     chart1.ChartAreas[0].AxisX.IntervalOffset = (chart1.Series[0].Points[1].XValue - chart1.Series[0].Points[0].XValue) / 2.0;
                     break;
@@ -162,7 +163,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            chart1.Series[0].ChartType = (SeriesChartType)Enum.Parse(typeof(AvailableChartType), comboBox1.Text);
+            AvailableChartType type = (AvailableChartType)Enum.Parse(typeof(AvailableChartType), comboBox1.Text);
+            chart1.Series[0].ChartType = type.GetChartType();
             setEachTypeSetting();
         }      
     }
