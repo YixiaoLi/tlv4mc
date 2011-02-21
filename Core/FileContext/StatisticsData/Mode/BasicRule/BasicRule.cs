@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NU.OJL.MPRTOS.TLV.Base;
 
-namespace NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules
+namespace NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Mode
 {
     public enum BasicRuleMethod
     {

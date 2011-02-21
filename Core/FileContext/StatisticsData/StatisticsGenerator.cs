@@ -7,7 +7,7 @@ using NU.OJL.MPRTOS.TLV.Base;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using NU.OJL.MPRTOS.TLV.Core.Controls.Forms;
-using NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules;
+using NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Mode;
 using System.Diagnostics;
 using System.Windows.Forms.DataVisualization.Charting;
 

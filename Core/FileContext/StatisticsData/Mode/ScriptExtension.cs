@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules
+namespace NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Mode
 {
     public class ScriptExtension
     {
