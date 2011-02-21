@@ -9,6 +9,7 @@ using System.Drawing;
 using NU.OJL.MPRTOS.TLV.Core.Controls.Forms;
 using NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules;
 using System.Diagnostics;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
@@ -132,6 +133,12 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
                     Statistics stats = Generate(rules[tgt]);                                       
 
+                    if(stats.Series.Points.Count == 0)
+                    {
+                        throw new Exception("データポイントを取得できませんでした。" +
+                                            "リソースヘッダ、リソースファイルに定義された名前を使用しているか確認してください。");
+                    }
+
                     sd.Statisticses.Add(stats);
                 }
                 catch (Exception e)
@@ -153,6 +160,11 @@ namespace NU.OJL.MPRTOS.TLV.Core
         {
             Statistics stats = new Statistics(rule.Name);
             stats.Setting = rule.Setting;
+            if (string.IsNullOrEmpty(rule.Setting.SeriesTitle))
+            {
+                stats.Setting.SeriesTitle = Path.GetFileName(_traceLogFilePath);
+            }
+                
 
             switch (rule.Mode)
             {
@@ -258,7 +270,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             string AppPath = System.Windows.Forms.Application.StartupPath;
             p.StartInfo.WorkingDirectory = AppPath;
 
-            string json = "";
+            string sf = "";
 
             p.Start();
             p.StandardInput.WriteLine(_resourceData.ToJson());  // 修正：変数名をこのクラス用へ
@@ -275,7 +287,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
             while (!(p.HasExited && p.StandardOutput.EndOfStream))
             {
-                json += p.StandardOutput.ReadLine();
+                sf += p.StandardOutput.ReadLine();
             }
 
             if (p.ExitCode != 0)
@@ -290,14 +302,31 @@ namespace NU.OJL.MPRTOS.TLV.Core
             p.Close();
 
             #endregion StandardFrmatConverter.generateByNewRule　の一部をコピペして修正
+                        
+            Statistics newStats = ApplicationFactory.JsonSerializer.Deserialize<Statistics>(sf);
 
-            Statistics newStats = ApplicationFactory.JsonSerializer.Deserialize<Statistics>(json);
-
-
-            if (newStats.Setting != null)
+            // 外部プロセスで得たSettingの内容に上書き
+            Json json = new Json().Parse(sf);
+            foreach (KeyValuePair<string, Json> j in json.GetKeyValuePairEnumerator())
             {
-                stats.Setting = newStats.Setting;
+                if (j.Key == "Setting")
+                {
+                    foreach(KeyValuePair<string, Json> jj in j.Value.GetKeyValuePairEnumerator())
+                    switch (jj.Key) 
+                    {
+                        case "Title": stats.Setting.Title = jj.Value; break;
+                        case "AxisXTitle": stats.Setting.AxisXTitle = jj.Value; break;
+                        case "AxisYTitle": stats.Setting.AxisYTitle = jj.Value; break;
+                        case "SeriesTitle": stats.Setting.SeriesTitle = jj.Value; break;
+                        case "DefaultType": stats.Setting.DefaultType = (AvailableChartType)Enum.Parse(typeof(AvailableChartType), jj.Value); break;
+                        case "MajorTickMarkInterval": stats.Setting.MajorTickMarkInterval = double.Parse(jj.Value.ToString()); break;
+                        case "MinorTickMarkInterval": stats.Setting.MinorTickMarkInterval = double.Parse(jj.Value.ToString()); break;
+                        case "MajorGridVisible": stats.Setting.MajorGridVisible = jj.Value; break;
+                        case "MinorGridVisible": stats.Setting.MinorGridVisible = jj.Value; break;
+                    }
+                }
             }
+            
             stats.Series = newStats.Series;
         }
 
