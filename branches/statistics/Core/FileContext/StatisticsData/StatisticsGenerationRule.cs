@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Rules;
+using NU.OJL.MPRTOS.TLV.Core.FileContext.StatisticsData.Mode;
 
 namespace NU.OJL.MPRTOS.TLV.Core
 {
