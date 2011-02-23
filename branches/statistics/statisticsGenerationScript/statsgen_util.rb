@@ -109,42 +109,49 @@ end
 # 統計情報ファイルを標準出力できます。
 class StatisticsFile
 	attr_accessor:name
-	attr_reader:setting
-	attr_reader:series
+	attr_reader:setting  # StatisticsFile_Settingのオブジェクト
+	attr_reader:series   # StatisticsFile_Seriesのオブジェクト
+	attr_reader:json
 
 	# name: 統計情報名
 	def initialize( name = "__tmp__",\
                       setting = StatisticsFile_Setting.new,\
 					  series = StatisticsFile_Series.new)
 		@name = name
-		@setting = setting
-		@series = series
+		@json = { @name => {}}
+		self.set_Setting( setting )
+		self.set_Series( series )
 	end
 
+	# StatisticsFile_Settingオブジェクト用セッター
 	def set_Setting(setting)
 		if setting.is_a?(StatisticsFile_Setting) then 
 			@setting = setting
-			@json.store( "Setting", @setting.json )
+			@json[@name].store( "Setting", @setting.json )
 		end
 	end
 
+	# StatisticsFile_Seriesオブジェクト用セッター
 	def set_Series(series)
-		if setting.is_a?(StatisticsFile_Series) then 
+		if series.is_a?(StatisticsFile_Series) then 
 			@series = series
-			@json.store( "Series", @series.json )
+			@json[@name].store( "Series", @series.json )
 		end
-	end
-
-	def get_json
-		return @json = { @name => {"Setting" => @setting.json, "Series" => @series.json }}
 	end
 
 	# 内容をJSONで標準出力
 	def output
-		print JSON.pretty_generate(self.get_json)
+		print JSON.pretty_generate(@json)
 	end
 end
 
+test = StatisticsFile.new
+setting = StatisticsFile_Setting.new
+setting.set_Title "oppai"
+test.set_Setting(setting)
+test.series.add(0,1)
+
+test.output
 
 # 統計情報の生成を開始するメソッド
 # f: 統計情報の生成手順を記述したブロック
