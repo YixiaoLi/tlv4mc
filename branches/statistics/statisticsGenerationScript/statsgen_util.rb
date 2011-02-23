@@ -145,13 +145,7 @@ class StatisticsFile
 	end
 end
 
-test = StatisticsFile.new
-setting = StatisticsFile_Setting.new
-setting.set_Title "oppai"
-test.set_Setting(setting)
-test.series.add(0,1)
 
-test.output
 
 # 統計情報の生成を開始するメソッド
 # f: 統計情報の生成手順を記述したブロック
