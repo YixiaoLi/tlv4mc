@@ -13,15 +13,15 @@ end
 
 # 統計情報ファイル内のSetting
 class StatisticsFile_Setting
-	attr_reader:json
-	attr_reader:title
-	attr_reader:axisXTitle
-	attr_reader:axisYTitle
-	attr_reader:defaultType
-	attr_reader:majorTickMarkInterval
-	attr_reader:minorTickMarkInterval
-	attr_reader:majorGridVisible
-	attr_reader:minorGridVisible
+	attr_reader :json
+	attr_reader :title
+	attr_reader :axisXTitle
+	attr_reader :axisYTitle
+	attr_reader :defaultType
+	attr_reader :majorTickMarkInterval
+	attr_reader :minorTickMarkInterval
+	attr_reader :majorGridVisible
+	attr_reader :minorGridVisible
 
 	def initialize
 		@json = {}
@@ -78,7 +78,7 @@ end
 
 # 統計情報ファイル内のSeries
 class StatisticsFile_Series
-	attr_reader:json
+	attr_reader :json
 
 	def initialize
 		@points = []
@@ -108,10 +108,10 @@ end
 # このクラスを構成する要素を設定し、outputメソッドを呼ぶことで
 # 統計情報ファイルを標準出力できます。
 class StatisticsFile
-	attr_accessor:name
-	attr_reader:setting  # StatisticsFile_Settingのオブジェクト
-	attr_reader:series   # StatisticsFile_Seriesのオブジェクト
-	attr_reader:json
+	attr_accessor :name
+	attr_reader :setting  # StatisticsFile_Settingのオブジェクト
+	attr_reader :series   # StatisticsFile_Seriesのオブジェクト
+	attr_reader :json
 
 	# name: 統計情報名
 	def initialize( name = "__tmp__",\
