@@ -356,7 +356,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             lastLogs = new Dictionary<string, LogData>();
             foreach (Resource res in ResourceData.Resources)
             {
-                for (int i = TraceLogData.LogDataBase.Count-1; i > 0; i--)
+                for (int i = TraceLogData.LogDataBase.Count-1; i >= 0; i--)
                 {
                     if (!res.Name.Contains("Current") && TraceLogData.LogDataBase[i].Object.Name.Equals(res.Name))
                     {

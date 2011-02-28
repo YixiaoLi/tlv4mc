@@ -43,14 +43,18 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using NU.OJL.MPRTOS.TLV.Base;
-using NU.OJL.MPRTOS.TLV.Base.Controls;
 using NU.OJL.MPRTOS.TLV.Third;
 using System.Collections;
 using NU.OJL.MPRTOS.TLV.Core.Search;
-using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
 using System.Diagnostics;
 using System.Threading;
+using NU.OJL.MPRTOS.TLV.Base;
+using NU.OJL.MPRTOS.TLV.Base.Controls;
+using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
+using NU.OJL.MPRTOS.TLV.Core.Search;
+using NU.OJL.MPRTOS.TLV.Core.Search.SearchConditions;
+using NU.OJL.MPRTOS.TLV.Core.Search.Filters;
+
 
 
 
@@ -68,8 +72,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         private int _mouseDownX;
         private bool _mouseDown;
 
-        private TraceLogSearcher _searcher = null;  //検索処理を行うオブジェクト
-        private detailSearchForm _detailSearchForm = null; //オブジェクト配置テスト用のウィンドウオブジェクト
+        private TraceLogSearcher _traceLogSearcher = null;
+        private DetailSearchForm _detailSearchForm = null; //オブジェクト配置テスト用のウィンドウオブジェクト
         
 
         //簡易検索に必要な変数群
@@ -81,7 +85,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
 
         //時系列順に並んだ図形データ
-        private List<VisualizeLog> _visLogs = null;
+        private List<VisualizeLog> _eventLogs = null;
 
         public override int TimeLineX
         {
@@ -143,7 +147,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             hScrollBar.Value = hScrollBar.Minimum;
             viewingAreaToolStrip.Enabled = false;
             searchToolStrip.Enabled = false;
-            _searcher = new SimpleSearch();
+            _traceLogSearcher = new TraceLogSearcher();
 
             imageList.Images.Add("visualize", Properties.Resources.visualize);
             imageList.Images.Add("resource", Properties.Resources.resource);
@@ -587,7 +591,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             #region detailSearchForm初期化
             detailSearchButton.Click += (o, _e) =>
             {
-                _detailSearchForm = new detailSearchForm(_data, TimeLine.MinTime.Value, TimeLine.MaxTime.Value);
+                _detailSearchForm = new DetailSearchForm(_data, _eventLogs, TimeLine.MinTime.Value, TimeLine.MaxTime.Value);
                 _detailSearchForm.Visible = true;
                 ApplicationFactory.BlackBoard.DetailSearchFlag = true;
                 _detailSearchForm.Move += (_o, __e) =>
@@ -1002,14 +1006,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         private void searchForward()
         {
-            SearchCondition condition = new SearchCondition();
-            condition.resourceName = _resourceName;
-            condition.ruleName = _ruleName;
-            condition.eventName = _eventName;
-            condition.eventDetail = _eventDetail;
-            _searcher.setSearchData(_visLogs, condition, null);
+            BaseCondition baseCondition = new BaseCondition();
+            baseCondition.conditionID = 0;
+            baseCondition.resourceName = _resourceName;
+            baseCondition.ruleName = _ruleName;
+            baseCondition.eventName = _eventName;
+            baseCondition.eventDetail = _eventDetail;
+            baseCondition.normTime = ApplicationFactory.BlackBoard.CursorTime.Value;
 
-            VisualizeLog hitLog = _searcher.searchForward(ApplicationFactory.BlackBoard.CursorTime.Value);
+            SimpleFilter filter = new SimpleFilter(_eventLogs, baseCondition);
+            _traceLogSearcher.setSearchData(_eventLogs, filter);
+            VisualizeLog hitLog = _traceLogSearcher.searchForward();
 
             if( hitLog != null)
             {
@@ -1035,14 +1042,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         private void searchBackward()
         {
-            SearchCondition condition = new SearchCondition();
-            condition.resourceName = _resourceName;
-            condition.ruleName = _ruleName;
-            condition.eventName = _eventName;
-            condition.eventDetail = _eventDetail;
-            _searcher.setSearchData(_visLogs, condition, null);
 
-            VisualizeLog hitLog = _searcher.searchBackward(ApplicationFactory.BlackBoard.CursorTime.Value);
+            BaseCondition baseCondition = new BaseCondition();
+            baseCondition.resourceName = _resourceName;
+            baseCondition.ruleName = _ruleName;
+            baseCondition.eventName = _eventName;
+            baseCondition.eventDetail = _eventDetail;
+            baseCondition.normTime = ApplicationFactory.BlackBoard.CursorTime.Value;
+
+            SimpleFilter filter = new SimpleFilter(_eventLogs, baseCondition);
+            _traceLogSearcher.setSearchData(_eventLogs, filter);
+            VisualizeLog hitLog = _traceLogSearcher.searchBackward();
+
             if (hitLog != null)
             {
                 decimal jumpTime = hitLog.fromTime;
@@ -1068,14 +1079,14 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         private void searchWhole()
         {
-            SearchCondition condition = new SearchCondition();
-            condition.resourceName = _resourceName;
-            condition.ruleName = _ruleName;
-            condition.eventName = _eventName;
-            condition.eventDetail = _eventDetail;
-            _searcher.setSearchData(_visLogs, condition, null);
+            BaseCondition baseCondition = new BaseCondition();
+            baseCondition.resourceName = _resourceName;
+            baseCondition.ruleName = _ruleName;
+            baseCondition.eventName = _eventName;
+            baseCondition.eventDetail = _eventDetail;
+            baseCondition.normTime = ApplicationFactory.BlackBoard.CursorTime.Value;
             
-            List<VisualizeLog> hitLogs =  _searcher.searchWhole();
+            List<VisualizeLog> hitLogs =  _traceLogSearcher.searchWhole();
             Color color = ApplicationFactory.ColorFactory.RamdomColor();
 
             if (hitLogs.Count > 0)
@@ -1323,7 +1334,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
         private void sortByTime()
         {
-            _visLogs = new List<VisualizeLog>(); //イベント情報を格納する
+            _eventLogs = new List<VisualizeLog>(); //イベント情報を格納する
 
             //_visLogs の要素を作成し、 随時_visLogs に加えていく
             foreach (KeyValuePair<string, EventShapes> evntShapesList in this._data.VisualizeShapeData.RuleResourceShapes)
@@ -1340,20 +1351,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                     {
                         if (evntShape.From.Value < 0)
                         {
-                            _visLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, 0));
+                            _eventLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, 0));
                         }
                         else
                         {
-                            _visLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
+                            _eventLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
                         }
                     }
                 }
             }
 
             //_visLogsの要素を時間でソート
-            VisualizeLog[] tmpLogs = _visLogs.ToArray();
+            VisualizeLog[] tmpLogs = _eventLogs.ToArray();
             Array.Sort(tmpLogs);
-            _visLogs = tmpLogs.ToList();
+
+            //ソートが完了したのでIDを付与
+            for (int i = 0; i < tmpLogs.Length; i++)
+            {
+                tmpLogs[i].logID = i;
+            }
+
+            _eventLogs = tmpLogs.ToList();
         }
 
         //コンボボックスのドロップダウンボックスのサイズを自動調整

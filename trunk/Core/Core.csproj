@@ -241,16 +241,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Search\BaseConditionPanel.cs">
+    <Compile Include="Search\ConditionPanels\BaseConditionPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Search\ConditionPanels\ConditionPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Search\ConditionRegister.cs" />
-    <Compile Include="Search\DetailSearchWithTiming.cs" />
-    <Compile Include="Search\RefiningConditionPanel.cs">
+    <Compile Include="Search\Filters\DetailFilter.cs" />
+    <Compile Include="Search\Filters\SearchFilter.cs" />
+    <Compile Include="Search\Filters\SimpleFilter.cs" />
+    <Compile Include="Search\Filters\TimingFilter.cs" />
+    <Compile Include="Search\ConditionPanels\BaseConditionWithTimingPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Search\SearchCondition.cs" />
-    <Compile Include="Search\SimpleSearch.cs" />
+    <Compile Include="Search\SearchConditions\BaseCondition.cs" />
+    <Compile Include="Search\SearchConditions\BaseConditionWithTiming.cs" />
+    <Compile Include="Search\SearchConditions\ErrorCondition.cs" />
     <Compile Include="Search\DetailSearchForm.cs">
       <SubType>Form</SubType>
     </Compile>

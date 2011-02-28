@@ -269,6 +269,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             #endregion
 
+
             //_windowManager.MainPanel = new Control();
             //_windowManager.MainPanel.Resize += (o, e) => _windowManager.MainPanel.Invalidate();
             //_windowManager.MainPanel.Paint += (o, e) =>
@@ -352,6 +353,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
         }
 
+        
         protected override void OnDragEnter(DragEventArgs drgevent)
         {
             base.OnDragEnter(drgevent);
@@ -382,27 +384,30 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
                 string[] s = ((string[])(drgevent.Data.GetData(DataFormats.FileDrop)));
 
-				if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.StandardFormatTraceLogFileExtension))
-				{
-					_commandManager.Do(new OpenCommand(s[0]));
-				}
-				else if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.TraceLogFileExtension))
-				{
-					_commandManager.Do(new NewCommand(null, s[0]));
-				}
-				else if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension))
-				{
-					_commandManager.Do(new NewCommand(s[0], null));
-				}
-				else if (s.Length == 2)
-				{
-					string resFilePath = Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension) ? s[0] : s[1];
-					string logFilePath = Path.GetExtension(s[1]).Contains(Properties.Resources.TraceLogFileExtension) ? s[1] : s[0];
+                if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.StandardFormatTraceLogFileExtension))
+                {
+                    _commandManager.Do(new OpenCommand(s[0]));
+                }
+                else if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.TraceLogFileExtension))
+                {
+                    //_commandManager.Do(new NewCommand(null, s[0]));
+                    MessageBox.Show("リソースファイルを一緒にドロップしてください", "ファイル入力エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension))
+                {
+                    //_commandManager.Do(new NewCommand(s[0], null));
+                    MessageBox.Show("トレースログファイルを一緒にドロップしてください", "ファイル入力エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else if (s.Length == 2)
+                {
+                    string resFilePath = Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension) ? s[0] : s[1];
+                    string logFilePath = Path.GetExtension(s[1]).Contains(Properties.Resources.TraceLogFileExtension) ? s[1] : s[0];
                     _commandManager.Do(new NewCommand(resFilePath, logFilePath));
-				}
-
+                }
             }
+            
             ApplicationFactory.BlackBoard.dragFlag = false;
+
         }
 
         private void settingLoad()
