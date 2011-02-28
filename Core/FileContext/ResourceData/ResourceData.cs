@@ -46,6 +46,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 	{
 		public string TimeScale { get; private set; }
         public int TimeRadix { get; private set; }
+        public int ProcessorNum { get; private set; }
         public string Path { get; set; }
 		public List<string> ConvertRules { get; private set; }
 		public List<string> VisualizeRules { get; private set; }
@@ -56,6 +57,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 		{
 			TimeScale = string.Empty;
 			TimeRadix = 10;
+            ProcessorNum = 1;
 			ConvertRules = null;
 			VisualizeRules = null;
 			ResourceHeaders = null;

@@ -50,9 +50,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 {
     public class NewCommand : AbstractFileChangeCommand
 	{
-		private OpenResourceFileAndTraceLogFileOpenForm _fileOpenDialog = new OpenResourceFileAndTraceLogFileOpenForm() { StartPosition = FormStartPosition.CenterParent};
-		private BackGroundWorkForm _convertBw = new BackGroundWorkForm() { Text = "共通形式トレースログへ変換中", StartPosition = FormStartPosition.CenterParent };
-		private BackGroundWorkForm _setDataBw = new BackGroundWorkForm() { Text = "初期化中", ProgressBarText = "", Message = "データを設定中", Style = ProgressBarStyle.Marquee, CanCancel = false, StartPosition = FormStartPosition.CenterParent };
+        private OpenResourceFileAndTraceLogFileOpenForm _fileOpenDialog = new OpenResourceFileAndTraceLogFileOpenForm() { StartPosition = FormStartPosition.CenterParent };
+        private BackGroundWorkForm _convertBw = new BackGroundWorkForm() { Text = "共通形式トレースログへ変換中", StartPosition = FormStartPosition.CenterParent };
+        private BackGroundWorkForm _setDataBw = new BackGroundWorkForm() { Text = "初期化中", ProgressBarText = "", Message = "データを設定中", Style = ProgressBarStyle.Marquee, CanCancel = false, StartPosition = FormStartPosition.CenterParent };
 		private TraceLogVisualizerData _cftl = null;
 		private string _resFilePath;
 		private string _logFilePath;
@@ -141,11 +141,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 				}
 				if (_fileOpenDialog.ShowDialog() == DialogResult.OK)
 				{
-					_resFilePath = _fileOpenDialog.ResourceFilePath;
-					_logFilePath = _fileOpenDialog.TraceLogFilePath;
+                    _resFilePath = _fileOpenDialog.ResourceFilePath;
+                    _logFilePath = _fileOpenDialog.TraceLogFilePath;
 
-					_convertBw.RunWorkerAsync();
-				}
+                    _convertBw.RunWorkerAsync();
+                }
+
 			}
 			else
 			{

@@ -59,7 +59,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
         private TraceLogData _tracelogData;
         private VisualizeData _vizData;
 
-
         public string Name { get { return ToString(); } }
         public VisualizeRule Rule { get { return _rule; } }
         public Event Event { get { return _evnt; } }
@@ -212,7 +211,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
                         addDrawShape(evnt.Figures, fl, log, evnt); //flの時刻が起点 logの時刻が終点
                         delKeys.Add(kpv.Key);
-
                     }
                 }
 
@@ -245,18 +243,36 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
                 if (count == logData.Count()) //logがlogDataの最後の要素の場合
                 {
-                    if (_lastLogs.ContainsKey(log.Object.Name) && (log.Id == _lastLogs[log.Object.Name].Id))
+                    if (evnt.Name.Equals("runningTaskChangeEvent"))
                     {
-                        LogData fl = new LogData(_tracelogData.MaxTime, log.Object); //最終イベントlogと同じイベントfl を作成し、 flの時間をログの最終時刻にしておく
-                        addDrawShape(evnt.Figures, log, fl, evnt); // log の時刻から fl の時刻まで log のイベントを可視化できる
+                        // evnt が"実行タスク"(runningTaskChangeEvent)の場合、図形を強制的に挿入
+
+                        if (_resData.ProcessorNum > 1) //マルチコアの場合
+                        {
+                           setLastRUNNINGShape(evnt, logData);
+                        }
+                        else //シングルコアの場合
+                        {
+                             if (log.Object.Attributes["state"].Value.Equals("RUNNING"))
+                             {
+                                 LogData fl = new LogData(_tracelogData.MaxTime, log.Object); //最終イベントlogと同じイベントfl を作成し、 flの時間をログの最終時刻にしておく
+                                 addDrawShape(evnt.Figures, log, fl, evnt); // log の時刻から fl の時刻まで log のイベントを可視化できる
+                             }
+                        }
                     }
-                    else if (evnt.Name.Equals("runningTaskChangeEvent"))
+                    else if (_lastLogs.ContainsKey(log.Object.Name) && (log.Id == _lastLogs[log.Object.Name].Id))
                     {
-                        int j = 0;
-                        //LogData fl = new LogData(_tracelogData.MaxTime, log.Object); //最終イベントlogと同じイベントfl を作成し、 flの時間をログの最終時刻にしておく
-                        //addDrawShape(evnt.Figures, log, fl, evnt); // log の時刻から fl の時刻まで log のイベントを可視化できる
+                        if (log is AttributeChangeLogData)
+                        {
+                            if (!((AttributeChangeLogData)log).Attribute.Value.ToString().Equals("DORMANT"))//DORMANT以外の状態遷移の場合、最後にダミーログを追加
+                            {
+                                LogData fl = new LogData(_tracelogData.MaxTime, log.Object); //最終イベントlogと同じイベントfl を作成し、flの時間をログの最終時刻にしておく
+                                addDrawShape(evnt.Figures, log, fl, evnt); // log の時刻から fl の時刻まで log のイベントを可視化できる
+                            }
+                        }
                     }
-                }
+                   
+                }  
             }
         }
 
@@ -546,6 +562,47 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 sb.Append(Target.Name);
             }
             return sb.ToString();
+        }
+
+
+        // TraceLogDisplayPanel 上の一番上の行には 実行中のタスクが図形として表示される
+        // チケット#156の問題によって、最後に実行状態になっていたタスクが表示されないので
+        // 以下の関数を用いて強制的に最後に表示すべき図形を _drawShapes に挿入する
+        private void setLastRUNNINGShape(Event evnt, LogDataEnumeable logData)
+        {
+            //各コアで最後にTASK が RUNNINGになったログを見つける
+            Dictionary<string, LogData> lastLogs = new Dictionary<string, LogData>();
+            for (int i = 0; i < _resData.ProcessorNum; i++)
+            {
+                string id = (i+1).ToString();
+                LogData tmpLastRUNNINGLog = null;
+                foreach (LogData log in logData)
+                {
+                    if (log.Object.Type.Equals("Task"))
+                    {
+                        if (log.Object.Attributes["prcId"].Value.ToString().Equals(id))
+                        {
+                            if (log.ToString().Contains("RUNNING"))
+                            {
+                                tmpLastRUNNINGLog = log;
+                            }
+                        }
+                    }
+                }
+                lastLogs.Add(id, tmpLastRUNNINGLog);
+            }
+
+            //上記のログを複製し、その時刻を最終時刻に書き換える。そして元のログと複製ログから図形を作成する
+            for (int i = 0; i < _resData.ProcessorNum; i++ )
+            {
+                string id = (i + 1).ToString();
+                LogData lastRUNNINGLog = lastLogs[id];
+                if (lastRUNNINGLog != null)
+                {
+                    LogData newLastRUNNINGLog = new LogData(_tracelogData.MaxTime, lastRUNNINGLog.Object);
+                    addDrawShape(evnt.Figures, lastRUNNINGLog, newLastRUNNINGLog, evnt); // log の時刻から fl の時刻まで log のイベントを可視化できる
+                }
+            }
         }
     }
 }
