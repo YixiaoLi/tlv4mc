@@ -39,15 +39,74 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
+using NU.OJL.MPRTOS.TLV.Core.Search.SearchConditions;
+using NU.OJL.MPRTOS.TLV.Core.Search.Filters;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
-     abstract class TraceLogSearcher
+    public class TraceLogSearcher
     {
-         abstract public void setSearchData(List<VisualizeLog> visLogs, SearchCondition condition, List<SearchCondition> refiningCondition);
-         abstract public void setSearchData(List<VisualizeLog> visLogs, SearchCondition condition, List<SearchCondition> refiningCondition, Boolean isAnd);
-         abstract public VisualizeLog searchForward(decimal time);
-         abstract public VisualizeLog searchBackward(decimal time);
-         abstract public List<VisualizeLog> searchWhole();
+        private SearchFilter _filter = null;
+        private List<VisualizeLog> _eventLogs = null;
+        private decimal _normTime = 0;
+
+
+        public void setSearchData(List<VisualizeLog> eventLogs, SearchFilter filter)
+        {
+            _eventLogs = eventLogs;
+            _filter = filter;
+        }
+
+        public VisualizeLog searchForward()
+        {
+            VisualizeLog hitLog = null;
+            _normTime = ApplicationFactory.BlackBoard.CursorTime.Value;
+
+            foreach (VisualizeLog targetLog in _eventLogs)
+            {
+                if (_filter.doMatching(targetLog))
+                {
+                    if (targetLog.fromTime > _normTime)
+                    {
+                        hitLog = targetLog;
+                        break;
+                    }
+                }
+            }
+            return hitLog;
+        }
+
+        public VisualizeLog searchBackward()
+        {
+            VisualizeLog hitLog = null;
+            _normTime = ApplicationFactory.BlackBoard.CursorTime.Value;
+
+            for (int i = _eventLogs.Count - 1; i > 0; i--)
+            {
+                VisualizeLog targetLog = _eventLogs[i];
+                if (_filter.doMatching(targetLog))
+                {
+                    if (targetLog.fromTime < _normTime)
+                    {
+                        hitLog = targetLog;
+                        break;
+                    }
+                }
+            }
+            return hitLog;
+        }
+
+        public List<VisualizeLog> searchWhole()
+        {
+            List<VisualizeLog> hitLogs = new List<VisualizeLog>();
+            foreach (VisualizeLog targetLog in _eventLogs)
+            {
+                if (_filter.doMatching(targetLog))
+                {
+                    hitLogs.Add(targetLog);
+                }
+            }
+            return hitLogs;
+        }
     }
 }

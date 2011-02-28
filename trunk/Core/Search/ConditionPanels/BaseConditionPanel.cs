@@ -39,14 +39,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
+using NU.OJL.MPRTOS.TLV.Core.Search.Filters;
+using NU.OJL.MPRTOS.TLV.Core.Search.SearchConditions;
+using NU.OJL.MPRTOS.TLV.Core.Search.ConditionPanels;
 
 
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
-    class BaseConditionPanel : Panel
+    public class BaseConditionPanel : ConditionPanel
     {
         protected TraceLogVisualizerData _data;
-        protected int _baseConditionID;
+        protected List<VisualizeLog> _eventLogs;
+        protected BaseCondition _baseCondition;
         protected System.Drawing.Size _parentPanelSize;
         protected Label _displayLabel;
         protected ComboBox _targetResourceForm;
@@ -54,47 +59,42 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         protected ComboBox _targetEventForm;
         protected ComboBox _targetEventDetailForm;
         
-        protected SearchCondition _searchCondition;
-        protected Button _deleteButton;
-        public Button DeleteButton{ set {_deleteButton = value ;} get { return _deleteButton; }}
+        protected BaseConditionPanel()
+        {
+        }
 
-
-        public BaseConditionPanel(TraceLogVisualizerData data, int parentPanelID, System.Drawing.Size parentPanelSize)
+        public BaseConditionPanel(TraceLogVisualizerData data, List<VisualizeLog> eventLogs, int parentID, System.Drawing.Size parentPanelSize)
         {
             _data = data;
-            _baseConditionID = parentPanelID;  //基本条件番号 = 親パネルのID 
+            conditionID = parentID;  //基本条件番号 = 親パネルのID 
+            parentPanelID = parentID;
             _parentPanelSize = parentPanelSize;
-            _searchCondition = new SearchCondition();
+            _baseCondition = new BaseCondition();
             initializeComponents();
         }
 
-        protected BaseConditionPanel() //継承元以外からは呼んではいけない
-        {
-        }
-
-
-        private void initializeComponents()
+        protected virtual void initializeComponents()
         {
             _displayLabel = new Label();
-            _displayLabel.Name = "displayLabel:" + _baseConditionID;
-            _displayLabel.Text = "基本条件" + _baseConditionID;
+            _displayLabel.Name = "displayLabel:" + conditionID;
+            _displayLabel.Text = "基本条件" + (conditionID + 1);
             _displayLabel.Font = new System.Drawing.Font("Century", 12, System.Drawing.FontStyle.Underline);
             _targetResourceForm = new ComboBox();
-            _targetResourceForm.Name = "resourceForm:" + _baseConditionID;
+            _targetResourceForm.Name = "resourceForm:" + conditionID;
             _targetResourceForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetRuleForm = new ComboBox();
-            _targetRuleForm.Name = "ruleForm:" + _baseConditionID;
+            _targetRuleForm.Name = "ruleForm:" + conditionID;
             _targetRuleForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetEventForm = new ComboBox();
-            _targetEventForm.Name = "eventForm:" + _baseConditionID;
+            _targetEventForm.Name = "eventForm:" + conditionID;
             _targetEventForm.DropDownStyle = ComboBoxStyle.DropDownList;
             _targetEventDetailForm = new ComboBox();
-            _targetEventDetailForm.Name = "eventDetailForm:" + _baseConditionID;
+            _targetEventDetailForm.Name = "eventDetailForm:" + conditionID;
             _targetEventDetailForm.DropDownStyle = ComboBoxStyle.DropDownList;
-            _deleteButton = new Button();
-            _deleteButton.Name = "deleteButton" + _baseConditionID;
-            _deleteButton.Text = "削除";
-            _deleteButton.Size = new System.Drawing.Size(37, 25);
+            deleteButton = new Button();
+            deleteButton.Name = "deleteButton" + conditionID;
+            deleteButton.Text = "削除";
+            deleteButton.Size = new System.Drawing.Size(37, 25);
             _targetResourceForm.Enabled = false;
             _targetRuleForm.Enabled = false;
             _targetEventForm.Enabled = false;
@@ -112,7 +112,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             this.Controls.Add(_targetEventForm);
             this.Controls.Add(_targetEventDetailForm);
             //this.Controls.Add(_denyConditionBox);
-            this.Controls.Add(_deleteButton);
+            this.Controls.Add(deleteButton);
             this.Size = new System.Drawing.Size(_parentPanelSize.Width - 25, _targetResourceForm.Location.Y + _targetResourceForm.Height + 1);
         }
 
@@ -121,8 +121,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         {
             _targetResourceForm.SelectedIndexChanged += (o, _e) =>
             {
-                _searchCondition.resourceName = (string)_targetResourceForm.SelectedItem;
-                _searchCondition.resourceType = _searchCondition.resourceType = _data.ResourceData.Resources[(string)_targetResourceForm.SelectedItem].Type;
+                _baseCondition.resourceName = (string)_targetResourceForm.SelectedItem;
+                _baseCondition.resourceType = _baseCondition.resourceType = _data.ResourceData.Resources[(string)_targetResourceForm.SelectedItem].Type;
                 _targetRuleForm.Enabled = false;
                 _targetRuleForm.Items.Clear();
                 _targetEventForm.Enabled = false;
@@ -139,26 +139,26 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 arrangeLocations();
                 changePanelSize(_targetEventDetailForm.Location.X + _targetEventDetailForm.Width);
 
-                _searchCondition.ruleName = null;
-                _searchCondition.ruleDisplayName = null;
-                _searchCondition.eventName = null;
-                _searchCondition.eventDisplayName = null;
-                _searchCondition.eventDetail = null;
+                _baseCondition.ruleName = null;
+                _baseCondition.ruleDisplayName = null;
+                _baseCondition.eventName = null;
+                _baseCondition.eventDisplayName = null;
+                _baseCondition.eventDetail = null;
             };
 
             _targetRuleForm.SelectedIndexChanged += (o, _e) =>
             {
-                _searchCondition.ruleDisplayName = (string)_targetRuleForm.SelectedItem;
+                _baseCondition.ruleDisplayName = (string)_targetRuleForm.SelectedItem;
                 //ルールの表示名(例："状態遷移")から正式名称(例："taskStateChange")を調べる
                 foreach (VisualizeRule visRule in _data.VisualizeData.VisualizeRules)
                 {
                     if (visRule.Target == null) // ルールのターゲットが CurrentContextのとき
                     {
-                        _searchCondition.ruleName = visRule.Name;
+                        _baseCondition.ruleName = visRule.Name;
                     }
-                    else if (visRule.Target.Equals(_searchCondition.resourceType) && visRule.DisplayName.Equals(_targetRuleForm.SelectedItem))
+                    else if (visRule.Target.Equals(_baseCondition.resourceType) && visRule.DisplayName.Equals(_targetRuleForm.SelectedItem))
                     {
-                        _searchCondition.ruleName = visRule.Name;
+                        _baseCondition.ruleName = visRule.Name;
                         break;
                     }
                 }
@@ -174,20 +174,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 arrangeLocations();
                 changePanelSize(_targetEventDetailForm.Location.X + _targetEventDetailForm.Width);
 
-                _searchCondition.eventName = null;
-                _searchCondition.eventDisplayName = null;
-                _searchCondition.eventDetail = null;
+                _baseCondition.eventName = null;
+                _baseCondition.eventDisplayName = null;
+                _baseCondition.eventDetail = null;
             };
 
             _targetEventForm.SelectedIndexChanged += (o, _e) =>
             {
-                _searchCondition.eventDisplayName = (string)_targetEventForm.SelectedItem;
+                _baseCondition.eventDisplayName = (string)_targetEventForm.SelectedItem;
                 //イベントの表示名(例："状態")から正式名称(例："stateChangeEvent")を調べる
-                foreach (Event ev in _data.VisualizeData.VisualizeRules[_searchCondition.ruleName].Shapes)
+                foreach (Event ev in _data.VisualizeData.VisualizeRules[_baseCondition.ruleName].Shapes)
                 {
                     if (ev.DisplayName.Equals(_targetEventForm.SelectedItem))
                     {
-                        _searchCondition.eventName = ev.Name;
+                        _baseCondition.eventName = ev.Name;
                         break;
                     }
                 }
@@ -200,12 +200,12 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 arrangeLocations();
                 changePanelSize(_targetEventDetailForm.Location.X + _targetEventDetailForm.Width);
 
-                _searchCondition.eventDetail = null;
+                _baseCondition.eventDetail = null;
             };
 
             _targetEventDetailForm.SelectedIndexChanged += (o, _e) =>
             {
-                _searchCondition.eventDetail = (string)_targetEventDetailForm.SelectedItem;
+                _baseCondition.eventDetail = (string)_targetEventDetailForm.SelectedItem;
                 _targetEventDetailForm.Width = getComponentLength(_targetEventDetailForm.Font, (string)_targetEventDetailForm.SelectedItem);
                 arrangeLocations();
                 changePanelSize(_targetEventDetailForm.Location.X + _targetEventDetailForm.Width);
@@ -217,16 +217,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             };
         }
 
-        public void setParentPanelID(int ID)
-        {
-            _displayLabel.Name = "displayLabel:" + ID;
-            _displayLabel.Text = "基本条件:" + ID;
-            _targetResourceForm.Name = "resourceForm:" + ID;
-            _targetRuleForm.Name = "resourceForm:" + ID;
-            _targetEventForm.Name = "resourceForm:" + ID;
-            _targetEventDetailForm.Name = "resourceForm:" + ID;
-            _deleteButton.Name = "deleteButton:" + ID;
-        }
 
         //リソース指定コンボボックスのアイテムをセット
         protected void makeResourceForm()
@@ -250,7 +240,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
             foreach (VisualizeRule rule in visRules)
             {
-                if (rule.Target != null && rule.Target.Equals(_searchCondition.resourceType))
+                if (rule.Target != null && rule.Target.Equals(_baseCondition.resourceType))
                 {
                     _targetRuleForm.Items.Add(rule.DisplayName);
                 }
@@ -262,7 +252,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         //イベント指定コンボボックスのアイテムをセット
         protected void makeEventForm()
         {
-            GeneralNamedCollection<Event> eventShapes = _data.VisualizeData.VisualizeRules[_searchCondition.ruleName].Shapes;
+            GeneralNamedCollection<Event> eventShapes = _data.VisualizeData.VisualizeRules[_baseCondition.ruleName].Shapes;
             foreach (Event e in eventShapes)
             {
                 _targetEventForm.Items.Add(e.DisplayName);
@@ -275,7 +265,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         protected void makeEventDetailForm()
         {
             //指定されたイベントが持つ RUNNABLE, RUNNING といった状態を切り出す
-            Event e = _data.VisualizeData.VisualizeRules[_searchCondition.ruleName].Shapes[_searchCondition.eventName];
+            Event e = _data.VisualizeData.VisualizeRules[_baseCondition.ruleName].Shapes[_baseCondition.eventName];
             foreach (Figure fg in e.Figures) // いつもe.Figuresの要素は一つしかないが、foreach で回しておく（どんなときに複数の要素を持つかは要調査）
             {
                 if (fg.Figures == null) //選択されたイベントにイベント詳細が存在しない場合
@@ -321,7 +311,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _targetRuleForm.Location = new System.Drawing.Point(_targetResourceForm.Location.X + _targetResourceForm.Width + 5, _targetResourceForm.Location.Y);
             _targetEventForm.Location = new System.Drawing.Point(_targetRuleForm.Location.X + _targetRuleForm.Width + 5, _targetRuleForm.Location.Y);
             _targetEventDetailForm.Location = new System.Drawing.Point(_targetEventForm.Location.X + _targetEventForm.Width + 5, _targetEventForm.Location.Y);
-            _deleteButton.Location = new System.Drawing.Point(_displayLabel.Location.X + _displayLabel.Width + 20, _displayLabel.Location.Y - 2);
+            deleteButton.Location = new System.Drawing.Point(_displayLabel.Location.X + _displayLabel.Width + 20, _displayLabel.Location.Y - 2);
         }
 
         //コンボボックスのドロップダウンボックスのサイズを自動調整
@@ -344,9 +334,42 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             return len * font_W + 50;
         }
 
-        public SearchCondition getSearchCondition()
+        public override void setConditionID(int ID)
         {
-            return _searchCondition;
+            conditionID = ID;
+            _displayLabel.Name = "displayLabel:" + ID;
+            _displayLabel.Text = "基本条件:" + (ID + 1);
+            _targetResourceForm.Name = "resourceForm:" + ID;
+            _targetRuleForm.Name = "ruleForm:" + ID;
+            _targetEventForm.Name = "eventForm:" + ID;
+            _targetEventDetailForm.Name = "eventDetailForm:" + ID;
+            deleteButton.Name = "deleteButton:" + ID;
+        }
+
+        public override SearchFilter getSearchFilter(SearchFilter decorateFilter)
+        {
+            //simpleFilterは最初のフィルタであるため、decorateFilterにはなにもしない
+            //(ConditionPanelを継承しているため、やむおえず引数にSearchFilterを持っている)
+            _baseCondition.normTime = ApplicationFactory.BlackBoard.CursorTime.Value;
+            SimpleFilter filter = new SimpleFilter(_eventLogs, _baseCondition);
+            return filter;
+        }
+
+        public override ErrorCondition checkSearchCondition()
+        {
+            ErrorCondition errorCondition = new ErrorCondition();
+            if (_baseCondition.resourceName == null)
+            {
+                errorCondition.PanelNum = conditionID;
+                errorCondition.ErrorMessage += "基本条件" + (conditionID + 1) + //
+                                               " のリソース名が指定されていません" + System.Environment.NewLine;
+                return errorCondition;
+            }
+            else
+            {
+                return null;
+            }
+
         }
     }
 }

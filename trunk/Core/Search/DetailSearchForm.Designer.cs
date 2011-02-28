@@ -36,7 +36,7 @@
  */﻿
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
-    partial class detailSearchForm
+    partial class DetailSearchForm
     {
         /// <summary>
         /// Required designer variable.

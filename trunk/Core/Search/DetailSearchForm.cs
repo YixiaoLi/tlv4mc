@@ -7,30 +7,31 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
+using NU.OJL.MPRTOS.TLV.Core.Search.SearchConditions;
+using NU.OJL.MPRTOS.TLV.Core.Search.Filters;
 
 namespace NU.OJL.MPRTOS.TLV.Core.Search
 {
-    public partial class detailSearchForm : Form
+    public partial class DetailSearchForm : Form
     {
         private TraceLogVisualizerData _data=null;
         private List<ConditionSettingPanel> _conditionSettingPanels = null; //検索条件設定パネルのリスト
         private TraceLogSearcher _searcher;
-        private List<VisualizeLog> _visLogs;
+        private List<VisualizeLog> _eventLogs;
         private decimal _minTime = 0;
         private decimal _maxTime = 0;
         private int _timeRadix = 0;
-        private int _nextPanelID = 1;
         private int _nextPanelLocationY = 0;
         public Button MarkerDleteButton = null;
 
 
-        public detailSearchForm(TraceLogVisualizerData data, decimal minTime, decimal maxTime)
+        public DetailSearchForm(TraceLogVisualizerData data, List<VisualizeLog> eventLogs, decimal minTime, decimal maxTime)
         {
             InitializeComponent();
             _data = data;
+            _eventLogs = eventLogs;
             _conditionSettingPanels = new List<ConditionSettingPanel>();
-            _searcher = new DetailSearchWithTiming();
-            _visLogs = getTimeSortedLog();
+            _searcher = new TraceLogSearcher();
             _minTime = minTime;
             _maxTime = maxTime;
             _timeRadix = _data.ResourceData.TimeRadix;
@@ -55,7 +56,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 if (_conditionSettingPanels.Count > 0)
                 {
-                    searchBackward(_conditionSettingPanels);
+                    List<ErrorCondition> errorConditions = getErrorConditions(_conditionSettingPanels);
+                    searchBackward(_conditionSettingPanels, errorConditions);
                 }
                 else
                 {
@@ -67,7 +69,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 if (_conditionSettingPanels.Count > 0)
                 {
-                    searchForward(_conditionSettingPanels);
+                    List<ErrorCondition> errorConditions = getErrorConditions(_conditionSettingPanels);
+                    searchForward(_conditionSettingPanels, errorConditions);
                 }
                 else
                 {
@@ -79,7 +82,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 if (_conditionSettingPanels.Count > 0)
                 {
-                    searchWhole(_conditionSettingPanels);
+                    List<ErrorCondition> errorConditions = getErrorConditions(_conditionSettingPanels);
+                    searchWhole(_conditionSettingPanels, errorConditions);
                 }
                 else
                 {
@@ -101,12 +105,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private void addConditionSettingPanel()
         {
             this.HorizontalScroll.Value = 0;
-            ConditionSettingPanel conditionSettingPanel = new ConditionSettingPanel(_data, _nextPanelID);
+            ConditionSettingPanel conditionSettingPanel = new ConditionSettingPanel(_data, _eventLogs, _conditionSettingPanels.Count);
             conditionSettingPanel.Location = new System.Drawing.Point(0, _nextPanelLocationY);
             _conditionSettingPanels.Add(conditionSettingPanel);
             this.Height += conditionSettingPanel.Height + 5;
             _nextPanelLocationY += conditionSettingPanel.Height + 5;
-            _nextPanelID++;
             conditionSettingPanel.SizeChanged += (o, _e) =>
             {
                 if (conditionSettingArea.VerticalScroll.Visible)
@@ -131,27 +134,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 // searchBackword を実行するには ConditionSettingPanel のリストを渡す必要がある。
                 // よって自分自身を唯一の要素とするリストを作成し、 searchBackwardを実行する
                 List<ConditionSettingPanel> panels = new List<ConditionSettingPanel>();
-                panels.Add(_conditionSettingPanels[conditionSettingPanel.getPanelID() - 1]);
-                searchBackward(panels);
+                panels.Add(_conditionSettingPanels[conditionSettingPanel.panelID]);
+                List<ErrorCondition> errorConditions = getErrorConditions(panels);
+                searchBackward(panels, errorConditions);
             };
-
             conditionSettingPanel.SearchForwardButton.Click += (o, _e) =>
             {
                 List<ConditionSettingPanel> panels = new List<ConditionSettingPanel>();
-                panels.Add(_conditionSettingPanels[conditionSettingPanel.getPanelID() - 1]);
-                searchForward(panels);
+                panels.Add(_conditionSettingPanels[conditionSettingPanel.panelID]);
+                List<ErrorCondition> errorConditions = getErrorConditions(panels);
+                searchForward(panels, errorConditions);
             };
 
             conditionSettingPanel.SearchWholeButton.Click += (o, _e) =>
             {
                 List<ConditionSettingPanel> panels = new List<ConditionSettingPanel>();
-                panels.Add(_conditionSettingPanels[conditionSettingPanel.getPanelID() - 1]);
-                searchWhole(panels);
+                panels.Add(_conditionSettingPanels[conditionSettingPanel.panelID]);
+                List<ErrorCondition> errorConditions = getErrorConditions(panels);
+                searchWhole(panels, errorConditions);
             };
 
-            conditionSettingPanel.baseConditionPanel.DeleteButton.Click += (o, _e) =>
+            conditionSettingPanel.baseConditionPanel.deleteButton.Click += (o, _e) =>
             {
-                deleteBaseCondition((int)conditionSettingPanel.getPanelID());
+                deleteBaseCondition((int)conditionSettingPanel.panelID);
             };
 
             conditionSettingArea.Controls.Add(conditionSettingPanel);
@@ -163,7 +168,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             {
                 _conditionSettingPanels[0].Focus();
             }
-            _conditionSettingPanels.RemoveAt(panelID-1);
+            _conditionSettingPanels.RemoveAt(panelID);
             updatePanel();
         }
 
@@ -171,30 +176,29 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         {
             //一度 全てのパネルを消去し、その後あらためてパネル配置する
             conditionSettingArea.Controls.Clear();
+            int nextPanelID =0;
             _nextPanelLocationY = 0;
-            _nextPanelID = 1;
             this.Height = searchOperationArea.Height + 35;
 
          
             foreach(ConditionSettingPanel panel in _conditionSettingPanels)
             {
                 panel.Location = new System.Drawing.Point(conditionSettingArea.Location.X, _nextPanelLocationY);
-                panel.setPanelID(_nextPanelID);
+                panel.setPanelID(nextPanelID);
                 if (panel.Width < conditionSettingArea.Width)
                 {
                     panel.Width = conditionSettingArea.Width - 2;
                 }
                 conditionSettingArea.Controls.Add(panel);
                 _nextPanelLocationY += panel.Height + 5;
-                _nextPanelID++;
+                nextPanelID++;
                 this.Height += panel.Height;
                 //conditionSettingArea.Height += panel.Height;
             }
         }
 
-        private void searchForward(List<ConditionSettingPanel> conditionSettingPanels)
+        private void searchForward(List<ConditionSettingPanel> conditionSettingPanels, List<ErrorCondition> errorConditions)
         {
-            List<ErrorCondition> errorConditions = checkSearchConditions(conditionSettingPanels);
             if (errorConditions.Count == 0)
             {
                 VisualizeLog hitLog = null;
@@ -202,20 +206,24 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                 //検索条件を１セットずつ調べ、現在時刻により近い時刻を検索結果とする
                 foreach (ConditionSettingPanel panel in conditionSettingPanels)
                 {
-                    _searcher.setSearchData(_visLogs, panel.getBaseCondition(), panel.getRefiningConditions(), panel.isAnd());
+                    List<SearchFilter> filters = panel.getFilters();
+                    foreach (SearchFilter filter in filters)
+                    {
+                        _searcher.setSearchData(_eventLogs, filter);
 
-                    VisualizeLog tmpHitLog = _searcher.searchForward(ApplicationFactory.BlackBoard.CursorTime.Value);
-                    if (hitLog == null) //最初のループ時の処理
-                    {
-                        hitLog = tmpHitLog;
-                    }
-                    else
-                    {
-                        if (tmpHitLog != null)
+                        VisualizeLog tmpHitLog = _searcher.searchForward();
+                        if (hitLog == null) //最初のループ時の処理
                         {
-                            if (hitLog.fromTime > tmpHitLog.fromTime) //より現在時刻に近い方のログを採用
+                            hitLog = tmpHitLog;
+                        }
+                        else
+                        {
+                            if (tmpHitLog != null)
                             {
-                                hitLog = tmpHitLog;
+                                if (hitLog.fromTime > tmpHitLog.fromTime) //より現在時刻に近い方のログを採用
+                                {
+                                    hitLog = tmpHitLog;
+                                }
                             }
                         }
                     }
@@ -260,30 +268,32 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
         }
 
-        private void searchBackward(List<ConditionSettingPanel> conditionSettingPanels)
+        private void searchBackward(List<ConditionSettingPanel> conditionSettingPanels, List<ErrorCondition> errorConditions)
         {
-            List<ErrorCondition> errorConditions = checkSearchConditions(conditionSettingPanels);
             if (errorConditions.Count == 0)
             {
                 VisualizeLog hitLog = null;
                 //検索条件を１セットずつ調べ、現在時刻により近い時刻を検索結果とする
                 foreach (ConditionSettingPanel panel in conditionSettingPanels)
                 {
-                    _searcher.setSearchData(_visLogs, panel.getBaseCondition(), panel.getRefiningConditions(), panel.isAnd());
-                    //if (panel.getRefiningConditions().Count > 1) ApplicationFactory.BlackBoard.isAnd = panel.isAnd();
+                    List<SearchFilter> filters = panel.getFilters();
+                    foreach (SearchFilter filter in filters)
+                    {
+                        _searcher.setSearchData(_eventLogs, filter);
 
-                    VisualizeLog tmpHitLog = _searcher.searchBackward(ApplicationFactory.BlackBoard.CursorTime.Value);
-                    if (hitLog == null) //最初のループ時の処理
-                    {
-                        hitLog = tmpHitLog;
-                    }
-                    else
-                    {
-                        if (tmpHitLog != null)
+                        VisualizeLog tmpHitLog = _searcher.searchBackward();
+                        if (hitLog == null) //最初のループ時の処理
                         {
-                            if (hitLog.fromTime > tmpHitLog.fromTime) //より現在時刻に近い方のログを採用
+                            hitLog = tmpHitLog;
+                        }
+                        else
+                        {
+                            if (tmpHitLog != null)
                             {
-                                hitLog = tmpHitLog;
+                                if (hitLog.fromTime > tmpHitLog.fromTime) //より現在時刻に近い方のログを採用
+                                {
+                                    hitLog = tmpHitLog;
+                                }
                             }
                         }
                     }
@@ -316,7 +326,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                     System.Windows.Forms.MessageBox.Show("検索の終わりです");
                 }
             } 
-             else
+            else
             {
                 string errorMessage = "";
                 foreach (ErrorCondition error in errorConditions)
@@ -330,9 +340,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         }
 
 
-        private void searchWhole(List<ConditionSettingPanel> conditionSettingPanels)
+        private void searchWhole(List<ConditionSettingPanel> conditionSettingPanels, List<ErrorCondition> errorConditions)
         {
-            List<ErrorCondition> errorConditions = checkSearchConditions(conditionSettingPanels);
             if (errorConditions.Count == 0)
             {
                 List<VisualizeLog> hitLogs = new List<VisualizeLog>();
@@ -340,11 +349,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
                 foreach (ConditionSettingPanel panel in conditionSettingPanels)
                 {
-                    _searcher.setSearchData(_visLogs, panel.getBaseCondition(), panel.getRefiningConditions(), panel.isAnd());
-                    List<VisualizeLog> candidateHitLogs = _searcher.searchWhole();
-                    foreach (VisualizeLog candidateHitLog in candidateHitLogs)
+                    List<SearchFilter> filters = panel.getFilters();
+                    foreach (SearchFilter filter in filters)
                     {
-                        hitLogs.Add(candidateHitLog);
+                        _searcher.setSearchData(_eventLogs, filter);
+
+                        List<VisualizeLog> candidateHitLogs = _searcher.searchWhole();
+                        foreach (VisualizeLog candidateHitLog in candidateHitLogs)
+                        {
+                            hitLogs.Add(candidateHitLog);
+                        }
                     }
                 }
 
@@ -383,42 +397,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
                                 System.Environment.NewLine + errorMessage, "検索条件のエラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
-
-        private List<VisualizeLog> getTimeSortedLog()
-        {
-            List<VisualizeLog> sortedLogs = new List<VisualizeLog>(); //イベント情報を格納する
-
-            //_visLogs の要素を作成し、 随時_visLogs に加えていく
-            foreach (KeyValuePair<string, EventShapes> evntShapesList in this._data.VisualizeShapeData.RuleResourceShapes)
-            {
-                string[] ruleAndResName = evntShapesList.Key.Split(':'); //例えば"taskStateChange:LOGTASK"を切り分ける
-                string resName = ruleAndResName[1];
-                string ruleName = ruleAndResName[0];
-
-                foreach (KeyValuePair<string, System.Collections.Generic.List<EventShape>> evntShapeList in evntShapesList.Value.List)
-                {
-                    string[] evntAndRuleName = evntShapeList.Key.Split(':');  // 例えば"taskStateChange:stateChangeEvent"を切り分ける
-                    string evntName = evntAndRuleName[1];
-                    foreach (EventShape evntShape in evntShapeList.Value)
-                    {
-                        if (evntShape.From.Value < 0)
-                        {
-                            sortedLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, 0));
-                        }
-                        else
-                        {
-                            sortedLogs.Add(new VisualizeLog(resName, ruleName, evntShape.Event.Name, evntShape.EventDetail, evntShape.From.Value));
-                        }
-                    }
-                }
-            }
-
-            //_visLogsの要素を時間でソート
-            VisualizeLog[] tmpLogs = sortedLogs.ToArray();
-            Array.Sort(tmpLogs);
-            return tmpLogs.ToList();
-        }
-
+     
         private void changeCursorValue()
         {
             int hscrollBarValue = cursorScrollBar.Value;
@@ -431,101 +410,20 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             ApplicationFactory.BlackBoard.CursorTime = new Time(cursorTime.ToString(),_timeRadix);
         }
 
-        //全ての検索条件のフォーマットが正しいかどうかチェックする
-        //不正になるのは、リソースが指定されていない、タイミングが指定されていない、
-        //タイミングの値が指定されていない、タイミングの値が不正な値、の4通り
-        private List<ErrorCondition> checkSearchConditions(List<ConditionSettingPanel> conditionSettingPanels)
+        private List<ErrorCondition> getErrorConditions(List<ConditionSettingPanel> targetPanels)
         {
-            int conditionSettingPanelNum = 1;
-            int refiningConditionNum = 1;
             List<ErrorCondition> errorConditions = new List<ErrorCondition>();
-
-            foreach (ConditionSettingPanel panel in conditionSettingPanels)
+            foreach (ConditionSettingPanel targetPanel in targetPanels)
             {
-                ErrorCondition errorCondition = new ErrorCondition();
-                if (panel.getBaseCondition().resourceName == null)
-                {
-                    errorCondition.PanelNum = conditionSettingPanelNum;
-                    errorCondition.ErrorMessage += "基本条件" + conditionSettingPanelNum + //
-                                                   " のリソースが指定されていません" + System.Environment.NewLine;
-                }
-
-                foreach (SearchCondition refiningCondition in panel.getRefiningConditions())
-                {
-                    if (refiningCondition.resourceName == null)
-                    {
-                        errorCondition.PanelNum = conditionSettingPanelNum;
-                        errorCondition.ConditionNum = refiningConditionNum;
-                        errorCondition.ErrorMessage += "基本条件" + errorCondition.PanelNum + //
-                                                       "_絞込み条件" + errorCondition.ConditionNum + " のリソースが指定されていません" + System.Environment.NewLine;
-                    }
-                    
-                    if (refiningCondition.timing == null)
-                    {
-                        errorCondition.PanelNum = conditionSettingPanelNum;
-                        errorCondition.ConditionNum = refiningConditionNum;
-                        errorCondition.ErrorMessage += "基本条件" + errorCondition.PanelNum + //
-                                                       "_絞込み条件" + errorCondition.ConditionNum + " のタイミングが指定されていません" + System.Environment.NewLine;
-                    }
-
-                    if (refiningCondition.timingValue == null)
-                    {
-                        errorCondition.PanelNum = conditionSettingPanelNum;
-                        errorCondition.ConditionNum = refiningConditionNum;
-                        errorCondition.ErrorMessage += "基本条件" + errorCondition.PanelNum + //
-                                                       "_絞込み条件" + errorCondition.ConditionNum + " のタイミング値が指定されていません" + System.Environment.NewLine;
-                    }
-                    else
-                    {
-                        try
-                        {
-                            decimal timingValue = decimal.Parse(refiningCondition.timingValue);
-                        }
-                        catch (FormatException _e)
-                        {
-                            errorCondition.PanelNum = conditionSettingPanelNum;
-                            errorCondition.ConditionNum = refiningConditionNum;
-                            errorCondition.ErrorMessage += "基本条件" + errorCondition.PanelNum + //
-                                                           "_絞込み条件" + errorCondition.ConditionNum + " のタイミング値が不正です" + System.Environment.NewLine;
-                        }
-                        catch (Exception _e)
-                        {
-                            errorCondition.PanelNum = conditionSettingPanelNum;
-                            errorCondition.ConditionNum = refiningConditionNum;
-                            errorCondition.ErrorMessage += "基本条件" + errorCondition.PanelNum + //
-                                                           "_絞込み条件" + errorCondition.ConditionNum + " になんらかのエラーがあります" + System.Environment.NewLine;
-                        }
-                    }
-                    refiningConditionNum++;
-                }
-
-                if (errorCondition.PanelNum != 0)
+                List<ErrorCondition> tmpErrorConditions = targetPanel.getErrorConditions();
+                foreach (ErrorCondition errorCondition in tmpErrorConditions)
                 {
                     errorConditions.Add(errorCondition);
                 }
-                conditionSettingPanelNum++;
-                refiningConditionNum = 1;
             }
-
             return errorConditions;
         }
 
 
-        private class ErrorCondition
-        {
-            private int _panelNum;
-            private int _conditionNum;
-            private string _errorMessage;
-            public int PanelNum { set { _panelNum = value; } get { return _panelNum; } }
-            public int ConditionNum { set { _conditionNum = value; } get { return _conditionNum; } }
-            public string ErrorMessage { set { _errorMessage = value; } get { return _errorMessage; } }
-
-            public ErrorCondition()
-            {
-                _panelNum = 0;
-                _conditionNum = 0;
-                _errorMessage = "";
-            }
-        }
     }
 }

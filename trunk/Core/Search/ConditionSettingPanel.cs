@@ -40,6 +40,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using NU.OJL.MPRTOS.TLV.Core.Controls;
+using NU.OJL.MPRTOS.TLV.Core.Search.ConditionPanels;
+using NU.OJL.MPRTOS.TLV.Core.Search.SearchConditions;
+using NU.OJL.MPRTOS.TLV.Core.Search.Filters;
+using NU.OJL.MPRTOS.TLV.Core.FileContext.VisualizeData;
 
 
 namespace NU.OJL.MPRTOS.TLV.Core.Search
@@ -61,8 +65,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private RadioButton _andRadioButton = null;
         private RadioButton _orRadioButton = null;
 
-        private List<RefiningConditionPanel> _refiningConditionPanels = null;
+        private List<ConditionPanel> _refiningConditionPanels = null;
         private int _panelID = 0;
+        public int panelID { set { _panelID = value; } get { return _panelID; } }
         private string _timeScale; //タイムラインの時間単位（s, ms, μsなど）
         private int _nextComponentLocationY = 0;
         private int _refiningConditionPanelMargin = 20; //絞込み条件パネルを主条件パネルに対してどれだけインデントするか
@@ -70,12 +75,15 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
         private int _maxPanelHeight = 300;
         private Boolean _isAlreadyMaximumSizeChanged = false;
 
-        public ConditionSettingPanel(TraceLogVisualizerData data, int panelID)
+        private List<VisualizeLog> _eventLogs;
+
+        public ConditionSettingPanel(TraceLogVisualizerData data, List<VisualizeLog> eventLogs, int panelID)
         {
             _data = data;
+            _eventLogs = eventLogs;
             _timeScale = _data.ResourceData.TimeScale;
             _panelID = panelID;
-            _refiningConditionPanels = new List<RefiningConditionPanel>();
+            _refiningConditionPanels = new List<ConditionPanel>();
             initializeCompoent();
         }
 
@@ -95,7 +103,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void setBaseConditionPanel()
         {
-            _baseConditionPanel = new BaseConditionPanel(_data, _panelID, this.Size);
+            _baseConditionPanel = new BaseConditionPanel(_data, _eventLogs, _panelID, this.Size);
             _baseConditionPanel.Location = new System.Drawing.Point(0, 0); //基本条件パネルは条件設定パネルの一番上へ配置
             _baseConditionPanel.SizeChanged += (o, e) =>
             {
@@ -115,8 +123,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             _searchBackwardButton.Text = "後ろを検索";
             _searchBackwardButton.Width = 80;
             _searchBackwardButton.Location = new System.Drawing.Point(//
-               _baseConditionPanel.DeleteButton.Location.X + _baseConditionPanel.DeleteButton.Width + 40, //
-                                                             _baseConditionPanel.DeleteButton.Location.Y);
+               _baseConditionPanel.deleteButton.Location.X + _baseConditionPanel.deleteButton.Width + 40, //
+                                                             _baseConditionPanel.deleteButton.Location.Y);
             _searchForwardButton = new Button();
             _searchForwardButton.Name = "searchForwardButton:" + _panelID;
             _searchForwardButton.Text = "次を検索";
@@ -150,11 +158,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void addRefiningConditionPanel()
         {
-            RefiningConditionPanel refiningConditionPanel = new RefiningConditionPanel(_data,  _panelID, _refiningConditionPanels.Count + 1, this.Size, _refiningConditionPanelMargin,_timeScale);
+            //絞込み検索条件の種類を増やす場合は、各条件に対応したパネルを生成する処理をここに追加すること。
+            //（現在はタイミング条件のみであるのでハードコーディングしてある）
+            ConditionPanel refiningConditionPanel = new BaseConditionWithTimingPanel(_data, _eventLogs, _panelID, _refiningConditionPanels.Count, this.Size, _refiningConditionPanelMargin,_timeScale);
             refiningConditionPanel.Location = new System.Drawing.Point(_baseConditionPanel.Location.X + _refiningConditionPanelMargin, _nextComponentLocationY);
-            refiningConditionPanel.DeleteButton.Click += (o, _e) =>
+            refiningConditionPanel.deleteButton.Click += (o, _e) =>
             {
-                deleteRefiningCondition((int)refiningConditionPanel.getConditionID());
+                deleteRefiningCondition(refiningConditionPanel.conditionID);
             };
 
             _refiningConditionPanels.Add(refiningConditionPanel);
@@ -195,23 +205,19 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         private void deleteRefiningCondition(int conditionID)
         {
-            _refiningConditionPanels.RemoveAt(conditionID-1);
+            _refiningConditionPanels.RemoveAt(conditionID);
             updatePanel();
         }
 
         public void setPanelID(int panelID)
         {
             _panelID = panelID;
-            _baseConditionPanel.setParentPanelID(_panelID);
-            foreach(RefiningConditionPanel panel in _refiningConditionPanels )
+            _baseConditionPanel.parentPanelID = panelID;
+            _baseConditionPanel.setConditionID(_panelID);
+            foreach (ConditionPanel panel in _refiningConditionPanels)
             {
-                panel.setBaseConditionID(_panelID);
+                panel.parentPanelID = panelID;
             }
-        }
-
-        public int getPanelID()
-        {
-            return _panelID;
         }
 
         //すべてのコンポーネントをパネル上から消去し、再配置する
@@ -221,7 +227,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             this.Focus();
             this.Controls.Clear();
             _nextComponentLocationY = 0;
-            int conditionID = 1;
+            int conditionID = 0;
 
             //基本条件と条件追加ボタンの追加
             this.Controls.Add(_baseConditionPanel);
@@ -236,7 +242,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
 
             //絞込み条件の追加
-            foreach (RefiningConditionPanel panel in _refiningConditionPanels)
+            foreach (ConditionPanel panel in _refiningConditionPanels)
             {
                 panel.Location = new System.Drawing.Point(this.Location.X + 20, _nextComponentLocationY);
                 panel.setConditionID(conditionID);
@@ -252,24 +258,50 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             }
         }
 
-        public SearchCondition getBaseCondition()
+        public List<SearchFilter> getFilters()
         {
-            return _baseConditionPanel.getSearchCondition();
-        }
+            List<SearchFilter> filters = new List<SearchFilter>();
 
-        public List<SearchCondition> getRefiningConditions()
-        {
-            List<SearchCondition> refiningConditions = new List<SearchCondition>();
-            foreach (RefiningConditionPanel panel in _refiningConditionPanels)
+            if (_andRadioButton.Checked) //すべてANDのときは直列フィルタを作成
             {
-                refiningConditions.Add(panel.getSearchCondition());
+                SearchFilter filter = _baseConditionPanel.getSearchFilter(null);
+                foreach (ConditionPanel panel in _refiningConditionPanels)
+                {
+                    filter = panel.getSearchFilter(filter);
+                }
+                filters.Add(filter);
             }
-            return refiningConditions;
+            else //すべてORのときは並列フィルタを作成
+            {
+                foreach (ConditionPanel panel in _refiningConditionPanels)
+                {
+                    SearchFilter filter = _baseConditionPanel.getSearchFilter(null);
+                    filter = panel.getSearchFilter(filter);
+                    filters.Add(filter);
+                }
+            }
+            return filters;
         }
 
-        public Boolean isAnd()
+        public List<ErrorCondition> getErrorConditions()
         {
-            return _andRadioButton.Checked;
+            List<ErrorCondition> errorConditions = new List<ErrorCondition>();
+            ErrorCondition tmpErrorCondition = _baseConditionPanel.checkSearchCondition();
+            if (tmpErrorCondition != null)
+            {
+                errorConditions.Add(tmpErrorCondition);
+            }
+            
+            foreach(ConditionPanel panel in _refiningConditionPanels)
+            {
+                tmpErrorCondition = panel.checkSearchCondition();
+                if (tmpErrorCondition != null)
+                {
+                    errorConditions.Add(tmpErrorCondition);
+                }
+            }
+
+            return errorConditions;
         }
     }
 }
