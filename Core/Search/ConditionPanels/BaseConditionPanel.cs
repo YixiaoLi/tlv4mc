@@ -329,9 +329,16 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
 
         protected int getComponentLength(System.Drawing.Font font, string text)
         {
-            int len = System.Text.Encoding.GetEncoding("Shift_JIS").GetByteCount(text);
-            int font_W = (int)Math.Ceiling(font.SizeInPoints * 2.0F / 3.0F);  // フォント幅を取得
-            return len * font_W + 50;
+            try
+            {
+                int len = System.Text.Encoding.GetEncoding("Shift_JIS").GetByteCount(text);
+                int font_W = (int)Math.Ceiling(font.SizeInPoints * 2.0F / 3.0F);  // フォント幅を取得
+                return len * font_W + 50;
+            }
+            catch (Exception e)
+            {
+                return 20;
+            }
         }
 
         public override void setConditionID(int ID)
