@@ -3,11 +3,11 @@ $FILE "kernel.res"$
 $TAB$"TimeScale" :"us",$NL$
 $TAB$"TimeRadix" :10,$NL$
 $TAB$"ConvertRules"   :["fmp"],$NL$
-$TAB$"VisualizeRules" :["toppers","fmp","fmp_core$+TNUM_PRC$"],$NL$
+$TAB$"VisualizeRules" :["toppers","fmp","fmp_core$+TNUM_PRCID$"],$NL$
 $TAB$"ResourceHeaders":["fmp"],$NL$
 $TAB$"Resources":$NL$
 $TAB${$NL$
-$JOINEACH prcid RANGE(1, TNUM_PRC) ",\n"$
+$JOINEACH prcid RANGE(1, TNUM_PRCID) ",\n"$
     $TAB$$TAB$"CurrentContext_PRC$prcid$":{$NL$
     $TAB$$TAB$$TAB$"Type":"Context",$NL$
     $TAB$$TAB$$TAB$"Attributes":$NL$
@@ -100,7 +100,7 @@ $JOINEACH excno EXC.ORDER_LIST ",\n"$
     $TAB$$TAB$}
 $END$,
 $NL$
-$JOINEACH prcid RANGE(1, TNUM_PRC) ",\n"$
+$JOINEACH prcid RANGE(1, TNUM_PRCID) ",\n"$
     $TAB$$TAB$"TASK_TEX_PRC$prcid$":{$NL$
     $TAB$$TAB$$TAB$"Type":"TaskExceptionRoutine",$NL$
     $TAB$$TAB$$TAB$"Attributes":$NL$
