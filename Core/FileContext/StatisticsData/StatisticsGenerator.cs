@@ -61,7 +61,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         #endregion
 
         /// <summary>
-        /// リソースファイルで指定した統計生成ルールを使用して統計情報を生成する
+        /// リソースファイルで指定した統計生成ルールを使用してStatisticsDataを生成する
         /// </summary>
         /// <returns>リソースファイルで指定した全ての統計生成ルールを使用して生成した、全ての統計情報を含むStatisticsData</returns>
         public StatisticsData GenerateData()
@@ -105,7 +105,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                             {
                                 if (jrules[j.Key].ContainsKey(jj.Key))
                                 {
-                                    throw new StatisticsGenerateException(string.Format(@"統計情報""{0}""の生成ルールで""{1}""が複数設定されています。", j.Key, jj.Key));
+                                    throw new InvalidStatsGenRuleException(string.Format(@"統計情報""{0}""の生成ルールで""{1}""が複数設定されています。", j.Key, jj.Key));
                                 }
                                 jrules[j.Key].Add(jj.Key, jj.Value);
                             }
@@ -135,7 +135,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
                     if(stats.Series.Points.Count == 0)
                     {
-                        throw new Exception("データポイントを取得できませんでした。" +
+                        throw new StatisticsGenerateException("データポイントを取得できませんでした。" +
                                             "リソースヘッダ、リソースファイルに定義された名前を使用しているか確認してください。");
                     }
 
@@ -172,7 +172,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 case "Script": applyScriptExtension(stats, rule.ScriptExtension); break;
                 case "Basic": applyBasicRule(stats, rule.BasicRule); break;
                 case "Input": applyInputRule(stats, rule.InputRule); break;
-                default: throw new StatisticsGenerateException(rule.Mode + "無効なスタイルです");
+                default: throw new InvalidStatsGenRuleException(rule.Mode + "無効なスタイルです");
             }
 
             if (rule.UseResourceColor)
@@ -186,7 +186,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         #region 統計生成メソッド
 
         /// <summary>
-        /// RegexpRuleで生成
+        /// データ読み取りモードで生成
         /// </summary>
         /// <param name="stats">統計情報を格納するオブジェクト</param>
         /// <param name="rule">"RegexpRule"のオブジェクト</param>
@@ -197,7 +197,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 || rule.Target == null
                 || rule.Regexps == null)
             {
-                throw new Exception("RegexpRuleに必要な項目が記述されていません");
+                throw new InvalidStatsGenRuleException("RegexpRuleに必要な項目が記述されていません");
             }
 
             List<string> data = getTargetData(rule.Target);
@@ -225,7 +225,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
         }
 
         /// <summary>
-        /// ScriptExtensionで生成
+        /// スクリプト拡張モードで生成
         /// </summary>
         /// <param name="stats">統計情報を格納するオブジェクト(注：スクリプトで生成したオブジェクトのSettingがNullでない場合、Settingは生成したオブジェクトに置き換えられます)</param>
         /// <param name="rule">"ScriptExtension"のオブジェクト</param>
@@ -236,7 +236,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 || rule.FileName == null
                 || rule.Arguments == null)
             {
-                throw new Exception("ScriptExtensionに必要な項目が記述されていません");
+                throw new InvalidStatsGenRuleException("ScriptExtensionに必要な項目が記述されていません");
             }
             
 
@@ -297,7 +297,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                 {
                     error += p.StandardError.ReadLine() + "\n";
                 }
-                throw new Exception(error);
+                throw new StatisticsGenerateException(error);
             }
             p.Close();
 
@@ -330,15 +330,20 @@ namespace NU.OJL.MPRTOS.TLV.Core
             stats.Series = newStats.Series;
         }
 
+        /// <summary>
+        /// 基本解析モードで生成
+        /// </summary>
+        /// <param name="stats">統計情報を格納するオブジェクト</param>
+        /// <param name="rule">"BasicRule"のオブジェクト</param>
         private void applyBasicRule(Statistics stats, BasicRule rule)
         {
             if (rule.When != null && rule.From != null)
             {
-                throw new Exception("BasicRuleにはWhen、または、From-Toの組、のどちらかしか設定できません");
+                throw new InvalidStatsGenRuleException("BasicRuleにはWhen、または、From-Toの組、のどちらかしか設定できません");
             }
             if (rule.When == null && (rule.From == null || rule.To == null))
             {
-                throw new Exception("BasicRuleに必要な項目が記述されていません");
+                throw new InvalidStatsGenRuleException("BasicRuleに必要な項目が記述されていません");
             }
 
 
@@ -444,7 +449,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             {
                 if (rule.From.GetResourceNameList(_resourceData).Count != rule.To.GetResourceNameList(_resourceData).Count)
                 {
-                    throw new Exception("FromとToのリソース数が違います");
+                    throw new InvalidStatsGenRuleException("FromとToのリソース数が違います");
                 }
 
                 // 対象とするFrom,Toの各リソース名の組のリスト
@@ -510,23 +515,57 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
                     case BasicRuleMethod.Count:
                     default:
-                        throw new Exception("From-Toの組に対して無効なMethodです");
+                        throw new InvalidStatsGenRuleException("From-Toの組に対して無効なMethodです");
                 }
             }
             
         }
+        
+        /// <summary>
+        /// 統計情報ファイル入力モードで生成
+        /// </summary>
+        /// <param name="stats">統計情報を格納するオブジェクト(注：Name以外上書きされます)</param>
+        /// <param name="rule"></param>
+        private void applyInputRule(Statistics stats, InputRule rule)
+        {
+            if (rule == null || (rule.FileName == null && rule.Data == null))
+            {
+                throw new InvalidStatsGenRuleException("InputRuleに必要な項目が記述されていません");
+            }
 
+            Statistics newStats;
+            if (rule.FileName != null)
+            {
+                newStats = ApplicationFactory.JsonSerializer.Deserialize<GeneralNamedCollection<Statistics>>(File.ReadAllText(rule.FileName)).Single<Statistics>();
+            }
+            else
+            {
+                newStats = rule.Data.Single<Statistics>();
+            }
+            stats.Setting = newStats.Setting;
+            stats.Series = newStats.Series;
+        }
+
+        #endregion 統計生成メソッド
+
+        /// <summary>
+        /// 標準形式トレースログから目的のイベントをフィルタリングする匿名メソッドを取得する<para></para>
+        /// LINQに属するメソッド(Whereなど)の引数として渡す匿名メソッドを想定している
+        /// </summary>
+        /// <param name="name">標準形式トレースログにおけるリソース名</param>
+        /// <param name="bEvent">目的のイベント</param>
+        /// <returns>目的のイベントをフィルタリングする匿名メソッド</returns>
         private Func<TraceLog, bool> makeEventFilter(string name, BaseEvent bEvent)
         {
             if (!string.IsNullOrEmpty(bEvent.AttributeName) && !string.IsNullOrEmpty(bEvent.AttributeValue)
                 && string.IsNullOrEmpty(bEvent.BehaviorName))
             {
                 return (t) =>
-                    {
-                        return t.ObjectName == name
-                            && t.Attribute == bEvent.AttributeName
-                            && t.Value == bEvent.AttributeValue;
-                    };
+                {
+                    return t.ObjectName == name
+                        && t.Attribute == bEvent.AttributeName
+                        && t.Value == bEvent.AttributeValue;
+                };
             }
             else if (!string.IsNullOrEmpty(bEvent.BehaviorName))
             {
@@ -550,21 +589,29 @@ namespace NU.OJL.MPRTOS.TLV.Core
             }
             else
             {
-                throw new Exception("イベント指定に誤りがあります");
+                throw new InvalidStatsGenRuleException("イベント指定に誤りがあります");
             }
         }
 
 
+        /// <summary>
+        /// FromとToを設定したときの基本解析モードにおけるデータポイントのXLabel用の文字列を生成する
+        /// </summary>
+        /// <param name="fname">Fromのイベントにおけるリソース名</param>
+        /// <param name="fevent">Fromのイベント</param>
+        /// <param name="tname">Toのイベントにおけるリソース名</param>
+        /// <param name="tevent">Toのイベント</param>
+        /// <returns></returns>
         private string makeXLabelForFromTo(string fname, BaseEvent fevent, string tname, BaseEvent tevent)
         {
             StringBuilder sb = new StringBuilder();
 
             sb.Append("From: ");
 
-            if(!string.IsNullOrEmpty(fevent.AttributeName) && !string.IsNullOrEmpty(fevent.AttributeValue)
+            if (!string.IsNullOrEmpty(fevent.AttributeName) && !string.IsNullOrEmpty(fevent.AttributeValue)
                 && string.IsNullOrEmpty(fevent.BehaviorName))
             {
-                    sb.Append(string.Format("{0}.{1}={2}\n", fname, fevent.AttributeName, fevent.AttributeValue));
+                sb.Append(string.Format("{0}.{1}={2}\n", fname, fevent.AttributeName, fevent.AttributeValue));
             }
             else if (!string.IsNullOrEmpty(fevent.BehaviorName))
             {
@@ -595,33 +642,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
             return sb.ToString();
         }
 
-        
-        /// <summary>
-        /// InputRuleで生成
-        /// </summary>
-        /// <param name="stats">統計情報を格納するオブジェクト(注：Name以外上書きされます)</param>
-        /// <param name="rule"></param>
-        private void applyInputRule(Statistics stats, InputRule rule)
-        {
-            if (rule == null || (rule.FileName == null && rule.Data == null))
-            {
-                throw new Exception("InputRuleに必要な項目が記述されていません");
-            }
-
-            Statistics newStats;
-            if (rule.FileName != null)
-            {
-                newStats = ApplicationFactory.JsonSerializer.Deserialize<GeneralNamedCollection<Statistics>>(File.ReadAllText(rule.FileName)).Single<Statistics>();
-            }
-            else
-            {
-                newStats = rule.Data.Single<Statistics>();
-            }
-            stats.Setting = newStats.Setting;
-            stats.Series = newStats.Series;
-        }
-
-        #endregion 統計生成メソッド
 
         /// <summary>
         /// DataPoint.XLabel値がリソースファイルで定義されたリソース名である場合、リソースファイルで定義されたカラーをグラフ設定で使用する
@@ -665,10 +685,6 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     break;
 
                 default:
-                    if (!File.Exists(target))
-                    {
-                        throw new FileNotFoundException("ファイル：" + target + "が見つかりません。");
-                    }
                     data.AddRange(File.ReadAllLines(target));
                     break;
             }
