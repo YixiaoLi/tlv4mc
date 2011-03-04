@@ -1,6 +1,0 @@
-LATEX = platex
-DVIPDFM = dvipdfmx
-
-LaTeXDocument(scripts, scripts)
-
-.DEFAULT: scripts.dvi
