@@ -10,7 +10,7 @@ def cpu_utilization(tasks, logs)
 	statsFile = StatisticsFile.new
 	
 	max = 0.0
-	min = Float.MAX
+	min = Float::MAX
 	
 	logs.each do |l|
 		t = TraceLog.time(l).to_f
@@ -51,6 +51,6 @@ generate_statisticsfile do|resource,logs|
 	resource['Resources'].each do |name,res|
 		if res['Type'] == 'Task' then tasks << name end		
 	end
-	cpu_utilization(tasks, logs)
-	statsFile.print
+	statsFile = cpu_utilization(tasks, logs)
+	statsFile.output
 end
