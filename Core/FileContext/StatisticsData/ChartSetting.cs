@@ -109,7 +109,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     break;
 
                 default:
-                    throw new Exception("無効なグラフタイプです");
+                    throw new InvalidStatsGenRuleException("無効なグラフタイプです");
             }
 
             return result;

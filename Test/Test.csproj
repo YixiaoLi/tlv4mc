@@ -83,7 +83,9 @@
     <Reference Include="System.ServiceModel.Web">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -96,6 +98,7 @@
     <Compile Include="GeneralCommandTest.cs" />
     <Compile Include="LogDataEnumeableTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatisticsGeneratorTest.cs" />
     <Compile Include="StringExtensionTest.cs" />
     <Compile Include="SubWindowCollectionTest.cs" />
     <Compile Include="SubWindowTest.cs" />

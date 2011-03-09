@@ -1,5 +1,5 @@
 ﻿{
-	"cpu_utilization" : {
+	"asp_cpu_utilization" : {
 		"Setting":{
 			"Title":"CPU利用率",
 			"AxisXTitle":"タスク",

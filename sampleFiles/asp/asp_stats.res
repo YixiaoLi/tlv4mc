@@ -4,7 +4,7 @@
 	"ConvertRules"   :["asp"],
 	"VisualizeRules" :["toppers","asp"],
 	"ResourceHeaders":["asp"],
-	"StatisticsGenerationRules":["test","test1","test3","testLine","script1","basic", "basicWCI", "basicFTM", "basicWM", "inputDirect"],
+	"StatisticsGenerationRules":["asp_cpu_utilization", "task_dispatch_count"],
 	"Resources":
 	{
 		"CurrentContext":{

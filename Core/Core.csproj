@@ -95,6 +95,7 @@
     <Compile Include="Base\EventShape.cs" />
     <Compile Include="Base\EventShapes.cs" />
     <Compile Include="Base\Exception\ConvertException.cs" />
+    <Compile Include="Base\Exception\InvalidStatsGenRuleException.cs" />
     <Compile Include="Base\Exception\ResNotFoundException.cs" />
     <Compile Include="Base\Exception\StatisticsGenerateException.cs" />
     <Compile Include="Base\Exception\VisualizeException.cs" />
@@ -196,7 +197,9 @@
     <Compile Include="FileContext\StatisticsData\Mode\BasicRule\BasicRule.cs" />
     <Compile Include="FileContext\StatisticsData\Mode\BasicRule\FromToPair.cs" />
     <Compile Include="FileContext\StatisticsData\Mode\InputRule.cs" />
-    <Compile Include="FileContext\StatisticsData\Mode\RegexpRule.cs" />
+    <Compile Include="FileContext\StatisticsData\Mode\RegexpRule\DataPointReplacePattern.cs" />
+    <Compile Include="FileContext\StatisticsData\Mode\RegexpRule\RegexpReplacePatternPairList.cs" />
+    <Compile Include="FileContext\StatisticsData\Mode\RegexpRule\RegexpRule.cs" />
     <Compile Include="FileContext\StatisticsData\Mode\ScriptExtension.cs" />
     <Compile Include="FileContext\StatisticsData\Series\DataPoint.cs" />
     <Compile Include="FileContext\StatisticsData\Series\DataPointList.cs" />

@@ -6,11 +6,15 @@ require 'pp'
 require 'statsgen_util'
 require 'json'
 
-def cpu_utilization(tasks, logs)
+
+# aspにおけるタスクのCPU利用率を統計情報ファイルで得るメソッド
+# tasks: タスク名の配列
+# logs: 標準形式トレースログの配列
+def asp_cpu_utilization(tasks, logs)
 	statsFile = StatisticsFile.new
 	
-	max = 0.0
-	min = Float::MAX
+	max = 0.0         # 最大時刻
+	min = Float::MAX  # 最小時刻
 	
 	logs.each do |l|
 		t = TraceLog.time(l).to_f
@@ -18,11 +22,11 @@ def cpu_utilization(tasks, logs)
 		if t < min then min = t end
 	end
 	
-	range = max - min
+	range = max - min  # ログの時刻幅
 	
 	tasks.each do |task| 
-		pre = 0.0
-		num = 0.0
+		pre = 0.0  # RUNNING開始時刻
+		num = 0.0  # あるタスクの総RUNNING時間
 		logs.each do|l|
 			if /#{task}\.state=(\w+)/ =~ l then
 				if $1 == "RUNNING" then 
@@ -35,7 +39,7 @@ def cpu_utilization(tasks, logs)
 				end
 			end
 		end
-		dat = (num / range) * 100.0
+		dat = (num / range) * 100.0  # 使用率を%で算出
 		
 		statsFile.series.add(0, dat, task)
 	end
@@ -51,6 +55,6 @@ generate_statisticsfile do|resource,logs|
 	resource['Resources'].each do |name,res|
 		if res['Type'] == 'Task' then tasks << name end		
 	end
-	statsFile = cpu_utilization(tasks, logs)
+	statsFile = asp_cpu_utilization(tasks, logs)
 	statsFile.output
 end
