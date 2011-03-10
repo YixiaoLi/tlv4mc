@@ -1,7 +1,7 @@
 /*
  *  TLV - Trace Log Visualizer
  *
- *  Copyright (C) 2008-2010 by Nagoya Univ., JAPAN
+ *  Copyright (C) 2008-2011 by Nagoya Univ., JAPAN
  *
  *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
  *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
@@ -133,7 +133,7 @@
             this.copyrightLabel.Name = "copyrightLabel";
             this.copyrightLabel.Size = new System.Drawing.Size(319, 16);
             this.copyrightLabel.TabIndex = 5;
-            this.copyrightLabel.Text = "Copyright (C) 2008-2010 Nagoya Univ., JAPAN";
+            this.copyrightLabel.Text = "Copyright (C) 2008-2011 Nagoya Univ., JAPAN";
             this.copyrightLabel.Click += new System.EventHandler(this.copyrightLabel_Click);
             // 
             // lineLabel
