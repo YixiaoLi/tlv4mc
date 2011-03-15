@@ -103,7 +103,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
         {
             
             chart1.ChartAreas[0].AxisX.IntervalOffset = 0;
-            chart1.Series[0].IsVisibleInLegend = false;
+            if (!string.IsNullOrWhiteSpace(Data.Setting.SeriesTitle))
+            {
+                chart1.Series[0].IsVisibleInLegend = false;
+            }
+
             switch (comboBox1.Text)
             {
                 case "Pie":
