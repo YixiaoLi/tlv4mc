@@ -11,7 +11,7 @@
 		"ScriptExtension":{
 			"Target":"standard",
 			"FileName":"c:/cygwin/bin/ruby",
-			"Arguments":"./statisticsGenerationScript/cpu_utilization.rb"
+			"Arguments":"./statisticsGenerationScript/asp_cpu_utilization.rb"
 		},
 		"RegexpRule":{
 			"Target":"nonstandard",

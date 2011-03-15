@@ -302,8 +302,15 @@ namespace NU.OJL.MPRTOS.TLV.Core
             p.Close();
 
             #endregion StandardFrmatConverter.generateByNewRule　の一部をコピペして修正
-                        
-            Statistics newStats = ApplicationFactory.JsonSerializer.Deserialize<Statistics>(sf);
+
+            // 統計情報ファイルは、ハッシュの中に統計情報を格納しているため、次の型でデシアライズが必要
+            var statsList = ApplicationFactory.JsonSerializer.Deserialize<GeneralNamedCollection<Statistics>>(sf);
+            if(statsList.Count > 1)
+            {
+                throw new StatisticsGenerateException("出力された統計情報ファイルに複数の統計情報が含まれています。");
+            }
+
+            Statistics newStats = statsList.First<Statistics>();
 
             // 外部プロセスで得たSettingの内容に上書き
             Json json = new Json().Parse(sf);
