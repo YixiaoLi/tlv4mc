@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,9 +10,15 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NU.OJL.MPRTOS.TLV</RootNamespace>
     <AssemblyName>TraceLogVisualizer</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationIcon>tlv.ico</ApplicationIcon>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,8 +33,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <ApplicationIcon>tlv.ico</ApplicationIcon>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,6 +44,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\TraceLogVisualizer.XML</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -51,6 +57,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <DebugSymbols>false</DebugSymbols>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -75,11 +82,18 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -93,6 +107,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
@@ -108,9 +127,14 @@
       <ProductName>.NET Framework 3.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>
-      <ProductName>Windows インストーラ 3.1</ProductName>
+      <ProductName>Windows インストーラー 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
@@ -136,7 +160,22 @@ xcopy $(SolutionDir)visualizeScript $(TargetDir)visualizeScript /e /c /q /y /exc
 if not exist $(TargetDir)visualizeRules mkdir $(TargetDir)visualizeRules
 xcopy $(SolutionDir)visualizeRules $(TargetDir)visualizeRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
 if not exist $(TargetDir)sampleFiles mkdir $(TargetDir)sampleFiles
+if not exist $(TargetDir)convertRules mkdir $(TargetDir)convertRules
+xcopy $(SolutionDir)convertRules $(TargetDir)convertRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+if not exist $(TargetDir)resourceHeaders mkdir $(TargetDir)resourceHeaders
+xcopy $(SolutionDir)resourceHeaders $(TargetDir)resourceHeaders /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+if not exist $(TargetDir)visualizeScript mkdir $(TargetDir)visualizeScript
+xcopy $(SolutionDir)visualizeScript $(TargetDir)visualizeScript /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+
+if not exist $(TargetDir)visualizeRules mkdir $(TargetDir)visualizeRules
+xcopy $(SolutionDir)visualizeRules $(TargetDir)visualizeRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+if not exist $(TargetDir)sampleFiles mkdir $(TargetDir)sampleFiles
 xcopy $(SolutionDir)sampleFiles $(TargetDir)sampleFiles /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+
+if not exist $(TargetDir)statisticsGenerationRules mkdir $(TargetDir)statisticsGenerationRules
+xcopy $(SolutionDir)statisticsGenerationRules $(TargetDir)statisticsGenerationRules /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
+if not exist $(TargetDir)statisticsGenerationScript mkdir $(TargetDir)statisticsGenerationScript
+xcopy $(SolutionDir)statisticsGenerationScript $(TargetDir)statisticsGenerationScript /e /c /q /y /exclude:$(SolutionDir)xcopyExcludeFile.txt
 
 if not exist $(TargetDir)doc mkdir $(Target)doc
 copy $(SolutionDir)doc\*.pdf $(TargetDir)doc
@@ -152,7 +191,7 @@ copy $(SolutionDir)README.txt $(TargetDir)
 copy $(SolutionDir)CHANGELOG.txt $(TargetDir)
 
 if $(ConfigurationName) == Release move $(TargetPath) $(TargetDir)___$(TargetFileName)
-if $(ConfigurationName) == Release $(SolutionDir)bin\ILMerge.exe /wildcards /ndebug /out:$(TargetPath) $(TargetDir)___$(TargetFileName) *.dll
+if $(ConfigurationName) == Release $(SolutionDir)bin\ILMerge.exe /wildcards /ndebug /targetplatform:v4,"C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319" /out:$(TargetPath) $(TargetDir)___$(TargetFileName) *.dll
 if $(ConfigurationName) == Release del $(TargetDir)___$(TargetFileName)
 if $(ConfigurationName) == Release del $(TargetDir)*.dll</PostBuildEvent>
   </PropertyGroup>

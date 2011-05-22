@@ -93,7 +93,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             this.searchOperationArea.Dock = System.Windows.Forms.DockStyle.Top;
             this.searchOperationArea.Location = new System.Drawing.Point(0, 0);
             this.searchOperationArea.Name = "searchOperationArea";
-            this.searchOperationArea.Size = new System.Drawing.Size(592, 108);
+            this.searchOperationArea.Size = new System.Drawing.Size(584, 108);
             this.searchOperationArea.TabIndex = 0;
             // 
             // markerDeleteButton
@@ -178,18 +178,18 @@ namespace NU.OJL.MPRTOS.TLV.Core.Search
             this.conditionSettingArea.Dock = System.Windows.Forms.DockStyle.Fill;
             this.conditionSettingArea.Location = new System.Drawing.Point(0, 108);
             this.conditionSettingArea.Name = "conditionSettingArea";
-            this.conditionSettingArea.Size = new System.Drawing.Size(592, 4);
+            this.conditionSettingArea.Size = new System.Drawing.Size(584, 4);
             this.conditionSettingArea.TabIndex = 1;
             // 
-            // detailSearchForm
+            // DetailSearchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(592, 112);
+            this.ClientSize = new System.Drawing.Size(584, 112);
             this.Controls.Add(this.conditionSettingArea);
             this.Controls.Add(this.searchOperationArea);
             this.MaximumSize = new System.Drawing.Size(600, 850);
-            this.Name = "detailSearchForm";
+            this.Name = "DetailSearchForm";
             this.Text = "詳細検索フォーム";
             this.searchOperationArea.ResumeLayout(false);
             this.searchOperationArea.PerformLayout();

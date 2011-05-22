@@ -44,7 +44,7 @@ using System.Xml.Serialization;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading;
-using System.Linq.Parallel;
+//using System.Linq.Parallel;
 using NU.OJL.MPRTOS.TLV.Base;
 
 namespace NU.OJL.MPRTOS.TLV.Core

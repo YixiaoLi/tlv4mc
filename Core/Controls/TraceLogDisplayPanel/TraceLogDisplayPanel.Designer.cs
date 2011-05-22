@@ -561,7 +561,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             // detailSearchButton
             // 
             this.detailSearchButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.detailSearchButton.Image = global::NU.OJL.MPRTOS.TLV.Core.Properties.Resources.DetailSearch;
+            this.detailSearchButton.Image = ((System.Drawing.Image)(resources.GetObject("detailSearchButton.Image")));
             this.detailSearchButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.detailSearchButton.Name = "detailSearchButton";
             this.detailSearchButton.Size = new System.Drawing.Size(23, 22);

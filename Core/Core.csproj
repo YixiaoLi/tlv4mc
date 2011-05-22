@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,10 +10,32 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NU.OJL.MPRTOS.TLV.Core</RootNamespace>
     <AssemblyName>NU.OJL.MPRTOS.TLV.Core</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>
     </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,6 +46,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\NU.OJL.MPRTOS.TLV.Core.XML</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -35,6 +58,7 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -53,7 +77,9 @@
     <Compile Include="Base\EventShape.cs" />
     <Compile Include="Base\EventShapes.cs" />
     <Compile Include="Base\Exception\ConvertException.cs" />
+    <Compile Include="Base\Exception\InvalidStatsGenRuleException.cs" />
     <Compile Include="Base\Exception\ResNotFoundException.cs" />
+    <Compile Include="Base\Exception\StatisticsGenerateException.cs" />
     <Compile Include="Base\Exception\VisualizeException.cs" />
     <Compile Include="Base\ObservableNamedCollection.cs" />
     <Compile Include="Base\TimeLineEvents.cs" />
@@ -79,12 +105,24 @@
     <Compile Include="Controls\Forms\MessageForm.Designer.cs">
       <DependentUpon>MessageForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Forms\StatisticsViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Forms\StatisticsViewer.Designer.cs">
+      <DependentUpon>StatisticsViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ITraceLogVisualizerControl.cs" />
     <Compile Include="Controls\ResourceExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ResourceExplorer.Designer.cs">
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StatisticsExplorer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StatisticsExplorer.Designer.cs">
+      <DependentUpon>StatisticsExplorer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TimeLineMacroViewer.cs">
       <SubType>UserControl</SubType>
@@ -129,6 +167,23 @@
     <Compile Include="FileContext\SettingData\VisualizeRuleExplorerSetting.cs" />
     <Compile Include="FileContext\SettingData\TraceLogViewerSetting.cs" />
     <Compile Include="FileContext\SettingData\TimeLineMacroViewerSetting.cs" />
+    <Compile Include="FileContext\StatisticsData\ChartSetting.cs" />
+    <Compile Include="FileContext\StatisticsData\Mode\BasicRule\BaseEvent.cs" />
+    <Compile Include="FileContext\StatisticsData\Mode\BasicRule\BasicRule.cs" />
+    <Compile Include="FileContext\StatisticsData\Mode\BasicRule\FromToPair.cs" />
+    <Compile Include="FileContext\StatisticsData\Mode\InputRule.cs" />
+    <Compile Include="FileContext\StatisticsData\Mode\RegexpRule\DataPointReplacePattern.cs" />
+    <Compile Include="FileContext\StatisticsData\Mode\RegexpRule\RegexpReplacePatternPairList.cs" />
+    <Compile Include="FileContext\StatisticsData\Mode\RegexpRule\RegexpRule.cs" />
+    <Compile Include="FileContext\StatisticsData\Mode\ScriptExtension.cs" />
+    <Compile Include="FileContext\StatisticsData\Series\DataPoint.cs" />
+    <Compile Include="FileContext\StatisticsData\Series\DataPointList.cs" />
+    <Compile Include="FileContext\StatisticsData\Series\Series.cs" />
+    <Compile Include="FileContext\StatisticsData\Statistics.cs" />
+    <Compile Include="FileContext\StatisticsData\StatisticsData.cs" />
+    <Compile Include="FileContext\StatisticsData\StatisticsGenerationRule.cs" />
+    <Compile Include="FileContext\StatisticsData\StatisticsGenerationRuleList.cs" />
+    <Compile Include="FileContext\StatisticsData\StatisticsGenerator.cs" />
     <Compile Include="FileContext\TraceLogData\LogDataBase\LogDataEnumeable.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\ITraceLogParser.cs" />
     <Compile Include="FileContext\TraceLogData\TraceLogParser\NullObjectOfTraceLogParser.cs" />
@@ -284,12 +339,8 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Threading, Version=1.0.3058.34407, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dll\System.Threading.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -322,9 +373,15 @@
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Forms\StatisticsViewer.resx">
+      <DependentUpon>StatisticsViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ResourceExplorer.resx">
       <DependentUpon>ResourceExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StatisticsExplorer.resx">
+      <DependentUpon>StatisticsExplorer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TimeLine\TimeLineControl.resx">
       <DependentUpon>TimeLineControl.cs</DependentUpon>
@@ -422,5 +479,22 @@
     <Content Include="Resources\Eraser.PNG" />
     <Content Include="Resources\ForwardArrow.png" />
     <Content Include="Resources\SearchWhole.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows インストーラー 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
 </Project>
