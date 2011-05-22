@@ -64,6 +64,10 @@ namespace NU.OJL.MPRTOS.TLV.Core
 
         public TraceLogData Generate()
         {
+            if (this._resourceData.ConvertRules[0] == "")
+            {
+            return generateTraceLog();
+            }
             Dictionary<string, Json> oldRule = new Dictionary<string, Json>();
             Json newRule = null;
 

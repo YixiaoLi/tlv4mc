@@ -130,9 +130,6 @@
   <data name="ForwardArrow1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ForwardArrow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DetailSearch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DetailSearch.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="DefaultTemporaryDirectoryName" xml:space="preserve">
     <value>TraceLogVisualizer</value>
   </data>
@@ -169,8 +166,8 @@
   <data name="handHold" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\handHold.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="resources" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resources.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="bhr2bhr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bhr2bhr.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DefaultConvertRulesDirectoryName" xml:space="preserve">
     <value>convertRules</value>
@@ -190,8 +187,8 @@
   <data name="TraceLogFileExtension" xml:space="preserve">
     <value>log</value>
   </data>
-  <data name="camera" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\camera.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="resources" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\resources.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="StandardFormatTraceLogFileExtension" xml:space="preserve">
     <value>tlv</value>
@@ -217,13 +214,25 @@
   <data name="resource" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\resource.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bhr2bhr" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bhr2bhr.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\warning.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="behavior" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\behavior.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="camera" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\camera.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DefaultStatisticsDirectoryName" xml:space="preserve">
+    <value>statisticses</value>
+  </data>
+  <data name="DefaultStatisticsGenerationRulesDirectoryName" xml:space="preserve">
+    <value>statisticsGenerationRules</value>
+  </data>
+  <data name="StatisticsFileExtension" xml:space="preserve">
+    <value>sta</value>
+  </data>
+  <data name="StatisticsGenerationRuleFileExtension" xml:space="preserve">
+    <value>sgr</value>
   </data>
 </root>

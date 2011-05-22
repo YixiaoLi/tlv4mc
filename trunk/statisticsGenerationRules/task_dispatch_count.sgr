@@ -1,0 +1,22 @@
+﻿{
+	"task_dispatch_count" : {
+		"Setting":{
+			"Title":"タスクのディスパッチ回数",
+			"AxisXTitle":"タスク",
+			"AxisYTitle":"回数",
+			"DefaultType":"Column",
+			"MajorGridVisible":true,
+			"MinorGridVisible":true
+		},
+		"UseResourceColor":true,
+		"Mode":"Basic",
+		"BasicRule":{
+			"Method":"Count",
+			"When":{
+				"ResourceType":["Task"],
+				"AttributeName":"state",
+				"AttributeValue":"RUNNING"
+			}
+		}
+	}
+}

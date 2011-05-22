@@ -1,7 +1,7 @@
 /*
  *  TLV - Trace Log Visualizer
  *
- *  Copyright (C) 2008-2011 by Nagoya Univ., JAPAN
+ *  Copyright (C) 2008-2010 by Nagoya Univ., JAPAN
  *
  *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
  *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
@@ -66,7 +66,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
             get { return _isDirty; }
             set
             {
-                if(_isDirty != value)
+                if (_isDirty != value)
                 {
                     _isDirty = value;
 
@@ -78,34 +78,39 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <summary>
         /// リソースデータ
         /// </summary>
-		public ResourceData ResourceData { get; private set; }
+        public ResourceData ResourceData { get; private set; }
         /// <summary>
         /// トレースログのリスト
         /// </summary>
-		public TraceLogData TraceLogData { get; private set; }
-		/// <summary>
-		/// 可視化データ
-		/// </summary>
-		public VisualizeData VisualizeData { get; set; }
+        public TraceLogData TraceLogData { get; private set; }
         /// <summary>
-		/// 設定データ
+        /// 可視化データ
         /// </summary>
-		public SettingData SettingData { get; set; }
+        public VisualizeData VisualizeData { get; set; }
+        /// <summary>
+        /// 設定データ
+        /// </summary>
+        public SettingData SettingData { get; set; }
 
         /// <summary>
-       /// 図形データ
+        /// 図形データ
         /// </summary>
         public VisualizeShapeData VisualizeShapeData { get; set; }
- 
-		/// <summary>
-		/// <c>CommonFormatTraceLog</c>のインスタンスを生成する
-		/// </summary>
+
+        /// <summary>
+        /// 統計データ
+        /// </summary>
+        public StatisticsData StatisticsData { get; set; }
+
+        /// <summary>
+        /// <c>CommonFormatTraceLog</c>のインスタンスを生成する
+        /// </summary>
         public TraceLogVisualizerData()
         {
         }
 
-		/// <summary>
-		/// <c>CommonFormatTraceLog</c>のインスタンスを生成する
+        /// <summary>
+        /// <c>CommonFormatTraceLog</c>のインスタンスを生成する
         /// </summary>
         /// <param name="resourceData">共通形式のリソースデータ</param>
         /// <param name="traceLogData">共通形式のトレースログデータ</param>
@@ -120,6 +125,21 @@ namespace NU.OJL.MPRTOS.TLV.Core
             setVisualizeRuleToEvent();
         }
 
+        /// <summary>
+        /// <c>CommonFormatTraceLog</c>のインスタンスを生成する
+        /// </summary>
+        /// <param name="resourceData">共通形式のリソースデータ</param>
+        /// <param name="traceLogData">共通形式のトレースログデータ</param>
+        /// <param name="visualizeData">可視化データ</param>
+        /// <param name="settingData">設定データ</param>
+        /// <param name="shapesData">図形データ</param>
+        /// <param name="statisticsData">統計データ</param>
+        public TraceLogVisualizerData(ResourceData resourceData, TraceLogData traceLogData, VisualizeData visualizeData, SettingData settingData, VisualizeShapeData shapesData, StatisticsData statisticsData)
+            : this(resourceData, traceLogData, visualizeData, settingData, shapesData)
+        {
+            StatisticsData = statisticsData;
+        }
+
         private void setVisualizeRuleToEvent()
         {
             foreach (VisualizeRule rule in VisualizeData.VisualizeRules)
@@ -129,7 +149,7 @@ namespace NU.OJL.MPRTOS.TLV.Core
                     evnt.SetVisualizeRuleName(rule.Name);
                 }
             }
-        }		
+        }
 
         /// <summary>
         /// パスを指定してシリアライズ
@@ -137,25 +157,34 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <param name="path">保存する先のパス</param>
         public void Serialize(string path)
         {
-			// 一時ディレクトリ作成
-			if(!Directory.Exists(ApplicationData.Setting.TemporaryDirectoryPath))
-				Directory.CreateDirectory(ApplicationData.Setting.TemporaryDirectoryPath);
+            // 一時ディレクトリ作成
+            if (!Directory.Exists(ApplicationData.Setting.TemporaryDirectoryPath))
+                Directory.CreateDirectory(ApplicationData.Setting.TemporaryDirectoryPath);
 
-			string targetTmpDirPath = Path.Combine(ApplicationData.Setting.TemporaryDirectoryPath, "tlv_convertRuleTmp_" + DateTime.Now.Ticks.ToString() + @"\");
-			Directory.CreateDirectory(targetTmpDirPath);
+            string targetTmpDirPath = Path.Combine(ApplicationData.Setting.TemporaryDirectoryPath, "tlv_convertRuleTmp_" + DateTime.Now.Ticks.ToString() + @"\");
+            Directory.CreateDirectory(targetTmpDirPath);
 
-			IZip zip = ApplicationFactory.Zip;
+            string targetTmpStatisticsDirPath = Path.Combine(targetTmpDirPath, Properties.Resources.DefaultStatisticsDirectoryName + @"\");
+            Directory.CreateDirectory(targetTmpStatisticsDirPath);
 
-			string name = Path.GetFileNameWithoutExtension(path);
+            IZip zip = ApplicationFactory.Zip;
 
-			File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.ResourceFileExtension, ResourceData.ToJson());
-			File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension, TraceLogData.TraceLogs.ToJson());
-			File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.VisualizeRuleFileExtension, VisualizeData.ToJson());
-			File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.SettingFileExtension, SettingData.ToJson());
-           File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.VisualizeShapesFileExtension, VisualizeShapeData.ToJson());
-			zip.Compress(path, targetTmpDirPath);
+            string name = Path.GetFileNameWithoutExtension(path);
 
-			Directory.Delete(targetTmpDirPath, true);
+            File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.ResourceFileExtension, ResourceData.ToJson());
+            File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.TraceLogFileExtension, TraceLogData.TraceLogs.ToJson());
+            File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.VisualizeRuleFileExtension, VisualizeData.ToJson());
+            File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.SettingFileExtension, SettingData.ToJson());
+            File.WriteAllText(targetTmpDirPath + name + "." + Properties.Resources.VisualizeShapesFileExtension, VisualizeShapeData.ToJson());
+            foreach (Statistics s in StatisticsData.Statisticses)
+            {
+                StatisticsData sd = new StatisticsData();
+                sd.Statisticses.Add(s);
+                File.WriteAllText(targetTmpStatisticsDirPath + name + "-" + s.Name + "." + Properties.Resources.StatisticsFileExtension, sd.Statisticses.ToJson());
+            }
+            zip.Compress(path, targetTmpDirPath);
+
+            Directory.Delete(targetTmpDirPath, true);
         }
 
         /// <summary>
@@ -164,43 +193,53 @@ namespace NU.OJL.MPRTOS.TLV.Core
         /// <param name="path">読み込むパス</param>
         public void Deserialize(string path)
         {
-			// 一時ディレクトリ作成
-			if (!Directory.Exists(ApplicationData.Setting.TemporaryDirectoryPath))
-				Directory.CreateDirectory(ApplicationData.Setting.TemporaryDirectoryPath);
+            // 一時ディレクトリ作成
+            if (!Directory.Exists(ApplicationData.Setting.TemporaryDirectoryPath))
+                Directory.CreateDirectory(ApplicationData.Setting.TemporaryDirectoryPath);
 
-			string targetTmpDirPath = Path.Combine(ApplicationData.Setting.TemporaryDirectoryPath, "tlv_convertRuleTmp_" + DateTime.Now.Ticks.ToString() + @"\");
-			Directory.CreateDirectory(targetTmpDirPath);
+            string targetTmpDirPath = Path.Combine(ApplicationData.Setting.TemporaryDirectoryPath, "tlv_convertRuleTmp_" + DateTime.Now.Ticks.ToString() + @"\");
+            Directory.CreateDirectory(targetTmpDirPath);
 
-			IZip zip = ApplicationFactory.Zip;
+            string targetTmpStatisticsDirPath = Path.Combine(targetTmpDirPath, Properties.Resources.DefaultStatisticsDirectoryName + @"\");
 
-			zip.Extract(path, targetTmpDirPath);
+            IZip zip = ApplicationFactory.Zip;
 
-			string resFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.ResourceFileExtension)[0];
-			string logFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.TraceLogFileExtension)[0];
-			string vixFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.VisualizeRuleFileExtension)[0];
-           string settingFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.SettingFileExtension)[0];
-           string visualizeShapesPath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.VisualizeShapesFileExtension)[0];
+            zip.Extract(path, targetTmpDirPath);
 
-			ResourceData res = ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(resFilePath));
-			TraceLogList log = ApplicationFactory.JsonSerializer.Deserialize<TraceLogList>(File.ReadAllText(logFilePath));
-			VisualizeData viz = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(File.ReadAllText(vixFilePath));
-			SettingData setting = ApplicationFactory.JsonSerializer.Deserialize<SettingData>(File.ReadAllText(settingFilePath));
+            string resFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.ResourceFileExtension)[0];
+            string logFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.TraceLogFileExtension)[0];
+            string vixFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.VisualizeRuleFileExtension)[0];
+            string settingFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.SettingFileExtension)[0];
+            string visualizeShapesPath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.VisualizeShapesFileExtension)[0];
+            string[] statisticsFilePathes = Directory.GetFiles(targetTmpStatisticsDirPath, "*." + Properties.Resources.StatisticsFileExtension);
+
+            ResourceData res = ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(resFilePath));
+            TraceLogList log = ApplicationFactory.JsonSerializer.Deserialize<TraceLogList>(File.ReadAllText(logFilePath));
+            VisualizeData viz = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(File.ReadAllText(vixFilePath));
+            SettingData setting = ApplicationFactory.JsonSerializer.Deserialize<SettingData>(File.ReadAllText(settingFilePath));
             VisualizeShapeData shapes = ApplicationFactory.JsonSerializer.Deserialize<VisualizeShapeData>(File.ReadAllText(visualizeShapesPath));
-			
-			ResourceData = res;
-			TraceLogData = new TraceLogData(log, res);
-			VisualizeData = viz;
-			SettingData = setting;
-            VisualizeShapeData = shapes; 
-			
-			setVisualizeRuleToEvent();
+            StatisticsData stad = new StatisticsData();
+            foreach (string staPath in statisticsFilePathes)
+            {
+                GeneralNamedCollection<Statistics> sd = ApplicationFactory.JsonSerializer.Deserialize<GeneralNamedCollection<Statistics>>(File.ReadAllText(staPath));
+                stad.Statisticses.Add(sd.Single<Statistics>());
+            }
 
-			foreach(KeyValuePair<string, TimeLineMarker> tlm in (ObservableDictionary<string, TimeLineMarker>)(SettingData.LocalSetting.TimeLineMarkerManager.Markers))
-			{
-				tlm.Value.Name = tlm.Key;
-			}
+            ResourceData = res;
+            TraceLogData = new TraceLogData(log, res);
+            VisualizeData = viz;
+            SettingData = setting;
+            VisualizeShapeData = shapes;
+            StatisticsData = stad;
 
-			Directory.Delete(targetTmpDirPath, true);
+            setVisualizeRuleToEvent();
+
+            foreach (KeyValuePair<string, TimeLineMarker> tlm in (ObservableDictionary<string, TimeLineMarker>)(SettingData.LocalSetting.TimeLineMarkerManager.Markers))
+            {
+                tlm.Value.Name = tlm.Key;
+            }
+
+            Directory.Delete(targetTmpDirPath, true);
         }
     }
 }

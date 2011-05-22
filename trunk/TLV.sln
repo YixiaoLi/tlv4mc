@@ -1,14 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main", "TLV\Main.csproj", "{08D6D604-5CAB-4F00-96FE-F5C97A2C4A1E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{7C37CBB0-B554-4268-8A92-D78714219A41}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base", "Base\Base.csproj", "{920F5653-9ED8-416C-B4FC-64285D3BB1A5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Third", "Third\Third.csproj", "{C2A4F798-30E4-4F03-AA49-F060FFD09B48}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionItems", "solutionItems", "{A9D965DA-0F3D-40DA-A0B4-67E6E61C5DE5}"
 	ProjectSection(SolutionItems) = preProject
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
@@ -47,8 +39,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualizeRules", "visualize
 		visualizeRules\toppers_shapes.viz = visualizeRules\toppers_shapes.viz
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{94C75166-FFDC-44D8-9030-0F6EF109BD8E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dll", "dll", "{0296E089-0644-4562-8509-A95AC6A6590D}"
 	ProjectSection(SolutionItems) = preProject
 		dll\ExpandableGridView.dll = dll\ExpandableGridView.dll
@@ -62,6 +52,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fmp", "fmp", "{2F0F8178-CAC
 	ProjectSection(SolutionItems) = preProject
 		sampleFiles\fmp\fmp.log = sampleFiles\fmp\fmp.log
 		sampleFiles\fmp\tlv.tf = sampleFiles\fmp\tlv.tf
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main", "TLV\Main.csproj", "{08D6D604-5CAB-4F00-96FE-F5C97A2C4A1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{7C37CBB0-B554-4268-8A92-D78714219A41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base", "Base\Base.csproj", "{920F5653-9ED8-416C-B4FC-64285D3BB1A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Third", "Third\Third.csproj", "{C2A4F798-30E4-4F03-AA49-F060FFD09B48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{94C75166-FFDC-44D8-9030-0F6EF109BD8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "statisticsGenerationRules", "statisticsGenerationRules", "{E78A1668-D451-48C3-894A-49EF45C58D87}"
+	ProjectSection(SolutionItems) = preProject
+		statisticsGenerationRules\asp_cpu_utilization.sgr = statisticsGenerationRules\asp_cpu_utilization.sgr
+		statisticsGenerationRules\task_dispatch_count.sgr = statisticsGenerationRules\task_dispatch_count.sgr
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "statisticsGenerationScript", "statisticsGenerationScript", "{D3FA7D56-CEBA-4A67-BDCA-46A5B8019C80}"
+	ProjectSection(SolutionItems) = preProject
+		statisticsGenerationScript\asp_cpu_utilization.rb = statisticsGenerationScript\asp_cpu_utilization.rb
+		statisticsGenerationScript\outputStats.rb = statisticsGenerationScript\outputStats.rb
+		statisticsGenerationScript\statsgen_util.rb = statisticsGenerationScript\statsgen_util.rb
 	EndProjectSection
 EndProject
 Global

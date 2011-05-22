@@ -1,7 +1,7 @@
 /*
  *  TLV - Trace Log Visualizer
  *
- *  Copyright (C) 2008-2011 by Nagoya Univ., JAPAN
+ *  Copyright (C) 2008-2010 by Nagoya Univ., JAPAN
  *
  *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
  *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
@@ -50,9 +50,9 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 {
     public class NewCommand : AbstractFileChangeCommand
 	{
-        private OpenResourceFileAndTraceLogFileOpenForm _fileOpenDialog = new OpenResourceFileAndTraceLogFileOpenForm() { StartPosition = FormStartPosition.CenterParent };
-        private BackGroundWorkForm _convertBw = new BackGroundWorkForm() { Text = "共通形式トレースログへ変換中", StartPosition = FormStartPosition.CenterParent };
-        private BackGroundWorkForm _setDataBw = new BackGroundWorkForm() { Text = "初期化中", ProgressBarText = "", Message = "データを設定中", Style = ProgressBarStyle.Marquee, CanCancel = false, StartPosition = FormStartPosition.CenterParent };
+		private OpenResourceFileAndTraceLogFileOpenForm _fileOpenDialog = new OpenResourceFileAndTraceLogFileOpenForm() { StartPosition = FormStartPosition.CenterParent};
+		private BackGroundWorkForm _convertBw = new BackGroundWorkForm() { Text = "共通形式トレースログへ変換中", StartPosition = FormStartPosition.CenterParent };
+		private BackGroundWorkForm _setDataBw = new BackGroundWorkForm() { Text = "初期化中", ProgressBarText = "", Message = "データを設定中", Style = ProgressBarStyle.Marquee, CanCancel = false, StartPosition = FormStartPosition.CenterParent };
 		private TraceLogVisualizerData _cftl = null;
 		private string _resFilePath;
 		private string _logFilePath;
@@ -84,39 +84,63 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 
 			_convertBw.DoWork += (o, _e) =>
 			{
-				try
-				{
-					string[] visualizeRuleFilePaths = Directory.GetFiles(ApplicationData.Setting.VisualizeRulesDirectoryPath, "*." + Properties.Resources.VisualizeRuleFileExtension);
+                try
+                {
+                    string[] visualizeRuleFilePaths = Directory.GetFiles(ApplicationData.Setting.VisualizeRulesDirectoryPath, "*." + Properties.Resources.VisualizeRuleFileExtension);
 
-					StandardFormatConverter cfc = new StandardFormatConverter(
-						_resFilePath,
-						_logFilePath,
-						visualizeRuleFilePaths,
-						(p, s) =>
-						{
-							if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
-							_convertBw.ReportProgress((int)((double)p * 0.8));
-							_convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = s; }));
-						});
+                    StandardFormatConverter cfc = new StandardFormatConverter(
+                        _resFilePath,
+                        _logFilePath,
+                        visualizeRuleFilePaths,
+                        (p, s) =>
+                        {
+                            if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
+                            _convertBw.ReportProgress((int)((double)p * 0.7));
+                            _convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = s; }));
+                        });
 
-					if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
-					_convertBw.ReportProgress(90);
-					_convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = "共通形式データを生成中"; }));
+                    StatisticsGenerator sg = new StatisticsGenerator(
+                        _logFilePath,
+                        cfc.ResourceData,
+                        cfc.TraceLogData,
+                        (p, s) =>
+                        {
+                            if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
+                            _convertBw.ReportProgress((int)((double)p + 70));
+                            _convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = s; }));
+                        }
+                    );
 
-					_cftl = new TraceLogVisualizerData(cfc.ResourceData, cfc.TraceLogData, cfc.VisualizeData, cfc.SettingData,cfc.VisualizeShapeData);
+                    StatisticsData sd = null;
+                    try
+                    {
+                        sd = sg.GenerateData();
+                    }
+                    catch (Exception e) // 統計情報の生成に失敗しても可視化を続ける
+                    {
+                        MessageForm mbox = new MessageForm(e.ToString(), "統計情報の生成に失敗しました");
+                        mbox.ShowDialog() ;
+                        sd = new StatisticsData();
+                    }
 
-					if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
-					_convertBw.ReportProgress(100);
-					_convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = "完了"; }));
-				}
-				catch (Exception e)
-				{
-				    MessageForm mbox = new MessageForm(e.ToString(), "変換に失敗しました。");
+                    if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
+                    _convertBw.ReportProgress(90);
+                    _convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = "共通形式データを生成中"; }));
+
+                    _cftl = new TraceLogVisualizerData(cfc.ResourceData, cfc.TraceLogData, cfc.VisualizeData, cfc.SettingData, cfc.VisualizeShapeData, sd);
+
+                    if (_convertBw.CancellationPending) { _e.Cancel = true; return; }
+                    _convertBw.ReportProgress(100);
+                    _convertBw.Invoke(new MethodInvoker(() => { _convertBw.Message = "完了"; }));
+                }
+                catch (Exception e)
+                {
+                    MessageForm mbox = new MessageForm(e.ToString(), "変換に失敗しました。");
                     mbox.ShowDialog();
-					//MessageBox.Show(e.ToString(), "共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					_e.Cancel = true;
-					return;
-				}
+                    //MessageBox.Show(e.ToString(), "共通形式への変換に失敗しました。", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _e.Cancel = true;
+                    return;
+                }
 			};
 		}
 
@@ -141,12 +165,11 @@ namespace NU.OJL.MPRTOS.TLV.Core.Commands
 				}
 				if (_fileOpenDialog.ShowDialog() == DialogResult.OK)
 				{
-                    _resFilePath = _fileOpenDialog.ResourceFilePath;
-                    _logFilePath = _fileOpenDialog.TraceLogFilePath;
+					_resFilePath = _fileOpenDialog.ResourceFilePath;
+					_logFilePath = _fileOpenDialog.TraceLogFilePath;
 
-                    _convertBw.RunWorkerAsync();
-                }
-
+					_convertBw.RunWorkerAsync();
+				}
 			}
 			else
 			{

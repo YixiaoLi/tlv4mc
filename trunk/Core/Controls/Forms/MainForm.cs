@@ -1,7 +1,7 @@
 /*
  *  TLV - Trace Log Visualizer
  *
- *  Copyright (C) 2008-2011 by Nagoya Univ., JAPAN
+ *  Copyright (C) 2008-2010 by Nagoya Univ., JAPAN
  *
  *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
  *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
@@ -76,7 +76,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             #region ApplicationDatasイベント設定
             ApplicationData.FileContext.PathChanged += (o, e) =>
-            {
+			{
                 invoke((MethodInvoker)(() =>
                 {
                     textReflesh();
@@ -86,7 +86,7 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             };
             ApplicationData.FileContext.IsSavedChanged += (o, e) =>
             {
-                invoke((MethodInvoker)(() =>
+				invoke((MethodInvoker)(() => 
                 {
                     textReflesh();
                     saveSToolStripMenuItem.Enabled = !ApplicationData.FileContext.IsSaved;
@@ -94,8 +94,8 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }));
             };
             ApplicationData.FileContext.IsOpenedChanged += (o, e) =>
-            {
-                invoke((MethodInvoker)(() =>
+			{
+				invoke((MethodInvoker)(() =>
                 {
                     textReflesh();
                     closeToolStripMenuItem.Enabled = ApplicationData.FileContext.IsOpened;
@@ -103,37 +103,37 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
                 }));
             };
             ApplicationData.FileContext.DataChanged += (o, e) =>
-            {
-                invoke((MethodInvoker)(() =>
+			{
+				invoke((MethodInvoker)(() =>
                 {
-                    if (ApplicationData.FileContext.Data == null)
-                    {
-                        saveSToolStripMenuItem.Enabled = false;
-                        saveToolStripButton.Enabled = false;
-                    }
+					if (ApplicationData.FileContext.Data == null)
+					{
+						saveSToolStripMenuItem.Enabled = false;
+						saveToolStripButton.Enabled = false;
+					}
                     reloadToolStripButton.Enabled = ApplicationData.FileContext.Path == string.Empty;
                     textReflesh();
                 }));
             };
-            ApplicationData.FileContext.Saving += (o, e) =>
-            {
-                invoke((MethodInvoker)(() =>
-                {
-                    Cursor.Current = Cursors.WaitCursor;
-                    _statusManager.ShowProcessing(this.GetType().ToString() + ":saving", "保存中");
-                }));
-            };
-            ApplicationData.FileContext.Saved += (o, e) =>
-            {
-                invoke((MethodInvoker)(() =>
-                {
-                    if (Cursor.Current == Cursors.WaitCursor)
-                        Cursor.Current = Cursors.Default;
+			ApplicationData.FileContext.Saving += (o, e) =>
+			{
+				invoke((MethodInvoker)(() => 
+				{
+					Cursor.Current = Cursors.WaitCursor;
+					_statusManager.ShowProcessing(this.GetType().ToString() + ":saving", "保存中");
+				}));
+			};
+			ApplicationData.FileContext.Saved += (o, e) =>
+			{
+				invoke((MethodInvoker)(() => 
+				{
+					if (Cursor.Current == Cursors.WaitCursor)
+						Cursor.Current = Cursors.Default;
 
-                    if (_statusManager.IsProcessingShown(this.GetType().ToString() + ":saving"))
-                        _statusManager.HideProcessing(this.GetType().ToString() + ":saving");
-                }));
-            };
+					if (_statusManager.IsProcessingShown(this.GetType().ToString() + ":saving"))
+						_statusManager.HideProcessing(this.GetType().ToString() + ":saving");
+				}));
+			};
             #endregion
 
             #region コマンド管理初期化
@@ -147,16 +147,17 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             _windowManager.Parent = this.toolStripContainer.ContentPanel;
             _windowManager.MainPanel = new TraceLogDisplayPanel();
 
-            SubWindow[] sws = new[]
+			SubWindow[] sws = new[]
             {
                 new SubWindow("macroViewer", new TimeLineMacroViewer(){ Text = "マクロビューア" }, DockState.DockBottom) { Text = "マクロビューア" },
                 new SubWindow("traceLogViewer", new TraceLogViewer(){ Text = "トレースログビューア" }, DockState.DockRight) { Text = "トレースログビューア" },
                 new SubWindow("resourceExplorer", new ResourceExplorer(){ Text = "リソースエクスプローラ" }, DockState.DockLeft) { Text = "リソースエクスプローラ" },
                 new SubWindow("visualizeRuleExplorer", new VisualizeRuleExplorer(){ Text = "可視化ルールエクスプローラ" }, DockState.DockLeft) { Text = "可視化ルールエクスプローラ" },
+                new SubWindow("statisticsExplorer", new StatisticsExplorer(this){ Text = "統計情報エクスプローラ" }, DockState.DockRight) { Text = "統計情報エクスプローラ" },
             };
-            _windowManager.AddSubWindow(sws);
-            _windowManager.Load();
-            _windowManager.Show();
+			_windowManager.AddSubWindow(sws);
+			_windowManager.Load();
+			_windowManager.Show();
             _windowManager.SubWindowDockStateChanged += (o, e) => { _commandManager.Done(new ChangeSubWindowDockStateCommand(((SubWindow)o), e.Old, e.New)); };
             EventHandler<GeneralChangedEventArgs<bool>> v = (o, e) => { _commandManager.Done(new ChangeSubWindowVisiblityCommand(((SubWindow)o), e.New)); };
             _windowManager.SubWindowVisibleChanged += v;
@@ -170,13 +171,13 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             {
                 // 非表示状態のウィンドウを探しコマンドを生成する
                 var cswvc = from sw in sws
-                            where !sw.Visible && sw.Enabled
-                            select (ICommand)(new ChangeSubWindowVisiblityCommand(sw, true));
+                         where !sw.Visible && sw.Enabled
+                         select (ICommand)(new ChangeSubWindowVisiblityCommand(sw, true));
                 if (cswvc.Count() != 0)
                 {
                     // SubWindowVisibleChangedを無効にしておかないとundoスタックにすべてのウィンドウの表示コマンドが追加されてしまう
                     _windowManager.SubWindowVisibleChanged -= v;
-                    _commandManager.Do(new MacroCommand(cswvc) { Text = "すべてのウィンドウを表示する" });
+                    _commandManager.Do(new MacroCommand(cswvc) { Text="すべてのウィンドウを表示する"});
                     _windowManager.SubWindowVisibleChanged += v;
                 }
             };
@@ -232,23 +233,23 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
             };
             captureToolStripeButton.Click += (o, e) =>
             {
-                _commandManager.Do(new CaptureCommand((TraceLogDisplayPanel)_windowManager.MainPanel));
+               _commandManager.Do(new CaptureCommand((TraceLogDisplayPanel) _windowManager.MainPanel));
             };
 
             #endregion
 
             #endregion
 
-            #region ステータスバー設定
+			#region ステータスバー設定
 
-            _statusManager = ApplicationFactory.StatusManager;
-            _statusManager.StatusStrip = statusStrip;
+			_statusManager = ApplicationFactory.StatusManager;
+			_statusManager.StatusStrip = statusStrip;
 
-            #endregion
+			#endregion
 
-            #region ツールバーイベント設定
+			#region ツールバーイベント設定
 
-            newToolStripButton.Click += (o, e) =>
+			newToolStripButton.Click += (o, e) =>
             {
                 _commandManager.Do(new NewCommand());
             };
@@ -269,62 +270,60 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
             #endregion
 
+			//_windowManager.MainPanel = new Control();
+			//_windowManager.MainPanel.Resize += (o, e) => _windowManager.MainPanel.Invalidate();
+			//_windowManager.MainPanel.Paint += (o, e) =>
+			//    {
+			////        RotateColorFactory colorFactory = new RotateColorFactory();
 
-            //_windowManager.MainPanel = new Control();
-            //_windowManager.MainPanel.Resize += (o, e) => _windowManager.MainPanel.Invalidate();
-            //_windowManager.MainPanel.Paint += (o, e) =>
-            //    {
-            ////        RotateColorFactory colorFactory = new RotateColorFactory();
+			////        int a = 50;
 
-            ////        int a = 50;
+			////        float w = _windowManager.MainPanel.ClientSize.Width / a / 2;
+			////        float h = _windowManager.MainPanel.ClientSize.Height / a;
 
-            ////        float w = _windowManager.MainPanel.ClientSize.Width / a / 2;
-            ////        float h = _windowManager.MainPanel.ClientSize.Height / a;
+			////        for (int j = 0; j < a; j++)
+			////        {
+			////            for (int i = 0; i < a; i++ )
+			////            {
+			////                Color c = colorFactory.RamdomColor();
+			////                float x = w * i;
+			////                float y = h * j;
+			////                e.Graphics.FillRectangle(new SolidBrush(c), x, y, w, h);
+			////            }
+			////        }
 
-            ////        for (int j = 0; j < a; j++)
-            ////        {
-            ////            for (int i = 0; i < a; i++ )
-            ////            {
-            ////                Color c = colorFactory.RamdomColor();
-            ////                float x = w * i;
-            ////                float y = h * j;
-            ////                e.Graphics.FillRectangle(new SolidBrush(c), x, y, w, h);
-            ////            }
-            ////        }
+			////        colorFactory.Saturation = 100;
+			////        colorFactory.Value = 100;
 
-            ////        colorFactory.Saturation = 100;
-            ////        colorFactory.Value = 100;
+			////        for (int j = 0; j < a; j++)
+			////        {
+			////            for (int i = 0; i < a; i++)
+			////            {
+			////                Color c = colorFactory.RotateColor();
+			////                float x = w * i + (_windowManager.MainPanel.ClientSize.Width / 2);
+			////                float y = h * j;
+			////                e.Graphics.FillRectangle(new SolidBrush(c), x, y, w, h);
+			////            }
+			////        }
 
-            ////        for (int j = 0; j < a; j++)
-            ////        {
-            ////            for (int i = 0; i < a; i++)
-            ////            {
-            ////                Color c = colorFactory.RotateColor();
-            ////                float x = w * i + (_windowManager.MainPanel.ClientSize.Width / 2);
-            ////                float y = h * j;
-            ////                e.Graphics.FillRectangle(new SolidBrush(c), x, y, w, h);
-            ////            }
-            ////        }
+			////    if (ApplicationData.FileContext.IsOpened)
+			////    {
+			////        float i = 0.0f;
+			////        foreach (Shapes ss in ApplicationData.FileContext.Data.VisualizeData.Shapes)
+			////        {
+			////            float w = (float)_windowManager.MainPanel.ClientSize.Width / (float)ApplicationData.FileContext.Data.VisualizeData.Shapes.Count;
 
-            ////    if (ApplicationData.FileContext.IsOpened)
-            ////    {
-            ////        float i = 0.0f;
-            ////        foreach (Shapes ss in ApplicationData.FileContext.Data.VisualizeData.Shapes)
-            ////        {
-            ////            float w = (float)_windowManager.MainPanel.ClientSize.Width / (float)ApplicationData.FileContext.Data.VisualizeData.Shapes.Count;
+			////            e.Graphics.FillRectangle(new SolidBrush(Color.White), new RectangleF(w * i, 0.0f, w, w));
+			////            e.Graphics.DrawRectangle(new System.Drawing.Pen(Color.Black), new Rectangle((int)(w * i), 0, (int)w, (int)w));
 
-            ////            e.Graphics.FillRectangle(new SolidBrush(Color.White), new RectangleF(w * i, 0.0f, w, w));
-            ////            e.Graphics.DrawRectangle(new System.Drawing.Pen(Color.Black), new Rectangle((int)(w * i), 0, (int)w, (int)w));
-
-            ////            foreach (Shape s in ss)
-            ////            {
-            ////                e.Graphics.DrawShape(s, new RectangleF(w * i, 0.0f, w, w));
-            ////            }
-            ////            i++;
-            ////        }
-            ////    }
-            ////};
-
+			////            foreach (Shape s in ss)
+			////            {
+			////                e.Graphics.DrawShape(s, new RectangleF(w * i, 0.0f, w, w));
+			////            }
+			////            i++;
+			////        }
+			////    }
+			////};
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -353,7 +352,6 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 			}
         }
 
-        
         protected override void OnDragEnter(DragEventArgs drgevent)
         {
             base.OnDragEnter(drgevent);
@@ -384,30 +382,27 @@ namespace NU.OJL.MPRTOS.TLV.Core.Controls
 
                 string[] s = ((string[])(drgevent.Data.GetData(DataFormats.FileDrop)));
 
-                if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.StandardFormatTraceLogFileExtension))
-                {
-                    _commandManager.Do(new OpenCommand(s[0]));
-                }
-                else if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.TraceLogFileExtension))
-                {
-                    //_commandManager.Do(new NewCommand(null, s[0]));
-                    MessageBox.Show("リソースファイルを一緒にドロップしてください", "ファイル入力エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension))
-                {
-                    //_commandManager.Do(new NewCommand(s[0], null));
-                    MessageBox.Show("トレースログファイルを一緒にドロップしてください", "ファイル入力エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else if (s.Length == 2)
-                {
-                    string resFilePath = Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension) ? s[0] : s[1];
-                    string logFilePath = Path.GetExtension(s[1]).Contains(Properties.Resources.TraceLogFileExtension) ? s[1] : s[0];
+				if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.StandardFormatTraceLogFileExtension))
+				{
+					_commandManager.Do(new OpenCommand(s[0]));
+				}
+				else if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.TraceLogFileExtension))
+				{
+					_commandManager.Do(new NewCommand(null, s[0]));
+				}
+				else if (s.Length == 1 && Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension))
+				{
+					_commandManager.Do(new NewCommand(s[0], null));
+				}
+				else if (s.Length == 2)
+				{
+					string resFilePath = Path.GetExtension(s[0]).Contains(Properties.Resources.ResourceFileExtension) ? s[0] : s[1];
+					string logFilePath = Path.GetExtension(s[1]).Contains(Properties.Resources.TraceLogFileExtension) ? s[1] : s[0];
                     _commandManager.Do(new NewCommand(resFilePath, logFilePath));
-                }
-            }
-            
-            ApplicationFactory.BlackBoard.dragFlag = false;
+				}
 
+            }
+            ApplicationFactory.BlackBoard.dragFlag = false;
         }
 
         private void settingLoad()
