@@ -63,8 +63,6 @@ raw_res,logs = ARGF.readlines().break{|line|
   line.chop == '---'
 }
 
-p raw_res
-
 
 
 ##変換と出力
@@ -264,7 +262,6 @@ logs.each do|line|
     else
       print "[",time,"]",$Context[-1],".leaveSVC(",$1,",",$4.delete(" "),")\r\n"
     end
-    #以下２つテスト未実施 $4の方がいい？
   elsif /enter to ((x?sns[_]\w+))( (.+))?\.?/ =~ pattern
     if nil == $3
       print "[",time,"]",$Context[-1],".enterSVC(",$1,")\r\n"      
@@ -277,7 +274,6 @@ logs.each do|line|
     else
       print "[",time,"]",$Context[-1],".leaveSVC(",$1,",",$4.delete(" "),")\r\n"
     end
-    #以下４つテスト怪しい
   elsif /enter to get_utm( (.+))?\.?/ =~ pattern
     if nil == $1
       print "[",time,"]",$Context[-1],".enterSVC(get_utm)\r\n"
@@ -365,7 +361,7 @@ logs.each do|line|
   elsif	/applog statetask : TASK ([^: ]+) : (\d+)\.?/ =~ pattern
     print "[",time,"]",AspResource.ResName($1,"Task"),".applog_state=",$2,"\r\n"
   else
-    #エラー処理が必要
+    #パターンに一致しなければ処理を行わない
   end
 end
 
