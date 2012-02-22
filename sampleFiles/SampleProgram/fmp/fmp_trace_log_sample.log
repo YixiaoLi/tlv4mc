@@ -1,0 +1,3132 @@
+[606548]:[2]: Processor 2 start.
+[608092]:[2]: local_inirtn exinf = 2, counter = 1
+[615887]:[1]: Processor 1 start.
+[617431]:[1]: local_inirtn exinf = 1, counter = 2
+[620484]:[1]: dispatch to task 5.
+[621010]:[1]: Server task 1 starts.
+[621576]:[2]: dispatch to task 9.
+[622102]:[2]: Server task 2 starts.
+[622114]:[1]: enter to rcv_dtq dtqid=1. p_data=118452.
+[622611]:[1]: task 5 becomes WAITING.
+[622850]:[1]: dispatch from task 5.
+[623027]:[1]: dispatch to task 4.
+[623158]:[2]: enter to rcv_dtq dtqid=2. p_data=146212.
+[623614]:[2]: task 9 becomes WAITING.
+[623746]:[1]: Sample program starts (exinf = 1).
+[623853]:[2]: dispatch from task 9.
+[625138]:[1]: enter to sns_dpn.
+[625347]:[1]: leave from sns_dpn state=0.
+[625535]:[1]: enter to dis_dsp.
+[625796]:[1]: leave from dis_dsp ercd=0.
+[626001]:[1]: enter to loc_cpu.
+[626191]:[1]: leave from loc_cpu ercd=0.
+[626412]:[1]: enter to ena_int intno=65538.
+[626657]:[1]: leave from ena_int ercd=0.
+[626860]:[1]: enter to unl_cpu.
+[627060]:[1]: leave from unl_cpu ercd=0.
+[627240]:[1]: enter to ena_dsp.
+[627525]:[1]: leave from ena_dsp ercd=0.
+[627730]:[1]: enter to sns_dpn.
+[627939]:[1]: leave from sns_dpn state=0.
+[628203]:[1]: enter to act_tsk tskid=1.
+[628489]:[1]: task 1 becomes RUNNABLE.
+[628730]:[1]: leave from act_tsk ercd=0.
+[628914]:[1]: enter to act_tsk tskid=6.
+[629200]:[1]: task 6 becomes RUNNABLE.
+[629469]:[1]: leave from act_tsk ercd=0.
+[629653]:[1]: enter to dly_tsk dlytim=10.
+[630129]:[1]: task 4 becomes WAITING.
+[630193]:[2]: enter to int handler 16.
+[630361]:[1]: dispatch from task 4.
+[630396]:[2]: leave from int handler 16.
+[630552]:[1]: dispatch to task 1.
+[630712]:[2]: dispatch to task 6.
+[630831]:[1]: enter to ena_tex.
+[630926]:[2]: enter to ena_tex.
+[631111]:[1]: leave from ena_tex ercd=0
+[631206]:[2]: leave from ena_tex ercd=0
+[631842]:[1]: task1_1 is running (001).   |
+[631937]:[2]: task2_1 is running (001).   |
+[827092]:[1]: enter to int handler 5.
+[827410]:[1]: leave from int handler 5.
+[829514]:[2]: enter to int handler 5.
+[829817]:[2]: leave from int handler 5.
+[1053501]:[1]: enter to int handler 5.
+[1053819]:[1]: leave from int handler 5.
+[1055928]:[2]: enter to int handler 5.
+[1056231]:[2]: leave from int handler 5.
+[1279912]:[1]: enter to int handler 5.
+[1280230]:[1]: leave from int handler 5.
+[1282343]:[2]: enter to int handler 5.
+[1282646]:[2]: leave from int handler 5.
+[1506324]:[1]: enter to int handler 5.
+[1506642]:[1]: leave from int handler 5.
+[1508759]:[2]: enter to int handler 5.
+[1509062]:[2]: leave from int handler 5.
+[1732733]:[1]: enter to int handler 5.
+[1733051]:[1]: leave from int handler 5.
+[1735173]:[2]: enter to int handler 5.
+[1735476]:[2]: leave from int handler 5.
+[1959144]:[1]: enter to int handler 5.
+[1959462]:[1]: leave from int handler 5.
+[1961589]:[2]: enter to int handler 5.
+[1961892]:[2]: leave from int handler 5.
+[2185556]:[1]: enter to int handler 5.
+[2185874]:[1]: leave from int handler 5.
+[2188005]:[2]: enter to int handler 5.
+[2188308]:[2]: leave from int handler 5.
+[2411965]:[1]: enter to int handler 5.
+[2412283]:[1]: leave from int handler 5.
+[2414419]:[2]: enter to int handler 5.
+[2414722]:[2]: leave from int handler 5.
+[2638376]:[1]: enter to int handler 5.
+[2638694]:[1]: leave from int handler 5.
+[2640834]:[2]: enter to int handler 5.
+[2641137]:[2]: leave from int handler 5.
+[2864788]:[1]: enter to int handler 5.
+[2865106]:[1]: leave from int handler 5.
+[2867250]:[2]: enter to int handler 5.
+[2867553]:[2]: leave from int handler 5.
+[3091197]:[1]: enter to int handler 5.
+[3091533]:[1]: task 4 becomes RUNNABLE.
+[3091920]:[1]: leave from int handler 5.
+[3092229]:[1]: dispatch from task 1.
+[3092406]:[1]: dispatch to task 4.
+[3092604]:[1]: leave from dly_tsk ercd=0.
+[3092786]:[1]: enter to act_tsk tskid=2.
+[3093072]:[1]: task 2 becomes RUNNABLE.
+[3093313]:[1]: leave from act_tsk ercd=0.
+[3093497]:[1]: enter to act_tsk tskid=7.
+[3093695]:[2]: enter to int handler 5.
+[3093783]:[1]: task 7 becomes RUNNABLE.
+[3094024]:[1]: leave from act_tsk ercd=0.
+[3094208]:[1]: enter to dly_tsk dlytim=10.
+[3094120]:[2]: leave from int handler 5.
+[3094684]:[1]: task 4 becomes WAITING.
+[3094902]:[1]: dispatch from task 4.
+[3095079]:[1]: dispatch to task 1.
+[3317463]:[1]: enter to int handler 5.
+[3317781]:[1]: leave from int handler 5.
+[3320012]:[2]: enter to int handler 5.
+[3320315]:[2]: leave from int handler 5.
+[3543874]:[1]: enter to int handler 5.
+[3544192]:[1]: leave from int handler 5.
+[3546428]:[2]: enter to int handler 5.
+[3546731]:[2]: leave from int handler 5.
+[3770285]:[1]: enter to int handler 5.
+[3770603]:[1]: leave from int handler 5.
+[3772842]:[2]: enter to int handler 5.
+[3773145]:[2]: leave from int handler 5.
+[3996695]:[1]: enter to int handler 5.
+[3997013]:[1]: leave from int handler 5.
+[3999257]:[2]: enter to int handler 5.
+[3999560]:[2]: leave from int handler 5.
+[4223106]:[1]: enter to int handler 5.
+[4223424]:[1]: leave from int handler 5.
+[4225673]:[2]: enter to int handler 5.
+[4225976]:[2]: leave from int handler 5.
+[4449517]:[1]: enter to int handler 5.
+[4449835]:[1]: leave from int handler 5.
+[4452087]:[2]: enter to int handler 5.
+[4452390]:[2]: leave from int handler 5.
+[4546322]:[2]: task2_1 is running (002).   |
+[4549813]:[1]: task1_1 is running (002).   |
+[4675272]:[1]: enter to int handler 5.
+[4675590]:[1]: leave from int handler 5.
+[4677847]:[2]: enter to int handler 5.
+[4678150]:[2]: leave from int handler 5.
+[4901682]:[1]: enter to int handler 5.
+[4902000]:[1]: leave from int handler 5.
+[4904262]:[2]: enter to int handler 5.
+[4904565]:[2]: leave from int handler 5.
+[5128093]:[1]: enter to int handler 5.
+[5128411]:[1]: leave from int handler 5.
+[5130678]:[2]: enter to int handler 5.
+[5130981]:[2]: leave from int handler 5.
+[5354504]:[1]: enter to int handler 5.
+[5354822]:[1]: leave from int handler 5.
+[5357092]:[2]: enter to int handler 5.
+[5357395]:[2]: leave from int handler 5.
+[5580914]:[1]: enter to int handler 5.
+[5581250]:[1]: task 4 becomes RUNNABLE.
+[5581637]:[1]: leave from int handler 5.
+[5581946]:[1]: dispatch from task 1.
+[5582123]:[1]: dispatch to task 4.
+[5582321]:[1]: leave from dly_tsk ercd=0.
+[5582503]:[1]: enter to act_tsk tskid=3.
+[5582789]:[1]: task 3 becomes RUNNABLE.
+[5583030]:[1]: leave from act_tsk ercd=0.
+[5583214]:[1]: enter to act_tsk tskid=8.
+[5583508]:[2]: enter to int handler 5.
+[5583531]:[1]: task 8 becomes RUNNABLE.
+[5583772]:[1]: leave from act_tsk ercd=0.
+[5583897]:[2]: leave from int handler 5.
+[5583956]:[1]: enter to dly_tsk dlytim=20.
+[5584432]:[1]: task 4 becomes WAITING.
+[5584650]:[1]: dispatch from task 4.
+[5584827]:[1]: dispatch to task 1.
+[5807157]:[1]: enter to int handler 5.
+[5807475]:[1]: leave from int handler 5.
+[5809890]:[2]: enter to int handler 5.
+[5810193]:[2]: leave from int handler 5.
+[6033567]:[1]: enter to int handler 5.
+[6033885]:[1]: leave from int handler 5.
+[6036306]:[2]: enter to int handler 5.
+[6036609]:[2]: leave from int handler 5.
+[6259978]:[1]: enter to int handler 5.
+[6260296]:[1]: leave from int handler 5.
+[6262720]:[2]: enter to int handler 5.
+[6263023]:[2]: leave from int handler 5.
+[6486389]:[1]: enter to int handler 5.
+[6486707]:[1]: leave from int handler 5.
+[6489135]:[2]: enter to int handler 5.
+[6489438]:[2]: leave from int handler 5.
+[6712799]:[1]: enter to int handler 5.
+[6713117]:[1]: leave from int handler 5.
+[6715551]:[2]: enter to int handler 5.
+[6715854]:[2]: leave from int handler 5.
+[6939210]:[1]: enter to int handler 5.
+[6939528]:[1]: leave from int handler 5.
+[6941965]:[2]: enter to int handler 5.
+[6942268]:[2]: leave from int handler 5.
+[7165621]:[1]: enter to int handler 5.
+[7165939]:[1]: leave from int handler 5.
+[7168381]:[2]: enter to int handler 5.
+[7168684]:[2]: leave from int handler 5.
+[7392031]:[1]: enter to int handler 5.
+[7392349]:[1]: leave from int handler 5.
+[7394797]:[2]: enter to int handler 5.
+[7395100]:[2]: leave from int handler 5.
+[7618442]:[1]: enter to int handler 5.
+[7618760]:[1]: leave from int handler 5.
+[7621211]:[2]: enter to int handler 5.
+[7621514]:[2]: leave from int handler 5.
+[7844853]:[1]: enter to int handler 5.
+[7845171]:[1]: leave from int handler 5.
+[7847626]:[2]: enter to int handler 5.
+[7847929]:[2]: leave from int handler 5.
+[8071263]:[1]: enter to int handler 5.
+[8071581]:[1]: leave from int handler 5.
+[8074042]:[2]: enter to int handler 5.
+[8074345]:[2]: leave from int handler 5.
+[8297674]:[1]: enter to int handler 5.
+[8297992]:[1]: leave from int handler 5.
+[8300456]:[2]: enter to int handler 5.
+[8300759]:[2]: leave from int handler 5.
+[8460640]:[2]: task2_1 is running (003).   |
+[8467815]:[1]: task1_1 is running (003).   |
+[8523429]:[1]: enter to int handler 5.
+[8523747]:[1]: leave from int handler 5.
+[8526216]:[2]: enter to int handler 5.
+[8526519]:[2]: leave from int handler 5.
+[8749840]:[1]: enter to int handler 5.
+[8750158]:[1]: leave from int handler 5.
+[8752631]:[2]: enter to int handler 5.
+[8752934]:[2]: leave from int handler 5.
+[8976250]:[1]: enter to int handler 5.
+[8976568]:[1]: leave from int handler 5.
+[8979047]:[2]: enter to int handler 5.
+[8979350]:[2]: leave from int handler 5.
+[9202661]:[1]: enter to int handler 5.
+[9202979]:[1]: leave from int handler 5.
+[9205461]:[2]: enter to int handler 5.
+[9205764]:[2]: leave from int handler 5.
+[9429072]:[1]: enter to int handler 5.
+[9429390]:[1]: leave from int handler 5.
+[9431877]:[2]: enter to int handler 5.
+[9432180]:[2]: leave from int handler 5.
+[9655482]:[1]: enter to int handler 5.
+[9655800]:[1]: leave from int handler 5.
+[9658293]:[2]: enter to int handler 5.
+[9658596]:[2]: leave from int handler 5.
+[9881893]:[1]: enter to int handler 5.
+[9882211]:[1]: leave from int handler 5.
+[9884707]:[2]: enter to int handler 5.
+[9885010]:[2]: leave from int handler 5.
+[10108304]:[1]: enter to int handler 5.
+[10108622]:[1]: leave from int handler 5.
+[10111122]:[2]: enter to int handler 5.
+[10111425]:[2]: leave from int handler 5.
+[10334714]:[1]: enter to int handler 5.
+[10335050]:[1]: task 4 becomes RUNNABLE.
+[10335437]:[1]: leave from int handler 5.
+[10335746]:[1]: dispatch from task 1.
+[10335923]:[1]: dispatch to task 4.
+[10336121]:[1]: leave from dly_tsk ercd=0.
+[10336310]:[1]: enter to rot_rdq tskpri=10. prcid=1.
+[10336622]:[1]: leave from mrot_rdq ercd=0.
+[10336815]:[1]: enter to rot_rdq tskpri=10. prcid=2.
+[10337538]:[2]: enter to int handler 5.
+[10337172]:[1]: leave from mrot_rdq ercd=0.
+[10337358]:[1]: enter to dly_tsk dlytim=10.
+[10337834]:[1]: task 4 becomes WAITING.
+[10338052]:[1]: dispatch from task 4.
+[10338229]:[1]: dispatch to task 2.
+[10338443]:[1]: enter to ena_tex.
+[10338723]:[1]: leave from ena_tex ercd=0
+[10338143]:[2]: leave from int handler 5.
+[10338547]:[2]: enter to int handler 16.
+[10338750]:[2]: leave from int handler 16.
+[10339059]:[2]: dispatch from task 6.
+[10339236]:[2]: dispatch to task 7.
+[10339450]:[2]: enter to ena_tex.
+[10339730]:[2]: leave from ena_tex ercd=0
+[10339454]:[1]: task1_2 is running (001).     +
+[10340461]:[2]: task2_2 is running (001).     +
+[10560266]:[1]: enter to int handler 5.
+[10560584]:[1]: leave from int handler 5.
+[10563151]:[2]: enter to int handler 5.
+[10563454]:[2]: leave from int handler 5.
+[10786677]:[1]: enter to int handler 5.
+[10786995]:[1]: leave from int handler 5.
+[10789567]:[2]: enter to int handler 5.
+[10789870]:[2]: leave from int handler 5.
+[11013088]:[1]: enter to int handler 5.
+[11013406]:[1]: leave from int handler 5.
+[11015983]:[2]: enter to int handler 5.
+[11016286]:[2]: leave from int handler 5.
+[11239498]:[1]: enter to int handler 5.
+[11239816]:[1]: leave from int handler 5.
+[11242397]:[2]: enter to int handler 5.
+[11242700]:[2]: leave from int handler 5.
+[11465909]:[1]: enter to int handler 5.
+[11466227]:[1]: leave from int handler 5.
+[11468812]:[2]: enter to int handler 5.
+[11469115]:[2]: leave from int handler 5.
+[11692320]:[1]: enter to int handler 5.
+[11692638]:[1]: leave from int handler 5.
+[11695228]:[2]: enter to int handler 5.
+[11695531]:[2]: leave from int handler 5.
+[11918730]:[1]: enter to int handler 5.
+[11919048]:[1]: leave from int handler 5.
+[11921642]:[2]: enter to int handler 5.
+[11921945]:[2]: leave from int handler 5.
+[12145141]:[1]: enter to int handler 5.
+[12145459]:[1]: leave from int handler 5.
+[12148058]:[2]: enter to int handler 5.
+[12148361]:[2]: leave from int handler 5.
+[12371552]:[1]: enter to int handler 5.
+[12371870]:[1]: leave from int handler 5.
+[12374474]:[2]: enter to int handler 5.
+[12374777]:[2]: leave from int handler 5.
+[12597962]:[1]: enter to int handler 5.
+[12598280]:[1]: leave from int handler 5.
+[12600888]:[2]: enter to int handler 5.
+[12601191]:[2]: leave from int handler 5.
+[12824373]:[1]: enter to int handler 5.
+[12824709]:[1]: task 4 becomes RUNNABLE.
+[12825096]:[1]: leave from int handler 5.
+[12825405]:[1]: dispatch from task 2.
+[12825582]:[1]: dispatch to task 4.
+[12825780]:[1]: leave from dly_tsk ercd=0.
+[12825969]:[1]: enter to rot_rdq tskpri=10. prcid=1.
+[12826281]:[1]: leave from mrot_rdq ercd=0.
+[12826474]:[1]: enter to rot_rdq tskpri=10. prcid=2.
+[12826831]:[1]: leave from mrot_rdq ercd=0.
+[12827017]:[1]: enter to dly_tsk dlytim=10.
+[12827310]:[2]: enter to int handler 5.
+[12827524]:[1]: task 4 becomes WAITING.
+[12827742]:[1]: dispatch from task 4.
+[12827678]:[2]: leave from int handler 5.
+[12827933]:[1]: dispatch to task 3.
+[12828043]:[2]: enter to int handler 16.
+[12828147]:[1]: enter to ena_tex.
+[12828260]:[2]: leave from int handler 16.
+[12828427]:[1]: leave from ena_tex ercd=0
+[12828569]:[2]: dispatch from task 7.
+[12828746]:[2]: dispatch to task 8.
+[12828960]:[2]: enter to ena_tex.
+[12829158]:[1]: task1_3 is running (001).       *
+[12829240]:[2]: leave from ena_tex ercd=0
+[12829971]:[2]: task2_3 is running (001).       *
+[13049878]:[1]: enter to int handler 5.
+[13050196]:[1]: leave from int handler 5.
+[13052910]:[2]: enter to int handler 5.
+[13053213]:[2]: leave from int handler 5.
+[13276289]:[1]: enter to int handler 5.
+[13276607]:[1]: leave from int handler 5.
+[13279324]:[2]: enter to int handler 5.
+[13279627]:[2]: leave from int handler 5.
+[13502699]:[1]: enter to int handler 5.
+[13503017]:[1]: leave from int handler 5.
+[13505740]:[2]: enter to int handler 5.
+[13506043]:[2]: leave from int handler 5.
+[13729110]:[1]: enter to int handler 5.
+[13729428]:[1]: leave from int handler 5.
+[13732156]:[2]: enter to int handler 5.
+[13732459]:[2]: leave from int handler 5.
+[13955521]:[1]: enter to int handler 5.
+[13955839]:[1]: leave from int handler 5.
+[13958570]:[2]: enter to int handler 5.
+[13958873]:[2]: leave from int handler 5.
+[14181931]:[1]: enter to int handler 5.
+[14182249]:[1]: leave from int handler 5.
+[14184985]:[2]: enter to int handler 5.
+[14185288]:[2]: leave from int handler 5.
+[14408342]:[1]: enter to int handler 5.
+[14408660]:[1]: leave from int handler 5.
+[14411401]:[2]: enter to int handler 5.
+[14411704]:[2]: leave from int handler 5.
+[14634753]:[1]: enter to int handler 5.
+[14635071]:[1]: leave from int handler 5.
+[14637815]:[2]: enter to int handler 5.
+[14638118]:[2]: leave from int handler 5.
+[14861163]:[1]: enter to int handler 5.
+[14861481]:[1]: leave from int handler 5.
+[14864231]:[2]: enter to int handler 5.
+[14864534]:[2]: leave from int handler 5.
+[15087574]:[1]: enter to int handler 5.
+[15087892]:[1]: leave from int handler 5.
+[15090647]:[2]: enter to int handler 5.
+[15090950]:[2]: leave from int handler 5.
+[15313985]:[1]: enter to int handler 5.
+[15314321]:[1]: task 4 becomes RUNNABLE.
+[15314708]:[1]: leave from int handler 5.
+[15315017]:[1]: dispatch from task 3.
+[15315194]:[1]: dispatch to task 4.
+[15315392]:[1]: leave from dly_tsk ercd=0.
+[15315581]:[1]: enter to rot_rdq tskpri=10. prcid=1.
+[15315893]:[1]: leave from mrot_rdq ercd=0.
+[15316086]:[1]: enter to rot_rdq tskpri=10. prcid=2.
+[15316443]:[1]: leave from mrot_rdq ercd=0.
+[15316629]:[1]: enter to dly_tsk dlytim=20.
+[15317061]:[2]: enter to int handler 5.
+[15317170]:[1]: task 4 becomes WAITING.
+[15317364]:[2]: leave from int handler 5.
+[15317453]:[1]: dispatch from task 4.
+[15317630]:[1]: dispatch to task 1.
+[15317782]:[2]: enter to int handler 16.
+[15317985]:[2]: leave from int handler 16.
+[15318294]:[2]: dispatch from task 8.
+[15318471]:[2]: dispatch to task 6.
+[15540155]:[1]: enter to int handler 5.
+[15540473]:[1]: leave from int handler 5.
+[15543462]:[2]: enter to int handler 5.
+[15543765]:[2]: leave from int handler 5.
+[15766565]:[1]: enter to int handler 5.
+[15766883]:[1]: leave from int handler 5.
+[15769878]:[2]: enter to int handler 5.
+[15770181]:[2]: leave from int handler 5.
+[15992976]:[1]: enter to int handler 5.
+[15993294]:[1]: leave from int handler 5.
+[15996294]:[2]: enter to int handler 5.
+[15996597]:[2]: leave from int handler 5.
+[16219387]:[1]: enter to int handler 5.
+[16219705]:[1]: leave from int handler 5.
+[16222708]:[2]: enter to int handler 5.
+[16223011]:[2]: leave from int handler 5.
+[16445797]:[1]: enter to int handler 5.
+[16446115]:[1]: leave from int handler 5.
+[16449123]:[2]: enter to int handler 5.
+[16449426]:[2]: leave from int handler 5.
+[16672208]:[1]: enter to int handler 5.
+[16672526]:[1]: leave from int handler 5.
+[16675539]:[2]: enter to int handler 5.
+[16675842]:[2]: leave from int handler 5.
+[16898619]:[1]: enter to int handler 5.
+[16898937]:[1]: leave from int handler 5.
+[16901953]:[2]: enter to int handler 5.
+[16902256]:[2]: leave from int handler 5.
+[17125029]:[1]: enter to int handler 5.
+[17125347]:[1]: leave from int handler 5.
+[17128369]:[2]: enter to int handler 5.
+[17128672]:[2]: leave from int handler 5.
+[17351440]:[1]: enter to int handler 5.
+[17351758]:[1]: leave from int handler 5.
+[17354785]:[2]: enter to int handler 5.
+[17355088]:[2]: leave from int handler 5.
+[17356129]:[2]: task2_1 is running (004).   |
+[17365542]:[1]: task1_1 is running (004).   |
+[17577195]:[1]: enter to int handler 5.
+[17577513]:[1]: leave from int handler 5.
+[17580544]:[2]: enter to int handler 5.
+[17580847]:[2]: leave from int handler 5.
+[17803606]:[1]: enter to int handler 5.
+[17803924]:[1]: leave from int handler 5.
+[17806958]:[2]: enter to int handler 5.
+[17807261]:[2]: leave from int handler 5.
+[18030016]:[1]: enter to int handler 5.
+[18030334]:[1]: leave from int handler 5.
+[18033374]:[2]: enter to int handler 5.
+[18033677]:[2]: leave from int handler 5.
+[18256427]:[1]: enter to int handler 5.
+[18256745]:[1]: leave from int handler 5.
+[18259790]:[2]: enter to int handler 5.
+[18260093]:[2]: leave from int handler 5.
+[18482838]:[1]: enter to int handler 5.
+[18483156]:[1]: leave from int handler 5.
+[18486204]:[2]: enter to int handler 5.
+[18486507]:[2]: leave from int handler 5.
+[18709248]:[1]: enter to int handler 5.
+[18709566]:[1]: leave from int handler 5.
+[18712619]:[2]: enter to int handler 5.
+[18712922]:[2]: leave from int handler 5.
+[18935659]:[1]: enter to int handler 5.
+[18935977]:[1]: leave from int handler 5.
+[18939035]:[2]: enter to int handler 5.
+[18939338]:[2]: leave from int handler 5.
+[19162070]:[1]: enter to int handler 5.
+[19162388]:[1]: leave from int handler 5.
+[19165449]:[2]: enter to int handler 5.
+[19165752]:[2]: leave from int handler 5.
+[19388480]:[1]: enter to int handler 5.
+[19388798]:[1]: leave from int handler 5.
+[19391865]:[2]: enter to int handler 5.
+[19392168]:[2]: leave from int handler 5.
+[19614891]:[1]: enter to int handler 5.
+[19615209]:[1]: leave from int handler 5.
+[19618281]:[2]: enter to int handler 5.
+[19618584]:[2]: leave from int handler 5.
+[19841302]:[1]: enter to int handler 5.
+[19841620]:[1]: leave from int handler 5.
+[19844695]:[2]: enter to int handler 5.
+[19844998]:[2]: leave from int handler 5.
+[20067712]:[1]: enter to int handler 5.
+[20068048]:[1]: task 4 becomes RUNNABLE.
+[20068435]:[1]: leave from int handler 5.
+[20068744]:[1]: dispatch from task 1.
+[20068921]:[1]: dispatch to task 4.
+[20069119]:[1]: leave from dly_tsk ercd=0.
+[20069308]:[1]: enter to ras_tex tskid=1. rasptn=1.
+[20069639]:[1]: leave from ras_tex ercd=0.
+[20069832]:[1]: enter to ras_tex tskid=6. rasptn=1.
+[20070161]:[1]: leave from ras_tex ercd=0.
+[20070347]:[1]: enter to dly_tsk dlytim=10.
+[20070823]:[1]: task 4 becomes WAITING.
+[20071041]:[1]: dispatch from task 4.
+[20071110]:[2]: enter to int handler 5.
+[20071249]:[1]: dispatch to task 1.
+[20071413]:[2]: leave from int handler 5.
+[20071562]:[1]: task 1 enter to tex 1.
+[20071817]:[2]: enter to int handler 16.
+[20072020]:[2]: leave from int handler 16.
+[20072227]:[1]: task1 receives exception 0x0001.
+[20072443]:[2]: task 6 enter to tex 1.
+[20073108]:[2]: task1 receives exception 0x0001.
+[20074639]:[2]: task 6 leave from tex 1.
+[20293392]:[1]: enter to int handler 5.
+[20293710]:[1]: leave from int handler 5.
+[20296991]:[2]: enter to int handler 5.
+[20297294]:[2]: leave from int handler 5.
+[20519804]:[1]: enter to int handler 5.
+[20520122]:[1]: leave from int handler 5.
+[20523406]:[2]: enter to int handler 5.
+[20523709]:[2]: leave from int handler 5.
+[20746213]:[1]: enter to int handler 5.
+[20746531]:[1]: leave from int handler 5.
+[20749822]:[2]: enter to int handler 5.
+[20750125]:[2]: leave from int handler 5.
+[20855920]:[1]: task 1 leave from tex 1.
+[20972642]:[1]: enter to int handler 5.
+[20972960]:[1]: leave from int handler 5.
+[20976236]:[2]: enter to int handler 5.
+[20976539]:[2]: leave from int handler 5.
+[21199053]:[1]: enter to int handler 5.
+[21199371]:[1]: leave from int handler 5.
+[21202652]:[2]: enter to int handler 5.
+[21202955]:[2]: leave from int handler 5.
+[21273653]:[2]: task2_1 is running (005).   |
+[21425465]:[1]: enter to int handler 5.
+[21425783]:[1]: leave from int handler 5.
+[21428411]:[2]: enter to int handler 5.
+[21428714]:[2]: leave from int handler 5.
+[21651874]:[1]: enter to int handler 5.
+[21652192]:[1]: leave from int handler 5.
+[21654827]:[2]: enter to int handler 5.
+[21655130]:[2]: leave from int handler 5.
+[21878285]:[1]: enter to int handler 5.
+[21878603]:[1]: leave from int handler 5.
+[21881241]:[2]: enter to int handler 5.
+[21881544]:[2]: leave from int handler 5.
+[22067985]:[1]: task1_1 is running (005).   |
+[22104040]:[1]: enter to int handler 5.
+[22104358]:[1]: leave from int handler 5.
+[22107657]:[2]: enter to int handler 5.
+[22107960]:[2]: leave from int handler 5.
+[22330452]:[1]: enter to int handler 5.
+[22330770]:[1]: leave from int handler 5.
+[22334073]:[2]: enter to int handler 5.
+[22334376]:[2]: leave from int handler 5.
+[22556861]:[1]: enter to int handler 5.
+[22557197]:[1]: task 4 becomes RUNNABLE.
+[22557584]:[1]: leave from int handler 5.
+[22557893]:[1]: dispatch from task 1.
+[22558070]:[1]: dispatch to task 4.
+[22558268]:[1]: leave from dly_tsk ercd=0.
+[22558460]:[1]: enter to snd_dtq dtqid=1. data=1114114.
+[22558858]:[1]: task 5 becomes RUNNABLE.
+[22559204]:[1]: dispatch from task 4.
+[22559381]:[1]: dispatch to task 5.
+[22559590]:[1]: leave from rcv_dtq ercd=0. data=1114114.
+[22560246]:[1]: #Server task 1 : ter_tsk(0x11)
+[22560487]:[2]: enter to int handler 5.
+[22560790]:[2]: leave from int handler 5.
+[22561813]:[1]: enter to ter_tsk tskid=1.
+[22562190]:[1]: task 1 becomes DORMANT.
+[22562392]:[1]: leave from ter_tsk ercd=0.
+[22562591]:[1]: enter to rcv_dtq dtqid=1. p_data=118452.
+[22563088]:[1]: task 5 becomes WAITING.
+[22563327]:[1]: dispatch from task 5.
+[22563504]:[1]: dispatch to task 4.
+[22563702]:[1]: leave from snd_dtq ercd=0.
+[22563900]:[1]: enter to snd_dtq dtqid=2. data=2162690.
+[22564298]:[1]: task 9 becomes RUNNABLE.
+[22564614]:[1]: leave from snd_dtq ercd=0.
+[22564802]:[1]: enter to dly_tsk dlytim=10.
+[22565278]:[1]: task 4 becomes WAITING.
+[22565287]:[2]: enter to int handler 16.
+[22565496]:[1]: dispatch from task 4.
+[22565490]:[2]: leave from int handler 16.
+[22565673]:[1]: dispatch to task 2.
+[22565799]:[2]: dispatch from task 6.
+[22565976]:[2]: dispatch to task 9.
+[22566185]:[2]: leave from rcv_dtq ercd=0. data=2162690.
+[22566841]:[2]: #Server task 2 : ter_tsk(0x21)
+[22568409]:[2]: enter to ter_tsk tskid=6.
+[22568786]:[2]: task 6 becomes DORMANT.
+[22568988]:[2]: leave from ter_tsk ercd=0.
+[22569187]:[2]: enter to rcv_dtq dtqid=2. p_data=146212.
+[22569691]:[2]: task 9 becomes WAITING.
+[22569930]:[2]: dispatch from task 9.
+[22570107]:[2]: dispatch to task 7.
+[22782502]:[1]: enter to int handler 5.
+[22782820]:[1]: leave from int handler 5.
+[22786240]:[2]: enter to int handler 5.
+[22786543]:[2]: leave from int handler 5.
+[23008911]:[1]: enter to int handler 5.
+[23009229]:[1]: leave from int handler 5.
+[23012654]:[2]: enter to int handler 5.
+[23012957]:[2]: leave from int handler 5.
+[23235322]:[1]: enter to int handler 5.
+[23235640]:[1]: leave from int handler 5.
+[23239070]:[2]: enter to int handler 5.
+[23239373]:[2]: leave from int handler 5.
+[23461734]:[1]: enter to int handler 5.
+[23462052]:[1]: leave from int handler 5.
+[23465486]:[2]: enter to int handler 5.
+[23465789]:[2]: leave from int handler 5.
+[23688143]:[1]: enter to int handler 5.
+[23688461]:[1]: leave from int handler 5.
+[23691900]:[2]: enter to int handler 5.
+[23692203]:[2]: leave from int handler 5.
+[23914554]:[1]: enter to int handler 5.
+[23914872]:[1]: leave from int handler 5.
+[23918315]:[2]: enter to int handler 5.
+[23918618]:[2]: leave from int handler 5.
+[23994885]:[1]: task1_2 is running (002).     +
+[23997266]:[2]: task2_2 is running (002).     +
+[24140299]:[1]: enter to int handler 5.
+[24140617]:[1]: leave from int handler 5.
+[24144065]:[2]: enter to int handler 5.
+[24144368]:[2]: leave from int handler 5.
+[24366711]:[1]: enter to int handler 5.
+[24367029]:[1]: leave from int handler 5.
+[24370481]:[2]: enter to int handler 5.
+[24370784]:[2]: leave from int handler 5.
+[24593120]:[1]: enter to int handler 5.
+[24593438]:[1]: leave from int handler 5.
+[24596895]:[2]: enter to int handler 5.
+[24597198]:[2]: leave from int handler 5.
+[24819531]:[1]: enter to int handler 5.
+[24819849]:[1]: leave from int handler 5.
+[24823310]:[2]: enter to int handler 5.
+[24823613]:[2]: leave from int handler 5.
+[25045943]:[1]: enter to int handler 5.
+[25046279]:[1]: task 4 becomes RUNNABLE.
+[25046666]:[1]: leave from int handler 5.
+[25046975]:[1]: dispatch from task 2.
+[25047152]:[1]: dispatch to task 4.
+[25047350]:[1]: leave from dly_tsk ercd=0.
+[25047539]:[1]: enter to ras_tex tskid=2. rasptn=1.
+[25047870]:[1]: leave from ras_tex ercd=0.
+[25048063]:[1]: enter to ras_tex tskid=7. rasptn=1.
+[25048392]:[1]: leave from ras_tex ercd=0.
+[25048578]:[1]: enter to dly_tsk dlytim=10.
+[25049054]:[1]: task 4 becomes WAITING.
+[25049284]:[2]: enter to int handler 16.
+[25049354]:[1]: dispatch from task 4.
+[25049518]:[2]: leave from int handler 16.
+[25049545]:[1]: dispatch to task 2.
+[25049780]:[2]: enter to int handler 5.
+[25049858]:[1]: task 2 enter to tex 1.
+[25050083]:[2]: leave from int handler 5.
+[25050523]:[1]: task2 receives exception 0x0001.
+[25050658]:[2]: task 7 enter to tex 1.
+[25051323]:[2]: task2 receives exception 0x0001.
+[25052854]:[2]: task 7 leave from tex 1.
+[25271582]:[1]: enter to int handler 5.
+[25271900]:[1]: leave from int handler 5.
+[25275573]:[2]: enter to int handler 5.
+[25275876]:[2]: leave from int handler 5.
+[25497993]:[1]: enter to int handler 5.
+[25498311]:[1]: leave from int handler 5.
+[25501989]:[2]: enter to int handler 5.
+[25502292]:[2]: leave from int handler 5.
+[25724404]:[1]: enter to int handler 5.
+[25724722]:[1]: leave from int handler 5.
+[25728405]:[2]: enter to int handler 5.
+[25728708]:[2]: leave from int handler 5.
+[25834216]:[1]: task 2 leave from tex 1.
+[25950831]:[1]: enter to int handler 5.
+[25951149]:[1]: leave from int handler 5.
+[25954819]:[2]: enter to int handler 5.
+[25955122]:[2]: leave from int handler 5.
+[26177243]:[1]: enter to int handler 5.
+[26177561]:[1]: leave from int handler 5.
+[26181234]:[2]: enter to int handler 5.
+[26181537]:[2]: leave from int handler 5.
+[26403652]:[1]: enter to int handler 5.
+[26403970]:[1]: leave from int handler 5.
+[26407650]:[2]: enter to int handler 5.
+[26407953]:[2]: leave from int handler 5.
+[26630063]:[1]: enter to int handler 5.
+[26630381]:[1]: leave from int handler 5.
+[26634064]:[2]: enter to int handler 5.
+[26634367]:[2]: leave from int handler 5.
+[26856475]:[1]: enter to int handler 5.
+[26856793]:[1]: leave from int handler 5.
+[26860480]:[2]: enter to int handler 5.
+[26860783]:[2]: leave from int handler 5.
+[27082884]:[1]: enter to int handler 5.
+[27083202]:[1]: leave from int handler 5.
+[27086896]:[2]: enter to int handler 5.
+[27087199]:[2]: leave from int handler 5.
+[27309295]:[1]: enter to int handler 5.
+[27309613]:[1]: leave from int handler 5.
+[27313310]:[2]: enter to int handler 5.
+[27313613]:[2]: leave from int handler 5.
+[27535707]:[1]: enter to int handler 5.
+[27536043]:[1]: task 4 becomes RUNNABLE.
+[27536430]:[1]: leave from int handler 5.
+[27536739]:[1]: dispatch from task 2.
+[27536916]:[1]: dispatch to task 4.
+[27537114]:[1]: leave from dly_tsk ercd=0.
+[27537306]:[1]: enter to snd_dtq dtqid=1. data=1179650.
+[27537704]:[1]: task 5 becomes RUNNABLE.
+[27538050]:[1]: dispatch from task 4.
+[27538227]:[1]: dispatch to task 5.
+[27538436]:[1]: leave from rcv_dtq ercd=0. data=1179650.
+[27539092]:[1]: #Server task 1 : ter_tsk(0x12)
+[27539725]:[2]: enter to int handler 5.
+[27540028]:[2]: leave from int handler 5.
+[27540659]:[1]: enter to ter_tsk tskid=2.
+[27541036]:[1]: task 2 becomes DORMANT.
+[27541238]:[1]: leave from ter_tsk ercd=0.
+[27541437]:[1]: enter to rcv_dtq dtqid=1. p_data=118452.
+[27541934]:[1]: task 5 becomes WAITING.
+[27542173]:[1]: dispatch from task 5.
+[27542350]:[1]: dispatch to task 4.
+[27542548]:[1]: leave from snd_dtq ercd=0.
+[27542746]:[1]: enter to snd_dtq dtqid=2. data=2228226.
+[27543144]:[1]: task 9 becomes RUNNABLE.
+[27543460]:[1]: leave from snd_dtq ercd=0.
+[27543648]:[1]: enter to dly_tsk dlytim=10.
+[27544124]:[1]: task 4 becomes WAITING.
+[27544257]:[2]: enter to int handler 16.
+[27544373]:[1]: dispatch from task 4.
+[27544491]:[2]: leave from int handler 16.
+[27544564]:[1]: dispatch to task 3.
+[27544800]:[2]: dispatch from task 7.
+[27544977]:[2]: dispatch to task 9.
+[27545186]:[2]: leave from rcv_dtq ercd=0. data=2228226.
+[27545842]:[2]: #Server task 2 : ter_tsk(0x22)
+[27547410]:[2]: enter to ter_tsk tskid=7.
+[27547787]:[2]: task 7 becomes DORMANT.
+[27547989]:[2]: leave from ter_tsk ercd=0.
+[27548188]:[2]: enter to rcv_dtq dtqid=2. p_data=146212.
+[27548692]:[2]: task 9 becomes WAITING.
+[27548931]:[2]: dispatch from task 9.
+[27549108]:[2]: dispatch to task 8.
+[27761309]:[1]: enter to int handler 5.
+[27761627]:[1]: leave from int handler 5.
+[27765488]:[2]: enter to int handler 5.
+[27765791]:[2]: leave from int handler 5.
+[27987721]:[1]: enter to int handler 5.
+[27988039]:[1]: leave from int handler 5.
+[27991904]:[2]: enter to int handler 5.
+[27992207]:[2]: leave from int handler 5.
+[28214130]:[1]: enter to int handler 5.
+[28214448]:[1]: leave from int handler 5.
+[28218318]:[2]: enter to int handler 5.
+[28218621]:[2]: leave from int handler 5.
+[28440541]:[1]: enter to int handler 5.
+[28440859]:[1]: leave from int handler 5.
+[28444733]:[2]: enter to int handler 5.
+[28445036]:[2]: leave from int handler 5.
+[28666953]:[1]: enter to int handler 5.
+[28667271]:[1]: leave from int handler 5.
+[28671149]:[2]: enter to int handler 5.
+[28671452]:[2]: leave from int handler 5.
+[28893362]:[1]: enter to int handler 5.
+[28893680]:[1]: leave from int handler 5.
+[28897563]:[2]: enter to int handler 5.
+[28897866]:[2]: leave from int handler 5.
+[28973910]:[1]: task1_3 is running (002).       *
+[28975951]:[2]: task2_3 is running (002).       *
+[29119097]:[1]: enter to int handler 5.
+[29119415]:[1]: leave from int handler 5.
+[29123303]:[2]: enter to int handler 5.
+[29123606]:[2]: leave from int handler 5.
+[29345508]:[1]: enter to int handler 5.
+[29345826]:[1]: leave from int handler 5.
+[29349718]:[2]: enter to int handler 5.
+[29350021]:[2]: leave from int handler 5.
+[29571920]:[1]: enter to int handler 5.
+[29572238]:[1]: leave from int handler 5.
+[29576134]:[2]: enter to int handler 5.
+[29576437]:[2]: leave from int handler 5.
+[29798329]:[1]: enter to int handler 5.
+[29798647]:[1]: leave from int handler 5.
+[29802548]:[2]: enter to int handler 5.
+[29802851]:[2]: leave from int handler 5.
+[30024740]:[1]: enter to int handler 5.
+[30025076]:[1]: task 4 becomes RUNNABLE.
+[30025463]:[1]: leave from int handler 5.
+[30025772]:[1]: dispatch from task 3.
+[30025949]:[1]: dispatch to task 4.
+[30026147]:[1]: leave from dly_tsk ercd=0.
+[30026336]:[1]: enter to ras_tex tskid=3. rasptn=1.
+[30026667]:[1]: leave from ras_tex ercd=0.
+[30026860]:[1]: enter to ras_tex tskid=8. rasptn=1.
+[30027189]:[1]: leave from ras_tex ercd=0.
+[30027375]:[1]: enter to dly_tsk dlytim=10.
+[30027851]:[1]: task 4 becomes WAITING.
+[30028069]:[1]: dispatch from task 4.
+[30028190]:[2]: enter to int handler 16.
+[30028294]:[1]: dispatch to task 3.
+[30028393]:[2]: leave from int handler 16.
+[30028607]:[1]: task 3 enter to tex 1.
+[30028973]:[2]: enter to int handler 5.
+[30029272]:[1]: task3 receives exception 0x0001.
+[30029324]:[2]: leave from int handler 5.
+[30029571]:[2]: task 8 enter to tex 1.
+[30030236]:[2]: task3 receives exception 0x0001.
+[30031767]:[2]: task 8 leave from tex 1.
+[30250411]:[1]: enter to int handler 5.
+[30250729]:[1]: leave from int handler 5.
+[30254813]:[2]: enter to int handler 5.
+[30255116]:[2]: leave from int handler 5.
+[30476823]:[1]: enter to int handler 5.
+[30477141]:[1]: leave from int handler 5.
+[30481227]:[2]: enter to int handler 5.
+[30481530]:[2]: leave from int handler 5.
+[30703232]:[1]: enter to int handler 5.
+[30703550]:[1]: leave from int handler 5.
+[30707643]:[2]: enter to int handler 5.
+[30707946]:[2]: leave from int handler 5.
+[30812965]:[1]: task 3 leave from tex 1.
+[30929662]:[1]: enter to int handler 5.
+[30929980]:[1]: leave from int handler 5.
+[30934059]:[2]: enter to int handler 5.
+[30934362]:[2]: leave from int handler 5.
+[31156073]:[1]: enter to int handler 5.
+[31156391]:[1]: leave from int handler 5.
+[31160473]:[2]: enter to int handler 5.
+[31160776]:[2]: leave from int handler 5.
+[31382483]:[1]: enter to int handler 5.
+[31382801]:[1]: leave from int handler 5.
+[31386888]:[2]: enter to int handler 5.
+[31387191]:[2]: leave from int handler 5.
+[31608894]:[1]: enter to int handler 5.
+[31609212]:[1]: leave from int handler 5.
+[31613304]:[2]: enter to int handler 5.
+[31613607]:[2]: leave from int handler 5.
+[31835305]:[1]: enter to int handler 5.
+[31835623]:[1]: leave from int handler 5.
+[31839718]:[2]: enter to int handler 5.
+[31840021]:[2]: leave from int handler 5.
+[32061715]:[1]: enter to int handler 5.
+[32062033]:[1]: leave from int handler 5.
+[32066134]:[2]: enter to int handler 5.
+[32066437]:[2]: leave from int handler 5.
+[32288126]:[1]: enter to int handler 5.
+[32288444]:[1]: leave from int handler 5.
+[32292550]:[2]: enter to int handler 5.
+[32292853]:[2]: leave from int handler 5.
+[32514537]:[1]: enter to int handler 5.
+[32514873]:[1]: task 4 becomes RUNNABLE.
+[32515260]:[1]: leave from int handler 5.
+[32515569]:[1]: dispatch from task 3.
+[32515746]:[1]: dispatch to task 4.
+[32515944]:[1]: leave from dly_tsk ercd=0.
+[32516136]:[1]: enter to snd_dtq dtqid=1. data=1245186.
+[32516534]:[1]: task 5 becomes RUNNABLE.
+[32516880]:[1]: dispatch from task 4.
+[32517057]:[1]: dispatch to task 5.
+[32517266]:[1]: leave from rcv_dtq ercd=0. data=1245186.
+[32517922]:[1]: #Server task 1 : ter_tsk(0x13)
+[32518964]:[2]: enter to int handler 5.
+[32519267]:[2]: leave from int handler 5.
+[32519489]:[1]: enter to ter_tsk tskid=3.
+[32519885]:[1]: task 3 becomes DORMANT.
+[32520087]:[1]: leave from ter_tsk ercd=0.
+[32520286]:[1]: enter to rcv_dtq dtqid=1. p_data=118452.
+[32520783]:[1]: task 5 becomes WAITING.
+[32521022]:[1]: dispatch from task 5.
+[32521199]:[1]: dispatch to task 4.
+[32521397]:[1]: leave from snd_dtq ercd=0.
+[32521595]:[1]: enter to snd_dtq dtqid=2. data=2293762.
+[32521993]:[1]: task 9 becomes RUNNABLE.
+[32522309]:[1]: leave from snd_dtq ercd=0.
+[32522497]:[1]: enter to dly_tsk dlytim=20.
+[32522925]:[1]: task 4 becomes WAITING.
+[32523143]:[1]: dispatch from task 4.
+[32523274]:[2]: enter to int handler 16.
+[32523477]:[2]: leave from int handler 16.
+[32523786]:[2]: dispatch from task 8.
+[32523963]:[2]: dispatch to task 9.
+[32524172]:[2]: leave from rcv_dtq ercd=0. data=2293762.
+[32524828]:[2]: #Server task 2 : ter_tsk(0x23)
+[32526396]:[2]: enter to ter_tsk tskid=8.
+[32526792]:[2]: task 8 becomes DORMANT.
+[32526994]:[2]: leave from ter_tsk ercd=0.
+[32527193]:[2]: enter to rcv_dtq dtqid=2. p_data=146212.
+[32527649]:[2]: task 9 becomes WAITING.
+[32527888]:[2]: dispatch from task 9.
+[32694927]:[1]: enter to int handler 5.
+[32695245]:[1]: leave from int handler 5.
+[32699540]:[2]: enter to int handler 5.
+[32699843]:[2]: leave from int handler 5.
+[32874217]:[1]: enter to int handler 5.
+[32874535]:[1]: leave from int handler 5.
+[32878827]:[2]: enter to int handler 5.
+[32879130]:[2]: leave from int handler 5.
+[33053508]:[1]: enter to int handler 5.
+[33053826]:[1]: leave from int handler 5.
+[33058126]:[2]: enter to int handler 5.
+[33058429]:[2]: leave from int handler 5.
+[33232809]:[1]: enter to int handler 5.
+[33233127]:[1]: leave from int handler 5.
+[33237413]:[2]: enter to int handler 5.
+[33237716]:[2]: leave from int handler 5.
+[33412099]:[1]: enter to int handler 5.
+[33412417]:[1]: leave from int handler 5.
+[33416701]:[2]: enter to int handler 5.
+[33417004]:[2]: leave from int handler 5.
+[33591389]:[1]: enter to int handler 5.
+[33591707]:[1]: leave from int handler 5.
+[33595999]:[2]: enter to int handler 5.
+[33596302]:[2]: leave from int handler 5.
+[33770679]:[1]: enter to int handler 5.
+[33770997]:[1]: leave from int handler 5.
+[33775286]:[2]: enter to int handler 5.
+[33775589]:[2]: leave from int handler 5.
+[33949969]:[1]: enter to int handler 5.
+[33950287]:[1]: leave from int handler 5.
+[33954585]:[2]: enter to int handler 5.
+[33954888]:[2]: leave from int handler 5.
+[34129259]:[1]: enter to int handler 5.
+[34129577]:[1]: leave from int handler 5.
+[34133872]:[2]: enter to int handler 5.
+[34134175]:[2]: leave from int handler 5.
+[34308550]:[1]: enter to int handler 5.
+[34308868]:[1]: leave from int handler 5.
+[34313171]:[2]: enter to int handler 5.
+[34313474]:[2]: leave from int handler 5.
+[34487851]:[1]: enter to int handler 5.
+[34488169]:[1]: leave from int handler 5.
+[34492458]:[2]: enter to int handler 5.
+[34492761]:[2]: leave from int handler 5.
+[34667141]:[1]: enter to int handler 5.
+[34667459]:[1]: leave from int handler 5.
+[34671746]:[2]: enter to int handler 5.
+[34672049]:[2]: leave from int handler 5.
+[34846431]:[1]: enter to int handler 5.
+[34846749]:[1]: leave from int handler 5.
+[34851044]:[2]: enter to int handler 5.
+[34851347]:[2]: leave from int handler 5.
+[35025721]:[1]: enter to int handler 5.
+[35026039]:[1]: leave from int handler 5.
+[35030331]:[2]: enter to int handler 5.
+[35030634]:[2]: leave from int handler 5.
+[35205011]:[1]: enter to int handler 5.
+[35205329]:[1]: leave from int handler 5.
+[35209630]:[2]: enter to int handler 5.
+[35209933]:[2]: leave from int handler 5.
+[35384301]:[1]: enter to int handler 5.
+[35384619]:[1]: leave from int handler 5.
+[35388917]:[2]: enter to int handler 5.
+[35389220]:[2]: leave from int handler 5.
+[35563592]:[1]: enter to int handler 5.
+[35563910]:[1]: leave from int handler 5.
+[35568216]:[2]: enter to int handler 5.
+[35568519]:[2]: leave from int handler 5.
+[35742893]:[1]: enter to int handler 5.
+[35743211]:[1]: leave from int handler 5.
+[35747503]:[2]: enter to int handler 5.
+[35747806]:[2]: leave from int handler 5.
+[35922183]:[1]: enter to int handler 5.
+[35922501]:[1]: leave from int handler 5.
+[35926791]:[2]: enter to int handler 5.
+[35927094]:[2]: leave from int handler 5.
+[36101473]:[1]: enter to int handler 5.
+[36101791]:[1]: leave from int handler 5.
+[36106089]:[2]: enter to int handler 5.
+[36106392]:[2]: leave from int handler 5.
+[36280763]:[1]: enter to int handler 5.
+[36281099]:[1]: task 4 becomes RUNNABLE.
+[36281482]:[1]: leave from int handler 5.
+[36281798]:[1]: dispatch to task 4.
+[36281996]:[1]: leave from dly_tsk ercd=0.
+[36282178]:[1]: enter to act_tsk tskid=1.
+[36282464]:[1]: task 1 becomes RUNNABLE.
+[36282705]:[1]: leave from act_tsk ercd=0.
+[36282889]:[1]: enter to act_tsk tskid=6.
+[36283175]:[1]: task 6 becomes RUNNABLE.
+[36283444]:[1]: leave from act_tsk ercd=0.
+[36283628]:[1]: enter to dly_tsk dlytim=10.
+[36284104]:[1]: task 4 becomes WAITING.
+[36284248]:[2]: enter to int handler 16.
+[36284387]:[1]: dispatch from task 4.
+[36284451]:[2]: leave from int handler 16.
+[36284578]:[1]: dispatch to task 1.
+[36284767]:[2]: dispatch to task 6.
+[36284840]:[1]: enter to ena_tex.
+[36284981]:[2]: enter to ena_tex.
+[36285120]:[1]: leave from ena_tex ercd=0
+[36285261]:[2]: leave from ena_tex ercd=0
+[36285636]:[2]: enter to int handler 5.
+[36285851]:[1]: task1_1 is running (001).   |
+[36285939]:[2]: leave from int handler 5.
+[36286699]:[2]: task2_1 is running (001).   |
+[36506263]:[1]: enter to int handler 5.
+[36506581]:[1]: leave from int handler 5.
+[36511414]:[2]: enter to int handler 5.
+[36511717]:[2]: leave from int handler 5.
+[36732674]:[1]: enter to int handler 5.
+[36732992]:[1]: leave from int handler 5.
+[36737830]:[2]: enter to int handler 5.
+[36738133]:[2]: leave from int handler 5.
+[36959086]:[1]: enter to int handler 5.
+[36959404]:[1]: leave from int handler 5.
+[36964246]:[2]: enter to int handler 5.
+[36964549]:[2]: leave from int handler 5.
+[37185495]:[1]: enter to int handler 5.
+[37185813]:[1]: leave from int handler 5.
+[37190660]:[2]: enter to int handler 5.
+[37190963]:[2]: leave from int handler 5.
+[37411906]:[1]: enter to int handler 5.
+[37412224]:[1]: leave from int handler 5.
+[37417075]:[2]: enter to int handler 5.
+[37417378]:[2]: leave from int handler 5.
+[37638318]:[1]: enter to int handler 5.
+[37638636]:[1]: leave from int handler 5.
+[37643491]:[2]: enter to int handler 5.
+[37643794]:[2]: leave from int handler 5.
+[37864727]:[1]: enter to int handler 5.
+[37865045]:[1]: leave from int handler 5.
+[37869905]:[2]: enter to int handler 5.
+[37870208]:[2]: leave from int handler 5.
+[38091138]:[1]: enter to int handler 5.
+[38091456]:[1]: leave from int handler 5.
+[38096321]:[2]: enter to int handler 5.
+[38096624]:[2]: leave from int handler 5.
+[38317550]:[1]: enter to int handler 5.
+[38317868]:[1]: leave from int handler 5.
+[38322737]:[2]: enter to int handler 5.
+[38323040]:[2]: leave from int handler 5.
+[38543959]:[1]: enter to int handler 5.
+[38544277]:[1]: leave from int handler 5.
+[38549151]:[2]: enter to int handler 5.
+[38549454]:[2]: leave from int handler 5.
+[38770370]:[1]: enter to int handler 5.
+[38770706]:[1]: task 4 becomes RUNNABLE.
+[38771093]:[1]: leave from int handler 5.
+[38771402]:[1]: dispatch from task 1.
+[38771579]:[1]: dispatch to task 4.
+[38771777]:[1]: leave from dly_tsk ercd=0.
+[38771959]:[1]: enter to act_tsk tskid=2.
+[38772245]:[1]: task 2 becomes RUNNABLE.
+[38772486]:[1]: leave from act_tsk ercd=0.
+[38772670]:[1]: enter to act_tsk tskid=7.
+[38772956]:[1]: task 7 becomes RUNNABLE.
+[38773197]:[1]: leave from act_tsk ercd=0.
+[38773381]:[1]: enter to dly_tsk dlytim=10.
+[38773857]:[1]: task 4 becomes WAITING.
+[38774075]:[1]: dispatch from task 4.
+[38774252]:[1]: dispatch to task 1.
+[38775566]:[2]: enter to int handler 5.
+[38775869]:[2]: leave from int handler 5.
+[38996636]:[1]: enter to int handler 5.
+[38996954]:[1]: leave from int handler 5.
+[39001982]:[2]: enter to int handler 5.
+[39002285]:[2]: leave from int handler 5.
+[39223047]:[1]: enter to int handler 5.
+[39223365]:[1]: leave from int handler 5.
+[39228396]:[2]: enter to int handler 5.
+[39228699]:[2]: leave from int handler 5.
+[39449457]:[1]: enter to int handler 5.
+[39449775]:[1]: leave from int handler 5.
+[39454812]:[2]: enter to int handler 5.
+[39455115]:[2]: leave from int handler 5.
+[39675868]:[1]: enter to int handler 5.
+[39676186]:[1]: leave from int handler 5.
+[39681228]:[2]: enter to int handler 5.
+[39681531]:[2]: leave from int handler 5.
+[39902279]:[1]: enter to int handler 5.
+[39902597]:[1]: leave from int handler 5.
+[39907642]:[2]: enter to int handler 5.
+[39907945]:[2]: leave from int handler 5.
+[40128689]:[1]: enter to int handler 5.
+[40129007]:[1]: leave from int handler 5.
+[40134057]:[2]: enter to int handler 5.
+[40134360]:[2]: leave from int handler 5.
+[40200931]:[2]: task2_1 is running (002).   |
+[40203822]:[1]: task1_1 is running (002).   |
+[40354444]:[1]: enter to int handler 5.
+[40354762]:[1]: leave from int handler 5.
+[40359817]:[2]: enter to int handler 5.
+[40360120]:[2]: leave from int handler 5.
+[40580855]:[1]: enter to int handler 5.
+[40581173]:[1]: leave from int handler 5.
+[40586233]:[2]: enter to int handler 5.
+[40586536]:[2]: leave from int handler 5.
+[40807266]:[1]: enter to int handler 5.
+[40807584]:[1]: leave from int handler 5.
+[40812647]:[2]: enter to int handler 5.
+[40812950]:[2]: leave from int handler 5.
+[41033676]:[1]: enter to int handler 5.
+[41033994]:[1]: leave from int handler 5.
+[41039062]:[2]: enter to int handler 5.
+[41039365]:[2]: leave from int handler 5.
+[41260087]:[1]: enter to int handler 5.
+[41260423]:[1]: task 4 becomes RUNNABLE.
+[41260810]:[1]: leave from int handler 5.
+[41261119]:[1]: dispatch from task 1.
+[41261296]:[1]: dispatch to task 4.
+[41261494]:[1]: leave from dly_tsk ercd=0.
+[41261676]:[1]: enter to act_tsk tskid=3.
+[41261962]:[1]: task 3 becomes RUNNABLE.
+[41262203]:[1]: leave from act_tsk ercd=0.
+[41262387]:[1]: enter to act_tsk tskid=8.
+[41262673]:[1]: task 8 becomes RUNNABLE.
+[41262914]:[1]: leave from act_tsk ercd=0.
+[41263102]:[1]: enter to dly_tsk dlytim=20.
+[41263578]:[1]: task 4 becomes WAITING.
+[41263796]:[1]: dispatch from task 4.
+[41263973]:[1]: dispatch to task 1.
+[41265478]:[2]: enter to int handler 5.
+[41265781]:[2]: leave from int handler 5.
+[41486353]:[1]: enter to int handler 5.
+[41486671]:[1]: leave from int handler 5.
+[41491892]:[2]: enter to int handler 5.
+[41492195]:[2]: leave from int handler 5.
+[41712762]:[1]: enter to int handler 5.
+[41713080]:[1]: leave from int handler 5.
+[41718308]:[2]: enter to int handler 5.
+[41718611]:[2]: leave from int handler 5.
+[41939173]:[1]: enter to int handler 5.
+[41939491]:[1]: leave from int handler 5.
+[41944724]:[2]: enter to int handler 5.
+[41945027]:[2]: leave from int handler 5.
+[42165585]:[1]: enter to int handler 5.
+[42165903]:[1]: leave from int handler 5.
+[42171138]:[2]: enter to int handler 5.
+[42171441]:[2]: leave from int handler 5.
+[42391994]:[1]: enter to int handler 5.
+[42392312]:[1]: leave from int handler 5.
+[42397553]:[2]: enter to int handler 5.
+[42397856]:[2]: leave from int handler 5.
+[42618405]:[1]: enter to int handler 5.
+[42618723]:[1]: leave from int handler 5.
+[42623969]:[2]: enter to int handler 5.
+[42624272]:[2]: leave from int handler 5.
+[42844817]:[1]: enter to int handler 5.
+[42845135]:[1]: leave from int handler 5.
+[42850383]:[2]: enter to int handler 5.
+[42850686]:[2]: leave from int handler 5.
+[43071226]:[1]: enter to int handler 5.
+[43071544]:[1]: leave from int handler 5.
+[43076799]:[2]: enter to int handler 5.
+[43077102]:[2]: leave from int handler 5.
+[43297637]:[1]: enter to int handler 5.
+[43297955]:[1]: leave from int handler 5.
+[43303215]:[2]: enter to int handler 5.
+[43303518]:[2]: leave from int handler 5.
+[43524049]:[1]: enter to int handler 5.
+[43524367]:[1]: leave from int handler 5.
+[43529629]:[2]: enter to int handler 5.
+[43529932]:[2]: leave from int handler 5.
+[43750458]:[1]: enter to int handler 5.
+[43750776]:[1]: leave from int handler 5.
+[43756044]:[2]: enter to int handler 5.
+[43756347]:[2]: leave from int handler 5.
+[43976869]:[1]: enter to int handler 5.
+[43977187]:[1]: leave from int handler 5.
+[43982460]:[2]: enter to int handler 5.
+[43982763]:[2]: leave from int handler 5.
+[44115163]:[2]: task2_1 is running (003).   |
+[44121797]:[1]: task1_1 is running (003).   |
+[44202624]:[1]: enter to int handler 5.
+[44202942]:[1]: leave from int handler 5.
+[44208220]:[2]: enter to int handler 5.
+[44208523]:[2]: leave from int handler 5.
+[44429036]:[1]: enter to int handler 5.
+[44429354]:[1]: leave from int handler 5.
+[44434634]:[2]: enter to int handler 5.
+[44434937]:[2]: leave from int handler 5.
+[44655445]:[1]: enter to int handler 5.
+[44655763]:[1]: leave from int handler 5.
+[44661049]:[2]: enter to int handler 5.
+[44661352]:[2]: leave from int handler 5.
+[44881856]:[1]: enter to int handler 5.
+[44882174]:[1]: leave from int handler 5.
+[44887465]:[2]: enter to int handler 5.
+[44887768]:[2]: leave from int handler 5.
+[45108268]:[1]: enter to int handler 5.
+[45108586]:[1]: leave from int handler 5.
+[45113879]:[2]: enter to int handler 5.
+[45114182]:[2]: leave from int handler 5.
+[45334677]:[1]: enter to int handler 5.
+[45334995]:[1]: leave from int handler 5.
+[45340295]:[2]: enter to int handler 5.
+[45340598]:[2]: leave from int handler 5.
+[45561088]:[1]: enter to int handler 5.
+[45561406]:[1]: leave from int handler 5.
+[45566711]:[2]: enter to int handler 5.
+[45567014]:[2]: leave from int handler 5.
+[45787500]:[1]: enter to int handler 5.
+[45787818]:[1]: leave from int handler 5.
+[45793125]:[2]: enter to int handler 5.
+[45793428]:[2]: leave from int handler 5.
+[46013909]:[1]: enter to int handler 5.
+[46014245]:[1]: task 4 becomes RUNNABLE.
+[46014632]:[1]: leave from int handler 5.
+[46014941]:[1]: dispatch from task 1.
+[46015118]:[1]: dispatch to task 4.
+[46015316]:[1]: leave from dly_tsk ercd=0.
+[46015502]:[1]: enter to dly_tsk dlytim=10.
+[46015978]:[1]: task 4 becomes WAITING.
+[46016196]:[1]: dispatch from task 4.
+[46016373]:[1]: dispatch to task 1.
+[46019540]:[2]: enter to int handler 5.
+[46019843]:[2]: leave from int handler 5.
+[46240270]:[1]: enter to int handler 5.
+[46240588]:[1]: leave from int handler 5.
+[46245956]:[2]: enter to int handler 5.
+[46246259]:[2]: leave from int handler 5.
+[46466680]:[1]: enter to int handler 5.
+[46466998]:[1]: leave from int handler 5.
+[46472370]:[2]: enter to int handler 5.
+[46472673]:[2]: leave from int handler 5.
+[46693091]:[1]: enter to int handler 5.
+[46693409]:[1]: leave from int handler 5.
+[46698786]:[2]: enter to int handler 5.
+[46699089]:[2]: leave from int handler 5.
+[46919502]:[1]: enter to int handler 5.
+[46919820]:[1]: leave from int handler 5.
+[46925202]:[2]: enter to int handler 5.
+[46925505]:[2]: leave from int handler 5.
+[47145912]:[1]: enter to int handler 5.
+[47146230]:[1]: leave from int handler 5.
+[47151616]:[2]: enter to int handler 5.
+[47151919]:[2]: leave from int handler 5.
+[47372323]:[1]: enter to int handler 5.
+[47372641]:[1]: leave from int handler 5.
+[47378031]:[2]: enter to int handler 5.
+[47378334]:[2]: leave from int handler 5.
+[47598734]:[1]: enter to int handler 5.
+[47599052]:[1]: leave from int handler 5.
+[47604447]:[2]: enter to int handler 5.
+[47604750]:[2]: leave from int handler 5.
+[47825144]:[1]: enter to int handler 5.
+[47825462]:[1]: leave from int handler 5.
+[47830861]:[2]: enter to int handler 5.
+[47831164]:[2]: leave from int handler 5.
+[48029082]:[2]: #1#slp_tsk()
+[48029893]:[2]: enter to slp_tsk.
+[48030225]:[2]: task 6 becomes WAITING.
+[48030443]:[2]: dispatch from task 6.
+[48030620]:[2]: dispatch to task 7.
+[48030834]:[2]: enter to ena_tex.
+[48031114]:[2]: leave from ena_tex ercd=0
+[48031845]:[2]: task2_2 is running (001).     +
+[48038037]:[1]: #1#slp_tsk()
+[48038848]:[1]: enter to slp_tsk.
+[48039180]:[1]: task 1 becomes WAITING.
+[48039398]:[1]: dispatch from task 1.
+[48039575]:[1]: dispatch to task 2.
+[48039789]:[1]: enter to ena_tex.
+[48040069]:[1]: leave from ena_tex ercd=0
+[48040800]:[1]: task1_2 is running (001).     +
+[48050627]:[1]: enter to int handler 5.
+[48050945]:[1]: leave from int handler 5.
+[48056349]:[2]: enter to int handler 5.
+[48056652]:[2]: leave from int handler 5.
+[48277037]:[1]: enter to int handler 5.
+[48277355]:[1]: leave from int handler 5.
+[48282763]:[2]: enter to int handler 5.
+[48283066]:[2]: leave from int handler 5.
+[48503448]:[1]: enter to int handler 5.
+[48503784]:[1]: task 4 becomes RUNNABLE.
+[48504171]:[1]: leave from int handler 5.
+[48504480]:[1]: dispatch from task 2.
+[48504657]:[1]: dispatch to task 4.
+[48504855]:[1]: leave from dly_tsk ercd=0.
+[48505041]:[1]: enter to dly_tsk dlytim=10.
+[48505517]:[1]: task 4 becomes WAITING.
+[48505735]:[1]: dispatch from task 4.
+[48505912]:[1]: dispatch to task 2.
+[48509179]:[2]: enter to int handler 5.
+[48509482]:[2]: leave from int handler 5.
+[48729807]:[1]: enter to int handler 5.
+[48730125]:[1]: leave from int handler 5.
+[48735595]:[2]: enter to int handler 5.
+[48735898]:[2]: leave from int handler 5.
+[48956218]:[1]: enter to int handler 5.
+[48956536]:[1]: leave from int handler 5.
+[48962009]:[2]: enter to int handler 5.
+[48962312]:[2]: leave from int handler 5.
+[49182630]:[1]: enter to int handler 5.
+[49182948]:[1]: leave from int handler 5.
+[49188424]:[2]: enter to int handler 5.
+[49188727]:[2]: leave from int handler 5.
+[49409039]:[1]: enter to int handler 5.
+[49409357]:[1]: leave from int handler 5.
+[49414840]:[2]: enter to int handler 5.
+[49415143]:[2]: leave from int handler 5.
+[49635450]:[1]: enter to int handler 5.
+[49635768]:[1]: leave from int handler 5.
+[49641254]:[2]: enter to int handler 5.
+[49641557]:[2]: leave from int handler 5.
+[49861862]:[1]: enter to int handler 5.
+[49862180]:[1]: leave from int handler 5.
+[49867670]:[2]: enter to int handler 5.
+[49867973]:[2]: leave from int handler 5.
+[50088271]:[1]: enter to int handler 5.
+[50088589]:[1]: leave from int handler 5.
+[50094086]:[2]: enter to int handler 5.
+[50094389]:[2]: leave from int handler 5.
+[50314682]:[1]: enter to int handler 5.
+[50315000]:[1]: leave from int handler 5.
+[50320500]:[2]: enter to int handler 5.
+[50320803]:[2]: leave from int handler 5.
+[50541094]:[1]: enter to int handler 5.
+[50541412]:[1]: leave from int handler 5.
+[50546915]:[2]: enter to int handler 5.
+[50547218]:[2]: leave from int handler 5.
+[50767503]:[1]: enter to int handler 5.
+[50767821]:[1]: leave from int handler 5.
+[50773331]:[2]: enter to int handler 5.
+[50773634]:[2]: leave from int handler 5.
+[50993914]:[1]: enter to int handler 5.
+[50994250]:[1]: task 4 becomes RUNNABLE.
+[50994637]:[1]: leave from int handler 5.
+[50994946]:[1]: dispatch from task 2.
+[50995123]:[1]: dispatch to task 4.
+[50995321]:[1]: leave from dly_tsk ercd=0.
+[50995507]:[1]: enter to dly_tsk dlytim=20.
+[50995983]:[1]: task 4 becomes WAITING.
+[50996201]:[1]: dispatch from task 4.
+[50996378]:[1]: dispatch to task 2.
+[50999745]:[2]: enter to int handler 5.
+[51000048]:[2]: leave from int handler 5.
+[51220274]:[1]: enter to int handler 5.
+[51220592]:[1]: leave from int handler 5.
+[51226161]:[2]: enter to int handler 5.
+[51226464]:[2]: leave from int handler 5.
+[51446685]:[1]: enter to int handler 5.
+[51447003]:[1]: leave from int handler 5.
+[51452577]:[2]: enter to int handler 5.
+[51452880]:[2]: leave from int handler 5.
+[51673096]:[1]: enter to int handler 5.
+[51673414]:[1]: leave from int handler 5.
+[51678991]:[2]: enter to int handler 5.
+[51679294]:[2]: leave from int handler 5.
+[51899506]:[1]: enter to int handler 5.
+[51899824]:[1]: leave from int handler 5.
+[51905406]:[2]: enter to int handler 5.
+[51905709]:[2]: leave from int handler 5.
+[51946513]:[2]: #2#slp_tsk()
+[51947324]:[2]: enter to slp_tsk.
+[51947656]:[2]: task 7 becomes WAITING.
+[51947874]:[2]: dispatch from task 7.
+[51948051]:[2]: dispatch to task 8.
+[51948265]:[2]: enter to ena_tex.
+[51948545]:[2]: leave from ena_tex ercd=0
+[51949276]:[2]: task2_3 is running (001).       *
+[51959870]:[1]: #2#slp_tsk()
+[51960681]:[1]: enter to slp_tsk.
+[51961013]:[1]: task 2 becomes WAITING.
+[51961231]:[1]: dispatch from task 2.
+[51961408]:[1]: dispatch to task 3.
+[51961622]:[1]: enter to ena_tex.
+[51961902]:[1]: leave from ena_tex ercd=0
+[51962633]:[1]: task1_3 is running (001).       *
+[52124979]:[1]: enter to int handler 5.
+[52125297]:[1]: leave from int handler 5.
+[52130883]:[2]: enter to int handler 5.
+[52131186]:[2]: leave from int handler 5.
+[52351389]:[1]: enter to int handler 5.
+[52351707]:[1]: leave from int handler 5.
+[52357298]:[2]: enter to int handler 5.
+[52357601]:[2]: leave from int handler 5.
+[52577800]:[1]: enter to int handler 5.
+[52578118]:[1]: leave from int handler 5.
+[52583714]:[2]: enter to int handler 5.
+[52584017]:[2]: leave from int handler 5.
+[52804211]:[1]: enter to int handler 5.
+[52804529]:[1]: leave from int handler 5.
+[52810128]:[2]: enter to int handler 5.
+[52810431]:[2]: leave from int handler 5.
+[53030621]:[1]: enter to int handler 5.
+[53030939]:[1]: leave from int handler 5.
+[53036544]:[2]: enter to int handler 5.
+[53036847]:[2]: leave from int handler 5.
+[53257032]:[1]: enter to int handler 5.
+[53257350]:[1]: leave from int handler 5.
+[53262960]:[2]: enter to int handler 5.
+[53263263]:[2]: leave from int handler 5.
+[53483443]:[1]: enter to int handler 5.
+[53483761]:[1]: leave from int handler 5.
+[53489374]:[2]: enter to int handler 5.
+[53489677]:[2]: leave from int handler 5.
+[53709853]:[1]: enter to int handler 5.
+[53710171]:[1]: leave from int handler 5.
+[53715789]:[2]: enter to int handler 5.
+[53716092]:[2]: leave from int handler 5.
+[53936264]:[1]: enter to int handler 5.
+[53936582]:[1]: leave from int handler 5.
+[53942205]:[2]: enter to int handler 5.
+[53942508]:[2]: leave from int handler 5.
+[54162675]:[1]: enter to int handler 5.
+[54162993]:[1]: leave from int handler 5.
+[54168619]:[2]: enter to int handler 5.
+[54168922]:[2]: leave from int handler 5.
+[54389085]:[1]: enter to int handler 5.
+[54389403]:[1]: leave from int handler 5.
+[54395035]:[2]: enter to int handler 5.
+[54395338]:[2]: leave from int handler 5.
+[54615496]:[1]: enter to int handler 5.
+[54615814]:[1]: leave from int handler 5.
+[54621451]:[2]: enter to int handler 5.
+[54621754]:[2]: leave from int handler 5.
+[54841907]:[1]: enter to int handler 5.
+[54842225]:[1]: leave from int handler 5.
+[54847865]:[2]: enter to int handler 5.
+[54848168]:[2]: leave from int handler 5.
+[55068317]:[1]: enter to int handler 5.
+[55068635]:[1]: leave from int handler 5.
+[55074280]:[2]: enter to int handler 5.
+[55074583]:[2]: leave from int handler 5.
+[55294728]:[1]: enter to int handler 5.
+[55295046]:[1]: leave from int handler 5.
+[55300696]:[2]: enter to int handler 5.
+[55300999]:[2]: leave from int handler 5.
+[55521139]:[1]: enter to int handler 5.
+[55521457]:[1]: leave from int handler 5.
+[55527110]:[2]: enter to int handler 5.
+[55527413]:[2]: leave from int handler 5.
+[55747549]:[1]: enter to int handler 5.
+[55747885]:[1]: task 4 becomes RUNNABLE.
+[55748272]:[1]: leave from int handler 5.
+[55748581]:[1]: dispatch from task 3.
+[55748758]:[1]: dispatch to task 4.
+[55748956]:[1]: leave from dly_tsk ercd=0.
+[55749138]:[1]: enter to wup_tsk tskid=1.
+[55749443]:[1]: task 1 becomes RUNNABLE.
+[55749705]:[1]: leave from wup_tsk ercd=0.
+[55749889]:[1]: enter to wup_tsk tskid=6.
+[55750194]:[1]: task 6 becomes RUNNABLE.
+[55750456]:[1]: leave from wup_tsk ercd=0.
+[55750640]:[1]: enter to dly_tsk dlytim=10.
+[55751116]:[1]: task 4 becomes WAITING.
+[55751334]:[1]: dispatch from task 4.
+[55751511]:[1]: dispatch to task 3.
+[55753526]:[2]: enter to int handler 5.
+[55753829]:[2]: leave from int handler 5.
+[55863279]:[2]: #3#slp_tsk()
+[55864090]:[2]: enter to slp_tsk.
+[55864422]:[2]: task 8 becomes WAITING.
+[55864640]:[2]: dispatch from task 8.
+[55864817]:[2]: dispatch to task 6.
+[55865021]:[2]: leave from slp_tsk ercd=0.
+[55865730]:[2]: task2_1 is running (004).   |
+[55880455]:[1]: #3#slp_tsk()
+[55881266]:[1]: enter to slp_tsk.
+[55881598]:[1]: task 3 becomes WAITING.
+[55881816]:[1]: dispatch from task 3.
+[55881993]:[1]: dispatch to task 1.
+[55882197]:[1]: leave from slp_tsk ercd=0.
+[55882906]:[1]: task1_1 is running (004).   |
+[55972882]:[1]: enter to int handler 5.
+[55973200]:[1]: leave from int handler 5.
+[55979048]:[2]: enter to int handler 5.
+[55979351]:[2]: leave from int handler 5.
+[56199291]:[1]: enter to int handler 5.
+[56199609]:[1]: leave from int handler 5.
+[56205464]:[2]: enter to int handler 5.
+[56205767]:[2]: leave from int handler 5.
+[56425702]:[1]: enter to int handler 5.
+[56426020]:[1]: leave from int handler 5.
+[56431880]:[2]: enter to int handler 5.
+[56432183]:[2]: leave from int handler 5.
+[56652114]:[1]: enter to int handler 5.
+[56652432]:[1]: leave from int handler 5.
+[56658294]:[2]: enter to int handler 5.
+[56658597]:[2]: leave from int handler 5.
+[56878523]:[1]: enter to int handler 5.
+[56878841]:[1]: leave from int handler 5.
+[56884709]:[2]: enter to int handler 5.
+[56885012]:[2]: leave from int handler 5.
+[57104934]:[1]: enter to int handler 5.
+[57105252]:[1]: leave from int handler 5.
+[57111125]:[2]: enter to int handler 5.
+[57111428]:[2]: leave from int handler 5.
+[57331346]:[1]: enter to int handler 5.
+[57331664]:[1]: leave from int handler 5.
+[57337539]:[2]: enter to int handler 5.
+[57337842]:[2]: leave from int handler 5.
+[57557755]:[1]: enter to int handler 5.
+[57558073]:[1]: leave from int handler 5.
+[57563955]:[2]: enter to int handler 5.
+[57564258]:[2]: leave from int handler 5.
+[57784166]:[1]: enter to int handler 5.
+[57784484]:[1]: leave from int handler 5.
+[57790371]:[2]: enter to int handler 5.
+[57790674]:[2]: leave from int handler 5.
+[58010578]:[1]: enter to int handler 5.
+[58010896]:[1]: leave from int handler 5.
+[58016785]:[2]: enter to int handler 5.
+[58017088]:[2]: leave from int handler 5.
+[58236987]:[1]: enter to int handler 5.
+[58237323]:[1]: task 4 becomes RUNNABLE.
+[58237710]:[1]: leave from int handler 5.
+[58238019]:[1]: dispatch from task 1.
+[58238196]:[1]: dispatch to task 4.
+[58238394]:[1]: leave from dly_tsk ercd=0.
+[58238576]:[1]: enter to wup_tsk tskid=2.
+[58238881]:[1]: task 2 becomes RUNNABLE.
+[58239143]:[1]: leave from wup_tsk ercd=0.
+[58239327]:[1]: enter to wup_tsk tskid=7.
+[58239632]:[1]: task 7 becomes RUNNABLE.
+[58239894]:[1]: leave from wup_tsk ercd=0.
+[58240078]:[1]: enter to dly_tsk dlytim=10.
+[58240554]:[1]: task 4 becomes WAITING.
+[58240772]:[1]: dispatch from task 4.
+[58240949]:[1]: dispatch to task 1.
+[58243200]:[2]: enter to int handler 5.
+[58243503]:[2]: leave from int handler 5.
+[58463212]:[1]: enter to int handler 5.
+[58463530]:[1]: leave from int handler 5.
+[58469616]:[2]: enter to int handler 5.
+[58469919]:[2]: leave from int handler 5.
+[58689623]:[1]: enter to int handler 5.
+[58689941]:[1]: leave from int handler 5.
+[58696030]:[2]: enter to int handler 5.
+[58696333]:[2]: leave from int handler 5.
+[58916033]:[1]: enter to int handler 5.
+[58916351]:[1]: leave from int handler 5.
+[58922446]:[2]: enter to int handler 5.
+[58922749]:[2]: leave from int handler 5.
+[59142444]:[1]: enter to int handler 5.
+[59142762]:[1]: leave from int handler 5.
+[59148862]:[2]: enter to int handler 5.
+[59149165]:[2]: leave from int handler 5.
+[59368855]:[1]: enter to int handler 5.
+[59369173]:[1]: leave from int handler 5.
+[59375276]:[2]: enter to int handler 5.
+[59375579]:[2]: leave from int handler 5.
+[59595265]:[1]: enter to int handler 5.
+[59595583]:[1]: leave from int handler 5.
+[59601691]:[2]: enter to int handler 5.
+[59601994]:[2]: leave from int handler 5.
+[59779962]:[2]: task2_1 is running (005).   |
+[59800957]:[1]: task1_1 is running (005).   |
+[59821020]:[1]: enter to int handler 5.
+[59821338]:[1]: leave from int handler 5.
+[59827451]:[2]: enter to int handler 5.
+[59827754]:[2]: leave from int handler 5.
+[60047431]:[1]: enter to int handler 5.
+[60047749]:[1]: leave from int handler 5.
+[60053867]:[2]: enter to int handler 5.
+[60054170]:[2]: leave from int handler 5.
+[60273842]:[1]: enter to int handler 5.
+[60274160]:[1]: leave from int handler 5.
+[60280281]:[2]: enter to int handler 5.
+[60280584]:[2]: leave from int handler 5.
+[60500252]:[1]: enter to int handler 5.
+[60500570]:[1]: leave from int handler 5.
+[60506696]:[2]: enter to int handler 5.
+[60506999]:[2]: leave from int handler 5.
+[60726663]:[1]: enter to int handler 5.
+[60726999]:[1]: task 4 becomes RUNNABLE.
+[60727386]:[1]: leave from int handler 5.
+[60727695]:[1]: dispatch from task 1.
+[60727872]:[1]: dispatch to task 4.
+[60728070]:[1]: leave from dly_tsk ercd=0.
+[60728252]:[1]: enter to wup_tsk tskid=3.
+[60728557]:[1]: task 3 becomes RUNNABLE.
+[60728819]:[1]: leave from wup_tsk ercd=0.
+[60729003]:[1]: enter to wup_tsk tskid=3.
+[60729293]:[1]: leave from wup_tsk ercd=0.
+[60729477]:[1]: enter to dly_tsk dlytim=20.
+[60729953]:[1]: task 4 becomes WAITING.
+[60730171]:[1]: dispatch from task 4.
+[60730348]:[1]: dispatch to task 1.
+[60733112]:[2]: enter to int handler 5.
+[60733415]:[2]: leave from int handler 5.
+[60952904]:[1]: enter to int handler 5.
+[60953222]:[1]: leave from int handler 5.
+[60959526]:[2]: enter to int handler 5.
+[60959829]:[2]: leave from int handler 5.
+[61179315]:[1]: enter to int handler 5.
+[61179633]:[1]: leave from int handler 5.
+[61185942]:[2]: enter to int handler 5.
+[61186245]:[2]: leave from int handler 5.
+[61405727]:[1]: enter to int handler 5.
+[61406045]:[1]: leave from int handler 5.
+[61412358]:[2]: enter to int handler 5.
+[61412661]:[2]: leave from int handler 5.
+[61632136]:[1]: enter to int handler 5.
+[61632454]:[1]: leave from int handler 5.
+[61638772]:[2]: enter to int handler 5.
+[61639075]:[2]: leave from int handler 5.
+[61858547]:[1]: enter to int handler 5.
+[61858865]:[1]: leave from int handler 5.
+[61865187]:[2]: enter to int handler 5.
+[61865490]:[2]: leave from int handler 5.
+[62084959]:[1]: enter to int handler 5.
+[62085277]:[1]: leave from int handler 5.
+[62091603]:[2]: enter to int handler 5.
+[62091906]:[2]: leave from int handler 5.
+[62311368]:[1]: enter to int handler 5.
+[62311686]:[1]: leave from int handler 5.
+[62318017]:[2]: enter to int handler 5.
+[62318320]:[2]: leave from int handler 5.
+[62537779]:[1]: enter to int handler 5.
+[62538097]:[1]: leave from int handler 5.
+[62544433]:[2]: enter to int handler 5.
+[62544736]:[2]: leave from int handler 5.
+[62764191]:[1]: enter to int handler 5.
+[62764509]:[1]: leave from int handler 5.
+[62770849]:[2]: enter to int handler 5.
+[62771152]:[2]: leave from int handler 5.
+[62990600]:[1]: enter to int handler 5.
+[62990918]:[1]: leave from int handler 5.
+[62997263]:[2]: enter to int handler 5.
+[62997566]:[2]: leave from int handler 5.
+[63217011]:[1]: enter to int handler 5.
+[63217329]:[1]: leave from int handler 5.
+[63223678]:[2]: enter to int handler 5.
+[63223981]:[2]: leave from int handler 5.
+[63443423]:[1]: enter to int handler 5.
+[63443741]:[1]: leave from int handler 5.
+[63450094]:[2]: enter to int handler 5.
+[63450397]:[2]: leave from int handler 5.
+[63669832]:[1]: enter to int handler 5.
+[63670150]:[1]: leave from int handler 5.
+[63676508]:[2]: enter to int handler 5.
+[63676811]:[2]: leave from int handler 5.
+[63694901]:[2]: task2_1 is running (006).   |
+[63719453]:[1]: task1_1 is running (006).   |
+[63895587]:[1]: enter to int handler 5.
+[63895905]:[1]: leave from int handler 5.
+[63902268]:[2]: enter to int handler 5.
+[63902571]:[2]: leave from int handler 5.
+[64121998]:[1]: enter to int handler 5.
+[64122316]:[1]: leave from int handler 5.
+[64128683]:[2]: enter to int handler 5.
+[64128986]:[2]: leave from int handler 5.
+[64348410]:[1]: enter to int handler 5.
+[64348728]:[1]: leave from int handler 5.
+[64355099]:[2]: enter to int handler 5.
+[64355402]:[2]: leave from int handler 5.
+[64574819]:[1]: enter to int handler 5.
+[64575137]:[1]: leave from int handler 5.
+[64581513]:[2]: enter to int handler 5.
+[64581816]:[2]: leave from int handler 5.
+[64801230]:[1]: enter to int handler 5.
+[64801548]:[1]: leave from int handler 5.
+[64807929]:[2]: enter to int handler 5.
+[64808232]:[2]: leave from int handler 5.
+[65027642]:[1]: enter to int handler 5.
+[65027960]:[1]: leave from int handler 5.
+[65034345]:[2]: enter to int handler 5.
+[65034648]:[2]: leave from int handler 5.
+[65254051]:[1]: enter to int handler 5.
+[65254369]:[1]: leave from int handler 5.
+[65260759]:[2]: enter to int handler 5.
+[65261062]:[2]: leave from int handler 5.
+[65480462]:[1]: enter to int handler 5.
+[65480798]:[1]: task 4 becomes RUNNABLE.
+[65481185]:[1]: leave from int handler 5.
+[65481494]:[1]: dispatch from task 1.
+[65481671]:[1]: dispatch to task 4.
+[65481869]:[1]: leave from dly_tsk ercd=0.
+[65482053]:[1]: enter to sta_cyc cycid=1.
+[65482428]:[1]: leave from sta_cyc ercd=0.
+[65482616]:[1]: enter to sta_cyc cycid=2.
+[65482991]:[1]: leave from sta_cyc ercd=0.
+[65483177]:[1]: enter to dly_tsk dlytim=100.
+[65483671]:[1]: task 4 becomes WAITING.
+[65483889]:[1]: dispatch from task 4.
+[65484066]:[1]: dispatch to task 1.
+[65487174]:[2]: enter to int handler 5.
+[65487607]:[2]: enter to cyclic handler 2.
+[65488136]:[2]: cyclic_handler 2 start!
+[65489244]:[2]: enter to irot_rdq tskpri=9. prcid=2.
+[65489533]:[2]: leave from imrot_rdq ercd=0.
+[65489727]:[2]: enter to irot_rdq tskpri=10. prcid=2.
+[65490082]:[2]: leave from imrot_rdq ercd=0.
+[65490276]:[2]: enter to irot_rdq tskpri=11. prcid=2.
+[65490565]:[2]: leave from imrot_rdq ercd=0.
+[65490746]:[2]: leave from cyclic handler 2.
+[65491072]:[2]: leave from int handler 5.
+[65491381]:[2]: dispatch from task 6.
+[65491558]:[2]: dispatch to task 7.
+[65491762]:[2]: leave from slp_tsk ercd=0.
+[65492471]:[2]: task2_2 is running (002).     +
+[65706771]:[1]: enter to int handler 5.
+[65707277]:[1]: enter to cyclic handler 1.
+[65707806]:[1]: cyclic_handler 1 start!
+[65708914]:[1]: enter to irot_rdq tskpri=9. prcid=1.
+[65709203]:[1]: leave from imrot_rdq ercd=0.
+[65709397]:[1]: enter to irot_rdq tskpri=10. prcid=1.
+[65709752]:[1]: leave from imrot_rdq ercd=0.
+[65709946]:[1]: enter to irot_rdq tskpri=11. prcid=1.
+[65710235]:[1]: leave from imrot_rdq ercd=0.
+[65710416]:[1]: leave from cyclic handler 1.
+[65710744]:[1]: leave from int handler 5.
+[65711053]:[1]: dispatch from task 1.
+[65711230]:[1]: dispatch to task 2.
+[65711434]:[1]: leave from slp_tsk ercd=0.
+[65712143]:[1]: task1_2 is running (002).     +
+[65712404]:[2]: enter to int handler 5.
+[65712722]:[2]: leave from int handler 5.
+[65931999]:[1]: enter to int handler 5.
+[65932317]:[1]: leave from int handler 5.
+[65938814]:[2]: enter to int handler 5.
+[65939132]:[2]: leave from int handler 5.
+[66158410]:[1]: enter to int handler 5.
+[66158728]:[1]: leave from int handler 5.
+[66165225]:[2]: enter to int handler 5.
+[66165543]:[2]: leave from int handler 5.
+[66384822]:[1]: enter to int handler 5.
+[66385140]:[1]: leave from int handler 5.
+[66391636]:[2]: enter to int handler 5.
+[66391954]:[2]: leave from int handler 5.
+[66611231]:[1]: enter to int handler 5.
+[66611549]:[1]: leave from int handler 5.
+[66618046]:[2]: enter to int handler 5.
+[66618364]:[2]: leave from int handler 5.
+[66837642]:[1]: enter to int handler 5.
+[66837960]:[1]: leave from int handler 5.
+[66844457]:[2]: enter to int handler 5.
+[66844775]:[2]: leave from int handler 5.
+[67064054]:[1]: enter to int handler 5.
+[67064372]:[1]: leave from int handler 5.
+[67070868]:[2]: enter to int handler 5.
+[67071186]:[2]: leave from int handler 5.
+[67290463]:[1]: enter to int handler 5.
+[67290781]:[1]: leave from int handler 5.
+[67297278]:[2]: enter to int handler 5.
+[67297596]:[2]: leave from int handler 5.
+[67516874]:[1]: enter to int handler 5.
+[67517192]:[1]: leave from int handler 5.
+[67523689]:[2]: enter to int handler 5.
+[67524007]:[2]: leave from int handler 5.
+[67743286]:[1]: enter to int handler 5.
+[67743604]:[1]: leave from int handler 5.
+[67750100]:[2]: enter to int handler 5.
+[67750418]:[2]: leave from int handler 5.
+[67969695]:[1]: enter to int handler 5.
+[67970013]:[1]: leave from int handler 5.
+[67976510]:[2]: enter to int handler 5.
+[67976828]:[2]: leave from int handler 5.
+[68196106]:[1]: enter to int handler 5.
+[68196424]:[1]: leave from int handler 5.
+[68202921]:[2]: enter to int handler 5.
+[68203239]:[2]: leave from int handler 5.
+[68422518]:[1]: enter to int handler 5.
+[68422836]:[1]: leave from int handler 5.
+[68429332]:[2]: enter to int handler 5.
+[68429650]:[2]: leave from int handler 5.
+[68648927]:[1]: enter to int handler 5.
+[68649245]:[1]: leave from int handler 5.
+[68655742]:[2]: enter to int handler 5.
+[68656060]:[2]: leave from int handler 5.
+[68875338]:[1]: enter to int handler 5.
+[68875656]:[1]: leave from int handler 5.
+[68882153]:[2]: enter to int handler 5.
+[68882471]:[2]: leave from int handler 5.
+[69101750]:[1]: enter to int handler 5.
+[69102068]:[1]: leave from int handler 5.
+[69108564]:[2]: enter to int handler 5.
+[69108882]:[2]: leave from int handler 5.
+[69328159]:[1]: enter to int handler 5.
+[69328477]:[1]: leave from int handler 5.
+[69334974]:[2]: enter to int handler 5.
+[69335292]:[2]: leave from int handler 5.
+[69407000]:[2]: task2_2 is running (003).     +
+[69554570]:[1]: enter to int handler 5.
+[69554888]:[1]: leave from int handler 5.
+[69560719]:[2]: enter to int handler 5.
+[69561037]:[2]: leave from int handler 5.
+[69626672]:[1]: task1_2 is running (003).     +
+[69780315]:[1]: enter to int handler 5.
+[69780633]:[1]: leave from int handler 5.
+[69787130]:[2]: enter to int handler 5.
+[69787448]:[2]: leave from int handler 5.
+[70006727]:[1]: enter to int handler 5.
+[70007045]:[1]: leave from int handler 5.
+[70013541]:[2]: enter to int handler 5.
+[70013859]:[2]: leave from int handler 5.
+[70233136]:[1]: enter to int handler 5.
+[70233454]:[1]: leave from int handler 5.
+[70239951]:[2]: enter to int handler 5.
+[70240269]:[2]: leave from int handler 5.
+[70459547]:[1]: enter to int handler 5.
+[70459865]:[1]: leave from int handler 5.
+[70466362]:[2]: enter to int handler 5.
+[70466680]:[2]: leave from int handler 5.
+[70685959]:[1]: enter to int handler 5.
+[70686277]:[1]: leave from int handler 5.
+[70692773]:[2]: enter to int handler 5.
+[70693091]:[2]: leave from int handler 5.
+[70912368]:[1]: enter to int handler 5.
+[70912686]:[1]: leave from int handler 5.
+[70919183]:[2]: enter to int handler 5.
+[70919501]:[2]: leave from int handler 5.
+[71138779]:[1]: enter to int handler 5.
+[71139097]:[1]: leave from int handler 5.
+[71145594]:[2]: enter to int handler 5.
+[71145912]:[2]: leave from int handler 5.
+[71365191]:[1]: enter to int handler 5.
+[71365509]:[1]: leave from int handler 5.
+[71372005]:[2]: enter to int handler 5.
+[71372323]:[2]: leave from int handler 5.
+[71591600]:[1]: enter to int handler 5.
+[71591918]:[1]: leave from int handler 5.
+[71598415]:[2]: enter to int handler 5.
+[71598733]:[2]: leave from int handler 5.
+[71818011]:[1]: enter to int handler 5.
+[71818329]:[1]: leave from int handler 5.
+[71824826]:[2]: enter to int handler 5.
+[71825144]:[2]: leave from int handler 5.
+[72044423]:[1]: enter to int handler 5.
+[72044741]:[1]: leave from int handler 5.
+[72051237]:[2]: enter to int handler 5.
+[72051555]:[2]: leave from int handler 5.
+[72270832]:[1]: enter to int handler 5.
+[72271150]:[1]: leave from int handler 5.
+[72277647]:[2]: enter to int handler 5.
+[72277965]:[2]: leave from int handler 5.
+[72497243]:[1]: enter to int handler 5.
+[72497561]:[1]: leave from int handler 5.
+[72504058]:[2]: enter to int handler 5.
+[72504376]:[2]: leave from int handler 5.
+[72723655]:[1]: enter to int handler 5.
+[72723973]:[1]: leave from int handler 5.
+[72730469]:[2]: enter to int handler 5.
+[72730787]:[2]: leave from int handler 5.
+[72950064]:[1]: enter to int handler 5.
+[72950382]:[1]: leave from int handler 5.
+[72956879]:[2]: enter to int handler 5.
+[72957197]:[2]: leave from int handler 5.
+[73176475]:[1]: enter to int handler 5.
+[73176793]:[1]: leave from int handler 5.
+[73183290]:[2]: enter to int handler 5.
+[73183608]:[2]: leave from int handler 5.
+[73321529]:[2]: task2_2 is running (004).     +
+[73402887]:[1]: enter to int handler 5.
+[73403205]:[1]: leave from int handler 5.
+[73409035]:[2]: enter to int handler 5.
+[73409353]:[2]: leave from int handler 5.
+[73541201]:[1]: task1_2 is running (004).     +
+[73628632]:[1]: enter to int handler 5.
+[73628950]:[1]: leave from int handler 5.
+[73635446]:[2]: enter to int handler 5.
+[73635764]:[2]: leave from int handler 5.
+[73855041]:[1]: enter to int handler 5.
+[73855359]:[1]: leave from int handler 5.
+[73861856]:[2]: enter to int handler 5.
+[73862174]:[2]: leave from int handler 5.
+[74081452]:[1]: enter to int handler 5.
+[74081770]:[1]: leave from int handler 5.
+[74088267]:[2]: enter to int handler 5.
+[74088585]:[2]: leave from int handler 5.
+[74307864]:[1]: enter to int handler 5.
+[74308182]:[1]: leave from int handler 5.
+[74314678]:[2]: enter to int handler 5.
+[74314996]:[2]: leave from int handler 5.
+[74534273]:[1]: enter to int handler 5.
+[74534591]:[1]: leave from int handler 5.
+[74541088]:[2]: enter to int handler 5.
+[74541406]:[2]: leave from int handler 5.
+[74760684]:[1]: enter to int handler 5.
+[74761002]:[1]: leave from int handler 5.
+[74767499]:[2]: enter to int handler 5.
+[74767817]:[2]: leave from int handler 5.
+[74987096]:[1]: enter to int handler 5.
+[74987414]:[1]: leave from int handler 5.
+[74993910]:[2]: enter to int handler 5.
+[74994228]:[2]: leave from int handler 5.
+[75213505]:[1]: enter to int handler 5.
+[75213823]:[1]: leave from int handler 5.
+[75220320]:[2]: enter to int handler 5.
+[75220638]:[2]: leave from int handler 5.
+[75439916]:[1]: enter to int handler 5.
+[75440234]:[1]: leave from int handler 5.
+[75446731]:[2]: enter to int handler 5.
+[75447049]:[2]: leave from int handler 5.
+[75666328]:[1]: enter to int handler 5.
+[75666646]:[1]: leave from int handler 5.
+[75673142]:[2]: enter to int handler 5.
+[75673460]:[2]: leave from int handler 5.
+[75892737]:[1]: enter to int handler 5.
+[75893055]:[1]: leave from int handler 5.
+[75899552]:[2]: enter to int handler 5.
+[75899870]:[2]: leave from int handler 5.
+[76119148]:[1]: enter to int handler 5.
+[76119466]:[1]: leave from int handler 5.
+[76125963]:[2]: enter to int handler 5.
+[76126281]:[2]: leave from int handler 5.
+[76345560]:[1]: enter to int handler 5.
+[76345878]:[1]: leave from int handler 5.
+[76352374]:[2]: enter to int handler 5.
+[76352692]:[2]: leave from int handler 5.
+[76571969]:[1]: enter to int handler 5.
+[76572287]:[1]: leave from int handler 5.
+[76578784]:[2]: enter to int handler 5.
+[76579102]:[2]: leave from int handler 5.
+[76798380]:[1]: enter to int handler 5.
+[76798698]:[1]: leave from int handler 5.
+[76805195]:[2]: enter to int handler 5.
+[76805513]:[2]: leave from int handler 5.
+[77024792]:[1]: enter to int handler 5.
+[77025110]:[1]: leave from int handler 5.
+[77031606]:[2]: enter to int handler 5.
+[77031924]:[2]: leave from int handler 5.
+[77236058]:[2]: task2_2 is running (005).     +
+[77251201]:[1]: enter to int handler 5.
+[77251519]:[1]: leave from int handler 5.
+[77257351]:[2]: enter to int handler 5.
+[77257669]:[2]: leave from int handler 5.
+[77455730]:[1]: task1_2 is running (005).     +
+[77476946]:[1]: enter to int handler 5.
+[77477264]:[1]: leave from int handler 5.
+[77483761]:[2]: enter to int handler 5.
+[77484079]:[2]: leave from int handler 5.
+[77703357]:[1]: enter to int handler 5.
+[77703675]:[1]: leave from int handler 5.
+[77710172]:[2]: enter to int handler 5.
+[77710490]:[2]: leave from int handler 5.
+[77929769]:[1]: enter to int handler 5.
+[77930087]:[1]: leave from int handler 5.
+[77936583]:[2]: enter to int handler 5.
+[77936901]:[2]: leave from int handler 5.
+[78156178]:[1]: enter to int handler 5.
+[78156496]:[1]: leave from int handler 5.
+[78162993]:[2]: enter to int handler 5.
+[78163311]:[2]: leave from int handler 5.
+[78382589]:[1]: enter to int handler 5.
+[78382907]:[1]: leave from int handler 5.
+[78389404]:[2]: enter to int handler 5.
+[78389722]:[2]: leave from int handler 5.
+[78609001]:[1]: enter to int handler 5.
+[78609319]:[1]: leave from int handler 5.
+[78615815]:[2]: enter to int handler 5.
+[78616133]:[2]: leave from int handler 5.
+[78835410]:[1]: enter to int handler 5.
+[78835728]:[1]: leave from int handler 5.
+[78842225]:[2]: enter to int handler 5.
+[78842543]:[2]: leave from int handler 5.
+[79061821]:[1]: enter to int handler 5.
+[79062139]:[1]: leave from int handler 5.
+[79068636]:[2]: enter to int handler 5.
+[79068954]:[2]: leave from int handler 5.
+[79288233]:[1]: enter to int handler 5.
+[79288551]:[1]: leave from int handler 5.
+[79295047]:[2]: enter to int handler 5.
+[79295365]:[2]: leave from int handler 5.
+[79514642]:[1]: enter to int handler 5.
+[79514960]:[1]: leave from int handler 5.
+[79521457]:[2]: enter to int handler 5.
+[79521775]:[2]: leave from int handler 5.
+[79741053]:[1]: enter to int handler 5.
+[79741371]:[1]: leave from int handler 5.
+[79747868]:[2]: enter to int handler 5.
+[79748186]:[2]: leave from int handler 5.
+[79967465]:[1]: enter to int handler 5.
+[79967783]:[1]: leave from int handler 5.
+[79974279]:[2]: enter to int handler 5.
+[79974597]:[2]: leave from int handler 5.
+[80193874]:[1]: enter to int handler 5.
+[80194192]:[1]: leave from int handler 5.
+[80200689]:[2]: enter to int handler 5.
+[80201007]:[2]: leave from int handler 5.
+[80420285]:[1]: enter to int handler 5.
+[80420603]:[1]: leave from int handler 5.
+[80427100]:[2]: enter to int handler 5.
+[80427418]:[2]: leave from int handler 5.
+[80646697]:[1]: enter to int handler 5.
+[80647015]:[1]: leave from int handler 5.
+[80653511]:[2]: enter to int handler 5.
+[80653829]:[2]: leave from int handler 5.
+[80873106]:[1]: enter to int handler 5.
+[80873424]:[1]: leave from int handler 5.
+[80879921]:[2]: enter to int handler 5.
+[80880239]:[2]: leave from int handler 5.
+[81099517]:[1]: enter to int handler 5.
+[81099835]:[1]: leave from int handler 5.
+[81106332]:[2]: enter to int handler 5.
+[81106650]:[2]: leave from int handler 5.
+[81151309]:[2]: task2_2 is running (006).     +
+[81325929]:[1]: enter to int handler 5.
+[81326247]:[1]: leave from int handler 5.
+[81332077]:[2]: enter to int handler 5.
+[81332395]:[2]: leave from int handler 5.
+[81370981]:[1]: task1_2 is running (006).     +
+[81551674]:[1]: enter to int handler 5.
+[81551992]:[1]: leave from int handler 5.
+[81558488]:[2]: enter to int handler 5.
+[81558806]:[2]: leave from int handler 5.
+[81778083]:[1]: enter to int handler 5.
+[81778401]:[1]: leave from int handler 5.
+[81784898]:[2]: enter to int handler 5.
+[81785216]:[2]: leave from int handler 5.
+[82004494]:[1]: enter to int handler 5.
+[82004812]:[1]: leave from int handler 5.
+[82011309]:[2]: enter to int handler 5.
+[82011627]:[2]: leave from int handler 5.
+[82230906]:[1]: enter to int handler 5.
+[82231224]:[1]: leave from int handler 5.
+[82237720]:[2]: enter to int handler 5.
+[82238038]:[2]: leave from int handler 5.
+[82457315]:[1]: enter to int handler 5.
+[82457633]:[1]: leave from int handler 5.
+[82464130]:[2]: enter to int handler 5.
+[82464448]:[2]: leave from int handler 5.
+[82683726]:[1]: enter to int handler 5.
+[82684044]:[1]: leave from int handler 5.
+[82690541]:[2]: enter to int handler 5.
+[82690859]:[2]: leave from int handler 5.
+[82910138]:[1]: enter to int handler 5.
+[82910456]:[1]: leave from int handler 5.
+[82916952]:[2]: enter to int handler 5.
+[82917270]:[2]: leave from int handler 5.
+[83136547]:[1]: enter to int handler 5.
+[83136865]:[1]: leave from int handler 5.
+[83143362]:[2]: enter to int handler 5.
+[83143680]:[2]: leave from int handler 5.
+[83362958]:[1]: enter to int handler 5.
+[83363276]:[1]: leave from int handler 5.
+[83369773]:[2]: enter to int handler 5.
+[83370091]:[2]: leave from int handler 5.
+[83589370]:[1]: enter to int handler 5.
+[83589688]:[1]: leave from int handler 5.
+[83596184]:[2]: enter to int handler 5.
+[83596502]:[2]: leave from int handler 5.
+[83815779]:[1]: enter to int handler 5.
+[83816097]:[1]: leave from int handler 5.
+[83822594]:[2]: enter to int handler 5.
+[83822912]:[2]: leave from int handler 5.
+[84042190]:[1]: enter to int handler 5.
+[84042508]:[1]: leave from int handler 5.
+[84049005]:[2]: enter to int handler 5.
+[84049323]:[2]: leave from int handler 5.
+[84268602]:[1]: enter to int handler 5.
+[84268920]:[1]: leave from int handler 5.
+[84275416]:[2]: enter to int handler 5.
+[84275734]:[2]: leave from int handler 5.
+[84495011]:[1]: enter to int handler 5.
+[84495329]:[1]: leave from int handler 5.
+[84501826]:[2]: enter to int handler 5.
+[84502144]:[2]: leave from int handler 5.
+[84721422]:[1]: enter to int handler 5.
+[84721740]:[1]: leave from int handler 5.
+[84728237]:[2]: enter to int handler 5.
+[84728555]:[2]: leave from int handler 5.
+[84947834]:[1]: enter to int handler 5.
+[84948152]:[1]: leave from int handler 5.
+[84954648]:[2]: enter to int handler 5.
+[84954966]:[2]: leave from int handler 5.
+[85065838]:[2]: task2_2 is running (007).     +
+[85174243]:[1]: enter to int handler 5.
+[85174561]:[1]: leave from int handler 5.
+[85180393]:[2]: enter to int handler 5.
+[85180711]:[2]: leave from int handler 5.
+[85285510]:[1]: task1_2 is running (007).     +
+[85399988]:[1]: enter to int handler 5.
+[85400306]:[1]: leave from int handler 5.
+[85406803]:[2]: enter to int handler 5.
+[85407121]:[2]: leave from int handler 5.
+[85626399]:[1]: enter to int handler 5.
+[85626717]:[1]: leave from int handler 5.
+[85633214]:[2]: enter to int handler 5.
+[85633532]:[2]: leave from int handler 5.
+[85852811]:[1]: enter to int handler 5.
+[85853129]:[1]: leave from int handler 5.
+[85859625]:[2]: enter to int handler 5.
+[85859943]:[2]: leave from int handler 5.
+[86079220]:[1]: enter to int handler 5.
+[86079538]:[1]: leave from int handler 5.
+[86086035]:[2]: enter to int handler 5.
+[86086353]:[2]: leave from int handler 5.
+[86305631]:[1]: enter to int handler 5.
+[86305949]:[1]: leave from int handler 5.
+[86312446]:[2]: enter to int handler 5.
+[86312764]:[2]: leave from int handler 5.
+[86532043]:[1]: enter to int handler 5.
+[86532361]:[1]: leave from int handler 5.
+[86538857]:[2]: enter to int handler 5.
+[86539175]:[2]: leave from int handler 5.
+[86758452]:[1]: enter to int handler 5.
+[86758770]:[1]: leave from int handler 5.
+[86765267]:[2]: enter to int handler 5.
+[86765585]:[2]: leave from int handler 5.
+[86984863]:[1]: enter to int handler 5.
+[86985181]:[1]: leave from int handler 5.
+[86991678]:[2]: enter to int handler 5.
+[86991996]:[2]: leave from int handler 5.
+[87211275]:[1]: enter to int handler 5.
+[87211593]:[1]: leave from int handler 5.
+[87218089]:[2]: enter to int handler 5.
+[87218407]:[2]: leave from int handler 5.
+[87437684]:[1]: enter to int handler 5.
+[87438002]:[1]: leave from int handler 5.
+[87444499]:[2]: enter to int handler 5.
+[87444817]:[2]: leave from int handler 5.
+[87664095]:[1]: enter to int handler 5.
+[87664413]:[1]: leave from int handler 5.
+[87670910]:[2]: enter to int handler 5.
+[87671228]:[2]: leave from int handler 5.
+[87890507]:[1]: enter to int handler 5.
+[87890825]:[1]: leave from int handler 5.
+[87897321]:[2]: enter to int handler 5.
+[87897639]:[2]: leave from int handler 5.
+[88116916]:[1]: enter to int handler 5.
+[88117234]:[1]: leave from int handler 5.
+[88123731]:[2]: enter to int handler 5.
+[88124164]:[2]: enter to cyclic handler 2.
+[88124693]:[2]: cyclic_handler 2 start!
+[88125801]:[2]: enter to irot_rdq tskpri=9. prcid=2.
+[88126090]:[2]: leave from imrot_rdq ercd=0.
+[88126284]:[2]: enter to irot_rdq tskpri=10. prcid=2.
+[88126639]:[2]: leave from imrot_rdq ercd=0.
+[88126833]:[2]: enter to irot_rdq tskpri=11. prcid=2.
+[88127122]:[2]: leave from imrot_rdq ercd=0.
+[88127303]:[2]: leave from cyclic handler 2.
+[88127629]:[2]: leave from int handler 5.
+[88127938]:[2]: dispatch from task 7.
+[88128115]:[2]: dispatch to task 6.
+[88343327]:[1]: enter to int handler 5.
+[88343718]:[1]: task 4 becomes RUNNABLE.
+[88344234]:[1]: enter to cyclic handler 1.
+[88344763]:[1]: cyclic_handler 1 start!
+[88345871]:[1]: enter to irot_rdq tskpri=9. prcid=1.
+[88346160]:[1]: leave from imrot_rdq ercd=0.
+[88346354]:[1]: enter to irot_rdq tskpri=10. prcid=1.
+[88346665]:[1]: leave from imrot_rdq ercd=0.
+[88346859]:[1]: enter to irot_rdq tskpri=11. prcid=1.
+[88347148]:[1]: leave from imrot_rdq ercd=0.
+[88347329]:[1]: leave from cyclic handler 1.
+[88347655]:[1]: leave from int handler 5.
+[88347964]:[1]: dispatch from task 2.
+[88348141]:[1]: dispatch to task 4.
+[88348339]:[1]: leave from dly_tsk ercd=0.
+[88348521]:[1]: enter to stp_cyc cycid=1.
+[88348862]:[1]: leave from stp_cyc ercd=0.
+[88349046]:[1]: enter to stp_cyc cycid=2.
+[88349387]:[1]: leave from stp_cyc ercd=0.
+[88349578]:[1]: enter to sta_alm almid=1. almtim=10.
+[88349682]:[2]: enter to int handler 5.
+[88349979]:[1]: leave from sta_alm ercd=0.
+[88350067]:[2]: leave from int handler 5.
+[88350172]:[1]: enter to sta_alm almid=2. almtim=10.
+[88350573]:[1]: leave from sta_alm ercd=0.
+[88350759]:[1]: enter to dly_tsk dlytim=20.
+[88351253]:[1]: task 4 becomes WAITING.
+[88351471]:[1]: dispatch from task 4.
+[88351648]:[1]: dispatch to task 3.
+[88351852]:[1]: leave from slp_tsk ercd=0.
+[88352561]:[1]: task1_3 is running (002).       *
+[88568380]:[1]: enter to int handler 5.
+[88568698]:[1]: leave from int handler 5.
+[88575967]:[2]: enter to int handler 5.
+[88576285]:[2]: leave from int handler 5.
+[88794791]:[1]: enter to int handler 5.
+[88795109]:[1]: leave from int handler 5.
+[88802378]:[2]: enter to int handler 5.
+[88802696]:[2]: leave from int handler 5.
+[89021201]:[1]: enter to int handler 5.
+[89021519]:[1]: leave from int handler 5.
+[89028789]:[2]: enter to int handler 5.
+[89029107]:[2]: leave from int handler 5.
+[89247612]:[1]: enter to int handler 5.
+[89247930]:[1]: leave from int handler 5.
+[89255199]:[2]: enter to int handler 5.
+[89255517]:[2]: leave from int handler 5.
+[89474023]:[1]: enter to int handler 5.
+[89474341]:[1]: leave from int handler 5.
+[89481610]:[2]: enter to int handler 5.
+[89481928]:[2]: leave from int handler 5.
+[89700433]:[1]: enter to int handler 5.
+[89700751]:[1]: leave from int handler 5.
+[89708021]:[2]: enter to int handler 5.
+[89708339]:[2]: leave from int handler 5.
+[89926844]:[1]: enter to int handler 5.
+[89927162]:[1]: leave from int handler 5.
+[89934431]:[2]: enter to int handler 5.
+[89934749]:[2]: leave from int handler 5.
+[90153255]:[1]: enter to int handler 5.
+[90153573]:[1]: leave from int handler 5.
+[90160842]:[2]: enter to int handler 5.
+[90161160]:[2]: leave from int handler 5.
+[90249941]:[2]: task2_1 is running (007).   |
+[90379665]:[1]: enter to int handler 5.
+[90379983]:[1]: leave from int handler 5.
+[90386597]:[2]: enter to int handler 5.
+[90386915]:[2]: leave from int handler 5.
+[90606076]:[1]: enter to int handler 5.
+[90606394]:[1]: leave from int handler 5.
+[90613008]:[2]: enter to int handler 5.
+[90613326]:[2]: leave from int handler 5.
+[90832487]:[1]: enter to int handler 5.
+[90832882]:[1]: enter to alarm handler 1.
+[90833399]:[1]: alarm_handler 1 start!
+[90834481]:[1]: enter to irot_rdq tskpri=9. prcid=1.
+[90834770]:[1]: leave from imrot_rdq ercd=0.
+[90834964]:[1]: enter to irot_rdq tskpri=10. prcid=1.
+[90835319]:[1]: leave from imrot_rdq ercd=0.
+[90835513]:[1]: enter to irot_rdq tskpri=11. prcid=1.
+[90835802]:[1]: leave from imrot_rdq ercd=0.
+[90835983]:[1]: leave from alarm handler 1.
+[90836309]:[1]: leave from int handler 5.
+[90836618]:[1]: dispatch from task 3.
+[90836795]:[1]: dispatch to task 1.
+[90839418]:[2]: enter to int handler 5.
+[90839758]:[2]: enter to alarm handler 2.
+[90840275]:[2]: alarm_handler 2 start!
+[90841357]:[2]: enter to irot_rdq tskpri=9. prcid=2.
+[90841646]:[2]: leave from imrot_rdq ercd=0.
+[90841840]:[2]: enter to irot_rdq tskpri=10. prcid=2.
+[90842195]:[2]: leave from imrot_rdq ercd=0.
+[90842389]:[2]: enter to irot_rdq tskpri=11. prcid=2.
+[90842678]:[2]: leave from imrot_rdq ercd=0.
+[90842859]:[2]: leave from alarm handler 2.
+[90843170]:[2]: leave from int handler 5.
+[90843479]:[2]: dispatch from task 6.
+[90843656]:[2]: dispatch to task 7.
+[91058393]:[1]: enter to int handler 5.
+[91058711]:[1]: leave from int handler 5.
+[91065320]:[2]: enter to int handler 5.
+[91065623]:[2]: leave from int handler 5.
+[91284804]:[1]: enter to int handler 5.
+[91285122]:[1]: leave from int handler 5.
+[91291736]:[2]: enter to int handler 5.
+[91292039]:[2]: leave from int handler 5.
+[91511216]:[1]: enter to int handler 5.
+[91511534]:[1]: leave from int handler 5.
+[91518150]:[2]: enter to int handler 5.
+[91518453]:[2]: leave from int handler 5.
+[91699849]:[2]: task2_2 is running (008).     +
+[91737625]:[1]: enter to int handler 5.
+[91737943]:[1]: leave from int handler 5.
+[91743900]:[2]: enter to int handler 5.
+[91744203]:[2]: leave from int handler 5.
+[91964036]:[1]: enter to int handler 5.
+[91964354]:[1]: leave from int handler 5.
+[91970315]:[2]: enter to int handler 5.
+[91970618]:[2]: leave from int handler 5.
+[92190448]:[1]: enter to int handler 5.
+[92190766]:[1]: leave from int handler 5.
+[92196731]:[2]: enter to int handler 5.
+[92197034]:[2]: leave from int handler 5.
+[92416857]:[1]: enter to int handler 5.
+[92417175]:[1]: leave from int handler 5.
+[92423145]:[2]: enter to int handler 5.
+[92423448]:[2]: leave from int handler 5.
+[92643268]:[1]: enter to int handler 5.
+[92643586]:[1]: leave from int handler 5.
+[92649561]:[2]: enter to int handler 5.
+[92649864]:[2]: leave from int handler 5.
+[92766772]:[1]: task1_1 is running (007).   |
+[92869023]:[1]: enter to int handler 5.
+[92869341]:[1]: leave from int handler 5.
+[92875977]:[2]: enter to int handler 5.
+[92876280]:[2]: leave from int handler 5.
+[93095435]:[1]: enter to int handler 5.
+[93095771]:[1]: task 4 becomes RUNNABLE.
+[93096158]:[1]: leave from int handler 5.
+[93096467]:[1]: dispatch from task 1.
+[93096644]:[1]: dispatch to task 4.
+[93096842]:[1]: leave from dly_tsk ercd=0.
+[93097031]:[1]: enter to sta_alm almid=1. almtim=20.
+[93097432]:[1]: leave from sta_alm ercd=0.
+[93097625]:[1]: enter to sta_alm almid=2. almtim=20.
+[93098026]:[1]: leave from sta_alm ercd=0.
+[93098213]:[1]: enter to dly_tsk dlytim=40.
+[93098707]:[1]: task 4 becomes WAITING.
+[93098925]:[1]: dispatch from task 4.
+[93099102]:[1]: dispatch to task 1.
+[93102391]:[2]: enter to int handler 5.
+[93102709]:[2]: leave from int handler 5.
+[93321713]:[1]: enter to int handler 5.
+[93322031]:[1]: leave from int handler 5.
+[93328802]:[2]: enter to int handler 5.
+[93329120]:[2]: leave from int handler 5.
+[93548122]:[1]: enter to int handler 5.
+[93548440]:[1]: leave from int handler 5.
+[93555213]:[2]: enter to int handler 5.
+[93555531]:[2]: leave from int handler 5.
+[93774533]:[1]: enter to int handler 5.
+[93774851]:[1]: leave from int handler 5.
+[93781623]:[2]: enter to int handler 5.
+[93781941]:[2]: leave from int handler 5.
+[94000945]:[1]: enter to int handler 5.
+[94001263]:[1]: leave from int handler 5.
+[94008034]:[2]: enter to int handler 5.
+[94008352]:[2]: leave from int handler 5.
+[94227354]:[1]: enter to int handler 5.
+[94227672]:[1]: leave from int handler 5.
+[94234445]:[2]: enter to int handler 5.
+[94234763]:[2]: leave from int handler 5.
+[94453765]:[1]: enter to int handler 5.
+[94454083]:[1]: leave from int handler 5.
+[94460855]:[2]: enter to int handler 5.
+[94461173]:[2]: leave from int handler 5.
+[94680177]:[1]: enter to int handler 5.
+[94680495]:[1]: leave from int handler 5.
+[94687266]:[2]: enter to int handler 5.
+[94687584]:[2]: leave from int handler 5.
+[94906586]:[1]: enter to int handler 5.
+[94906904]:[1]: leave from int handler 5.
+[94913677]:[2]: enter to int handler 5.
+[94913995]:[2]: leave from int handler 5.
+[95132997]:[1]: enter to int handler 5.
+[95133315]:[1]: leave from int handler 5.
+[95140087]:[2]: enter to int handler 5.
+[95140405]:[2]: leave from int handler 5.
+[95359409]:[1]: enter to int handler 5.
+[95359727]:[1]: leave from int handler 5.
+[95366498]:[2]: enter to int handler 5.
+[95366816]:[2]: leave from int handler 5.
+[95585818]:[1]: enter to int handler 5.
+[95586136]:[1]: leave from int handler 5.
+[95592909]:[2]: enter to int handler 5.
+[95593227]:[2]: leave from int handler 5.
+[95615010]:[2]: task2_2 is running (009).     +
+[95812229]:[1]: enter to int handler 5.
+[95812547]:[1]: leave from int handler 5.
+[95818654]:[2]: enter to int handler 5.
+[95818972]:[2]: leave from int handler 5.
+[96038641]:[1]: enter to int handler 5.
+[96038959]:[1]: leave from int handler 5.
+[96045064]:[2]: enter to int handler 5.
+[96045382]:[2]: leave from int handler 5.
+[96265050]:[1]: enter to int handler 5.
+[96265368]:[1]: leave from int handler 5.
+[96271475]:[2]: enter to int handler 5.
+[96271793]:[2]: leave from int handler 5.
+[96491461]:[1]: enter to int handler 5.
+[96491779]:[1]: leave from int handler 5.
+[96497886]:[2]: enter to int handler 5.
+[96498204]:[2]: leave from int handler 5.
+[96684528]:[1]: task1_1 is running (008).   |
+[96717216]:[1]: enter to int handler 5.
+[96717534]:[1]: leave from int handler 5.
+[96724296]:[2]: enter to int handler 5.
+[96724614]:[2]: leave from int handler 5.
+[96943628]:[1]: enter to int handler 5.
+[96943946]:[1]: leave from int handler 5.
+[96950707]:[2]: enter to int handler 5.
+[96951025]:[2]: leave from int handler 5.
+[97170037]:[1]: enter to int handler 5.
+[97170355]:[1]: leave from int handler 5.
+[97177118]:[2]: enter to int handler 5.
+[97177436]:[2]: leave from int handler 5.
+[97396448]:[1]: enter to int handler 5.
+[97396766]:[1]: leave from int handler 5.
+[97403528]:[2]: enter to int handler 5.
+[97403846]:[2]: leave from int handler 5.
+[97622860]:[1]: enter to int handler 5.
+[97623178]:[1]: leave from int handler 5.
+[97629939]:[2]: enter to int handler 5.
+[97630279]:[2]: enter to alarm handler 2.
+[97630796]:[2]: alarm_handler 2 start!
+[97631878]:[2]: enter to irot_rdq tskpri=9. prcid=2.
+[97632167]:[2]: leave from imrot_rdq ercd=0.
+[97632361]:[2]: enter to irot_rdq tskpri=10. prcid=2.
+[97632716]:[2]: leave from imrot_rdq ercd=0.
+[97632910]:[2]: enter to irot_rdq tskpri=11. prcid=2.
+[97633199]:[2]: leave from imrot_rdq ercd=0.
+[97633380]:[2]: leave from alarm handler 2.
+[97633691]:[2]: leave from int handler 5.
+[97634000]:[2]: dispatch from task 7.
+[97634177]:[2]: dispatch to task 6.
+[97849269]:[1]: enter to int handler 5.
+[97849664]:[1]: enter to alarm handler 1.
+[97850181]:[1]: alarm_handler 1 start!
+[97851263]:[1]: enter to irot_rdq tskpri=9. prcid=1.
+[97851552]:[1]: leave from imrot_rdq ercd=0.
+[97851746]:[1]: enter to irot_rdq tskpri=10. prcid=1.
+[97852101]:[1]: leave from imrot_rdq ercd=0.
+[97852295]:[1]: enter to irot_rdq tskpri=11. prcid=1.
+[97852584]:[1]: leave from imrot_rdq ercd=0.
+[97852765]:[1]: leave from alarm handler 1.
+[97853091]:[1]: leave from int handler 5.
+[97853400]:[1]: dispatch from task 1.
+[97853577]:[1]: dispatch to task 2.
+[97855841]:[2]: enter to int handler 5.
+[97856144]:[2]: leave from int handler 5.
+[98075177]:[1]: enter to int handler 5.
+[98075495]:[1]: leave from int handler 5.
+[98082257]:[2]: enter to int handler 5.
+[98082560]:[2]: leave from int handler 5.
+[98301587]:[1]: enter to int handler 5.
+[98301905]:[1]: leave from int handler 5.
+[98308671]:[2]: enter to int handler 5.
+[98308974]:[2]: leave from int handler 5.
+[98527998]:[1]: enter to int handler 5.
+[98528316]:[1]: leave from int handler 5.
+[98535087]:[2]: enter to int handler 5.
+[98535390]:[2]: leave from int handler 5.
+[98709891]:[1]: task1_2 is running (008).     +
+[98753743]:[1]: enter to int handler 5.
+[98754061]:[1]: leave from int handler 5.
+[98761503]:[2]: enter to int handler 5.
+[98761806]:[2]: leave from int handler 5.
+[98980154]:[1]: enter to int handler 5.
+[98980472]:[1]: leave from int handler 5.
+[98987917]:[2]: enter to int handler 5.
+[98988220]:[2]: leave from int handler 5.
+[99206564]:[1]: enter to int handler 5.
+[99206882]:[1]: leave from int handler 5.
+[99214332]:[2]: enter to int handler 5.
+[99214635]:[2]: leave from int handler 5.
+[99432975]:[1]: enter to int handler 5.
+[99433293]:[1]: leave from int handler 5.
+[99440748]:[2]: enter to int handler 5.
+[99441051]:[2]: leave from int handler 5.
+[99659386]:[1]: enter to int handler 5.
+[99659704]:[1]: leave from int handler 5.
+[99667162]:[2]: enter to int handler 5.
+[99667465]:[2]: leave from int handler 5.
+[99885796]:[1]: enter to int handler 5.
+[99886114]:[1]: leave from int handler 5.
+[99893578]:[2]: enter to int handler 5.
+[99893881]:[2]: leave from int handler 5.
+[100112207]:[1]: enter to int handler 5.
+[100112525]:[1]: leave from int handler 5.
+[100119994]:[2]: enter to int handler 5.
+[100120297]:[2]: leave from int handler 5.
+[100338618]:[1]: enter to int handler 5.
+[100338936]:[1]: leave from int handler 5.
+[100346408]:[2]: enter to int handler 5.
+[100346711]:[2]: leave from int handler 5.
+[100565028]:[1]: enter to int handler 5.
+[100565346]:[1]: leave from int handler 5.
+[100572823]:[2]: enter to int handler 5.
+[100573126]:[2]: leave from int handler 5.
+[100791439]:[1]: enter to int handler 5.
+[100791757]:[1]: leave from int handler 5.
+[100799239]:[2]: enter to int handler 5.
+[100799542]:[2]: leave from int handler 5.
+[100958579]:[2]: task2_1 is running (008).   |
+[101017850]:[1]: enter to int handler 5.
+[101018168]:[1]: leave from int handler 5.
+[101024999]:[2]: enter to int handler 5.
+[101025302]:[2]: leave from int handler 5.
+[101244260]:[1]: enter to int handler 5.
+[101244578]:[1]: leave from int handler 5.
+[101251413]:[2]: enter to int handler 5.
+[101251716]:[2]: leave from int handler 5.
+[101470671]:[1]: enter to int handler 5.
+[101470989]:[1]: leave from int handler 5.
+[101477828]:[2]: enter to int handler 5.
+[101478131]:[2]: leave from int handler 5.
+[101697082]:[1]: enter to int handler 5.
+[101697400]:[1]: leave from int handler 5.
+[101704244]:[2]: enter to int handler 5.
+[101704547]:[2]: leave from int handler 5.
+[101923492]:[1]: enter to int handler 5.
+[101923810]:[1]: leave from int handler 5.
+[101930658]:[2]: enter to int handler 5.
+[101930961]:[2]: leave from int handler 5.
+[102149903]:[1]: enter to int handler 5.
+[102150221]:[1]: leave from int handler 5.
+[102157074]:[2]: enter to int handler 5.
+[102157377]:[2]: leave from int handler 5.
+[102376314]:[1]: enter to int handler 5.
+[102376650]:[1]: task 4 becomes RUNNABLE.
+[102377037]:[1]: leave from int handler 5.
+[102377346]:[1]: dispatch from task 2.
+[102377523]:[1]: dispatch to task 4.
+[102377721]:[1]: leave from dly_tsk ercd=0.
+[102377907]:[1]: enter to dly_tsk dlytim=10.
+[102378383]:[1]: task 4 becomes WAITING.
+[102378601]:[1]: dispatch from task 4.
+[102378778]:[1]: dispatch to task 2.
+[102383490]:[2]: enter to int handler 5.
+[102383793]:[2]: leave from int handler 5.
+[102602673]:[1]: enter to int handler 5.
+[102602991]:[1]: leave from int handler 5.
+[102609904]:[2]: enter to int handler 5.
+[102610207]:[2]: leave from int handler 5.
+[102627208]:[1]: task1_2 is running (009).     +
+[102828418]:[1]: enter to int handler 5.
+[102828736]:[1]: leave from int handler 5.
+[102836319]:[2]: enter to int handler 5.
+[102836622]:[2]: leave from int handler 5.
+[103054830]:[1]: enter to int handler 5.
+[103055148]:[1]: leave from int handler 5.
+[103062735]:[2]: enter to int handler 5.
+[103063038]:[2]: leave from int handler 5.
+[103281239]:[1]: enter to int handler 5.
+[103281557]:[1]: leave from int handler 5.
+[103289149]:[2]: enter to int handler 5.
+[103289452]:[2]: leave from int handler 5.
+[103507650]:[1]: enter to int handler 5.
+[103507968]:[1]: leave from int handler 5.
+[103515565]:[2]: enter to int handler 5.
+[103515868]:[2]: leave from int handler 5.
+[103734062]:[1]: enter to int handler 5.
+[103734380]:[1]: leave from int handler 5.
+[103741981]:[2]: enter to int handler 5.
+[103742284]:[2]: leave from int handler 5.
+[103960471]:[1]: enter to int handler 5.
+[103960789]:[1]: leave from int handler 5.
+[103968395]:[2]: enter to int handler 5.
+[103968698]:[2]: leave from int handler 5.
+[104186882]:[1]: enter to int handler 5.
+[104187200]:[1]: leave from int handler 5.
+[104194810]:[2]: enter to int handler 5.
+[104195113]:[2]: leave from int handler 5.
+[104413294]:[1]: enter to int handler 5.
+[104413612]:[1]: leave from int handler 5.
+[104421226]:[2]: enter to int handler 5.
+[104421529]:[2]: leave from int handler 5.
+[104639703]:[1]: enter to int handler 5.
+[104640021]:[1]: leave from int handler 5.
+[104647640]:[2]: enter to int handler 5.
+[104647943]:[2]: leave from int handler 5.
+[104866114]:[1]: enter to int handler 5.
+[104866450]:[1]: task 4 becomes RUNNABLE.
+[104866837]:[1]: leave from int handler 5.
+[104867146]:[1]: dispatch from task 2.
+[104867323]:[1]: dispatch to task 4.
+[104867521]:[1]: leave from dly_tsk ercd=0.
+[104867707]:[1]: enter to dly_tsk dlytim=10.
+[104868183]:[1]: task 4 becomes WAITING.
+[104868401]:[1]: dispatch from task 4.
+[104868578]:[1]: dispatch to task 2.
+[104872498]:[2]: #1#ext_tsk()
+[104873310]:[2]: enter to ext_tsk.
+[104873714]:[2]: task 6 becomes DORMANT.
+[104873925]:[2]: dispatch from task 6.
+[104874102]:[2]: dispatch to task 7.
+[104874426]:[2]: enter to int handler 5.
+[104874729]:[2]: leave from int handler 5.
+[105092474]:[1]: enter to int handler 5.
+[105092792]:[1]: leave from int handler 5.
+[105100231]:[2]: enter to int handler 5.
+[105100534]:[2]: leave from int handler 5.
+[105318885]:[1]: enter to int handler 5.
+[105319203]:[1]: leave from int handler 5.
+[105326645]:[2]: enter to int handler 5.
+[105326948]:[2]: leave from int handler 5.
+[105545296]:[1]: enter to int handler 5.
+[105545614]:[1]: leave from int handler 5.
+[105553060]:[2]: enter to int handler 5.
+[105553363]:[2]: leave from int handler 5.
+[105771706]:[1]: enter to int handler 5.
+[105772024]:[1]: leave from int handler 5.
+[105779476]:[2]: enter to int handler 5.
+[105779779]:[2]: leave from int handler 5.
+[105998117]:[1]: enter to int handler 5.
+[105998435]:[1]: leave from int handler 5.
+[106005890]:[2]: enter to int handler 5.
+[106006193]:[2]: leave from int handler 5.
+[106224528]:[1]: enter to int handler 5.
+[106224846]:[1]: leave from int handler 5.
+[106232306]:[2]: enter to int handler 5.
+[106232609]:[2]: leave from int handler 5.
+[106450938]:[1]: enter to int handler 5.
+[106451256]:[1]: leave from int handler 5.
+[106458722]:[2]: enter to int handler 5.
+[106459025]:[2]: leave from int handler 5.
+[106543490]:[1]: #2#ext_tsk()
+[106544302]:[1]: enter to ext_tsk.
+[106544706]:[1]: task 2 becomes DORMANT.
+[106544917]:[1]: dispatch from task 2.
+[106545094]:[1]: dispatch to task 3.
+[106677108]:[1]: enter to int handler 5.
+[106677426]:[1]: leave from int handler 5.
+[106685136]:[2]: enter to int handler 5.
+[106685439]:[2]: leave from int handler 5.
+[106773578]:[2]: #2#ext_tsk()
+[106774390]:[2]: enter to ext_tsk.
+[106774812]:[2]: task 7 becomes DORMANT.
+[106775023]:[2]: dispatch from task 7.
+[106882907]:[2]: enter to int handler 5.
+[106883210]:[2]: leave from int handler 5.
+[106903518]:[1]: enter to int handler 5.
+[106903836]:[1]: leave from int handler 5.
+[107062206]:[2]: enter to int handler 5.
+[107062509]:[2]: leave from int handler 5.
+[107129929]:[1]: enter to int handler 5.
+[107130247]:[1]: leave from int handler 5.
+[107241493]:[2]: enter to int handler 5.
+[107241796]:[2]: leave from int handler 5.
+[107356340]:[1]: enter to int handler 5.
+[107356676]:[1]: task 4 becomes RUNNABLE.
+[107357063]:[1]: leave from int handler 5.
+[107357372]:[1]: dispatch from task 3.
+[107357549]:[1]: dispatch to task 4.
+[107357747]:[1]: leave from dly_tsk ercd=0.
+[107357933]:[1]: enter to dly_tsk dlytim=20.
+[107358409]:[1]: task 4 becomes WAITING.
+[107358627]:[1]: dispatch from task 4.
+[107358804]:[1]: dispatch to task 3.
+[107420792]:[2]: enter to int handler 5.
+[107421095]:[2]: leave from int handler 5.
+[107582699]:[1]: enter to int handler 5.
+[107583017]:[1]: leave from int handler 5.
+[107600079]:[2]: enter to int handler 5.
+[107600382]:[2]: leave from int handler 5.
+[107779367]:[2]: enter to int handler 5.
+[107779670]:[2]: leave from int handler 5.
+[107809111]:[1]: enter to int handler 5.
+[107809429]:[1]: leave from int handler 5.
+[107958665]:[2]: enter to int handler 5.
+[107958968]:[2]: leave from int handler 5.
+[107981094]:[1]: #3#ext_tsk()
+[107981906]:[1]: enter to ext_tsk.
+[107982310]:[1]: task 3 becomes DORMANT.
+[107982521]:[1]: dispatch from task 3.
+[107982698]:[1]: dispatch to task 1.
+[108035281]:[1]: enter to int handler 5.
+[108035599]:[1]: leave from int handler 5.
+[108137952]:[2]: enter to int handler 5.
+[108138255]:[2]: leave from int handler 5.
+[108261691]:[1]: enter to int handler 5.
+[108262009]:[1]: leave from int handler 5.
+[108317251]:[2]: enter to int handler 5.
+[108317554]:[2]: leave from int handler 5.
+[108488102]:[1]: enter to int handler 5.
+[108488420]:[1]: leave from int handler 5.
+[108496538]:[2]: enter to int handler 5.
+[108496841]:[2]: leave from int handler 5.
+[108675837]:[2]: enter to int handler 5.
+[108676140]:[2]: leave from int handler 5.
+[108714513]:[1]: enter to int handler 5.
+[108714831]:[1]: leave from int handler 5.
+[108855124]:[2]: enter to int handler 5.
+[108855427]:[2]: leave from int handler 5.
+[108940923]:[1]: enter to int handler 5.
+[108941241]:[1]: leave from int handler 5.
+[109034412]:[2]: enter to int handler 5.
+[109034715]:[2]: leave from int handler 5.
+[109167334]:[1]: enter to int handler 5.
+[109167652]:[1]: leave from int handler 5.
+[109213710]:[2]: enter to int handler 5.
+[109214013]:[2]: leave from int handler 5.
+[109392997]:[2]: enter to int handler 5.
+[109393300]:[2]: leave from int handler 5.
+[109393745]:[1]: enter to int handler 5.
+[109394063]:[1]: leave from int handler 5.
+[109572296]:[2]: enter to int handler 5.
+[109572599]:[2]: leave from int handler 5.
+[109620155]:[1]: enter to int handler 5.
+[109620473]:[1]: leave from int handler 5.
+[109751583]:[2]: enter to int handler 5.
+[109751886]:[2]: leave from int handler 5.
+[109846566]:[1]: enter to int handler 5.
+[109846884]:[1]: leave from int handler 5.
+[109930882]:[2]: enter to int handler 5.
+[109931185]:[2]: leave from int handler 5.
+[110072977]:[1]: enter to int handler 5.
+[110073295]:[1]: leave from int handler 5.
+[110110169]:[2]: enter to int handler 5.
+[110110472]:[2]: leave from int handler 5.
+[110289457]:[2]: enter to int handler 5.
+[110289760]:[2]: leave from int handler 5.
+[110299387]:[1]: enter to int handler 5.
+[110299705]:[1]: leave from int handler 5.
+[110468755]:[2]: enter to int handler 5.
+[110469058]:[2]: leave from int handler 5.
+[110525798]:[1]: enter to int handler 5.
+[110526116]:[1]: leave from int handler 5.
+[110648042]:[2]: enter to int handler 5.
+[110648345]:[2]: leave from int handler 5.
+[110732455]:[1]: #1#ext_tsk()
+[110733267]:[1]: enter to ext_tsk.
+[110733689]:[1]: task 1 becomes DORMANT.
+[110733900]:[1]: dispatch from task 1.
+[110748256]:[1]: enter to int handler 5.
+[110748574]:[1]: leave from int handler 5.
+[110827341]:[2]: enter to int handler 5.
+[110827644]:[2]: leave from int handler 5.
+[110927546]:[1]: enter to int handler 5.
+[110927864]:[1]: leave from int handler 5.
+[111006628]:[2]: enter to int handler 5.
+[111006931]:[2]: leave from int handler 5.
+[111106836]:[1]: enter to int handler 5.
+[111107154]:[1]: leave from int handler 5.
+[111185927]:[2]: enter to int handler 5.
+[111186230]:[2]: leave from int handler 5.
+[111286126]:[1]: enter to int handler 5.
+[111286444]:[1]: leave from int handler 5.
+[111365214]:[2]: enter to int handler 5.
+[111365517]:[2]: leave from int handler 5.
+[111465416]:[1]: enter to int handler 5.
+[111465734]:[1]: leave from int handler 5.
+[111544502]:[2]: enter to int handler 5.
+[111544805]:[2]: leave from int handler 5.
+[111644706]:[1]: enter to int handler 5.
+[111645024]:[1]: leave from int handler 5.
+[111723800]:[2]: enter to int handler 5.
+[111724103]:[2]: leave from int handler 5.
+[111823997]:[1]: enter to int handler 5.
+[111824333]:[1]: task 4 becomes RUNNABLE.
+[111824716]:[1]: leave from int handler 5.
+[111825031]:[1]: dispatch to task 4.
+[111825229]:[1]: leave from dly_tsk ercd=0.
+[111825411]:[1]: enter to act_tsk tskid=1.
+[111825697]:[1]: task 1 becomes RUNNABLE.
+[111825938]:[1]: leave from act_tsk ercd=0.
+[111826122]:[1]: enter to dly_tsk dlytim=10.
+[111826598]:[1]: task 4 becomes WAITING.
+[111826816]:[1]: dispatch from task 4.
+[111826993]:[1]: dispatch to task 1.
+[111827207]:[1]: enter to ena_tex.
+[111827487]:[1]: leave from ena_tex ercd=0
+[111828218]:[1]: task1_1 is running (001).   |
+[111903087]:[2]: enter to int handler 5.
+[111903390]:[2]: leave from int handler 5.
+[112049640]:[1]: enter to int handler 5.
+[112049958]:[1]: leave from int handler 5.
+[112082386]:[2]: enter to int handler 5.
+[112082689]:[2]: leave from int handler 5.
+[112261673]:[2]: enter to int handler 5.
+[112261976]:[2]: leave from int handler 5.
+[112276052]:[1]: enter to int handler 5.
+[112276370]:[1]: leave from int handler 5.
+[112440972]:[2]: enter to int handler 5.
+[112441275]:[2]: leave from int handler 5.
+[112502461]:[1]: enter to int handler 5.
+[112502779]:[1]: leave from int handler 5.
+[112620259]:[2]: enter to int handler 5.
+[112620562]:[2]: leave from int handler 5.
+[112728872]:[1]: enter to int handler 5.
+[112729190]:[1]: leave from int handler 5.
+[112799547]:[2]: enter to int handler 5.
+[112799850]:[2]: leave from int handler 5.
+[112955284]:[1]: enter to int handler 5.
+[112955602]:[1]: leave from int handler 5.
+[112978845]:[2]: enter to int handler 5.
+[112979148]:[2]: leave from int handler 5.
+[113158132]:[2]: enter to int handler 5.
+[113158435]:[2]: leave from int handler 5.
+[113181693]:[1]: enter to int handler 5.
+[113182011]:[1]: leave from int handler 5.
+[113337431]:[2]: enter to int handler 5.
+[113337734]:[2]: leave from int handler 5.
+[113408104]:[1]: enter to int handler 5.
+[113408422]:[1]: leave from int handler 5.
+[113516718]:[2]: enter to int handler 5.
+[113517021]:[2]: leave from int handler 5.
+[113634516]:[1]: enter to int handler 5.
+[113634834]:[1]: leave from int handler 5.
+[113696017]:[2]: enter to int handler 5.
+[113696320]:[2]: leave from int handler 5.
+[113860925]:[1]: enter to int handler 5.
+[113861243]:[1]: leave from int handler 5.
+[113875304]:[2]: enter to int handler 5.
+[113875607]:[2]: leave from int handler 5.
+[114054592]:[2]: enter to int handler 5.
+[114054895]:[2]: leave from int handler 5.
+[114087336]:[1]: enter to int handler 5.
+[114087654]:[1]: leave from int handler 5.
+[114233890]:[2]: enter to int handler 5.
+[114234193]:[2]: leave from int handler 5.
+[114313748]:[1]: enter to int handler 5.
+[114314084]:[1]: task 4 becomes RUNNABLE.
+[114314471]:[1]: leave from int handler 5.
+[114314780]:[1]: dispatch from task 1.
+[114314957]:[1]: dispatch to task 4.
+[114315155]:[1]: leave from dly_tsk ercd=0.
+[114315347]:[1]: enter to mig_tsk tskid=1. prcid=2.
+[114315796]:[1]: task 1 migrates from processor 1 to processor 2.
+[114316090]:[1]: leave from mig_tsk ercd=0.
+[114316218]:[2]: enter to int handler 16.
+[114316309]:[1]: enter to dly_tsk dlytim=10.
+[114316421]:[2]: leave from int handler 16.
+[114316737]:[1]: task 4 becomes WAITING.
+[114316750]:[2]: dispatch to task 1.
+[114316955]:[1]: dispatch from task 4.
+[114438764]:[2]: enter to int handler 5.
+[114439067]:[2]: leave from int handler 5.
+[114493527]:[1]: enter to int handler 5.
+[114493845]:[1]: leave from int handler 5.
+[114665180]:[2]: enter to int handler 5.
+[114665483]:[2]: leave from int handler 5.
+[114672817]:[1]: enter to int handler 5.
+[114673135]:[1]: leave from int handler 5.
+[114852107]:[1]: enter to int handler 5.
+[114852425]:[1]: leave from int handler 5.
+[114891594]:[2]: enter to int handler 5.
+[114891897]:[2]: leave from int handler 5.
+[115031398]:[1]: enter to int handler 5.
+[115031716]:[1]: leave from int handler 5.
+[115118009]:[2]: enter to int handler 5.
+[115118312]:[2]: leave from int handler 5.
+[115210699]:[1]: enter to int handler 5.
+[115211017]:[1]: leave from int handler 5.
+[115344425]:[2]: enter to int handler 5.
+[115344728]:[2]: leave from int handler 5.
+[115389989]:[1]: enter to int handler 5.
+[115390307]:[1]: leave from int handler 5.
+[115569279]:[1]: enter to int handler 5.
+[115569597]:[1]: leave from int handler 5.
+[115570839]:[2]: enter to int handler 5.
+[115571142]:[2]: leave from int handler 5.
+[115745219]:[2]: task1_1 is running (002).   |
+[115748569]:[1]: enter to int handler 5.
+[115748887]:[1]: leave from int handler 5.
+[115796599]:[2]: enter to int handler 5.
+[115796902]:[2]: leave from int handler 5.
+[115927859]:[1]: enter to int handler 5.
+[115928177]:[1]: leave from int handler 5.
+[116023014]:[2]: enter to int handler 5.
+[116023317]:[2]: leave from int handler 5.
+[116107149]:[1]: enter to int handler 5.
+[116107467]:[1]: leave from int handler 5.
+[116249430]:[2]: enter to int handler 5.
+[116249733]:[2]: leave from int handler 5.
+[116286440]:[1]: enter to int handler 5.
+[116286776]:[1]: task 4 becomes RUNNABLE.
+[116287159]:[1]: leave from int handler 5.
+[116287474]:[1]: dispatch to task 4.
+[116287672]:[1]: leave from dly_tsk ercd=0.
+[116475844]:[2]: enter to int handler 5.
+[116476147]:[2]: leave from int handler 5.
+[116530128]:[1]: enter to int handler 5.
+[116530431]:[1]: leave from int handler 5.
+[116702260]:[2]: enter to int handler 5.
+[116702563]:[2]: leave from int handler 5.
+[116773904]:[1]: enter to int handler 5.
+[116774207]:[1]: leave from int handler 5.
+[116928676]:[2]: enter to int handler 5.
+[116928979]:[2]: leave from int handler 5.
+[117017682]:[1]: enter to int handler 5.
+[117017985]:[1]: leave from int handler 5.
+[117155090]:[2]: enter to int handler 5.
+[117155393]:[2]: leave from int handler 5.
+[117261460]:[1]: enter to int handler 5.
+[117261763]:[1]: leave from int handler 5.
+[117381505]:[2]: enter to int handler 5.
+[117381808]:[2]: leave from int handler 5.
+[117505236]:[1]: enter to int handler 5.
+[117505539]:[1]: leave from int handler 5.
+[117607921]:[2]: enter to int handler 5.
+[117608224]:[2]: leave from int handler 5.
+[117749014]:[1]: enter to int handler 5.
+[117749317]:[1]: leave from int handler 5.
+[117834335]:[2]: enter to int handler 5.
+[117834638]:[2]: leave from int handler 5.
+[117992792]:[1]: enter to int handler 5.
+[117993095]:[1]: leave from int handler 5.
+[118060751]:[2]: enter to int handler 5.
+[118061054]:[2]: leave from int handler 5.
+[118236568]:[1]: enter to int handler 5.
+[118236871]:[1]: leave from int handler 5.
+[118287167]:[2]: enter to int handler 5.
+[118287470]:[2]: leave from int handler 5.
+[118480346]:[1]: enter to int handler 5.
+[118480649]:[1]: leave from int handler 5.
+[118513581]:[2]: enter to int handler 5.
+[118513884]:[2]: leave from int handler 5.
+[118724124]:[1]: enter to int handler 5.
+[118724427]:[1]: leave from int handler 5.
+[118739996]:[2]: enter to int handler 5.
+[118740299]:[2]: leave from int handler 5.
+[118966412]:[2]: enter to int handler 5.
+[118966715]:[2]: leave from int handler 5.
+[118967900]:[1]: enter to int handler 5.
+[118968203]:[1]: leave from int handler 5.
+[119192826]:[2]: enter to int handler 5.
+[119193129]:[2]: leave from int handler 5.
+[119211678]:[1]: enter to int handler 5.
+[119211981]:[1]: leave from int handler 5.
+[119419242]:[2]: enter to int handler 5.
+[119419545]:[2]: leave from int handler 5.
+[119455456]:[1]: enter to int handler 5.
+[119455759]:[1]: leave from int handler 5.
+[119645658]:[2]: enter to int handler 5.
+[119645961]:[2]: leave from int handler 5.
+[119659621]:[1]: enter to dly_tsk dlytim=10.
+[119659935]:[2]: #1#mig_tsk(0, 1)
+[119660049]:[1]: task 4 becomes WAITING.
+[119660267]:[1]: dispatch from task 4.
+[119661052]:[2]: enter to mig_tsk tskid=0. prcid=1.
+[119661431]:[2]: task 1 migrates from processor 2 to processor 1.
+[119661856]:[2]: dispatch from task 1.
+[119662251]:[1]: enter to int handler 16.
+[119662454]:[1]: leave from int handler 16.
+[119662770]:[1]: dispatch to task 1.
+[119662970]:[1]: leave from mig_tsk ercd=0.
+[119663681]:[1]: task1_1 is running (003).   |
+[119695297]:[1]: enter to int handler 5.
+[119695615]:[1]: leave from int handler 5.
+[119827940]:[2]: enter to int handler 5.
+[119828243]:[2]: leave from int handler 5.
+[119921708]:[1]: enter to int handler 5.
+[119922026]:[1]: leave from int handler 5.
+[120007239]:[2]: enter to int handler 5.
+[120007542]:[2]: leave from int handler 5.
+[120148118]:[1]: enter to int handler 5.
+[120148436]:[1]: leave from int handler 5.
+[120186526]:[2]: enter to int handler 5.
+[120186829]:[2]: leave from int handler 5.
+[120365814]:[2]: enter to int handler 5.
+[120366117]:[2]: leave from int handler 5.
+[120374529]:[1]: enter to int handler 5.
+[120374847]:[1]: leave from int handler 5.
+[120545112]:[2]: enter to int handler 5.
+[120545415]:[2]: leave from int handler 5.
+[120600940]:[1]: enter to int handler 5.
+[120601258]:[1]: leave from int handler 5.
+[120724399]:[2]: enter to int handler 5.
+[120724702]:[2]: leave from int handler 5.
+[120827350]:[1]: enter to int handler 5.
+[120827668]:[1]: leave from int handler 5.
+[120903698]:[2]: enter to int handler 5.
+[120904001]:[2]: leave from int handler 5.
+[121053761]:[1]: enter to int handler 5.
+[121054079]:[1]: leave from int handler 5.
+[121082985]:[2]: enter to int handler 5.
+[121083288]:[2]: leave from int handler 5.
+[121262284]:[2]: enter to int handler 5.
+[121262587]:[2]: leave from int handler 5.
+[121280172]:[1]: enter to int handler 5.
+[121280490]:[1]: leave from int handler 5.
+[121441571]:[2]: enter to int handler 5.
+[121441874]:[2]: leave from int handler 5.
+[121506582]:[1]: enter to int handler 5.
+[121506900]:[1]: leave from int handler 5.
+[121620859]:[2]: enter to int handler 5.
+[121621162]:[2]: leave from int handler 5.
+[121732993]:[1]: enter to int handler 5.
+[121733311]:[1]: leave from int handler 5.
+[121800157]:[2]: enter to int handler 5.
+[121800460]:[2]: leave from int handler 5.
+[121959404]:[1]: enter to int handler 5.
+[121959740]:[1]: task 4 becomes RUNNABLE.
+[121960127]:[1]: leave from int handler 5.
+[121960436]:[1]: dispatch from task 1.
+[121960613]:[1]: dispatch to task 4.
+[121960811]:[1]: leave from dly_tsk ercd=0.
+[121960999]:[1]: enter to dly_tsk dlytim=20.
+[121961475]:[1]: task 4 becomes WAITING.
+[121961693]:[1]: dispatch from task 4.
+[121961870]:[1]: dispatch to task 1.
+[121979444]:[2]: enter to int handler 5.
+[121979747]:[2]: leave from int handler 5.
+[122158743]:[2]: enter to int handler 5.
+[122159046]:[2]: leave from int handler 5.
+[122185763]:[1]: enter to int handler 5.
+[122186081]:[1]: leave from int handler 5.
+[122338030]:[2]: enter to int handler 5.
+[122338333]:[2]: leave from int handler 5.
+[122412174]:[1]: enter to int handler 5.
+[122412492]:[1]: leave from int handler 5.
+[122517329]:[2]: enter to int handler 5.
+[122517632]:[2]: leave from int handler 5.
+[122638585]:[1]: enter to int handler 5.
+[122638903]:[1]: leave from int handler 5.
+[122696616]:[2]: enter to int handler 5.
+[122696919]:[2]: leave from int handler 5.
+[122864995]:[1]: enter to int handler 5.
+[122865313]:[1]: leave from int handler 5.
+[122875904]:[2]: enter to int handler 5.
+[122876207]:[2]: leave from int handler 5.
+[123055202]:[2]: enter to int handler 5.
+[123055505]:[2]: leave from int handler 5.
+[123091406]:[1]: enter to int handler 5.
+[123091724]:[1]: leave from int handler 5.
+[123234489]:[2]: enter to int handler 5.
+[123234792]:[2]: leave from int handler 5.
+[123317817]:[1]: enter to int handler 5.
+[123318135]:[1]: leave from int handler 5.
+[123413788]:[2]: enter to int handler 5.
+[123414091]:[2]: leave from int handler 5.
+[123544227]:[1]: enter to int handler 5.
+[123544545]:[1]: leave from int handler 5.
+[123580645]:[1]: #1#ext_tsk()
+[123581457]:[1]: enter to ext_tsk.
+[123581879]:[1]: task 1 becomes DORMANT.
+[123582090]:[1]: dispatch from task 1.
+[123593075]:[2]: enter to int handler 5.
+[123593378]:[2]: leave from int handler 5.
+[123731134]:[1]: enter to int handler 5.
+[123731452]:[1]: leave from int handler 5.
+[123772374]:[2]: enter to int handler 5.
+[123772677]:[2]: leave from int handler 5.
+[123910424]:[1]: enter to int handler 5.
+[123910742]:[1]: leave from int handler 5.
+[123951661]:[2]: enter to int handler 5.
+[123951964]:[2]: leave from int handler 5.
+[124089715]:[1]: enter to int handler 5.
+[124090033]:[1]: leave from int handler 5.
+[124130949]:[2]: enter to int handler 5.
+[124131252]:[2]: leave from int handler 5.
+[124269016]:[1]: enter to int handler 5.
+[124269334]:[1]: leave from int handler 5.
+[124310247]:[2]: enter to int handler 5.
+[124310550]:[2]: leave from int handler 5.
+[124448306]:[1]: enter to int handler 5.
+[124448624]:[1]: leave from int handler 5.
+[124489534]:[2]: enter to int handler 5.
+[124489837]:[2]: leave from int handler 5.
+[124627596]:[1]: enter to int handler 5.
+[124627914]:[1]: leave from int handler 5.
+[124668833]:[2]: enter to int handler 5.
+[124669136]:[2]: leave from int handler 5.
+[124806886]:[1]: enter to int handler 5.
+[124807204]:[1]: leave from int handler 5.
+[124848120]:[2]: enter to int handler 5.
+[124848423]:[2]: leave from int handler 5.
+[124986176]:[1]: enter to int handler 5.
+[124986494]:[1]: leave from int handler 5.
+[125027419]:[2]: enter to int handler 5.
+[125027722]:[2]: leave from int handler 5.
+[125165466]:[1]: enter to int handler 5.
+[125165784]:[1]: leave from int handler 5.
+[125206706]:[2]: enter to int handler 5.
+[125207009]:[2]: leave from int handler 5.
+[125344757]:[1]: enter to int handler 5.
+[125345075]:[1]: leave from int handler 5.
+[125385994]:[2]: enter to int handler 5.
+[125386297]:[2]: leave from int handler 5.
+[125524058]:[1]: enter to int handler 5.
+[125524376]:[1]: leave from int handler 5.
+[125565292]:[2]: enter to int handler 5.
+[125565595]:[2]: leave from int handler 5.
+[125703348]:[1]: enter to int handler 5.
+[125703666]:[1]: leave from int handler 5.
+[125744579]:[2]: enter to int handler 5.
+[125744882]:[2]: leave from int handler 5.
+[125882638]:[1]: enter to int handler 5.
+[125882956]:[1]: leave from int handler 5.
+[125923878]:[2]: enter to int handler 5.
+[125924181]:[2]: leave from int handler 5.
+[126061928]:[1]: enter to int handler 5.
+[126062264]:[1]: task 4 becomes RUNNABLE.
+[126062647]:[1]: leave from int handler 5.
+[126062963]:[1]: dispatch to task 4.
+[126063161]:[1]: leave from dly_tsk ercd=0.
+[126063349]:[1]: enter to mact_tsk tskid=1. prcid=2.
+[126063700]:[1]: task 1 migrates from processor 1 to processor 2.
+[126063896]:[1]: task 1 becomes RUNNABLE.
+[126064179]:[1]: leave from mact_tsk ercd=0.
+[126064364]:[1]: enter to dly_tsk dlytim=10.
+[126064792]:[1]: task 4 becomes WAITING.
+[126065010]:[1]: dispatch from task 4.
+[126065221]:[2]: enter to int handler 16.
+[126065424]:[2]: leave from int handler 16.
+[126065740]:[2]: dispatch to task 1.
+[126065954]:[2]: enter to ena_tex.
+[126066234]:[2]: leave from ena_tex ercd=0
+[126066965]:[2]: task1_1 is running (001).   |
+[126112501]:[2]: enter to int handler 5.
+[126112804]:[2]: leave from int handler 5.
+[126241702]:[1]: enter to int handler 5.
+[126242020]:[1]: leave from int handler 5.
+[126338917]:[2]: enter to int handler 5.
+[126339220]:[2]: leave from int handler 5.
+[126420992]:[1]: enter to int handler 5.
+[126421310]:[1]: leave from int handler 5.
+[126565333]:[2]: enter to int handler 5.
+[126565636]:[2]: leave from int handler 5.
+[126600282]:[1]: enter to int handler 5.
+[126600600]:[1]: leave from int handler 5.
+[126779573]:[1]: enter to int handler 5.
+[126779891]:[1]: leave from int handler 5.
+[126791747]:[2]: enter to int handler 5.
+[126792050]:[2]: leave from int handler 5.
+[126958874]:[1]: enter to int handler 5.
+[126959192]:[1]: leave from int handler 5.
+[127018162]:[2]: enter to int handler 5.
+[127018465]:[2]: leave from int handler 5.
+[127138164]:[1]: enter to int handler 5.
+[127138482]:[1]: leave from int handler 5.
+[127244578]:[2]: enter to int handler 5.
+[127244881]:[2]: leave from int handler 5.
+[127317454]:[1]: enter to int handler 5.
+[127317772]:[1]: leave from int handler 5.
+[127470992]:[2]: enter to int handler 5.
+[127471295]:[2]: leave from int handler 5.
+[127496744]:[1]: enter to int handler 5.
+[127497062]:[1]: leave from int handler 5.
+[127676034]:[1]: enter to int handler 5.
+[127676352]:[1]: leave from int handler 5.
+[127697408]:[2]: enter to int handler 5.
+[127697711]:[2]: leave from int handler 5.
+[127855324]:[1]: enter to int handler 5.
+[127855642]:[1]: leave from int handler 5.
+[127923824]:[2]: enter to int handler 5.
+[127924127]:[2]: leave from int handler 5.
+[128034615]:[1]: enter to int handler 5.
+[128034951]:[1]: task 4 becomes RUNNABLE.
+[128035334]:[1]: leave from int handler 5.
+[128035649]:[1]: dispatch to task 4.
+[128035847]:[1]: leave from dly_tsk ercd=0.
+[128036032]:[1]: enter to dly_tsk dlytim=10.
+[128036460]:[1]: task 4 becomes WAITING.
+[128036678]:[1]: dispatch from task 4.
+[128150238]:[2]: enter to int handler 5.
+[128150541]:[2]: leave from int handler 5.
+[128214222]:[1]: enter to int handler 5.
+[128214540]:[1]: leave from int handler 5.
+[128376653]:[2]: enter to int handler 5.
+[128376956]:[2]: leave from int handler 5.
+[128393512]:[1]: enter to int handler 5.
+[128393830]:[1]: leave from int handler 5.
+[128572802]:[1]: enter to int handler 5.
+[128573120]:[1]: leave from int handler 5.
+[128603069]:[2]: enter to int handler 5.
+[128603372]:[2]: leave from int handler 5.
+[128752093]:[1]: enter to int handler 5.
+[128752411]:[1]: leave from int handler 5.
+[128829483]:[2]: enter to int handler 5.
+[128829786]:[2]: leave from int handler 5.
+[128931394]:[1]: enter to int handler 5.
+[128931712]:[1]: leave from int handler 5.
+[129055899]:[2]: enter to int handler 5.
+[129056202]:[2]: leave from int handler 5.
+[129110684]:[1]: enter to int handler 5.
+[129111002]:[1]: leave from int handler 5.
+[129282315]:[2]: enter to int handler 5.
+[129282618]:[2]: leave from int handler 5.
+[129289974]:[1]: enter to int handler 5.
+[129290292]:[1]: leave from int handler 5.
+[129469264]:[1]: enter to int handler 5.
+[129469582]:[1]: leave from int handler 5.
+[129508729]:[2]: enter to int handler 5.
+[129509032]:[2]: leave from int handler 5.
+[129648554]:[1]: enter to int handler 5.
+[129648872]:[1]: leave from int handler 5.
+[129735144]:[2]: enter to int handler 5.
+[129735447]:[2]: leave from int handler 5.
+[129827844]:[1]: enter to int handler 5.
+[129828162]:[1]: leave from int handler 5.
+[129961560]:[2]: enter to int handler 5.
+[129961863]:[2]: leave from int handler 5.
+[129981591]:[2]: #1#ext_tsk()
+[129982403]:[2]: enter to ext_tsk.
+[129982825]:[2]: task 1 becomes DORMANT.
+[129983036]:[2]: dispatch from task 1.
+[130007135]:[1]: enter to int handler 5.
+[130007471]:[1]: task 4 becomes RUNNABLE.
+[130007854]:[1]: leave from int handler 5.
+[130008169]:[1]: dispatch to task 4.
+[130008367]:[1]: leave from dly_tsk ercd=0.
+[130008542]:[1]: enter to ext_ker.
+[130009188]:[2]: enter to int handler 16.
+[130009380]:[2]: enter to ext_ker.
+[130012831]:[2]: local_terrtn exinf = 2, counter = 4
+[130012115]:[1]: local_terrtn exinf = 1, counter = 3
+global_terrtn exinf = 0, counter = 5
