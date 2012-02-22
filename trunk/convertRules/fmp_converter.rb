@@ -302,6 +302,17 @@ p FmpResource.ResName(1,6,"Task")
 
 FmpResource = FmpResourceClass.new
 
+#Debug
+#FmpResource.PrintAtr2
+#p FmpResource.Migration(1,2,1,"Task")
+#p FmpResource.Migration(1,2,1,"CyclicHandler")
+#p FmpResource.Migration(1,2,1,"AlarmHandler")
+#FmpResource.PrintAtr2
+#exit(0)
+#p FmpResource.ResName(1,1,"AlarmHandler")
+#FmpResource.ChangeAtr(1,FmpResource.ResName(1,1,"AlarmHandler"),"AlarmHandler","RUNNING")
+#exit(0)
+
 #1çsÇ∏Ç¬ÉçÉOÇì«Ç›éÊÇË
 logs.each do|line|
   line.chomp!
