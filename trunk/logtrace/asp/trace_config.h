@@ -244,7 +244,7 @@ extern void	trace_write_6(uint_t type, intptr_t arg1, intptr_t arg2, intptr_t ar
 #if TKERNEL_PRVER < 0x1050
 #define LOG_TEX_LEAVE(p_tcb, texptn) trace_2(LOG_TYPE_TEX|LOG_LEAVE,p_tcb, texptn)
 #else
-#define LOG_TEX_LEAVE(p_tcb) trace_2(LOG_TYPE_TEX|LOG_LEAVE, p_tcb, p_tcb->texptn)
+#define LOG_TEX_LEAVE(p_tcb) trace_1(LOG_TYPE_TEX|LOG_LEAVE, p_tcb)
 #endif /* TKERNEL_PRVER < 0x1050 */
 
 /*
