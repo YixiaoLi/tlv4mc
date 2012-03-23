@@ -2,6 +2,6 @@
   "asp_script": {
     "$STYLE": "script",
     "fileName": "C:/cygwin/bin/ruby.exe",
-    "arguments": "convertRules/asp_converter.rb"
+    "arguments": "convertRules/asp_converter2.rb"
    }
 }
