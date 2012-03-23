@@ -1,7 +1,7 @@
 
-	TraceLogVisualizer(TLV)（バージョン 2.0rc）
+	TraceLogVisualizer(TLV)（バージョン 2.0）
 
-					最終更新 : 2011年03月10日
+					最終更新 : 2011年03月23日
 
 ----------------------------------------------------------------------
  TraceLogVisualizer(TLV)
@@ -201,5 +201,7 @@ tlv＠nces.is.nagoya-u.ac.jp 宛にお送り下さい．
 	2010年11月30日	Release	1.3rc		機能追加
 	2011年03月10日　Release 1.3         リファクタリング
 	2011年05月22日　Release 2.0rc       機能追加,.NET Framework4.0への移行
+	2012年03月23日　Release 2.0       
+
 
 以上．
