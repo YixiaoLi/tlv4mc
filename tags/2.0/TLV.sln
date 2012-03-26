@@ -1,0 +1,115 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionItems", "solutionItems", "{A9D965DA-0F3D-40DA-A0B4-67E6E61C5DE5}"
+	ProjectSection(SolutionItems) = preProject
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		TLV1.vsmdi = TLV1.vsmdi
+		xcopyExcludeFile.txt = xcopyExcludeFile.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sampleFiles", "sampleFiles", "{92DADFFC-3815-4346-B504-00E1C119B730}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resourceHeaders", "resourceHeaders", "{80065D5C-A54D-4547-9122-BCBDAEBADC60}"
+	ProjectSection(SolutionItems) = preProject
+		resourceHeaders\asp.resh = resourceHeaders\asp.resh
+		resourceHeaders\fmp.resh = resourceHeaders\fmp.resh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{37F01460-E939-41AD-B195-4219C5DF177F}"
+	ProjectSection(SolutionItems) = preProject
+		bin\ILMerge.exe = bin\ILMerge.exe
+		bin\Zip.exe = bin\Zip.exe
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "convertRules", "convertRules", "{45DF08F6-ADDF-4479-877B-4694CFB4E542}"
+	ProjectSection(SolutionItems) = preProject
+		convertRules\fmp.cnv = convertRules\fmp.cnv
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "asp", "asp", "{375235B2-F695-4B0F-9CD4-F72F6DED0FFE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualizeRules", "visualizeRules", "{5E36682B-2A49-4630-8E27-7ADBF39D3A20}"
+	ProjectSection(SolutionItems) = preProject
+		visualizeRules\asp_rules.viz = visualizeRules\asp_rules.viz
+		visualizeRules\asp_shapes.viz = visualizeRules\asp_shapes.viz
+		visualizeRules\fmp_rules.viz = visualizeRules\fmp_rules.viz
+		visualizeRules\fmp_shapes.viz = visualizeRules\fmp_shapes.viz
+		visualizeRules\toppers_rules.viz = visualizeRules\toppers_rules.viz
+		visualizeRules\toppers_shapes.viz = visualizeRules\toppers_shapes.viz
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dll", "dll", "{0296E089-0644-4562-8509-A95AC6A6590D}"
+	ProjectSection(SolutionItems) = preProject
+		dll\ExpandableGridView.dll = dll\ExpandableGridView.dll
+		dll\ICSharpCode.SharpZipLib.dll = dll\ICSharpCode.SharpZipLib.dll
+		dll\Newtonsoft.Json.dll = dll\Newtonsoft.Json.dll
+		dll\System.Threading.dll = dll\System.Threading.dll
+		dll\WeifenLuo.WinFormsUI.Docking.dll = dll\WeifenLuo.WinFormsUI.Docking.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fmp", "fmp", "{2F0F8178-CAC0-4C76-9A4D-6D3BA5FCD6A4}"
+	ProjectSection(SolutionItems) = preProject
+		sampleFiles\fmp\fmp.log = sampleFiles\fmp\fmp.log
+		sampleFiles\fmp\tlv.tf = sampleFiles\fmp\tlv.tf
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main", "TLV\Main.csproj", "{08D6D604-5CAB-4F00-96FE-F5C97A2C4A1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{7C37CBB0-B554-4268-8A92-D78714219A41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base", "Base\Base.csproj", "{920F5653-9ED8-416C-B4FC-64285D3BB1A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Third", "Third\Third.csproj", "{C2A4F798-30E4-4F03-AA49-F060FFD09B48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{94C75166-FFDC-44D8-9030-0F6EF109BD8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "statisticsGenerationRules", "statisticsGenerationRules", "{E78A1668-D451-48C3-894A-49EF45C58D87}"
+	ProjectSection(SolutionItems) = preProject
+		statisticsGenerationRules\asp_cpu_utilization.sgr = statisticsGenerationRules\asp_cpu_utilization.sgr
+		statisticsGenerationRules\task_dispatch_count.sgr = statisticsGenerationRules\task_dispatch_count.sgr
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "statisticsGenerationScript", "statisticsGenerationScript", "{D3FA7D56-CEBA-4A67-BDCA-46A5B8019C80}"
+	ProjectSection(SolutionItems) = preProject
+		statisticsGenerationScript\asp_cpu_utilization.rb = statisticsGenerationScript\asp_cpu_utilization.rb
+		statisticsGenerationScript\outputStats.rb = statisticsGenerationScript\outputStats.rb
+		statisticsGenerationScript\statsgen_util.rb = statisticsGenerationScript\statsgen_util.rb
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08D6D604-5CAB-4F00-96FE-F5C97A2C4A1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08D6D604-5CAB-4F00-96FE-F5C97A2C4A1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08D6D604-5CAB-4F00-96FE-F5C97A2C4A1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08D6D604-5CAB-4F00-96FE-F5C97A2C4A1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C37CBB0-B554-4268-8A92-D78714219A41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C37CBB0-B554-4268-8A92-D78714219A41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C37CBB0-B554-4268-8A92-D78714219A41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C37CBB0-B554-4268-8A92-D78714219A41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{920F5653-9ED8-416C-B4FC-64285D3BB1A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{920F5653-9ED8-416C-B4FC-64285D3BB1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{920F5653-9ED8-416C-B4FC-64285D3BB1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{920F5653-9ED8-416C-B4FC-64285D3BB1A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2A4F798-30E4-4F03-AA49-F060FFD09B48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A4F798-30E4-4F03-AA49-F060FFD09B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A4F798-30E4-4F03-AA49-F060FFD09B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A4F798-30E4-4F03-AA49-F060FFD09B48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94C75166-FFDC-44D8-9030-0F6EF109BD8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94C75166-FFDC-44D8-9030-0F6EF109BD8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94C75166-FFDC-44D8-9030-0F6EF109BD8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94C75166-FFDC-44D8-9030-0F6EF109BD8E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{375235B2-F695-4B0F-9CD4-F72F6DED0FFE} = {92DADFFC-3815-4346-B504-00E1C119B730}
+		{2F0F8178-CAC0-4C76-9A4D-6D3BA5FCD6A4} = {92DADFFC-3815-4346-B504-00E1C119B730}
+		{0296E089-0644-4562-8509-A95AC6A6590D} = {80065D5C-A54D-4547-9122-BCBDAEBADC60}
+	EndGlobalSection
+EndGlobal
