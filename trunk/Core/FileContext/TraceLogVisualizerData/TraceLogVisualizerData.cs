@@ -211,18 +211,22 @@ namespace NU.OJL.MPRTOS.TLV.Core
             string vixFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.VisualizeRuleFileExtension)[0];
             string settingFilePath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.SettingFileExtension)[0];
             string visualizeShapesPath = Directory.GetFiles(targetTmpDirPath, "*." + Properties.Resources.VisualizeShapesFileExtension)[0];
-            string[] statisticsFilePathes = Directory.GetFiles(targetTmpStatisticsDirPath, "*." + Properties.Resources.StatisticsFileExtension);
-
+ 
             ResourceData res = ApplicationFactory.JsonSerializer.Deserialize<ResourceData>(File.ReadAllText(resFilePath));
             TraceLogList log = ApplicationFactory.JsonSerializer.Deserialize<TraceLogList>(File.ReadAllText(logFilePath));
             VisualizeData viz = ApplicationFactory.JsonSerializer.Deserialize<VisualizeData>(File.ReadAllText(vixFilePath));
             SettingData setting = ApplicationFactory.JsonSerializer.Deserialize<SettingData>(File.ReadAllText(settingFilePath));
             VisualizeShapeData shapes = ApplicationFactory.JsonSerializer.Deserialize<VisualizeShapeData>(File.ReadAllText(visualizeShapesPath));
             StatisticsData stad = new StatisticsData();
-            foreach (string staPath in statisticsFilePathes)
+            
+            if (Directory.Exists(targetTmpStatisticsDirPath))
             {
-                GeneralNamedCollection<Statistics> sd = ApplicationFactory.JsonSerializer.Deserialize<GeneralNamedCollection<Statistics>>(File.ReadAllText(staPath));
-                stad.Statisticses.Add(sd.Single<Statistics>());
+                string[] statisticsFilePathes = Directory.GetFiles(targetTmpStatisticsDirPath, "*." + Properties.Resources.StatisticsFileExtension);
+                foreach (string staPath in statisticsFilePathes)
+                {
+                    GeneralNamedCollection<Statistics> sd = ApplicationFactory.JsonSerializer.Deserialize<GeneralNamedCollection<Statistics>>(File.ReadAllText(staPath));
+                    stad.Statisticses.Add(sd.Single<Statistics>());
+                }
             }
 
             ResourceData = res;
