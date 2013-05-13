@@ -1,0 +1,475 @@
+[1926099] dispatch to task 1.
+[1926446] enter to ena_int intno=2.
+[1926624] leave from ena_int ercd=0.
+[1926926] System logging task is started on port 1.
+[1945000] enter to dly_tsk dlytim=10.
+[1945398] task 1 becomes WAITING.
+[1945560] dispatch from task 1.
+[1945707] dispatch to task 5.
+[1946412] Sample program starts (exinf = 0).
+[1946926] enter to act_tsk tskid=2.
+[1947126] task 2 becomes RUNNABLE.
+[1947315] leave from act_tsk ercd=0.
+[1947461] enter to act_tsk tskid=3.
+[1947661] task 3 becomes RUNNABLE.
+[1947850] leave from act_tsk ercd=0.
+[1947996] enter to act_tsk tskid=4.
+[1948196] task 4 becomes RUNNABLE.
+[1948385] leave from act_tsk ercd=0.
+[1948878] task 5 becomes WAITING.
+[1949040] dispatch from task 5.
+[1949187] dispatch to task 2.
+[1949367] enter to ena_tex.
+[1949548] leave from ena_tex ercd=0
+[1950218] task1 is running (001).   |
+[2136637] enter to int handler 5.
+[2136861] leave from int handler 5.
+[2363096] enter to int handler 5.
+[2363320] leave from int handler 5.
+[2589556] enter to int handler 5.
+[2589780] leave from int handler 5.
+[2816014] enter to int handler 5.
+[2816238] leave from int handler 5.
+[3042474] enter to int handler 5.
+[3042698] leave from int handler 5.
+[3268934] enter to int handler 5.
+[3269158] leave from int handler 5.
+[3495392] enter to int handler 5.
+[3495616] leave from int handler 5.
+[3721851] enter to int handler 5.
+[3722075] leave from int handler 5.
+[3948311] enter to int handler 5.
+[3948535] leave from int handler 5.
+[4174769] enter to int handler 5.
+[4174993] leave from int handler 5.
+[4401229] enter to int handler 5.
+[4401490] task 1 becomes RUNNABLE.
+[4401731] leave from int handler 5.
+[4401985] dispatch from task 2.
+[4402132] dispatch to task 1.
+[4402297] leave from dly_tsk ercd=0.
+[4429578] enter to dly_tsk dlytim=10.
+[4429976] task 1 becomes WAITING.
+[4430138] dispatch from task 1.
+[4430285] dispatch to task 2.
+[4624106] enter to int handler 5.
+[4624330] leave from int handler 5.
+[4850565] enter to int handler 5.
+[4850789] leave from int handler 5.
+[5077025] enter to int handler 5.
+[5077249] leave from int handler 5.
+[5303483] enter to int handler 5.
+[5303707] leave from int handler 5.
+[5529943] enter to int handler 5.
+[5530167] leave from int handler 5.
+[5756403] enter to int handler 5.
+[5756627] leave from int handler 5.
+[5888792] task1 is running (002).   |
+[5982631] enter to int handler 5.
+[5982855] leave from int handler 5.
+[6209091] enter to int handler 5.
+[6209315] leave from int handler 5.
+[6435551] enter to int handler 5.
+[6435775] leave from int handler 5.
+[6662009] enter to int handler 5.
+[6662233] leave from int handler 5.
+[6888468] enter to int handler 5.
+[6888729] task 1 becomes RUNNABLE.
+[6888970] leave from int handler 5.
+[6889224] dispatch from task 2.
+[6889371] dispatch to task 1.
+[6889536] leave from dly_tsk ercd=0.
+[6901936] enter to dly_tsk dlytim=10.
+[6902334] task 1 becomes WAITING.
+[6902496] dispatch from task 1.
+[6902643] dispatch to task 2.
+[7113341] enter to int handler 5.
+[7113565] leave from int handler 5.
+[7339801] enter to int handler 5.
+[7340025] leave from int handler 5.
+[7566259] enter to int handler 5.
+[7566483] leave from int handler 5.
+[7792718] enter to int handler 5.
+[7792942] leave from int handler 5.
+[8019178] enter to int handler 5.
+[8019402] leave from int handler 5.
+[8245636] enter to int handler 5.
+[8245860] leave from int handler 5.
+[8472096] enter to int handler 5.
+[8472320] leave from int handler 5.
+[8698556] enter to int handler 5.
+[8698780] leave from int handler 5.
+[8925014] enter to int handler 5.
+[8925238] leave from int handler 5.
+[9151473] enter to int handler 5.
+[9151697] leave from int handler 5.
+[9377933] enter to int handler 5.
+[9378194] task 1 becomes RUNNABLE.
+[9378435] leave from int handler 5.
+[9378689] dispatch from task 2.
+[9378836] dispatch to task 1.
+[9379001] leave from dly_tsk ercd=0.
+[9379211] enter to dly_tsk dlytim=10.
+[9379609] task 1 becomes WAITING.
+[9379771] dispatch from task 1.
+[9379918] dispatch to task 2.
+[9521970] enter to int handler 2.
+[9522246] enter to isig_sem semid=1.
+[9522473] task 5 becomes RUNNABLE.
+[9522683] leave from isig_sem ercd=0.
+[9522907] leave from int handler 2.
+[9523161] dispatch from task 2.
+[9523308] dispatch to task 5.
+[9523981] #rot_rdq(three priorities)
+[9524234] enter to rot_rdq tskpri=9.
+[9524432] leave from rot_rdq ercd=0.
+[9524578] enter to rot_rdq tskpri=10.
+[9524799] leave from rot_rdq ercd=0.
+[9524945] enter to rot_rdq tskpri=11.
+[9525143] leave from rot_rdq ercd=0.
+[9525645] task 5 becomes WAITING.
+[9525807] dispatch from task 5.
+[9525954] dispatch to task 3.
+[9526134] enter to ena_tex.
+[9526315] leave from ena_tex ercd=0
+[9526985] task2 is running (001).     +
+[9604226] enter to int handler 5.
+[9604450] leave from int handler 5.
+[9830686] enter to int handler 5.
+[9830910] leave from int handler 5.
+[10057144] enter to int handler 5.
+[10057368] leave from int handler 5.
+[10283603] enter to int handler 5.
+[10283827] leave from int handler 5.
+[10510063] enter to int handler 5.
+[10510287] leave from int handler 5.
+[10736521] enter to int handler 5.
+[10736745] leave from int handler 5.
+[10962981] enter to int handler 5.
+[10963205] leave from int handler 5.
+[11189441] enter to int handler 5.
+[11189665] leave from int handler 5.
+[11415899] enter to int handler 5.
+[11416123] leave from int handler 5.
+[11642358] enter to int handler 5.
+[11642582] leave from int handler 5.
+[11868818] enter to int handler 5.
+[11869079] task 1 becomes RUNNABLE.
+[11869320] leave from int handler 5.
+[11869574] dispatch from task 3.
+[11869721] dispatch to task 1.
+[11869886] leave from dly_tsk ercd=0.
+[11894518] enter to dly_tsk dlytim=10.
+[11894916] task 1 becomes WAITING.
+[11895078] dispatch from task 1.
+[11895225] dispatch to task 3.
+[12092081] enter to int handler 5.
+[12092305] leave from int handler 5.
+[12318541] enter to int handler 5.
+[12318765] leave from int handler 5.
+[12544999] enter to int handler 5.
+[12545223] leave from int handler 5.
+[12771459] enter to int handler 5.
+[12771683] leave from int handler 5.
+[12997919] enter to int handler 5.
+[12998143] leave from int handler 5.
+[13224377] enter to int handler 5.
+[13224601] leave from int handler 5.
+[13450836] enter to int handler 5.
+[13451060] leave from int handler 5.
+[13463440] task2 is running (002).     +
+[13677067] enter to int handler 5.
+[13677291] leave from int handler 5.
+[13903525] enter to int handler 5.
+[13903749] leave from int handler 5.
+[14129984] enter to int handler 5.
+[14130208] leave from int handler 5.
+[14356444] enter to int handler 5.
+[14356705] task 1 becomes RUNNABLE.
+[14356946] leave from int handler 5.
+[14357200] dispatch from task 3.
+[14357347] dispatch to task 1.
+[14357512] leave from dly_tsk ercd=0.
+[14370728] enter to dly_tsk dlytim=10.
+[14371126] task 1 becomes WAITING.
+[14371288] dispatch from task 1.
+[14371435] dispatch to task 3.
+[14581210] enter to int handler 5.
+[14581434] leave from int handler 5.
+[14807668] enter to int handler 5.
+[14807892] leave from int handler 5.
+[15034127] enter to int handler 5.
+[15034351] leave from int handler 5.
+[15260587] enter to int handler 5.
+[15260811] leave from int handler 5.
+[15487045] enter to int handler 5.
+[15487269] leave from int handler 5.
+[15713505] enter to int handler 5.
+[15713729] leave from int handler 5.
+[15939965] enter to int handler 5.
+[15940189] leave from int handler 5.
+[16157141] enter to int handler 2.
+[16157417] enter to isig_sem semid=1.
+[16157644] task 5 becomes RUNNABLE.
+[16157854] leave from isig_sem ercd=0.
+[16158078] leave from int handler 2.
+[16158332] dispatch from task 3.
+[16158479] dispatch to task 5.
+[16159152] #rot_rdq(three priorities)
+[16159405] enter to rot_rdq tskpri=9.
+[16159603] leave from rot_rdq ercd=0.
+[16159749] enter to rot_rdq tskpri=10.
+[16159970] leave from rot_rdq ercd=0.
+[16160116] enter to rot_rdq tskpri=11.
+[16160314] leave from rot_rdq ercd=0.
+[16160816] task 5 becomes WAITING.
+[16160978] dispatch from task 5.
+[16161125] dispatch to task 4.
+[16161305] enter to ena_tex.
+[16161486] leave from ena_tex ercd=0
+[16162156] task3 is running (001).       *
+[16166135] enter to int handler 5.
+[16166359] leave from int handler 5.
+[16392595] enter to int handler 5.
+[16392819] leave from int handler 5.
+[16619053] enter to int handler 5.
+[16619277] leave from int handler 5.
+[16845513] enter to int handler 5.
+[16845774] task 1 becomes RUNNABLE.
+[16846015] leave from int handler 5.
+[16846269] dispatch from task 4.
+[16846416] dispatch to task 1.
+[16846581] leave from dly_tsk ercd=0.
+[16872029] enter to dly_tsk dlytim=10.
+[16872427] task 1 becomes WAITING.
+[16872589] dispatch from task 1.
+[16872736] dispatch to task 4.
+[17068669] enter to int handler 5.
+[17068893] leave from int handler 5.
+[17295129] enter to int handler 5.
+[17295353] leave from int handler 5.
+[17521589] enter to int handler 5.
+[17521813] leave from int handler 5.
+[17748047] enter to int handler 5.
+[17748271] leave from int handler 5.
+[17974506] enter to int handler 5.
+[17974730] leave from int handler 5.
+[18200966] enter to int handler 5.
+[18201190] leave from int handler 5.
+[18427424] enter to int handler 5.
+[18427648] leave from int handler 5.
+[18653884] enter to int handler 5.
+[18654108] leave from int handler 5.
+[18880344] enter to int handler 5.
+[18880568] leave from int handler 5.
+[19106802] enter to int handler 5.
+[19107026] leave from int handler 5.
+[19333261] enter to int handler 5.
+[19333522] task 1 becomes RUNNABLE.
+[19333763] leave from int handler 5.
+[19334017] dispatch from task 4.
+[19334164] dispatch to task 1.
+[19334329] leave from dly_tsk ercd=0.
+[19334539] enter to dly_tsk dlytim=10.
+[19334937] task 1 becomes WAITING.
+[19335099] dispatch from task 1.
+[19335246] dispatch to task 4.
+[19559844] enter to int handler 5.
+[19560068] leave from int handler 5.
+[19786302] enter to int handler 5.
+[19786526] leave from int handler 5.
+[20012761] enter to int handler 5.
+[20012985] leave from int handler 5.
+[20101142] task3 is running (002).       *
+[20238992] enter to int handler 5.
+[20239216] leave from int handler 5.
+[20465450] enter to int handler 5.
+[20465674] leave from int handler 5.
+[20691909] enter to int handler 5.
+[20692133] leave from int handler 5.
+[20918369] enter to int handler 5.
+[20918593] leave from int handler 5.
+[21144827] enter to int handler 5.
+[21145051] leave from int handler 5.
+[21371287] enter to int handler 5.
+[21371511] leave from int handler 5.
+[21597747] enter to int handler 5.
+[21597971] leave from int handler 5.
+[21824205] enter to int handler 5.
+[21824466] task 1 becomes RUNNABLE.
+[21824707] leave from int handler 5.
+[21824961] dispatch from task 4.
+[21825108] dispatch to task 1.
+[21825273] leave from dly_tsk ercd=0.
+[21839305] enter to dly_tsk dlytim=10.
+[21839703] task 1 becomes WAITING.
+[21839865] dispatch from task 1.
+[21840012] dispatch to task 4.
+[22048863] enter to int handler 5.
+[22049087] leave from int handler 5.
+[22275323] enter to int handler 5.
+[22275547] leave from int handler 5.
+[22501783] enter to int handler 5.
+[22502007] leave from int handler 5.
+[22728241] enter to int handler 5.
+[22728465] leave from int handler 5.
+[22919561] enter to int handler 2.
+[22919837] enter to isig_sem semid=1.
+[22920064] task 5 becomes RUNNABLE.
+[22920274] leave from isig_sem ercd=0.
+[22920498] leave from int handler 2.
+[22920752] dispatch from task 4.
+[22920899] dispatch to task 5.
+[22921572] #rot_rdq(three priorities)
+[22921825] enter to rot_rdq tskpri=9.
+[22922023] leave from rot_rdq ercd=0.
+[22922169] enter to rot_rdq tskpri=10.
+[22922390] leave from rot_rdq ercd=0.
+[22922536] enter to rot_rdq tskpri=11.
+[22922734] leave from rot_rdq ercd=0.
+[22923236] task 5 becomes WAITING.
+[22923398] dispatch from task 5.
+[22923545] dispatch to task 2.
+[22954624] enter to int handler 5.
+[22954848] leave from int handler 5.
+[23181084] enter to int handler 5.
+[23181308] leave from int handler 5.
+[23216565] task1 is running (003).   |
+[23407313] enter to int handler 5.
+[23407537] leave from int handler 5.
+[23633772] enter to int handler 5.
+[23633996] leave from int handler 5.
+[23860232] enter to int handler 5.
+[23860456] leave from int handler 5.
+[24086690] enter to int handler 5.
+[24086914] leave from int handler 5.
+[24313150] enter to int handler 5.
+[24313411] task 1 becomes RUNNABLE.
+[24313652] leave from int handler 5.
+[24313906] dispatch from task 2.
+[24314053] dispatch to task 1.
+[24314218] leave from dly_tsk ercd=0.
+[24338034] enter to dly_tsk dlytim=10.
+[24338432] task 1 becomes WAITING.
+[24338594] dispatch from task 1.
+[24338741] dispatch to task 2.
+[24536520] enter to int handler 5.
+[24536744] leave from int handler 5.
+[24762980] enter to int handler 5.
+[24763204] leave from int handler 5.
+[24989440] enter to int handler 5.
+[24989664] leave from int handler 5.
+[25215898] enter to int handler 5.
+[25216122] leave from int handler 5.
+[25442357] enter to int handler 5.
+[25442581] leave from int handler 5.
+[25668817] enter to int handler 5.
+[25669041] leave from int handler 5.
+[25895275] enter to int handler 5.
+[25895499] leave from int handler 5.
+[26121735] enter to int handler 5.
+[26121959] leave from int handler 5.
+[26348195] enter to int handler 5.
+[26348419] leave from int handler 5.
+[26574653] enter to int handler 5.
+[26574877] leave from int handler 5.
+[26801112] enter to int handler 5.
+[26801373] task 1 becomes RUNNABLE.
+[26801614] leave from int handler 5.
+[26801868] dispatch from task 2.
+[26802015] dispatch to task 1.
+[26802180] leave from dly_tsk ercd=0.
+[26802390] enter to dly_tsk dlytim=10.
+[26802788] task 1 becomes WAITING.
+[26802950] dispatch from task 1.
+[26803097] dispatch to task 2.
+[27027695] enter to int handler 5.
+[27027919] leave from int handler 5.
+[27153389] task1 is running (004).   |
+[27253923] enter to int handler 5.
+[27254147] leave from int handler 5.
+[27480383] enter to int handler 5.
+[27480607] leave from int handler 5.
+[27706843] enter to int handler 5.
+[27707067] leave from int handler 5.
+[27933301] enter to int handler 5.
+[27933525] leave from int handler 5.
+[28159760] enter to int handler 5.
+[28159984] leave from int handler 5.
+[28182237] enter to int handler 2.
+[28182513] enter to isig_sem semid=1.
+[28182740] task 5 becomes RUNNABLE.
+[28182950] leave from isig_sem ercd=0.
+[28183174] leave from int handler 2.
+[28183428] dispatch from task 2.
+[28183575] dispatch to task 5.
+[28184234] task 5 becomes WAITING.
+[28184396] dispatch from task 5.
+[28184543] dispatch to task 2.
+[28386307] enter to int handler 5.
+[28386531] leave from int handler 5.
+[28612767] enter to int handler 5.
+[28612991] leave from int handler 5.
+[28839225] enter to int handler 5.
+[28839449] leave from int handler 5.
+[29065684] enter to int handler 5.
+[29065908] leave from int handler 5.
+[29292144] enter to int handler 5.
+[29292405] task 1 becomes RUNNABLE.
+[29292646] leave from int handler 5.
+[29292900] dispatch from task 2.
+[29293047] dispatch to task 1.
+[29293212] leave from dly_tsk ercd=0.
+[29305612] enter to dly_tsk dlytim=10.
+[29306010] task 1 becomes WAITING.
+[29306172] dispatch from task 1.
+[29306319] dispatch to task 2.
+[29369057] enter to int handler 2.
+[29369333] enter to isig_sem semid=1.
+[29369560] task 5 becomes RUNNABLE.
+[29369770] leave from isig_sem ercd=0.
+[29369994] leave from int handler 2.
+[29370248] dispatch from task 2.
+[29370395] dispatch to task 5.
+[29371062] task 5 becomes WAITING.
+[29371224] dispatch from task 5.
+[29371371] dispatch to task 2.
+[29517101] enter to int handler 5.
+[29517325] leave from int handler 5.
+[29743559] enter to int handler 5.
+[29743783] leave from int handler 5.
+[29970019] enter to int handler 5.
+[29970243] leave from int handler 5.
+[30196479] enter to int handler 5.
+[30196703] leave from int handler 5.
+[30422937] enter to int handler 5.
+[30423161] leave from int handler 5.
+[30649396] enter to int handler 5.
+[30649620] leave from int handler 5.
+[30875856] enter to int handler 5.
+[30876080] leave from int handler 5.
+[31081946] #1#slp_tsk()
+[31082197] enter to slp_tsk.
+[31082444] task 2 becomes WAITING.
+[31082606] dispatch from task 2.
+[31082753] dispatch to task 3.
+[31102301] enter to int handler 5.
+[31102525] leave from int handler 5.
+[31328761] enter to int handler 5.
+[31328985] leave from int handler 5.
+[31555219] enter to int handler 5.
+[31555443] leave from int handler 5.
+[31781678] enter to int handler 5.
+[31781939] task 1 becomes RUNNABLE.
+[31782180] leave from int handler 5.
+[31782434] dispatch from task 3.
+[31782581] dispatch to task 1.
+[31782746] leave from dly_tsk ercd=0.
+[31788747] enter to dly_tsk dlytim=10.
+[31789145] task 1 becomes WAITING.
+[31789307] dispatch from task 1.
+[31789454] dispatch to task 3.
+[32007471] enter to int handler 5.
+[32007695] leave from int handler 5.
+[32233931] enter to int handler 5.
+[32234155] leave from int handler 5.
