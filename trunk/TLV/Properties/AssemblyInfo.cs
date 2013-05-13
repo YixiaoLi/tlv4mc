@@ -1,7 +1,7 @@
 /*
  *  TLV - Trace Log Visualizer
  *
- *  Copyright (C) 2008-2011 by Nagoya Univ., JAPAN
+ *  Copyright (C) 2008-2013 by Nagoya Univ., JAPAN
  *
  *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
  *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
@@ -46,7 +46,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Nagoya Univ., JAPAN")]
 [assembly: AssemblyProduct("TraceLogVisualizer")]
-[assembly: AssemblyCopyright("Copyright (C) 2008-2011 Nagoya Univ., JAPAN")]
+[assembly: AssemblyCopyright("Copyright (C) 2008-2013 Nagoya Univ., JAPAN")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
